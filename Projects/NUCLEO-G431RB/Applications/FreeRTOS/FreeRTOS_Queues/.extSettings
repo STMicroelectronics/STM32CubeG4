@@ -1,0 +1,9 @@
+[ProjectFiles]
+HeaderPath=..\..\..\..\..\..\Drivers\STM32G4xx_HAL_Driver\Inc;..\..\..\..\..\..\Drivers\STM32G4xx_HAL_Driver\Inc\Legacy;..\..\..\..\..\..\Drivers\CMSIS\Include;..\..\..\..\..\..\Drivers\CMSIS\Device\ST\STM32G4xx\Include;..\..\..\..\..\..\Drivers\BSP\STM32G4xx_Nucleo
+[Others]
+Define=USE_NUCLEO_64
+HALModule=TIM;EXTI;UART
+[Groups]
+Application/User=../Src/main.c;../Src/stm32g4xx_it.c;../Src/stm32g4xx_hal_timebase_tim.c;../Src/app_freertos.c;../Src/stm32g4xx_hal_msp.c;
+Doc=../readme.txt;
+Drivers/BSP/STM32G4xx_Nucleo=../../../../../../Drivers/BSP/STM32G4xx_Nucleo/stm32g4xx_nucleo.c;

@@ -1,0 +1,8 @@
+[ProjectFiles]
+HeaderPath=
+[Others]
+Define=
+HALModule=
+[Groups]
+Application/User=../Src/main.c;../Src/stm32g4xx_it.c;
+Doc=../readme.txt;

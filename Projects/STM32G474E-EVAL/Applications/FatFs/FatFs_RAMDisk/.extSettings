@@ -1,0 +1,12 @@
+[ProjectFiles]
+HeaderPath=..\..\..\..\..\..\Drivers\STM32G4xx_HAL_Driver\Inc;..\..\..\..\..\..\Drivers\STM32G4xx_HAL_Driver\Inc\Legacy;..\..\..\..\..\..\Drivers\CMSIS\Include;..\..\..\..\..\..\Drivers\CMSIS\Device\ST\STM32G4xx\Include;..\..\..\..\..\..\Drivers\BSP\STM32G474E-EVAL;..\..\..\..\..\..\Drivers\BSP\Components\mfxstm32l152
+[Others]
+Define=
+HALModule=I2C;EXTI;SPI
+[Groups]
+Doc=../readme.txt;
+Drivers/BSP/STM32G474E-EVAL=../../../../../../Drivers/BSP/STM32G474E-EVAL/stm32g474e_eval_sram.c;../../../../../../Drivers/BSP/STM32G474E-EVAL/stm32g474e_eval_bus.c;../../../../../../Drivers/BSP/STM32G474E-EVAL/stm32g474e_eval_io.c;../../../../../../Drivers/BSP/STM32G474E-EVAL/stm32g474e_eval.c;
+Application/User/FATFS/Target=../FATFS/Target/sram_diskio.c;
+Application/User/Core=../Core/Src/main.c;../Core/Src/stm32g4xx_hal_msp.c;../Core/Src/stm32g4xx_it.c;
+Drivers/BSP/Components=../../../../../../Drivers/BSP/Components/mfxstm32l152/mfxstm32l152_reg.c;../../../../../../Drivers/BSP/Components/mfxstm32l152/mfxstm32l152.c;
+Application/User/FATFS/App=../FATFS/App/app_fatfs.c;

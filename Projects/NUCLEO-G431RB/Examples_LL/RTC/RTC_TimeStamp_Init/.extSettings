@@ -1,0 +1,7 @@
+[ProjectFiles]
+HeaderPath=
+[Others]
+Define=
+HALModule=
+[Groups]
+Doc=../readme.txt;

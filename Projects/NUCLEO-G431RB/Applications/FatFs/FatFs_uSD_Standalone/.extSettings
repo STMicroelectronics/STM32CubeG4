@@ -1,0 +1,11 @@
+[ProjectFiles]
+HeaderPath=..\..\..\..\..\..\Drivers\STM32G4xx_HAL_Driver\Inc;..\..\..\..\..\..\Drivers\STM32G4xx_HAL_Driver\Inc\Legacy;..\..\..\..\..\..\Drivers\CMSIS\Include;..\..\..\..\..\..\Drivers\CMSIS\Device\ST\STM32G4xx\Include;..\..\..\..\..\..\Drivers\BSP\STM32G4xx_Nucleo;..\..\..\..\..\..\Drivers\BSP\Adafruit_Shield
+[Others]
+Define=USE_NUCLEO_64
+HALModule=EXTI;UART;SPI;ADC
+[Groups]
+Drivers/BSP/STM32G4xx_Nucleo=../../../../../../Drivers/BSP/STM32G4xx_Nucleo/stm32g4xx_nucleo.c;
+Doc=../readme.txt;
+Application/User/Core=../Core/Src/main.c;../Core/Src/stm32g4xx_it.c;../Core/Src/stm32g4xx_hal_msp.c;
+Application/User/FATFS/Target=../FATFS/Target/stm32g4xx_nucleo_bus.c;
+Drivers/BSP/Adafruit802=../../../../../../Drivers/BSP/Adafruit_Shield/adafruit_802_sd.c;../../../../../../Drivers/BSP/Adafruit_Shield/adafruit_802.c;

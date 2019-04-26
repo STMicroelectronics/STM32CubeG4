@@ -1,0 +1,75 @@
+/**
+  @page HRTIM_BasicPWM HRTIM example
+  
+  @verbatim
+  ******************************************************************************
+  * @file    Examples/HRTIM/HRTIM_BasicPWM/readme.txt 
+  * @author  MCD Application Team
+  * @brief   Description of HRTIM_DualBuck example.
+  ******************************************************************************
+  *
+  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  *
+  * This software component is licensed by ST under BSD 3-Clause license,
+  * the "License"; You may not use this file except in compliance with the
+  * License. You may obtain a copy of the License at:
+  *                       opensource.org/licenses/BSD-3-Clause
+  *
+  ******************************************************************************
+  @endverbatim
+
+@par Example Description 
+  This example describes how to generate basic PWM waveforms with the 
+  HRTIM, as per HRTIM Cookbook basic examples.
+  5 basic examples are provided. Its is necessary to uncomment one of the 
+  following 5 #define statement at the beginning of the main.c module:
+
+  #define HRTIM_CHECK: basic HRTIM outputs check
+  #define SINGLE_PWM: elementary PWM generation
+  #define MULTIPLE_PWM: PWM on multiple outputs
+  #define PWM_MASTER: PWM generation with timers other than the timing unit itself
+  #define ARBITRARY_WAVEFORM: non-PWM waveform example
+
+  The PWM and waveforms are generated on the TD1 and TD2 outputs
+  (resp. PB14 and PB15) and TA1 and TA2 outputs (resp. PA8 and PA9), depending 
+  on example.
+
+  Green LED: ON or blinks during normal operation
+
+@note Care must be taken when using HAL_Delay(), this function provides accurate delay (in milliseconds)
+      based on variable incremented in SysTick ISR. This implies that if HAL_Delay() is called from
+      a peripheral ISR process, then the SysTick interrupt must have higher priority (numerically lower)
+      than the peripheral interrupt. Otherwise the caller ISR process will be blocked.
+      To change the SysTick interrupt priority you have to use HAL_NVIC_SetPriority() function.
+      
+@note The application need to ensure that the SysTick time base is always set to 1 millisecond
+      to have correct HAL operation.
+
+@par Directory contents 
+
+  - HRTIM/HRTIM_BasicPWM/Inc/stm32g4xx_hal_conf.h    HAL configuration file
+  - HRTIM/HRTIM_BasicPWM/Inc/stm32g4xx_it.h          IT interrupt handlers header file
+  - HRTIM/HRTIM_BasicPWM/Inc/main.h                  Header for main.c module  
+  - HRTIM/HRTIM_BasicPWM/Src/stm32g4xx_it.c          IT interrupt handlers
+  - HRTIM/HRTIM_BasicPWM/Src/main.c                  Main program
+  - HRTIM/HRTIM_BasicPWM/Src/stm32g4xx_hal_msp.c     HAL MSP module
+  - HRTIM/HRTIM_BasicPWM/Src/system_stm32g4xx.c      STM32G4xx system source file
+
+
+@par Hardware and Software environment 
+
+  - This example runs on STM32G474RETx devices.
+  
+  - This example has been tested with two NUCLEO-G474RE RevC boards embedding
+    a STM32G474RET6 device and can be easily tailored to any other supported device 
+    and development board.
+
+@par How to use it ? 
+
+In order to make the program work, you must do the following :
+ - Open your preferred toolchain 
+ - Rebuild all files and load your image into target memory
+ - Run the example
+
+ * <h3><center>&copy; COPYRIGHT STMicroelectronics</center></h3>
+ */
