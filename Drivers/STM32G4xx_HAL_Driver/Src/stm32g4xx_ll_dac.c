@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -46,7 +46,7 @@
 /** @addtogroup DAC_LL_Private_Macros
   * @{
   */
-#if defined(STM32G474xx) || defined(STM32G484xx) || defined(STM32G473xx)
+#if defined(STM32G474xx) || defined(STM32G484xx) || defined(STM32G473xx) || defined(STM32G483xx)
 #define IS_LL_DAC_CHANNEL(__DACX__, __DAC_CHANNEL__)                           \
   (((__DACX__) == DAC2) ?                                                      \
    ((__DAC_CHANNEL__) == LL_DAC_CHANNEL_1)                                 \
@@ -365,7 +365,6 @@ ErrorStatus LL_DAC_Init(DAC_TypeDef *DACx, uint32_t DAC_Channel, LL_DAC_InitType
                  ) << (DAC_Channel & DAC_CR_CHX_BITOFFSET_MASK)
                 );
     }
-
     MODIFY_REG(DACx->MCR,
                (DAC_MCR_MODE1_1
                 | DAC_MCR_MODE1_0

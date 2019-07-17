@@ -8,7 +8,7 @@
   * @brief   Description of the PWR Standby example.
   ******************************************************************************
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -42,6 +42,7 @@ a RESET and LED2 restarts toggling.
 LED2 is used to monitor the system state as follows:
  - LED2 toggling: system in Run mode
  - LED2 off : system in Standby mode
+ - LED2 on : configuration failed (system will go to an infinite loop)
 @note To measure the current consumption in Standby mode, remove JP4 jumper
       and connect an amperemeter to JP4 to measure IDD current.
 
@@ -60,6 +61,7 @@ Power, PWR, Standby mode, Interrupt, EXTI, Wakeup, Low Power, External reset
 
 @par Directory contents
 
+  - PWR/PWR_STANDBY/Inc/stm32g4xx_nucleo_conf.h     BSP configuration file
   - PWR/PWR_STANDBY/Inc/stm32g4xx_conf.h         HAL Configuration file
   - PWR/PWR_STANDBY/Inc/stm32g4xx_it.h           Header for stm32g4xx_it.c
   - PWR/PWR_STANDBY/Inc/main.h                         Header file for main.c

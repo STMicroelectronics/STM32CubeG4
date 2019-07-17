@@ -105,11 +105,18 @@
 /** @defgroup BASIC_GUI_Exported_Types BASIC GUI Exported Types
   * @{
   */
+#define LINE(x) ((x) * (((sFONT *)GUI_GetFont())->Height))
+/**
+  * @}
+  */
+
+/** @defgroup BASIC_GUI_Exported_Types BASIC GUI Exported Types
+  * @{
+  */
 
 /**
-* @brief  GUI Drawing main properties
-*/
-
+  * @brief  GUI Drawing main properties
+  */
 typedef struct
 {
   uint32_t  TextColor; /*!< Specifies the color of text */

@@ -8,7 +8,7 @@
   * @brief   Description of the OPAMP_PGA_ExternalBias example.
   ******************************************************************************
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -79,6 +79,7 @@ Analog, OPAMP, PGA, Bias
 
 @par Directory contents 
 
+  - OPAMP/OPAMP_PGA_ExternalBias/Inc/stm32g474e_eval_conf.h     BSP configuration file
   - OPAMP/OPAMP_PGA_ExternalBias/Inc/stm32g4xx_hal_conf.h    HAL configuration file
   - OPAMP/OPAMP_PGA_ExternalBias/Inc/stm32g4xx_it.h          Interrupt handlers header file
   - OPAMP/OPAMP_PGA_ExternalBias/Inc/main.h                  Header for main.c module  

@@ -2,13 +2,13 @@
   @page GPIO_InfiniteLedToggling_Init GPIO example
   
   @verbatim
-  ******************** (C) COPYRIGHT 2016 STMicroelectronics *******************
+  ******************** (C) COPYRIGHT 2019 STMicroelectronics *******************
   * @file    Examples_LL/GPIO/GPIO_InfiniteLedToggling_Init/readme.txt 
   * @author  MCD Application Team
   * @brief   Description of the GPIO example.
   ******************************************************************************
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the

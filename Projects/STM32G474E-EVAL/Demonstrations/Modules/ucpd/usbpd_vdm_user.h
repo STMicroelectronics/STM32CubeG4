@@ -6,13 +6,13 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics International N.V.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
   *
   ******************************************************************************
   */
@@ -25,6 +25,13 @@
 #endif
 
 /* Includes ------------------------------------------------------------------*/
+/** @addtogroup STM32_USBPD_APPLICATION
+  * @{
+  */
+
+/** @addtogroup STM32_USBPD_APPLICATION_VDM_USER
+  * @{
+  */
 
 /* Exported typedef ----------------------------------------------------------*/
 typedef struct
@@ -107,6 +114,14 @@ USBPD_StatusTypeDef USBPD_VDM_UserInit(uint8_t PortNum);
 void                USBPD_VDM_UserReset(uint8_t PortNum);
 void                USBPD_VDM_FillDPStatus(uint8_t PortNum, USBPD_DPStatus_TypeDef *dp_status);
 void                USBPD_VDM_FillDPConfig(uint8_t PortNum, USBPD_DPConfig_TypeDef *pDP_Config);
+
+/**
+  * @}
+  */
+
+/**
+  * @}
+  */
 
 #ifdef __cplusplus
 }

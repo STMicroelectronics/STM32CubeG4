@@ -15,7 +15,7 @@
 ;********************************************************************************
 ;* @attention
 ;*
-;* <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
+;* <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
 ;* All rights reserved.</center></h2>
 ;*
 ;* This software component is licensed by ST under BSD 3-Clause license,
@@ -120,7 +120,7 @@ __vector_table
         DCD     TIM8_UP_IRQHandler                ; TIM8 Update Interrupt
         DCD     TIM8_TRG_COM_IRQHandler           ; TIM8 Trigger, Commutation, Direction change and Index Interrupt
         DCD     TIM8_CC_IRQHandler                ; TIM8 Capture Compare Interrupt
-        DCD     0                                 ; Reserved
+        DCD     ADC3_IRQHandler                   ; ADC3
         DCD     0                                 ; Reserved
         DCD     LPTIM1_IRQHandler                 ; LP TIM1 interrupt
         DCD     TIM5_IRQHandler                   ; TIM5
@@ -458,6 +458,11 @@ TIM8_TRG_COM_IRQHandler
         SECTION .text:CODE:NOROOT:REORDER(1)
 TIM8_CC_IRQHandler
         B TIM8_CC_IRQHandler
+
+        PUBWEAK ADC3_IRQHandler
+        SECTION .text:CODE:NOROOT:REORDER(1)
+ADC3_IRQHandler
+        B ADC3_IRQHandler
 
         PUBWEAK LPTIM1_IRQHandler
         SECTION .text:CODE:NOROOT:REORDER(1)

@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -303,7 +303,7 @@ typedef  void (*pIRDA_CallbackTypeDef)(IRDA_HandleTypeDef *hirda);  /*!< pointer
   * @}
   */
 
-/** @defgroup IRDA_ClockPrescaler Clock Prescaler
+/** @defgroup IRDA_ClockPrescaler IRDA Clock Prescaler
   * @{
   */
 #define IRDA_PRESCALER_DIV1    0x00000000U  /*!< fclk_pres = fclk     */

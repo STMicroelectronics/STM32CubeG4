@@ -9,7 +9,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics. 
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics. 
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -112,6 +112,7 @@ int main(void)
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */
+  
 
   /* MCU Configuration--------------------------------------------------------*/
 
@@ -248,10 +249,16 @@ static void MX_RTC_Init(void)
   /* USER CODE BEGIN RTC_Init 1 */
 
   /* USER CODE END RTC_Init 1 */
+  /** Initialize RTC and set the Time and Date 
+  */
   RTC_InitStruct.HourFormat = LL_RTC_HOURFORMAT_24HOUR;
   RTC_InitStruct.AsynchPrescaler = RTC_ASYNCH_PREDIV;
   RTC_InitStruct.SynchPrescaler = RTC_SYNCH_PREDIV;
   LL_RTC_Init(RTC, &RTC_InitStruct);
+  /** Initialize RTC and set the Time and Date 
+  */
+  if(LL_RTC_BKP_GetRegister(RTC,LL_RTC_BKP_DR0) != 0x32F2){
+  
   RTC_TimeStruct.Hours = 0x0;
   RTC_TimeStruct.Minutes = 0x0;
   RTC_TimeStruct.Seconds = 0x0;
@@ -263,6 +270,12 @@ static void MX_RTC_Init(void)
   RTC_DateStruct.Year = 0x19;
 
   LL_RTC_DATE_Init(RTC, LL_RTC_FORMAT_BCD, &RTC_DateStruct);
+    LL_RTC_BKP_SetRegister(RTC,LL_RTC_BKP_DR0,0x32F2);
+  }
+  /** Initialize RTC and set the Time and Date 
+  */
+  if(LL_RTC_BKP_GetRegister(RTC,LL_RTC_BKP_DR0) != 0x32F2){
+  
   RTC_TimeStruct.Hours = 0x0;
   RTC_TimeStruct.Minutes = 0x0;
   RTC_TimeStruct.Seconds = 0x0;
@@ -270,6 +283,8 @@ static void MX_RTC_Init(void)
   RTC_DateStruct.Day = 0x1;
   RTC_DateStruct.Year = 0x19;
 
+    LL_RTC_BKP_SetRegister(RTC,LL_RTC_BKP_DR0,0x32F2);
+  }
   /** Enable the WakeUp 
   */
   LL_RTC_WAKEUP_SetClock(RTC, LL_RTC_WAKEUPCLOCK_CKSPRE);
@@ -340,8 +355,8 @@ static void MX_USART1_UART_Init(void)
   LL_USART_SetTXFIFOThreshold(USART1, LL_USART_FIFOTHRESHOLD_1_8);
   LL_USART_SetRXFIFOThreshold(USART1, LL_USART_FIFOTHRESHOLD_1_8);
   LL_USART_DisableFIFO(USART1);
-  LL_USART_EnableOverrunDetect(USART1);
-  LL_USART_EnableDMADeactOnRxErr(USART1);
+  LL_USART_DisableOverrunDetect(USART1);
+  LL_USART_DisableDMADeactOnRxErr(USART1);
   LL_USART_ConfigAsyncMode(USART1);
 
   /* USER CODE BEGIN WKUPType USART1 */
@@ -427,12 +442,11 @@ void Process(void)
       {
         Alarm = 0;
 
-		/* get time */
+        /* get time */
         time = LL_RTC_TIME_Get(RTC);
         /* need to read date also to unlock TR register */
         temp_read = READ_REG(RTC->DR);
         ((void)(temp_read));  /* To avoid warning */
-
 
         aStringToSend[1] = (uint8_t)((__LL_RTC_GET_HOUR(time) >> 4) + ASCII_CONVERT);/* hour tens */
         aStringToSend[2] = (uint8_t)((__LL_RTC_GET_HOUR(time) & 0x0F) + ASCII_CONVERT);/* hour units */

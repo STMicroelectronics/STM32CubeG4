@@ -30,18 +30,19 @@ extern "C" {
 /* Includes ------------------------------------------------------------------*/
 #include "stm32g4xx_hal.h"
 #include "stm32g4xx_ll_adc.h"
-#include "stm32g4xx_ll_ucpd.h"
-#include "stm32g4xx_ll_usart.h"
+#include "stm32g4xx_ll_dma.h"
 #include "stm32g4xx_ll_rcc.h"
 #include "stm32g4xx_ll_bus.h"
-#include "stm32g4xx_ll_cortex.h"
+#include "stm32g4xx_ll_crs.h"
 #include "stm32g4xx_ll_system.h"
+#include "stm32g4xx_ll_exti.h"
+#include "stm32g4xx_ll_cortex.h"
 #include "stm32g4xx_ll_utils.h"
 #include "stm32g4xx_ll_pwr.h"
+#include "stm32g4xx_ll_ucpd.h"
+#include "stm32g4xx_ll_usart.h"
+#include "stm32g4xx.h"
 #include "stm32g4xx_ll_gpio.h"
-#include "stm32g4xx_ll_dma.h"
-
-#include "stm32g4xx_ll_exti.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -71,11 +72,11 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define VSENSE_Pin GPIO_PIN_0
+#define VSENSE_Pin LL_GPIO_PIN_0
 #define VSENSE_GPIO_Port GPIOC
-#define DISCHARGE_Pin GPIO_PIN_2
+#define DISCHARGE_Pin LL_GPIO_PIN_2
 #define DISCHARGE_GPIO_Port GPIOB
-#define SOURCE_EN_Pin GPIO_PIN_11
+#define SOURCE_EN_Pin LL_GPIO_PIN_11
 #define SOURCE_EN_GPIO_Port GPIOC
 /* USER CODE BEGIN Private defines */
 

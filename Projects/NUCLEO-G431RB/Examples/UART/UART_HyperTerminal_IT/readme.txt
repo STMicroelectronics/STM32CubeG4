@@ -1,14 +1,14 @@
 /**
   @page UART_Hyperterminal_IT UART Hyperterminal IT example
-  
+
   @verbatim
   ******************************************************************************
-  * @file    UART/UART_Hyperterminal_IT/readme.txt 
+  * @file    UART/UART_Hyperterminal_IT/readme.txt
   * @author  MCD Application Team
   * @brief   Description of the UART Hyperterminal example.
   ******************************************************************************
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -20,28 +20,28 @@
 
 @par Example Description
 
-UART transmission (transmit/receive) in Interrupt mode between a board and 
+UART transmission (transmit/receive) in Interrupt mode between a board and
 an HyperTerminal PC application.
 
 Board: NUCLEO-G431RB
-Tx Pin: PA.09 (Pin 21 in CN10)
-Rx Pin: PA.10 (Pin 33 in CN10)
-   _________________________ 
+Tx Pin: PA.02 (available through VCP)
+Rx Pin: PA.03 (available through VCP)
+   _________________________
   |           ______________|                       _______________
   |          |USART         |                      | HyperTerminal |
   |          |              |                      |               |
   |          |           TX |______________________|RX             |
   |          |              |                      |               |
-  |          |              |     RS232 Cable      |               |
+  |          |              |    ST-Link Cable     |               |
   |          |              |                      |               |
-  |          |           RX |______________________|TX             |          
-  |          |              |                      |               |           
-  |          |______________|                      |_______________|          
-  |                         |                       
-  |                         |                    
-  |                         |                      
-  |                         |                      
-  |_STM32_Board_____________|                      
+  |          |           RX |______________________|TX             |
+  |          |              |                      |               |
+  |          |______________|                      |_______________|
+  |                         |
+  |                         |
+  |                         |
+  |                         |
+  |_STM32_Board_____________|
 
 At the beginning of the main program the HAL_Init() function is called to reset
 all the peripherals, initialize the Flash interface and the systick.
@@ -97,11 +97,12 @@ position of the transmitted data.
 
 @par Keywords
 
-Connectivity, UART, Printf, Baud rate, RS-232, HyperTerminal, full-duplex, HyperTerminal, 
+Connectivity, UART, Printf, Baud rate, RS-232, HyperTerminal, full-duplex, HyperTerminal,
 Transmission, Reception, Asynchronous, interrupt
 
 @par Directory contents
 
+  - UART/UART_HyperTerminal_IT/Inc/stm32g4xx_nucleo_conf.h     BSP configuration file
   - UART/UART_HyperTerminal_IT/Inc/stm32g4xx_hal_conf.h    HAL configuration file
   - UART/UART_HyperTerminal_IT/Inc/stm32g4xx_it.h          IT interrupt handlers header file
   - UART/UART_HyperTerminal_IT/Inc/main.h                  Header for main.c module
@@ -114,15 +115,15 @@ Transmission, Reception, Asynchronous, interrupt
 @par Hardware and Software environment
 
   - This example runs on STM32G431RBTx devices.
-    
+
   - This example has been tested with STMicroelectronics NUCLEO-G431RB board and can be
-    easily tailored to any other supported device and development board.    
-      
+    easily tailored to any other supported device and development board.
+
   - NUCLEO-G431RB Set-up
     
-    - Connect USART1 TX (PA9) to RX pin of PC serial port (or USB to UART adapter)
-      and USART1 RX (PA10) to TX pin of PC serial port (or USB to UART adapter).
-          
+    - Connect ST-Link cable to the PC USB port to display data on the HyperTerminal (and to receive data).
+      A virtual COM port will then appear in the HyperTerminal.
+
   - Hyperterminal configuration:
     - Data Length = 7 Bits
     - One Stop Bit
@@ -130,7 +131,7 @@ Transmission, Reception, Asynchronous, interrupt
     - BaudRate = 9600 baud
     - Flow control: None
 
-@par How to use it ? 
+@par How to use it ?
 
 In order to make the program work, you must do the following :
  - Open your preferred toolchain

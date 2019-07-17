@@ -8,7 +8,7 @@
   * @brief   Description of the DMA FLASH to RAM example.
   ******************************************************************************
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -61,6 +61,7 @@ System, DMA, Data Transfer, Memory to memory, Stream, Flash, RAM
 
 @par Directory contents 
 
+  - DMA/DMA_FLASHToRAM/Inc/stm32g474e_eval_conf.h     BSP configuration file
   - DMA/DMA_FLASHToRAM/Src/system_stm32g4xx.c           stm32g4xx system source file
   - DMA/DMA_FLASHToRAM/Src/stm32g4xx_it.c               Interrupt handlers
   - DMA/DMA_FLASHToRAM/Src/main.c                             Main program

@@ -2,14 +2,14 @@
   @page FatFs_RAMDisk   FatFs with RAM disk drive application
  
   @verbatim
-  ******************** (C) COPYRIGHT 2017 STMicroelectronics *******************
+  ******************** (C) COPYRIGHT 2019 STMicroelectronics *******************
   * @file    FatFs/FatFs_RAMDisk/readme.txt 
   * @author  MCD Application Team
   * @brief   Description of the FatFs with RAM disk drive application
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics. 
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics. 
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,

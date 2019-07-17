@@ -8,7 +8,7 @@
   * @brief   Description of the LPTIM PWM with an External clock example.
   ******************************************************************************
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -66,8 +66,9 @@ generation is stopped.
 
 Timer, Low Power, PWM, Stop mode, Interrupt, External Clock, Output, Duty Cycle
 
-@par Directory contents  
+@par Directory contents
 
+  - LPTIM/LPTIM_PWMExternalClock/Inc/stm32g4xx_nucleo_conf.h     BSP configuration file
   - LPTIM/LPTIM_PWMExternalClock/Inc/stm32g4xx_hal_conf.h    HAL configuration file
   - LPTIM/LPTIM_PWMExternalClock/Inc/stm32g4xx_it.h          Interrupt handlers header file
   - LPTIM/LPTIM_PWMExternalClock/Inc/main.h                  Header for main.c module  

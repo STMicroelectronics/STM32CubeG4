@@ -1,195 +1,134 @@
 <!DOCTYPE html>
-<html><head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-
-<title>Release Notes for STM32 TRACER EMB</title><style>
-div.Section1 {
-page: Section1;
-font-family: Arial,Helvetica,sans-serif;
-}
-h1 {
-font-size: 24pt;
-font-weight: bold;
-font-family: Arial,Helvetica,sans-serif;
-text-align: center;
-color: #3366ff;
-}
-h2 {
-margin: 12pt 0in 3pt;
-page-break-after: avoid;
-font-weight: bold;
-font-family: Arial,Helvetica,sans-serif;
-background-color: #3366ff;
-color: white;
-padding-left: 5px;
-font-size: 16pt;
-}
-h3 {
-margin-left: 0in;
-font-weight: bold;
-font-family: Arial,Helvetica,sans-serif;
-background-color: #3366ff;
-width: 200px;
-margin-right: 500pt;
-color: white;
-padding-left: 5px;
-padding-top: 2px;
-padding-bottom: 2px;
-font-size: 12pt;
-}
-h4 {
-font-family: Arial,Helvetica,sans-serif;
-font-weight: bold;
-text-decoration: underline;
-font-size: 12pt;
-}
-p {
-margin: 0px 0px 0px 0in;
-font-family: Arial,Helvetica,sans-serif;
-padding-top: 3px;
-padding-bottom: 3px;
-font-size: 12pt;
-}
-ul {
-font-family: Arial,Helvetica,sans-serif;
-margin-top: 3px;
-margin-bottom: 3px;
-font-size: 10pt;
-}
-caption {
-margin-top: 10px;
-font-family: Arial,Helvetica,sans-serif;
-font-size: 11pt;
-}
-hr {
-width: 100%;
-}
-.guidance {
-background-color: #e5b8b7;
-font-style: italic;
-font-family: Arial,Helvetica,sans-serif;
-padding-top: 3px;
-padding-bottom: 3px;
-margin-top: 3px;
-margin-bottom: 3px;
-font-size: 10pt;
-}
-.guidance_title {
-font-style: normal;
-font-weight: bold;
-text-decoration: underline;
-font-family: Arial,Helvetica,sans-serif;
-font-size: 10pt;
-}
-.tickets {
-border: 1pt solid #9cc2e5;
-font-family: Arial,Helvetica,sans-serif;
-margin-bottom: 3px;
-margin-top: 3px;
-font-size: 10pt;
-}
-.tickets th {
-border: 1pt solid #9cc2e5;
-font-size: 12pt;
-background-color: #39a9dc;
-color: white;
-text-align: center;
-}
-.tickets td {
-border: 1pt solid #9cc2e5;
-min-height: 32px;
-}
-tr:nth-child(even) {background-color: #cee2f2;}
-tr:nth-child(even) {background-color: #e8f1f9;}
-.topic1 {
-margin-top: 3px;
-margin-bottom: 3px;
-margin-left: 40px;
-}
-.topic2 {
-margin-top: 3px;
-margin-bottom: 3px;
-}
-.topic3 {
-margin-top: 3px;
-margin-bottom: 3px;
-margin-left: 20px;
-}
-#purpose {
-margin-top: 3px;
-margin-bottom: 3px;
-}
-#identification {
-margin-top: 3px;
-margin-bottom: 3px;
-}
-</style></head>
-<body link="blue" vlink="blue">
-<script type="text/javascript">
-var toggle_hist_disp = true;
-function toggle_history()
-{
-if (toggle_hist_disp)
-{
-toggle_hist_disp = false;
-var filter_off_text = document.createTextNode("Hide History");
-document.getElementById('filter_hist').innerHTML = "";
-document.getElementById('filter_hist').appendChild(filter_off_text);
-document.getElementById("history").hidden = false;
-}
-else
-{
-toggle_hist_disp = true;
-var filter_on_text = document.createTextNode("Show History");
-document.getElementById('filter_hist').innerHTML = "";
-document.getElementById('filter_hist').appendChild(filter_on_text);
-document.getElementById("history").hidden = true;
-}
-}</script><small><a href="../../Release_Notes.html">Back to Release page</a></small>
-<div style="width: 1034px;" class="Section1">
-
-<div id="header">
-<h1>Release
-Notes for&nbsp;<span style="background-color: white;">Tracer embedded</span></h1>
-<p style="text-align: center;">Copyright 2018
-STMicroelectronics</p>
-<p style="text-align: center;"><img style="width: 104px; height: 77px;" id="st_logo" alt="&lt;ST logo&gt; image" src="../../_htmresc/st_logo.png"></p>
-</div>
-<div id="license" class="topic1">
-<h2>License</h2>
-<p>This software component is licensed by ST under Ultimate Liberty license SLA0044, the "License"; You may not use this component except in compliance with the License. You may obtain a copy of the License at:</p>
-<p style="text-align: center; color: white;"><a href="http://www.st.com/SLA0044" target="_blank">http://www.st.com/SLA0044</a></p>
-
-
-<div id="release_container" class="topic1">
-<div class="topic2" id="identification">
-<h3>V1.0.0 / 18-Dec.-2018</h3>
-</div><div class="topic3" id="contents"><h4>Contents</h4>
-<ul><li>[USBPD] tracer embedded creation</li></ul>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>STM32 USB-C Power Delivery embedded Tracer</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <link rel="stylesheet" href="_htmresc/mini-st.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<div class="row">
+<div class="col-sm-12 col-lg-4">
+<div class="card fluid">
+<div class="sectione dark">
+<center>
+<h1 id="release-notes-for-stm32-usb-c-power-delivery-embedded-tracer"><small>Release Notes for</small> STM32 USB-C Power Delivery embedded Tracer</h1>
+<p>Copyright © 2018 STMicroelectronics<br />
+</p>
+<a href="https://www.st.com" class="logo"><img src="_htmresc/st_logo.png" alt="ST logo" /></a>
+</center>
 </div>
 </div>
-<br>
-<div style="margin-left: 40px;"><button id="filter_hist" onclick="toggle_history()">Show History</button><br>
+<h1 id="license">License</h1>
+<p>This software component is licensed by ST under Ultimate Liberty license SLA0044, the “License”; You may not use this component except in compliance with the License. You may obtain a copy of the License at:</p>
+<p><a href="http://www.st.com/SLA0044">http://www.st.com/SLA0044</a></p>
+<h1 id="purpose">Purpose</h1>
+<p>This driver is used for the embedded USB-PD tracer used to debug USB-PD application.</p>
 </div>
-<div id="history" class="topic1" hidden="">
-<h2>Update History</h2>
-<br>
-
-<div id="release_container" class="topic1">
-
-<br>
-<br>
+<div class="col-sm-12 col-lg-8">
+<h1 id="update-history">Update History</h1>
+<div class="collapse">
+<input type="checkbox" id="collapse-section2" checked aria-hidden="true"> <label for="collapse-section2" aria-hidden="true">V1.1.0 / 10-April-2019</label>
+<div>
+<h2 id="main-changes">Main Changes</h2>
+<h3 id="maintenance-release">Maintenance release</h3>
+<h2 id="contents">Contents</h2>
+<table>
+<caption>Fixed bugs list</caption>
+<thead>
+<tr class="header">
+<th>Headline</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Add new defines in tracer_emb_conf_template.h (as done in projects tracer_emb_conf.h files)</td>
+</tr>
+<tr class="even">
+<td>Update tracer file</td>
+</tr>
+<tr class="odd">
+<td>remove dependence with USBPD Application</td>
+</tr>
+<tr class="even">
+<td>Update for low power management</td>
+</tr>
+<tr class="odd">
+<td>call DPM_TraceWakeUp after added message</td>
+</tr>
+<tr class="even">
+<td>Move macro definition about USART/LPUART inside tracer_em_hw.c</td>
+</tr>
+<tr class="odd">
+<td>Change emb_conf to be able to have trace independent of USART or LPUART</td>
+</tr>
+<tr class="even">
+<td>Add LPUART files</td>
+</tr>
+<tr class="odd">
+<td>Add management of LPUART1</td>
+</tr>
+</tbody>
+</table>
+<h2 id="known-limitations">known limitations</h2>
+<h2 id="development-toolchains-and-compilers">Development Toolchains and Compilers</h2>
+<ul>
+<li>IAR Embedded Workbench for ARM (EWARM) toolchain V8.20.2</li>
+<li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.25</li>
+<li>System Workbench STM32 (SW4STM32) toolchain V2.7.2</li>
+</ul>
+<h2 id="supported-devices-and-boards">Supported Devices and boards</h2>
+<h2 id="backward-compatibility">backward compatibility</h2>
+<h2 id="dependencies">Dependencies</h2>
 </div>
-
 </div>
-
-
-<div id="product_doc" class="topic1">
-<hr>
-<p style="text-align: center;">For complete
-documentation on&nbsp;<span style="background-color: white;">STM32 Microcontrollers</span>, visit: <span style="background-color: white;"><a href="http://www.st.com/STM32" target="_blank">www.st.com/STM32</a></span></p>
-
+<div class="collapse">
+<input type="checkbox" id="collapse-section1" aria-hidden="true"> <label for="collapse-section1" aria-hidden="true">V1.0.0 / 18-Dec.-2018</label>
+<div>
+<h2 id="main-changes-1">Main Changes</h2>
+<h3 id="maintenance-release-1">Maintenance release</h3>
+<p>Maintenance release</p>
+<h2 id="contents-1">Contents</h2>
+<table>
+<caption>Fixed bugs list</caption>
+<thead>
+<tr class="header">
+<th>Headline</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>tracer embedded creation</td>
+</tr>
+</tbody>
+</table>
+<h2 id="known-limitations-1">known limitations</h2>
+<h2 id="development-toolchains-and-compilers-1">Development Toolchains and Compilers</h2>
+<ul>
+<li>IAR Embedded Workbench for ARM (EWARM) toolchain V8.20.2</li>
+<li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.25</li>
+<li>System Workbench STM32 (SW4STM32) toolchain V2.7.2</li>
+</ul>
+<h2 id="supported-devices-and-boards-1">Supported Devices and boards</h2>
+<h2 id="backward-compatibility-1">backward compatibility</h2>
+<h2 id="dependencies-1">Dependencies</h2>
 </div>
 </div>
-</body></html>
+</div>
+</div>
+<footer class="sticky">
+<p>For complete documentation on STM32,visit: [<a href="http://www.st.com">www.st.com/stm32</a>]</p>
+This release note uses up to date web standards and, for this reason, should not be opened with Internet Explorer but preferably with popular browsers such as Google Chrome, Mozilla Firefox, Opera or Microsoft Edge.
+</footer>
+</body>
+</html>

@@ -8,7 +8,7 @@
   * @brief   Description of the TIM One Pulse example.      
   ******************************************************************************
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -77,6 +77,7 @@ Timer, Output, signals, One Pulse, PWM, Oscilloscope, External signal, Autoreloa
 
 @par Directory contents
 
+  - TIM/TIM_OnePulse/Inc/stm32g474e_eval_conf.h     BSP configuration file
   - TIM/TIM_OnePulse/Inc/stm32g4xx_hal_conf.h    HAL configuration file
   - TIM/TIM_OnePulse/Inc/stm32g4xx_it.h          Interrupt handlers header file
   - TIM/TIM_OnePulse/Inc/main.h                  Header for main.c module  

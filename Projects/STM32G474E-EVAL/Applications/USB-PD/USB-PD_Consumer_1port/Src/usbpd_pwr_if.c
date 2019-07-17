@@ -6,7 +6,7 @@
   * @brief   This file contains power interface control functions.
   ******************************************************************************
   *
-  * Copyright (c) 2018 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under Ultimate Liberty license
   * SLA0044, the "License"; You may not use this file except in compliance with
@@ -179,6 +179,7 @@ USBPD_StatusTypeDef USBPD_PWR_IF_SupplyReady(uint8_t PortNum, USBPD_VSAFE_Status
 {
 /* USER CODE BEGIN USBPD_PWR_IF_SupplyReady */
   USBPD_StatusTypeDef status = USBPD_ERROR;
+  uint32_t _voltage;
 
   /* check for valid port */
   if (!USBPD_PORT_IsValid(PortNum))
@@ -186,15 +187,16 @@ USBPD_StatusTypeDef USBPD_PWR_IF_SupplyReady(uint8_t PortNum, USBPD_VSAFE_Status
     return USBPD_ERROR;
   }
 
+  BSP_USBPD_PWR_VBUSGetVoltage(PortNum, &_voltage);
   if (USBPD_VSAFE_0V == Vsafe)
   {
     /* Vsafe0V */
-    status = ((BSP_PWR_VBUSGetVoltage(PortNum) < BSP_PWR_HIGH_VBUS_THRESHOLD)? USBPD_OK: USBPD_ERROR);
+    status = ((_voltage < USBPD_PWR_LOW_VBUS_THRESHOLD)? USBPD_OK: USBPD_ERROR);
   }
   else
   {
     /* Vsafe5V */
-    status = ((BSP_PWR_VBUSGetVoltage(PortNum) > BSP_PWR_HIGH_VBUS_THRESHOLD)? USBPD_OK: USBPD_ERROR);
+    status = ((_voltage > USBPD_PWR_HIGH_VBUS_THRESHOLD)? USBPD_OK: USBPD_ERROR);
   }
 
   return status;

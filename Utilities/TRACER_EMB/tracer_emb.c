@@ -73,7 +73,9 @@
   */
 uint32_t                    TRACER_CallbackRX(uint8_t character, uint8_t error);
 static TRACER_StatusTypedef TRACER_CheckLook(uint32_t *Begin, uint32_t *End);
-
+#if defined(_TRACE) 
+extern void                 USBPD_DPM_TraceWakeUp(void);
+#endif /* _TRACE */
 
 /* Function prototypes -----------------------------------------------*/
 uint8_t TRACER_EMB_ReadData(void);
@@ -108,6 +110,9 @@ void TRACER_EMB_Init(void)
   PtrTx_Write = 0u;
   /* Initialize trace BUS */
   HW_TRACER_EMB_Init();
+  
+  /* Initialize the lowpower aspect */
+  TRACER_EMB_LowPowerInit();
 }
 
 void TRACER_EMB_Add(uint8_t *Ptr, uint32_t Size)
@@ -129,8 +134,10 @@ void TRACER_EMB_Add(uint8_t *Ptr, uint32_t Size)
       TRACER_WRITE_DATA(_writepos, data_to_write[index]);
     }
   }
-
   TRACER_EMB_UnLock();
+
+  /* Wakeup the trace system */
+  TRACER_EMB_WakeUpProcess();
 }
 
 #if TRACER_EMB_DMA_MODE == 1UL
@@ -169,10 +176,10 @@ uint32_t TRACER_EMB_TX_Process(void)
       {
         SizeSent = TRACER_EMB_BUFFER_SIZE - _begin;
       }
+      TRACER_EMB_LowPowerSendData();
       HW_TRACER_EMB_SendData(&PtrDataTx[_begin], SizeSent);
     }
   }
-
   return _timing;
 }
 
@@ -190,7 +197,7 @@ void TRACER_EMB_StartRX(void (*callbackRX)(uint8_t, uint8_t))
 
 uint8_t TRACER_EMB_ReadData()
 {
-  return LL_USART_ReceiveData8(TRACER_EMB_USART_INSTANCE); // -------------------------------------------------------------*/
+  return HW_TRACER_EMB_ReadData();
 }
 
 
@@ -213,6 +220,7 @@ void TRACER_EMB_CALLBACK_TX(void)
   PtrTx_Read = (PtrTx_Read + SizeSent) % TRACER_EMB_BUFFER_SIZE;
   TRACER_LEAVE_CRITICAL_SECTION();
   TRACER_EMB_UnLock();
+  TRACER_EMB_LowPowerSendDataComplete();
 }
 
 /**
@@ -298,6 +306,22 @@ int32_t TRACER_EMB_AllocateBufer(uint32_t Size)
 
   TRACER_LEAVE_CRITICAL_SECTION();
   return _pos;
+}
+
+__weak void TRACER_EMB_LowPowerInit(void)
+{
+}
+
+__weak void TRACER_EMB_LowPowerSendData(void)
+{
+}
+
+__weak void TRACER_EMB_LowPowerSendDataComplete(void)
+{
+}
+
+__weak void TRACER_EMB_WakeUpProcess(void)
+{
 }
 
 /**

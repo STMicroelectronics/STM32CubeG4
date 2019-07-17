@@ -53,7 +53,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -92,8 +92,8 @@ QSPI_Ctx_t QSPICtx[QSPI_INSTANCES_NUMBER];
 
 /** STM32G474E-EVAL_QSPI_Private_FunctionPrototypes Private Functions
   */
-static void QSPI_MspInit(QSPI_HandleTypeDef *hqspi);
-static void QSPI_MspDeInit(QSPI_HandleTypeDef *hqspi);
+static void QSPI_MspInit(QSPI_HandleTypeDef *hQspi);
+static void QSPI_MspDeInit(QSPI_HandleTypeDef *hQspi);
 static int32_t QSPI_ResetMemory(uint32_t Instance);
 static int32_t QSPI_SetODS(uint32_t Instance);
 static int32_t QSPI_EnterDPIMode(uint32_t Instance);
@@ -258,24 +258,24 @@ int32_t BSP_QSPI_DeInit(uint32_t Instance)
 
 /**
   * @brief  Initializes the QSPI interface.
-  * @param  hqspi          QSPI handle
+  * @param  hQspi          QSPI handle
   * @param  Config         QSPI config structure
   * @retval HAL status
   */
-__weak HAL_StatusTypeDef MX_QSPI_Init(QSPI_HandleTypeDef *hqspi, MX_QSPI_Config *Config)
+__weak HAL_StatusTypeDef MX_QSPI_Init(QSPI_HandleTypeDef *hQspi, MX_QSPI_Config *Config)
 {
   /* QSPI initialization */
-  hqspi->Instance                = QUADSPI;
-  hqspi->Init.ClockPrescaler     = Config->ClockPrescaler;
-  hqspi->Init.FifoThreshold      = 1;
-  hqspi->Init.SampleShifting     = Config->SampleShifting;
-  hqspi->Init.FlashSize          = Config->FlashSize;
-  hqspi->Init.ChipSelectHighTime = QSPI_CS_HIGH_TIME_4_CYCLE;  /* Min 50ns required after non Read command */
-  hqspi->Init.ClockMode          = QSPI_CLOCK_MODE_0;
-  hqspi->Init.FlashID            = QSPI_FLASH_ID_1;            /* Default value at start, can be changed dynamically using BSP_QSPI_SetFlashID() */
-  hqspi->Init.DualFlash          = Config->DualFlashMode;
+  hQspi->Instance                = QUADSPI;
+  hQspi->Init.ClockPrescaler     = Config->ClockPrescaler;
+  hQspi->Init.FifoThreshold      = 1;
+  hQspi->Init.SampleShifting     = Config->SampleShifting;
+  hQspi->Init.FlashSize          = Config->FlashSize;
+  hQspi->Init.ChipSelectHighTime = QSPI_CS_HIGH_TIME_4_CYCLE;  /* Min 50ns required after non Read command */
+  hQspi->Init.ClockMode          = QSPI_CLOCK_MODE_0;
+  hQspi->Init.FlashID            = QSPI_FLASH_ID_1;            /* Default value at start, can be changed dynamically using BSP_QSPI_SetFlashID() */
+  hQspi->Init.DualFlash          = Config->DualFlashMode;
 
-  return HAL_QSPI_Init(hqspi);
+  return HAL_QSPI_Init(hQspi);
 }
 
 #if (USE_HAL_QSPI_REGISTER_CALLBACKS == 1)
@@ -882,19 +882,19 @@ int32_t BSP_QSPI_SelectFlashID(uint32_t Instance, uint32_t FlashID)
 
 /**
   * @brief QSPI MSP Initialization
-  * @param hqspi: QSPI handle
+  * @param hQspi QSPI handle
   *        This function configures the hardware resources used in this example:
   *           - Peripheral's clock enable
   *           - Peripheral's GPIO Configuration
   *           - NVIC configuration for QSPI interrupt
   * @retval None
   */
-static void QSPI_MspInit(QSPI_HandleTypeDef *hqspi)
+static void QSPI_MspInit(QSPI_HandleTypeDef *hQspi)
 {
   GPIO_InitTypeDef gpio_init_structure;
 
   /* Prevent unused argument(s) compilation warning */
-  UNUSED(hqspi);
+  UNUSED(hQspi);
 
   /*##-1- Enable peripherals and GPIO Clocks #################################*/
   /* Enable the QuadSPI memory interface clock */
@@ -982,16 +982,16 @@ static void QSPI_MspInit(QSPI_HandleTypeDef *hqspi)
 
 /**
   * @brief QSPI MSP De-Initialization
-  * @param hqspi: QSPI handle
+  * @param hQspi: QSPI handle
   *        This function frees the hardware resources used in this example:
   *          - Disable the Peripheral's clock
   *          - Revert GPIO and NVIC configuration to their default state
   * @retval None
   */
-static void QSPI_MspDeInit(QSPI_HandleTypeDef *hqspi)
+static void QSPI_MspDeInit(QSPI_HandleTypeDef *hQspi)
 {
   /* Prevent unused argument(s) compilation warning */
-  UNUSED(hqspi);
+  UNUSED(hQspi);
 
   /*##-2- Disable peripherals and GPIO Clocks ################################*/
   /* De-Configure QSPI pins */

@@ -8,7 +8,7 @@
   * @brief   Description of the UTILS example.
   ******************************************************************************
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -53,7 +53,7 @@ Anyway, user can connect on oscilloscope to MCO pin (PA.08) to check requested f
 
   - NUCLEO-G474RE RevC Set-up
     - Connect the MCO pin to an oscilloscope to monitor the different waveforms:
-      - PA.08: Arduino connector CN9 pin D8, Morpho connector CN10 pin 23 
+      - PA.08: Arduino connector CN9 pin D7, Morpho connector CN10 pin 23 
 
 @par How to use it ? 
 

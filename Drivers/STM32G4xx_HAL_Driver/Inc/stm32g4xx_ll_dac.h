@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -55,7 +55,6 @@ extern "C" {
 /* - channel register offset of data output register DORx                     */
 /* - channel register offset of sample-and-hold sample time register SHSRx    */
 /* - channel register offset of sawtooth register STRx                        */
-
 #define DAC_CR_CH1_BITOFFSET           0U    /* Position of channel bits into registers CR, MCR, CCR, SHHR, SHRR, STMODR of channel 1 */
 #define DAC_CR_CH2_BITOFFSET           16U   /* Position of channel bits into registers CR, MCR, CCR, SHHR, SHRR, STMODR of channel 2 */
 #define DAC_CR_CHX_BITOFFSET_MASK      (DAC_CR_CH1_BITOFFSET | DAC_CR_CH2_BITOFFSET)
@@ -82,7 +81,6 @@ extern "C" {
 #define DAC_REG_DOR1_REGOFFSET         0x00000000U             /* Register DORx channel 1 taken as reference */
 #define DAC_REG_DOR2_REGOFFSET         0x00000020U             /* Register offset of DORx channel 1 versus DORx channel 2 (shifted left of 5 bits) */
 #define DAC_REG_DORX_REGOFFSET_MASK    (DAC_REG_DOR1_REGOFFSET | DAC_REG_DOR2_REGOFFSET)
-
 #define DAC_REG_SHSR1_REGOFFSET        0x00000000U             /* Register SHSRx channel 1 taken as reference */
 #define DAC_REG_SHSR2_REGOFFSET        0x00000040U             /* Register offset of SHSRx channel 1 versus SHSRx channel 2 (shifted left of 6 bits) */
 #define DAC_REG_SHSRX_REGOFFSET_MASK   (DAC_REG_SHSR1_REGOFFSET | DAC_REG_SHSR2_REGOFFSET)
@@ -148,13 +146,13 @@ extern "C" {
   */
 typedef struct
 {
-  uint32_t TriggerSource;               /*!< Set the conversion trigger source for the selected DAC channel: internal (SW start) or from external IP (timer event, external interrupt line).
+  uint32_t TriggerSource;               /*!< Set the conversion trigger source for the selected DAC channel: internal (SW start) or from external peripheral (timer event, external interrupt line).
                                              This parameter can be a value of @ref DAC_LL_EC_TRIGGER_SOURCE
 
                                              This feature can be modified afterwards using unitary function @ref LL_DAC_SetTriggerSource().
                                              @note If waveform automatic generation mode is set to sawtooth, this parameter is used as sawtooth RESET trigger */
 
-  uint32_t TriggerSource2;              /*!< Set the conversion secondary trigger source for the selected DAC channel: internal (SW start) or from external IP (timer event, external interrupt line).
+  uint32_t TriggerSource2;              /*!< Set the conversion secondary trigger source for the selected DAC channel: internal (SW start) or from external peripheral (timer event, external interrupt line).
                                              This parameter can be a value of @ref DAC_LL_EC_TRIGGER_SOURCE
 
                                              This feature can be modified afterwards using unitary function @ref LL_DAC_SetTriggerSource2().
@@ -180,6 +178,7 @@ typedef struct
 
                                              This feature can be modified afterwards using unitary function @ref LL_DAC_SetOutputBuffer(). */
 
+
   uint32_t OutputConnection;            /*!< Set the output connection for the selected DAC channel.
                                              This parameter can be a value of @ref DAC_LL_EC_OUTPUT_CONNECTION
 
@@ -189,7 +188,6 @@ typedef struct
                                              This parameter can be a value of @ref DAC_LL_EC_OUTPUT_MODE
 
                                              This feature can be modified afterwards using unitary function @ref LL_DAC_SetOutputMode(). */
-
 } LL_DAC_InitTypeDef;
 
 /**
@@ -266,31 +264,31 @@ typedef struct
   * @{
   */
 #define LL_DAC_TRIG_SOFTWARE                  0x00000000U                                                         /*!< DAC (all) channel conversion trigger internal (SW start) */
-#define LL_DAC_TRIG_EXT_TIM1_TRGO             (                                                   DAC_CR_TSEL1_0) /*!< DAC3 channel conversion trigger from external IP: TIM1 TRGO. */
-#define LL_DAC_TRIG_EXT_TIM8_TRGO             (                                                   DAC_CR_TSEL1_0) /*!< DAC1/2/4 channel conversion trigger from external IP: TIM8 TRGO. Refer to device datasheet for DACx instance availability. */
-#define LL_DAC_TRIG_EXT_TIM7_TRGO             (                                  DAC_CR_TSEL1_1                 ) /*!< DAC (all) channel conversion trigger from external IP: TIM7 TRGO. */
-#define LL_DAC_TRIG_EXT_TIM15_TRGO            (                                  DAC_CR_TSEL1_1 | DAC_CR_TSEL1_0) /*!< DAC (all) channel conversion trigger from external IP: TIM15 TRGO. */
-#define LL_DAC_TRIG_EXT_TIM2_TRGO             (                 DAC_CR_TSEL1_2                                  ) /*!< DAC (all) channel conversion trigger from external IP: TIM2 TRGO. */
-#define LL_DAC_TRIG_EXT_TIM4_TRGO             (                 DAC_CR_TSEL1_2                  | DAC_CR_TSEL1_0) /*!< DAC (all) channel conversion trigger from external IP: TIM4 TRGO. */
-#define LL_DAC_TRIG_EXT_EXTI_LINE9            (                 DAC_CR_TSEL1_2 | DAC_CR_TSEL1_1                 ) /*!< DAC (all) channel conversion trigger from external IP: external interrupt line 9. Note: only to be used as update or reset (sawtooth generation) trigger */
-#define LL_DAC_TRIG_EXT_EXTI_LINE10           (                 DAC_CR_TSEL1_2 | DAC_CR_TSEL1_1                 ) /*!< DAC (all) channel conversion trigger from external IP: external interrupt line 10. Note: only to be used as increment (sawtooth generation) trigger */
-#define LL_DAC_TRIG_EXT_TIM6_TRGO             (                 DAC_CR_TSEL1_2 | DAC_CR_TSEL1_1 | DAC_CR_TSEL1_0) /*!< DAC (all) channel conversion trigger from external IP: TIM6 TRGO. */
-#define LL_DAC_TRIG_EXT_TIM3_TRGO             (DAC_CR_TSEL1_3                                                   ) /*!< DAC (all) channel conversion trigger from external IP: TIM3 TRGO. */
-#define LL_DAC_TRIG_EXT_HRTIM_STEP_TRG1       (DAC_CR_TSEL1_3                                   | DAC_CR_TSEL1_0)  /*!< DAC (all) channel conversion trigger from external IP: HRTIM DAC STEP TRIG1  (only available for sawtooth wave generation). On this STM32 serie, parameter only available if HRTIM feature is supported (refer to device datasheet for supported features list) */
-#define LL_DAC_TRIG_EXT_HRTIM_RST_TRG1        (DAC_CR_TSEL1_3                                   | DAC_CR_TSEL1_0)  /*!< DAC (all) channel conversion trigger from external IP: HRTIM DAC RESET TRIG1 (only available for sawtooth wave generation). On this STM32 serie, parameter only available if HRTIM feature is supported (refer to device datasheet for supported features list) */
-#define LL_DAC_TRIG_EXT_HRTIM_STEP_TRG2       (DAC_CR_TSEL1_3                  | DAC_CR_TSEL1_1                 )  /*!< DAC (all) channel conversion trigger from external IP: HRTIM DAC STEP TRIG2  (only available for sawtooth wave generation). On this STM32 serie, parameter only available if HRTIM feature is supported (refer to device datasheet for supported features list) */
-#define LL_DAC_TRIG_EXT_HRTIM_RST_TRG2        (DAC_CR_TSEL1_3                  | DAC_CR_TSEL1_1                 )  /*!< DAC (all) channel conversion trigger from external IP: HRTIM DAC RESET TRIG2 (only available for sawtooth wave generation). On this STM32 serie, parameter only available if HRTIM feature is supported (refer to device datasheet for supported features list) */
-#define LL_DAC_TRIG_EXT_HRTIM_STEP_TRG3       (DAC_CR_TSEL1_3                  | DAC_CR_TSEL1_1 | DAC_CR_TSEL1_0)  /*!< DAC (all) channel conversion trigger from external IP: HRTIM DAC STEP TRIG3  (only available for sawtooth wave generation). On this STM32 serie, parameter only available if HRTIM feature is supported (refer to device datasheet for supported features list) */
-#define LL_DAC_TRIG_EXT_HRTIM_RST_TRG3        (DAC_CR_TSEL1_3                  | DAC_CR_TSEL1_1 | DAC_CR_TSEL1_0)  /*!< DAC (all) channel conversion trigger from external IP: HRTIM DAC RESET TRIG3 (only available for sawtooth wave generation). On this STM32 serie, parameter only available if HRTIM feature is supported (refer to device datasheet for supported features list) */
-#define LL_DAC_TRIG_EXT_HRTIM_STEP_TRG4       (DAC_CR_TSEL1_3 | DAC_CR_TSEL1_2                                  )  /*!< DAC (all) channel conversion trigger from external IP: HRTIM DAC STEP TRIG4  (only available for sawtooth wave generation). On this STM32 serie, parameter only available if HRTIM feature is supported (refer to device datasheet for supported features list) */
-#define LL_DAC_TRIG_EXT_HRTIM_RST_TRG4        (DAC_CR_TSEL1_3 | DAC_CR_TSEL1_2                                  )  /*!< DAC (all) channel conversion trigger from external IP: HRTIM DAC RESET TRIG4 (only available for sawtooth wave generation). On this STM32 serie, parameter only available if HRTIM feature is supported (refer to device datasheet for supported features list) */
-#define LL_DAC_TRIG_EXT_HRTIM_STEP_TRG5       (DAC_CR_TSEL1_3 | DAC_CR_TSEL1_2                  | DAC_CR_TSEL1_0)  /*!< DAC (all) channel conversion trigger from external IP: HRTIM DAC STEP TRIG5  (only available for sawtooth wave generation). On this STM32 serie, parameter only available if HRTIM feature is supported (refer to device datasheet for supported features list) */
-#define LL_DAC_TRIG_EXT_HRTIM_RST_TRG5        (DAC_CR_TSEL1_3 | DAC_CR_TSEL1_2                  | DAC_CR_TSEL1_0)  /*!< DAC (all) channel conversion trigger from external IP: HRTIM DAC RESET TRIG5 (only available for sawtooth wave generation). On this STM32 serie, parameter only available if HRTIM feature is supported (refer to device datasheet for supported features list) */
-#define LL_DAC_TRIG_EXT_HRTIM_STEP_TRG6       (DAC_CR_TSEL1_3 | DAC_CR_TSEL1_2 | DAC_CR_TSEL1_1                 )  /*!< DAC (all) channel conversion trigger from external IP: HRTIM DAC STEP TRIG6  (only available for sawtooth wave generation). On this STM32 serie, parameter only available if HRTIM feature is supported (refer to device datasheet for supported features list) */
-#define LL_DAC_TRIG_EXT_HRTIM_RST_TRG6        (DAC_CR_TSEL1_3 | DAC_CR_TSEL1_2 | DAC_CR_TSEL1_1                 )  /*!< DAC (all) channel conversion trigger from external IP: HRTIM DAC RESET TRIG6 (only available for sawtooth wave generation). On this STM32 serie, parameter only available if HRTIM feature is supported (refer to device datasheet for supported features list) */
-#define LL_DAC_TRIG_EXT_HRTIM_TRGO1           (DAC_CR_TSEL1_3 | DAC_CR_TSEL1_2 | DAC_CR_TSEL1_1 | DAC_CR_TSEL1_0) /*!< DAC1&4 channel conversion trigger from external IP: HRTIM1 DACTRG1. Note: only to be used as update or reset (sawtooth generation) trigger. Refer to device datasheet for DACx instance availability. On this STM32 serie, parameter only available if HRTIM feature is supported (refer to device datasheet for supported features list) */
-#define LL_DAC_TRIG_EXT_HRTIM_TRGO2           (DAC_CR_TSEL1_3 | DAC_CR_TSEL1_2 | DAC_CR_TSEL1_1 | DAC_CR_TSEL1_0) /*!< DAC2 channel conversion trigger from external IP: HRTIM1 DACTRG2. Note: only to be used as update or reset (sawtooth generation) trigger. On this STM32 serie, parameter only available if HRTIM feature is supported and DAC2 instance present (refer to device datasheet for supported features list and DAC2 instance availability) */
-#define LL_DAC_TRIG_EXT_HRTIM_TRGO3           (DAC_CR_TSEL1_3 | DAC_CR_TSEL1_2 | DAC_CR_TSEL1_1 | DAC_CR_TSEL1_0) /*!< DAC3 channel conversion trigger from external IP: HRTIM1 DACTRG3. Note: only to be used as update or reset (sawtooth generation) trigger. On this STM32 serie, parameter only available if HRTIM feature is supported (refer to device datasheet for supported features list) */
+#define LL_DAC_TRIG_EXT_TIM1_TRGO             (                                                   DAC_CR_TSEL1_0) /*!< DAC3 channel conversion trigger from external peripheral: TIM1 TRGO. */
+#define LL_DAC_TRIG_EXT_TIM8_TRGO             (                                                   DAC_CR_TSEL1_0) /*!< DAC1/2/4 channel conversion trigger from external peripheral: TIM8 TRGO. Refer to device datasheet for DACx instance availability. */
+#define LL_DAC_TRIG_EXT_TIM7_TRGO             (                                  DAC_CR_TSEL1_1                 ) /*!< DAC (all) channel conversion trigger from external peripheral: TIM7 TRGO. */
+#define LL_DAC_TRIG_EXT_TIM15_TRGO            (                                  DAC_CR_TSEL1_1 | DAC_CR_TSEL1_0) /*!< DAC (all) channel conversion trigger from external peripheral: TIM15 TRGO. */
+#define LL_DAC_TRIG_EXT_TIM2_TRGO             (                 DAC_CR_TSEL1_2                                  ) /*!< DAC (all) channel conversion trigger from external peripheral: TIM2 TRGO. */
+#define LL_DAC_TRIG_EXT_TIM4_TRGO             (                 DAC_CR_TSEL1_2                  | DAC_CR_TSEL1_0) /*!< DAC (all) channel conversion trigger from external peripheral: TIM4 TRGO. */
+#define LL_DAC_TRIG_EXT_EXTI_LINE9            (                 DAC_CR_TSEL1_2 | DAC_CR_TSEL1_1                 ) /*!< DAC (all) channel conversion trigger from external peripheral: external interrupt line 9. Note: only to be used as update or reset (sawtooth generation) trigger */
+#define LL_DAC_TRIG_EXT_EXTI_LINE10           (                 DAC_CR_TSEL1_2 | DAC_CR_TSEL1_1                 ) /*!< DAC (all) channel conversion trigger from external peripheral: external interrupt line 10. Note: only to be used as increment (sawtooth generation) trigger */
+#define LL_DAC_TRIG_EXT_TIM6_TRGO             (                 DAC_CR_TSEL1_2 | DAC_CR_TSEL1_1 | DAC_CR_TSEL1_0) /*!< DAC (all) channel conversion trigger from external peripheral: TIM6 TRGO. */
+#define LL_DAC_TRIG_EXT_TIM3_TRGO             (DAC_CR_TSEL1_3                                                   ) /*!< DAC (all) channel conversion trigger from external peripheral: TIM3 TRGO. */
+#define LL_DAC_TRIG_EXT_HRTIM_STEP_TRG1       (DAC_CR_TSEL1_3                                   | DAC_CR_TSEL1_0) /*!< DAC (all) channel conversion trigger from external peripheral: HRTIM DAC STEP TRIG1  (only available for sawtooth wave generation). On this STM32 serie, parameter only available if HRTIM feature is supported (refer to device datasheet for supported features list) */
+#define LL_DAC_TRIG_EXT_HRTIM_RST_TRG1        (DAC_CR_TSEL1_3                                   | DAC_CR_TSEL1_0) /*!< DAC (all) channel conversion trigger from external peripheral: HRTIM DAC RESET TRIG1 (only available for sawtooth wave generation). On this STM32 serie, parameter only available if HRTIM feature is supported (refer to device datasheet for supported features list) */
+#define LL_DAC_TRIG_EXT_HRTIM_STEP_TRG2       (DAC_CR_TSEL1_3                  | DAC_CR_TSEL1_1                 ) /*!< DAC (all) channel conversion trigger from external peripheral: HRTIM DAC STEP TRIG2  (only available for sawtooth wave generation). On this STM32 serie, parameter only available if HRTIM feature is supported (refer to device datasheet for supported features list) */
+#define LL_DAC_TRIG_EXT_HRTIM_RST_TRG2        (DAC_CR_TSEL1_3                  | DAC_CR_TSEL1_1                 ) /*!< DAC (all) channel conversion trigger from external peripheral: HRTIM DAC RESET TRIG2 (only available for sawtooth wave generation). On this STM32 serie, parameter only available if HRTIM feature is supported (refer to device datasheet for supported features list) */
+#define LL_DAC_TRIG_EXT_HRTIM_STEP_TRG3       (DAC_CR_TSEL1_3                  | DAC_CR_TSEL1_1 | DAC_CR_TSEL1_0) /*!< DAC (all) channel conversion trigger from external peripheral: HRTIM DAC STEP TRIG3  (only available for sawtooth wave generation). On this STM32 serie, parameter only available if HRTIM feature is supported (refer to device datasheet for supported features list) */
+#define LL_DAC_TRIG_EXT_HRTIM_RST_TRG3        (DAC_CR_TSEL1_3                  | DAC_CR_TSEL1_1 | DAC_CR_TSEL1_0) /*!< DAC (all) channel conversion trigger from external peripheral: HRTIM DAC RESET TRIG3 (only available for sawtooth wave generation). On this STM32 serie, parameter only available if HRTIM feature is supported (refer to device datasheet for supported features list) */
+#define LL_DAC_TRIG_EXT_HRTIM_STEP_TRG4       (DAC_CR_TSEL1_3 | DAC_CR_TSEL1_2                                  ) /*!< DAC (all) channel conversion trigger from external peripheral: HRTIM DAC STEP TRIG4  (only available for sawtooth wave generation). On this STM32 serie, parameter only available if HRTIM feature is supported (refer to device datasheet for supported features list) */
+#define LL_DAC_TRIG_EXT_HRTIM_RST_TRG4        (DAC_CR_TSEL1_3 | DAC_CR_TSEL1_2                                  ) /*!< DAC (all) channel conversion trigger from external peripheral: HRTIM DAC RESET TRIG4 (only available for sawtooth wave generation). On this STM32 serie, parameter only available if HRTIM feature is supported (refer to device datasheet for supported features list) */
+#define LL_DAC_TRIG_EXT_HRTIM_STEP_TRG5       (DAC_CR_TSEL1_3 | DAC_CR_TSEL1_2                  | DAC_CR_TSEL1_0) /*!< DAC (all) channel conversion trigger from external peripheral: HRTIM DAC STEP TRIG5  (only available for sawtooth wave generation). On this STM32 serie, parameter only available if HRTIM feature is supported (refer to device datasheet for supported features list) */
+#define LL_DAC_TRIG_EXT_HRTIM_RST_TRG5        (DAC_CR_TSEL1_3 | DAC_CR_TSEL1_2                  | DAC_CR_TSEL1_0) /*!< DAC (all) channel conversion trigger from external peripheral: HRTIM DAC RESET TRIG5 (only available for sawtooth wave generation). On this STM32 serie, parameter only available if HRTIM feature is supported (refer to device datasheet for supported features list) */
+#define LL_DAC_TRIG_EXT_HRTIM_STEP_TRG6       (DAC_CR_TSEL1_3 | DAC_CR_TSEL1_2 | DAC_CR_TSEL1_1                 ) /*!< DAC (all) channel conversion trigger from external peripheral: HRTIM DAC STEP TRIG6  (only available for sawtooth wave generation). On this STM32 serie, parameter only available if HRTIM feature is supported (refer to device datasheet for supported features list) */
+#define LL_DAC_TRIG_EXT_HRTIM_RST_TRG6        (DAC_CR_TSEL1_3 | DAC_CR_TSEL1_2 | DAC_CR_TSEL1_1                 ) /*!< DAC (all) channel conversion trigger from external peripheral: HRTIM DAC RESET TRIG6 (only available for sawtooth wave generation). On this STM32 serie, parameter only available if HRTIM feature is supported (refer to device datasheet for supported features list) */
+#define LL_DAC_TRIG_EXT_HRTIM_TRGO1           (DAC_CR_TSEL1_3 | DAC_CR_TSEL1_2 | DAC_CR_TSEL1_1 | DAC_CR_TSEL1_0) /*!< DAC1&4 channel conversion trigger from external peripheral: HRTIM1 DACTRG1. Note: only to be used as update or reset (sawtooth generation) trigger. Refer to device datasheet for DACx instance availability. On this STM32 serie, parameter only available if HRTIM feature is supported (refer to device datasheet for supported features list) */
+#define LL_DAC_TRIG_EXT_HRTIM_TRGO2           (DAC_CR_TSEL1_3 | DAC_CR_TSEL1_2 | DAC_CR_TSEL1_1 | DAC_CR_TSEL1_0) /*!< DAC2 channel conversion trigger from external peripheral: HRTIM1 DACTRG2. Note: only to be used as update or reset (sawtooth generation) trigger. On this STM32 serie, parameter only available if HRTIM feature is supported and DAC2 instance present (refer to device datasheet for supported features list and DAC2 instance availability) */
+#define LL_DAC_TRIG_EXT_HRTIM_TRGO3           (DAC_CR_TSEL1_3 | DAC_CR_TSEL1_2 | DAC_CR_TSEL1_1 | DAC_CR_TSEL1_0) /*!< DAC3 channel conversion trigger from external peripheral: HRTIM1 DACTRG3. Note: only to be used as update or reset (sawtooth generation) trigger. On this STM32 serie, parameter only available if HRTIM feature is supported (refer to device datasheet for supported features list) */
 /**
   * @}
   */
@@ -412,7 +410,7 @@ typedef struct
   */
 
 /** @defgroup DAC_LL_EC_HW_DELAYS  Definitions of DAC hardware constraints delays
-  * @note   Only DAC IP HW delays are defined in DAC LL driver driver,
+  * @note   Only DAC peripheral HW delays are defined in DAC LL driver driver,
   *         not timeout values.
   *         For details on delays values, refer to descriptions in source code
   *         above each literal definition.
@@ -432,7 +430,6 @@ typedef struct
 /* parameter "tWAKEUP").                                                      */
 /* Unit: us                                                                   */
 #define LL_DAC_DELAY_STARTUP_VOLTAGE_SETTLING_US             8U  /*!< Delay for DAC channel voltage settling time from DAC channel startup (transition from disable to enable) */
-
 
 /* Delay for DAC channel voltage settling time.                               */
 /* Note: DAC channel startup time depends on board application environment:   */
@@ -536,7 +533,7 @@ typedef struct
           )                                                                    \
           :                                                                    \
           (                                                                    \
-           0                                                                   \
+           0U                                                                  \
           )                                                                    \
       )                                                                        \
   )
@@ -1065,7 +1062,7 @@ __STATIC_INLINE uint32_t LL_DAC_GetWaveTriangleAmplitude(DAC_TypeDef *DACx, uint
   */
 __STATIC_INLINE void LL_DAC_SetWaveSawtoothPolarity(DAC_TypeDef *DACx, uint32_t DAC_Channel, uint32_t Polarity)
 {
-  register uint32_t *preg = __DAC_PTR_REG_OFFSET(DACx->STR1, (DAC_Channel >> DAC_REG_STRX_REGOFFSET_BITOFFSET_POS) & DAC_REG_STRX_REGOFFSET_MASK_POSBIT0);
+  __IO uint32_t *preg = __DAC_PTR_REG_OFFSET(DACx->STR1, (DAC_Channel >> DAC_REG_STRX_REGOFFSET_BITOFFSET_POS) & DAC_REG_STRX_REGOFFSET_MASK_POSBIT0);
 
   MODIFY_REG(*preg,
              DAC_STR1_STDIR1,
@@ -1089,7 +1086,7 @@ __STATIC_INLINE void LL_DAC_SetWaveSawtoothPolarity(DAC_TypeDef *DACx, uint32_t 
   */
 __STATIC_INLINE uint32_t LL_DAC_GetWaveSawtoothPolarity(DAC_TypeDef *DACx, uint32_t DAC_Channel)
 {
-  register uint32_t const *preg = __DAC_PTR_REG_OFFSET(DACx->STR1, (DAC_Channel >> DAC_REG_STRX_REGOFFSET_BITOFFSET_POS) & DAC_REG_STRX_REGOFFSET_MASK_POSBIT0);
+  __IO uint32_t const *preg = __DAC_PTR_REG_OFFSET(DACx->STR1, (DAC_Channel >> DAC_REG_STRX_REGOFFSET_BITOFFSET_POS) & DAC_REG_STRX_REGOFFSET_MASK_POSBIT0);
 
   return (uint32_t) READ_BIT(*preg, DAC_STR1_STDIR1);
 }
@@ -1116,7 +1113,7 @@ __STATIC_INLINE uint32_t LL_DAC_GetWaveSawtoothPolarity(DAC_TypeDef *DACx, uint3
   */
 __STATIC_INLINE void LL_DAC_SetWaveSawtoothResetData(DAC_TypeDef *DACx, uint32_t DAC_Channel, uint32_t ResetData)
 {
-  register uint32_t *preg = __DAC_PTR_REG_OFFSET(DACx->STR1, (DAC_Channel >> DAC_REG_STRX_REGOFFSET_BITOFFSET_POS) & DAC_REG_STRX_REGOFFSET_MASK_POSBIT0);
+  __IO uint32_t *preg = __DAC_PTR_REG_OFFSET(DACx->STR1, (DAC_Channel >> DAC_REG_STRX_REGOFFSET_BITOFFSET_POS) & DAC_REG_STRX_REGOFFSET_MASK_POSBIT0);
 
   MODIFY_REG(*preg,
              DAC_STR1_STRSTDATA1,
@@ -1139,7 +1136,7 @@ __STATIC_INLINE void LL_DAC_SetWaveSawtoothResetData(DAC_TypeDef *DACx, uint32_t
   */
 __STATIC_INLINE uint32_t LL_DAC_GetWaveSawtoothResetData(DAC_TypeDef *DACx, uint32_t DAC_Channel)
 {
-  register uint32_t const *preg = __DAC_PTR_REG_OFFSET(DACx->STR1, (DAC_Channel >> DAC_REG_STRX_REGOFFSET_BITOFFSET_POS) & DAC_REG_STRX_REGOFFSET_MASK_POSBIT0);
+  __IO uint32_t const *preg = __DAC_PTR_REG_OFFSET(DACx->STR1, (DAC_Channel >> DAC_REG_STRX_REGOFFSET_BITOFFSET_POS) & DAC_REG_STRX_REGOFFSET_MASK_POSBIT0);
 
   return (uint32_t)(READ_BIT(*preg, DAC_STR1_STRSTDATA1) >> DAC_STR1_STRSTDATA1_Pos);
 }
@@ -1168,7 +1165,7 @@ __STATIC_INLINE uint32_t LL_DAC_GetWaveSawtoothResetData(DAC_TypeDef *DACx, uint
   */
 __STATIC_INLINE void LL_DAC_SetWaveSawtoothStepData(DAC_TypeDef *DACx, uint32_t DAC_Channel, uint32_t StepData)
 {
-  register uint32_t *preg = __DAC_PTR_REG_OFFSET(DACx->STR1, (DAC_Channel >> DAC_REG_STRX_REGOFFSET_BITOFFSET_POS) & DAC_REG_STRX_REGOFFSET_MASK_POSBIT0);
+  __IO uint32_t *preg = __DAC_PTR_REG_OFFSET(DACx->STR1, (DAC_Channel >> DAC_REG_STRX_REGOFFSET_BITOFFSET_POS) & DAC_REG_STRX_REGOFFSET_MASK_POSBIT0);
 
   MODIFY_REG(*preg,
              DAC_STR1_STINCDATA1,
@@ -1193,7 +1190,7 @@ __STATIC_INLINE void LL_DAC_SetWaveSawtoothStepData(DAC_TypeDef *DACx, uint32_t 
   */
 __STATIC_INLINE uint32_t LL_DAC_GetWaveSawtoothStepData(DAC_TypeDef *DACx, uint32_t DAC_Channel)
 {
-  register uint32_t const *preg = __DAC_PTR_REG_OFFSET(DACx->STR1, (DAC_Channel >> DAC_REG_STRX_REGOFFSET_BITOFFSET_POS) & DAC_REG_STRX_REGOFFSET_MASK_POSBIT0);
+  __IO uint32_t const *preg = __DAC_PTR_REG_OFFSET(DACx->STR1, (DAC_Channel >> DAC_REG_STRX_REGOFFSET_BITOFFSET_POS) & DAC_REG_STRX_REGOFFSET_MASK_POSBIT0);
 
   return (uint32_t)(READ_BIT(*preg, DAC_STR1_STINCDATA1) >> DAC_STR1_STINCDATA1_Pos);
 }
@@ -1636,7 +1633,7 @@ __STATIC_INLINE uint32_t LL_DAC_GetOutputConnection(DAC_TypeDef *DACx, uint32_t 
   */
 __STATIC_INLINE void LL_DAC_SetSampleAndHoldSampleTime(DAC_TypeDef *DACx, uint32_t DAC_Channel, uint32_t SampleTime)
 {
-  register uint32_t *preg = __DAC_PTR_REG_OFFSET(DACx->SHSR1, (DAC_Channel >> DAC_REG_SHSRX_REGOFFSET_BITOFFSET_POS) & DAC_REG_SHSRX_REGOFFSET_MASK_POSBIT0);
+  __IO uint32_t *preg = __DAC_PTR_REG_OFFSET(DACx->SHSR1, (DAC_Channel >> DAC_REG_SHSRX_REGOFFSET_BITOFFSET_POS) & DAC_REG_SHSRX_REGOFFSET_MASK_POSBIT0);
 
   MODIFY_REG(*preg,
              DAC_SHSR1_TSAMPLE1,
@@ -1659,7 +1656,7 @@ __STATIC_INLINE void LL_DAC_SetSampleAndHoldSampleTime(DAC_TypeDef *DACx, uint32
   */
 __STATIC_INLINE uint32_t LL_DAC_GetSampleAndHoldSampleTime(DAC_TypeDef *DACx, uint32_t DAC_Channel)
 {
-  register uint32_t const *preg = __DAC_PTR_REG_OFFSET(DACx->SHSR1, (DAC_Channel >> DAC_REG_SHSRX_REGOFFSET_BITOFFSET_POS) & DAC_REG_SHSRX_REGOFFSET_MASK_POSBIT0);
+  __IO uint32_t const *preg = __DAC_PTR_REG_OFFSET(DACx->SHSR1, (DAC_Channel >> DAC_REG_SHSRX_REGOFFSET_BITOFFSET_POS) & DAC_REG_SHSRX_REGOFFSET_MASK_POSBIT0);
 
   return (uint32_t) READ_BIT(*preg, DAC_SHSR1_TSAMPLE1);
 }
@@ -2214,7 +2211,7 @@ __STATIC_INLINE void LL_DAC_TrigSWConversion2(DAC_TypeDef *DACx, uint32_t DAC_Ch
   */
 __STATIC_INLINE void LL_DAC_ConvertData12RightAligned(DAC_TypeDef *DACx, uint32_t DAC_Channel, uint32_t Data)
 {
-  register uint32_t *preg = __DAC_PTR_REG_OFFSET(DACx->DHR12R1, (DAC_Channel >> DAC_REG_DHR12RX_REGOFFSET_BITOFFSET_POS) & DAC_REG_DHR_REGOFFSET_MASK_POSBIT0);
+  __IO uint32_t *preg = __DAC_PTR_REG_OFFSET(DACx->DHR12R1, (DAC_Channel >> DAC_REG_DHR12RX_REGOFFSET_BITOFFSET_POS) & DAC_REG_DHR_REGOFFSET_MASK_POSBIT0);
 
   MODIFY_REG(*preg,
              DAC_DHR12R1_DACC1DHR,
@@ -2239,7 +2236,7 @@ __STATIC_INLINE void LL_DAC_ConvertData12RightAligned(DAC_TypeDef *DACx, uint32_
   */
 __STATIC_INLINE void LL_DAC_ConvertData12LeftAligned(DAC_TypeDef *DACx, uint32_t DAC_Channel, uint32_t Data)
 {
-  register uint32_t *preg = __DAC_PTR_REG_OFFSET(DACx->DHR12R1, (DAC_Channel >> DAC_REG_DHR12LX_REGOFFSET_BITOFFSET_POS) & DAC_REG_DHR_REGOFFSET_MASK_POSBIT0);
+  __IO uint32_t *preg = __DAC_PTR_REG_OFFSET(DACx->DHR12R1, (DAC_Channel >> DAC_REG_DHR12LX_REGOFFSET_BITOFFSET_POS) & DAC_REG_DHR_REGOFFSET_MASK_POSBIT0);
 
   MODIFY_REG(*preg,
              DAC_DHR12L1_DACC1DHR,
@@ -2264,7 +2261,7 @@ __STATIC_INLINE void LL_DAC_ConvertData12LeftAligned(DAC_TypeDef *DACx, uint32_t
   */
 __STATIC_INLINE void LL_DAC_ConvertData8RightAligned(DAC_TypeDef *DACx, uint32_t DAC_Channel, uint32_t Data)
 {
-  register uint32_t *preg = __DAC_PTR_REG_OFFSET(DACx->DHR12R1, (DAC_Channel >> DAC_REG_DHR8RX_REGOFFSET_BITOFFSET_POS) & DAC_REG_DHR_REGOFFSET_MASK_POSBIT0);
+  __IO uint32_t *preg = __DAC_PTR_REG_OFFSET(DACx->DHR12R1, (DAC_Channel >> DAC_REG_DHR8RX_REGOFFSET_BITOFFSET_POS) & DAC_REG_DHR_REGOFFSET_MASK_POSBIT0);
 
   MODIFY_REG(*preg,
              DAC_DHR8R1_DACC1DHR,
@@ -2352,7 +2349,7 @@ __STATIC_INLINE void LL_DAC_ConvertDualData8RightAligned(DAC_TypeDef *DACx, uint
   */
 __STATIC_INLINE uint32_t LL_DAC_RetrieveOutputData(DAC_TypeDef *DACx, uint32_t DAC_Channel)
 {
-  register uint32_t const *preg = __DAC_PTR_REG_OFFSET(DACx->DOR1, (DAC_Channel >> DAC_REG_DORX_REGOFFSET_BITOFFSET_POS) & DAC_REG_DORX_REGOFFSET_MASK_POSBIT0);
+  __IO uint32_t const *preg = __DAC_PTR_REG_OFFSET(DACx->DOR1, (DAC_Channel >> DAC_REG_DORX_REGOFFSET_BITOFFSET_POS) & DAC_REG_DORX_REGOFFSET_MASK_POSBIT0);
 
   return (uint16_t) READ_BIT(*preg, DAC_DOR1_DACC1DOR);
 }

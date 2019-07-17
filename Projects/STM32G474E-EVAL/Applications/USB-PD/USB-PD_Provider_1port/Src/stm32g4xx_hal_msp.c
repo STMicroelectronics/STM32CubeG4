@@ -75,6 +75,7 @@ void HAL_MspInit(void)
   /* PendSV_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(PendSV_IRQn, 3, 0);
 
+  /* Disable the internal Pull-Up in Dead Battery pins of UCPD peripheral */
   LL_PWR_DisableDeadBatteryPD();
 
   /* USER CODE BEGIN MspInit 1 */

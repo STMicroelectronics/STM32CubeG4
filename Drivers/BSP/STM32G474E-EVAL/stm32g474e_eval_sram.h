@@ -7,7 +7,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -100,7 +100,7 @@ void BSP_SRAM_DMA_IRQHandler(void);
 
 /* These functions can be modified in case the current settings
    need to be changed for specific application needs */
-HAL_StatusTypeDef MX_SRAM_BANK1_Init(SRAM_HandleTypeDef *hsram);
+HAL_StatusTypeDef MX_SRAM_BANK1_Init(SRAM_HandleTypeDef *hSram);
 /**
   * @}
   */

@@ -168,7 +168,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -757,29 +757,30 @@ HAL_StatusTypeDef HAL_SMARTCARD_UnRegisterCallback(SMARTCARD_HandleTypeDef *hsma
         (++) HAL_SMARTCARD_RxCpltCallback()
         (++) HAL_SMARTCARD_ErrorCallback()
 
+  [..]
     (#) Non-Blocking mode transfers could be aborted using Abort API's :
-        (+) HAL_SMARTCARD_Abort()
-        (+) HAL_SMARTCARD_AbortTransmit()
-        (+) HAL_SMARTCARD_AbortReceive()
-        (+) HAL_SMARTCARD_Abort_IT()
-        (+) HAL_SMARTCARD_AbortTransmit_IT()
-        (+) HAL_SMARTCARD_AbortReceive_IT()
+        (++) HAL_SMARTCARD_Abort()
+        (++) HAL_SMARTCARD_AbortTransmit()
+        (++) HAL_SMARTCARD_AbortReceive()
+        (++) HAL_SMARTCARD_Abort_IT()
+        (++) HAL_SMARTCARD_AbortTransmit_IT()
+        (++) HAL_SMARTCARD_AbortReceive_IT()
 
     (#) For Abort services based on interrupts (HAL_SMARTCARD_Abortxxx_IT), a set of Abort Complete Callbacks are provided:
-        (+) HAL_SMARTCARD_AbortCpltCallback()
-        (+) HAL_SMARTCARD_AbortTransmitCpltCallback()
-        (+) HAL_SMARTCARD_AbortReceiveCpltCallback()
+        (++) HAL_SMARTCARD_AbortCpltCallback()
+        (++) HAL_SMARTCARD_AbortTransmitCpltCallback()
+        (++) HAL_SMARTCARD_AbortReceiveCpltCallback()
 
     (#) In Non-Blocking mode transfers, possible errors are split into 2 categories.
         Errors are handled as follows :
-       (+) Error is considered as Recoverable and non blocking : Transfer could go till end, but error severity is
-           to be evaluated by user : this concerns Frame Error, Parity Error or Noise Error in Interrupt mode reception .
-           Received character is then retrieved and stored in Rx buffer, Error code is set to allow user to identify error type,
-           and HAL_SMARTCARD_ErrorCallback() user callback is executed. Transfer is kept ongoing on SMARTCARD side.
-           If user wants to abort it, Abort services should be called by user.
-       (+) Error is considered as Blocking : Transfer could not be completed properly and is aborted.
-           This concerns Frame Error in Interrupt mode tranmission, Overrun Error in Interrupt mode reception and all errors in DMA mode.
-           Error code is set to allow user to identify error type, and HAL_SMARTCARD_ErrorCallback() user callback is executed.
+       (++) Error is considered as Recoverable and non blocking : Transfer could go till end, but error severity is
+            to be evaluated by user : this concerns Frame Error, Parity Error or Noise Error in Interrupt mode reception .
+            Received character is then retrieved and stored in Rx buffer, Error code is set to allow user to identify error type,
+            and HAL_SMARTCARD_ErrorCallback() user callback is executed. Transfer is kept ongoing on SMARTCARD side.
+            If user wants to abort it, Abort services should be called by user.
+       (++) Error is considered as Blocking : Transfer could not be completed properly and is aborted.
+            This concerns Frame Error in Interrupt mode tranmission, Overrun Error in Interrupt mode reception and all errors in DMA mode.
+            Error code is set to allow user to identify error type, and HAL_SMARTCARD_ErrorCallback() user callback is executed.
 
 @endverbatim
   * @{
@@ -2292,6 +2293,7 @@ static HAL_StatusTypeDef SMARTCARD_SetConfig(SMARTCARD_HandleTypeDef *hsmartcard
   SMARTCARD_ClockSourceTypeDef clocksource;
   HAL_StatusTypeDef ret = HAL_OK;
   const uint16_t SMARTCARDPrescTable[12] = {1U, 2U, 4U, 6U, 8U, 10U, 12U, 16U, 32U, 64U, 128U, 256U};
+  uint32_t pclk;
 
   /* Check the parameters */
   assert_param(IS_SMARTCARD_INSTANCE(hsmartcard->Instance));
@@ -2363,16 +2365,19 @@ static HAL_StatusTypeDef SMARTCARD_SetConfig(SMARTCARD_HandleTypeDef *hsmartcard
   switch (clocksource)
   {
     case SMARTCARD_CLOCKSOURCE_PCLK1:
-      tmpreg = (uint16_t)(((HAL_RCC_GetPCLK1Freq() / SMARTCARDPrescTable[hsmartcard->Init.ClockPrescaler]) + (hsmartcard->Init.BaudRate / 2U)) / hsmartcard->Init.BaudRate);
+      pclk = HAL_RCC_GetPCLK1Freq();
+      tmpreg = (uint16_t)(((pclk / SMARTCARDPrescTable[hsmartcard->Init.ClockPrescaler]) + (hsmartcard->Init.BaudRate / 2U)) / hsmartcard->Init.BaudRate);
       break;
     case SMARTCARD_CLOCKSOURCE_PCLK2:
-      tmpreg = (uint16_t)(((HAL_RCC_GetPCLK2Freq() / SMARTCARDPrescTable[hsmartcard->Init.ClockPrescaler]) + (hsmartcard->Init.BaudRate / 2U)) / hsmartcard->Init.BaudRate);
+      pclk = HAL_RCC_GetPCLK2Freq();
+      tmpreg = (uint16_t)(((pclk / SMARTCARDPrescTable[hsmartcard->Init.ClockPrescaler]) + (hsmartcard->Init.BaudRate / 2U)) / hsmartcard->Init.BaudRate);
       break;
     case SMARTCARD_CLOCKSOURCE_HSI:
       tmpreg = (uint16_t)(((HSI_VALUE / SMARTCARDPrescTable[hsmartcard->Init.ClockPrescaler]) + (hsmartcard->Init.BaudRate / 2U)) / hsmartcard->Init.BaudRate);
       break;
     case SMARTCARD_CLOCKSOURCE_SYSCLK:
-      tmpreg = (uint16_t)(((HAL_RCC_GetSysClockFreq() / SMARTCARDPrescTable[hsmartcard->Init.ClockPrescaler]) + (hsmartcard->Init.BaudRate / 2U)) / hsmartcard->Init.BaudRate);
+      pclk = HAL_RCC_GetSysClockFreq();
+      tmpreg = (uint16_t)(((pclk / SMARTCARDPrescTable[hsmartcard->Init.ClockPrescaler]) + (hsmartcard->Init.BaudRate / 2U)) / hsmartcard->Init.BaudRate);
       break;
     case SMARTCARD_CLOCKSOURCE_LSE:
       tmpreg = (uint16_t)(((uint16_t)(LSE_VALUE / SMARTCARDPrescTable[hsmartcard->Init.ClockPrescaler]) + (hsmartcard->Init.BaudRate / 2U)) / hsmartcard->Init.BaudRate);

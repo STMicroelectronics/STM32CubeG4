@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -666,7 +666,6 @@ static void COMP_Config(void)
   CompHandle.Init.Hysteresis        = COMP_HYSTERESIS_NONE;
   CompHandle.Init.BlankingSrce      = COMP_BLANKINGSRC_NONE;
   CompHandle.Init.TriggerMode       = COMP_TRIGGERMODE_NONE;
-  CompHandle.Init.DeglitcherMode    = COMP_DEGLITCHER_DISABLED;
   if(HAL_COMP_Init(&CompHandle) != HAL_OK)
   {
     Error_Handler();

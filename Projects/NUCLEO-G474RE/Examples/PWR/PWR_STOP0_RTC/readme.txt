@@ -8,7 +8,7 @@
   * @brief   Description of the PWR STOP1 RTC example.
   ******************************************************************************
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -65,6 +65,7 @@ Power, PWR, Stop 1 mode, Interrupt, EXTI, Wakeup, Low Power, RTC, External reset
 
 @par Directory contents 
 
+  - PWR/PWR_STOP0_RTC/Inc/stm32g4xx_nucleo_conf.h     BSP configuration file
   - PWR/PWR_STOP1_RTC/Inc/stm32g4xx_conf.h         HAL Configuration file
   - PWR/PWR_STOP1_RTC/Inc/stm32g4xx_it.h           Header for stm32g4xx_it.c
   - PWR/PWR_STOP1_RTC/Inc/main.h                   Header file for main.c

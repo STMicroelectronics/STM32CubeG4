@@ -8,7 +8,7 @@
   * @brief   Description of the TIM_InputCapture example.
   ******************************************************************************
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -47,6 +47,8 @@ How to use the TIM peripheral to measure an external signal frequency.
   Due to TIM1 CC IRQHandler processing time (around 1.66us), the maximum
   frequency value to measure is around 600kHz.
 
+  In case of error , LED2 is turned ON .
+  
 @note Care must be taken when using HAL_Delay(), this function provides accurate delay (in milliseconds)
       based on variable incremented in SysTick ISR. This implies that if HAL_Delay() is called from
       a peripheral ISR process, then the SysTick interrupt must have higher priority (numerically lower)
@@ -63,6 +65,7 @@ Timer, DMA, Frequency, Input, Capture, External Signal, Measurement
 
 @par Directory contents
 
+  - TIM/TIM_InputCapture/Inc/stm32g4xx_nucleo_conf.h     BSP configuration file
   - TIM/TIM_InputCapture/Inc/stm32g4xx_hal_conf.h    HAL configuration file
   - TIM/TIM_InputCapture/Inc/stm32g4xx_it.h          Interrupt handlers header file
   - TIM/TIM_InputCapture/Inc/main.h                  Header for main.c module  

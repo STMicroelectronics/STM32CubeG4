@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -1894,7 +1894,7 @@ typedef struct
   * @retval Value "0" if the internal channel selected is not available on the ADC instance selected.
   *         Value "1" if the internal channel selected is available on the ADC instance selected.
   */
-#if defined(STM32G474xx) || defined(STM32G484xx) || defined(STM32G473xx)
+#if defined(STM32G474xx) || defined(STM32G484xx) || defined(STM32G473xx) || defined(STM32G483xx)
 #define __LL_ADC_IS_CHANNEL_INTERNAL_AVAILABLE(__ADC_INSTANCE__, __CHANNEL__)  \
   ((((__ADC_INSTANCE__) == ADC1)                                               \
     &&(                                                                        \
@@ -1937,7 +1937,33 @@ typedef struct
       )                                                                        \
    )                                                                           \
   )
-#elif defined(STM32GBK1CB) || defined(STM32G431xx) || defined(STM32G441xx) || defined(STM32G471xx)
+#elif defined(STM32G471xx)
+#define __LL_ADC_IS_CHANNEL_INTERNAL_AVAILABLE(__ADC_INSTANCE__, __CHANNEL__)  \
+  ((((__ADC_INSTANCE__) == ADC1)                                               \
+    &&(                                                                        \
+       ((__CHANNEL__) == LL_ADC_CHANNEL_VOPAMP1)         ||                    \
+       ((__CHANNEL__) == LL_ADC_CHANNEL_TEMPSENSOR_ADC1) ||                    \
+       ((__CHANNEL__) == LL_ADC_CHANNEL_VBAT)            ||                    \
+       ((__CHANNEL__) == LL_ADC_CHANNEL_VREFINT)                               \
+      )                                                                        \
+   )                                                                           \
+   ||                                                                          \
+   (((__ADC_INSTANCE__) == ADC2)                                               \
+    &&(                                                                        \
+       ((__CHANNEL__) == LL_ADC_CHANNEL_VOPAMP2)         ||                    \
+       ((__CHANNEL__) == LL_ADC_CHANNEL_VOPAMP3_ADC2)                          \
+      )                                                                        \
+   )                                                                           \
+   ||                                                                          \
+   (((__ADC_INSTANCE__) == ADC3)                                               \
+    &&(                                                                        \
+       ((__CHANNEL__) == LL_ADC_CHANNEL_VOPAMP3_ADC3)    ||                    \
+       ((__CHANNEL__) == LL_ADC_CHANNEL_VBAT)            ||                    \
+       ((__CHANNEL__) == LL_ADC_CHANNEL_VREFINT)                               \
+      )                                                                        \
+   )                                                                           \
+  )
+#elif defined(STM32GBK1CB) || defined(STM32G431xx) || defined(STM32G441xx)
 #define __LL_ADC_IS_CHANNEL_INTERNAL_AVAILABLE(__ADC_INSTANCE__, __CHANNEL__)  \
   ((((__ADC_INSTANCE__) == ADC1)                                               \
     &&(                                                                        \
@@ -2304,6 +2330,7 @@ typedef struct
   *         is enabled.
   */
 #if defined(ADC345_COMMON)
+#if defined(ADC4) &&  defined(ADC5)
 #define __LL_ADC_IS_ENABLED_ALL_COMMON_INSTANCE(__ADCXY_COMMON__)              \
   (((__ADCXY_COMMON__) == ADC12_COMMON)                                        \
     ? (                                                                        \
@@ -2317,6 +2344,17 @@ typedef struct
         LL_ADC_IsEnabled(ADC5)  )                                              \
       )                                                                        \
   )
+#else
+#define __LL_ADC_IS_ENABLED_ALL_COMMON_INSTANCE(__ADCXY_COMMON__)              \
+  (((__ADCXY_COMMON__) == ADC12_COMMON)                                        \
+    ? (                                                                        \
+       (LL_ADC_IsEnabled(ADC1) |                                               \
+        LL_ADC_IsEnabled(ADC2)  )                                              \
+      )                                                                        \
+      :                                                                        \
+      (LL_ADC_IsEnabled(ADC3))                                                 \
+  )
+#endif /* ADC4 && ADC5 */
 #else
 #define __LL_ADC_IS_ENABLED_ALL_COMMON_INSTANCE(__ADCXY_COMMON__)              \
   (LL_ADC_IsEnabled(ADC1) | LL_ADC_IsEnabled(ADC2))
@@ -5070,7 +5108,7 @@ __STATIC_INLINE void LL_ADC_INJ_ConfigQueueContext(ADC_TypeDef *ADCx,
              ADC_JSQR_JSQ2    |
              ADC_JSQR_JSQ1    |
              ADC_JSQR_JL,
-             TriggerSource       |
+             (TriggerSource & ADC_JSQR_JEXTSEL)          |
              (ExternalTriggerEdge * (is_trigger_not_sw)) |
              (((Rank4_Channel & ADC_CHANNEL_ID_NUMBER_MASK) >> ADC_CHANNEL_ID_NUMBER_BITOFFSET_POS) << (LL_ADC_INJ_RANK_4 & ADC_INJ_RANK_ID_JSQR_MASK)) |
              (((Rank3_Channel & ADC_CHANNEL_ID_NUMBER_MASK) >> ADC_CHANNEL_ID_NUMBER_BITOFFSET_POS) << (LL_ADC_INJ_RANK_3 & ADC_INJ_RANK_ID_JSQR_MASK)) |
@@ -6944,7 +6982,7 @@ __STATIC_INLINE uint32_t LL_ADC_INJ_IsStopConversionOngoing(ADC_TypeDef *ADCx)
 }
 
 /**
-  * @brief  Get ADC group regular conversion data, range fit for
+  * @brief  Get ADC group injected conversion data, range fit for
   *         all ADC configurations: all ADC resolutions and
   *         all oversampling increased data width (for devices
   *         with feature oversampling).

@@ -121,11 +121,11 @@
                 </option>
                 <option>
                     <name>OGUseCmsis</name>
-                    <state>1</state>
+                    <state>0</state>
                 </option>
                 <option>
                     <name>OGUseCmsisDspLib</name>
-                    <state>1</state>
+                    <state>0</state>
                 </option>
                 <option>
                     <name>GRuntimeLibThreads</name>
@@ -239,6 +239,8 @@
                     <state>_STATUS=USBPD_TRUE</state>
                     <state>_MANU_INFO=USBPD_TRUE</state>
                     <state>_VDM</state>
+                    <state>_GUI_INTERFACE</state>
+                    <state>ARM_MATH_CM4</state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>
@@ -370,6 +372,7 @@
                     <state>$PROJ_DIR$\..\..\Demo\Modules\lowpower</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\CMSIS\Device\ST\STM32G4xx\Include</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\CMSIS\Include</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Drivers\CMSIS\DSP\Include</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\STM32G4xx_HAL_Driver\Inc</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\STM32G474E-EVAL</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Components</state>
@@ -394,6 +397,7 @@
                     <state>$PROJ_DIR$\..\..\Modules\ucpd</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Utilities\Basic_GUI</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Utilities\TRACER_EMB</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Utilities\GUI_INTERFACE</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -857,7 +861,7 @@
                 </option>
                 <option>
                     <name>IlinkAdditionalLibs</name>
-                    <state></state>
+                    <state>$PROJ_DIR$/../../../../../Drivers/CMSIS/Lib/IAR/iar_cortexM4l_math.a</state>
                 </option>
                 <option>
                     <name>IlinkOverrideProgramEntryLabel</name>
@@ -1204,6 +1208,12 @@
             </file>
         </group>
     </group>
+	<group>
+	    <name>Doc</name>
+		<file>
+          <name>$PROJ_DIR$\..\readme.txt</name>
+        </file>
+	</group>
     <group>
         <name>Drivers</name>
         <group>
@@ -1214,7 +1224,7 @@
                     <name>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Components\hx8347d\hx8347d.c</name>
                 </file>
                 <file>
-                    <name>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Components\hx8347d\hx8347d_regs.c</name>
+                    <name>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Components\hx8347d\hx8347d_reg.c</name>
                 </file>
                 <file>
                     <name>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Components\mfxstm32l152\mfxstm32l152.c</name>
@@ -1226,7 +1236,7 @@
                     <name>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Components\stts751\stts751.c</name>
                 </file>
                 <file>
-                    <name>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Components\stts751\stts751_regs.c</name>
+                    <name>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Components\stts751\stts751_reg.c</name>
                 </file>
                 <file>
                     <name>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Components\wm8994\wm8994.c</name>
@@ -1495,6 +1505,18 @@
             <name>Basic_GUI</name>
             <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\Utilities\Basic_GUI\basic_gui.c</name>
+            </file>
+        </group>
+        <group>
+            <name>GUI_INTERFACE</name>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\..\..\Utilities\GUI_INTERFACE\bsp_gui.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\..\..\Utilities\GUI_INTERFACE\data_struct_tlv.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\..\..\Utilities\GUI_INTERFACE\gui_api.c</name>
             </file>
         </group>
         <group>

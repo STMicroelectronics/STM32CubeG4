@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -440,7 +440,7 @@ typedef enum
   * @}
   */
 
-/** @defgroup SMARTCARD_ClockPrescaler  Clock Prescaler
+/** @defgroup SMARTCARD_ClockPrescaler  SMARTCARD Clock Prescaler
   * @{
   */
 #define SMARTCARD_PRESCALER_DIV1    0x00000000U  /*!< fclk_pres = fclk     */

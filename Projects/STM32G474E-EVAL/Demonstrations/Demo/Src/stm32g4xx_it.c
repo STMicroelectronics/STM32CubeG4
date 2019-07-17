@@ -1,12 +1,15 @@
+/* USER CODE BEGIN Header */
 /**
   ******************************************************************************
   * @file    stm32g4xx_it.c
   * @author  MCD Application Team
-  * @brief   This file includes the interrupt handlers for the application.
+  * @brief   Main Interrupt Service Routines.
+  *          This file provides template for all exceptions handler and
+  *          peripherals interrupt service routine.
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -16,6 +19,7 @@
   *
   ******************************************************************************
   */
+/* USER CODE END Header */
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32g4xx_hal.h"
@@ -38,122 +42,160 @@
 #if defined(_TRACE) || defined(_GUI_INTERFACE)
 #include "tracer_emb.h"
 #endif /*_TRACE || _GUI_INTERFACE */
+#if defined(_GUI_INTERFACE)
+#include "gui_api.h"
+#endif /* _GUI_INTERFACE */
+/* USER CODE BEGIN Includes */
 
 
 /** @addtogroup CORE
   * @{
   */
 
-/** @defgroup
-  * @brief
+/** @addtogroup STM32G4xx_HAL_Examples
   * @{
   */
 
 /* Private typedef -----------------------------------------------------------*/
+/* USER CODE BEGIN TD */
+
+/* USER CODE END TD */
+
 /* Private define ------------------------------------------------------------*/
+/* USER CODE BEGIN PD */
+ 
+/* USER CODE END PD */
+
 /* Private macro -------------------------------------------------------------*/
+/* USER CODE BEGIN PM */
+
+/* USER CODE END PM */
+
 /* Private variables ---------------------------------------------------------*/
+/* USER CODE BEGIN PV */
+
+/* USER CODE END PV */
+
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
 /* RTC Handle variable */
 extern RTC_HandleTypeDef RtcHandle;
 
 /******************************************************************************/
-/*             Cortex-M Processor Exceptions Handlers                         */
+/*           Cortex-M4 Processor Interruption and Exception Handlers          */ 
 /******************************************************************************/
 /**
-  * @brief  NMI_Handler
-  *         This function handles NMI exception.
-  * @param  None
-  * @retval None
+  * @brief This function handles Non maskable interrupt.
   */
 void NMI_Handler(void)
 {
+  /* USER CODE BEGIN NonMaskableInt_IRQn 0 */
   /* Go to infinite loop when Hard Fault exception occurs */
   while (1)
   {
   }
+  /* USER CODE END NonMaskableInt_IRQn 0 */
+  /* USER CODE BEGIN NonMaskableInt_IRQn 1 */
+
+  /* USER CODE END NonMaskableInt_IRQn 1 */
 }
 
 /**
-  * @brief  HardFault_Handler
-  *         This function handles Hard Fault exception.
-  * @param  None
-  * @retval None
+  * @brief This function handles Hard fault interrupt.
   */
 void HardFault_Handler(void)
 {
+  /* USER CODE BEGIN HardFault_IRQn 0 */
+
+  /* USER CODE END HardFault_IRQn 0 */
   /* Go to infinite loop when Hard Fault exception occurs */
   while (1)
   {
+    /* USER CODE BEGIN W1_HardFault_IRQn 0 */
+    /* USER CODE END W1_HardFault_IRQn 0 */
   }
 }
 
 /**
-  * @brief  MemManage_Handler
-  *         This function handles Memory Manage exception.
-  * @param  None
-  * @retval None
+  * @brief This function handles Memory management fault.
   */
 void MemManage_Handler(void)
 {
-  /* Go to infinite loop when Memory Manage exception occurs */
+  /* USER CODE BEGIN MemoryManagement_IRQn 0 */
+
+  /* USER CODE END MemoryManagement_IRQn 0 */
   while (1)
   {
+    /* USER CODE BEGIN W1_MemoryManagement_IRQn 0 */
+    /* USER CODE END W1_MemoryManagement_IRQn 0 */
   }
 }
 
 /**
-  * @brief  BusFault_Handler
-  *         This function handles Bus Fault exception.
-  * @param  None
-  * @retval None
+  * @brief This function handles Prefetch fault, memory access fault.
   */
 void BusFault_Handler(void)
 {
-  /* Go to infinite loop when Bus Fault exception occurs */
+  /* USER CODE BEGIN BusFault_IRQn 0 */
+
+  /* USER CODE END BusFault_IRQn 0 */
   while (1)
   {
+    /* USER CODE BEGIN W1_BusFault_IRQn 0 */
+    /* USER CODE END W1_BusFault_IRQn 0 */
   }
 }
 
 /**
-  * @brief  UsageFault_Handler
-  *         This function handles Usage Fault exception.
-  * @param  None
-  * @retval None
+  * @brief This function handles Undefined instruction or illegal state.
   */
 void UsageFault_Handler(void)
 {
-  /* Go to infinite loop when Usage Fault exception occurs */
+  /* USER CODE BEGIN UsageFault_IRQn 0 */
+
+  /* USER CODE END UsageFault_IRQn 0 */
   while (1)
   {
+    /* USER CODE BEGIN W1_UsageFault_IRQn 0 */
+    /* USER CODE END W1_UsageFault_IRQn 0 */
   }
 }
 
 /**
-  * @brief  DebugMon_Handler
-  *         This function handles Debug Monitor exception.
-  * @param  None
-  * @retval None
+  * @brief This function handles Debug monitor.
   */
 void DebugMon_Handler(void)
 {
-}
+  /* USER CODE BEGIN DebugMonitor_IRQn 0 */
 
+  /* USER CODE END DebugMonitor_IRQn 0 */
+  /* USER CODE BEGIN DebugMonitor_IRQn 1 */
+
+  /* USER CODE END DebugMonitor_IRQn 1 */
+}
 /******************************************************************************/
 /*                 STM32G4xx Peripherals Interrupt Handlers                   */
 /*  Add here the Interrupt Handler for the used peripheral(s) (PPP), for the  */
 /*  available peripheral interrupt handler's name please refer to the startup */
 /*  file (startup_stm32gxxx.s).                                                */
 /******************************************************************************/
+/**
+  * @brief This function handles System tick timer.
+  */
 void SysTick_Handler (void)
 {
-  HAL_IncTick();
+  /* USER CODE BEGIN SysTick_IRQn 0 */
   if (UcpdDemoRunning == 1)
   {
     USBPD_DPM_TimerCounter();
+#if defined(_GUI_INTERFACE)
+    GUI_TimerCounter();
+#endif /* _GUI_INTERFACE */
   }
+  /* USER CODE END SysTick_IRQn 0 */
+  HAL_IncTick();
+  /* USER CODE BEGIN SysTick_IRQn 1 */
+  /* USER CODE END SysTick_IRQn 1 */
 }
 
 /**
@@ -242,6 +284,19 @@ void DMA1_Channel6_IRQHandler(void)
   else
   {
     HAL_DMA_IRQHandler(&DmaFmacOutHandle);
+  }
+}
+
+/**
+  * @brief  This function handles USART interrupts (used for GUI).
+  * @param  None
+  * @retval None
+  */
+void TRACER_EMB_USART_IRQHANDLER(void)
+{
+  if (UcpdDemoRunning == 1)
+  {
+    TRACER_EMB_IRQHandlerUSART();
   }
 }
 

@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -155,7 +155,7 @@ typedef struct
 /** @defgroup PCD_Speed PCD Speed
   * @{
   */
-#define PCD_SPEED_FULL               2U
+#define PCD_SPEED_FULL               USBD_FS_SPEED
 /**
   * @}
   */
@@ -200,15 +200,6 @@ typedef struct
 
 #define __HAL_USB_WAKEUP_EXTI_ENABLE_IT()                             EXTI->IMR1 |= USB_WAKEUP_EXTI_LINE
 #define __HAL_USB_WAKEUP_EXTI_DISABLE_IT()                            EXTI->IMR1 &= ~(USB_WAKEUP_EXTI_LINE)
-#define __HAL_USB_WAKEUP_EXTI_GET_FLAG()                              EXTI->PR1 & (USB_WAKEUP_EXTI_LINE)
-#define __HAL_USB_WAKEUP_EXTI_CLEAR_FLAG()                            EXTI->PR1 = USB_WAKEUP_EXTI_LINE
-
-#define __HAL_USB_WAKEUP_EXTI_ENABLE_RISING_EDGE()                 \
-                        do {                                        \
-                             EXTI->FTSR1 &= ~(USB_WAKEUP_EXTI_LINE); \
-                             EXTI->RTSR1 |= USB_WAKEUP_EXTI_LINE;    \
-                           } while(0U)
-
 
 
 /**
@@ -723,20 +714,20 @@ PCD_StateTypeDef HAL_PCD_GetState(PCD_HandleTypeDef *hpcd);
   * @retval None
   */
 #define PCD_SET_EP_TX_ADDRESS(USBx, bEpNum, wAddr) do { \
-  register uint16_t *_wRegVal; \
+  register __IO uint16_t *_wRegVal; \
   register uint32_t _wRegBase = (uint32_t)USBx; \
   \
   _wRegBase += (uint32_t)(USBx)->BTABLE; \
-  _wRegVal = (uint16_t *)(_wRegBase + 0x400U + (((uint32_t)(bEpNum) * 8U) * PMA_ACCESS)); \
+  _wRegVal = (__IO uint16_t *)(_wRegBase + 0x400U + (((uint32_t)(bEpNum) * 8U) * PMA_ACCESS)); \
   *_wRegVal = ((wAddr) >> 1) << 1; \
 } while(0) /* PCD_SET_EP_TX_ADDRESS */
 
 #define PCD_SET_EP_RX_ADDRESS(USBx, bEpNum, wAddr) do { \
-  register uint16_t *_wRegVal; \
+  register __IO uint16_t *_wRegVal; \
   register uint32_t _wRegBase = (uint32_t)USBx; \
   \
   _wRegBase += (uint32_t)(USBx)->BTABLE; \
-  _wRegVal = (uint16_t *)(_wRegBase + 0x400U + ((((uint32_t)(bEpNum) * 8U) + 4U) * PMA_ACCESS)); \
+  _wRegVal = (__IO uint16_t *)(_wRegBase + 0x400U + ((((uint32_t)(bEpNum) * 8U) + 4U) * PMA_ACCESS)); \
   *_wRegVal = ((wAddr) >> 1) << 1; \
 } while(0) /* PCD_SET_EP_RX_ADDRESS */
 
@@ -758,6 +749,10 @@ PCD_StateTypeDef HAL_PCD_GetState(PCD_HandleTypeDef *hpcd);
   */
 #define PCD_CALC_BLK32(pdwReg, wCount, wNBlocks) do { \
     (wNBlocks) = (wCount) >> 5; \
+    if (((wCount) & 0x1fU) == 0U) \
+    { \
+      (wNBlocks)--; \
+    } \
     *(pdwReg) = (uint16_t)(((wNBlocks) << 10) | USB_CNTRX_BLSIZE); \
   } while(0) /* PCD_CALC_BLK32 */
 
@@ -777,22 +772,22 @@ PCD_StateTypeDef HAL_PCD_GetState(PCD_HandleTypeDef *hpcd);
       *(pdwReg) &= (uint16_t)~USB_CNTRX_NBLK_MSK; \
       *(pdwReg) |= USB_CNTRX_BLSIZE; \
     } \
-    else if((wCount) < 62U) \
+    else if((wCount) <= 62U) \
     { \
       PCD_CALC_BLK2((pdwReg), (wCount), wNBlocks); \
     } \
     else \
     { \
-      PCD_CALC_BLK32((pdwReg),(wCount), wNBlocks); \
+      PCD_CALC_BLK32((pdwReg), (wCount), wNBlocks); \
     } \
   } while(0) /* PCD_SET_EP_CNT_RX_REG */
 
 #define PCD_SET_EP_RX_DBUF0_CNT(USBx, bEpNum, wCount) do { \
      register uint32_t _wRegBase = (uint32_t)(USBx); \
-     uint16_t *pdwReg; \
+     register __IO uint16_t *pdwReg; \
      \
     _wRegBase += (uint32_t)(USBx)->BTABLE; \
-    pdwReg = (uint16_t *)(_wRegBase + 0x400U + ((((uint32_t)(bEpNum) * 8U) + 2U) * PMA_ACCESS)); \
+    pdwReg = (__IO uint16_t *)(_wRegBase + 0x400U + ((((uint32_t)(bEpNum) * 8U) + 2U) * PMA_ACCESS)); \
     PCD_SET_EP_CNT_RX_REG(pdwReg, (wCount)); \
   } while(0)
 
@@ -805,19 +800,19 @@ PCD_StateTypeDef HAL_PCD_GetState(PCD_HandleTypeDef *hpcd);
   */
 #define PCD_SET_EP_TX_CNT(USBx, bEpNum, wCount) do { \
     register uint32_t _wRegBase = (uint32_t)(USBx); \
-    uint16_t *_wRegVal; \
+    register __IO uint16_t *_wRegVal; \
     \
     _wRegBase += (uint32_t)(USBx)->BTABLE; \
-    _wRegVal = (uint16_t *)(_wRegBase + 0x400U + ((((uint32_t)(bEpNum) * 8U) + 2U) * PMA_ACCESS)); \
+    _wRegVal = (__IO uint16_t *)(_wRegBase + 0x400U + ((((uint32_t)(bEpNum) * 8U) + 2U) * PMA_ACCESS)); \
     *_wRegVal = (uint16_t)(wCount); \
 } while(0)
 
 #define PCD_SET_EP_RX_CNT(USBx, bEpNum, wCount) do { \
     register uint32_t _wRegBase = (uint32_t)(USBx); \
-    uint16_t *_wRegVal; \
+    register __IO uint16_t *_wRegVal; \
     \
     _wRegBase += (uint32_t)(USBx)->BTABLE; \
-    _wRegVal = (uint16_t *)(_wRegBase + 0x400U + ((((uint32_t)(bEpNum) * 8U) + 6U) * PMA_ACCESS)); \
+    _wRegVal = (__IO uint16_t *)(_wRegBase + 0x400U + ((((uint32_t)(bEpNum) * 8U) + 6U) * PMA_ACCESS)); \
     PCD_SET_EP_CNT_RX_REG(_wRegVal, (wCount)); \
 } while(0)
 
@@ -893,7 +888,7 @@ PCD_StateTypeDef HAL_PCD_GetState(PCD_HandleTypeDef *hpcd);
 
 #define PCD_SET_EP_DBUF1_CNT(USBx, bEpNum, bDir, wCount) do { \
     register uint32_t _wBase = (uint32_t)(USBx); \
-    uint16_t *_wEPRegVal; \
+    __IO uint16_t *_wEPRegVal; \
     \
     if ((bDir) == 0U) \
     { \
@@ -906,7 +901,7 @@ PCD_StateTypeDef HAL_PCD_GetState(PCD_HandleTypeDef *hpcd);
       { \
         /* IN endpoint */ \
         _wBase += (uint32_t)(USBx)->BTABLE; \
-        _wEPRegVal = (uint16_t *)(_wBase + 0x400U + ((((uint32_t)(bEpNum) * 8U) + 6U) * PMA_ACCESS)); \
+        _wEPRegVal = (__IO uint16_t *)(_wBase + 0x400U + ((((uint32_t)(bEpNum) * 8U) + 6U) * PMA_ACCESS)); \
         *_wEPRegVal = (uint16_t)(wCount); \
       } \
     } \

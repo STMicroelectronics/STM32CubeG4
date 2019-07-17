@@ -26,7 +26,7 @@
 #define TRACER_EMB_CONF_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -46,10 +46,10 @@
 
 #define TRACER_EMB_BAUDRATE                          921600UL
 
-#define TRACER_EMB_BUFFER_SIZE                       1024UL
-
 #define TRACER_EMB_DMA_MODE                          1UL
 #define TRACER_EMB_IT_MODE                           0UL
+
+#define TRACER_EMB_BUFFER_SIZE                       1024UL
 
 /* -----------------------------------------------------------------------------
       Definitions for TRACE Hw information
@@ -70,7 +70,7 @@
 
 #define TRACER_EMB_ENABLE_CLK_USART()                LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_USART1)
 #define TRACER_EMB_DISABLE_CLK_USART()               LL_APB2_GRP1_DisableClock(LL_APB2_GRP1_PERIPH_USART1)
-#define TRACER_EMB_SET_CLK_SOURCE_USART()            // No need for clock source selection in case of USART3 // LL_RCC_SetUSARTClockSource(LL_RCC_USART3_CLKSOURCE_PCLK2)
+#define TRACER_EMB_SET_CLK_SOURCE_USART()            /* No need for clock source selection in case of USART3 // LL_RCC_SetUSARTClockSource(LL_RCC_USART3_CLKSOURCE_PCLK2) */
 #define TRACER_EMB_USART_IRQ                         USART1_IRQn
 #define TRACER_EMB_USART_IRQHANDLER                  USART1_IRQHandler
 #define TRACER_EMB_TX_AF_FUNCTION                    LL_GPIO_SetAFPin_8_15
@@ -89,7 +89,7 @@
 #define TRACER_EMB_TX_DMA_CLEAR_FLAG                 LL_DMA_ClearFlag_GI6
 
 #ifdef __cplusplus
- }
+}
 #endif
 
 #endif /* TRACER_EMB_CONF_H */

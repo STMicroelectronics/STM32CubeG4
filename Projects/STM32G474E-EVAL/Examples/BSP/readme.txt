@@ -2,14 +2,14 @@
   @page BSP Mode example
   
   @verbatim
-  ******************** (C) COPYRIGHT 2018 STMicroelectronics *******************
+  ******************** (C) COPYRIGHT 2019 STMicroelectronics *******************
   * @file    BSP/BSP_Test/readme.txt 
   * @author  MCD Application Team
   * @brief   Description of the STM32G4xx BSP example.
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,

@@ -8,7 +8,7 @@
   * @brief   Description of the COMP_CompareGpioVsVrefInt_IT Example.
   ******************************************************************************
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -57,6 +57,7 @@ comparator, stop mode, voltage compare, wakeup trigger, comparator interrupt.
 
 @par Directory contents 
 
+  - COMP/COMP_CompareGpioVsVrefInt_IT/Inc/stm32g474e_eval_conf.h     BSP configuration file
   - COMP/COMP_CompareGpioVsVrefInt_IT/Inc/stm32g4xx_hal_conf.h    HAL configuration file
   - COMP/COMP_CompareGpioVsVrefInt_IT/Inc/stm32g4xx_it.h          COMP interrupt handlers header file
   - COMP/COMP_CompareGpioVsVrefInt_IT/Inc/main.h                  Header for main.c module

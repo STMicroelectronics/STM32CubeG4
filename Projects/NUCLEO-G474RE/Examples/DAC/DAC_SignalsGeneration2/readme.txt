@@ -8,7 +8,7 @@
   * @brief   Description of the DAC Signals generation example.
   ******************************************************************************
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -63,6 +63,7 @@ Analog, DAC, Signals generation, DMA, Sawtooth, Sine, Waveform
 
 @par Directory contents 
 
+  - DAC/DAC_SignalsGeneration2/Inc/stm32g4xx_nucleo_conf.h     BSP configuration file
   - DAC/DAC_SignalsGeneration/Inc/stm32g4xx_hal_conf.h    HAL configuration file
   - DAC/DAC_SignalsGeneration/Inc/stm32g4xx_it.h          DAC interrupt handlers header file
   - DAC/DAC_SignalsGeneration/Inc/main.h                  Header for main.c module  

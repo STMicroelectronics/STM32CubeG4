@@ -6,39 +6,13 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics International N.V.
+  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
-  * Redistribution and use in source and binary forms, with or without
-  * modification, are permitted, provided that the following conditions are met:
-  *
-  * 1. Redistribution of source code must retain the above copyright notice,
-  *    this list of conditions and the following disclaimer.
-  * 2. Redistributions in binary form must reproduce the above copyright notice,
-  *    this list of conditions and the following disclaimer in the documentation
-  *    and/or other materials provided with the distribution.
-  * 3. Neither the name of STMicroelectronics nor the names of other
-  *    contributors to this software may be used to endorse or promote products
-  *    derived from this software without specific written permission.
-  * 4. This software, including modifications and/or derivative works of this
-  *    software, must execute solely and exclusively on microcontroller or
-  *    microprocessor devices manufactured by or for STMicroelectronics.
-  * 5. Redistribution and use of this software other than as permitted under
-  *    this license is void and will automatically terminate your rights under
-  *    this license.
-  *
-  * THIS SOFTWARE IS PROVIDED BY STMICROELECTRONICS AND CONTRIBUTORS "AS IS"
-  * AND ANY EXPRESS, IMPLIED OR STATUTORY WARRANTIES, INCLUDING, BUT NOT
-  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
-  * PARTICULAR PURPOSE AND NON-INFRINGEMENT OF THIRD PARTY INTELLECTUAL PROPERTY
-  * RIGHTS ARE DISCLAIMED TO THE FULLEST EXTENT PERMITTED BY LAW. IN NO EVENT
-  * SHALL STMICROELECTRONICS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-  * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-  * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
-  * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
-  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  * This software component is licensed by ST under BSD 3-Clause license,
+  * the "License"; You may not use this file except in compliance with the
+  * License. You may obtain a copy of the License at:
+  *                        opensource.org/licenses/BSD-3-Clause
   *
   ******************************************************************************
   */
@@ -46,33 +20,68 @@
 /* Includes ------------------------------------------------------------------*/
 #if defined(_GUI_INTERFACE)
 #include "bsp_gui.h"
-#include "usbpd_pdo_defs.h"
-#include "usbpd_gui_memmap.h"
-#if defined(STM32F072xB)  || defined(STM32F051x8)
-#include "stm32f0xx.h"
-#include "usbpd_pwr_if.h"
-#else
-#include "stm32g0xx.h"
-#endif /* STM32F072xB */
-#include "usbpd_dpm_user.h"
-#if defined(_VDM)
-#include "usbpd_vdm_user.h"
-#endif /* _VDM */
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private Defines */
-extern USBPD_PWR_Port_PDO_Storage_TypeDef PWR_Port_PDO_Storage[USBPD_PORT_COUNT];
 extern USBPD_SettingsTypeDef       DPM_Settings[USBPD_PORT_COUNT];
-extern USBPD_SettingsTypeDef       DPM_Flash_Settings[USBPD_PORT_COUNT];
-extern USBPD_USER_SettingsTypeDef  DPM_USER_Settings[USBPD_PORT_COUNT];
-extern USBPD_USER_SettingsTypeDef  DPM_USER_FLASH_Settings[];
 #if defined(_VDM)
 extern USBPD_VDM_SettingsTypeDef   DPM_VDM_Settings[USBPD_PORT_COUNT];
 #endif /* _VDM */
 
 /* Private function prototypes -----------------------------------------------*/
-static GUI_StatusTypeDef SavePDOInFlash(uint32_t Address, uint32_t* pListOfPDO);
-static GUI_StatusTypeDef SaveSettingsInFlash(uint32_t Address, uint32_t *pSettings, uint32_t Size);
+static GUI_StatusTypeDef        LoadPDOFromFlash(uint32_t Address, uint32_t *pListOfPDO);
+static GUI_StatusTypeDef        LoadSettingsFromFlash(uint32_t Address, uint32_t *pSettings, uint32_t Size);
+static GUI_StatusTypeDef        SavePDOInFlash(uint32_t Address, uint32_t* pListOfPDO);
+static GUI_StatusTypeDef        SaveSettingsInFlash(uint32_t Address, uint32_t *pSettings, uint32_t Size);
+
+GUI_StatusTypeDef BSP_GUI_LoadDataFromFlash(void)
+{
+  GUI_StatusTypeDef _status = GUI_ERROR;
+  uint32_t _addr = GUI_FLASH_ADDR_NB_PDO_SNK_P0;
+
+  /* Update GUI_NbPDO? */
+  if (0xFFFFFFFFu != *((uint32_t*)_addr))
+  {
+    uint32_t* _ptr = (uint32_t*)GUI_NbPDO;
+    USPBPD_WRITE32 (_ptr,*((uint32_t*)_addr));
+    _status = GUI_OK;
+  }
+
+#if defined(_SRC) || defined(_DRP)
+  /* Save PORT0_PDO_ListSRC */
+  _status |= LoadPDOFromFlash(GUI_FLASH_ADDR_PDO_SRC_P0, PORT0_PDO_ListSRC);
+#endif /* _SRC || _DRP */
+
+#if defined(_SNK) || defined(_DRP)
+  /* Save PORT0_PDO_ListSNK */
+  _status |= LoadPDOFromFlash(GUI_FLASH_ADDR_PDO_SNK_P0, PORT0_PDO_ListSNK);
+#endif /* _SNK || _DRP */
+
+#if USBPD_PORT_COUNT==2
+#if defined(_SRC) || defined(_DRP)
+  /* Save PORT1_PDO_ListSRC */
+  _status |= LoadPDOFromFlash(GUI_FLASH_ADDR_PDO_SRC_P1, PORT1_PDO_ListSRC);
+#endif /* _SRC || _DRP */
+
+#if defined(_SNK) || defined(_DRP)
+  /* Save PORT1_PDO_ListSNK */
+  _status |= LoadPDOFromFlash(GUI_FLASH_ADDR_PDO_SNK_P1, PORT1_PDO_ListSNK);
+#endif /* _SNK || _DRP */
+#endif /* USBPD_PORT_COUNT==2 */
+
+  /* Save DPM_Settings of port 0 */
+  _status |= LoadSettingsFromFlash(GUI_FLASH_ADDR_DPM_SETTINGS, (uint32_t*)DPM_Settings, sizeof(USBPD_SettingsTypeDef) * USBPD_PORT_COUNT);
+
+  /* Save DPM_Settings of port 0 */
+  _status |= LoadSettingsFromFlash(GUI_FLASH_ADDR_DPM_USER_SETTINGS, (uint32_t*)DPM_USER_Settings, sizeof(USBPD_USER_SettingsTypeDef) * USBPD_PORT_COUNT);
+
+#if defined(_VDM)
+  /* Save DPM_Settings of port 0 */
+  _status |= LoadSettingsFromFlash(GUI_FLASH_ADDR_DPM_VDM_SETTINGS, (uint32_t*)DPM_VDM_Settings, sizeof(USBPD_VDM_SettingsTypeDef) * USBPD_PORT_COUNT);
+#endif /* _VDM */
+
+  return _status;
+}
 
 GUI_StatusTypeDef BSP_GUI_SaveDataInFlash(void)
 {
@@ -111,20 +120,10 @@ GUI_StatusTypeDef BSP_GUI_SaveDataInFlash(void)
 #ifdef GUI_FLASH_ADDR_NB_PDO_SNK_P0
     /* Save the nb of sink and src PDO */
     uint64_t value = 0;
-#if defined(_SNK) || defined(_DRP)
-    value |= PWR_Port_PDO_Storage[USBPD_PORT_0].SinkPDO.NumberOfPDO;
-#endif /* _SNK || _DRP */
-#if defined(_SRC) || defined(_DRP)
-    value |= (PWR_Port_PDO_Storage[USBPD_PORT_0].SourcePDO.NumberOfPDO << 8);
-#endif /* _SRC || _DRP */
-#if USBPD_PORT_COUNT==2
-#if defined(_SNK) || defined(_DRP)
-    value |= (PWR_Port_PDO_Storage[USBPD_PORT_1].SinkPDO.NumberOfPDO   << 16);
-#endif /* _SNK || _DRP */
-#if defined(_SRC) || defined(_DRP)
-    value |= (PWR_Port_PDO_Storage[USBPD_PORT_1].SourcePDO.NumberOfPDO << 24);
-#endif /* _SRC || _DRP */
-#endif /* USBPD_PORT_COUNT==2 */
+    value |= GUI_NbPDO[0];
+    value |= (GUI_NbPDO[1] << 8);
+    value |= (GUI_NbPDO[2] << 16);
+    value |= (GUI_NbPDO[3] << 24);
    status = HAL_OK == HAL_FLASH_Program(FLASH_TYPEPROGRAM_DOUBLEWORD, GUI_FLASH_ADDR_NB_PDO_SNK_P0, value)? GUI_OK : GUI_WRITE_ERROR;
 #endif  /* GUI_FLASH_ADDR_NB_PDO_SNK_P0 */
 
@@ -132,7 +131,7 @@ GUI_StatusTypeDef BSP_GUI_SaveDataInFlash(void)
     /* Save PORT0_PDO_ListSRC */
     if (GUI_OK == status)
     {
-      status = SavePDOInFlash(GUI_FLASH_ADDR_PDO_SRC_P0, PWR_Port_PDO_Storage[USBPD_PORT_0].SourcePDO.ListOfPDO);
+      status = SavePDOInFlash(GUI_FLASH_ADDR_PDO_SRC_P0, PORT0_PDO_ListSRC);
     }
 #endif /* _SRC || _DRP */
 
@@ -140,7 +139,7 @@ GUI_StatusTypeDef BSP_GUI_SaveDataInFlash(void)
     /* Save PORT0_PDO_ListSNK */
     if (GUI_OK == status)
     {
-      status = SavePDOInFlash(GUI_FLASH_ADDR_PDO_SNK_P0, PWR_Port_PDO_Storage[USBPD_PORT_0].SinkPDO.ListOfPDO);
+      status = SavePDOInFlash(GUI_FLASH_ADDR_PDO_SNK_P0, PORT0_PDO_ListSNK);
     }
 #endif /* _SNK || _DRP */
 
@@ -149,7 +148,7 @@ GUI_StatusTypeDef BSP_GUI_SaveDataInFlash(void)
         /* Save PORT1_PDO_ListSRC */
         if (GUI_OK == status)
         {
-          status = SavePDOInFlash(GUI_FLASH_ADDR_PDO_SRC_P1, PWR_Port_PDO_Storage[USBPD_PORT_1].SourcePDO.ListOfPDO);
+          status = SavePDOInFlash(GUI_FLASH_ADDR_PDO_SRC_P1, PORT1_PDO_ListSRC);
         }
 #endif /* _SRC || _DRP */
 
@@ -157,7 +156,7 @@ GUI_StatusTypeDef BSP_GUI_SaveDataInFlash(void)
         /* Save PORT1_PDO_ListSNK */
         if (GUI_OK == status)
         {
-          status = SavePDOInFlash(GUI_FLASH_ADDR_PDO_SNK_P1, PWR_Port_PDO_Storage[USBPD_PORT_1].SinkPDO.ListOfPDO);
+          status = SavePDOInFlash(GUI_FLASH_ADDR_PDO_SNK_P1, PORT1_PDO_ListSNK);
         }
 #endif /* _SNK || _DRP */
 #endif /* USBPD_PORT_COUNT==2 */
@@ -199,7 +198,6 @@ static GUI_StatusTypeDef SavePDOInFlash(uint32_t Address, uint32_t *pListOfPDO)
   uint32_t value[2];
   GUI_StatusTypeDef status = GUI_OK;
 
-  /* Save PORT0_PDO_ListSRC */
   for (index = 0, index_flash = 0; ((index < USBPD_MAX_NB_PDO) && (GUI_OK == status)); index++, index_flash++)
   {
     value[0] = pListOfPDO[index];
@@ -254,6 +252,39 @@ static GUI_StatusTypeDef SaveSettingsInFlash(uint32_t Address, uint32_t *pSettin
     status = HAL_OK == HAL_FLASH_Program(FLASH_TYPEPROGRAM_DOUBLEWORD, (Address + (8 * index_flash)) , data_in_64)? GUI_OK : GUI_WRITE_ERROR;
   }
   return status;
+}
+
+static GUI_StatusTypeDef LoadPDOFromFlash(uint32_t Address, uint32_t *pListOfPDO)
+{
+  uint32_t _addr = Address;
+  GUI_StatusTypeDef _status = GUI_ERROR;
+
+  /* Check if FLASH is not empty to retrieve the data. Nethertheless keep data in the RAM */
+  if (0xFFFFFFFFu != *((uint32_t*)_addr))
+  {
+    uint32_t _index;
+    for (_index = 0; _index < USBPD_MAX_NB_PDO; _index++)
+    {
+      pListOfPDO[_index] = *((uint32_t*)_addr);
+      _addr = _addr + 4u;
+    }
+    _status = GUI_OK;
+  }
+  return _status;
+}
+
+static GUI_StatusTypeDef LoadSettingsFromFlash(uint32_t Address, uint32_t *pSettings, uint32_t Size)
+{
+  uint32_t _addr = Address;
+  GUI_StatusTypeDef _status = GUI_ERROR;
+
+  /* Check if FLASH is not empty to retrieve the data. Nethertheless keep data in the RAM */
+  if (0xFFFFFFFFu != *((uint32_t*)_addr))
+  {
+    memcpy(pSettings, ((uint32_t*)_addr), Size);
+    _status = GUI_OK;
+  }
+  return _status;
 }
 #endif /* _GUI_INTERFACE */
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

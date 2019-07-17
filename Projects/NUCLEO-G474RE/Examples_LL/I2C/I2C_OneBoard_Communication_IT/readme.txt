@@ -8,7 +8,7 @@
   * @brief   Description of the I2C_OneBoard_Communication_IT I2C example (IT Mode).
   ******************************************************************************
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -73,8 +73,8 @@ In case of errors, LED2 is blinking.
   - NUCLEO-G474RE RevC Set-up
     - Connect GPIOs connected to I2C1 SCL/SDA (PB.8 and PB.9)
     to respectively SCL and SDA pins of I2C3 (PC.8 and PC.9).
-      - I2C1_SCL  PB.8 (CN10, pin 3) : connected to I2C3_SCL PC.8 (CN11, pin 30) 
-      - I2C1_SDA  PB.9 (CN10, pin 5) : connected to I2C3_SDA PC.9 (CN11, pin 28)
+      - I2C1_SCL  PB.8 (CN10, pin 3) : connected to I2C3_SCL PC.8 (CN10, pin 2)
+      - I2C1_SDA  PB.9 (CN10, pin 5) : connected to I2C3_SDA PC.9 (CN10, pin 1)
 
   - Launch the program. Press User push-button to initiate a read request by Master 
       then Slave send a byte.

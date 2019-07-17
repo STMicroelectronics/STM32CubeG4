@@ -8,7 +8,7 @@
   * @brief   Description of the HAL time base example.
   ******************************************************************************
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -59,8 +59,9 @@ In an infinite loop, LED2 toggles spaced out over 1s delay.
 
 System, TIM, Time base, HAL
 
-@par Directory contents  
+@par Directory contents
 
+  - HAL/HAL_TimeBase_TIM/Inc/stm32g4xx_nucleo_conf.h     BSP configuration file
   - HAL/HAL_TimeBase_TIM/Inc/stm32g4xx_hal_conf.h          HAL configuration file
   - HAL/HAL_TimeBase_TIM/Inc/stm32g4xx_it.h                Interrupt handlers header file
   - HAL/HAL_TimeBase_TIM/Inc/stm32g4xx.h                   Header for main.c module  

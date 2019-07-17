@@ -8,7 +8,7 @@
   * @brief   Description of the TIM DMA example.
   ******************************************************************************
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -53,7 +53,8 @@ The CPU at 150 MHz
       _|           |___|       |_______|   |___________|           |__|             
        <----57us -----><----57us -----><----57us -----><----57us ----->
 
-	   
+ In case of error , LED2 is turned ON . 
+ 
 @note PWM signal frequency value mentioned above is theoretical (obtained when the system clock frequency 
       is exactly 150 MHz). Since the generated system clock frequency may vary from one board to another observed
       PWM signal frequency might be slightly different.
@@ -73,6 +74,7 @@ Timer, DMA, PWM, Frequency, Duty Cycle, Waveform, Oscilloscope, Output, Signal
 
 @par Directory contents
 
+  - TIM/TIM_DMA/Inc/stm32g4xx_nucleo_conf.h     BSP configuration file
   - TIM/TIM_DMA/Inc/stm32g4xx_hal_conf.h    HAL configuration file
   - TIM/TIM_DMA/Inc/stm32g4xx_it.h          Interrupt handlers header file
   - TIM/TIM_DMA/Inc/main.h                  Header for main.c module  

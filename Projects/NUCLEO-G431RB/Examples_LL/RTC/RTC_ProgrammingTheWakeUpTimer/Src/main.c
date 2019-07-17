@@ -9,7 +9,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics. 
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics. 
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -427,12 +427,11 @@ void Process(void)
       {
         Alarm = 0;
 
-		/* get time */
+        /* get time */
         time = LL_RTC_TIME_Get(RTC);
         /* need to read date also to unlock TR register */
-        temp_read = READ_REG(RTC->DR);
-        ((void)(temp_read));  /* To avoid warning */
-
+        temp_read = RTC->DR;
+        ((void)(temp_read));
 
         aStringToSend[1] = (uint8_t)((__LL_RTC_GET_HOUR(time) >> 4) + ASCII_CONVERT);/* hour tens */
         aStringToSend[2] = (uint8_t)((__LL_RTC_GET_HOUR(time) & 0x0F) + ASCII_CONVERT);/* hour units */

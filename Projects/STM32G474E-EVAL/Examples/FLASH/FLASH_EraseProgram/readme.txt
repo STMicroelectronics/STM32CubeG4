@@ -8,7 +8,7 @@
   * @brief   Description of the FLASH Erase and Program example.
   ******************************************************************************
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -61,6 +61,7 @@ Memory, FLASH, Erase, Program, Sector, Mass Erase
 
 @par Directory contents
 
+  - FLASH/FLASH_EraseProgram/Inc/stm32g474e_eval_conf.h     BSP configuration file
   - FLASH/FLASH_EraseProgram/Inc/stm32g4xx_hal_conf.h        HAL Configuration file
   - FLASH/FLASH_EraseProgram/Inc/stm32g4xx_it.h              Header for stm32g4xx_it.c
   - FLASH/FLASH_EraseProgram/Inc/main.h                      Header for main.c module

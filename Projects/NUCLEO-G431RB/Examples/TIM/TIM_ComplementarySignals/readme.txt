@@ -8,7 +8,7 @@
   * @brief   Description of the TIM Complementary Signals example.
   ******************************************************************************
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -56,7 +56,7 @@ duty cycle measured on OCx will be slightly lower.
 The break Polarity is used at High level.
 
 The TIM1 waveforms can be displayed using an oscilloscope.
-
+In case of error , LED2 is turned ON .
 
 
 @note Care must be taken when using HAL_Delay(), this function provides accurate delay (in milliseconds)
@@ -74,6 +74,7 @@ Timer, PWM, Complemntary signal, Duty Cycle, Waveform, Oscilloscope, Output, Sig
 
 @par Directory contents
 
+  - TIM/TIM_ComplementarySignals/Inc/stm32g4xx_nucleo_conf.h     BSP configuration file
   - TIM/TIM_ComplementarySignals/Inc/stm32g4xx_hal_conf.h    HAL configuration file
   - TIM/TIM_ComplementarySignals/Inc/stm32g4xx_it.h          Interrupt handlers header file
   - TIM/TIM_ComplementarySignals/Inc/main.h                  Header for main.c module  
@@ -93,14 +94,14 @@ Timer, PWM, Complemntary signal, Duty Cycle, Waveform, Oscilloscope, Output, Sig
 
   - NUCLEO-G431RB Set-up
     - Connect the TIM1 pins to an oscilloscope to monitor the different waveforms:
-      - TIM1_CH1  pin (PA8)  
-      - TIM1_CH1N pin (PB13)  
-      - TIM1_CH2  pin (PA9)  
-      - TIM1_CH2N pin (PA12)  
-      - TIM1_CH3  pin (PA10)  
-      - TIM1_CH3N pin (PB15)
+      - TIM1_CH1  pin (PA8  (connected to pin 23 in CN10))  
+      - TIM1_CH1N pin (PB13 (connected to pin 30 in CN10))  
+      - TIM1_CH2  pin (PA9  (connected to pin 21 in CN10))  
+      - TIM1_CH2N pin (PA12 (connected to pin 12 in CN10))  
+      - TIM1_CH3  pin (PA10 (connected to pin 33 in CN10))  
+      - TIM1_CH3N pin (PB15 (connected to pin 26 in CN10))
 
-    - Connect the TIM1 break pin TIM1_BKIN pin (PB12) to the GND. To generate a 
+    - Connect the TIM1 break pin TIM1_BKIN pin (PB12 (connected to pin 16 in CN10)) to the GND. To generate a 
       break event, switch this pin level from 0V to 3.3V.  
 
 

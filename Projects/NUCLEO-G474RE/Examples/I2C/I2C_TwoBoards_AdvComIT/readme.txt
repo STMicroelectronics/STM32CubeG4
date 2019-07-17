@@ -9,7 +9,7 @@
   *          Interrupt example.
   ******************************************************************************
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -25,8 +25,8 @@ How to handle I2C data buffer transmission/reception between two boards,
 using an interrupt.
 
 Board: NUCLEO-G474RE RevC (embeds a STM32G474RET6 device)
-SCL Pin: PA13 (CN7, pin13)
-SDA Pin: PA14 (CN7, pin15)
+SCL Pin: PB8 (CN10, pin3)
+SDA Pin: PB9 (CN10, pin5)
 
    _________________________                       _________________________ 
   |           ______________|                     |______________           |
@@ -120,6 +120,7 @@ Command, Acknowledge,
 
 @par Directory contents 
 
+  - I2C/I2C_TwoBoards_AdvComIT/Inc/stm32g4xx_nucleo_conf.h     BSP configuration file
   - I2C/I2C_TwoBoards_AdvComIT/Inc/stm32g4xx_hal_conf.h    HAL configuration file
   - I2C/I2C_TwoBoards_AdvComIT/Inc/stm32g4xx_it.h          I2C interrupt handlers header file
   - I2C/I2C_TwoBoards_AdvComIT/Inc/main.h                  Header for main.c module  
@@ -137,8 +138,8 @@ Command, Acknowledge,
 
   - NUCLEO-G474RE RevC Set-up
   
-    - Connect I2C_SCL line of Master board (PA13, CN7, pin13) to I2C_SCL line of Slave Board (PA13, CN7, pin13).
-    - Connect I2C_SDA line of Master board (PA14, CN7, pin15) to I2C_SDA line of Slave Board (PA14, CN7, pin15).
+    - Connect I2C_SCL line of Master board (PB8, CN10, pin3) to I2C_SCL line of Slave Board (PB8, CN10, pin3).
+    - Connect I2C_SDA line of Master board (PB9, CN10, pin5) to I2C_SDA line of Slave Board (PB9, CN10, pin5).
     - Connect GND of Master board to GND of Slave Board.
 
 @par How to use it ? 

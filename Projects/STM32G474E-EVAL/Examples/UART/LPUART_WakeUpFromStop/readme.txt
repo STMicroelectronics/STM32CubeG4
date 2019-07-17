@@ -8,7 +8,7 @@
   * @brief   Description of the LPUART-triggered MCU wake-up from STOP mode.
   ******************************************************************************
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -124,9 +124,6 @@ The LPUART is configured as follows:
     - Hardware flow control disabled (RTS and CTS signals)
 
 
-@note LPUART instance used and associated resources can be updated in "main.h"
-file depending hardware configuration used.
-
 @note This example can not be used in DEBUG mode due to the fact that the
     Cortex-M4 core is no longer clocked during low power mode and so debugging
     features are not available.
@@ -137,7 +134,7 @@ file depending hardware configuration used.
       than the peripheral interrupt. Otherwise the caller ISR process will be blocked.
       To change the SysTick interrupt priority you have to use HAL_NVIC_SetPriority() function.
 
-@note The application need to ensure that the SysTick time base is always set to 1 millisecond
+@note The application needs to ensure that the SysTick time base is always set to 1 millisecond
       to have correct HAL operation.
 
 @par Keywords
@@ -146,6 +143,7 @@ Connectivity, UART, Printf, Baud rate, RS-232, HyperTerminal, full-duplex, Hyper
 
 @par Directory contents
 
+  - UART/LPUART_WakeUpFromStop/Inc/stm32g474e_eval_conf.h     BSP configuration file
   - UART/LPUART_WakeUpFromStop/Inc/stm32g4xx_hal_conf.h    HAL configuration file
   - UART/LPUART_WakeUpFromStop/Inc/stm32g4xx_it.h          Interrupt handlers header file
   - UART/LPUART_WakeUpFromStop/Inc/main.h                  Header for main.c module

@@ -9,7 +9,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics. 
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics. 
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -244,18 +244,23 @@ static void MX_RTC_Init(void)
 
   LL_PWR_EnableBkUpAccess();
   /* USER CODE END RTC_Init 1 */
+  /** Initialize RTC and set the Time and Date 
+  */
   RTC_InitStruct.HourFormat = LL_RTC_HOURFORMAT_24HOUR;
   RTC_InitStruct.AsynchPrescaler = 127;
   RTC_InitStruct.SynchPrescaler = 255;
   LL_RTC_Init(RTC, &RTC_InitStruct);
+  /** Initialize RTC and set the Time and Date 
+  */
   /** Enable the RTC Tamper 1 
   */
   LL_RTC_TAMPER_Enable(RTC, LL_RTC_TAMPER_1);
   LL_RTC_TAMPER_SetFilterCount(RTC, LL_RTC_TAMPER_FILTER_DISABLE);
   LL_RTC_TAMPER_SetPrecharge(RTC, LL_RTC_TAMPER_DURATION_1RTCCLK);
   LL_RTC_TAMPER_SetSamplingFreq(RTC, LL_RTC_TAMPER_SAMPLFREQDIV_32768);
-  LL_RTC_TAMPER_EnableEraseBKP(RTC, LL_RTC_TAMPER_NOERASE_TAMPER1);
+  LL_RTC_TAMPER_EnableActiveLevel(RTC, LL_RTC_TAMPER_ACTIVELEVEL_TAMP1);
   LL_RTC_TAMPER_DisableMask(RTC, LL_RTC_TAMPER_MASK_TAMPER1);
+  LL_RTC_TAMPER_EnableEraseBKP(RTC, LL_RTC_TAMPER_NOERASE_TAMPER1);
   LL_RTC_TAMPER_EnablePullUp(RTC);
   /* USER CODE BEGIN RTC_Init 2 */
   /* Enable IT TAMPER */

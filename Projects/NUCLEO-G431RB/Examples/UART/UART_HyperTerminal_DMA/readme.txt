@@ -8,7 +8,7 @@
   * @brief   Description of the UART Hyperterminal example.
   ******************************************************************************
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -20,19 +20,19 @@
 
 @par Example Description
 
-UART transmission (transmit/receive) in DMA mode 
+UART transmission (transmit/receive) in DMA mode
 between a board and an HyperTerminal PC application.
 
 Board: NUCLEO-G431RB (embeds a STM32G431RBT6 device)
-Tx Pin: PA9 (connected to pin 21 in CN10)
-Rx Pin: PA10 (connected to pin 33 in CN10)
-   _________________________ 
+Tx Pin: PA2 (available through VCP)
+Rx Pin: PA3 (available through VCP)
+   _________________________
   |           ______________|                       _______________
   |          |USART         |                      | HyperTerminal |
   |          |              |                      |               |
   |          |           TX |______________________|RX             |
   |          |              |                      |               |
-  |          |              |     RS232 Cable      |               |
+  |          |              |    ST-Link Cable     |               |
   |          |              |                      |               |
   |          |           RX |______________________|TX             |
   |          |              |                      |               |
@@ -102,6 +102,7 @@ Transmission, Reception, Asynchronous
 
 @par Directory contents
 
+  - UART/UART_HyperTerminal_DMA/Inc/stm32g4xx_nucleo_conf.h     BSP configuration file
   - UART/UART_HyperTerminal_DMA/Inc/stm32g4xx_hal_conf.h    HAL configuration file
   - UART/UART_HyperTerminal_DMA/Inc/stm32g4xx_it.h          DMA interrupt handlers header file
   - UART/UART_HyperTerminal_DMA/Inc/main.h                  Header for main.c module
@@ -114,13 +115,13 @@ Transmission, Reception, Asynchronous
 @par Hardware and Software environment
 
   - This example runs on STM32G431RBTx devices.
-    
+
   - This example has been tested with NUCLEO-G431RB board and can be
     easily tailored to any other supported device and development board.
 
   - NUCLEO-G431RB Set-up
-     - Connect USART1 TX (PA.09 - Pin 21 in CN10) to RX pin of PC serial port (or USB to UART adapter)
-       and USART1 RX (PA.10 - Pin 33 in CN10) to TX pin of PC serial port (or USB to UART adapter).
+     - Connect ST-Link cable to the PC USB port to display data on the HyperTerminal (and to receive data).
+       A virtual COM port will then appear in the HyperTerminal.
      
 
   - Hyperterminal configuration:
@@ -130,7 +131,7 @@ Transmission, Reception, Asynchronous
     - BaudRate = 9600 baud
     - Flow control: None
 
-@par How to use it ? 
+@par How to use it ?
 
 In order to make the program work, you must do the following :
  - Open your preferred toolchain

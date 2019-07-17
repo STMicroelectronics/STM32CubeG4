@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * @file    stm32g4xx_fmac.c
+  * @file    stm32g4xx_hal_fmac.c
   * @author  MCD Application Team
   * @brief   FMAC HAL module driver.
   *          This file provides firmware functions to manage the following
@@ -187,7 +187,7 @@
       or @ref HAL_FMAC_Init() function.
 
     [..]
-      When The compilation define USE_HAL_FMAC_REGISTER_CALLBACKS is set to 0 or
+      When the compilation define USE_HAL_FMAC_REGISTER_CALLBACKS is set to 0 or
       not defined, the callback registration feature is not available
       and weak (surcharged) callbacks are used.
 
@@ -197,7 +197,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,

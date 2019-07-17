@@ -15,7 +15,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -195,7 +195,7 @@ g_pfnVectors:
 	.word	TIM8_UP_IRQHandler
 	.word	TIM8_TRG_COM_IRQHandler
 	.word	TIM8_CC_IRQHandler
-	.word	0
+	.word	ADC3_IRQHandler
 	.word	0
 	.word	LPTIM1_IRQHandler
 	.word	TIM5_IRQHandler
@@ -420,6 +420,9 @@ g_pfnVectors:
 
 	.weak	TIM8_CC_IRQHandler
 	.thumb_set TIM8_CC_IRQHandler,Default_Handler
+
+	.weak	ADC3_IRQHandler
+	.thumb_set ADC3_IRQHandler,Default_Handler
 
 	.weak	LPTIM1_IRQHandler
 	.thumb_set LPTIM1_IRQHandler,Default_Handler

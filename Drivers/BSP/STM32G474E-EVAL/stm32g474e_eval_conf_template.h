@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -62,6 +62,15 @@
 
 /* JOY define */
 #define USE_BSP_JOY_FEATURE                 1U
+
+/* USBPD BSP PWR TRACE define */
+#define USE_BSP_PWR_TRACE                 0U
+
+#if (USE_BSP_PWR_TRACE > 0u)
+#define USBPD_PWR_TRACE(_PORT_,...)  UTIL_ADV_TRACE_FSend(__VA_ARGS__)
+#else
+#define USBPD_PWR_TRACE(_PORT_,...)
+#endif /* USE_BSP_PWR_TRACE */
 
 /* IRQ priorities */
 #define BSP_SRAM_IT_PRIORITY                15U

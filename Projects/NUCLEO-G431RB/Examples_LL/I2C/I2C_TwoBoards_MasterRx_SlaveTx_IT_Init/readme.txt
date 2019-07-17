@@ -8,7 +8,7 @@
   * @brief   Description of the I2C_TwoBoards_MasterRx_SlaveTx_IT_Init I2C example (IT Mode).
   ******************************************************************************
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the

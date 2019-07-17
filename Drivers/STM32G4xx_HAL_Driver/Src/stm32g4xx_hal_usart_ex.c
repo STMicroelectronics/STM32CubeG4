@@ -28,7 +28,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -54,11 +54,17 @@
 #ifdef HAL_USART_MODULE_ENABLED
 
 /* Private typedef -----------------------------------------------------------*/
+/** @defgroup USARTEx_Private_Constants USARTEx Private Constants
+  * @{
+  */
 /* UART RX FIFO depth */
 #define RX_FIFO_DEPTH 8U
 
 /* UART TX FIFO depth */
 #define TX_FIFO_DEPTH 8U
+/**
+  * @}
+  */
 
 /* Private define ------------------------------------------------------------*/
 /* Private macros ------------------------------------------------------------*/

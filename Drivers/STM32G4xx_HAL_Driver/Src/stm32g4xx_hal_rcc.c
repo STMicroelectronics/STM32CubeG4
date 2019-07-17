@@ -39,7 +39,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -263,7 +263,7 @@ HAL_StatusTypeDef HAL_RCC_DeInit(void)
   SystemCoreClock = HSI_VALUE;
 
   /* Adapt Systick interrupt period */
-  if (HAL_InitTick(TICK_INT_PRIORITY) != HAL_OK)
+  if (HAL_InitTick(uwTickPrio) != HAL_OK)
   {
     return HAL_ERROR;
   }
@@ -407,7 +407,7 @@ HAL_StatusTypeDef HAL_RCC_OscConfig(RCC_OscInitTypeDef  *RCC_OscInitStruct)
         __HAL_RCC_HSI_CALIBRATIONVALUE_ADJUST(RCC_OscInitStruct->HSICalibrationValue);
 
         /* Adapt Systick interrupt period */
-        if (HAL_InitTick(TICK_INT_PRIORITY) != HAL_OK)
+        if (HAL_InitTick(uwTickPrio) != HAL_OK)
         {
           return HAL_ERROR;
         }
@@ -943,7 +943,7 @@ HAL_StatusTypeDef HAL_RCC_ClockConfig(RCC_ClkInitTypeDef  *RCC_ClkInitStruct, ui
   SystemCoreClock = HAL_RCC_GetSysClockFreq() >> (AHBPrescTable[READ_BIT(RCC->CFGR, RCC_CFGR_HPRE) >> RCC_CFGR_HPRE_Pos] & 0x1FU);
 
   /* Configure the source of time base considering new system clocks settings*/
-  return HAL_InitTick(TICK_INT_PRIORITY);
+  return HAL_InitTick(uwTickPrio);
 }
 
 /**

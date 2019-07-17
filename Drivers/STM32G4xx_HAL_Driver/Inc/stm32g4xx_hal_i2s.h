@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -25,10 +25,10 @@
 extern "C" {
 #endif
 
-#if defined(SPI_I2S_SUPPORT)
 /* Includes ------------------------------------------------------------------*/
 #include "stm32g4xx_hal_def.h"
 
+#if defined(SPI_I2S_SUPPORT)
 /** @addtogroup STM32G4xx_HAL_Driver
   * @{
   */
@@ -456,14 +456,6 @@ uint32_t HAL_I2S_GetError(I2S_HandleTypeDef *hi2s);
 /* Private types -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 /* Private constants ---------------------------------------------------------*/
-/** @defgroup I2S_Private_Constants I2S Private Constants
-  * @{
-  */
-
-/**
-  * @}
-  */
-
 /* Private macros ------------------------------------------------------------*/
 /** @defgroup I2S_Private_Macros I2S Private Macros
   * @{

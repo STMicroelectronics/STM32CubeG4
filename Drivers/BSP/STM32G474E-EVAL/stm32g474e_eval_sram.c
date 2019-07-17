@@ -38,7 +38,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -98,8 +98,8 @@ static uint32_t IsMspCallbacksValid = 0;
 
 /** STM32G474E-EVAL_SRAM_Private_FunctionPrototypes Private Functions
   */
-static void SRAM_MspInit(SRAM_HandleTypeDef  *hsram);
-static void SRAM_MspDeInit(SRAM_HandleTypeDef  *hsram);
+static void SRAM_MspInit(SRAM_HandleTypeDef  *hSram);
+static void SRAM_MspDeInit(SRAM_HandleTypeDef  *hSram);
 /**
   */
 
@@ -127,7 +127,7 @@ int32_t BSP_SRAM_Init(uint32_t Instance)
     SRAM_MspInit(&hsram);
 #else
     /* Register the SRAM MSP Callbacks */
-    if(IsMspCallbacksValid == 0)
+    if(IsMspCallbacksValid == 0U)
     {
       if(BSP_SRAM_RegisterDefaultMspCallbacks(Instance) != BSP_ERROR_NONE)
       {
@@ -182,33 +182,34 @@ int32_t BSP_SRAM_DeInit(uint32_t Instance)
 
 /**
   * @brief  Initializes the SRAM peripheral.
+  * @param  hSram  SRAM handle
   * @retval HAL status
   */
-__weak HAL_StatusTypeDef MX_SRAM_BANK1_Init(SRAM_HandleTypeDef *hsram)
+__weak HAL_StatusTypeDef MX_SRAM_BANK1_Init(SRAM_HandleTypeDef *hSram)
 {
   static FMC_NORSRAM_TimingTypeDef SramTiming;
 
   /* SRAM device configuration */
-  hsram->Instance = FMC_NORSRAM_DEVICE;
-  hsram->Extended = FMC_NORSRAM_EXTENDED_DEVICE;
+  hSram->Instance = FMC_NORSRAM_DEVICE;
+  hSram->Extended = FMC_NORSRAM_EXTENDED_DEVICE;
 
   /* SRAM device configuration */
-  hsram->Init.NSBank             = FMC_NORSRAM_BANK1;
-  hsram->Init.DataAddressMux     = FMC_DATA_ADDRESS_MUX_DISABLE;
-  hsram->Init.MemoryType         = FMC_MEMORY_TYPE_SRAM;
-  hsram->Init.MemoryDataWidth    = FMC_NORSRAM_MEM_BUS_WIDTH_16;
-  hsram->Init.BurstAccessMode    = FMC_BURST_ACCESS_MODE_DISABLE;
-  hsram->Init.WaitSignalPolarity = FMC_WAIT_SIGNAL_POLARITY_LOW;
-  hsram->Init.WaitSignalActive   = FMC_WAIT_TIMING_BEFORE_WS;
-  hsram->Init.WriteOperation     = FMC_WRITE_OPERATION_ENABLE;
-  hsram->Init.WaitSignal         = FMC_WAIT_SIGNAL_DISABLE;
-  hsram->Init.ExtendedMode       = FMC_EXTENDED_MODE_DISABLE;
-  hsram->Init.AsynchronousWait   = FMC_ASYNCHRONOUS_WAIT_DISABLE;
-  hsram->Init.WriteBurst         = FMC_WRITE_BURST_DISABLE;
-  hsram->Init.ContinuousClock    = FMC_CONTINUOUS_CLOCK_SYNC_ONLY;
-  hsram->Init.WriteFifo          = FMC_WRITE_FIFO_DISABLE;
-  hsram->Init.NBLSetupTime       = FMC_NBL_SETUPTIME_0;
-  hsram->Init.PageSize           = FMC_PAGE_SIZE_NONE;
+  hSram->Init.NSBank             = FMC_NORSRAM_BANK1;
+  hSram->Init.DataAddressMux     = FMC_DATA_ADDRESS_MUX_DISABLE;
+  hSram->Init.MemoryType         = FMC_MEMORY_TYPE_SRAM;
+  hSram->Init.MemoryDataWidth    = FMC_NORSRAM_MEM_BUS_WIDTH_16;
+  hSram->Init.BurstAccessMode    = FMC_BURST_ACCESS_MODE_DISABLE;
+  hSram->Init.WaitSignalPolarity = FMC_WAIT_SIGNAL_POLARITY_LOW;
+  hSram->Init.WaitSignalActive   = FMC_WAIT_TIMING_BEFORE_WS;
+  hSram->Init.WriteOperation     = FMC_WRITE_OPERATION_ENABLE;
+  hSram->Init.WaitSignal         = FMC_WAIT_SIGNAL_DISABLE;
+  hSram->Init.ExtendedMode       = FMC_EXTENDED_MODE_DISABLE;
+  hSram->Init.AsynchronousWait   = FMC_ASYNCHRONOUS_WAIT_DISABLE;
+  hSram->Init.WriteBurst         = FMC_WRITE_BURST_DISABLE;
+  hSram->Init.ContinuousClock    = FMC_CONTINUOUS_CLOCK_SYNC_ONLY;
+  hSram->Init.WriteFifo          = FMC_WRITE_FIFO_DISABLE;
+  hSram->Init.NBLSetupTime       = FMC_NBL_SETUPTIME_0;
+  hSram->Init.PageSize           = FMC_PAGE_SIZE_NONE;
 
   /* Timing configuration */
   SramTiming.AddressSetupTime      = SRAM_ADDR_SETUP_TIME;
@@ -221,7 +222,7 @@ __weak HAL_StatusTypeDef MX_SRAM_BANK1_Init(SRAM_HandleTypeDef *hsram)
   SramTiming.AccessMode            = FMC_ACCESS_MODE_A;
 
   /* SRAM controller initialization */
-  if(HAL_SRAM_Init(hsram, &SramTiming, NULL) != HAL_OK)
+  if(HAL_SRAM_Init(hSram, &SramTiming, NULL) != HAL_OK)
   {
     return  HAL_ERROR;
   }
@@ -317,10 +318,10 @@ void BSP_SRAM_DMA_IRQHandler(void)
 
 /**
   * @brief  Initializes SRAM MSP.
-  * @param  hsram  SRAM handle
+  * @param  hSram  SRAM handle
   * @retval None
   */
-static void SRAM_MspInit(SRAM_HandleTypeDef  *hsram)
+static void SRAM_MspInit(SRAM_HandleTypeDef  *hSram)
 {
   static DMA_HandleTypeDef dma_handle;
   GPIO_InitTypeDef gpio_init_structure;
@@ -394,7 +395,7 @@ static void SRAM_MspInit(SRAM_HandleTypeDef  *hsram)
   dma_handle.Instance = SRAM_DMAx_CHANNEL;
 
    /* Associate the DMA handle */
-  __HAL_LINKDMA(hsram, hdma, dma_handle);
+  __HAL_LINKDMA(hSram, hdma, dma_handle);
 
   /* Deinitialize the Stream for new transfer */
   (void)HAL_DMA_DeInit(&dma_handle);
@@ -409,15 +410,15 @@ static void SRAM_MspInit(SRAM_HandleTypeDef  *hsram)
 
 /**
   * @brief  DeInitializes SRAM MSP.
-  * @param  hsram  SRAM handle
+  * @param  hSram  SRAM handle
   * @retval None
   */
-static void SRAM_MspDeInit(SRAM_HandleTypeDef  *hsram)
+static void SRAM_MspDeInit(SRAM_HandleTypeDef  *hSram)
 {
   static DMA_HandleTypeDef dma_handle;
 
   /* Prevent unused argument(s) compilation warning */
-  UNUSED(hsram);
+  UNUSED(hSram);
 
   /*## Data Bus #######*/
   /* GPIOD configuration */

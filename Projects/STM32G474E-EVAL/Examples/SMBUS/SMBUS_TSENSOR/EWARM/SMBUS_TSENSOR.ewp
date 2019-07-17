@@ -1079,7 +1079,10 @@
       <group>
         <name>Components</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../Drivers/BSP/Components/hx8347d/hx8347d_regs.c</name>
+          <name>$PROJ_DIR$/../../../../../../Drivers/BSP/Components/hx8347d/hx8347d_reg.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Drivers/BSP/Components/hx8347d/hx8347d_reg.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../Drivers/BSP/Components/hx8347d/hx8347d.c</name>

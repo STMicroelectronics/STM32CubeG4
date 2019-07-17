@@ -8,7 +8,7 @@
   * @brief   TIM Combined Example Description.
   ******************************************************************************
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -66,6 +66,7 @@ Timer, PWM, combined signal, Duty Cycle, Waveform, Oscilloscope, Output, Signal
 
 @par Directory contents
 
+  - TIM/TIM_Combined/Inc/stm32g4xx_nucleo_conf.h     BSP configuration file
   - TIM/TIM_Combined/Inc/stm32g4xx_hal_conf.h    HAL configuration file
   - TIM/TIM_Combined/Inc/stm32g4xx_it.h          Interrupt handlers header file
   - TIM/TIM_Combined/Inc/main.h                  Header for main.c module  

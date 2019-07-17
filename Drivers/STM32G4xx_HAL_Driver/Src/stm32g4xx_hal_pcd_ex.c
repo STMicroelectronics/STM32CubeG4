@@ -10,7 +10,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -125,6 +125,9 @@ HAL_StatusTypeDef HAL_PCDEx_ActivateBCD(PCD_HandleTypeDef *hpcd)
   USB_TypeDef *USBx = hpcd->Instance;
   hpcd->battery_charging_active = 1U;
 
+  /* Enable BCD feature */
+  USBx->BCDR |= USB_BCDR_BCDEN;
+
   /* Enable DCD : Data Contact Detect */
   USBx->BCDR &= ~(USB_BCDR_PDEN);
   USBx->BCDR &= ~(USB_BCDR_SDEN);
@@ -143,6 +146,7 @@ HAL_StatusTypeDef HAL_PCDEx_DeActivateBCD(PCD_HandleTypeDef *hpcd)
   USB_TypeDef *USBx = hpcd->Instance;
   hpcd->battery_charging_active = 0U;
 
+  /* Disable BCD feature */
   USBx->BCDR &= ~(USB_BCDR_BCDEN);
 
   return HAL_OK;

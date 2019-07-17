@@ -8,7 +8,7 @@
   * @brief   Description of the PWR Programmable Voltage Detector (PVD) example
   ******************************************************************************
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -45,6 +45,7 @@ Power, PWR, EXTI, PVD, Interrupt, Wakeup, External reset
 
 @par Directory contents 
 
+  - PWR/PWR_PVD/Inc/stm32g474e_eval_conf.h     BSP configuration file
   - PWR/PWR_PVD/Inc/stm32g4xx_hal_conf.h     HAL Configuration file
   - PWR/PWR_PVD/Inc/stm32g4xx_it.h           Header for stm32g4xx_it.c
   - PWR/PWR_PVD/Inc/main.h                         Header file for main.c

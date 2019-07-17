@@ -48,19 +48,19 @@
   ==============================================================================
   [..]
     (#) Use IWDG using HAL_IWDG_Init() function to :
-      (+) Enable instance by writing Start keyword in IWDG_KEY register. LSI
+      (++) Enable instance by writing Start keyword in IWDG_KEY register. LSI
            clock is forced ON and IWDG counter starts counting down.
-      (+) Enable write access to configuration registers:
+      (++) Enable write access to configuration registers:
           IWDG_PR, IWDG_RLR and IWDG_WINR.
-      (+) Configure the IWDG prescaler and counter reload value. This reload
+      (++) Configure the IWDG prescaler and counter reload value. This reload
            value will be loaded in the IWDG counter each time the watchdog is
            reloaded, then the IWDG will start counting down from this value.
-      (+) Wait for status flags to be reset.
-      (+) Depending on window parameter:
-        (++) If Window Init parameter is same as Window register value,
+      (++) Wait for status flags to be reset.
+      (++) Depending on window parameter:
+        (+++) If Window Init parameter is same as Window register value,
              nothing more is done but reload counter value in order to exit
              function with exact time base.
-        (++) Else modify Window register. This will automatically reload
+        (+++) Else modify Window register. This will automatically reload
              watchdog counter.
 
     (#) Then the application program must refresh the IWDG counter at regular
@@ -79,7 +79,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -126,8 +126,8 @@
   */
 
 /** @addtogroup IWDG_Exported_Functions_Group1
- *  @brief    Initialization and Start functions.
- *
+  *  @brief    Initialization and Start functions.
+  *
 @verbatim
  ===============================================================================
           ##### Initialization and Start functions #####
@@ -215,8 +215,8 @@ HAL_StatusTypeDef HAL_IWDG_Init(IWDG_HandleTypeDef *hiwdg)
 
 
 /** @addtogroup IWDG_Exported_Functions_Group2
- *  @brief   IO operation functions
- *
+  *  @brief   IO operation functions
+  *
 @verbatim
  ===============================================================================
                       ##### IO operation functions #####

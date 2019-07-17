@@ -18,7 +18,6 @@
   */
 
 /* Includes ------------------------------------------------------------------*/
-#if defined(_TRACE)
 #define USBPD_TRACE_C
 
 #include "stdint.h"
@@ -83,7 +82,7 @@
   * @{
   */
 extern uint32_t HAL_GetTick(void);
-
+extern void     USBPD_DPM_TraceWakeUp(void);
 /**
   * @}
   */
@@ -96,42 +95,48 @@ extern uint32_t HAL_GetTick(void);
   */
 void USBPD_TRACE_Init(void)
 {
+#if defined(_TRACE)
   /* initialize tracer module */
   TRACER_EMB_Init();
 
   /* Initialize PE trace */
   USBPD_PE_SetTrace(USBPD_TRACE_Add, 3u);
+#else
+  return;
+#endif  
+}
+
+void USBPD_TRACE_DeInit(void)
+{
+  /* Nothing to do */
+  return;
 }
 
 void USBPD_TRACE_Add(TRACE_EVENT Type, uint8_t PortNum, uint8_t Sop, uint8_t *Ptr, uint32_t Size)
 {
+#if defined(_TRACE)
   uint32_t _time;
   int32_t _writepos;
   uint16_t _writepos2;
   uint8_t *data_to_write;
   uint32_t index;
   uint32_t total_size;
-  
-#if !defined(_TRACE)
-  /* Do not send debug traces */
-  return;
-#endif
-  
+
   TRACER_EMB_Lock();
-  
+
   /* Data are encapsulate inside a TLV string*/
   /* Allocate buffer Size */
   total_size = Size + TRACE_SIZE_HEADER_TRACE + TLV_HEADER_SIZE + TLV_SOF_SIZE + TLV_EOF_SIZE;
   _writepos = TRACER_EMB_AllocateBufer(total_size);
-  
+
   /* Check allocation */
   if (_writepos  != -1)
   {
     _writepos2 = (uint16_t)_writepos;
     data_to_write = Ptr;
-    
+
     /* Copy SOF bytes */
-    for(index = 0u; index < TLV_SOF_SIZE; index++)
+    for (index = 0u; index < TLV_SOF_SIZE; index++)
     {
       TRACER_EMB_WRITE_DATA(_writepos2, TLV_SOF);
     }
@@ -141,39 +146,52 @@ void USBPD_TRACE_Add(TRACE_EVENT Type, uint8_t PortNum, uint8_t Sop, uint8_t *Pt
     TRACER_EMB_WRITE_DATA(_writepos2, (uint8_t)((total_size - TLV_HEADER_SIZE - TLV_SOF_SIZE - TLV_EOF_SIZE) >> 8u));
     TRACER_EMB_WRITE_DATA(_writepos2, (uint8_t)(total_size - TLV_HEADER_SIZE - TLV_SOF_SIZE - TLV_EOF_SIZE));
     TRACER_EMB_WRITE_DATA(_writepos2, (uint8_t)Type);
-    
+
     _time = HAL_GetTick();
-    
+
     TRACER_EMB_WRITE_DATA(_writepos2, (uint8_t)_time);
     TRACER_EMB_WRITE_DATA(_writepos2, (uint8_t)(_time >> 8u));
     TRACER_EMB_WRITE_DATA(_writepos2, (uint8_t)(_time >> 16u));
     TRACER_EMB_WRITE_DATA(_writepos2, (uint8_t)(_time >> 24u));
-    
+
     TRACER_EMB_WRITE_DATA(_writepos2, PortNum);
     TRACER_EMB_WRITE_DATA(_writepos2, Sop);
-    
+
     TRACER_EMB_WRITE_DATA(_writepos2, (uint8_t)(Size >> 8u));
     TRACER_EMB_WRITE_DATA(_writepos2, (uint8_t)Size);
-    
+
     /* initialize the Ptr for Read/Write */
     for (index = 0u; index < Size; index++)
     {
       TRACER_EMB_WRITE_DATA(_writepos2, data_to_write[index]);
     }
-    
+
     /* Copy EOF bytes */
-    for(index = 0u; index < TLV_EOF_SIZE; index++)
+    for (index = 0u; index < TLV_EOF_SIZE; index++)
     {
       TRACER_EMB_WRITE_DATA(_writepos2, TLV_EOF);
     }
   }
-  
+
   TRACER_EMB_UnLock();
+  
+  if (__get_IPSR() == 0 )
+  {
+    /* Wakeup the trace system, only for trace outside interrupt context */
+    USBPD_DPM_TraceWakeUp();
+  }
+#else
+  return;
+#endif  
 }
 
 uint32_t USBPD_TRACE_TX_Process(void)
 {
+#ifdef _TRACE  
   return TRACER_EMB_TX_Process();
+#else
+  return 0xFFFFFFFF;
+#endif  
 }
 
 /**
@@ -199,6 +217,5 @@ uint32_t USBPD_TRACE_TX_Process(void)
 /**
   * @}
   */
-#endif /* _TRACE */
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
 

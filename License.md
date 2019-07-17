@@ -5,6 +5,7 @@
 | STM32G4 HAL                     | BSD-3-Clause         | STMicroelectronics |
 | BSP STM32G4xx_Nucleo            | BSD-3-Clause         | STMicroelectronics |
 | BSP STM32G474E-EVAL             | BSD-3-Clause         | STMicroelectronics |
+| BSP B-G474E-DPOW1               | BSD-3-Clause         | STMicroelectronics |
 | BSP Adafruit                    | BSD-3-Clause         | STMicroelectronics |
 | BSP Components                  | BSD-3-Clause         | STMicroelectronics |
 | STM32_USB_Device_Library        | SLA0044              | STMicroelectronics |

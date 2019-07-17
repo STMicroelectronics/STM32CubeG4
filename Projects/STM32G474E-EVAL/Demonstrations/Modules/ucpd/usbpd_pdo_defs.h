@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics International N.V.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics International N.V.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -79,56 +79,37 @@ typedef struct
 /* Definitions of nb of PDO and APDO for each port */
 #define PORT0_NB_SOURCEPDO         1   /* Number of Source PDOs (applicable for port 0)   */
 #define PORT0_NB_SINKPDO           1   /* Number of Sink PDOs (applicable for port 0)     */
+#define PORT1_NB_SOURCEPDO         0   /* Number of Source PDOs (applicable for port 1)   */
+#define PORT1_NB_SINKPDO           0   /* Number of Sink PDOs (applicable for port 1)     */
 #define PORT0_NB_SOURCEAPDO        0   /* Number of Source APDOs (applicable for port 0)  */
 #define PORT0_NB_SINKAPDO          0   /* Number of Sink APDOs (applicable for port 0)    */
+#define PORT1_NB_SOURCEAPDO        0   /* Number of Source APDOs (applicable for port 1)  */
+#define PORT1_NB_SINKAPDO          0   /* Number of Sink APDOs (applicable for port 1)    */
 
 /* Exported constants --------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/
 /* Exported variables --------------------------------------------------------*/
 #ifndef __USBPD_PWR_IF_C
 
-#if defined(_GUI_INTERFACE)
-extern const uint8_t NbPDO[4];
-#endif /* _GUI_INTERFACE */
+extern uint8_t USBPD_NbPDO[4];
 
 #if (PORT0_NB_SOURCEPDO > 0) || (PORT0_NB_SOURCEAPDO > 0)
-extern const uint32_t PORT0_PDO_ListSRC[USBPD_MAX_NB_PDO];
+extern uint32_t PORT0_PDO_ListSRC[USBPD_MAX_NB_PDO];
 #endif
 #if (PORT0_NB_SINKPDO > 0) || (PORT0_NB_SINKAPDO > 0)
-extern const uint32_t PORT0_PDO_ListSNK[USBPD_MAX_NB_PDO];
+extern uint32_t PORT0_PDO_ListSNK[USBPD_MAX_NB_PDO];
 #endif
 
 #else
 
-#if defined(_GUI_INTERFACE)
-
-#if defined(__CC_ARM)
-
-const uint8_t NbPDO[4] __attribute__((at(GUI_FLASH_ADDR_NB_PDO))) = {(PORT0_NB_SINKPDO + PORT0_NB_SINKAPDO), 
-                          ((PORT0_NB_SOURCEPDO + PORT0_NB_SOURCEAPDO))};
-#error "[YMA] TBC for KEIL"
-
-#elif defined(__ICCARM__)
-
-#pragma location=GUI_FLASH_ADDR_NB_PDO_SNK_P0
-const uint8_t NbPDO[4] = {(PORT0_NB_SINKPDO + PORT0_NB_SINKAPDO), 
-                          ((PORT0_NB_SOURCEPDO + PORT0_NB_SOURCEAPDO))};
-
-#elif defined(__GNUC__)
-
-const uint8_t NbPDO[4] __attribute__((section(".ROarraySection"))) = {(PORT0_NB_SINKPDO + PORT0_NB_SINKAPDO), 
-                          ((PORT0_NB_SOURCEPDO + PORT0_NB_SOURCEAPDO))};
-#error "[YMA] TBC for SW4STM32"
-
-#endif
-#endif /* _GUI_INTERFACE */
+uint8_t USBPD_NbPDO[4] = {(PORT0_NB_SINKPDO + PORT0_NB_SINKAPDO), 
+                          ((PORT0_NB_SOURCEPDO + PORT0_NB_SOURCEAPDO)),
+                          ((PORT1_NB_SINKPDO + PORT1_NB_SINKAPDO)),
+                          ((PORT1_NB_SOURCEPDO + PORT1_NB_SOURCEAPDO))};
 
 /* Definition of Source PDO for Port 0 */
-#if (PORT0_NB_SOURCEPDO > 0) || (PORT0_NB_SOURCEAPDO > 0)
-#if defined(_GUI_INTERFACE)
-#pragma location=GUI_FLASH_ADDR_PDO_SRC_P0
-#endif /* _GUI_INTERFACE */
-const uint32_t PORT0_PDO_ListSRC[USBPD_MAX_NB_PDO] =
+#if defined(_SRC)||defined(_DRP)
+uint32_t PORT0_PDO_ListSRC[USBPD_MAX_NB_PDO] =
 {
   /* PDO 1 */
         ( ((PWR_A_10MA(USBPD_CORE_PDO_SRC_FIXED_MAX_CURRENT)) << USBPD_PDO_SRC_FIXED_MAX_CURRENT_Pos) |
@@ -142,7 +123,11 @@ const uint32_t PORT0_PDO_ListSRC[USBPD_MAX_NB_PDO] =
 #endif /* _UNCHUNKED_SUPPORT */
 #endif /*USBPD_REV30_SUPPORT*/
           USBPD_PDO_SRC_FIXED_DRD_SUPPORTED                                                           |
+#if defined(_USB_HOST) || defined(_USB_DEVICE)
+          USBPD_PDO_SRC_FIXED_USBCOMM_SUPPORTED                                                   |
+#else
           USBPD_PDO_SRC_FIXED_USBCOMM_NOT_SUPPORTED                                                   |
+#endif
           USBPD_PDO_SRC_FIXED_EXT_POWER_NOT_AVAILABLE                                                 |
           USBPD_PDO_SRC_FIXED_USBSUSPEND_NOT_SUPPORTED                                                |
           USBPD_PDO_SRC_FIXED_DRP_SUPPORTED                                                           |
@@ -160,10 +145,7 @@ const uint32_t PORT0_PDO_ListSRC[USBPD_MAX_NB_PDO] =
 
 /* Definition of Sink PDO for Port 0 */
 #if (PORT0_NB_SINKPDO > 0) || (PORT0_NB_SINKAPDO > 0)
-#if defined(_GUI_INTERFACE)
-#pragma location=GUI_FLASH_ADDR_PDO_SNK_P0
-#endif /* _GUI_INTERFACE */
-const uint32_t PORT0_PDO_ListSNK[USBPD_MAX_NB_PDO] = 
+uint32_t PORT0_PDO_ListSNK[USBPD_MAX_NB_PDO] = 
 {
   /* PDO 1 */
         ( ((PWR_A_10MA(USBPD_CORE_PDO_SNK_FIXED_MAX_CURRENT / 1000.0)) << USBPD_PDO_SNK_FIXED_OP_CURRENT_Pos) |
@@ -172,7 +154,11 @@ const uint32_t PORT0_PDO_ListSNK[USBPD_MAX_NB_PDO] =
            USBPD_PDO_SNK_FIXED_FRS_NOT_SUPPORTED                                                     |
 #endif /*USBPD_REV30_SUPPORT*/
            USBPD_PDO_SNK_FIXED_DRD_SUPPORTED                                                         |
+#if defined(_USB_DEVICE) || defined(_USB_DEVICE)
+           USBPD_PDO_SNK_FIXED_USBCOMM_SUPPORTED                                                     |
+#else           
            USBPD_PDO_SNK_FIXED_USBCOMM_NOT_SUPPORTED                                                 |
+#endif           
            USBPD_PDO_SNK_FIXED_EXT_POWER_NOT_AVAILABLE                                               |
            USBPD_PDO_SNK_FIXED_HIGHERCAPAB_NOT_SUPPORTED                                             |
            USBPD_PDO_SNK_FIXED_DRP_SUPPORTED                                                         |
@@ -187,7 +173,7 @@ const uint32_t PORT0_PDO_ListSNK[USBPD_MAX_NB_PDO] =
 };
 #endif
 
-#endif
+#endif /* __USBPD_PWR_IF_C */
 
 /* Exported functions --------------------------------------------------------*/
 

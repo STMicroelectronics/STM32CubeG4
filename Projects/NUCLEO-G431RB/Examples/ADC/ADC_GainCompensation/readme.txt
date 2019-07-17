@@ -8,7 +8,7 @@
   * @brief   Description of the ADC_GainCompensation example.
   ******************************************************************************
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -64,6 +64,7 @@ Analog, ADC, Analog to Digital, Single conversion, Gain compensation, Timer trig
 
 @par Directory contents 
 
+  - ADC/ADC_GainCompensation/Inc/stm32g4xx_nucleo_conf.h     BSP configuration file
   - ADC/ADC_GainCompensation/Inc/stm32g4xx_it.h          Interrupt handlers header file
   - ADC/ADC_GainCompensation/Inc/main.h                        Header for main.c module  
   - ADC/ADC_GainCompensation/Src/stm32g4xx_it.c          Interrupt handlers

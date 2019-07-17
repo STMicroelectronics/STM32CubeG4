@@ -10,11 +10,11 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics. 
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the 
+  * the "License"; You may not use this file except in compliance with the
   * License. You may obtain a copy of the License at:
   *                        opensource.org/licenses/BSD-3-Clause
   *
@@ -112,8 +112,8 @@ int main(void)
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
 
-  /*##-1- Start the transmission process #####################################*/  
-  /* While the UART in reception process, user can transmit data through 
+  /*##-1- Start the transmission process #####################################*/
+  /* While the UART in reception process, user can transmit data through
      "aTxBuffer" buffer */
   if(HAL_UART_Transmit_IT(&huart1, (uint8_t*)aTxStartMessage, TXSTARTMESSAGESIZE)!= HAL_OK)
   {
@@ -141,15 +141,15 @@ int main(void)
   {
   }
 
-  /*##-4- Send the received Buffer ###########################################*/  
+  /*##-4- Send the received Buffer ###########################################*/
   if(HAL_UART_Transmit_IT(&huart1, (uint8_t*)aRxBuffer, RXBUFFERSIZE)!= HAL_OK)
   {
     /* Transfer error in transmission process */
     Error_Handler();
   }
-  
-  /*##-5- Wait for the end of the transfer ###################################*/  
-  /*  Before starting a new communication transfer, you need to check the current   
+
+  /*##-5- Wait for the end of the transfer ###################################*/
+  /*  Before starting a new communication transfer, you need to check the current
       state of the peripheral; if it’s busy you need to wait for the end of current
       transfer before starting a new one.
       For simplicity reasons, this example is just waiting till the end of the
@@ -158,21 +158,21 @@ int main(void)
   while (HAL_UART_GetState(&huart1) != HAL_UART_STATE_READY)
   {
   }
-  
-  /*##-6- Send the End Message ###############################################*/  
+
+  /*##-6- Send the End Message ###############################################*/
   if(HAL_UART_Transmit_IT(&huart1, (uint8_t*)aTxEndMessage, TXENDMESSAGESIZE)!= HAL_OK)
   {
     /* Transfer error in transmission process */
     Error_Handler();
   }
-  
-  /*##-7- Wait for the end of the transfer ###################################*/  
+
+  /*##-7- Wait for the end of the transfer ###################################*/
   while (HAL_UART_GetState(&huart1) != HAL_UART_STATE_READY)
   {
   }
 
   /* Turn on LED1 if test passes then enter infinite loop */
-  BSP_LED_On(LED1); 
+  BSP_LED_On(LED1);
 
   /* USER CODE END 2 */
 
@@ -205,7 +205,7 @@ void SystemClock_Config(void)
   */
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
-  RCC_OscInitStruct.HSICalibrationValue = 64;
+  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
   RCC_OscInitStruct.PLL.PLLM = RCC_PLLM_DIV4;
@@ -306,9 +306,9 @@ static void MX_GPIO_Init(void)
 
 /**
   * @brief  Tx Transfer completed callback
-  * @param  UartHandle: UART handle. 
-  * @note   This example shows a simple way to report end of IT Tx transfer, and 
-  *         you can add your own implementation. 
+  * @param  UartHandle: UART handle.
+  * @note   This example shows a simple way to report end of IT Tx transfer, and
+  *         you can add your own implementation.
   * @retval None
   */
 void HAL_UART_TxCpltCallback(UART_HandleTypeDef *UartHandle)
@@ -318,7 +318,7 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *UartHandle)
 /**
   * @brief  Rx Transfer completed callback
   * @param  UartHandle: UART handle
-  * @note   This example shows a simple way to report end of IT Rx transfer, and 
+  * @note   This example shows a simple way to report end of IT Rx transfer, and
   *         you can add your own implementation.
   * @retval None
   */

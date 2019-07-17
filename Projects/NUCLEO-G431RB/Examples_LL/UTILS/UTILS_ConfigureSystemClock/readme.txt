@@ -53,7 +53,7 @@ Anyway, user can connect on oscilloscope to MCO pin (PA.08) to check requested f
 
   - NUCLEO-G431RB RevC Set-up
     - Connect the MCO pin to an oscilloscope to monitor the different waveforms:
-      - PA.08: Arduino connector CN9 pin D8, Morpho connector C10 pin 23 
+      - PA.08: Arduino connector CN9 pin D7, Morpho connector C10 pin 23 
 
 @par How to use it ? 
 

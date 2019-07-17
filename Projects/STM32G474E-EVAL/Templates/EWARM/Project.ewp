@@ -1056,7 +1056,7 @@
                     <name>$PROJ_DIR$\..\..\..\..\Drivers\BSP\Components\stts751\stts751.c</name>
                 </file>
                 <file>
-                    <name>$PROJ_DIR$\..\..\..\..\Drivers\BSP\Components\stts751\stts751_regs.c</name>
+                    <name>$PROJ_DIR$\..\..\..\..\Drivers\BSP\Components\stts751\stts751_reg.c</name>
                 </file>
             </group>
             <group>

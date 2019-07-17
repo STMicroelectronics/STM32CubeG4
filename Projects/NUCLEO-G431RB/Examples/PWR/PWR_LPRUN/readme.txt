@@ -8,7 +8,7 @@
   * @brief   Description of the Low Power Run Mode example.
   ******************************************************************************
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -57,6 +57,7 @@ Power, PWR, Low Power, Run mode, Interrupt, EXTI, Wakeup, External reset
 
 @par Directory contents 
 
+  - PWR/PWR_LPRUN/Inc/stm32g4xx_nucleo_conf.h     BSP configuration file
   - PWR/PWR_LPRUN/Inc/stm32g4xx_conf.h         HAL Configuration file
   - PWR/PWR_LPRUN/Inc/stm32g4xx_it.h           Header for stm32g4xx_it.c
   - PWR/PWR_LPRUN/Inc/main.h                         Header file for main.c

@@ -8,7 +8,7 @@
   * @brief   Description of the FLASH Dual boot example.
   ******************************************************************************
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -69,6 +69,7 @@ Memory, Flash, Dual boot, Dual Bank, Execute, Binary, Option bytes
 
 @par Directory contents
 
+  - FLASH/FLASH_DualBoot/Inc/stm32g4xx_nucleo_conf.h     BSP configuration file
   - FLASH/FLASH_DualBoot/Inc/stm32g4xx_hal_conf.h        HAL Configuration file
   - FLASH/FLASH_DualBoot/Inc/stm32g4xx_it.h              Header for stm32g4xx_it.c
   - FLASH/FLASH_DualBoot/Inc/main.h                      Header for main.c module

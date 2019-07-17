@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; COPYRIGHT(c) 2017 STMicroelectronics</center></h2>
+  * <h2><center>&copy; COPYRIGHT(c) 2019 STMicroelectronics</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -85,18 +85,7 @@
 
 #define IS_LL_RTC_DAY(__DAY__)    (((__DAY__) >= (uint32_t)1U) && ((__DAY__) <= (uint32_t)31U))
 
-#define IS_LL_RTC_MONTH(__VALUE__) (((__VALUE__) == LL_RTC_MONTH_JANUARY) \
-                                    || ((__VALUE__) == LL_RTC_MONTH_FEBRUARY) \
-                                    || ((__VALUE__) == LL_RTC_MONTH_MARCH) \
-                                    || ((__VALUE__) == LL_RTC_MONTH_APRIL) \
-                                    || ((__VALUE__) == LL_RTC_MONTH_MAY) \
-                                    || ((__VALUE__) == LL_RTC_MONTH_JUNE) \
-                                    || ((__VALUE__) == LL_RTC_MONTH_JULY) \
-                                    || ((__VALUE__) == LL_RTC_MONTH_AUGUST) \
-                                    || ((__VALUE__) == LL_RTC_MONTH_SEPTEMBER) \
-                                    || ((__VALUE__) == LL_RTC_MONTH_OCTOBER) \
-                                    || ((__VALUE__) == LL_RTC_MONTH_NOVEMBER) \
-                                    || ((__VALUE__) == LL_RTC_MONTH_DECEMBER))
+#define IS_LL_RTC_MONTH(__MONTH__) (((__MONTH__) >= 1U) && ((__MONTH__) <= 12U))
 
 #define IS_LL_RTC_YEAR(__YEAR__) ((__YEAR__) <= 99U)
 
@@ -394,7 +383,7 @@ ErrorStatus LL_RTC_DATE_Init(RTC_TypeDef *RTCx, uint32_t RTC_Format, LL_RTC_Date
 
   if ((RTC_Format == LL_RTC_FORMAT_BIN) && ((RTC_DateStruct->Month & 0x10U) == 0x10U))
   {
-    RTC_DateStruct->Month = (uint8_t)(RTC_DateStruct->Month & (uint32_t)~(0x10U)) + 0x0AU;
+    RTC_DateStruct->Month = (uint8_t)(RTC_DateStruct->Month & (uint8_t)~(0x10U)) + 0x0AU;
   }
   if (RTC_Format == LL_RTC_FORMAT_BIN)
   {

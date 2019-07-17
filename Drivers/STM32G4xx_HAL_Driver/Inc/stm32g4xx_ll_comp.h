@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -78,11 +78,6 @@ typedef struct
                                              This parameter can be a value of @ref COMP_LL_EC_OUTPUT_BLANKING_SOURCE
 
                                              This feature can be modified afterwards using unitary function @ref LL_COMP_SetOutputBlankingSource(). */
-
-  uint32_t DeglitcherMode;              /*!< Configure the comparator deglitcher mode.
-                                             This parameter can be a value of @ref COMP_LL_EC_DEGLITCHER_MODE
-
-                                             This feature can be modified afterwards using unitary function @ref LL_COMP_SetDeglitcherMode(). */
 
 } LL_COMP_InitTypeDef;
 
@@ -198,15 +193,6 @@ typedef struct
   */
 #define LL_COMP_OUTPUT_LEVEL_LOW        (0x00000000UL)          /*!< Comparator output level low (if the polarity is not inverted, otherwise to be complemented) */
 #define LL_COMP_OUTPUT_LEVEL_HIGH       (0x00000001UL)          /*!< Comparator output level high (if the polarity is not inverted, otherwise to be complemented) */
-/**
-  * @}
-  */
-
-/** @defgroup COMP_LL_EC_DEGLITCHER_MODE Comparator Deglitcher Mode
-  * @{
-  */
-#define LL_COMP_DEGLITCHER_DISABLED      (0x00000000UL)         /*!< Comparator deglitcher disabled */
-#define LL_COMP_DEGLITCHER_ENABLED       (COMP_CSR_DEGLITCHEN)  /*!< Comparator deglitcher enabled */
 /**
   * @}
   */
@@ -629,32 +615,6 @@ __STATIC_INLINE uint32_t LL_COMP_GetOutputBlankingSource(COMP_TypeDef *COMPx)
   return (uint32_t)(READ_BIT(COMPx->CSR, COMP_CSR_BLANKING));
 }
 
-/**
-  * @brief  Configure comparator instance deglitcher mode.
-  * @rmtoll CSR      DEGLITCHEN      LL_COMP_SetDeglitcherMode
-  * @param  COMPx Comparator instance
-  * @param  DeglitcherMode This parameter can be one of the following values:
-  *         @arg @ref LL_COMP_DEGLITCHER_DISABLED
-  *         @arg @ref LL_COMP_DEGLITCHER_ENABLED
-  * @retval None
-  */
-__STATIC_INLINE void LL_COMP_SetDeglitcherMode(COMP_TypeDef *COMPx, uint32_t DeglitcherMode)
-{
-  MODIFY_REG(COMPx->CSR, COMP_CSR_DEGLITCHEN, DeglitcherMode);
-}
-
-/**
-  * @brief  Get comparator instance deglitcher mode.
-  * @rmtoll CSR      DEGLITCHEN      LL_COMP_GetDeglitcherMode
-  * @param  COMPx Comparator instance
-  * @retval Returned value can be one of the following values:
-  *         @arg @ref LL_COMP_DEGLITCHER_DISABLED
-  *         @arg @ref LL_COMP_DEGLITCHER_ENABLED
-  */
-__STATIC_INLINE uint32_t LL_COMP_GetDeglitcherMode(COMP_TypeDef *COMPx)
-{
-  return (uint32_t)(READ_BIT(COMPx->CSR, COMP_CSR_DEGLITCHEN));
-}
 /**
   * @}
   */

@@ -21,7 +21,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -52,7 +52,7 @@
   * @brief STM32G4xx HAL Driver version number $VERSION$
   */
 #define __STM32G4xx_HAL_VERSION_MAIN   (0x01U) /*!< [31:24] main version */
-#define __STM32G4xx_HAL_VERSION_SUB1   (0x00U) /*!< [23:16] sub1 version */
+#define __STM32G4xx_HAL_VERSION_SUB1   (0x01U) /*!< [23:16] sub1 version */
 #define __STM32G4xx_HAL_VERSION_SUB2   (0x00U) /*!< [15:8]  sub2 version */
 #define __STM32G4xx_HAL_VERSION_RC     (0x00U) /*!< [7:0]  release candidate */
 #define __STM32G4xx_HAL_VERSION         ((__STM32G4xx_HAL_VERSION_MAIN << 24U)\
@@ -347,7 +347,7 @@ uint32_t HAL_GetTickPrio(void)
 
 /**
   * @brief Set new tick Freq.
-  * @retval Status
+  * @retval status
   */
 HAL_StatusTypeDef HAL_SetTickFreq(uint32_t Freq)
 {
@@ -356,10 +356,12 @@ HAL_StatusTypeDef HAL_SetTickFreq(uint32_t Freq)
 
   if (uwTickFreq != Freq)
   {
-    uwTickFreq = Freq;
-
     /* Apply the new tick Freq  */
     status = HAL_InitTick(uwTickPrio);
+    if (status == HAL_OK)
+    {
+      uwTickFreq = Freq;
+    }
   }
 
   return status;

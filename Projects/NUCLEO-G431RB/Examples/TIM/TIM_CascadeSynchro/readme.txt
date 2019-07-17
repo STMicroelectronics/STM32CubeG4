@@ -10,7 +10,7 @@
 
   ******************************************************************************
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -71,6 +71,7 @@ Timer, PWM, Cascade Synchronization, Master, Slave, Duty Cycle, Waveform, Oscill
 
 @par Directory contents
 
+  - TIM/TIM_CascadeSynchro/Inc/stm32g4xx_nucleo_conf.h     BSP configuration file
   - TIM/TIM_CascadeSynchro/Inc/stm32g4xx_hal_conf.h    HAL configuration file
   - TIM/TIM_CascadeSynchro/Inc/stm32g4xx_it.h          Interrupt handlers header file
   - TIM/TIM_CascadeSynchro/Inc/main.h                  Header for main.c module  
@@ -89,9 +90,9 @@ Timer, PWM, Cascade Synchronization, Master, Slave, Duty Cycle, Waveform, Oscill
 
   - NUCLEO-G431RB Set-up
    Connect the following pins to an oscilloscope to monitor the different waveforms:
-      - TIM2 CH1 (PA0)
-      - TIM3 CH1 (PA6)
-      - TIM4 CH1 (PA11)
+      - TIM2 CH1 (PA0 (connected to pin 28 in CN7))
+      - TIM3 CH1 (PA6 (connected to pin 13 in CN10))
+      - TIM4 CH1 (PA11 (connected to pin 14 in CN10))
 
 @par How to use it ? 
 

@@ -91,7 +91,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -317,9 +317,6 @@ void HAL_GPIO_DeInit(GPIO_TypeDef  *GPIOx, uint32_t GPIO_Pin)
       tmp &= (0x0FUL << (4U * (position & 0x03U)));
       if (tmp == (GPIO_GET_INDEX(GPIOx) << (4U * (position & 0x03U))))
       {
-        tmp = 0x0FUL << (4U * (position & 0x03U));
-        SYSCFG->EXTICR[position >> 2U] &= ~tmp;
-
         /* Clear EXTI line configuration */
         EXTI->IMR1 &= ~(iocurrent);
         EXTI->EMR1 &= ~(iocurrent);
@@ -327,6 +324,9 @@ void HAL_GPIO_DeInit(GPIO_TypeDef  *GPIOx, uint32_t GPIO_Pin)
         /* Clear Rising Falling edge configuration */
         EXTI->RTSR1 &= ~(iocurrent);
         EXTI->FTSR1 &= ~(iocurrent);
+
+        tmp = 0x0FUL << (4U * (position & 0x03U));
+        SYSCFG->EXTICR[position >> 2U] &= ~tmp;
       }
 
       /*------------------------- GPIO Mode Configuration --------------------*/

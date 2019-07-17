@@ -10,10 +10,10 @@
   * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
-  * This software component is licensed by ST under Ultimate Liberty license
-  * SLA0044, the "License"; You may not use this file except in compliance with
-  * the License. You may obtain a copy of the License at:
-  *                             www.st.com/SLA0044
+  * This software component is licensed by ST under BSD 3-Clause license,
+  * the "License"; You may not use this file except in compliance with the
+  * License. You may obtain a copy of the License at:
+  *                        opensource.org/licenses/BSD-3-Clause
   *
   ******************************************************************************
   */
@@ -28,7 +28,10 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
+#include "stm32g4xx_ll_bus.h"
+#include "stm32g4xx_ll_gpio.h"
 #include "stm32g474e_eval_conf.h"
+#include "stm32g474e_eval_errno.h"
 
 /** @addtogroup BSP
   * @{
@@ -47,48 +50,40 @@ extern "C" {
   */
 
 /**
-  * @brief  POWER Status
-  */
-typedef enum
-{
-    PWR_OK = 0,
-    PWR_ERROR
-} PWR_StatusTypeDef;
-
-/**
   * @brief  Power role
   */
 typedef enum
 {
-    POWER_ROLE_SOURCE = 0,
-    POWER_ROLE_SINK,
-    POWER_ROLE_DUAL
-} PWR_PowerRoleTypeDef;
+  POWER_ROLE_SOURCE = 0,
+  POWER_ROLE_SINK,
+  POWER_ROLE_DUAL
+}
+USBPD_PWR_PowerRoleTypeDef;
 
 /**
   * @brief  Voltage control mode
   */
 typedef enum
 {
-    DCDC_CTRL_MODE_UNKNOWN = 0,
-    DCDC_CTRL_MODE_GPIO,
-    DCDC_CTRL_MODE_PWM,
-} PWR_DCDCCtrlModeTypeDef;
+  DCDC_CTRL_MODE_UNKNOWN = 0,
+  DCDC_CTRL_MODE_GPIO,
+  DCDC_CTRL_MODE_PWM,
+} USBPD_PWR_DCDCCtrlModeTypeDef;
 
 /**
   * @brief  VBUS connection status
   */
 typedef enum
 {
-    VBUS_CONNECTED = 0,
-    VBUS_NOT_CONNECTED
-} PWR_VBUSConnectionStatusTypeDef;
+  VBUS_CONNECTED = 0,
+  VBUS_NOT_CONNECTED
+} USBPD_PWR_VBUSConnectionStatusTypeDef;
 
 /**
   * @brief VBUS Detection Callback
   */
-typedef void PWR_VBUSDetectCallbackFunc(uint32_t PortId,
-                                        PWR_VBUSConnectionStatusTypeDef VBUSConnectionStatus);
+typedef void USBPD_PWR_VBUSDetectCallbackFunc(uint32_t Instance,
+                                              USBPD_PWR_VBUSConnectionStatusTypeDef VBUSConnectionStatus);
 
 /**
   * @}
@@ -100,56 +95,87 @@ typedef void PWR_VBUSDetectCallbackFunc(uint32_t PortId,
 /**
   * @brief  Number of TypeC ports
   */
-#define PWR_TYPEC_PORT_NB 2
+#define USBPD_PWR_INSTANCES_NBR               1U
 
 /**
   * @brief  Type-C port identifier
   */
-#define TYPE_C_PORT_1  0
-#define TYPE_C_PORT_2  1
+#define USBPD_PWR_TYPE_C_PORT_1           0U
 
 /**
   * @brief  CC pin identifier
   */
-#define TYPE_C_CC1     1
-#define TYPE_C_CC2     2
+#define USBPD_PWR_TYPE_C_CC1              1U
+#define USBPD_PWR_TYPE_C_CC2              2U
 
 /**
   * @brief  VBUS disconnection threshold values (in mV)
   */
-#define BSP_PWR_HIGH_VBUS_THRESHOLD     (4500u)
-#define BSP_PWR_LOW_VBUS_THRESHOLD       (800u)
+#define USBPD_PWR_HIGH_VBUS_THRESHOLD     (4500U)
+#define USBPD_PWR_LOW_VBUS_THRESHOLD       (800U)
 
 /**
   * @brief  VBUS discharge parameters
   */
-#define BSP_PWR_DISCHARGE_MARGIN        (500u)
-#define BSP_PWR_DISCHARGE_TIME            (6u)
+#define USBPD_PWR_DISCHARGE_MARGIN        (500U)
+#define USBPD_PWR_DISCHARGE_TIME            (6U)
 
 /**
   * @brief  Calibration settings
   */
-#define BSP_PWR_DCDC_PRECISION          (40u)     /* DCDC output precision set to 40mV (Noise)*/
-#define BSP_PWR_CALIBRATION_ENABLED     (1u)
-#define BSP_PWR_CALIBRATION_DISABLED    (0u)
+#define USBPD_PWR_DCDC_PRECISION          (40U)     /* DCDC output precision set to 40mV (Noise)*/
+#define USBPD_PWR_CALIBRATION_ENABLED     (1U)
+#define USBPD_PWR_CALIBRATION_DISABLED    (0U)
 
 /**
   * @brief  Standard VBUS voltage levels
   */
-#define BSP_PWR_VBUS_5V                 5000u
-#define BSP_PWR_VBUS_9V                 9000u
-#define BSP_PWR_VBUS_15V                15000u
+#define USBPD_PWR_VBUS_5V                 5000U
+#define USBPD_PWR_VBUS_9V                 9000U
+#define USBPD_PWR_VBUS_15V                15000U
 
 /**
   * @brief  power timeout
   */
-#define BSP_PWR_TIMEOUT_PDO             250u
-#define BSP_PWR_TIMEOUT_APDO             25u
+#define USBPD_PWR_TIMEOUT_PDO             250U         /* Timeout for PDO to PDO or PDO to APDO at 250ms*/
+#define USBPD_PWR_TIMEOUT_APDO            25U          /* Timeout for APDO to APDO at 25ms*/
 
 /**
   * @brief  Invalid value set during issue with voltage setting
   */
-#define BSP_PWR_INVALID_VALUE           0xFFFFFFFFu
+#define USBPD_PWR_INVALID_VALUE           0xFFFFFFFFU
+
+/* On EVAL STM32G474E_EVAL MB1397 REVA used for G474 validation, following setup has been used :
+      VSENSE      => PC0
+      SOURCE_EN   => PC11
+      DISCHARGE   => PB2  */
+#define VSENSE_GPIO_PORT                  GPIOC
+#define VSENSE_GPIO_PIN                   LL_GPIO_PIN_0
+#define VSENSE_GPIO_ENABLE_CLOCK()        LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOC);
+
+#define SOURCE_EN_GPIO_PORT               GPIOC
+#define SOURCE_EN_GPIO_PIN                LL_GPIO_PIN_11
+#define SOURCE_EN_GPIO_ENABLE_CLOCK()     LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOC);
+#define SOURCE_EN_SET_OFF()               LL_GPIO_ResetOutputPin(SOURCE_EN_GPIO_PORT, SOURCE_EN_GPIO_PIN);
+#define SOURCE_EN_SET_ON()                LL_GPIO_SetOutputPin(SOURCE_EN_GPIO_PORT, SOURCE_EN_GPIO_PIN);
+#define IS_SOURCE_EN_SET_ON()             (1u == LL_GPIO_IsOutputPinSet(SOURCE_EN_GPIO_PORT, SOURCE_EN_GPIO_PIN))
+
+#define DISCHARGE_GPIO_PORT               GPIOB
+#define DISCHARGE_GPIO_PIN                LL_GPIO_PIN_2
+#define DISCHARGE_GPIO_ENABLE_CLOCK()     LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOB);
+#define DISCHARGE_SET_OFF()               LL_GPIO_ResetOutputPin(DISCHARGE_GPIO_PORT, DISCHARGE_GPIO_PIN);
+#define DISCHARGE_SET_ON()                LL_GPIO_SetOutputPin(DISCHARGE_GPIO_PORT, DISCHARGE_GPIO_PIN);
+
+/* PC0 is used as ADC12_IN6 input for ADC measurement of VBUS voltage :
+   ADC1 (Common 12) Channel 1.
+*/
+#define VSENSE_ADC_INSTANCE               ADC1
+#define VSENSE_ADC_COMMON                 ADC12_COMMON
+#define VSENSE_ADC_RANK                   LL_ADC_REG_RANK_1
+#define VSENSE_ADC_CHANNEL                LL_ADC_CHANNEL_6
+
+/* Enable ADC clock (core clock) */
+#define VSENSE_ADC_ENABLE_CLOCK()         LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_ADC12);
 
 /**
   * @}
@@ -158,64 +184,67 @@ typedef void PWR_VBUSDetectCallbackFunc(uint32_t PortId,
 /** @defgroup STM32G474E_EVAL_USBPD_PWR_Exported_Functions Exported Functions
   * @{
   */
-PWR_StatusTypeDef BSP_PWR_VBUSInit(uint32_t PortId);
+/* Common functions */
+int32_t BSP_USBPD_PWR_Init(uint32_t Instance);
 
-PWR_StatusTypeDef BSP_PWR_VBUSDeInit(uint32_t PortId);
+int32_t BSP_USBPD_PWR_Deinit(uint32_t Instance);
 
-PWR_StatusTypeDef BSP_PWR_VBUSOn(uint32_t PortId);
+int32_t BSP_USBPD_PWR_VBUSInit(uint32_t Instance);
 
-PWR_StatusTypeDef BSP_PWR_VBUSOff(uint32_t PortId);
+int32_t BSP_USBPD_PWR_VBUSDeInit(uint32_t Instance);
 
-PWR_StatusTypeDef BSP_PWR_VBUSSetVoltage_Fixed(uint32_t PortNum,
-                                               uint32_t VbusTargetInmv,
-                                               uint32_t OperatingCurrent,
-                                               uint32_t MaxOperatingCurrent);
+int32_t BSP_USBPD_PWR_VBUSOn(uint32_t Instance);
 
-PWR_StatusTypeDef BSP_PWR_VBUSSetVoltage_Variable(uint32_t PortNum,
-                                                  uint32_t VbusTargetMaxInmv,
-                                                  uint32_t VbusTargetMinInmv,
-                                                  uint32_t OperatingCurrent,
-                                                  uint32_t MaxOperatingCurrent);
+int32_t BSP_USBPD_PWR_VBUSOff(uint32_t Instance);
 
-PWR_StatusTypeDef BSP_PWR_VBUSSetVoltage_Battery(uint32_t PortId,
-                                                 uint32_t VbusTargetMin,
-                                                 uint32_t VbusTargetMax,
-                                                 uint32_t OperatingPower,
-                                                 uint32_t MaxOperatingPower);
+int32_t BSP_USBPD_PWR_VBUSSetVoltage_Fixed(uint32_t Instance,
+                                           uint32_t VbusTargetInmv,
+                                           uint32_t OperatingCurrent,
+                                           uint32_t MaxOperatingCurrent);
 
-PWR_StatusTypeDef BSP_PWR_VBUSSetVoltage_APDO(uint32_t PortId,
-                                              uint32_t VbusTargetInmv,
+int32_t BSP_USBPD_PWR_VBUSSetVoltage_Variable(uint32_t Instance,
+                                              uint32_t VbusTargetMaxInmv,
+                                              uint32_t VbusTargetMinInmv,
                                               uint32_t OperatingCurrent,
-                                              int32_t Delta);
+                                              uint32_t MaxOperatingCurrent);
 
-uint32_t BSP_PWR_VBUSGetVoltage(uint32_t PortId);
+int32_t BSP_USBPD_PWR_VBUSSetVoltage_Battery(uint32_t Instance,
+                                             uint32_t VbusTargetMin,
+                                             uint32_t VbusTargetMax,
+                                             uint32_t OperatingPower,
+                                             uint32_t MaxOperatingPower);
 
-int32_t BSP_PWR_VBUSGetCurrent(uint32_t PortId);
+int32_t BSP_USBPD_PWR_VBUSSetVoltage_APDO(uint32_t Instance,
+                                          uint32_t VbusTargetInmv,
+                                          uint32_t OperatingCurrent,
+                                          int32_t Delta);
 
-PWR_StatusTypeDef BSP_PWR_VCONNInit(uint32_t PortId,
-                                    uint32_t CCPinId);
+int32_t BSP_USBPD_PWR_VBUSGetVoltage(uint32_t Instance, uint32_t *pVoltage);
 
-PWR_StatusTypeDef BSP_PWR_VCONNDeInit(uint32_t PortId,
-                                      uint32_t CCPinId);
+int32_t BSP_USBPD_PWR_VBUSGetCurrent(uint32_t Instance, int32_t *pCurrent);
 
-PWR_StatusTypeDef BSP_PWR_VCONNOn(uint32_t PortId,
+int32_t BSP_USBPD_PWR_VCONNInit(uint32_t Instance,
+                                uint32_t CCPinId);
+
+int32_t BSP_USBPD_PWR_VCONNDeInit(uint32_t Instance,
                                   uint32_t CCPinId);
 
-PWR_StatusTypeDef BSP_PWR_VCONNOff(uint32_t PortId,
-                                   uint32_t CCPinId);
+int32_t BSP_USBPD_PWR_VCONNOn(uint32_t Instance,
+                              uint32_t CCPinId);
 
-void BSP_PWR_SetVBUSDisconnectionThreshold(uint32_t PortId,
-                                           uint32_t VoltageThreshold);
+int32_t BSP_USBPD_PWR_VCONNOff(uint32_t Instance,
+                               uint32_t CCPinId);
 
-PWR_StatusTypeDef BSP_PWR_RegisterVBUSDetectCallback(uint32_t                      PortId,
-                                                     PWR_VBUSDetectCallbackFunc *  pfnVBUSDetectCallback);
+int32_t BSP_USBPD_PWR_SetVBUSDisconnectionThreshold(uint32_t Instance,
+                                                    uint32_t VoltageThreshold);
 
-uint8_t BSP_PWR_VBUSIsOn(uint32_t PortId);
+int32_t BSP_USBPD_PWR_RegisterVBUSDetectCallback(uint32_t Instance,
+                                                 USBPD_PWR_VBUSDetectCallbackFunc *pfnVBUSDetectCallback);
 
-uint8_t BSP_PWR_VCONNIsOn(uint32_t PortId,
-                          uint32_t CCPinId);
+int32_t BSP_USBPD_PWR_VBUSIsOn(uint32_t Instance, uint8_t *pState);
 
-int32_t BSP_PWR_DCDCGetCtrlMode(uint32_t PortId, PWR_DCDCCtrlModeTypeDef *pDCDCCtrl);
+int32_t BSP_USBPD_PWR_VCONNIsOn(uint32_t Instance,
+                                uint32_t CCPinId, uint8_t *pState);
 
 /**
   * @}

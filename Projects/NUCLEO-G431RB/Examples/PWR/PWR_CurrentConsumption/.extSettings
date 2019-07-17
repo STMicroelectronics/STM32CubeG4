@@ -4,6 +4,6 @@ HeaderPath=..\..\..\..\..\..\Drivers\STM32G4xx_HAL_Driver\Inc;..\..\..\..\..\..\
 Define=USE_NUCLEO_64
 HALModule=EXTI;UART
 [Groups]
-Doc=../readme.txt;
 Application/User=../Src/stm32g4xx_lp_modes.c;
+Doc=../readme.txt;
 Drivers/BSP/STM32G4xx_Nucleo=../../../../../../Drivers/BSP/STM32G4xx_Nucleo/stm32g4xx_nucleo.c;

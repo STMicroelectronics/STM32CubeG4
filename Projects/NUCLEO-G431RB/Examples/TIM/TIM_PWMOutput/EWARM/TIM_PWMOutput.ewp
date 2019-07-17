@@ -219,8 +219,6 @@
           <state>USE_HAL_DRIVER</state>
           <state>STM32G431xx</state>
           <state></state>
-          <state></state>
-          <state></state>
         </option>
         <option>
           <name>CCPreprocFile</name>

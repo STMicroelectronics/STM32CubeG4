@@ -9,7 +9,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics. 
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics. 
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -217,7 +217,7 @@ void DMA1_Channel1_IRQHandler(void)
 
 /* USER CODE BEGIN 1 */
 /**
-  * @brief  This function handles external line 4_15 interrupt request.
+  * @brief  This function handles key press external line interrupt request.
   * @param  None
   * @retval None
   */

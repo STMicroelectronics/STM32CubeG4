@@ -64,7 +64,6 @@ MEMORY
 FLASH (rx)      : ORIGIN = 0x08000000, LENGTH = 512K
 RAM (xrw)      : ORIGIN = 0x20000000, LENGTH = 128K
 CCMSRAM (xrw)      : ORIGIN = 0x10000000, LENGTH = 32K
-RAM2 (xrw) : ORIGIN = 0x20002000, LENGTH = 10K
 }
 
 /* Define output sections */
@@ -186,7 +185,6 @@ SECTIONS
   }
 
   .ARM.attributes 0 : { *(.ARM.attributes) }
-  .ROarraySection : { *(.ROarraySection) } >RAM2
 }
 
 

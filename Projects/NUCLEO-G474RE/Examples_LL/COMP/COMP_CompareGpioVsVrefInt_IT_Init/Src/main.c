@@ -12,7 +12,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -215,7 +215,6 @@ static void MX_COMP1_Init(void)
   COMP_InitStruct.InputHysteresis = LL_COMP_HYSTERESIS_NONE;
   COMP_InitStruct.OutputPolarity = LL_COMP_OUTPUTPOL_NONINVERTED;
   COMP_InitStruct.OutputBlankingSource = LL_COMP_BLANKINGSRC_NONE;
-  COMP_InitStruct.DeglitcherMode = LL_COMP_DEGLITCHER_DISABLED;
   LL_COMP_Init(COMP1, &COMP_InitStruct);
 
   /* Wait loop initialization and execution */

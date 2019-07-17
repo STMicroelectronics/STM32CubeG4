@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -1006,7 +1006,7 @@ typedef  void (*pADC_CallbackTypeDef)(ADC_HandleTypeDef *hadc); /*!< pointer to 
                                                    ((__REGTRIG__) == ADC_EXTERNALTRIG_HRTIM_TRG4)     || \
                                                    ((__REGTRIG__) == ADC_EXTERNALTRIG_EXT_IT2)))     || \
                                                  ((__REGTRIG__) == ADC_SOFTWARE_START)           )
-#elif defined(STM32G473xx)
+#elif defined(STM32G473xx) || defined(STM32G483xx)
 #define IS_ADC_EXTTRIG(__HANDLE__, __REGTRIG__) (((__REGTRIG__) == ADC_EXTERNALTRIG_T1_TRGO)         || \
                                                  ((__REGTRIG__) == ADC_EXTERNALTRIG_T1_TRGO2)        || \
                                                  ((__REGTRIG__) == ADC_EXTERNALTRIG_T1_CC3)          || \
@@ -1039,7 +1039,35 @@ typedef  void (*pADC_CallbackTypeDef)(ADC_HandleTypeDef *hadc); /*!< pointer to 
                                                    ((__REGTRIG__) == ADC_EXTERNALTRIG_T8_CC1)         || \
                                                    ((__REGTRIG__) == ADC_EXTERNALTRIG_EXT_IT2)))     || \
                                                  ((__REGTRIG__) == ADC_SOFTWARE_START)           )
-#elif defined(STM32GBK1CB) || defined(STM32G431xx) || defined(STM32G441xx) || defined(STM32G471xx)
+#elif defined(STM32G471xx)
+#define IS_ADC_EXTTRIG(__HANDLE__, __REGTRIG__) (((__REGTRIG__) == ADC_EXTERNALTRIG_T1_TRGO)         || \
+                                                 ((__REGTRIG__) == ADC_EXTERNALTRIG_T1_TRGO2)        || \
+                                                 ((__REGTRIG__) == ADC_EXTERNALTRIG_T1_CC3)          || \
+                                                 ((__REGTRIG__) == ADC_EXTERNALTRIG_T2_TRGO)         || \
+                                                 ((__REGTRIG__) == ADC_EXTERNALTRIG_T3_TRGO)         || \
+                                                 ((__REGTRIG__) == ADC_EXTERNALTRIG_T4_TRGO)         || \
+                                                 ((__REGTRIG__) == ADC_EXTERNALTRIG_T6_TRGO)         || \
+                                                 ((__REGTRIG__) == ADC_EXTERNALTRIG_T7_TRGO)         || \
+                                                 ((__REGTRIG__) == ADC_EXTERNALTRIG_T8_TRGO)         || \
+                                                 ((__REGTRIG__) == ADC_EXTERNALTRIG_T8_TRGO2)        || \
+                                                 ((__REGTRIG__) == ADC_EXTERNALTRIG_T15_TRGO)        || \
+                                                 ((__REGTRIG__) == ADC_EXTERNALTRIG_LPTIM_OUT)       || \
+                                                 ((((__HANDLE__)->Instance == ADC1) || ((__HANDLE__)->Instance == ADC2)) && \
+                                                  (((__REGTRIG__) == ADC_EXTERNALTRIG_T1_CC1)    || \
+                                                   ((__REGTRIG__) == ADC_EXTERNALTRIG_T1_CC2)    || \
+                                                   ((__REGTRIG__) == ADC_EXTERNALTRIG_T2_CC2)    || \
+                                                   ((__REGTRIG__) == ADC_EXTERNALTRIG_T3_CC4)    || \
+                                                   ((__REGTRIG__) == ADC_EXTERNALTRIG_T4_CC4)    || \
+                                                   ((__REGTRIG__) == ADC_EXTERNALTRIG_EXT_IT11)))    || \
+                                                 ((((__HANDLE__)->Instance == ADC3)) && \
+                                                  (((__REGTRIG__) == ADC_EXTERNALTRIG_T2_CC1)         || \
+                                                   ((__REGTRIG__) == ADC_EXTERNALTRIG_T2_CC3)         || \
+                                                   ((__REGTRIG__) == ADC_EXTERNALTRIG_T3_CC1)         || \
+                                                   ((__REGTRIG__) == ADC_EXTERNALTRIG_T4_CC1)         || \
+                                                   ((__REGTRIG__) == ADC_EXTERNALTRIG_T8_CC1)         || \
+                                                   ((__REGTRIG__) == ADC_EXTERNALTRIG_EXT_IT2)))     || \
+                                                 ((__REGTRIG__) == ADC_SOFTWARE_START)           )
+#elif defined(STM32GBK1CB) || defined(STM32G431xx) || defined(STM32G441xx)
 #define IS_ADC_EXTTRIG(__HANDLE__, __REGTRIG__) (((__REGTRIG__) == ADC_EXTERNALTRIG_T1_TRGO)         || \
                                                  ((__REGTRIG__) == ADC_EXTERNALTRIG_T1_TRGO2)        || \
                                                  ((__REGTRIG__) == ADC_EXTERNALTRIG_T1_CC1)          || \

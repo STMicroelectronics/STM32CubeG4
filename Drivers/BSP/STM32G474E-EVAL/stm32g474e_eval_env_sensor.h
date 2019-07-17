@@ -7,7 +7,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -33,6 +33,8 @@
 #include "../Components/stts751/stts751.h"
 #include "../Components/Common/env_sensor.h"
 
+#include <math.h>
+
 /** @addtogroup BSP
   * @{
   */
@@ -56,9 +58,9 @@ typedef struct
   uint8_t Pressure;
   uint8_t Humidity;
   uint8_t LowPower;
-  float   HumMaxOdr;
-  float   TempMaxOdr;
-  float   PressMaxOdr;
+  float_t HumMaxOdr;
+  float_t TempMaxOdr;
+  float_t PressMaxOdr;
 } ENV_SENSOR_Capabilities_t;
 
 typedef struct
@@ -81,7 +83,13 @@ typedef struct
 
 #define ENV_TEMPERATURE      1U
 
+#if defined(STTS751_MANUFACTURER)
 #define STTS751_ID           STTS751_MANUFACTURER
+#elif defined(STTS751_MANUFACTURER_ID)
+#define STTS751_ID           STTS751_MANUFACTURER_ID
+#else
+#error "STTS751_ID not defined"
+#endif
 
 #define ENV_FUNCTIONS_NBR    1U
 #define ENV_INSTANCES_NBR    (USE_ENV_SENSOR_STTS751)
@@ -112,9 +120,9 @@ int32_t BSP_ENV_SENSOR_GetCapabilities(uint32_t Instance, ENV_SENSOR_Capabilitie
 int32_t BSP_ENV_SENSOR_ReadID(uint32_t Instance, uint8_t *Id);
 int32_t BSP_ENV_SENSOR_Enable(uint32_t Instance, uint32_t Function);
 int32_t BSP_ENV_SENSOR_Disable(uint32_t Instance, uint32_t Function);
-int32_t BSP_ENV_SENSOR_GetOutputDataRate(uint32_t Instance, uint32_t Function, float *Odr);
-int32_t BSP_ENV_SENSOR_SetOutputDataRate(uint32_t Instance, uint32_t Function, float Odr);
-int32_t BSP_ENV_SENSOR_GetValue(uint32_t Instance, uint32_t Function, float *Value);
+int32_t BSP_ENV_SENSOR_GetOutputDataRate(uint32_t Instance, uint32_t Function, float_t *Odr);
+int32_t BSP_ENV_SENSOR_SetOutputDataRate(uint32_t Instance, uint32_t Function, float_t Odr);
+int32_t BSP_ENV_SENSOR_GetValue(uint32_t Instance, uint32_t Function, float_t *Value);
 /**
   * @}
   */

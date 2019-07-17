@@ -8,7 +8,7 @@
   * @brief   Description of the RCC Clock Recovery Service example.
   ******************************************************************************
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -42,7 +42,7 @@ In this test, there are results which could occur:
  procedure. It may due to an issue with LSE synchronization frequency.
  - LED2 will finally power on if SYNC OK is returned by CRS.
 
-Note: HSI48 frequency can be checked with oscilloscope using MCO PIN PA.08 (pin 23 connector CN10 )
+Note: HSI48 frequency can be checked with oscilloscope using MCO PIN PA.08
 
 @par Keywords
 
@@ -50,6 +50,7 @@ RCC, System, Clock Configuration, CRS, System clock, HSI48, LSE, Oscillator, PLL
 
 @par Directory contents
 
+  - RCC/RCC_CRS_Synchronization_Polling/Inc/stm32g4xx_nucleo_conf.h     BSP configuration file
   - RCC/RCC_CRS_Synchonization_Polling/Inc/stm32g4xx_hal_conf.h    HAL configuration file
   - RCC/RCC_CRS_Synchonization_Polling/Inc/stm32g4xx_it.h          Interrupt handlers header file
   - RCC/RCC_CRS_Synchonization_Polling/Inc/main.h                  Header for main.c module

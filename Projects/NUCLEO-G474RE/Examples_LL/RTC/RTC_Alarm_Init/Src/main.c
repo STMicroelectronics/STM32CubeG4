@@ -9,7 +9,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics. 
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics. 
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -104,6 +104,7 @@ int main(void)
 
 
   /* USER CODE END 1 */
+  
 
   /* MCU Configuration--------------------------------------------------------*/
 
@@ -296,10 +297,16 @@ static void MX_RTC_Init(void)
 
   /* USER CODE BEGIN RTC_Init 1 */
   /* USER CODE END RTC_Init 1 */
+  /** Initialize RTC and set the Time and Date 
+  */
   RTC_InitStruct.HourFormat = LL_RTC_HOURFORMAT_24HOUR;
   RTC_InitStruct.AsynchPrescaler = RTC_ASYNCH_PREDIV;
   RTC_InitStruct.SynchPrescaler = RTC_SYNCH_PREDIV;
   LL_RTC_Init(RTC, &RTC_InitStruct);
+  /** Initialize RTC and set the Time and Date 
+  */
+  if(LL_RTC_BKP_GetRegister(RTC,LL_RTC_BKP_DR0) != 0x32F2){
+  
   RTC_TimeStruct.Hours = 0x11;
   RTC_TimeStruct.Minutes = 0x59;
   RTC_TimeStruct.Seconds = 0x55;
@@ -311,6 +318,12 @@ static void MX_RTC_Init(void)
   RTC_DateStruct.Year = 0x16;
 
   LL_RTC_DATE_Init(RTC, LL_RTC_FORMAT_BCD, &RTC_DateStruct);
+    LL_RTC_BKP_SetRegister(RTC,LL_RTC_BKP_DR0,0x32F2);
+  }
+  /** Initialize RTC and set the Time and Date 
+  */
+  if(LL_RTC_BKP_GetRegister(RTC,LL_RTC_BKP_DR0) != 0x32F2){
+  
   RTC_TimeStruct.Hours = 0x11;
   RTC_TimeStruct.Minutes = 0x59;
   RTC_TimeStruct.Seconds = 0x55;
@@ -318,6 +331,8 @@ static void MX_RTC_Init(void)
   RTC_DateStruct.Day = 0x29;
   RTC_DateStruct.Year = 0x16;
 
+    LL_RTC_BKP_SetRegister(RTC,LL_RTC_BKP_DR0,0x32F2);
+  }
   /** Enable the Alarm A 
   */
   RTC_AlarmStruct.AlarmTime.Hours = 0x12;
@@ -325,11 +340,12 @@ static void MX_RTC_Init(void)
   RTC_AlarmStruct.AlarmTime.Seconds = 0x25;
   RTC_AlarmStruct.AlarmMask = LL_RTC_ALMA_MASK_DATEWEEKDAY;
   RTC_AlarmStruct.AlarmDateWeekDaySel = LL_RTC_ALMA_DATEWEEKDAYSEL_DATE;
-  RTC_AlarmStruct.AlarmDateWeekDay = 1;
+  RTC_AlarmStruct.AlarmDateWeekDay = 0x1;
+
   LL_RTC_ALMA_Init(RTC, LL_RTC_FORMAT_BCD, &RTC_AlarmStruct);
   LL_RTC_SetOutputPolarity(RTC, LL_RTC_OUTPUTPOLARITY_PIN_HIGH );
   LL_RTC_SetAlarmOutputType(RTC, LL_RTC_ALARM_OUTPUTTYPE_OPENDRAIN );
-  LL_RTC_SetAlarmOutEvent(RTC, LL_RTC_ALARMOUT_DISABLE);
+  LL_RTC_DisableAlarmPullUp(RTC);
   /* USER CODE BEGIN RTC_Init 2 */
 
   /* Disable the write protection for RTC registers */

@@ -2,13 +2,13 @@
   @page Demo Demo NUCLEO-G431KB Rev A
 
   @verbatim
-  ********************* COPYRIGHT(c) 2018 STMicroelectronics *******************
+  ********************* COPYRIGHT(c) 2019 STMicroelectronics *******************
   * @file    Led_Jumper/readme.txt
   * @author  MCD Application Team
   * @brief   Description of the NUCLEO-G431KB Rev A Demo.
   ******************************************************************************
   *
-  * Copyright (c) 2018 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under Ultimate Liberty license
   * SLA0044, the "License"; You may not use this file except in compliance with

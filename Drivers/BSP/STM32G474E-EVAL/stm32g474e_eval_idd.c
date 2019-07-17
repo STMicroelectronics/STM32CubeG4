@@ -7,7 +7,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -332,7 +332,7 @@ int32_t BSP_IDD_StartMeasurement(uint32_t Instance)
     status = BSP_IO_Init(Instance, &io);
     if (status >= 0)
     {
-      status = BSP_IO_WritePin(Instance, EVAL_IDD_AMP_CONTROL_PIN, GPIO_PIN_RESET);
+      status = BSP_IO_WritePin(Instance, EVAL_IDD_AMP_CONTROL_PIN, (uint32_t)GPIO_PIN_RESET);
 
       if (status >= 0)
       {

@@ -8,7 +8,7 @@
   * @brief   Description of the UART Two Boards Communication IT example.
   ******************************************************************************
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -84,9 +84,6 @@ The UART is configured as follows:
     - Hardware flow control disabled (RTS and CTS signals)
     - Reception and transmission are enabled in the time
 
-@note USARTx/UARTx instance used and associated resources can be updated in "main.h"
-file depending hardware configuration used.
-
 @note When the parity is enabled, the computed parity is inserted at the MSB
 position of the transmitted data.
 
@@ -96,7 +93,7 @@ position of the transmitted data.
       than the peripheral interrupt. Otherwise the caller ISR process will be blocked.
       To change the SysTick interrupt priority you have to use HAL_NVIC_SetPriority() function.
       
-@note The application need to ensure that the SysTick time base is always set to 1 millisecond
+@note The application needs to ensure that the SysTick time base is always set to 1 millisecond
       to have correct HAL operation.
 
 @par Keywords
@@ -105,6 +102,7 @@ Connectivity, UART, Baud rate, RS-232, Full-duplex, DMA, Parity, Stop bit, Trans
 
 @par Directory contents 
 
+  - UART/UART_TwoBoards_ComIT/Inc/stm32g4xx_nucleo_conf.h     BSP configuration file
   - UART/UART_TwoBoards_ComIT/Inc/stm32g4xx_hal_conf.h    HAL configuration file
   - UART/UART_TwoBoards_ComIT/Inc/stm32g4xx_it.h          IT interrupt handlers header file
   - UART/UART_TwoBoards_ComIT/Inc/main.h                  Header for main.c module  

@@ -146,7 +146,7 @@ void                 USBPD_PHY_Reset(uint8_t PortNum);
   * @param  SOPSupported  List of the supported SOP
   * @retval None.
   */
-void                 USBPD_PHY_SOPSupported(uint8_t PortNum,uint32_t SOPSupported);
+void                 USBPD_PHY_SOPSupported(uint8_t PortNum, uint32_t SOPSupported);
 
 /**
   * @brief  De-initialize TCPC devices

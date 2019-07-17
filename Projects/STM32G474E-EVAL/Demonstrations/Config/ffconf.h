@@ -1,19 +1,21 @@
 /**
-  *
-  *  Portions COPYRIGHT 2018 STMicroelectronics
-  *  Copyright (C) 2018, ChaN, all right reserved.
-  *
-  ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
-  * All rights reserved.</center></h2>
-  *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
-  *
+  ****************************************************************************** 
+  * FatFs - Generic FAT file system module R0.12c 
+  ****************************************************************************** 
+  * Copyright (C) 2017, ChaN, all right reserved.
+  * Portion Copyright (C) 2019, STMicroelectronics, all right reserved. 
+  * 
+  * FatFs module is an open source software. Redistribution and use of FatFs in 
+  * source and binary forms, with or without modification, are permitted provided 
+  * that the following condition is met: 
+  * 
+  * 1. Redistributions of source code must retain the above copyright notice, 
+  * this condition and the following disclaimer. 
+  * 
+  * This software is provided by the copyright holder and contributors "AS IS" 
+  * and any warranties related to this software are DISCLAIMED. 
+  * The copyright owner or contributors be NOT LIABLE for any damages caused 
+  * by use of this software. 
   ******************************************************************************
   */
 

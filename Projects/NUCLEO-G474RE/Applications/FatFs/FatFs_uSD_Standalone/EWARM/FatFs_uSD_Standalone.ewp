@@ -219,8 +219,6 @@
           <state>USE_HAL_DRIVER</state>
           <state>STM32G474xx</state>
           <state></state>
-          <state></state>
-          <state></state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1082,18 +1080,18 @@
     <group>
       <name>BSP</name>
       <group>
-        <name>STM32G4xx_Nucleo</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../Drivers/BSP/STM32G4xx_Nucleo/stm32g4xx_nucleo.c</name>
-        </file>
-      </group>
-      <group>
         <name>Adafruit802</name>
         <file>
           <name>$PROJ_DIR$/../../../../../../Drivers/BSP/Adafruit_Shield/adafruit_802_sd.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../Drivers/BSP/Adafruit_Shield/adafruit_802.c</name>
+        </file>
+      </group>
+      <group>
+        <name>STM32G4xx_Nucleo</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Drivers/BSP/STM32G4xx_Nucleo/stm32g4xx_nucleo.c</name>
         </file>
       </group>
     </group>

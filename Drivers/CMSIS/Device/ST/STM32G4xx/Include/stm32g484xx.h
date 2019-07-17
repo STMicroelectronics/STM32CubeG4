@@ -12,7 +12,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -1430,12 +1430,12 @@ typedef struct {
 #define SAI1_Block_A        ((SAI_Block_TypeDef *)SAI1_Block_A_BASE)
 #define SAI1_Block_B        ((SAI_Block_TypeDef *)SAI1_Block_B_BASE)
 #define HRTIM1              ((HRTIM_TypeDef *) HRTIM1_BASE)
-#define HRTIM1_TIMA         ((HRTIM_TIM_TypeDef *) HRTIM1_TIMA_BASE)
-#define HRTIM1_TIMB         ((HRTIM_TIM_TypeDef *) HRTIM1_TIMB_BASE)
-#define HRTIM1_TIMC         ((HRTIM_TIM_TypeDef *) HRTIM1_TIMC_BASE)
-#define HRTIM1_TIMD         ((HRTIM_TIM_TypeDef *) HRTIM1_TIMD_BASE)
-#define HRTIM1_TIME         ((HRTIM_TIM_TypeDef *) HRTIM1_TIME_BASE)
-#define HRTIM1_TIMF         ((HRTIM_TIM_TypeDef *) HRTIM1_TIMF_BASE)
+#define HRTIM1_TIMA         ((HRTIM_Timerx_TypeDef *) HRTIM1_TIMA_BASE)
+#define HRTIM1_TIMB         ((HRTIM_Timerx_TypeDef *) HRTIM1_TIMB_BASE)
+#define HRTIM1_TIMC         ((HRTIM_Timerx_TypeDef *) HRTIM1_TIMC_BASE)
+#define HRTIM1_TIMD         ((HRTIM_Timerx_TypeDef *) HRTIM1_TIMD_BASE)
+#define HRTIM1_TIME         ((HRTIM_Timerx_TypeDef *) HRTIM1_TIME_BASE)
+#define HRTIM1_TIMF         ((HRTIM_Timerx_TypeDef *) HRTIM1_TIMF_BASE)
 #define HRTIM1_COMMON       ((HRTIM_Common_TypeDef *) HRTIM1_COMMON_BASE)
 #define DMA1                ((DMA_TypeDef *) DMA1_BASE)
 #define DMA2                ((DMA_TypeDef *) DMA2_BASE)
@@ -2721,10 +2721,6 @@ typedef struct {
 #define COMP_CSR_EN_Pos            (0U)
 #define COMP_CSR_EN_Msk            (0x1UL << COMP_CSR_EN_Pos)                  /*!< 0x00000001 */
 #define COMP_CSR_EN                COMP_CSR_EN_Msk                             /*!< Comparator enable */
-
-#define COMP_CSR_DEGLITCHEN_Pos    (1U)
-#define COMP_CSR_DEGLITCHEN_Msk    (0x1UL << COMP_CSR_DEGLITCHEN_Pos)          /*!< 0x00000002 */
-#define COMP_CSR_DEGLITCHEN        COMP_CSR_DEGLITCHEN_Msk                     /*!< Comparator deglitcher enable */
 
 #define COMP_CSR_INMSEL_Pos        (4U)
 #define COMP_CSR_INMSEL_Msk        (0xFUL << COMP_CSR_INMSEL_Pos)              /*!< 0x00000070 */

@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -1022,7 +1022,7 @@ static uint32_t Compute_SCLL_SCLH (uint32_t clock_src_freq, uint32_t I2C_speed)
     for (l = 0; l < I2C_SCLL_MAX; l++)
     {
       /* tLOW(min) <= tAF(min) + tDNF + 2 x tI2CCLK + [(SCLL+1) x tPRESC ] */
-      uint32_t tscl_l = I2C_ANALOG_FILTER_DELAY_MIN + dnf_delay + (2U * ti2cclk) + (l + 1U) * tpresc;
+      uint32_t tscl_l = I2C_ANALOG_FILTER_DELAY_MIN + dnf_delay + (2U * ti2cclk) + ((l + 1U) * tpresc);
 
 
       /* The I2CCLK period tI2CCLK must respect the following conditions:
@@ -1035,7 +1035,7 @@ static uint32_t Compute_SCLL_SCLH (uint32_t clock_src_freq, uint32_t I2C_speed)
       for (h = 0; h < I2C_SCLH_MAX; h++)
       {
         /* tHIGH(min) <= tAF(min) + tDNF + 2 x tI2CCLK + [(SCLH+1) x tPRESC] */
-        uint32_t tscl_h = I2C_ANALOG_FILTER_DELAY_MIN + dnf_delay + (2U * ti2cclk) + (h + 1U) * tpresc;
+        uint32_t tscl_h = I2C_ANALOG_FILTER_DELAY_MIN + dnf_delay + (2U * ti2cclk) + ((h + 1U) * tpresc);
 
         /* tSCL = tf + tLOW + tr + tHIGH */
         uint32_t tscl = tscl_l + tscl_h + i2c_charac[I2C_speed].trise + i2c_charac[I2C_speed].tfall;

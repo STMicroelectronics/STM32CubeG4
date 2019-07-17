@@ -8,7 +8,7 @@
   * @brief   Description of the RTC Calendar example.
   ******************************************************************************
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -81,6 +81,7 @@ System, RTC, Calendar, Backup Domain, Reset
 
 @par Directory contents 
 
+  - RTC/RTC_Calendar/Inc/stm32g474e_eval_conf.h     BSP configuration file
   - RTC/RTC_Calendar/Inc/stm32g4xx_hal_conf.h    HAL configuration file
   - RTC/RTC_Calendar/Inc/stm32g4xx_it.h          Interrupt handlers header file
   - RTC/RTC_Calendar/Inc/main.h                  Header for main.c module  

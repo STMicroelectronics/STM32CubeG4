@@ -8,7 +8,7 @@
   * @brief   Sines calculation in DMA mode example.
   ******************************************************************************
   *
-  * Copyright (c) 2018 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -53,6 +53,7 @@ STM32 board LED is used to monitor the example status:
 
 @par Directory contents
 
+  - CORDIC/CORDIC_Sin_DMA/Inc/stm32g4xx_nucleo_conf.h     BSP configuration file
   - CORDIC/CORDIC_Sinus_DMA/Inc/stm32g4xx_hal_conf.h    HAL configuration file
   - CORDIC/CORDIC_Sinus_DMA/Inc/stm32g4xx_it.h          Interrupt handlers header file
   - CORDIC/CORDIC_Sinus_DMA/Inc/main.h                  Header for main.c module

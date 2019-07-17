@@ -229,8 +229,6 @@
           <state>DATA_CACHE_ENABLE=1</state>
           <state>STM32G474xx</state>
           <state></state>
-          <state></state>
-          <state></state>
         </option>
         <option>
           <name>CCPreprocFile</name>

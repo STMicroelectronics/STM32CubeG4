@@ -12,7 +12,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -123,6 +123,7 @@ typedef enum
   TIM8_UP_IRQn                = 44,     /*!< TIM8 Update Interrupt                                                              */
   TIM8_TRG_COM_IRQn           = 45,     /*!< TIM8 Trigger, Commutation, Direction change and Index Interrupt                    */
   TIM8_CC_IRQn                = 46,     /*!< TIM8 Capture Compare Interrupt                                                     */
+  ADC3_IRQn                   = 47,     /*!< ADC3 global  Interrupt                                                             */
   LPTIM1_IRQn                 = 49,     /*!< LP TIM1 Interrupt                                                                  */
   TIM5_IRQn                   = 50,     /*!< TIM5 global Interrupt                                                              */
   SPI3_IRQn                   = 51,     /*!< SPI3 global Interrupt                                                              */
@@ -1096,6 +1097,8 @@ typedef struct
 #define ADC1_BASE             (AHB2PERIPH_BASE + 0x08000000UL)
 #define ADC2_BASE             (AHB2PERIPH_BASE + 0x08000100UL)
 #define ADC12_COMMON_BASE     (AHB2PERIPH_BASE + 0x08000300UL)
+#define ADC3_BASE             (AHB2PERIPH_BASE + 0x08000400UL)
+#define ADC345_COMMON_BASE    (AHB2PERIPH_BASE + 0x08000700UL)
 
 #define DAC_BASE              (AHB2PERIPH_BASE + 0x08000800UL)
 #define DAC1_BASE             (AHB2PERIPH_BASE + 0x08000800UL)
@@ -1188,6 +1191,8 @@ typedef struct
 #define ADC1                ((ADC_TypeDef *) ADC1_BASE)
 #define ADC2                ((ADC_TypeDef *) ADC2_BASE)
 #define ADC12_COMMON        ((ADC_Common_TypeDef *) ADC12_COMMON_BASE)
+#define ADC3                ((ADC_TypeDef *) ADC3_BASE)
+#define ADC345_COMMON       ((ADC_Common_TypeDef *) ADC345_COMMON_BASE)
 #define DAC                 ((DAC_TypeDef *) DAC_BASE)
 #define DAC1                ((DAC_TypeDef *) DAC1_BASE)
 #define DAC3                ((DAC_TypeDef *) DAC3_BASE)
@@ -2254,10 +2259,6 @@ typedef struct
 #define COMP_CSR_EN_Pos            (0U)
 #define COMP_CSR_EN_Msk            (0x1UL << COMP_CSR_EN_Pos)                  /*!< 0x00000001 */
 #define COMP_CSR_EN                COMP_CSR_EN_Msk                             /*!< Comparator enable */
-
-#define COMP_CSR_DEGLITCHEN_Pos    (1U)
-#define COMP_CSR_DEGLITCHEN_Msk    (0x1UL << COMP_CSR_DEGLITCHEN_Pos)          /*!< 0x00000002 */
-#define COMP_CSR_DEGLITCHEN        COMP_CSR_DEGLITCHEN_Msk                     /*!< Comparator deglitcher enable */
 
 #define COMP_CSR_INMSEL_Pos        (4U)
 #define COMP_CSR_INMSEL_Msk        (0xFUL << COMP_CSR_INMSEL_Pos)              /*!< 0x00000070 */
@@ -7857,6 +7858,9 @@ typedef struct
 #define RCC_AHB2RSTR_ADC12RST_Pos            (13U)
 #define RCC_AHB2RSTR_ADC12RST_Msk            (0x1UL << RCC_AHB2RSTR_ADC12RST_Pos)/*!< 0x00002000 */
 #define RCC_AHB2RSTR_ADC12RST                RCC_AHB2RSTR_ADC12RST_Msk
+#define RCC_AHB2RSTR_ADC345RST_Pos           (14U)
+#define RCC_AHB2RSTR_ADC345RST_Msk           (0x1UL << RCC_AHB2RSTR_ADC345RST_Pos)/*!< 0x00004000 */
+#define RCC_AHB2RSTR_ADC345RST               RCC_AHB2RSTR_ADC345RST_Msk
 #define RCC_AHB2RSTR_DAC1RST_Pos             (16U)
 #define RCC_AHB2RSTR_DAC1RST_Msk             (0x1UL << RCC_AHB2RSTR_DAC1RST_Pos)/*!< 0x00010000 */
 #define RCC_AHB2RSTR_DAC1RST                 RCC_AHB2RSTR_DAC1RST_Msk
@@ -8025,6 +8029,9 @@ typedef struct
 #define RCC_AHB2ENR_ADC12EN_Pos              (13U)
 #define RCC_AHB2ENR_ADC12EN_Msk              (0x1UL << RCC_AHB2ENR_ADC12EN_Pos)  /*!< 0x00002000 */
 #define RCC_AHB2ENR_ADC12EN                  RCC_AHB2ENR_ADC12EN_Msk
+#define RCC_AHB2ENR_ADC345EN_Pos             (14U)
+#define RCC_AHB2ENR_ADC345EN_Msk             (0x1UL << RCC_AHB2ENR_ADC345EN_Pos)  /*!< 0x00004000 */
+#define RCC_AHB2ENR_ADC345EN                 RCC_AHB2ENR_ADC345EN_Msk
 #define RCC_AHB2ENR_DAC1EN_Pos               (16U)
 #define RCC_AHB2ENR_DAC1EN_Msk               (0x1UL << RCC_AHB2ENR_DAC1EN_Pos)  /*!< 0x00010000 */
 #define RCC_AHB2ENR_DAC1EN                   RCC_AHB2ENR_DAC1EN_Msk
@@ -8208,6 +8215,9 @@ typedef struct
 #define RCC_AHB2SMENR_ADC12SMEN_Pos          (13U)
 #define RCC_AHB2SMENR_ADC12SMEN_Msk          (0x1UL << RCC_AHB2SMENR_ADC12SMEN_Pos)/*!< 0x00002000 */
 #define RCC_AHB2SMENR_ADC12SMEN              RCC_AHB2SMENR_ADC12SMEN_Msk
+#define RCC_AHB2SMENR_ADC345SMEN_Pos         (14U)
+#define RCC_AHB2SMENR_ADC345SMEN_Msk         (0x1UL << RCC_AHB2SMENR_ADC345SMEN_Pos)/*!< 0x00004000 */
+#define RCC_AHB2SMENR_ADC345SMEN             RCC_AHB2SMENR_ADC345SMEN_Msk
 #define RCC_AHB2SMENR_DAC1SMEN_Pos           (16U)
 #define RCC_AHB2SMENR_DAC1SMEN_Msk           (0x1UL << RCC_AHB2SMENR_DAC1SMEN_Pos)/*!< 0x00010000 */
 #define RCC_AHB2SMENR_DAC1SMEN               RCC_AHB2SMENR_DAC1SMEN_Msk
@@ -8425,6 +8435,11 @@ typedef struct
 #define RCC_CCIPR_ADC12SEL_0                 (0x1UL << RCC_CCIPR_ADC12SEL_Pos)   /*!< 0x10000000 */
 #define RCC_CCIPR_ADC12SEL_1                 (0x2UL << RCC_CCIPR_ADC12SEL_Pos)   /*!< 0x20000000 */
 
+#define RCC_CCIPR_ADC345SEL_Pos              (30U)
+#define RCC_CCIPR_ADC345SEL_Msk              (0x3UL << RCC_CCIPR_ADC345SEL_Pos)   /*!< 0x80000000 */
+#define RCC_CCIPR_ADC345SEL                  RCC_CCIPR_ADC345SEL_Msk
+#define RCC_CCIPR_ADC345SEL_0                (0x1UL << RCC_CCIPR_ADC345SEL_Pos)   /*!< 0x40000000 */
+#define RCC_CCIPR_ADC345SEL_1                (0x2UL << RCC_CCIPR_ADC345SEL_Pos)   /*!< 0x80000000 */
 
 /********************  Bit definition for RCC_BDCR register  ******************/
 #define RCC_BDCR_LSEON_Pos                   (0U)
@@ -13031,13 +13046,15 @@ typedef struct
   */
 
 /******************************* ADC Instances ********************************/
-
 #define IS_ADC_ALL_INSTANCE(INSTANCE) (((INSTANCE) == ADC1) || \
-                                       ((INSTANCE) == ADC2))
+                                       ((INSTANCE) == ADC2) || \
+                                       ((INSTANCE) == ADC3))
 
 #define IS_ADC_MULTIMODE_MASTER_INSTANCE(INSTANCE) ((INSTANCE) == ADC1)
 
-#define IS_ADC_COMMON_INSTANCE(INSTANCE) ((INSTANCE) == ADC12_COMMON)
+#define IS_ADC_COMMON_INSTANCE(INSTANCE) (((INSTANCE) == ADC12_COMMON) || \
+                                          ((INSTANCE) == ADC345_COMMON) )
+
 
 
 /******************************** FDCAN Instances ******************************/

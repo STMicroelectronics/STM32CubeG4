@@ -1,21 +1,21 @@
+/* USER CODE BEGIN Header */
 /**
   ******************************************************************************
   * @file    usbpd_dpm_user.c
   * @author  MCD Application Team
   * @brief   USBPD DPM user code
   ******************************************************************************
-  * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics International N.V.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
   *
   ******************************************************************************
   */
+/* USER CODE END Header */
 
 #define USBPD_DPM_USER_C
 /* Includes ------------------------------------------------------------------*/
@@ -25,12 +25,10 @@
 #include "usbpd_dpm_conf.h"
 #include "usbpd_dpm_user.h"
 #include "usbpd_pwr_if.h"
-#if defined(_GUI_INTERFACE) || defined(_TRACE)
+#if defined(_TRACE)
 #include "usbpd_trace.h"
-#if defined(_GUI_INTERFACE)
-#include "gui_api.h"
-#endif
-#endif /* _GUI_INTERFACE || _TRACE */
+#endif /* _TRACE */
+
 #if defined(USBPD_REV30_SUPPORT) && _ALERT
 #include "usbpd_hw_if.h"
 #endif /* USBPD_REV30_SUPPORT && _ALERT */
@@ -39,11 +37,16 @@
 #include "usbpd_vdm_user.h"
 #endif /*_VDM*/
 #include "string.h"
-#if defined(USBPD_BILLBOARD)
+#ifdef _USB_DEVICE
 #include "usbd_core.h"
 #include "usbd_desc.h"
+#if defined(USB_BILLBOARD)
 #include "usbd_bb.h"
-#endif /* USBPD_BILLBOARD */
+#else
+#include "usbd_msc.h"
+#include "usbd_storage.h"
+#endif /* USB_BILLBOARD */
+#endif /* _USB_DEVICE */
 #ifdef _RTOS
 #include "cmsis_os.h"
 #else
@@ -60,15 +63,16 @@
 #include "usbpd_pdfu_user.h"
 #endif /* _FWUPDATE_RESPONDER)|| _FWUPDATE_INITIATOR */
 
-/** @addtogroup STM32_USBPD_LIBRARY
+/** @addtogroup STM32_USBPD_APPLICATION
   * @{
   */
 
-/** @addtogroup USBPD_USER
+/** @addtogroup STM32_USBPD_APPLICATION_DPM_USER
   * @{
   */
 
 /* Private typedef -----------------------------------------------------------*/
+/* USER CODE BEGIN Private_Typedef */
 #if defined(_SNK) || defined(_DRP)
 /** @brief  Sink Request characteritics Structure definition
   *
@@ -82,24 +86,26 @@ typedef struct
   uint32_t OperatingPowerInmWunits;                /*!< Sink request operating power in mW units         */
 } USBPD_DPM_SNKPowerRequestDetails_TypeDef;
 #endif /*_SNK || _DRP */
+/* USER CODE END Private_Typedef */
 
 /* Private define ------------------------------------------------------------*/
 /** @defgroup USBPD_USER_PRIVATE_DEFINES USBPD USER Private Defines
   * @{
   */
+/* USER CODE BEGIN Private_Define */
 
 #define DPM_TIMER_ENABLE_MSK      ((uint16_t)0x8000U)       /*!< Enable Timer Mask                                                        */
 #define DPM_TIMER_READ_MSK        ((uint16_t)0x7FFFU)       /*!< Read Timer Mask                                                          */
 
 #define DPM_BOX_MESSAGES_MAX      30u
-#if defined(USBPD_BILLBOARD)
+#if defined(USB_BILLBOARD)
 
 /* Timer used to start billboard driver (based on tAMETimeout */
 #define DPM_TIMER_AME             1000u  /*!< 1000ms: The time between a Sink attach until a
                                                 USB Billboard Device Class interface is
                                                 exposed when an Alternate Mode is
                                                 not successfully entered*/
-#endif /* USBPD_BILLBOARD */
+#endif /* USB_BILLBOARD */
 #if _SRC_CAPA_EXT
 
 /* Timer used to send a GET_SRC_CAPA_EXT*/
@@ -113,6 +119,10 @@ typedef struct
 
 #define DPM_NO_SRC_PDO_FOUND      0xFFU        /*!< No match found between Received SRC PDO and SNK capabilities                             */
 
+#define DPM_GUI_NOTIF_ISCONNECTED       (1 << 5)
+#define DPM_GUI_NOTIF_POWER_EVENT       (1 << 15)
+
+/* USER CODE END Private_Define */
 /**
   * @}
   */
@@ -121,6 +131,7 @@ typedef struct
 /** @defgroup USBPD_USER_PRIVATE_MACROS USBPD USER Private Macros
   * @{
   */
+/* USER CODE BEGIN Private_Macro */
 #if defined(_RTOS)
 #define DPM_START_TIMER(_PORT_,_TIMER_,_TIMEOUT_)   do{                                                               \
                                                       DPM_Ports[_PORT_]._TIMER_ = (_TIMEOUT_) |  DPM_TIMER_ENABLE_MSK;\
@@ -132,6 +143,13 @@ typedef struct
 #define IS_DPM_TIMER_RUNNING(_PORT_, _TIMER_)       ((DPM_Ports[_PORT_]._TIMER_ & DPM_TIMER_READ_MSK) > 0)
 #define IS_DPM_TIMER_EXPIRED(_PORT_, _TIMER_)       (DPM_TIMER_ENABLE_MSK == DPM_Ports[_PORT_]._TIMER_)
 
+#if defined(_DEBUG_TRACE)
+#define __DPM_DEBUG_CALLBACK(_PORT_, __MESSAGE__)  USBPD_TRACE_Add(USBPD_TRACE_DEBUG,    (_PORT_), 0u,(__MESSAGE__), sizeof(__MESSAGE__) - 1u)
+#else
+#define __DPM_DEBUG_CALLBACK(_PORT_, __MESSAGE__)
+#endif /* _DEBUG_TRACE */
+
+/* USER CODE END Private_Macro */
 /**
   * @}
   */
@@ -140,17 +158,30 @@ typedef struct
 /** @defgroup USBPD_USER_PRIVATE_VARIABLES USBPD USER Private Variables
   * @{
   */
-#if defined(_VDM) || defined(USBPD_BILLBOARD)
-extern uint8_t VDM_Mode_On[USBPD_PORT_COUNT];
-#endif /* _VDM || USBPD_BILLBOARD */
+/* USER CODE BEGIN Private_Variables */
 extern USBPD_ParamsTypeDef DPM_Params[USBPD_PORT_COUNT];
-#if defined(USBPD_BILLBOARD)
-extern USBD_HandleTypeDef hUsbDeviceBB[USBPD_PORT_COUNT];
-#endif /* USBPD_BILLBOARD */
+
+#ifdef _RTOS
+osMessageQId  DPMMsgBox;
+#endif /* _RTOS */
+
+#if defined(_VDM)
+extern uint8_t VDM_Mode_On[USBPD_PORT_COUNT];
+#endif /* _VDM */
+
+#if defined(_USB_DEVICE)
+USBD_HandleTypeDef hUsbDevice[USBPD_PORT_COUNT];
+#endif /* _USB_DEVICE */
+
 #if defined(USBPD_REV30_SUPPORT) && _ALERT && _PPS
 extern USBPD_PWR_Port_PDO_Storage_TypeDef PWR_Port_PDO_Storage[USBPD_PORT_COUNT];
 #endif /* USBPD_REV30_SUPPORT && _ALERT && _PPS */
 
+GUI_NOTIFICATION_POST         DPM_GUI_PostNotificationMessage   = NULL;
+GUI_NOTIFICATION_FORMAT_SEND  DPM_GUI_FormatAndSendNotification = NULL;
+GUI_SAVE_INFO                 DPM_GUI_SaveInfo                  = NULL;
+
+/* USER CODE END Private_Variables */
 /**
   * @}
   */
@@ -159,6 +190,7 @@ extern USBPD_PWR_Port_PDO_Storage_TypeDef PWR_Port_PDO_Storage[USBPD_PORT_COUNT]
 /** @defgroup USBPD_USER_PRIVATE_FUNCTIONS USBPD USER Private Functions
   * @{
   */
+/* USER CODE BEGIN USBPD_USER_PRIVATE_FUNCTIONS_Prototypes */
 #if defined(_SNK) || defined(_DRP)
 static  void DPM_SNK_BuildRDOfromSelectedPDO(uint8_t PortNum, uint8_t IndexSrcPDO, USBPD_DPM_SNKPowerRequestDetails_TypeDef* PtrRequestPowerDetails,
                                              USBPD_SNKRDO_TypeDef* Rdo, USBPD_CORE_PDO_Type_TypeDef *PtrPowerObject);
@@ -184,10 +216,14 @@ static void DPM_ManageExtendedCapa(void);
 static void DPM_ManageAlert(void);
 #endif /* _ALERT */
 #endif /* USBPD_REV30_SUPPORT */
-#ifdef USBPD_BILLBOARD
-static void DPM_USB_Billboard_START(void);
-#endif /* USBPD_BILLBOARD */
 
+
+#if defined(_USB_DEVICE) || defined(_USB_HOST)
+static USBPD_StatusTypeDef DPM_USB_Init(void);
+static void DPM_USB_Start(uint32_t PortNum);
+static void DPM_USB_Stop(uint32_t PortNum);
+#endif /* _USB_DEVICE || _USB_HOST */
+/* USER CODE END USBPD_USER_PRIVATE_FUNCTIONS_Prototypes */
 /**
   * @}
   */
@@ -196,10 +232,16 @@ static void DPM_USB_Billboard_START(void);
 /** @defgroup USBPD_USER_EXPORTED_FUNCTIONS USBPD USER Exported Functions
   * @{
   */
+/* USER CODE BEGIN USBPD_USER_EXPORTED_FUNCTIONS */
+
+/* USER CODE END USBPD_USER_EXPORTED_FUNCTIONS */
 
 /** @defgroup USBPD_USER_EXPORTED_FUNCTIONS_GROUP1 USBPD USER Exported Functions called by DPM CORE
   * @{
   */
+/* USER CODE BEGIN USBPD_USER_EXPORTED_FUNCTIONS_GROUP1 */
+
+/* USER CODE END USBPD_USER_EXPORTED_FUNCTIONS_GROUP1 */
 
 /**
   * @brief  Initialize DPM (port power role, PWR_IF, CAD and PE Init procedures)
@@ -207,8 +249,16 @@ static void DPM_USB_Billboard_START(void);
   */
 USBPD_StatusTypeDef USBPD_DPM_UserInit(void)
 {
+/* USER CODE BEGIN USBPD_DPM_UserInit */
   /* Demo initialisation */
   DEMO_InitBSP();
+
+#ifdef _USB_DEVICE
+  if(USBPD_OK !=  DPM_USB_Init())
+  {
+      return USBPD_ERROR;
+  }
+#endif
 
   /* PWR SET UP */
   if(USBPD_OK !=  USBPD_PWR_IF_Init())
@@ -247,11 +297,6 @@ USBPD_StatusTypeDef USBPD_DPM_UserInit(void)
 #endif /* USBPD_PORT_COUNT == 2 */
 #endif /* _VDM */
 
-#if defined(USBPD_TCPM_MODULE_ENABLED)
-#else
-  if(USBPD_OK != USBPD_PWR_IF_PowerResetGlobal()) return USBPD_ERROR;
-#endif /* USBPD_TCPM_MODULE_ENABLED */
-
   DEMO_InitTask();
 
 #if defined(_FWUPDATE_RESPONDER)||defined(_FWUPDATE_INITIATOR)
@@ -270,6 +315,21 @@ USBPD_StatusTypeDef USBPD_DPM_UserInit(void)
 #endif /* _RTOS */
 
   return USBPD_OK;
+/* USER CODE END USBPD_DPM_UserInit */
+}
+
+/**
+  * @brief  Function to set the function ptr linked to GUI interface
+  * @param  PtrFormatSend Pointer on function to format and send GUI notifications
+  * @param  PtrPost       Pointer on function to send GUI notifications
+  * @param  PtrSaveInfo   Pointer on function to save information from Port Partner
+  * @retval None
+  */
+void USBPD_DPM_SetNotification_GUI(GUI_NOTIFICATION_FORMAT_SEND PtrFormatSend, GUI_NOTIFICATION_POST PtrPost, GUI_SAVE_INFO PtrSaveInfo)
+{
+  DPM_GUI_PostNotificationMessage   = PtrPost;
+  DPM_GUI_FormatAndSendNotification = PtrFormatSend;
+  DPM_GUI_SaveInfo                  = PtrSaveInfo;
 }
 
 /**
@@ -279,20 +339,23 @@ USBPD_StatusTypeDef USBPD_DPM_UserInit(void)
   */
 void USBPD_DPM_WaitForTime(uint32_t Time)
 {
-#ifndef _RTOS
-  HAL_Delay(Time);
-#else
+/* USER CODE BEGIN USBPD_DPM_WaitForTime */
+#ifdef _RTOS
   osDelay(Time);
+#else
+  HAL_Delay(Time);
 #endif
+/* USER CODE END USBPD_DPM_WaitForTime */
 }
 
 /**
   * @brief  User processing time, it is recommended to avoid blocking task for long time
-  * @param  argument pointer to task to execute
+  * @param  argument  DPM User event
   * @retval None
   */
 void USBPD_DPM_UserExecute(void const *argument)
 {
+/* USER CODE BEGIN USBPD_DPM_UserExecute */
   /* User code implementation */
 #ifdef _RTOS
   uint32_t _timing = osWaitForever;
@@ -303,68 +366,16 @@ void USBPD_DPM_UserExecute(void const *argument)
     osEvent event = osMessageGet(queue, _timing);
     switch (((DPM_USER_EVENT)event.value.v & 0xF))
     {
-#if defined(_GUI_INTERFACE)
-    case DPM_USER_EVENT_GUI:
-      {
-        GUI_RXProcess((uint32_t)event.value.v);
-        /* Sent an event to check if measurement report has been requested */
-        osMessagePut(DPMMsgBox, DPM_USER_EVENT_TIMER, 0);
-        break;
-      }
-#endif /* _GUI_INTERFACE */
     case DPM_USER_EVENT_TIMER:
       {
 #endif /* _RTOS */
-#if defined(_GUI_INTERFACE)
-#ifndef _RTOS
-        switch (GUI_Flag & 0xF)
-        {
-          case DPM_USER_EVENT_NONE:
-            break;
-          case DPM_USER_EVENT_GUI:
-            GUI_RXProcess(GUI_Flag);
-          case DPM_USER_EVENT_TIMER:
-              break;
-            default:
-              break;
-        }
-        GUI_Flag = DPM_USER_EVENT_NONE;
-#endif /* !_RTOS */
-        for(uint8_t _instance = 0; _instance < USBPD_PORT_COUNT; _instance++)
-        {
-          /* -------------------------------------------------  */
-          /* Check if timeout related to Measurement reporting  */
-          /* -------------------------------------------------  */
-          /* - Send a GUI Event only if PE is connected
-          and Measurement report has been enabled          */
-          if ((USBPD_TRUE == DPM_Params[_instance].PE_IsConnected)
-              && (1 == GUI_USER_Params[_instance].u.d.MeasReportActivation)
-                && (0 != GUI_USER_Params[_instance].u.d.MeasReportValue))
-          {
-            /* Check if timer has expired */
-            if (IS_DPM_TIMER_EXPIRED(_instance, DPM_TimerMeasReport))
-            {
-              uint32_t event_mr = DPM_USER_EVENT_GUI | (_instance << GUI_PE_PORT_NUM_Pos) | (GUI_NOTIF_MEASUREMENT << GUI_PE_NOTIF_Pos);
-              GUI_RXProcess(event_mr);
-            }
-            /* Start or Restart Measurement report timer */
-            if (!(IS_DPM_TIMER_RUNNING(_instance, DPM_TimerMeasReport)))
-            {
-              DPM_START_TIMER(_instance, DPM_TimerMeasReport, (GUI_USER_Params[_instance].u.d.MeasReportValue * GUI_NOTIF_MEASUREMENT_STEP));
-            }
-          }
-          else
-          {
-            /* Stop measurement report timer */
-            DPM_Ports[_instance].DPM_TimerMeasReport = 0;
-          }
-        }
-#endif /* _GUI_INTERFACE */
 
-#ifdef USBPD_BILLBOARD
-        DPM_USB_Billboard_START();
+#if defined(USB_DEVICE) || defined(USB_HOST)
+        /* This function is used only in the billboard case to start the AME delay */
+        #warning "to rework" 
+        DPM_USB_Start(USBPD_PORT_0);
+#endif /* USB_DEVICE || USB_HOST */
 
-#endif /* USBPD_BILLBOARD */
 #if defined(USBPD_REV30_SUPPORT)
 #if _SRC_CAPA_EXT
         /* Manage the extended capa */
@@ -392,41 +403,7 @@ void USBPD_DPM_UserExecute(void const *argument)
   PDFU_Task(USBPD_PORT_0, PDFU_EVENT_NONE);
 #endif /* _FWUPDATE_RESPONDER */
 #endif /* _RTOS */
-}
-
-/**
-  * @brief  function used to manage user timer.
-  * @param  PortNum Port number
-  * @retval None
-  */
-void USBPD_DPM_UserTimerCounter(uint8_t PortNum)
-{
-#ifdef USBPD_BILLBOARD
-  if((DPM_Ports[PortNum].DPM_TimerAME & DPM_TIMER_READ_MSK) > 0)
-  {
-    DPM_Ports[PortNum].DPM_TimerAME--;
-  }
-#endif /* USBPD_BILLBOARD */
-#ifdef USBPD_REV30_SUPPORT
-#if _SRC_CAPA_EXT
-  if((DPM_Ports[PortNum].DPM_TimerSRCExtendedCapa & DPM_TIMER_READ_MSK) > 0)
-  {
-    DPM_Ports[PortNum].DPM_TimerSRCExtendedCapa--;
-  }
-#endif /* _SRC_CAPA_EXT */
-#if _ALERT
-  if((DPM_Ports[PortNum].DPM_TimerAlert & DPM_TIMER_READ_MSK) > 0)
-  {
-    DPM_Ports[PortNum].DPM_TimerAlert--;
-  }
-#endif /* _ALERT */
-#endif /* USBPD_REV30_SUPPORT */
-#if defined(_GUI_INTERFACE)
-  if((DPM_Ports[PortNum].DPM_TimerMeasReport & DPM_TIMER_READ_MSK) > 0)
-  {
-    DPM_Ports[PortNum].DPM_TimerMeasReport--;
-  }
-#endif /* _GUI_INTERFACE */
+/* USER CODE END USBPD_DPM_UserExecute */
 }
 
 /**
@@ -437,15 +414,22 @@ void USBPD_DPM_UserTimerCounter(uint8_t PortNum)
   */
 void USBPD_DPM_UserCableDetection(uint8_t PortNum, USBPD_CAD_EVENT State)
 {
+/* USER CODE BEGIN USBPD_DPM_UserCableDetection */
   DEMO_PostCADMessage(PortNum, State, DPM_Params[PortNum].ActiveCCIs);
 
   switch(State)
   {
-  case USBPD_CAD_EVENT_ATTACHED:
   case USBPD_CAD_EVENT_ATTEMC:
-#if defined(_GUI_INTERFACE)
-    GUI_FormatAndSendNotification(PortNum, GUI_NOTIF_ISCONNECTED, 0);
-#endif /* _GUI_INTERFACE */
+#if defined(_VCONN_SUPPORT)
+    /* Save flag to keep information that cable is a EMC. */
+    DPM_Ports[PortNum].DPM_CablePDCapable = USBPD_TRUE;
+#endif /* _VCONN_SUPPORT */
+  case USBPD_CAD_EVENT_ATTACHED:
+    /* Format and send a notification to GUI if enabled */
+    if (NULL != DPM_GUI_FormatAndSendNotification)
+    {
+      DPM_GUI_FormatAndSendNotification(PortNum, DPM_GUI_NOTIF_ISCONNECTED, 0);
+    }
 
 #ifdef _VDM
     USBPD_VDM_UserReset(PortNum);
@@ -458,7 +442,7 @@ void USBPD_DPM_UserCableDetection(uint8_t PortNum, USBPD_CAD_EVENT State)
       if (USBPD_OK != USBPD_PWR_IF_VBUSEnable(PortNum))
       {
         /* display the error */
-        DEMO_PostMMIMessage(DEMO_MMI_ACTION_ERROR);
+        DEMO_PostMMIMessage(DEMO_MMI_ACTION_ERROR_POWER);
 
         /* Should not occurr */
         USBPD_DPM_WaitForTime(6000);
@@ -468,25 +452,29 @@ void USBPD_DPM_UserCableDetection(uint8_t PortNum, USBPD_CAD_EVENT State)
     }
 #endif /* _SRC || _DRP */
     DPM_Ports[PortNum].DPM_IsConnected = 1;
+    
+#if defined(_USB_DEVICE) || defined(_USB_HOST)
+    DPM_USB_Start(PortNum);
+#endif
     break;
-
 
   case USBPD_CAD_EVENT_DETACHED :
   case USBPD_CAD_EVENT_EMC :
   default :
+
+#if defined(_USB_DEVICE) || defined(_USB_HOST)
+    /* STOP must be executed before the DPM_Ports Reset */
+    DPM_USB_Stop(PortNum);
+#endif    
     /* reset all values received from port partner */
     memset(&DPM_Ports[PortNum], 0, sizeof(DPM_Ports[PortNum]));
-#if defined(_GUI_INTERFACE)
-    GUI_FormatAndSendNotification(PortNum, GUI_NOTIF_ISCONNECTED | GUI_NOTIF_POWER_EVENT, 0);
-#endif /* _GUI_INTERFACE */
-#ifdef USBPD_BILLBOARD
-    /* Stop tAMETimeout timer and stop Billboard */
-    DPM_Ports[PortNum].DPM_TimerAME = 0;
-    USBD_DeInit(&hUsbDeviceBB[PortNum]);
-    USBD_Init(&hUsbDeviceBB[PortNum], &BB_Desc, 0);
-    USBD_RegisterClass(&hUsbDeviceBB[PortNum], &USBD_BB);
 
-#endif /* USBPD_BILLBOARD */
+    /* Format and send a notification to GUI if enabled */
+    if (NULL != DPM_GUI_FormatAndSendNotification)
+    {
+      DPM_GUI_FormatAndSendNotification(PortNum, DPM_GUI_NOTIF_ISCONNECTED | DPM_GUI_NOTIF_POWER_EVENT, 0);
+    }
+
 #ifdef _VDM
     USBPD_VDM_UserReset(PortNum);
 #endif /* _VDM */
@@ -523,6 +511,39 @@ void USBPD_DPM_UserCableDetection(uint8_t PortNum, USBPD_CAD_EVENT State)
 #endif /* _FWUPDATE_INITIATOR || _FWUPDATE_RESPONDER */
     break;
   }
+/* USER CODE END USBPD_DPM_UserCableDetection */
+}
+
+/**
+  * @brief  function used to manage user timer.
+  * @param  PortNum Port number
+  * @retval None
+  */
+void USBPD_DPM_UserTimerCounter(uint8_t PortNum)
+{
+/* USER CODE BEGIN USBPD_DPM_UserTimerCounter */
+#ifdef USB_BILLBOARD
+  if((DPM_Ports[PortNum].DPM_TimerAME & DPM_TIMER_READ_MSK) > 0)
+  {
+    DPM_Ports[PortNum].DPM_TimerAME--;
+  }
+#endif /* USB_BILLBOARD */
+
+#ifdef USBPD_REV30_SUPPORT
+#if _SRC_CAPA_EXT
+  if((DPM_Ports[PortNum].DPM_TimerSRCExtendedCapa & DPM_TIMER_READ_MSK) > 0)
+  {
+    DPM_Ports[PortNum].DPM_TimerSRCExtendedCapa--;
+  }
+#endif /* _SRC_CAPA_EXT */
+#if _ALERT
+  if((DPM_Ports[PortNum].DPM_TimerAlert & DPM_TIMER_READ_MSK) > 0)
+  {
+    DPM_Ports[PortNum].DPM_TimerAlert--;
+  }
+#endif /* _ALERT */
+#endif /* USBPD_REV30_SUPPORT */
+/* USER CODE END USBPD_DPM_UserTimerCounter */
 }
 
 /**
@@ -542,6 +563,7 @@ void USBPD_DPM_UserCableDetection(uint8_t PortNum, USBPD_CAD_EVENT State)
   */
 void USBPD_DPM_HardReset(uint8_t PortNum, USBPD_PortPowerRole_TypeDef CurrentRole, USBPD_HR_Status_TypeDef Status)
 {
+/* USER CODE BEGIN USBPD_DPM_HardReset */
 #ifdef _VDM
   USBPD_VDM_UserReset(PortNum);
 #endif /* _VDM */
@@ -550,30 +572,44 @@ void USBPD_DPM_HardReset(uint8_t PortNum, USBPD_PortPowerRole_TypeDef CurrentRol
   DPM_Ports[PortNum].DPM_TimerAlert    = 0;
   DPM_Ports[PortNum].DPM_SendAlert.d32 = 0;
 #endif /* USBPD_REV30_SUPPORT && _ALERT */
+#if defined(_VCONN_SUPPORT)
+  /* Reset flag DPM_CableResetOnGoing */
+  DPM_Ports[PortNum].DPM_CableResetOnGoing = USBPD_FALSE;
+#endif /* _VCONN_SUPPORT */
 
   switch (Status)
   {
 #if defined(_SRC) || defined(_DRP)
-  case USBPD_HR_STATUS_START_ACK:
-  case USBPD_HR_STATUS_START_REQ:
+  case USBPD_HR_STATUS_WAIT_VBUS_VSAFE0V:
     if (USBPD_PORTPOWERROLE_SRC == CurrentRole)
     {
       /* Reset the power supply */
       DPM_TurnOffPower(PortNum, USBPD_PORTPOWERROLE_SRC);
     }
-    else
+    break;
+  case USBPD_HR_STATUS_WAIT_VBUS_VSAFE5V:
+    if (CurrentRole == USBPD_PORTPOWERROLE_SRC)
     {
-      USBPD_PWR_IF_VBUSIsEnabled(PortNum);
+#if defined(_VCONN_SUPPORT)
+      /* When VCONN is supported, the Hard Reset Shall cause the Port with the Rp resistor asserted to supply VCONN */
+      if (USBPD_TRUE == DPM_Ports[PortNum].DPM_CablePDCapable)
+      {
+        DPM_Params[PortNum].VconnStatus = USBPD_TRUE;
+      }
+#endif /* _VCONN_SUPPORT */
+      /* Power on the power supply */
+      DPM_TurnOnPower(PortNum, CurrentRole);
     }
     break;
-  case USBPD_HR_STATUS_COMPLETED:
-    /* Reset the power supply */
-    DPM_TurnOnPower(PortNum,CurrentRole);
-    break;
 #endif /* _SRC || _DRP */
+  case USBPD_HR_STATUS_COMPLETED:
+    break;
+  case USBPD_HR_STATUS_FAILED:
+    break;
   default:
       break;
   }
+/* USER CODE END USBPD_DPM_HardReset */
 }
 
 #if defined(_SRC) || defined(_DRP)
@@ -584,7 +620,9 @@ void USBPD_DPM_HardReset(uint8_t PortNum, USBPD_PortPowerRole_TypeDef CurrentRol
   */
 USBPD_StatusTypeDef USBPD_DPM_SetupNewPower(uint8_t PortNum)
 {
+/* USER CODE BEGIN USBPD_DPM_SetupNewPower */
   return  USBPD_PWR_IF_SetProfile(PortNum);
+/* USER CODE END USBPD_DPM_SetupNewPower */
 }
 
 #endif /* _SRC || _DRP */
@@ -595,7 +633,9 @@ USBPD_StatusTypeDef USBPD_DPM_SetupNewPower(uint8_t PortNum)
   */
 USBPD_StatusTypeDef USBPD_DPM_EvaluatePowerRoleSwap(uint8_t PortNum)
 {
+/* USER CODE BEGIN USBPD_DPM_EvaluatePowerRoleSwap */
   return USBPD_ACCEPT;
+/* USER CODE END USBPD_DPM_EvaluatePowerRoleSwap */
 }
 
 /**
@@ -606,6 +646,7 @@ USBPD_StatusTypeDef USBPD_DPM_EvaluatePowerRoleSwap(uint8_t PortNum)
   */
 void USBPD_DPM_Notification(uint8_t PortNum, USBPD_NotifyEventValue_TypeDef EventVal)
 {
+/* USER CODE BEGIN USBPD_DPM_Notification */
   DEMO_PostNotificationMessage(PortNum, EventVal);
 
   switch(EventVal)
@@ -614,7 +655,15 @@ void USBPD_DPM_Notification(uint8_t PortNum, USBPD_NotifyEventValue_TypeDef Even
                               Power Notification
     */
     case USBPD_NOTIFY_POWER_EXPLICIT_CONTRACT :
+    {
       /* Power ready means an explicit contract has been establish and Power is available */
+#if defined(_VDM)
+      /* Request VDM identify only if not already entered in VDM mode */
+      if ((0 == VDM_Mode_On[PortNum]) && (USBPD_PORTDATAROLE_DFP == DPM_Params[PortNum].PE_DataRole))
+      {
+        USBPD_PE_SVDM_RequestIdentity(PortNum, USBPD_SOPTYPE_SOP);
+      }
+#endif /*_VDM*/
 #if defined(USBPD_REV30_SUPPORT)
 #if _ALERT
 #if defined(_SRC) || defined(_DRP)
@@ -627,18 +676,19 @@ void USBPD_DPM_Notification(uint8_t PortNum, USBPD_NotifyEventValue_TypeDef Even
 #endif /* _ALERT */
 #if defined(_FWUPDATE_INITIATOR)||defined(_FWUPDATE_RESPONDER)
 #if defined(_FWUPDATE_INITIATOR)
-    /* Start the PDFU initiator task*/
-    USBPD_PDFU_INIT_CreateTask(PortNum);
+      /* Start the PDFU initiator task*/
+      USBPD_PDFU_INIT_CreateTask(PortNum);
 #endif /* _FWUPDATE_INITIATOR */
 #if defined(_FWUPDATE_RESPONDER)
-    /* Start the PDFU Responder task*/
-    USBPD_PDFU_CreateTask(PortNum);
-    /* Send an UVDM message to indicate initiator that CC loader is ready */
-    USBPD_DPM_RequestUVDMMessage(PortNum, USBPD_SOPTYPE_SOP);
+      /* Start the PDFU Responder task*/
+      USBPD_PDFU_CreateTask(PortNum);
+      /* Send an UVDM message to indicate initiator that CC loader is ready */
+      USBPD_DPM_RequestUVDMMessage(PortNum, USBPD_SOPTYPE_SOP);
 #endif /* _FWUPDATE_RESPONDER */
 #endif /* _FWUPDATE_INITIATOR || _FWUPDATE_RESPONDER */
 #endif /* USBPD_REV30_SUPPORT */
-    break;
+      break;
+    }
     /*
                               End Power Notification
      ***************************************************************************/
@@ -653,10 +703,6 @@ void USBPD_DPM_Notification(uint8_t PortNum, USBPD_NotifyEventValue_TypeDef Even
         USBPD_SNKRDO_TypeDef rdo;
         rdo.d32                                   = DPM_Ports[PortNum].DPM_RequestDOMsg;
         DPM_Ports[PortNum].DPM_RDOPosition        = rdo.GenericRDO.ObjectPosition;
-#if defined(_GUI_INTERFACE)
-        DPM_USER_Settings[PortNum].DPM_SNKRequestedPower.OperatingVoltageInmVunits    = DPM_Ports[PortNum].DPM_RequestedVoltage;
-        DPM_USER_Settings[PortNum].DPM_SNKRequestedPower.OperatingPowerInmWunits      = (DPM_Ports[PortNum].DPM_RequestedVoltage * DPM_USER_Settings[PortNum].DPM_SNKRequestedPower.MaxOperatingCurrentInmAunits) / 1000;
-#endif /* _GUI_INTERFACE */
       }
     break;
     /*
@@ -705,186 +751,19 @@ void USBPD_DPM_Notification(uint8_t PortNum, USBPD_NotifyEventValue_TypeDef Even
            In this state, VBUS is set to 5V */
       }
       break;
-    default :
+      
+#if defined(_USB_DEVICE) || defined(USB_HOST)
+  case USBPD_NOTIFY_DATAROLESWAP_UFP :
+  case USBPD_NOTIFY_DATAROLESWAP_DFP :
+    {
+      DPM_USB_Stop(PortNum);
+      DPM_USB_Start(PortNum);
       break;
-  }
-
-#if defined(_GUI_INTERFACE)
-  GUI_PostNotificationMessage(PortNum, EventVal);
-#endif /* _GUI_INTERFACE */
-}
-
-/**
-  * @brief  DPM callback to allow PE to retrieve information from DPM/PWR_IF.
-  * @param  PortNum Port number
-  * @param  DataId  Type of data to be updated in DPM based on @ref USBPD_CORE_DataInfoType_TypeDef
-  * @param  Ptr     Pointer on address where DPM data should be written (u8 pointer)
-  * @param  Size    Pointer on nb of u8 written by DPM
-  * @retval None
-  */
-void USBPD_DPM_GetDataInfo(uint8_t PortNum, USBPD_CORE_DataInfoType_TypeDef DataId, uint8_t *Ptr, uint32_t *Size)
-{
-  /* Check type of information targeted by request */
-  switch (DataId)
-  {
-    /* Case Port Source PDO Data information :
-    Case Port SINK PDO Data information :
-    Call PWR_IF PDO reading request.
-    */
-  case USBPD_CORE_DATATYPE_SRC_PDO :
-  case USBPD_CORE_DATATYPE_SNK_PDO :
-    USBPD_PWR_IF_GetPortPDOs(PortNum, DataId, Ptr, Size);
-    *Size *= 4;
-    break;
-
-    /* Case Requested voltage value Data information */
-  case USBPD_CORE_DATATYPE_REQ_VOLTAGE :
-    *Size = 4;
-    (void)memcpy((uint8_t*)Ptr, (uint8_t *)&DPM_Ports[PortNum].DPM_RequestedVoltage, *Size);
-    break;
-
+    }
+#endif /* _USB */
 #if defined(USBPD_REV30_SUPPORT)
-#if _PPS
-  case USBPD_CORE_PPS_STATUS :
-    {
-      /* Get current drawn by sink */
-      USBPD_PPSSDB_TypeDef pps_status = {0};
-
-      /* Disable VBUS & IBUS Measurements */
-      pps_status.fields.OutputVoltageIn20mVunits  = 0xFFFF;
-      pps_status.fields.OutputCurrentIn50mAunits  = 0xFF;
-      pps_status.fields.RealTimeFlags             = USBPD_PPS_REALTIMEFLAGS_PTF_NOT_SUPPORTED | USBPD_PPS_REALTIMEFLAGS_OMF_DISABLED;
-
-      *Size = 4;
-      (void)memcpy((uint8_t*)Ptr, (uint8_t *)&pps_status.d32, *Size);
-    }
-    break;
-#endif /* _PPS */
-#if _SRC_CAPA_EXT && (defined(_SRC)||defined(_DRP))
-  case USBPD_CORE_EXTENDED_CAPA :
-    {
-      *Size = sizeof(USBPD_SCEDB_TypeDef);
-      memcpy((uint8_t*)Ptr, (uint8_t *)&DPM_USER_Settings[PortNum].DPM_SRCExtendedCapa, *Size);
-    }
-    break;
-#endif /* _SRC_CAPA_EXT && (_SRC || _DRP) */
-#if _STATUS
-  case USBPD_CORE_INFO_STATUS :
-    {
-      USBPD_SDB_TypeDef  infostatus = {
-        .InternalTemp = 0,          /*!< Source or Sink internal temperature in degrees centigrade */
-        .PresentInput = 0,          /*!< Present Input                                             */
-        .PresentBatteryInput = 0,   /*!< Present Battery Input                                     */
-        .EventFlags = 0,            /*!< Event Flags                                               */
-        .TemperatureStatus = 0,     /*!< Temperature                                               */
-        .PowerStatus = 0,           /*!< Power Status based on combination of @ref USBPD_SDB_POWER_STATUS*/
-      };
-
-      *Size = sizeof(USBPD_SDB_TypeDef);
-      memcpy((uint8_t *)Ptr, &infostatus, *Size);
-    }
-    break;
-#endif /* _STATUS */
-#if _MANU_INFO
-  case USBPD_CORE_MANUFACTURER_INFO :
-    {
-      USBPD_MIDB_TypeDef* manu_info;
-      /* Manufacturer Info Target must be a range 0..1 */
-      /* Manufacturer Info Ref must be a range 0..7    */
-      if((DPM_Ports[PortNum].DPM_GetManufacturerInfo.ManufacturerInfoTarget > USBPD_MANUFINFO_TARGET_BATTERY)
-      || (DPM_Ports[PortNum].DPM_GetManufacturerInfo.ManufacturerInfoRef > USBPD_MANUFINFO_REF_MAX_VALUES))
-      {
-        /* If the Manufacturer Info Target field or Manufacturer Info Ref field in the Get_Manufacturer_Info Message is
-           unrecognized the field Shall return a null terminated ascii text string Not Supported.*/
-        char *_notsupported = "Not Supported\0";
-        *Size = 4 + 14; /* VID (2) + .PID(2) + sizeof("Not Supported\0")*/
-        /* Copy Manufacturer Info into data area for transmission */
-        manu_info = (USBPD_MIDB_TypeDef*)&DPM_USER_Settings[PortNum].DPM_ManuInfoPort;
-        memcpy((uint8_t*)Ptr, (uint8_t *)manu_info, 4);
-        memcpy((uint8_t*)(Ptr + 4), (uint8_t *)_notsupported, 14);
-      }
-      else
-      {
-        if (USBPD_MANUFINFO_TARGET_PORT_CABLE_PLUG == DPM_Ports[PortNum].DPM_GetManufacturerInfo.ManufacturerInfoTarget)
-        {
-          /* Manufacturer info requested for the port */
-          /* VID(2) + .PID(2) + .ManuString("STMicroelectronics") */
-          *Size = 4 + strlen((char*)(DPM_USER_Settings[PortNum].DPM_ManuInfoPort.ManuString));
-          /* Copy Manufacturer Info into data area for transmission */
-          manu_info = (USBPD_MIDB_TypeDef*)&DPM_USER_Settings[PortNum].DPM_ManuInfoPort;
-          memcpy((uint8_t*)Ptr, (uint8_t *)manu_info, *Size);
-        }
-        else
-        {
-          /* Manufacturer info requested for the battery (not available yet) */
-          /* If the Manufacturer Info Target field or Manufacturer Info Ref field in the Get_Manufacturer_Info Message is
-             unrecognized the field Shall return a null terminated ascii text string Not Supported.*/
-          char *_notsupported = "Not Supported\0";
-          *Size = 4 + 14; /* VID (2) + .PID(2) + sizeof("Not Supported\0")*/
-          /* Copy Manufacturer Info into data area for transmission */
-          manu_info = (USBPD_MIDB_TypeDef*)&DPM_USER_Settings[PortNum].DPM_ManuInfoPort;
-          memcpy((uint8_t*)Ptr, (uint8_t *)manu_info, 4);
-          memcpy((uint8_t*)(Ptr + 4), (uint8_t *)_notsupported, 14);
-        }
-      }
-    }
-    break;
-#endif /* _MANU_INFO */
-#if _BATTERY
-  case USBPD_CORE_BATTERY_STATUS:
-    {
-      USBPD_BSDO_TypeDef  battery_status;
-
-      battery_status.d32 = 0;
-#if _SRC_CAPA_EXT && (defined(_SRC)||defined(_DRP))
-      if ((DPM_Ports[PortNum].DPM_GetBatteryStatus.BatteryStatusRef < 8)
-        && (DPM_Ports[PortNum].DPM_GetBatteryStatus.BatteryStatusRef < DPM_USER_Settings[PortNum].DPM_SRCExtendedCapa.NbBatteries))
-      {
-        battery_status.b.BatteryPC    = 0xABCDu;
-        battery_status.b.BatteryInfo  = USBPD_BSDO_BATT_INFO_BATT_PRESENT | USBPD_BSDO_BATT_INFO_BATT_ISIDLE;
-      }
-      else
-#endif /* _SRC_CAPA_EXT && (_SRC || _DRP) */
-      {
-        battery_status.b.BatteryPC    = 0xFFFFu;
-        battery_status.b.BatteryInfo  = USBPD_BSDO_BATT_INFO_INVALID_REF;
-      }
-      *Size = 4;
-      memcpy((uint8_t *)Ptr, (uint8_t *)&battery_status.d32, *Size);
-    }
-    break;
-
-  case USBPD_CORE_BATTERY_CAPABILITY:
-    {
-#if _SRC_CAPA_EXT && (defined(_SRC)||defined(_DRP))
-      if (0 != DPM_USER_Settings[PortNum].DPM_SRCExtendedCapa.NbBatteries)
-      {
-        *Size = sizeof(USBPD_BCDB_TypeDef);
-        USBPD_BCDB_TypeDef  battery_capability = {
-          .VID = USBPD_VID,                     /*!< Vendor ID (assigned by the USB-IF)         */
-          .PID = USBPD_PID,                     /*!< Product ID (assigned by the manufacturer)  */
-          .BatteryDesignCapa = 0xAABB,          /*!< Battery Design Capacity                    */
-          .BatteryLastFullChargeCapa = 0xCCDD,  /*!< Battery last full charge capacity          */
-          .BatteryType= 0,                      /*!< Battery Type                               */
-        };
-        if (DPM_Ports[PortNum].DPM_GetBatteryCapability.BatteryCapRef >= 8)
-        {
-          battery_capability.BatteryType  = 1;
-        }
-
-        memcpy((uint8_t *)Ptr, &battery_capability, *Size);
-      }
-      else
-#endif /* _SRC_CAPA_EXT && (_SRC || _DRP) */
-      {
-        /* Set Size to 0 to send a not supported message */
-        *Size = 0;
-      }
-    }
-    break;
-#endif /* _BATTERY */
 #if _ALERT
-  case USBPD_CORE_ALERT:
+  case USBPD_NOTIFY_ALERT_RECEIVED :
     {
 #if _BATTERY
       uint32_t index = 0;
@@ -979,29 +858,247 @@ void USBPD_DPM_GetDataInfo(uint8_t PortNum, USBPD_CORE_DataInfoType_TypeDef Data
 #endif /* _SRC || _DRP */
       }
 
-_ctrl_msg:
-      /* Post GET_STATUS message */
-      USBPD_DPM_RequestGetStatus(PortNum);
+      _ctrl_msg:
+        /* Post GET_STATUS message */
+        USBPD_DPM_RequestGetStatus(PortNum);
     }
     break;
 #endif /* ALERT */
+#endif /* USBPD_REV30_SUPPORT */
+#if defined(_VCONN_SUPPORT)
+    case USBPD_NOTIFY_CABLERESET_REQUESTED :
+      {
+        /* CABLE_RESET is requested by the PE but port is not in the correct configuration */
+        /* Only a DFP Shall generate Cable Reset Signaling. A DFP Shall only generate Cable Reset Signaling within an Explicit Contract. */
+        if ((USBPD_PORTDATAROLE_DFP == DPM_Params[PortNum].PE_DataRole) && (USBPD_FALSE == DPM_Params[PortNum].VconnStatus))
+        {
+          /* DFP is not VCONN source. Should request a VCONN Swap */
+          USBPD_DPM_RequestVconnSwap(PortNum);
+          DPM_Ports[PortNum].DPM_CableResetOnGoing = USBPD_TRUE;
+        }
+      }
+      break;
+    case USBPD_NOTIFY_VCONN_SWAP_COMPLETE :
+      {
+        /* VCONN Swap received in DFP. Now DFP is VCONN Source. Can send the CABLE_RESET  */
+        if ((USBPD_TRUE == DPM_Ports[PortNum].DPM_CableResetOnGoing) && (USBPD_TRUE == DPM_Params[PortNum].VconnStatus))
+        {
+          /* DFP is now VCONN source. Cable Reset request could be processed */
+          USBPD_DPM_RequestCableReset(PortNum);
+          DPM_Ports[PortNum].DPM_CableResetOnGoing = USBPD_FALSE;
+        }
+      }
+      break;
+#endif /* _VCONN_SUPPORT */
+    default :
+      break;
+  }
+
+  /* Forward PE notifications to GUI if enabled */
+  if (NULL != DPM_GUI_PostNotificationMessage)
+  {
+    DPM_GUI_PostNotificationMessage(PortNum, EventVal);
+  }
+/* USER CODE END USBPD_DPM_Notification */
+}
+
+/**
+  * @brief  DPM callback to allow PE to retrieve information from DPM/PWR_IF.
+  * @param  PortNum Port number
+  * @param  DataId  Type of data to be updated in DPM based on @ref USBPD_CORE_DataInfoType_TypeDef
+  * @param  Ptr     Pointer on address where DPM data should be written (u8 pointer)
+  * @param  Size    Pointer on nb of u8 written by DPM
+  * @retval None
+  */
+void USBPD_DPM_GetDataInfo(uint8_t PortNum, USBPD_CORE_DataInfoType_TypeDef DataId, uint8_t *Ptr, uint32_t *Size)
+{
+/* USER CODE BEGIN USBPD_DPM_GetDataInfo */
+  /* Check type of information targeted by request */
+  switch (DataId)
+  {
+    /* Case Port Source PDO Data information :
+    Case Port SINK PDO Data information :
+    Call PWR_IF PDO reading request.
+    */
+  case USBPD_CORE_DATATYPE_SRC_PDO :
+  case USBPD_CORE_DATATYPE_SNK_PDO :
+    USBPD_PWR_IF_GetPortPDOs(PortNum, DataId, Ptr, Size);
+    *Size *= 4;
+    break;
+
+    /* Case Requested voltage value Data information */
+  case USBPD_CORE_DATATYPE_REQ_VOLTAGE :
+    *Size = 4;
+    (void)memcpy((uint8_t*)Ptr, (uint8_t *)&DPM_Ports[PortNum].DPM_RequestedVoltage, *Size);
+    break;
+
+#if defined(USBPD_REV30_SUPPORT)
+#if _PPS
+  case USBPD_CORE_PPS_STATUS :
+    {
+      /* Get current drawn by sink */
+      USBPD_PPSSDB_TypeDef pps_status = {0};
+
+      /* Disable VBUS & IBUS Measurements */
+      pps_status.fields.OutputVoltageIn20mVunits  = 0xFFFF;
+      pps_status.fields.OutputCurrentIn50mAunits  = 0xFF;
+      pps_status.fields.RealTimeFlags             = USBPD_PPS_REALTIMEFLAGS_PTF_NOT_SUPPORTED | USBPD_PPS_REALTIMEFLAGS_OMF_DISABLED;
+
+      *Size = 4;
+      (void)memcpy((uint8_t*)Ptr, (uint8_t *)&pps_status.d32, *Size);
+    }
+    break;
+#endif /* _PPS */
+#if _SRC_CAPA_EXT && (defined(_SRC)||defined(_DRP))
+  case USBPD_CORE_EXTENDED_CAPA :
+    {
+      *Size = sizeof(USBPD_SCEDB_TypeDef);
+      memcpy((uint8_t*)Ptr, (uint8_t *)&DPM_USER_Settings[PortNum].DPM_SRCExtendedCapa, *Size);
+    }
+    break;
+#endif /* _SRC_CAPA_EXT && (_SRC || _DRP) */
+#if _SNK_CAPA_EXT && (defined(_SNK)||defined(_DRP))
+  case USBPD_CORE_SNK_EXTENDED_CAPA :
+    {
+      *Size = sizeof(USBPD_SKEDB_TypeDef);
+      memcpy((uint8_t*)Ptr, (uint8_t *)&DPM_USER_Settings[PortNum].DPM_SNKExtendedCapa, *Size);
+     }
+     break;
+#endif /* _SNK_CAPA_EXT && (_SNK || _DRP) */
+#if _STATUS
+  case USBPD_CORE_INFO_STATUS :
+    {
+      USBPD_SDB_TypeDef  infostatus = {
+        .InternalTemp = 0,          /*!< Source or Sink internal temperature in degrees centigrade */
+        .PresentInput = 0,          /*!< Present Input                                             */
+        .PresentBatteryInput = 0,   /*!< Present Battery Input                                     */
+        .EventFlags = 0,            /*!< Event Flags                                               */
+        .TemperatureStatus = 0,     /*!< Temperature                                               */
+        .PowerStatus = 0,           /*!< Power Status based on combination of @ref USBPD_SDB_POWER_STATUS*/
+      };
+
+      *Size = sizeof(USBPD_SDB_TypeDef);
+      memcpy((uint8_t *)Ptr, &infostatus, *Size);
+    }
+    break;
+#endif /* _STATUS */
+#if _MANU_INFO
+  case USBPD_CORE_MANUFACTURER_INFO :
+    {
+      USBPD_MIDB_TypeDef* manu_info;
+      /* Manufacturer Info Target must be a range 0..1 */
+      /* Manufacturer Info Ref must be a range 0..7    */
+      if((DPM_Ports[PortNum].DPM_GetManufacturerInfo.ManufacturerInfoTarget > USBPD_MANUFINFO_TARGET_BATTERY)
+      || (DPM_Ports[PortNum].DPM_GetManufacturerInfo.ManufacturerInfoRef > USBPD_MANUFINFO_REF_MAX_VALUES))
+      {
+        /* If the Manufacturer Info Target field or Manufacturer Info Ref field in the Get_Manufacturer_Info Message is
+           unrecognized the field Shall return a null terminated ascii text string "Not Supported".*/
+        char *_notsupported = "Not Supported\0";
+        *Size = 4 + 14; /* VID (2) + .PID(2) + sizeof("Not Supported\0")*/
+        /* Copy Manufacturer Info into data area for transmission */
+        manu_info = (USBPD_MIDB_TypeDef*)&DPM_USER_Settings[PortNum].DPM_ManuInfoPort;
+        memcpy((uint8_t*)Ptr, (uint8_t *)manu_info, 4);
+        memcpy((uint8_t*)(Ptr + 4), (uint8_t *)_notsupported, 14);
+      }
+      else
+      {
+        if (USBPD_MANUFINFO_TARGET_PORT_CABLE_PLUG == DPM_Ports[PortNum].DPM_GetManufacturerInfo.ManufacturerInfoTarget)
+        {
+          /* Manufacturer info requested for the port */
+          /* VID(2) + .PID(2) + .ManuString("STMicroelectronics") */
+          *Size = 4 + strlen((char*)(DPM_USER_Settings[PortNum].DPM_ManuInfoPort.ManuString));
+          /* Copy Manufacturer Info into data area for transmission */
+          manu_info = (USBPD_MIDB_TypeDef*)&DPM_USER_Settings[PortNum].DPM_ManuInfoPort;
+          memcpy((uint8_t*)Ptr, (uint8_t *)manu_info, *Size);
+        }
+        else
+        {
+          /* Manufacturer info requested for the battery (not available yet) */
+          /* If the Manufacturer Info Target field or Manufacturer Info Ref field in the Get_Manufacturer_Info Message is
+             unrecognized the field Shall return a null terminated ascii text string "Not Supported".*/
+          char *_notsupported = "Not Supported\0";
+          *Size = 4 + 14; /* VID (2) + .PID(2) + sizeof("Not Supported\0")*/
+          /* Copy Manufacturer Info into data area for transmission */
+          manu_info = (USBPD_MIDB_TypeDef*)&DPM_USER_Settings[PortNum].DPM_ManuInfoPort;
+          memcpy((uint8_t*)Ptr, (uint8_t *)manu_info, 4);
+          memcpy((uint8_t*)(Ptr + 4), (uint8_t *)_notsupported, 14);
+        }
+      }
+    }
+    break;
+#endif /* _MANU_INFO */
+#if _BATTERY
+  case USBPD_CORE_BATTERY_STATUS:
+    {
+      USBPD_BSDO_TypeDef  battery_status;
+
+      battery_status.d32 = 0;
+#if _SRC_CAPA_EXT && (defined(_SRC)||defined(_DRP))
+      if ((DPM_Ports[PortNum].DPM_GetBatteryStatus.BatteryStatusRef < 8)
+        && (DPM_Ports[PortNum].DPM_GetBatteryStatus.BatteryStatusRef < DPM_USER_Settings[PortNum].DPM_SRCExtendedCapa.NbBatteries))
+      {
+        battery_status.b.BatteryPC    = 0xABCDu;
+        battery_status.b.BatteryInfo  = USBPD_BSDO_BATT_INFO_BATT_PRESENT | USBPD_BSDO_BATT_INFO_BATT_ISIDLE;
+      }
+      else
+#endif /* _SRC_CAPA_EXT && (_SRC || _DRP) */
+      {
+        battery_status.b.BatteryPC    = 0xFFFFu;
+        battery_status.b.BatteryInfo  = USBPD_BSDO_BATT_INFO_INVALID_REF;
+      }
+      *Size = 4;
+      memcpy((uint8_t *)Ptr, (uint8_t *)&battery_status.d32, *Size);
+    }
+    break;
+
+  case USBPD_CORE_BATTERY_CAPABILITY:
+    {
+#if _SRC_CAPA_EXT && (defined(_SRC)||defined(_DRP))
+      if (0 != DPM_USER_Settings[PortNum].DPM_SRCExtendedCapa.NbBatteries)
+      {
+        *Size = sizeof(USBPD_BCDB_TypeDef);
+        USBPD_BCDB_TypeDef  battery_capability = {
+          .VID = USBPD_VID,                     /*!< Vendor ID (assigned by the USB-IF)         */
+          .PID = USBPD_PID,                     /*!< Product ID (assigned by the manufacturer)  */
+          .BatteryDesignCapa = 0xAABB,          /*!< Battery Design Capacity                    */
+          .BatteryLastFullChargeCapa = 0xCCDD,  /*!< Battery last full charge capacity          */
+          .BatteryType= 0,                      /*!< Battery Type                               */
+        };
+        if (DPM_Ports[PortNum].DPM_GetBatteryCapability.BatteryCapRef >= 8)
+        {
+          battery_capability.BatteryType  = 1;
+        }
+
+        memcpy((uint8_t *)Ptr, &battery_capability, *Size);
+      }
+      else
+#endif /* _SRC_CAPA_EXT && (_SRC || _DRP) */
+      {
+        /* Set Size to 0 to send a not supported message */
+        *Size = 0;
+      }
+    }
+    break;
+#endif /* _BATTERY */
 #endif /* USBPD_REV30_SUPPORT */
   default :
     *Size = 0;
     break;
   }
+/* USER CODE END USBPD_DPM_GetDataInfo */
 }
 
 /**
   * @brief  DPM callback to allow PE to update information in DPM/PWR_IF.
   * @param  PortNum Port number
   * @param  DataId  Type of data to be updated in DPM based on @ref USBPD_CORE_DataInfoType_TypeDef
-  * @param  Ptr     Pointer on address where DPM data should be written (u8 pointer)
+  * @param  Ptr     Pointer on the data
   * @param  Size    Nb of bytes to be updated in DPM
   * @retval None
   */
 void USBPD_DPM_SetDataInfo(uint8_t PortNum, USBPD_CORE_DataInfoType_TypeDef DataId, uint8_t *Ptr, uint32_t Size)
 {
+/* USER CODE BEGIN USBPD_DPM_SetDataInfo */
   uint32_t index;
 
   /* Check type of information targeted by request */
@@ -1103,6 +1200,15 @@ void USBPD_DPM_SetDataInfo(uint8_t PortNum, USBPD_CORE_DataInfoType_TypeDef Data
     }
     break;
 #endif /* _SRC_CAPA_EXT */
+#if _SNK_CAPA_EXT
+  case USBPD_CORE_SNK_EXTENDED_CAPA :
+    {
+      uint8_t*  _snk_ext_capa;
+      _snk_ext_capa = (uint8_t*)&DPM_Ports[PortNum].DPM_RcvSNKExtendedCapa;
+      memcpy(_snk_ext_capa, Ptr, Size);
+    }
+    break;
+#endif /* _SNK_CAPA_EXT */
 #if _MANU_INFO
   case USBPD_CORE_GET_MANUFACTURER_INFO:
     {
@@ -1146,6 +1252,12 @@ void USBPD_DPM_SetDataInfo(uint8_t PortNum, USBPD_CORE_DataInfoType_TypeDef Data
   default :
     break;
   }
+  /* Forward info to GUI if enabled */
+  if (NULL != DPM_GUI_SaveInfo)
+  {
+    DPM_GUI_SaveInfo(PortNum, DataId, Ptr, Size);
+  }
+/* USER CODE END USBPD_DPM_SetDataInfo */
 }
 
 #if defined(_SRC) || defined(_DRP)
@@ -1157,6 +1269,7 @@ void USBPD_DPM_SetDataInfo(uint8_t PortNum, USBPD_CORE_DataInfoType_TypeDef Data
   */
 USBPD_StatusTypeDef USBPD_DPM_EvaluateRequest(uint8_t PortNum, USBPD_CORE_PDO_Type_TypeDef *PtrPowerObject)
 {
+/* USER CODE BEGIN USBPD_DPM_EvaluateRequest */
   USBPD_SNKRDO_TypeDef rdo;
   USBPD_PDO_TypeDef pdo;
   uint32_t pdomaxcurrent = 0;
@@ -1173,7 +1286,7 @@ USBPD_StatusTypeDef USBPD_DPM_EvaluateRequest(uint8_t PortNum, USBPD_CORE_PDO_Ty
   {
     DPM_Params[PortNum].PE_UnchunkSupport   = USBPD_TRUE;
   }
-#endif /* USBPD_REV30_SUPPORT && _UNCHUNKED_SUPPORT*/
+#endif /* USBPD_REV30_SUPPORT && _UNCHUNKED_SUPPORT */
   pdhandle->DPM_RDOPosition = 0;
 
   /* Check if RDP can be met within the supported PDOs by the Source port */
@@ -1211,7 +1324,7 @@ USBPD_StatusTypeDef USBPD_DPM_EvaluateRequest(uint8_t PortNum, USBPD_CORE_PDO_Ty
       }
     }
     break;
-#if defined(USBPD_REV30_SUPPORT) && _PPS
+#if _PPS
   case USBPD_CORE_PDO_TYPE_APDO:
     {
       uint32_t pdominvoltage, pdomaxvoltage, rdovoltage;
@@ -1233,7 +1346,7 @@ USBPD_StatusTypeDef USBPD_DPM_EvaluateRequest(uint8_t PortNum, USBPD_CORE_PDO_Ty
       }
     }
     break;
-#endif /* USBPD_REV30_SUPPORT && _PPS */
+#endif /* _PPS */
   case USBPD_CORE_PDO_TYPE_BATTERY:
   case USBPD_CORE_PDO_TYPE_VARIABLE:
   default:
@@ -1256,6 +1369,7 @@ USBPD_StatusTypeDef USBPD_DPM_EvaluateRequest(uint8_t PortNum, USBPD_CORE_PDO_Ty
                rdo.FixedVariableRDO.MaxOperatingCurrent10mAunits * 10, rdo.FixedVariableRDO.OperatingCurrentIn10mAunits * 10 */
   /* USBPD_DPM_EvaluateRequest: Source accepts the requested power */
   return USBPD_ACCEPT;
+/* USER CODE END USBPD_DPM_EvaluateRequest */
 }
 #endif /* _SRC || _DRP */
 
@@ -1269,6 +1383,7 @@ USBPD_StatusTypeDef USBPD_DPM_EvaluateRequest(uint8_t PortNum, USBPD_CORE_PDO_Ty
   */
 void USBPD_DPM_SNK_EvaluateCapabilities(uint8_t PortNum, uint32_t *PtrRequestData, USBPD_CORE_PDO_Type_TypeDef *PtrPowerObjectType)
 {
+/* USER CODE BEGIN USBPD_DPM_SNK_EvaluateCapabilities */
   USBPD_PDO_TypeDef  fixed_pdo;
   USBPD_SNKRDO_TypeDef rdo;
   USBPD_HandleTypeDef *pdhandle = &DPM_Ports[PortNum];
@@ -1315,7 +1430,6 @@ void USBPD_DPM_SNK_EvaluateCapabilities(uint8_t PortNum, uint32_t *PtrRequestDat
     }
 #endif /* USBPD_REV30_SUPPORT && _UNCHUNKED_SUPPORT */
     DPM_Ports[PortNum].DPM_RequestedCurrent = puser->DPM_SNKRequestedPower.MaxOperatingCurrentInmAunits;
-    /* USBPD_DPM_EvaluateCapabilities: Mismatch, could not find desired pdo index */
 
     pdhandle->DPM_RequestDOMsg = rdo.d32;
     *PtrPowerObjectType = USBPD_CORE_PDO_TYPE_FIXED;
@@ -1341,6 +1455,7 @@ void USBPD_DPM_SNK_EvaluateCapabilities(uint8_t PortNum, uint32_t *PtrRequestDat
 #endif /* USBPD_REV30_SUPPORT && _SRC_CAPA_EXT*/
 
   *PtrRequestData = pdhandle->DPM_RequestDOMsg;
+/* USER CODE END USBPD_DPM_SNK_EvaluateCapabilities */
 }
 #endif /* _SNK || _DRP */
 
@@ -1350,14 +1465,14 @@ void USBPD_DPM_SNK_EvaluateCapabilities(uint8_t PortNum, uint32_t *PtrRequestDat
   * @param  PortNum Port number
   * @param  CurrentRole the current role
   * @param  Status status on power role swap event
-  * @retval None
   */
 void USBPD_DPM_PowerRoleSwap(uint8_t PortNum, USBPD_PortPowerRole_TypeDef CurrentRole, USBPD_PRS_Status_TypeDef Status)
 {
+/* USER CODE BEGIN USBPD_DPM_PowerRoleSwap */
     switch (Status)
     {
     case USBPD_PRS_STATUS_VBUS_OFF:
-#if defined(_SRC)
+#if defined(_SRC) || defined(_DRP)
       if (CurrentRole == USBPD_PORTPOWERROLE_SRC)
       {
 #if defined(_VCONN_SUPPORT)
@@ -1373,7 +1488,7 @@ void USBPD_DPM_PowerRoleSwap(uint8_t PortNum, USBPD_PortPowerRole_TypeDef Curren
         DPM_Params[PortNum].VconnStatus = _vconnstate;
 #endif /* _VCONN_SUPPORT */
       }
-#endif /* _SRC */
+#endif /* _SRC || _DRP */
       break;
     case USBPD_PRS_STATUS_SRC_RP2RD:
       DPM_AssertRd(PortNum);
@@ -1381,7 +1496,7 @@ void USBPD_DPM_PowerRoleSwap(uint8_t PortNum, USBPD_PortPowerRole_TypeDef Curren
     case USBPD_PRS_STATUS_SNK_RD2RP:
       DPM_AssertRp(PortNum);
       break;
-#if defined(_SRC)
+#if defined(_SRC) || defined(_DRP)
     case USBPD_PRS_STATUS_VBUS_ON:
       DPM_TurnOnPower(PortNum, CurrentRole);
 
@@ -1390,10 +1505,11 @@ void USBPD_DPM_PowerRoleSwap(uint8_t PortNum, USBPD_PortPowerRole_TypeDef Curren
       osMessagePut(AlarmMsgBox, (PortNum << 8 | 1), osWaitForever);
 #endif /* USBPD_TCPM_MODULE_ENABLED */
       break;
-#endif /*_SRC */
+#endif /*_SRC || _DRP */
     default:
       break;
     }
+/* USER CODE END USBPD_DPM_PowerRoleSwap */
 }
 #endif /* _DRP */
 
@@ -1405,6 +1521,7 @@ void USBPD_DPM_PowerRoleSwap(uint8_t PortNum, USBPD_PortPowerRole_TypeDef Curren
   */
 USBPD_StatusTypeDef USBPD_DPM_EvaluateVconnSwap(uint8_t PortNum)
 {
+/* USER CODE BEGIN USBPD_DPM_EvaluateVconnSwap */
   USBPD_StatusTypeDef status = USBPD_REJECT;
   if (USBPD_TRUE == DPM_USER_Settings[PortNum].PE_VconnSwap)
   {
@@ -1412,6 +1529,7 @@ USBPD_StatusTypeDef USBPD_DPM_EvaluateVconnSwap(uint8_t PortNum)
   }
 
   return status;
+/* USER CODE END USBPD_DPM_EvaluateVconnSwap */
 }
 
 /**
@@ -1422,9 +1540,12 @@ USBPD_StatusTypeDef USBPD_DPM_EvaluateVconnSwap(uint8_t PortNum)
   */
 USBPD_StatusTypeDef USBPD_DPM_PE_VconnPwr(uint8_t PortNum, USBPD_FunctionalState State)
 {
+/* USER CODE BEGIN USBPD_DPM_PE_VconnPwr */
   USBPD_StatusTypeDef status = USBPD_ERROR;
   if((USBPD_ENABLE == State) && (CCNONE != DPM_Params[PortNum].VconnCCIs))
   {
+    /* In case of VCONN Swap SRC -> SNK. Keep information that CABLE is EMC */
+    DPM_Ports[PortNum].DPM_CablePDCapable = USBPD_TRUE;
     status = USBPD_PWR_IF_Enable_VConn(PortNum,DPM_Params[PortNum].VconnCCIs);
 #ifndef _RTOS
     /* To be sure than VCONN is ON */
@@ -1436,23 +1557,25 @@ USBPD_StatusTypeDef USBPD_DPM_PE_VconnPwr(uint8_t PortNum, USBPD_FunctionalState
     status = USBPD_PWR_IF_Disable_VConn(PortNum,DPM_Params[PortNum].VconnCCIs);
   }
   return status;
+/* USER CODE END USBPD_DPM_PE_VconnPwr */
 }
 #endif /* _VCONN_SUPPORT */
 
 #ifdef USBPD_REV30_SUPPORT
 /**
   * @brief  DPM callback to allow PE to forward extended message information.
-  * @param  PortNum  Port number
-  * @param  MsgType  Type of message to be handled in DPM
+  * @param  PortNum   Port number
+  * @param  MsgType   Type of message to be handled in DPM
   *         This parameter can be one of the following values:
   *           @arg @ref USBPD_EXT_SECURITY_REQUEST Security Request extended message
   *           @arg @ref USBPD_EXT_SECURITY_RESPONSE Security Response extended message
-  * @param  ptrData  Pointer on address Extended Message data could be read (u8 pointer)
-  * @param  DataSize Nb of u8 that compose Extended message
+  * @param  ptrData   Pointer on address Extended Message data could be read (u8 pointer)
+  * @param  DataSize  Nb of u8 that compose Extended message
   * @retval None
   */
 void USBPD_DPM_ExtendedMessageReceived(uint8_t PortNum, USBPD_ExtendedMsg_TypeDef MsgType, uint8_t *ptrData, uint16_t DataSize)
 {
+/* USER CODE BEGIN USBPD_DPM_ExtendedMessageReceived */
   if (DataSize == 0)
   {
     /* No data received. */
@@ -1462,15 +1585,16 @@ void USBPD_DPM_ExtendedMessageReceived(uint8_t PortNum, USBPD_ExtendedMsg_TypeDe
   switch(MsgType)
   {
 #ifdef _SECURITY_MSG
-    case   USBPD_EXT_SECURITY_REQUEST :
+    case USBPD_EXT_SECURITY_REQUEST :
       {
         uint8_t data[60] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60};
         USBPD_PE_SendExtendedMessage(PortNum, USBPD_SOPTYPE_SOP, USBPD_EXT_SECURITY_RESPONSE, data, 60);
       }
       break;
-    case   USBPD_EXT_SECURITY_RESPONSE :
+    case USBPD_EXT_SECURITY_RESPONSE :
       break;
 #endif /* _SECURITY_MSG */
+
 #if defined(_FWUPDATE_INITIATOR) || defined(_FWUPDATE_RESPONDER)
     case USBPD_EXT_FIRM_UPDATE_REQUEST :
 #if defined(_FWUPDATE_RESPONDER)
@@ -1514,6 +1638,7 @@ void USBPD_DPM_EnterErrorRecovery(uint8_t PortNum)
 
   /* Inform CAD to enter recovery mode */
   USBPD_CAD_EnterErrorRecovery(PortNum);
+/* USER CODE END USBPD_DPM_ExtendedMessageReceived */
 }
 #endif /* _ERROR_RECOVERY */
 
@@ -1524,15 +1649,16 @@ void USBPD_DPM_EnterErrorRecovery(uint8_t PortNum)
   */
 USBPD_StatusTypeDef USBPD_DPM_EvaluateDataRoleSwap(uint8_t PortNum)
 {
+/* USER CODE BEGIN USBPD_DPM_EvaluateDataRoleSwap */
   USBPD_StatusTypeDef status = USBPD_REJECT;
   if (USBPD_TRUE == DPM_USER_Settings[PortNum].PE_DataSwap)
   {
     status = USBPD_ACCEPT;
   }
   return status;
+/* USER CODE END USBPD_DPM_EvaluateDataRoleSwap */
 }
 
-#if defined(_SNK) || defined(_DRP)
 /**
   * @brief  Callback to be used by PE to check is VBUS is ready or present
   * @param  PortNum Port number
@@ -1541,9 +1667,10 @@ USBPD_StatusTypeDef USBPD_DPM_EvaluateDataRoleSwap(uint8_t PortNum)
   */
 USBPD_FunctionalState USBPD_DPM_IsPowerReady(uint8_t PortNum, USBPD_VSAFE_StatusTypeDef Vsafe)
 {
+/* USER CODE BEGIN USBPD_DPM_IsPowerReady */
   return ((USBPD_OK == USBPD_PWR_IF_SupplyReady(PortNum, Vsafe)) ? USBPD_ENABLE : USBPD_DISABLE);
+/* USER CODE END USBPD_DPM_IsPowerReady */
 }
-#endif /* _SNK || _DRP */
 
 /**
   * @}
@@ -1565,13 +1692,14 @@ USBPD_StatusTypeDef USBPD_DPM_RequestHardReset(uint8_t PortNum)
 
 /**
   * @brief  Request the PE to send a cable reset.
+  * @note   Only a DFP Shall generate Cable Reset Signaling. A DFP Shall only generate Cable Reset Signaling within an Explicit Contract.
+            The DFP has to be supplying VCONN prior to a Cable Reset
   * @param  PortNum The current port number
   * @retval USBPD Status
   */
 USBPD_StatusTypeDef USBPD_DPM_RequestCableReset(uint8_t PortNum)
 {
-  /* Not yet implemeneted. */
-  return USBPD_ERROR;
+  return USBPD_PE_Request_CableReset(PortNum);
 }
 
 /**
@@ -1598,8 +1726,8 @@ USBPD_StatusTypeDef USBPD_DPM_RequestPing(uint8_t PortNum)
 
 /**
   * @brief  Request the PE to send a request message.
-  * @param  PortNum          The current port number
-  * @param  IndexSrcPDO      Index on the selected SRC PDO (value between 1 to 7)
+  * @param  PortNum     The current port number
+  * @param  IndexSrcPDO Index on the selected SRC PDO (value between 1 to 7)
   * @param  RequestedVoltage Requested voltage (in MV and use mainly for APDO)
   * @retval USBPD Status
   */
@@ -1718,7 +1846,7 @@ USBPD_StatusTypeDef USBPD_DPM_RequestSourceCapability(uint8_t PortNum)
   return USBPD_PE_Request_DataMessage(PortNum, USBPD_DATAMSG_SRC_CAPABILITIES, NULL);
 }
 
-#if defined(_VDM)
+#if defined(_VDM) || defined(_VCONN_SUPPORT)
 /**
   * @brief  Request the PE to send a VDM discovery identity
   * @param  PortNum The current port number
@@ -1727,7 +1855,19 @@ USBPD_StatusTypeDef USBPD_DPM_RequestSourceCapability(uint8_t PortNum)
   */
 USBPD_StatusTypeDef USBPD_DPM_RequestVDM_DiscoveryIdentify(uint8_t PortNum, USBPD_SOPType_TypeDef SOPType)
 {
-  return USBPD_PE_SVDM_RequestIdentity(PortNum, SOPType);
+  USBPD_StatusTypeDef _status = USBPD_ERROR;
+  __DPM_DEBUG_CALLBACK(PortNum, "USBPD_PE_SVDM_RequestIdentity");
+
+  if ((USBPD_SOPTYPE_SOP == SOPType)
+#if defined(_VCONN_SUPPORT)
+    || (USBPD_TRUE == DPM_Ports[PortNum].DPM_CablePDCapable)
+#endif /* _VCONN_SUPPORT */
+    )
+  {
+    _status = USBPD_PE_SVDM_RequestIdentity(PortNum, SOPType);
+  }
+
+  return _status;
 }
 
 /**
@@ -1738,6 +1878,7 @@ USBPD_StatusTypeDef USBPD_DPM_RequestVDM_DiscoveryIdentify(uint8_t PortNum, USBP
   */
 USBPD_StatusTypeDef USBPD_DPM_RequestVDM_DiscoverySVID(uint8_t PortNum, USBPD_SOPType_TypeDef SOPType)
 {
+  __DPM_DEBUG_CALLBACK(PortNum, "USBPD_PE_SVDM_RequestSVID");
   return USBPD_PE_SVDM_RequestSVID(PortNum, SOPType);
 }
 
@@ -1750,6 +1891,7 @@ USBPD_StatusTypeDef USBPD_DPM_RequestVDM_DiscoverySVID(uint8_t PortNum, USBPD_SO
   */
 USBPD_StatusTypeDef USBPD_DPM_RequestVDM_DiscoveryMode(uint8_t PortNum, USBPD_SOPType_TypeDef SOPType, uint16_t SVID)
 {
+  __DPM_DEBUG_CALLBACK(PortNum, "USBPD_PE_SVDM_RequestMode");
   return USBPD_PE_SVDM_RequestMode(PortNum, SOPType, SVID);
 }
 
@@ -1763,6 +1905,7 @@ USBPD_StatusTypeDef USBPD_DPM_RequestVDM_DiscoveryMode(uint8_t PortNum, USBPD_SO
   */
 USBPD_StatusTypeDef USBPD_DPM_RequestVDM_EnterMode(uint8_t PortNum, USBPD_SOPType_TypeDef SOPType, uint16_t SVID, uint8_t ModeIndex)
 {
+  __DPM_DEBUG_CALLBACK(PortNum, "USBPD_PE_SVDM_RequestModeEnter");
   return USBPD_PE_SVDM_RequestModeEnter(PortNum, SOPType, SVID, ModeIndex);
 }
 
@@ -1776,20 +1919,10 @@ USBPD_StatusTypeDef USBPD_DPM_RequestVDM_EnterMode(uint8_t PortNum, USBPD_SOPTyp
   */
 USBPD_StatusTypeDef USBPD_DPM_RequestVDM_ExitMode(uint8_t PortNum, USBPD_SOPType_TypeDef SOPType, uint16_t SVID, uint8_t ModeIndex)
 {
+  __DPM_DEBUG_CALLBACK(PortNum, "USBPD_PE_SVDM_RequestModeExit");
   return USBPD_PE_SVDM_RequestModeExit(PortNum, SOPType, SVID, ModeIndex);
 }
 
-/**
-  * @brief  Request the PE to perform a VDM Attention.
-  * @param  PortNum The current port number
-  * @param  SOPType SOP Type
-  * @param  SVID    Used SVID
-  * @retval USBPD Status
-  */
-USBPD_StatusTypeDef USBPD_DPM_RequestAttention(uint8_t PortNum, USBPD_SOPType_TypeDef SOPType, uint16_t SVID)
-{
-  return USBPD_PE_SVDM_RequestAttention(PortNum, SOPType, SVID);
-}
 
 /**
   * @brief  Request the PE to send a Display Port status
@@ -1801,6 +1934,7 @@ USBPD_StatusTypeDef USBPD_DPM_RequestAttention(uint8_t PortNum, USBPD_SOPType_Ty
   */
 USBPD_StatusTypeDef USBPD_DPM_RequestDisplayPortStatus(uint8_t PortNum, USBPD_SOPType_TypeDef SOPType, uint16_t SVID, uint32_t *pDPStatus)
 {
+  __DPM_DEBUG_CALLBACK(PortNum, "USBPD_PE_SVDM_RequestSpecific(DP_STATUS)");
   USBPD_VDM_FillDPStatus(PortNum, (USBPD_DPStatus_TypeDef*)pDPStatus);
   return USBPD_PE_SVDM_RequestSpecific(PortNum, SOPType, SVDM_SPECIFIC_1, SVID);
 }
@@ -1814,10 +1948,25 @@ USBPD_StatusTypeDef USBPD_DPM_RequestDisplayPortStatus(uint8_t PortNum, USBPD_SO
   */
 USBPD_StatusTypeDef USBPD_DPM_RequestDisplayPortConfig(uint8_t PortNum, USBPD_SOPType_TypeDef SOPType, uint16_t SVID, uint32_t *pDPConfig)
 {
+  __DPM_DEBUG_CALLBACK(PortNum, "USBPD_PE_SVDM_RequestSpecific(DP_CONFIG)");
   USBPD_VDM_FillDPConfig(PortNum, (USBPD_DPConfig_TypeDef*)pDPConfig);
   return USBPD_PE_SVDM_RequestSpecific(PortNum, SOPType, SVDM_SPECIFIC_2, SVID);
 }
 
+#endif /* _VDM || _VCONN_SUPPORT */
+#if defined(_VDM)
+/**
+  * @brief  Request the PE to perform a VDM Attention.
+  * @param  PortNum The current port number
+  * @param  SOPType SOP Type
+  * @param  SVID    Used SVID
+  * @retval USBPD Status
+  */
+USBPD_StatusTypeDef USBPD_DPM_RequestAttention(uint8_t PortNum, USBPD_SOPType_TypeDef SOPType, uint16_t SVID)
+{
+  __DPM_DEBUG_CALLBACK(PortNum, "USBPD_PE_SVDM_RequestAttention");
+  return USBPD_PE_SVDM_RequestAttention(PortNum, SOPType, SVID);
+}
 #endif /* _VDM */
 #if defined(_UVDM)
 /**
@@ -1863,9 +2012,23 @@ USBPD_StatusTypeDef USBPD_DPM_RequestGetSourceCapabilityExt(uint8_t PortNum)
 }
 
 /**
+  * @brief  Request the PE to get a sink capability extended
+  * @param  PortNum The current port number
+  * @retval USBPD Status
+  */
+USBPD_StatusTypeDef USBPD_DPM_RequestGetSinkCapabilityExt(uint8_t PortNum)
+{
+#if _SNK_CAPA_EXT
+  return USBPD_PE_Request_CtrlMessage(PortNum, USBPD_CONTROLMSG_GET_SNK_CAPEXT, USBPD_SOPTYPE_SOP);
+#else
+  return USBPD_ERROR;
+#endif /* _SNK_CAPA_EXT */
+}
+
+/**
   * @brief  Request the PE to get a manufacturer infor
-  * @param  PortNum       The current port number
-  * @param  SOPType       SOP Type
+  * @param  PortNum The current port number
+  * @param  SOPType SOP Type
   * @param  pManuInfoData Pointer on manufacturer info based on @ref USBPD_GMIDB_TypeDef
   * @retval USBPD Status
   */
@@ -2008,6 +2171,7 @@ USBPD_StatusTypeDef USBPD_DPM_RequestFirwmwareUpdate(uint8_t PortNum, USBPD_Exte
   * @{
   */
 
+/* USER CODE BEGIN USBPD_USER_PRIVATE_FUNCTIONS */
 #if defined(_SNK) || defined(_DRP)
 /**
   * @brief  Examinate a given SRC PDO to check if matching with SNK capabilities.
@@ -2135,11 +2299,11 @@ uint32_t USBPD_DPM_SNK_EvaluateMatchWithSRCPDO(uint8_t PortNum, uint32_t SrcPDO,
             }
             break;
 
-#if defined(USBPD_REV30_SUPPORT) && _PPS
+#if _PPS
             /* SNK Augmented Power Data Object (APDO) */
           case USBPD_CORE_PDO_TYPE_APDO:
             break;
-#endif /*_USBPD_REV30_SUPPORT && PPS*/
+#endif /* _PPS */
 
           default:
             break;
@@ -2228,11 +2392,11 @@ uint32_t USBPD_DPM_SNK_EvaluateMatchWithSRCPDO(uint8_t PortNum, uint32_t SrcPDO,
             }
             break;
 
-#if defined(USBPD_REV30_SUPPORT) && _PPS
+#if _PPS
             /* SNK Augmented Power Data Object (APDO) */
           case USBPD_CORE_PDO_TYPE_APDO:
             break;
-#endif /*_USBPD_REV30_SUPPORT && PPS*/
+#endif /* _PPS */
 
           default:
             break;
@@ -2321,11 +2485,11 @@ uint32_t USBPD_DPM_SNK_EvaluateMatchWithSRCPDO(uint8_t PortNum, uint32_t SrcPDO,
             }
             break;
 
-#if defined(USBPD_REV30_SUPPORT) && _PPS
+#if _PPS
             /* SNK Augmented Power Data Object (APDO) */
           case USBPD_CORE_PDO_TYPE_APDO:
             break;
-#endif /*_USBPD_REV30_SUPPORT && PPS*/
+#endif /* _PPS */
 
           default:
             break;
@@ -2340,7 +2504,7 @@ uint32_t USBPD_DPM_SNK_EvaluateMatchWithSRCPDO(uint8_t PortNum, uint32_t SrcPDO,
       }
       break;
 
-#if defined(USBPD_REV30_SUPPORT) && _PPS
+#if _PPS
     /* Augmented Power Data Object (APDO) */
     case USBPD_CORE_PDO_TYPE_APDO:
       {
@@ -2405,7 +2569,7 @@ uint32_t USBPD_DPM_SNK_EvaluateMatchWithSRCPDO(uint8_t PortNum, uint32_t SrcPDO,
         }
       }
       break;
-#endif /*_USBPD_REV30_SUPPORT && PPS*/
+#endif /* _PPS */
 
     default:
       return(USBPD_FALSE);
@@ -2594,7 +2758,7 @@ void DPM_SNK_BuildRDOfromSelectedPDO(uint8_t PortNum, uint8_t IndexSrcPDO, USBPD
     }
     break;
 
-#if defined(USBPD_REV30_SUPPORT) && _PPS
+#if _PPS
   case USBPD_CORE_PDO_TYPE_APDO:
     {
       DPM_Ports[PortNum].DPM_RequestedCurrent    = ma;
@@ -2603,7 +2767,7 @@ void DPM_SNK_BuildRDOfromSelectedPDO(uint8_t PortNum, uint8_t IndexSrcPDO, USBPD
       rdo.ProgRDO.OutputVoltageIn20mV            = mv / 20;
     }
     break;
-#endif /* USBPD_REV30_SUPPORT && _PPS*/
+#endif /* _PPS */
   default:
     break;
   }
@@ -2621,7 +2785,7 @@ void DPM_SNK_BuildRDOfromSelectedPDO(uint8_t PortNum, uint8_t IndexSrcPDO, USBPD
 /**
   * @brief  Turn Off power supply.
   * @param  PortNum The current port number
-  * @param  Role    The Power Role Type to switch off
+  * @param  Role    Port power role
   * @retval USBPD_OK, USBPD_ERROR
   */
 static USBPD_StatusTypeDef DPM_TurnOffPower(uint8_t PortNum, USBPD_PortPowerRole_TypeDef Role)
@@ -2635,7 +2799,7 @@ static USBPD_StatusTypeDef DPM_TurnOffPower(uint8_t PortNum, USBPD_PortPowerRole
 /**
   * @brief  Turn On power supply.
   * @param  PortNum The current port number
-  * @param  Role    The Power Role Type to set 
+  * @param  Role    Port power role
   * @retval USBPD_ACCEPT, USBPD_WAIT, USBPD_REJECT
   */
 static USBPD_StatusTypeDef DPM_TurnOnPower(uint8_t PortNum, USBPD_PortPowerRole_TypeDef Role)
@@ -2692,24 +2856,14 @@ static void DPM_AssertRd(uint8_t PortNum)
 static uint32_t CheckDPMTimers(void)
 {
   uint32_t _timing = osWaitForever;
-#if defined(USBPD_REV30_SUPPORT) && (_SRC_CAPA_EXT || _ALERT) || defined(_GUI_INTERFACE) || defined(USBPD_BILLBOARD)
+
+#if defined(USBPD_REV30_SUPPORT) && (_SRC_CAPA_EXT || _ALERT) || defined(USBPD_BILLBOARD)
   uint32_t _current_timing;
 
   /* Calculate the minimum timers to wake-up DPM tasks */
   for(uint8_t instance = 0; instance < USBPD_PORT_COUNT; instance++)
   {
-#if defined(_GUI_INTERFACE)
-    /* Check if Measurement reporting has been enabled by the GUI */
-    _current_timing = DPM_Ports[instance].DPM_TimerMeasReport & DPM_TIMER_READ_MSK;
-    if(_current_timing > 0)
-    {
-      if (_current_timing < _timing)
-      {
-        _timing = _current_timing;
-      }
-    }
-#endif /* _GUI_INTERFACE */
-#ifdef USBPD_BILLBOARD
+#ifdef USB_BILLBOARD
     _current_timing = DPM_Ports[instance].DPM_TimerAME & DPM_TIMER_READ_MSK;
     if(_current_timing > 0)
     {
@@ -2718,7 +2872,7 @@ static uint32_t CheckDPMTimers(void)
         _timing = _current_timing;
       }
     }
-#endif /* USBPD_BILLBOARD */
+#endif /* USB_BILLBOARD */
 #if _SRC_CAPA_EXT
     _current_timing = DPM_Ports[instance].DPM_TimerSRCExtendedCapa & DPM_TIMER_READ_MSK;
     if(_current_timing > 0)
@@ -2745,30 +2899,6 @@ static uint32_t CheckDPMTimers(void)
 }
 #endif /* _RTOS */
 
-#ifdef USBPD_BILLBOARD
-/**
-  * @brief  check if BILLBAORD usb driver must be started.
-  * @retval none
-  */
-void DPM_USB_Billboard_START(void)
-{
-  for(uint8_t _instance = 0; _instance < USBPD_PORT_COUNT; _instance++)
-  {
-    /* check if tAMETimeout is expired */
-    if (DPM_TIMER_ENABLE_MSK == DPM_Ports[_instance].DPM_TimerAME)
-    {
-      DPM_Ports[_instance].DPM_TimerAME = 0;
-      /* Check if VDM failed */
-      if (0 == VDM_Mode_On[_instance])
-      {
-        /* Start Billboard driver */
-        USBD_Start(&hUsbDeviceBB[_instance]);
-      }
-    }
-  }
-}
-
-#endif /* USBPD_BILLBOARD */
 #if defined(USBPD_REV30_SUPPORT)
 #if _SRC_CAPA_EXT
 /**
@@ -2779,14 +2909,14 @@ void DPM_ManageExtendedCapa(void)
 {
   for(uint8_t _instance = 0; _instance < USBPD_PORT_COUNT; _instance++)
   {
-  /* -------------------------------------------------  */
-      /* Check if send SRC extended capa timer is expired   */
-      /* -------------------------------------------------  */
-      if (DPM_TIMER_ENABLE_MSK == DPM_Ports[_instance].DPM_TimerSRCExtendedCapa)
-      {
-        DPM_Ports[_instance].DPM_TimerSRCExtendedCapa = 0;
-        USBPD_DPM_RequestGetSourceCapabilityExt(_instance);
-      }
+    /* -------------------------------------------------  */
+    /* Check if send SRC extended capa timer is expired   */
+    /* -------------------------------------------------  */
+    if (DPM_TIMER_ENABLE_MSK == DPM_Ports[_instance].DPM_TimerSRCExtendedCapa)
+    {
+      DPM_Ports[_instance].DPM_TimerSRCExtendedCapa = 0;
+      USBPD_DPM_RequestGetSourceCapabilityExt(_instance);
+    }
   }
 }
 
@@ -2869,6 +2999,117 @@ void DPM_ManageAlert(void)
 #endif /* _ALERT */
 #endif /* USBPD_REV30_SUPPORT */
 
+#if defined (_USB_DEVICE) || defined (_USB_HOST)
+/**
+  * @brief  Initialize billboard driver
+  * @param  None
+  * @retval status
+  */
+static USBPD_StatusTypeDef DPM_USB_Init(void)
+{
+#if defined (USB_BILLBOARD)   
+#if (USBD_BOS_ENABLED == 1)
+  USBD_BB_AlternateModeTypeDef AlternateMode;
+
+  /* Add Display Port alternate mode */
+  AlternateMode.VendorID = 0xFF01;
+  AlternateMode.bAlternateMode = 0x01;
+  AlternateMode.iAlternateModeString = 0x00;
+  if(USBD_OK != USBD_BB_AddAlternateMode(hUSBDBOSDesc, &AlternateMode))
+  {
+    return USBPD_ERROR;
+  }
+
+  /* Setup Alternate mode with Index=0x00 as the prefered alternate mode */
+  if(USBD_OK != USBD_BB_SetupPreferedAltMode (hUSBDBOSDesc, 0x00))
+  {
+    return USBPD_ERROR;
+  }
+
+  /* Setup the state of the alternate mode with index=0x00 */
+  if(USBD_OK != USBD_BB_SetupAltModeState (hUSBDBOSDesc, 0x00, CONFIGURATION_NOT_ATTEMPTED))
+  {
+    return USBPD_ERROR;
+  }
+#endif
+  /* Init Device Library,Add Supported Class and Start the library*/
+  if(USBD_OK != USBD_Init(&hUsbDevice[USBPD_PORT_0], &BB_Desc, 0))
+  {
+    return USBPD_ERROR;
+  }
+  
+  if(USBD_OK != USBD_RegisterClass(&hUsbDevice[USBPD_PORT_0], &USBD_BB))
+  {
+    return USBPD_ERROR;
+  }
+#else
+  /* Init MSC Application */
+  USBD_Init(&hUsbDevice[USBPD_PORT_0], &MSC_Desc, 0);
+
+  /* initialize the MSC class */
+  /* Add Supported Class */
+  USBD_RegisterClass(&hUsbDevice[USBPD_PORT_0], USBD_MSC_CLASS);
+
+  /* Add Storage callbacks for MSC Class */
+  USBD_MSC_RegisterStorage(&hUsbDevice[USBPD_PORT_0], &USBD_DISK_fops);
+#endif
+  
+  for(uint8_t index = 0; index < USBPD_PORT_COUNT; index++)
+  {
+    DPM_Ports[index].DPM_USBState = 0;
+  }
+  return USBPD_OK;
+}
+
+/**
+  * @brief  check if BILLBAORD usb driver must be started.
+  * @retval none
+  */
+void DPM_USB_Start(uint32_t PortNum)
+{
+  /* check if tAMETimeout is expired */
+  /* Check if VDM failed */
+  if(DPM_Ports[PortNum].DPM_USBState == 0)
+  {
+    switch(DPM_Params[PortNum].PE_DataRole)
+    {
+    case USBPD_PORTDATAROLE_UFP :
+      {
+#if defined(USB_BILLBOARD) || defined(USB_MSC)
+        /* Start Billboard driver */
+        USBD_Start(&hUsbDevice[PortNum]);
+        DPM_Ports[PortNum].DPM_USBState = 1;
+#endif /* USB_BILLBOARD */
+        break;
+      }
+    case USBPD_PORTDATAROLE_DFP :
+    default :
+      {
+        break;
+      }
+    }
+  }
+}
+
+void DPM_USB_Stop(uint32_t PortNum)
+{
+  if(DPM_Ports[PortNum].DPM_USBState == 1)
+  {
+#if defined(USB_BILLBOARD) || defined(USB_MSC)
+    USBD_Stop(&hUsbDevice[0]);
+    DPM_Ports[PortNum].DPM_USBState = 0;
+#endif
+  }
+  
+  if(DPM_Ports[PortNum].DPM_USBState == 2)
+  {
+    /* Stop the host */
+  }
+}
+
+#endif /* _USB */
+
+/* USER CODE END USBPD_USER_PRIVATE_FUNCTIONS */
 /**
   * @}
   */

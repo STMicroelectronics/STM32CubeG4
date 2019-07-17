@@ -8,7 +8,7 @@
   * @brief   Description of CRC Example with user-defined generating polynomial.
   ******************************************************************************
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -39,9 +39,9 @@ You can update HAL_CRC_Init() input parameters to change the CRC configuration.
 The calculated CRC code is stored in uwCRCValue variable.
 Once calculated, the CRC value (uwCRCValue) is compared to the CRC expected value (uwExpectedCRCValue).
 
-STM32G474E-EVAL Rev B board's LEDs are used to monitor the example status:
-  - LED1 is ON when the correct CRC value is calculated
-  - LED3 is ON when there is an error in initialization or if an incorrect CRC value is calculated.
+STM32 board's LEDs are used to monitor the example status:
+  - LED1 (GREEN) is ON when the correct CRC value is calculated
+  - LED3 (RED) is ON when there is an error in initialization or if an incorrect CRC value is calculated.
 
 @note Care must be taken when using HAL_Delay(), this function provides accurate delay (in milliseconds)
       based on variable incremented in SysTick ISR. This implies that if HAL_Delay() is called from
@@ -57,7 +57,8 @@ STM32G474E-EVAL Rev B board's LEDs are used to monitor the example status:
 Security, CRC, CRC Polynomial, IEC 60870-5, hardware CRC, user-defined generating polynomial
 
 @par Directory contents
-  
+
+  - CRC/CRC_UserDefinedPolynomial/Inc/stm32g474e_eval_conf.h     BSP configuration file
   - CRC/CRC_UserDefinedPolynomial/Inc/stm32g4xx_hal_conf.h    HAL configuration file
   - CRC/CRC_UserDefinedPolynomial/Inc/stm32g4xx_it.h          Interrupt handlers header file
   - CRC/CRC_UserDefinedPolynomial/Inc/main.h                  Header for main.c module

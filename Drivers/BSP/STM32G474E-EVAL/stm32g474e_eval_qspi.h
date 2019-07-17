@@ -7,7 +7,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -246,7 +246,7 @@ int32_t BSP_QSPI_SelectFlashID(uint32_t Instance, uint32_t FlashID);
 
 /* These functions can be modified in case the current settings
    need to be changed for specific application needs */
-HAL_StatusTypeDef MX_QSPI_Init(QSPI_HandleTypeDef *hqspi, MX_QSPI_Config *Config);
+HAL_StatusTypeDef MX_QSPI_Init(QSPI_HandleTypeDef *hQspi, MX_QSPI_Config *Config);
 
 /**
   * @}

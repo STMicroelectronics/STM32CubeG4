@@ -56,7 +56,7 @@ osThreadDef(PE_0, USBPD_PE_Task, osPriorityHigh, 0, 200);
 osThreadDef(PE_1, USBPD_PE_Task, osPriorityHigh, 0, 200);
 
 /* Private define ------------------------------------------------------------*/
-#define MAX_TREAD_POWER   (USBPD_PORT_COUNT + 1)
+#define MAX_THREAD_NB   (USBPD_PORT_COUNT + 1)          /* 1 entry per port + 1 for CAD */
 
 #define OSTHREAD_PE(__VAL__) __VAL__==USBPD_PORT_0?osThread(PE_0):osThread(PE_1)
 
@@ -71,13 +71,12 @@ osThreadDef(PE_1, USBPD_PE_Task, osPriorityHigh, 0, 200);
 #endif /* _DEBUG_TRACE */
 
 /* Private variables ---------------------------------------------------------*/
-static uint32_t DPM_Sleep_time[MAX_TREAD_POWER];
-static osThreadId DPM_Thread_Table[MAX_TREAD_POWER];
+static osThreadId DPM_Thread_Table[MAX_THREAD_NB];
 osMessageQDef(queuePE, 2, uint16_t);
 osMessageQDef(queueCAD, 1, uint16_t);
 static osMessageQId PEQueueId[USBPD_PORT_COUNT], CADQueueId;
 osMessageQDef(queueTRACE, 1, uint16_t);
-static osMessageQId TraceQueueId;
+osMessageQId TraceQueueId;
 
 USBPD_ParamsTypeDef   DPM_Params[USBPD_PORT_COUNT];
 
@@ -91,33 +90,33 @@ static void DPM_ManageAttachedState(uint8_t PortNum, USBPD_CAD_EVENT State, CCxP
   */
 USBPD_StatusTypeDef USBPD_DPM_InitCore(void)
 {
-/* variable to get dynamique memory allocated by usbpd stack */
+  /* variable to get dynamique memory allocated by usbpd stack */
   uint32_t stack_dynamemsize;
 
-static const USBPD_PE_Callbacks dpmCallbacks =
-{
-  USBPD_DPM_SetupNewPower,
-  USBPD_DPM_HardReset,
-  USBPD_DPM_EvaluatePowerRoleSwap,
-  USBPD_DPM_Notification,
-  USBPD_DPM_ExtendedMessageReceived,
-  USBPD_DPM_GetDataInfo,
-  USBPD_DPM_SetDataInfo,
-  USBPD_DPM_EvaluateRequest,
-  NULL,
-  NULL,
-  USBPD_PE_TaskWakeUp,
-  NULL,
-  NULL,
-  NULL,
-  USBPD_DPM_EvaluateDataRoleSwap,
-  NULL,
-};
+  static const USBPD_PE_Callbacks dpmCallbacks =
+  {
+    USBPD_DPM_SetupNewPower,
+    USBPD_DPM_HardReset,
+    USBPD_DPM_EvaluatePowerRoleSwap,
+    USBPD_DPM_Notification,
+    USBPD_DPM_ExtendedMessageReceived,
+    USBPD_DPM_GetDataInfo,
+    USBPD_DPM_SetDataInfo,
+    USBPD_DPM_EvaluateRequest,
+    NULL,
+    NULL,
+    USBPD_PE_TaskWakeUp,
+    NULL,
+    NULL,
+    NULL,
+    USBPD_DPM_EvaluateDataRoleSwap,
+    USBPD_DPM_IsPowerReady
+  };
 
   static const USBPD_CAD_Callbacks CAD_cbs = { USBPD_DPM_CADCallback, USBPD_DPM_CADTaskWakeUp };
 
   /* Check the lib selected */
-  if( USBPD_TRUE != USBPD_PE_CheckLIB(_LIB_ID))
+  if (USBPD_TRUE != USBPD_PE_CheckLIB(_LIB_ID))
   {
     return USBPD_ERROR;
   }
@@ -156,9 +155,9 @@ static const USBPD_PE_Callbacks dpmCallbacks =
   USBPD_TRACE_Init();
 
   /* CAD SET UP : Port 0 */
-  CHECK_CAD_FUNCTION_CALL(USBPD_CAD_Init(USBPD_PORT_0, (USBPD_CAD_Callbacks *)&CAD_cbs, (USBPD_SettingsTypeDef *)&DPM_Settings[USBPD_PORT_0], &DPM_Params[USBPD_PORT_0]));
+  CHECK_CAD_FUNCTION_CALL(USBPD_CAD_Init(USBPD_PORT_0, &CAD_cbs, (USBPD_SettingsTypeDef *)&DPM_Settings[USBPD_PORT_0], &DPM_Params[USBPD_PORT_0]));
 #if USBPD_PORT_COUNT == 2
-  CHECK_CAD_FUNCTION_CALL(USBPD_CAD_Init(USBPD_PORT_1, (USBPD_CAD_Callbacks *)&CAD_cbs, (USBPD_SettingsTypeDef *)&DPM_Settings[USBPD_PORT_1], &DPM_Params[USBPD_PORT_1]));
+  CHECK_CAD_FUNCTION_CALL(USBPD_CAD_Init(USBPD_PORT_1, &CAD_cbs, (USBPD_SettingsTypeDef *)&DPM_Settings[USBPD_PORT_1], &DPM_Params[USBPD_PORT_1]));
 #endif /* USBPD_PORT_COUNT == 2 */
 
   /* PE SET UP : Port 0 */
@@ -189,14 +188,15 @@ static const USBPD_PE_Callbacks dpmCallbacks =
 USBPD_StatusTypeDef USBPD_DPM_InitOS(void)
 {
   osThreadDef(CAD, USBPD_CAD_Task, osPriorityRealtime, 0, 300);
-  if((DPM_Thread_Table[USBPD_THREAD_CAD] = osThreadCreate(osThread(CAD), NULL)) == NULL)
+  if ((DPM_Thread_Table[USBPD_THREAD_CAD] = osThreadCreate(osThread(CAD), NULL)) == NULL)
   {
     return USBPD_ERROR;
   }
   CADQueueId = osMessageCreate(osMessageQ(queueCAD), NULL);
 
+  TraceQueueId = osMessageCreate(osMessageQ(queueTRACE), NULL);
   osThreadDef(TRA_TX, USBPD_TRACE_TX_Task, osPriorityLow, 0, configMINIMAL_STACK_SIZE * 2);
-  if(NULL == osThreadCreate(osThread(TRA_TX), NULL))
+  if (NULL == osThreadCreate(osThread(TRA_TX), NULL))
   {
     return USBPD_ERROR;
   }
@@ -276,12 +276,9 @@ static void USBPD_DPM_CADTaskWakeUp(void)
 void USBPD_PE_Task(void const *argument)
 {
   uint8_t _port = (uint32_t)argument;
-
-  for(;;)
+  for (;;)
   {
-    DPM_Sleep_time[_port] =
-    USBPD_PE_StateMachine_SRC(_port);
-    osMessageGet(PEQueueId[_port], DPM_Sleep_time[_port]);
+    osMessageGet(PEQueueId[_port], USBPD_PE_StateMachine_SRC(_port));
 
   }
 }
@@ -293,10 +290,9 @@ void USBPD_PE_Task(void const *argument)
   */
 void USBPD_CAD_Task(void const *argument)
 {
-  for(;;)
+  for (;;)
   {
-    DPM_Sleep_time[USBPD_THREAD_CAD] = USBPD_CAD_Process();
-    osMessageGet(CADQueueId, DPM_Sleep_time[USBPD_THREAD_CAD]);
+    osMessageGet(CADQueueId, USBPD_CAD_Process());
   }
 }
 
@@ -307,7 +303,7 @@ void USBPD_CAD_Task(void const *argument)
   */
 void USBPD_TRACE_TX_Task(void const *argument)
 {
-  for(;;)
+  for (;;)
   {
     (void)USBPD_TRACE_TX_Process();
     osDelay(5);
@@ -334,30 +330,31 @@ void USBPD_DPM_CADCallback(uint8_t PortNum, USBPD_CAD_EVENT State, CCxPin_TypeDe
 {
   USBPD_TRACE_Add(USBPD_TRACE_CADEVENT, PortNum, (uint8_t)State, NULL, 0);
 
-  switch(State)
+  switch (State)
   {
-  case USBPD_CAD_EVENT_ATTEMC :
+    case USBPD_CAD_EVENT_ATTEMC :
     {
       DPM_ManageAttachedState(PortNum, State, Cc);
       break;
     }
-  case USBPD_CAD_EVENT_ATTACHED :
-    DPM_ManageAttachedState(PortNum, State, Cc);
-    break;
-  case USBPD_CAD_EVENT_DETACHED :
-  case USBPD_CAD_EVENT_EMC :
+    case USBPD_CAD_EVENT_ATTACHED :
+      DPM_ManageAttachedState(PortNum, State, Cc);
+      break;
+    case USBPD_CAD_EVENT_DETACHED :
+    case USBPD_CAD_EVENT_EMC :
     {
-    /* The ufp is detached */
+      /* The ufp is detached */
       (void)USBPD_PE_IsCableConnected(PortNum, 0);
-    /* Terminate PE task */
-    if (DPM_Thread_Table[PortNum] != NULL)
-    {
-      osThreadTerminate(DPM_Thread_Table[PortNum]);
-      DPM_Thread_Table[PortNum] = NULL;
-    }
-    USBPD_DPM_UserCableDetection(PortNum, State);
-    DPM_Params[PortNum].ActiveCCIs = CCNONE;
-    DPM_Params[PortNum].PE_Power   = USBPD_POWER_NO;
+      /* Terminate PE task */
+      if (DPM_Thread_Table[PortNum] != NULL)
+      {
+        osThreadTerminate(DPM_Thread_Table[PortNum]);
+        DPM_Thread_Table[PortNum] = NULL;
+      }
+      USBPD_DPM_UserCableDetection(PortNum, State);
+      DPM_Params[PortNum].PE_SwapOngoing = USBPD_FALSE;
+      DPM_Params[PortNum].ActiveCCIs = CCNONE;
+      DPM_Params[PortNum].PE_Power   = USBPD_POWER_NO;
     break;
     }
   default :
@@ -380,7 +377,7 @@ static void DPM_ManageAttachedState(uint8_t PortNum, USBPD_CAD_EVENT State, CCxP
     if (DPM_Thread_Table[PortNum] == NULL)
     {
       /* should not occurr. May be an issue with FreeRTOS heap size too small */
-      while(1);
+      while (1);
     }
   }
 }

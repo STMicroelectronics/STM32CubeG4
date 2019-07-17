@@ -46,11 +46,92 @@
 <div class="col-sm-12 col-lg-8">
 <h1 id="update-history">Update History</h1>
 <div class="collapse">
-<input type="checkbox" id="collapse-section4" checked aria-hidden="true"> <label for="collapse-section4" aria-hidden="true">V1.0.0 / 12-April-2019</label>
+<input type="checkbox" id="collapse-section2" checked aria-hidden="true"> <label for="collapse-section1" aria-hidden="true">V1.1.0 / 28-June-2019</label>
 <div>
 <h2 id="main-changes">Main Changes</h2>
-<h3 id="first-release">First release</h3>
-<p>First official release of HAL (Hardware Abstraction Layer) and LL (Low layers) drivers to support STM32G431/41xx, STM32G471xx, STM32G473/83xx and STM32G474/84xx.</p>
+<h3 id="maintenance-release">Maintenance Release</h3>
+<p>Maintenance release of HAL (Hardware Abstraction Layer) and LL (Low layers) drivers to support STM32G431/41xx, STM32G471xx, STM32G473/83xx and STM32G474/84xx.</p>
+<h2 id="contents">Contents</h2>
+<table>
+<caption>Additional features and changes :</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Headline</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">General: Support of device STM32G483xx in HAL and LL drivers</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">COMP: Suppress Deglitcher mode - Not supported on STM32G4 series</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">HAL: Change naming of the IRQn 2 to RTC_TAMP_LSECSS_IRQn</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">HRTIM: HRTIM_OUTPUTRESET_TIMAEVx renamed to HRTIM_OUTPUTRESET_TIMEVx</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">TIM: Add new macro to configure fast mode</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">TIM: Master Slave Mode (MSM) is now configurable</td>
+</tr>
+</tbody>
+</table>
+<table>
+<caption>Bugs fix :</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Headline</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">General : redefinition of registers with adjusted address MUST be volatile</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">DMA : DMA2 instance cannot be configured in LL drivers</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">GPIO: HAL_GPIO_DeInit() bug on EXTI management</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">GPIO: Compilation warning with IAR v8.30</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">HAL: Correct potential issue within HAL_SetTickFreq() function</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">HRTIM: HRTIM_TIMxCR.DELCMP isn’t systematically programmed</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">HRTIM: Fault source programming isn’t wrong in HAL_HRTIM_FaultConfig</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">HRTIM : Useless Assignment at function HAL_HRTIM_SimpleOCChannelConfig</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">RCC: Should not overwrite Tick priority</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">RTC: HAL_RTCEx_SetWakeUpTimer WUTWF management reworked to be aligned with Reference Manual</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">RTC: INITF can rise too early when entering init mode just after exiting</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">RTC : fix issue in define with STM32L4 LL RTC month macros</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">RTC : Remove ALRBWF and ALRAWF bits</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">TIM: CodeSonar warnings about useless assignment in HAL_TIMEx_ConfigBreakInput()</td>
+</tr>
+</tbody>
+</table>
 <h2 id="development-toolchains-and-compilers">Development Toolchains and Compilers</h2>
 <ul>
 <li>IAR Embedded Workbench for ARM (EWARM) toolchain V8.20.2</li>
@@ -58,6 +139,27 @@
 <li>System Workbench STM32 (SW4STM32) toolchain V2.7.2</li>
 </ul>
 <h2 id="supported-devices">Supported Devices</h2>
+<ul>
+<li>STM32G431/41xx</li>
+<li>STM32G471xx</li>
+<li>STM32G473/<strong>83xx</strong></li>
+<li>STM32G474/84xx</li>
+</ul>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section1" aria-hidden="true"> <label for="collapse-section1" aria-hidden="true">V1.0.0 / 12-April-2019</label>
+<div>
+<h2 id="main-changes-1">Main Changes</h2>
+<h3 id="first-release">First release</h3>
+<p>First official release of HAL (Hardware Abstraction Layer) and LL (Low layers) drivers to support STM32G431/41xx, STM32G471xx, STM32G473/83xx and STM32G474/84xx.</p>
+<h2 id="development-toolchains-and-compilers-1">Development Toolchains and Compilers</h2>
+<ul>
+<li>IAR Embedded Workbench for ARM (EWARM) toolchain V8.20.2</li>
+<li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.25</li>
+<li>System Workbench STM32 (SW4STM32) toolchain V2.7.2</li>
+</ul>
+<h2 id="supported-devices-1">Supported Devices</h2>
 <ul>
 <li>STM32G431/41xx</li>
 <li>STM32G471xx</li>

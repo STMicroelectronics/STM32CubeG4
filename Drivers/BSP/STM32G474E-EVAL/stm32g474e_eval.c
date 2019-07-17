@@ -12,7 +12,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -111,6 +111,12 @@ static const uint16_t JOY_UP_PIN[JOYn]    = {JOY_UP};
 static const uint16_t JOY_ALL_PIN[JOYn]   = {JOY_ALL};
 #endif /* USE_BSP_JOY_FEATURE */
 #endif /* USE_BSP_IO_CLASS */
+
+#if defined(_GUI_INTERFACE)
+const uint8_t HWBoardVersionName[]  = "STM32G474E-EVAL";
+const uint8_t PDTypeName[]          = "MB1397B";
+#endif /* _GUI_INTERFACE */
+
 /**
   * @}
   */
@@ -910,7 +916,7 @@ int32_t BSP_POT_GetLevel(POT_TypeDef POT)
       AdcValue = HAL_ADC_GetValue(&hpot_adc[POT]);
       if(AdcValue <= 0x0FFFU)
       {
-        ret = POT_CONVERT2PERC(AdcValue);
+        ret = (int32_t)POT_CONVERT2PERC((uint32_t)AdcValue);
       }
     }
     else

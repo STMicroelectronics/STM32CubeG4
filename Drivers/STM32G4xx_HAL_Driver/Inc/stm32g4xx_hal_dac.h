@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -79,17 +79,17 @@ typedef struct
   __IO uint32_t               ErrorCode;     /*!< DAC Error code                    */
 
 #if (USE_HAL_DAC_REGISTER_CALLBACKS == 1)
-  void (* ConvCpltCallbackCh1)(struct __DAC_HandleTypeDef *hdac);
-  void (* ConvHalfCpltCallbackCh1)(struct __DAC_HandleTypeDef *hdac);
-  void (* ErrorCallbackCh1)(struct __DAC_HandleTypeDef *hdac);
-  void (* DMAUnderrunCallbackCh1)(struct __DAC_HandleTypeDef *hdac);
-  void (* ConvCpltCallbackCh2)(struct __DAC_HandleTypeDef *hdac);
-  void (* ConvHalfCpltCallbackCh2)(struct __DAC_HandleTypeDef *hdac);
-  void (* ErrorCallbackCh2)(struct __DAC_HandleTypeDef *hdac);
-  void (* DMAUnderrunCallbackCh2)(struct __DAC_HandleTypeDef *hdac);
+  void (* ConvCpltCallbackCh1)            (struct __DAC_HandleTypeDef *hdac);
+  void (* ConvHalfCpltCallbackCh1)        (struct __DAC_HandleTypeDef *hdac);
+  void (* ErrorCallbackCh1)               (struct __DAC_HandleTypeDef *hdac);
+  void (* DMAUnderrunCallbackCh1)         (struct __DAC_HandleTypeDef *hdac);
+  void (* ConvCpltCallbackCh2)            (struct __DAC_HandleTypeDef *hdac);
+  void (* ConvHalfCpltCallbackCh2)        (struct __DAC_HandleTypeDef *hdac);
+  void (* ErrorCallbackCh2)               (struct __DAC_HandleTypeDef *hdac);
+  void (* DMAUnderrunCallbackCh2)         (struct __DAC_HandleTypeDef *hdac);
 
-  void (* MspInitCallback)(struct __DAC_HandleTypeDef *hdac);
-  void (* MspDeInitCallback)(struct __DAC_HandleTypeDef *hdac);
+  void (* MspInitCallback)                (struct __DAC_HandleTypeDef *hdac);
+  void (* MspDeInitCallback )             (struct __DAC_HandleTypeDef *hdac);
 #endif /* USE_HAL_DAC_REGISTER_CALLBACKS */
 
 } DAC_HandleTypeDef;
@@ -169,8 +169,8 @@ typedef enum
   HAL_DAC_CH2_HALF_COMPLETE_CB_ID            = 0x05U,  /*!< DAC CH2 half Complete Callback ID */
   HAL_DAC_CH2_ERROR_ID                       = 0x06U,  /*!< DAC CH2 error Callback ID         */
   HAL_DAC_CH2_UNDERRUN_CB_ID                 = 0x07U,  /*!< DAC CH2 underrun Callback ID      */
-  HAL_DAC_MSP_INIT_CB_ID                     = 0x08U,  /*!< DAC MspInit Callback ID           */
-  HAL_DAC_MSP_DEINIT_CB_ID                   = 0x09U,  /*!< DAC MspDeInit Callback ID         */
+  HAL_DAC_MSPINIT_CB_ID                      = 0x08U,  /*!< DAC MspInit Callback ID           */
+  HAL_DAC_MSPDEINIT_CB_ID                    = 0x09U,  /*!< DAC MspDeInit Callback ID         */
   HAL_DAC_ALL_CB_ID                          = 0x0AU   /*!< DAC All ID                        */
 } HAL_DAC_CallbackIDTypeDef;
 
@@ -236,6 +236,7 @@ typedef void (*pDAC_CallbackTypeDef)(DAC_HandleTypeDef *hdac);
 #define DAC_TRIGGER_HRTIM_TRG01         (DAC_CR_TSEL1_3 | DAC_CR_TSEL1_2 | DAC_CR_TSEL1_1 | DAC_CR_TSEL1_0 | DAC_CR_TEN1) /*!< DAC1&4: HRTIM TRIG OUT 1 selected as external conversion trigger for DAC channel. Note: only to be used as update or reset (sawtooth generation) trigger. Refer to device datasheet for DACx instance availability. On this STM32 serie, parameter only available if HRTIM feature is supported (refer to device datasheet for supported features list) */
 #define DAC_TRIGGER_HRTIM_TRG02         (DAC_CR_TSEL1_3 | DAC_CR_TSEL1_2 | DAC_CR_TSEL1_1 | DAC_CR_TSEL1_0 | DAC_CR_TEN1) /*!< DAC2: HRTIM TRIG OUT 1 selected as external conversion trigger for DAC channel. Note: only to be used as update or reset (sawtooth generation) trigger. On this STM32 serie, parameter only available if HRTIM feature is supported and DAC2 instance present (refer to device datasheet for supported features list and DAC2 instance availability) */
 #define DAC_TRIGGER_HRTIM_TRG03         (DAC_CR_TSEL1_3 | DAC_CR_TSEL1_2 | DAC_CR_TSEL1_1 | DAC_CR_TSEL1_0 | DAC_CR_TEN1) /*!< DAC3: HRTIM TRIG OUT 1 selected as external conversion trigger for DAC channel. Note: only to be used as update or reset (sawtooth generation) trigger. On this STM32 serie, parameter only available if HRTIM feature is supported (refer to device datasheet for supported features list) */
+
 /**
   * @}
   */
@@ -298,6 +299,7 @@ typedef void (*pDAC_CallbackTypeDef)(DAC_HandleTypeDef *hdac);
 #define DAC_CHIPCONNECT_EXTERNAL       (1UL << 0)
 #define DAC_CHIPCONNECT_INTERNAL       (1UL << 1)
 #define DAC_CHIPCONNECT_BOTH           (1UL << 2)
+
 /**
   * @}
   */
@@ -305,7 +307,6 @@ typedef void (*pDAC_CallbackTypeDef)(DAC_HandleTypeDef *hdac);
 /** @defgroup DAC_UserTrimming DAC User Trimming
   * @{
   */
-
 #define DAC_TRIMMING_FACTORY        0x00000000U           /*!< Factory trimming */
 #define DAC_TRIMMING_USER           0x00000001U           /*!< User trimming */
 
@@ -322,7 +323,6 @@ typedef void (*pDAC_CallbackTypeDef)(DAC_HandleTypeDef *hdac);
 /**
   * @}
   */
-
 /** @defgroup DAC_HighFrequency DAC high frequency interface mode
   * @{
   */
@@ -352,8 +352,8 @@ typedef void (*pDAC_CallbackTypeDef)(DAC_HandleTypeDef *hdac);
 #if (USE_HAL_DAC_REGISTER_CALLBACKS == 1)
 #define __HAL_DAC_RESET_HANDLE_STATE(__HANDLE__) do {                                                        \
                                                       (__HANDLE__)->State             = HAL_DAC_STATE_RESET; \
-                                                      (__HANDLE__)->MspInitCallback   = NULL;                  \
-                                                      (__HANDLE__)->MspDeInitCallback = NULL;                  \
+                                                      (__HANDLE__)->MspInitCallback   = NULL;                \
+                                                      (__HANDLE__)->MspDeInitCallback = NULL;                \
                                                      } while(0)
 #else
 #define __HAL_DAC_RESET_HANDLE_STATE(__HANDLE__) ((__HANDLE__)->State = HAL_DAC_STATE_RESET)

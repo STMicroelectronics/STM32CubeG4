@@ -37,6 +37,7 @@
      ===================================
       (+) Use HAL_DACEx_TriangleWaveGenerate() to generate Triangle signal.
       (+) Use HAL_DACEx_NoiseWaveGenerate() to generate Noise signal.
+
       (+) Use HAL_DACEx_SawtoothWaveGenerate() to generate sawtooth signal.
       (+) Use HAL_DACEx_SawtoothWaveDataReset() to reset sawtooth wave.
       (+) Use HAL_DACEx_SawtoothWaveDataStep() to step sawtooth wave.
@@ -51,7 +52,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,

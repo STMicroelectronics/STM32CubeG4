@@ -75,7 +75,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -140,13 +140,13 @@
   * @brief  SD answer format
   */
 typedef enum {
- SD_ANSWER_R1_EXPECTED,
- SD_ANSWER_R1B_EXPECTED,
- SD_ANSWER_R2_EXPECTED,
- SD_ANSWER_R3_EXPECTED,
+ SD_ANSWER_R1_EXPECTED ,
+ SD_ANSWER_R1B_EXPECTED ,
+ SD_ANSWER_R2_EXPECTED ,
+ SD_ANSWER_R3_EXPECTED ,
  SD_ANSWER_R4R5_EXPECTED,
- SD_ANSWER_R7_EXPECTED,
- SD_ANSWER_NOT_EXPECTED,
+ SD_ANSWER_R7_EXPECTED ,
+ SD_ANSWER_NOT_EXPECTED ,
 }SD_Answer_t;
 
 /**
@@ -296,8 +296,8 @@ EXTI_HandleTypeDef hsd_exti;
 
 /** STM32G474E-EVAL_SD_Private_FunctionPrototypes Private Functions
   */
-static int32_t SD_WriteBlock(uint32_t Instance, uint32_t* pData, uint32_t WriteAddr, uint16_t BlockSize);
-static int32_t SD_ReadBlock(uint32_t Instance, uint32_t* pData, uint32_t ReadAddr, uint16_t BlockSize);
+static int32_t SD_WriteBlock(uint32_t Instance, uint8_t* pData, uint32_t WriteAddr, uint16_t BlockSize);
+static int32_t SD_ReadBlock(uint32_t Instance, uint8_t* pData, uint32_t ReadAddr, uint16_t BlockSize);
 
 #if defined (USE_SPI_DMA)
 static void SD_Msp_Init(SD_HandleTypeDef *hsd);
@@ -550,9 +550,10 @@ int32_t BSP_SD_Erase(uint32_t Instance, uint32_t Blockindex, uint32_t BlockNbr)
   */
 int32_t BSP_SD_WriteBlocks(uint32_t Instance, uint32_t* pData, uint32_t BlockAddr, uint32_t BlockNbr)
 {
-  int32_t ret = BSP_ERROR_NONE;
+  int32_t ret;
   uint8_t *pByte;
   uint32_t block_addr;
+//  uint32_t pByte;
 
   if(Instance >= SD_INSTANCES_NBR)
   {
@@ -560,17 +561,19 @@ int32_t BSP_SD_WriteBlocks(uint32_t Instance, uint32_t* pData, uint32_t BlockAdd
   }
   else
   {
+  //  pByte = (uint32_t)&pData;
     pByte = (uint8_t *)pData;
     block_addr = BlockAddr * SD_BLOCKSIZE;
     /* Data transfer */
-    while (BlockNbr--)
+    do 
     {
-       ret = SD_WriteBlock(Instance, (uint32_t *)pByte, block_addr, SD_BLOCKSIZE);
+       ret = SD_WriteBlock(Instance, (uint8_t *)pByte, block_addr, SD_BLOCKSIZE);
        if (ret != BSP_ERROR_NONE) break;
        /* loop on next block : Set next write address */
        pByte += SD_BLOCKSIZE;
        block_addr += SD_BLOCKSIZE;
-    }
+       BlockNbr--;
+    } while ((BlockNbr != 0U) && (ret == BSP_ERROR_NONE));
   }
   /* Returns the response */
   return ret;
@@ -587,7 +590,7 @@ int32_t BSP_SD_WriteBlocks(uint32_t Instance, uint32_t* pData, uint32_t BlockAdd
   */
 int32_t BSP_SD_ReadBlocks(uint32_t Instance, uint32_t* pData, uint32_t BlockAddr, uint32_t BlockNbr)
 {
-  int32_t ret = BSP_ERROR_NONE;
+  int32_t ret;
   uint8_t *pByte;
   uint32_t block_addr;
 
@@ -600,14 +603,16 @@ int32_t BSP_SD_ReadBlocks(uint32_t Instance, uint32_t* pData, uint32_t BlockAddr
       pByte = (uint8_t *)pData;
       block_addr = BlockAddr * SD_BLOCKSIZE;
       /* Data transfer */
-      while (BlockNbr--)
+      do
       {
-       ret = SD_ReadBlock(Instance, (uint32_t *)pByte, block_addr, SD_BLOCKSIZE);
+       ret = SD_ReadBlock(Instance, (uint8_t *)pByte, block_addr, SD_BLOCKSIZE);
        if (ret != BSP_ERROR_NONE) break;
        /* loop on next block : Set next read address */
        pByte += SD_BLOCKSIZE;
        block_addr += SD_BLOCKSIZE;
-      }
+       BlockNbr--;
+     } while ((BlockNbr != 0U) && (ret == BSP_ERROR_NONE));
+
   }
   /* Returns the response */
   return ret;
@@ -882,7 +887,7 @@ void BSP_SD_IRQHandler(void)
   * @param  BlockSize  Size of SD blocks to write that should be 512
   * @retval BSP status
   */
-static int32_t SD_WriteBlock(uint32_t Instance, uint32_t* pData, uint32_t WriteAddr, uint16_t BlockSize)
+static int32_t SD_WriteBlock(uint32_t Instance, uint8_t* pData, uint32_t WriteAddr, uint16_t BlockSize)
 {
   int32_t ret;
   SD_CmdAnswer_typedef response;
@@ -970,7 +975,7 @@ static int32_t SD_WriteBlock(uint32_t Instance, uint32_t* pData, uint32_t WriteA
   * @param  BlockSize  Size of SD blocks to read that should be 512
   * @retval BSP status
   */
-static int32_t SD_ReadBlock(uint32_t Instance, uint32_t* pData, uint32_t ReadAddr, uint16_t BlockSize)
+static int32_t SD_ReadBlock(uint32_t Instance, uint8_t* pData, uint32_t ReadAddr, uint16_t BlockSize)
 {
   int32_t ret;
   SD_CmdAnswer_typedef response;
@@ -1137,7 +1142,7 @@ static int32_t SD_GetCSDRegister(SD_CardSpecificData_t* Csd)
       Csd->MaxBusClkFrec = CSD_Tab[3];
 
       /* Byte 4/5 */
-      Csd->CardComdClasses = (CSD_Tab[4] << 4) | ((CSD_Tab[5] & 0xF0U) >> 4);
+      Csd->CardComdClasses = (uint16_t)(((uint16_t)CSD_Tab[4] << 4U) | ((uint16_t)(CSD_Tab[5] & 0xF0U) >> 4U));
       Csd->RdBlockLen = CSD_Tab[5] & 0x0FU;
 
       /* Byte 6 */
@@ -1152,43 +1157,43 @@ static int32_t SD_GetCSDRegister(SD_CardSpecificData_t* Csd)
 
       if(CardType == SD_CARD_SDSC)
       {
-        Csd->version.v1.Reserved1 = ((CSD_Tab[6] & 0x0CU) >> 2);
+        Csd->version.v1.Reserved1 = ((CSD_Tab[6] & 0x0CU) >> 2U);
 
-        Csd->version.v1.DeviceSize =  ((CSD_Tab[6] & 0x03U) << 10)
-                                    |  (CSD_Tab[7] << 2)
-                                    | ((CSD_Tab[8] & 0xC0U) >> 6);
-        Csd->version.v1.MaxRdCurrentVDDMin = (CSD_Tab[8] & 0x38U) >> 3;
+        Csd->version.v1.DeviceSize =  ((CSD_Tab[6] & 0x03U) << 10U)
+                                    |  (CSD_Tab[7] << 2U)
+                                    | ((CSD_Tab[8] & 0xC0U) >> 6U);
+        Csd->version.v1.MaxRdCurrentVDDMin = (CSD_Tab[8] & 0x38U) >> 3U;
         Csd->version.v1.MaxRdCurrentVDDMax = (CSD_Tab[8] & 0x07U);
-        Csd->version.v1.MaxWrCurrentVDDMin = (CSD_Tab[9] & 0xE0U) >> 5;
-        Csd->version.v1.MaxWrCurrentVDDMax = (CSD_Tab[9] & 0x1CU) >> 2;
-        Csd->version.v1.DeviceSizeMul = ((CSD_Tab[9] & 0x03U) << 1)
-                                       |((CSD_Tab[10] & 0x80U) >> 7);
+        Csd->version.v1.MaxWrCurrentVDDMin = (CSD_Tab[9] & 0xE0U) >> 5U;
+        Csd->version.v1.MaxWrCurrentVDDMax = (CSD_Tab[9] & 0x1CU) >> 2U;
+        Csd->version.v1.DeviceSizeMul = ((CSD_Tab[9] & 0x03U) << 1U)
+                                       |((CSD_Tab[10] & 0x80U) >> 7U);
       }
       else 
       {
-        Csd->version.v2.Reserved1 = ((CSD_Tab[6] & 0x0FU) << 2) | ((CSD_Tab[7] & 0xC0U) >> 6);
-        Csd->version.v2.DeviceSize= ((CSD_Tab[7] & 0x3FU) << 16) | (CSD_Tab[8] << 8) | CSD_Tab[9];
-        Csd->version.v2.Reserved2 = ((CSD_Tab[10] & 0x80U) >> 8);
+        Csd->version.v2.Reserved1 = ((CSD_Tab[6] & 0x0FU) << 2U) | ((CSD_Tab[7] & 0xC0U) >> 6U);
+        Csd->version.v2.DeviceSize= ((CSD_Tab[7] & 0x3FU) << 16U) | (CSD_Tab[8] << 8U) | CSD_Tab[9];
+        Csd->version.v2.Reserved2 = ((CSD_Tab[10] & 0x80U) >> 8U);
       }
 
-      Csd->EraseSingleBlockEnable = (CSD_Tab[10] & 0x40U) >> 6;
-      Csd->EraseSectorSize   = ((CSD_Tab[10] & 0x3FU) << 1)
-                              |((CSD_Tab[11] & 0x80U) >> 7);
+      Csd->EraseSingleBlockEnable = (CSD_Tab[10] & 0x40U) >> 6U;
+      Csd->EraseSectorSize   = ((CSD_Tab[10] & 0x3FU) << 1U)
+                              |((CSD_Tab[11] & 0x80U) >> 7U);
       Csd->WrProtectGrSize   = (CSD_Tab[11] & 0x7FU);
-      Csd->WrProtectGrEnable = (CSD_Tab[12] & 0x80U) >> 7;
-      Csd->Reserved2         = (CSD_Tab[12] & 0x60U) >> 5;
-      Csd->WrSpeedFact       = (CSD_Tab[12] & 0x1CU) >> 2;
-      Csd->MaxWrBlockLen     = ((CSD_Tab[12] & 0x03U) << 2)
-                              |((CSD_Tab[13] & 0xC0U) >> 6);
-      Csd->WriteBlockPartial = (CSD_Tab[13] & 0x20U) >> 5;
+      Csd->WrProtectGrEnable = (CSD_Tab[12] & 0x80U) >> 7U;
+      Csd->Reserved2         = (CSD_Tab[12] & 0x60U) >> 5U;
+      Csd->WrSpeedFact       = (CSD_Tab[12] & 0x1CU) >> 2U;
+      Csd->MaxWrBlockLen     = ((CSD_Tab[12] & 0x03U) << 2U)
+                              |((CSD_Tab[13] & 0xC0U) >> 6U);
+      Csd->WriteBlockPartial = (CSD_Tab[13] & 0x20U) >> 5U;
       Csd->Reserved3         = (CSD_Tab[13] & 0x1FU);
-      Csd->FileFormatGrouop  = (CSD_Tab[14] & 0x80U) >> 7;
-      Csd->CopyFlag          = (CSD_Tab[14] & 0x40U) >> 6;
-      Csd->PermWrProtect     = (CSD_Tab[14] & 0x20U) >> 5;
-      Csd->TempWrProtect     = (CSD_Tab[14] & 0x10U) >> 4;
-      Csd->FileFormat        = (CSD_Tab[14] & 0x0CU) >> 2;
+      Csd->FileFormatGrouop  = (CSD_Tab[14] & 0x80U) >> 7U;
+      Csd->CopyFlag          = (CSD_Tab[14] & 0x40U) >> 6U;
+      Csd->PermWrProtect     = (CSD_Tab[14] & 0x20U) >> 5U;
+      Csd->TempWrProtect     = (CSD_Tab[14] & 0x10U) >> 4U;
+      Csd->FileFormat        = (CSD_Tab[14] & 0x0CU) >> 2U;
       Csd->Reserved4         = (CSD_Tab[14] & 0x03U);
-      Csd->crc               = (CSD_Tab[15] & 0xFEU) >> 1;
+      Csd->crc               = (CSD_Tab[15] & 0xFEU) >> 1U;
       Csd->Reserved5         = (CSD_Tab[15] & 0x01U);
     }
   }
@@ -1240,19 +1245,19 @@ static int32_t SD_GetCIDRegister(SD_CardIdData_t* Cid)
       Cid->ManufacturerID = CID_Tab[0];
 
       /* Byte 1 */
-      Cid->OEM_AppliID = CID_Tab[1] << 8;
+      Cid->OEM_AppliID = CID_Tab[1] << 8U;
 
       /* Byte 2 */
       Cid->OEM_AppliID |= CID_Tab[2];
 
       /* Byte 3 */
-      Cid->ProdName1 = CID_Tab[3] << 24;
+      Cid->ProdName1 = CID_Tab[3] << 24U;
 
       /* Byte 4 */
-      Cid->ProdName1 |= CID_Tab[4] << 16;
+      Cid->ProdName1 |= CID_Tab[4] << 16U;
 
       /* Byte 5 */
-      Cid->ProdName1 |= CID_Tab[5] << 8;
+      Cid->ProdName1 |= CID_Tab[5] << 8U;
 
       /* Byte 6 */
       Cid->ProdName1 |= CID_Tab[6];
@@ -1264,26 +1269,26 @@ static int32_t SD_GetCIDRegister(SD_CardIdData_t* Cid)
       Cid->ProdRev = CID_Tab[8];
 
       /* Byte 9 */
-      Cid->ProdSN = CID_Tab[9] << 24;
+      Cid->ProdSN = CID_Tab[9] << 24U;
 
       /* Byte 10 */
-      Cid->ProdSN |= CID_Tab[10] << 16;
+      Cid->ProdSN |= CID_Tab[10] << 16U;
 
       /* Byte 11 */
-      Cid->ProdSN |= CID_Tab[11] << 8;
+      Cid->ProdSN |= CID_Tab[11] << 8U;
 
       /* Byte 12 */
       Cid->ProdSN |= CID_Tab[12];
 
       /* Byte 13 */
-      Cid->Reserved1 |= (CID_Tab[13] & 0xF0U) >> 4;
-      Cid->ManufactDate = (CID_Tab[13] & 0x0FU) << 8;
+      Cid->Reserved1 |= (CID_Tab[13] & 0xF0U) >> 4U;
+      Cid->ManufactDate = (CID_Tab[13] & 0x0FU) << 8U;
 
       /* Byte 14 */
       Cid->ManufactDate |= CID_Tab[14];
 
       /* Byte 15 */
-      Cid->CID_CRC = (CID_Tab[15] & 0xFEU) >> 1;
+      Cid->CID_CRC = (CID_Tab[15] & 0xFEU) >> 1U;
       Cid->Reserved2 = 1;
 
       retr = BSP_ERROR_NONE;
@@ -1354,7 +1359,7 @@ SD_CmdAnswer_typedef SD_SendCmd(uint8_t Cmd, uint32_t Arg, uint8_t Crc, uint8_t 
   frame[1] = (uint8_t)(Arg >> 24U); /* Construct byte 2 */
   frame[2] = (uint8_t)(Arg >> 16U); /* Construct byte 3 */
   frame[3] = (uint8_t)(Arg >> 8U);  /* Construct byte 4 */
-  frame[4] = (uint8_t)(Arg);       /* Construct byte 5 */
+  frame[4] = (uint8_t)(Arg);        /* Construct byte 5 */
   frame[5] = (Crc | 0x01U);         /* Construct byte 6 */
 
   /* Send the command */
@@ -1377,8 +1382,9 @@ SD_CmdAnswer_typedef SD_SendCmd(uint8_t Cmd, uint32_t Arg, uint8_t Crc, uint8_t 
         SD_CS_LOW();
 
         /* Wait IO line return 0xFF */      
-        while (( retr.r2 == (uint8_t)0) && (counter++  <= SD_MAX_TRY))
-        {
+        while (( retr.r2 == (uint8_t)0) && (counter  < SD_MAX_TRY))
+        { 
+          counter++;
           retr.r2 = SD_IO_WriteByte(SD_DUMMY_BYTE);
         }
         break;
@@ -1649,16 +1655,16 @@ SD_CmdAnswer_typedef SD_WaitResponse(uint8_t Answer, uint8_t Response)
   SD_CmdAnswer_typedef response = {0xFF, 0xFF , 0xFF, 0xFF, 0xFF};
   uint32_t timeout = 6;
 
-  switch(Answer)
+  if (Answer == (uint8_t)SD_ANSWER_R1_EXPECTED)
   {
-  case SD_ANSWER_R1_EXPECTED :
     while ((response.r1 != Response) && (timeout != 0U))
     {
       response.r1 = SD_IO_ReadByte();
       timeout--;
     }
-    break;
-  case SD_ANSWER_R1B_EXPECTED :
+  }
+  else if (Answer == (uint8_t)SD_ANSWER_R1_EXPECTED)
+  {
     /* R1 format plus the optionnal busy signal */
     while ((response.r1 != Response) && (timeout != 0U))
     {
@@ -1672,17 +1678,18 @@ SD_CmdAnswer_typedef SD_WaitResponse(uint8_t Answer, uint8_t Response)
       response.r2 = SD_IO_ReadByte();
       timeout--;
     } while ((response.r2 == (uint8_t)0) && (timeout != 0U));
-    break;
-  case SD_ANSWER_R2_EXPECTED :
+  }
+  else if (Answer == (uint8_t)SD_ANSWER_R2_EXPECTED)
+  {
     while ((response.r1 != Response) && (timeout != 0U))
     {
       response.r1 = SD_IO_ReadByte();
       timeout--;
     }
     response.r2 = SD_IO_ReadByte();
-    break;
-  case SD_ANSWER_R3_EXPECTED :
-  case SD_ANSWER_R7_EXPECTED :
+  }
+  else if ((Answer == (uint8_t)SD_ANSWER_R3_EXPECTED) || (Answer == (uint8_t)SD_ANSWER_R7_EXPECTED))
+  {
     while ((response.r1 != Response) && (timeout != 0U))
     {
       response.r1 = SD_IO_ReadByte();
@@ -1692,9 +1699,10 @@ SD_CmdAnswer_typedef SD_WaitResponse(uint8_t Answer, uint8_t Response)
     response.r3 = SD_IO_ReadByte();
     response.r4 = SD_IO_ReadByte();
     response.r5 = SD_IO_ReadByte();
-    break;
-  default :
-    break;
+  }
+  else
+  {
+    /* nothing to do */
   }
 
   return response;

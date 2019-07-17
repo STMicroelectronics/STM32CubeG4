@@ -1054,7 +1054,7 @@
                         <name>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Components\hx8347d\hx8347d.c</name>
                     </file>
                     <file>
-                        <name>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Components\hx8347d\hx8347d_regs.c</name>
+                        <name>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Components\hx8347d\hx8347d_reg.c</name>
                     </file>
                 </group>
                 <group>
@@ -1078,7 +1078,7 @@
                         <name>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Components\stts751\stts751.c</name>
                     </file>
                     <file>
-                        <name>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Components\stts751\stts751_regs.c</name>
+                        <name>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Components\stts751\stts751_reg.c</name>
                     </file>
                 </group>
                 <group>

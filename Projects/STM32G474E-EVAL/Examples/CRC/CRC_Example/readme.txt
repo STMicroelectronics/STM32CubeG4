@@ -8,7 +8,7 @@
   * @brief   Description of Cyclic Redundancy Check Example.
   ******************************************************************************
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -27,7 +27,7 @@ redundancy check) calculation unit computes the CRC code of a given buffer of
 At the beginning of the main program the HAL_Init() function is called to reset 
 all the peripherals, initialize the Flash interface and the systick.
 Then the SystemClock_Config() function is used to configure the system
-clock (SYSCLK) to run at 150 MHz.
+clock (SYSCLK) to run at 170 MHz.
 
 The CRC peripheral configuration is ensured by HAL_CRC_Init() function.
 The latter is calling HAL_CRC_MspInit() function which core is implementing
@@ -55,7 +55,8 @@ STM32G474E-EVAL Rev B LEDs are used to monitor the example status:
 Security, CRC, CRC Polynomial, IEC 60870-5, hardware CRC
 
 @par Directory contents
-  
+
+  - CRC/CRC_Example/Inc/stm32g474e_eval_conf.h     BSP configuration file
   - CRC/CRC_Example/Inc/stm32g4xx_hal_conf.h    HAL configuration file
   - CRC/CRC_Example/Inc/stm32g4xx_it.h          Interrupt handlers header file
   - CRC/CRC_Example/Inc/main.h                  Header for main.c module

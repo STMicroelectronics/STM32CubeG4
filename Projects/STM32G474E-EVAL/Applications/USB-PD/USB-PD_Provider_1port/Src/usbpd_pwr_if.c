@@ -6,7 +6,7 @@
   * @brief   This file contains power interface control functions.
   ******************************************************************************
   *
-  * Copyright (c) 2018 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under Ultimate Liberty license
   * SLA0044, the "License"; You may not use this file except in compliance with
@@ -152,7 +152,7 @@ USBPD_StatusTypeDef USBPD_PWR_IF_SetProfile(uint8_t PortNum)
   else
     _pdo.d32 = PORT0_PDO_ListSRC[0];
 
-  if(PWR_OK == BSP_PWR_VBUSSetVoltage_Fixed(PortNum, _pdo.SRCFixedPDO.VoltageIn50mVunits * 50,
+  if(BSP_ERROR_NONE == BSP_USBPD_PWR_VBUSSetVoltage_Fixed(PortNum, _pdo.SRCFixedPDO.VoltageIn50mVunits * 50,
                                                      (_rdo.FixedVariableRDO.OperatingCurrentIn10mAunits * 10),
                                                      (_rdo.FixedVariableRDO.MaxOperatingCurrent10mAunits * 10)))
   {

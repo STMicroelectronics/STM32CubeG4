@@ -8,7 +8,7 @@
   * @brief   Description of the COMP output blanking Example
   ******************************************************************************
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -51,7 +51,7 @@ Comparator output signal expected:
    Comparator positive input is higher than negative input, blanking source is low, therefore comparator output is high.
  - Between t=duty cycle pulse and t=period: Comparator positive input at level low, blanking source at level low.
    Comparator positive input is higher than negative input, therefore comparator output is low.
-   
+
 STM32G474E-EVAL Rev B board's LED is be used to monitor the program execution status:
   - LED1 is toggling every 500ms when test pass successfully.
   - LED1 is "ON" when an error occurred.
@@ -72,6 +72,7 @@ comparator, output blanking.
 
 @par Directory contents 
 
+  - COMP/COMP_OutputBlanking/Inc/stm32g474e_eval_conf.h     BSP configuration file
   - COMP/COMP_OutputBlanking/Inc/stm32g4xx_hal_conf.h    HAL configuration file
   - COMP/COMP_OutputBlanking/Inc/stm32g4xx_it.h          COMP interrupt handlers header file
   - COMP/COMP_OutputBlanking/Inc/main.h                  Header for main.c module
@@ -87,6 +88,9 @@ comparator, output blanking.
 
   - This example has been tested with STM32G474E-EVAL Rev B board and can be
     easily tailored to any other supported device and development board.
+
+  - 
+    
 
 
 @par How to use it ? 

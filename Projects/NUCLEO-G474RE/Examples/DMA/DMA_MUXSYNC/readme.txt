@@ -8,7 +8,7 @@
   * @brief   Description of the DMA & DMAMUX Synchronization Example.
   ******************************************************************************
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -102,6 +102,7 @@ System, DMA, DMAMUX, LPTIM, USART, Data Transfer, Memory to periph, synchronizat
 
 @par Directory contents 
 
+  - DMA/DMA_MUXSYNC/Inc/stm32g4xx_nucleo_conf.h     BSP configuration file
   - DMA/DMAMUX_SYNC/Inc/stm32g4xx_hal_conf.h    HAL configuration file
   - DMA/DMAMUX_SYNC/Inc/stm32g4xx_it.h          DMA interrupt handlers header file
   - DMA/DMAMUX_SYNC/Inc/main.h                  Header for main.c module  
@@ -119,11 +120,10 @@ System, DMA, DMAMUX, LPTIM, USART, Data Transfer, Memory to periph, synchronizat
     easily tailored to any other supported device and development board.
 
   - NUCLEO-G474RE RevC Set-up
-    Example is delivered for using Virtual Com port feature of STLINK for connection between NUCLEO-G474RE RevC and PC,
-    Please ensure that USART communication between the target MCU and ST-LINK MCU is properly enabled 
-    on HW board in order to support Virtual Com Port (Default HW SB configuration allows use of VCP)
-    GPIOs connected to USART1 TX/RX (PC.04 pin 34 CN10 and PC.05 pin 6 CN10) are automatically mapped
-    on RX and TX pins of PC UART Com port selected on PC side (please ensure VCP com port is selected).
+    Example is delivered for using the Arduino COM Port for connection between NUCLEO-G474RE RevC and PC,
+    Please ensure that USART communication between the target MCU the PC is properly enabled 
+    GPIOs connected to USART1 TX/RX (PC.04 and PC.05) are automatically mapped
+    on RX and TX pins of PC UART Com port selected on PC side.
 
   - Launch serial communication SW on PC (as HyperTerminal or TeraTerm) with proper configuration 
     - Word Length = 8 Bits

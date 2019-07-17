@@ -112,16 +112,16 @@ typedef struct
   */
 typedef struct
 {
-  __IO uint32_t  ManufacturerID;       /* ManufacturerID */
-  __IO uint32_t  OEM_AppliID;          /* OEM/Application ID */
-  __IO uint32_t  ProdName1;            /* Product Name part1 */
-  __IO uint32_t  ProdName2;            /* Product Name part2*/
-  __IO uint32_t  ProdRev;              /* Product Revision */
-  __IO uint32_t  ProdSN;               /* Product Serial Number */
-  __IO uint32_t  Reserved1;            /* Reserved1 */
-  __IO uint32_t  ManufactDate;         /* Manufacturing Date */
-  __IO uint32_t  CID_CRC;              /* CID CRC */
-  __IO uint32_t  Reserved2;            /* always 1 */
+  uint32_t  ManufacturerID;       /* ManufacturerID */
+  uint32_t  OEM_AppliID;          /* OEM/Application ID */
+  uint32_t  ProdName1;            /* Product Name part1 */
+  uint32_t  ProdName2;            /* Product Name part2*/
+  uint32_t  ProdRev;              /* Product Revision */
+  uint32_t  ProdSN;               /* Product Serial Number */
+  uint32_t  Reserved1;            /* Reserved1 */
+  uint32_t  ManufactDate;         /* Manufacturing Date */
+  uint32_t  CID_CRC;              /* CID CRC */
+  uint32_t  Reserved2;            /* always 1 */
 } SD_CardIdData_t;
 
 /**

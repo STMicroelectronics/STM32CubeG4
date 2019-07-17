@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -202,7 +202,6 @@ extern "C" {
    )                                             \
   )
 #endif
-
 #define  IS_DAC_HIGH_FREQUENCY_MODE(MODE) (((MODE) == DAC_HIGH_FREQUENCY_INTERFACE_MODE_DISABLE)         || \
                                            ((MODE) == DAC_HIGH_FREQUENCY_INTERFACE_MODE_ABOVE_80MHZ)     || \
                                            ((MODE) == DAC_HIGH_FREQUENCY_INTERFACE_MODE_ABOVE_160MHZ)    || \
@@ -314,7 +313,6 @@ uint32_t HAL_DACEx_GetTrimOffset(DAC_HandleTypeDef *hdac, uint32_t Channel);
 /**
   * @}
   */
-
 
 /** @addtogroup DACEx_Private_Functions
   * @{

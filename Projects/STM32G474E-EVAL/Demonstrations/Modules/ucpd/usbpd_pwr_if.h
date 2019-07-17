@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics International N.V.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics International N.V.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -27,15 +27,11 @@
 /* Includes ------------------------------------------------------------------*/
 #include "usbpd_def.h"
 
-/** @addtogroup STM32_USBPD_USER
+/** @addtogroup STM32_USBPD_APPLICATION
   * @{
   */
 
-/** @addtogroup USBPD_USER
-  * @{
-  */
-
-/** @addtogroup USBPD_USER_PWR_IF
+/** @addtogroup STM32_USBPD_APPLICATION_POWER_IF
   * @{
   */
 
@@ -48,19 +44,19 @@
   */
 
 /* Macros used to convert values into PDO representation */
-#define PWR_V_20MV(_V_)        ((uint16_t)(( (_V_) * 1000.0) / 20.0))   /* From Volt to 20mV multiples      */
-#define PWR_V_50MV(_V_)        ((uint16_t)(( (_V_) * 1000.0) / 50.0))   /* From Volt to 50mV multiples      */
-#define PWR_V_100MV(_V_)       ((uint16_t)(( (_V_) * 1000.0) / 100.0))  /* From Volt to 100mV multiples     */
-#define PWR_A_10MA(_A_)        ((uint16_t)(( (_A_) * 1000.0) / 10.0))   /* From Ampere to 10mA multiples    */
-#define PWR_A_50MA(_A_)        ((uint16_t)(( (_A_) * 1000.0) / 50.0))   /* From Ampere to 50mA multiples    */
-#define PWR_W(_W_)             ((uint16_t)(( (_W_) * 1000.0) / 250.0))  /* From Watt to 250mW multiples     */
+#define PWR_V_20MV(_V_)        ((uint16_t)(( (_V_) * 1000) / 20))   /* From Volt to 20mV multiples      */
+#define PWR_V_50MV(_V_)        ((uint16_t)(( (_V_) * 1000) / 50))   /* From Volt to 50mV multiples      */
+#define PWR_V_100MV(_V_)       ((uint16_t)(( (_V_) * 1000) / 100))  /* From Volt to 100mV multiples     */
+#define PWR_A_10MA(_A_)        ((uint16_t)(( (_A_) * 1000) / 10))   /* From Ampere to 10mA multiples    */
+#define PWR_A_50MA(_A_)        ((uint16_t)(( (_A_) * 1000) / 50))   /* From Ampere to 50mA multiples    */
+#define PWR_W(_W_)             ((uint16_t)(( (_W_) * 1000) / 250))  /* From Watt to 250mW multiples     */
 
 /* Macros used to get values from PDO representation */
-#define PWR_DECODE_50MV(_Value_)           ((uint16_t)(( (float)(_Value_) * 50.0)))     /* From 50mV multiples to mV        */
-#define PWR_DECODE_100MV(_Value_)          ((uint16_t)(( (float)(_Value_) * 100.0)))    /* From 100mV multiples to mV       */
-#define PWR_DECODE_10MA(_Value_)           ((uint16_t)(( (float)(_Value_) * 10.0)))     /* From 10mA multiples to mA        */
-#define PWR_DECODE_50MA(_Value_)           ((uint16_t)(( (float)(_Value_) * 50.0)))     /* From 50mA multiples to mA        */
-#define PWR_DECODE_MW(_Value_)             ((uint16_t)(( (float)(_Value_) * 250.0)))    /* From 250mW multiples to mW       */
+#define PWR_DECODE_50MV(_Value_)           ((uint16_t)(((_Value_) * 50)))     /* From 50mV multiples to mV        */
+#define PWR_DECODE_100MV(_Value_)          ((uint16_t)(((_Value_) * 100)))    /* From 100mV multiples to mV       */
+#define PWR_DECODE_10MA(_Value_)           ((uint16_t)(((_Value_) * 10)))     /* From 10mA multiples to mA        */
+#define PWR_DECODE_50MA(_Value_)           ((uint16_t)(((_Value_) * 50)))     /* From 50mA multiples to mA        */
+#define PWR_DECODE_MW(_Value_)             ((uint16_t)(((_Value_) * 250)))    /* From 250mW multiples to mW       */
 
 #define USBPD_PORT_IsValid(__Port__) ((__Port__) < (USBPD_PORT_COUNT))
 
@@ -70,10 +66,9 @@
 
 /* Exported variables --------------------------------------------------------*/
 /* Exported functions --------------------------------------------------------*/
-/** @defgroup USBPD_USER_PWR_IF_Exported_Functions USBPD PWR IF Exported Functions
+/** @defgroup STM32_USBPD_APPLICATION_POWER_IF_Exported_Functions USBPD PWR IF Exported Functions
   * @{
   */
-
 /**
   * @brief  Initialize structures and variables related to power board profiles
   *         used by Sink and Source, for all available ports.
@@ -89,34 +84,12 @@ USBPD_StatusTypeDef USBPD_PWR_IF_Init(void);
 USBPD_StatusTypeDef USBPD_PWR_IF_SetProfile(uint8_t PortNum);
 
 /**
-  * @brief  Resets the Power Board
-  * @retval USBPD status
-  */
-USBPD_StatusTypeDef USBPD_PWR_IF_PowerResetGlobal(void);
-
-/**
-  * @brief  Resets the Power on a specified port
-  * @param  PortNum Port number
-  * @retval USBPD status
-  */
-USBPD_StatusTypeDef USBPD_PWR_IF_PowerReset(uint8_t PortNum);
-
-#if defined(_SNK) || defined(_DRP)
-/**
   * @brief  Checks if the power on a specified port is ready
   * @param  PortNum Port number
   * @param  Vsafe   Vsafe status based on @ref USBPD_VSAFE_StatusTypeDef
   * @retval USBPD status
   */
 USBPD_StatusTypeDef USBPD_PWR_IF_SupplyReady(uint8_t PortNum, USBPD_VSAFE_StatusTypeDef Vsafe);
-#endif /* _SNK || _DRP */
-
-/**
-  * @brief  Initialize the power on a specified port
-  * @param  PortNum Port number
-  * @retval USBPD status
-  */
-USBPD_StatusTypeDef USBPD_PWR_IF_InitPower(uint8_t PortNum);
 
 #if defined(_SRC) || defined(_DRP)
 /**
@@ -133,15 +106,6 @@ USBPD_StatusTypeDef USBPD_PWR_IF_VBUSEnable(uint8_t PortNum);
   */
 USBPD_StatusTypeDef USBPD_PWR_IF_VBUSDisable(uint8_t PortNum);
 #endif /* _SRC || _DRP */
-
-#if 0
-/**
-  * @brief  Disable the SNK to stop current consumption
-  * @param  PortNum Port number
-  * @retval USBPD status
-  */
-USBPD_StatusTypeDef USBPD_PWR_IF_SNKDisable(uint8_t PortNum);
-#endif
 
 /**
   * @brief  Checks if the power on a specified port is enabled
@@ -203,6 +167,12 @@ void USBPD_PWR_IF_GetPortPDOs(uint8_t PortNum, USBPD_CORE_DataInfoType_TypeDef D
 USBPD_StatusTypeDef USBPD_PWR_IF_SearchRequestedPDO(uint8_t PortNum, uint32_t RdoPosition, uint32_t *Pdo);
 
 #endif /* _SRC || _DRP */
+/**
+  * @brief  the function is called in case of critical issue is detected to switch in safety mode.
+  * @retval None
+  */
+void USBPD_PWR_IF_Alarm(void);
+
 #if defined(_SNK) || defined(_DRP)
 /**
   * @brief  Function to check validity between SNK PDO and power user settings
@@ -211,13 +181,6 @@ USBPD_StatusTypeDef USBPD_PWR_IF_SearchRequestedPDO(uint8_t PortNum, uint32_t Rd
   */
 USBPD_StatusTypeDef USBPD_PWR_IF_CheckUpdateSNKPower(uint8_t PortNum);
 #endif /* _SNK) || _DRP */
-
-/**
-  * @brief  the function is called in case of critical issue is detected to switch in safety mode.
-  * @param  None
-  * @retval None
-  */
-void USBPD_PWR_IF_Alarm(void);
 
 /**
   * @}

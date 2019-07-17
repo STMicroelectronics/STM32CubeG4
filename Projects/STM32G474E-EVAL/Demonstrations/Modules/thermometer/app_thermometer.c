@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -177,7 +177,7 @@ void ThermometerUserInformation(float temperature)
 
   /* Thermometer update information *******************************************/
   /* Convert Temperature in Celsius to temperature in Fahrenheit */
-  TempFahrenheitDisplay = (1.8 * TempCelsiusDisplay) + 32;
+  TempFahrenheitDisplay = ((float)1.8 * TempCelsiusDisplay) + (float)32;
 
   sprintf((char*)LCDStrCelsius,    "%5.1f C", TempCelsiusDisplay);
   sprintf((char*)LCDStrFahrenheit, "%5.1f F", TempFahrenheitDisplay);

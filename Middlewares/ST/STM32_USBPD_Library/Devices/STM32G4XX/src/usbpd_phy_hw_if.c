@@ -25,6 +25,9 @@
 #include "usbpd_core.h"
 #include "usbpd_hw_if.h"
 #include "usbpd_timersserver.h"
+#if defined(_LOW_POWER)
+#include "usbpd_lowpower.h"
+#endif
 
 /* Private typedef -----------------------------------------------------------*/
 
@@ -37,15 +40,9 @@ USBPD_PORT_HandleTypeDef Ports[USBPD_PORT_COUNT];
 
 void USBPD_HW_IF_GlobalHwInit(void)
 {
-  LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_CRC);
+  /* ## Backup register access ## */
   LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_PWR);
-  LL_APB1_GRP2_EnableClock(LL_APB1_GRP2_PERIPH_LPUART1);
-  /* Init timer to detect the reception of goodCRC */
-  USBPD_TIM_Init();
-
-  /* Initialise VBUS power */
-  (void)BSP_PWR_VBUSInit(0);
-
+  LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_CRC);
 }
 
 void USBPD_HW_IF_StopBISTMode2(uint8_t PortNum)
@@ -105,6 +102,9 @@ USBPD_StatusTypeDef USBPD_HW_IF_SendBuffer(uint8_t PortNum, USBPD_SOPType_TypeDe
 
     if (USBPD_OK == _status)
     {
+#if defined(_LOW_POWER)       
+      LPM_SetStopMode((LPM_Id_t)(LPM_PE_0 + PortNum), LPM_Disable);
+#endif  
       WRITE_REG(Ports[PortNum].hdmatx->CMAR, (uint32_t)pBuffer);
       WRITE_REG(Ports[PortNum].hdmatx->CNDTR, Size);
       Ports[PortNum].hdmatx->CCR |= DMA_CCR_EN;
@@ -160,9 +160,10 @@ void USBPDM1_AssertRd(uint8_t PortNum)
 
   HAL_Delay(1);
 
+#ifndef _LOW_POWER  
   LL_UCPD_TypeCDetectionCC2Enable(Ports[PortNum].husbpd);
   LL_UCPD_TypeCDetectionCC1Enable(Ports[PortNum].husbpd);
-
+#endif
 }
 
 void USBPDM1_EnterErrorRecovery(uint8_t PortNum)
@@ -195,7 +196,6 @@ void USBPDM1_RX_EnableInterrupt(uint8_t PortNum)
 void USBPD_HW_IF_EnableRX(uint8_t PortNum)
 {
   LL_UCPD_RxEnable(Ports[PortNum].husbpd);
-
 }
 
 void USBPD_HW_IF_DisableRX(uint8_t PortNum)
@@ -236,15 +236,6 @@ void HW_SignalAttachement(uint8_t PortNum, CCxPin_TypeDef cc)
 
   /* Handle CC enable */
   Ports[PortNum].CCx = cc;
-  if (USBPD_PORTPOWERROLE_SRC == Ports[PortNum].params->PE_PowerRole)
-  {
-    LL_UCPD_SetccEnable(Ports[PortNum].husbpd, LL_UCPD_CCENABLE_CC1CC2);
-  }
-  else
-  {
-    /* disconnect is done by VBUS */
-    LL_UCPD_SetccEnable(Ports[PortNum].husbpd, (Ports[PortNum].CCx == CC1) ? LL_UCPD_CCENABLE_CC1 : LL_UCPD_CCENABLE_CC2);
-  }
 
   /* Set CC pin for PD message */
   LL_UCPD_SetCCPin(Ports[PortNum].husbpd, (Ports[PortNum].CCx == CC1) ? LL_UCPD_CCPIN_CC1 : LL_UCPD_CCPIN_CC2);
@@ -259,8 +250,9 @@ void HW_SignalAttachement(uint8_t PortNum, CCxPin_TypeDef cc)
 
 #if defined(_VCONN_SUPPORT)
   /* Initialize Vconn managment */
-  (void)BSP_PWR_VCONNInit(PortNum, (Ports[PortNum].CCx == CC1) ? 1u : 2u);
+  (void)BSP_USBPD_PWR_VCONNInit(PortNum, (Ports[PortNum].CCx == CC1) ? 1u : 2u);
 #endif /* _VCONN_SUPPORT */
+  
   /* Disable the Resistor on Vconn PIN */
   (Ports[PortNum].CCx == CC1) ? LL_UCPD_SetccEnable(Ports[PortNum].husbpd, LL_UCPD_CCENABLE_CC1) : LL_UCPD_SetccEnable(Ports[PortNum].husbpd, LL_UCPD_CCENABLE_CC2);
 
@@ -274,21 +266,33 @@ void HW_SignalAttachement(uint8_t PortNum, CCxPin_TypeDef cc)
 
 void HW_SignalDetachment(uint8_t PortNum)
 {
+  /* stop DMA RX/TX */
   LL_UCPD_RxDMADisable(Ports[PortNum].husbpd);
   LL_UCPD_TxDMADisable(Ports[PortNum].husbpd);
   LL_UCPD_RxDisable(Ports[PortNum].husbpd);
 
+#ifndef _LOW_POWER  
   /* Enable only detection interrupt */
   WRITE_REG(Ports[PortNum].husbpd->IMR, UCPD_IMR_TYPECEVT1IE | UCPD_IMR_TYPECEVT2IE);
-
-  /* stop DMA RX/TX */
-  LL_UCPD_RxDMADisable(Ports[PortNum].husbpd);
-  LL_UCPD_TxDMADisable(Ports[PortNum].husbpd);
+#endif
 
   USBPD_HW_DeInit_DMATxInstance(PortNum);
   USBPD_HW_DeInit_DMARxInstance(PortNum);
 
   LL_UCPD_SetccEnable(Ports[PortNum].husbpd, LL_UCPD_CCENABLE_CC1CC2);
+
+  if (USBPD_PORTPOWERROLE_SNK == Ports[PortNum].params->PE_PowerRole) 
+  {  
+#if defined(_VCONN_SUPPORT)
+    /* DeInitialize Vconn managment */
+  (void)BSP_USBPD_PWR_VCONNDeInit(PortNum, (Ports[PortNum].CCx == CC1) ? 1u : 2u);
+#endif  
+    /* DeInitialise VBUS power */
+  (void)BSP_USBPD_PWR_VBUSDeInit(PortNum);
+  }
+  
+  /* DeInit timer to detect the reception of goodCRC */
+  USBPD_TIM_DeInit();
 }
 
 void USBPD_HW_IF_SetResistor_SinkTxNG(uint8_t PortNum)

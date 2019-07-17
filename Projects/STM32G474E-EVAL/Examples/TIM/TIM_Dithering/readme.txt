@@ -2,14 +2,14 @@
   @page TIM_Dithering TIM PWM Output with dithering example
 
   @verbatim
-  ******************** (C) COPYRIGHT 2018 STMicroelectronics *******************
+  ******************** (C) COPYRIGHT 2019 STMicroelectronics *******************
   * @file    TIM/TIM_Dithering/readme.txt
   * @author  MCD Application Team
   * @brief   Description of the TIM_Dithering example
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -44,7 +44,8 @@ Dithering is activated but fractional part is null,
 thus there is only regular pulses with 1/5 = 20% duty cycle.
 And LD5 led brightness is quite low (about 20% of max intensity).
 PWM waveforms can be displayed using an oscilloscope.
-  TIM3_CH3   _     _     _     _     _     _     _     _     _     _     _     _     _     _     _     _     _
+  TIM3_CH3
+           _     _     _     _     _     _     _     _     _     _     _     _     _     _     _     _     _
          _| |___| |___| |___| |___| |___| |___| |___| |___| |___| |___| |___| |___| |___| |___| |___| |___| |__
 
 Then timer compare match is incremented regularly. This add 1 more cycle to x pulse out of 16 period (x fractional part = Compare modulo 16).
@@ -52,7 +53,8 @@ And LD5 led brightness is slightly increased.
 
 Fractional part = 1 --> 1 pulse out of 16 periods is longer (1 more cycle). Dither duty cycle = (1+1)/5 = 40%:
 
-  TIM3_CH3   __    _     _     _     _     _     _     _     _     _     _     _     _     _     _     _     __
+  TIM3_CH3
+           __    _     _     _     _     _     _     _     _     _     _     _     _     _     _     _     __
          _|  |__| |___| |___| |___| |___| |___| |___| |___| |___| |___| |___| |___| |___| |___| |___| |___|  |_
           <---------------------------------------------------------------------------------------------->
            ^                                       16 periods
@@ -60,7 +62,8 @@ Fractional part = 1 --> 1 pulse out of 16 periods is longer (1 more cycle). Dith
 LD5 led brightness is slightly increased.
 
 Fractional part = 2 --> 2 pulses out of 16 periods are longer (1 more cycle):
-  TIM3_CH3   __    _     _     _     _     _     _     _     __    _     _     _     _     _     _     _     __
+  TIM3_CH3
+           __    _     _     _     _     _     _     _     __    _     _     _     _     _     _     _     __
          _|  |__| |___| |___| |___| |___| |___| |___| |___|  |__| |___| |___| |___| |___| |___| |___| |___|  |_
           <---------------------------------------------------------------------------------------------->
            ^                                               ^                  16 periods
@@ -82,17 +85,20 @@ With dithering LD5 led brightness increases smoothly with (dither * period_count
 @note When dithering is activated, TIM3_CHTIM3_CH4 is configured in PWM output with a pulse 1/16 so that oscilloscope can be synchronized.
 Pulse on CHTIM3_CH4 will appear every 16 periods.
 
-  TIM3_CH4   _                                                                                               _
+  TIM3_CH4
+           _                                                                                               _
          _| |_____________________________________________________________________________________________| |_
           <---------------------------------------------------------------------------------------------->
                                                   16 periods
 
 If BUTTON_USER is pressed, dithering is deactivated. LD5 led brightness increases roughly with only 5 intermediate steps (= period_count).
 
- TIM3_CH3    _     _     _     _     _     _     _     _     _     _     _     _     _     _     _     _     _
+ TIM3_CH3
+           _     _     _     _     _     _     _     _     _     _     _     _     _     _     _     _     _
          _| |___| |___| |___| |___| |___| |___| |___| |___| |___| |___| |___| |___| |___| |___| |___| |___| |__
 
- TIM3_CH3    __    __    __    __    __    __    __    __    __    __    __    __    __    __    __    __    __
+ TIM3_CH3
+           __    __    __    __    __    __    __    __    __    __    __    __    __    __    __    __    __
          _|  |__|  |__|  |__|  |__|  |__|  |__|  |__|  |__|  |__|  |__|  |__|  |__|  |__|  |__|  |__|  |__|  |_
 
 ... and so on.
@@ -110,6 +116,7 @@ If BUTTON_USER is pressed again dithering is reactivated.
 
 @par Directory contents
 
+  - TIM/TIM_Dithering/Inc/stm32g474e_eval_conf.h     BSP configuration file
   - TIM/TIM_Dithering/Inc/stm32g4xx_hal_conf.h    HAL configuration file
   - TIM/TIM_Dithering/Inc/stm32g4xx_it.h          Interrupt handlers header file
   - TIM/TIM_Dithering/Inc/main.h                  Header for main.c module

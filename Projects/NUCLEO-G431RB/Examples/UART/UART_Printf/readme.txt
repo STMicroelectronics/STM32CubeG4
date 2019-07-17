@@ -8,7 +8,7 @@
   * @brief   Description of the UART Printf example.
   ******************************************************************************
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -72,6 +72,7 @@ Transmission, Reception, Asynchronous, interrupt
 
 @par Directory contents
 
+  - UART/UART_Printf/Inc/stm32g4xx_nucleo_conf.h     BSP configuration file
   - UART/UART_Printf/Inc/stm32g4xx_hal_conf.h    HAL configuration file
   - UART/UART_Printf/Inc/stm32g4xx_it.h          IT interrupt handlers header file
   - UART/UART_Printf/Inc/main.h                  Header for main.c module

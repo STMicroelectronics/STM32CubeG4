@@ -168,7 +168,7 @@ int32_t HX8347D_Init(HX8347D_Object_t *pObj, uint32_t ColorCoding, uint32_t Orie
 {
   int32_t ret;
   uint8_t pdata;
-  volatile uint8_t data;
+  volatile uint8_t *data;
 
   if((pObj == NULL) || (Orientation > HX8347D_ORIENTATION_LANDSCAPE_ROT180))
   {
@@ -281,26 +281,16 @@ int32_t HX8347D_Init(HX8347D_Object_t *pObj, uint32_t ColorCoding, uint32_t Orie
     pdata = 0x09;
     ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_PANEL_CTRL, &pdata, 1); /* SS_PANEL = 1, GS_PANEL = 0,REV_PANEL = 0, BGR_PANEL = 1 */
 
-#if 0
     /* Display ON flow */
-    pdata = 0x38;
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_DISPLAY_CTRL3, &pdata, 1); /* GON=1, DTE=1, D=10 */
+    pdata = 0x38U;
+    data = (uint8_t *)&pdata;
+    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_DISPLAY_CTRL3, (uint8_t *)data, 1);
     (void)HX8347D_IO_Delay(pObj, 100);
-    pdata = 0x3C;
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_DISPLAY_CTRL3, &pdata, 1); /* GON=1, DTE=1, D=11 */
+    pdata = 0x3CU;
+    data = (uint8_t *)&pdata;
+    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_DISPLAY_CTRL3, (uint8_t *)data, 1);
     (void)HX8347D_IO_Delay(pObj, 100);
-#else
-  volatile uint8_t *data;
 
-  pdata = 0x38U;
-  data = (uint8_t *)&pdata;
-  ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_DISPLAY_CTRL3, (uint8_t *)data, 1);
-  (void)HX8347D_IO_Delay(pObj, 100);
-  pdata = 0x3CU;
-  data = (uint8_t *)&pdata;
-  ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_DISPLAY_CTRL3, (uint8_t *)data, 1);
-  (void)HX8347D_IO_Delay(pObj, 100);
-#endif
     /* Set GRAM Area - Partial Display Control */
     pdata = 0x00U;
     ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_DISPLAY_MODE_CTRL, &pdata, 1); /* DP_STB = 0, DP_STB_S = 0, SCROLL = 0, */

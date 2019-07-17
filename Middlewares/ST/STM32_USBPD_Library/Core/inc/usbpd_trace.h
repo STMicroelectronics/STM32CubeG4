@@ -54,6 +54,12 @@ extern "C" {
 void            USBPD_TRACE_Init(void);
 
 /**
+  * @brief  DeInitialize the TRACE module
+  * @retval None
+  */
+void            USBPD_TRACE_DeInit(void);
+
+/**
   * @brief  Add information in debug trace buffer
   * @param  Type    Trace Type based on @ref TRACE_EVENT
   * @param  PortNum Port number value

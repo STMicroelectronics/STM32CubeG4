@@ -1,13 +1,13 @@
 /**
   ******************************************************************************
-  * @file    stm32g4xx_fmac.h
+  * @file    stm32g4xx_hal_fmac.h
   * @author  MCD Application Team
   * @brief   This file contains all the functions prototypes for the FMAC firmware
   *          library.
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,

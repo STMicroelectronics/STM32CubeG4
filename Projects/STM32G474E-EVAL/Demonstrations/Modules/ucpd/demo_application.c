@@ -6,13 +6,13 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics International N.V.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
   *
   ******************************************************************************
   */
@@ -22,11 +22,8 @@
 #include "usbpd_dpm_core.h"
 #include "usbpd_dpm_conf.h"
 #include "usbpd_dpm_user.h"
+#include "usbpd_devices_conf.h"
 #include "usbpd_pwr_if.h"
-#include "stm32g474e_eval.h"
-#include "stm32g474e_eval_lcd.h"
-#include "stm32g474e_eval_io.h"
-#include "stm32g474e_eval_usbpd_pwr.h"
 #include "logo_STM32_G4.h"
 #include "demo_application.h"
 #include "string.h"
@@ -38,6 +35,20 @@
 #include "usbpd_trace.h"
 #endif
 #include "basic_gui.h"
+#include "stm32g474e_eval.h"
+#include "stm32g474e_eval_lcd.h"
+#include "stm32g474e_eval_io.h"
+#include "stm32g474e_eval_usbpd_pwr.h"
+
+#define LCD_INSTANCE  0
+
+/** @addtogroup STM32_USBPD_APPLICATION
+  * @{
+  */
+
+/** @addtogroup STM32_USBPD_APPLICATION_DEMO
+  * @{
+  */
 
 /* Exported variables --------------------------------------------------------*/
 /* Private typedef -----------------------------------------------------------*/
@@ -104,6 +115,10 @@
 #define MAX_LINE_PDO      4u
 #define MAX_LINE_COMMAND  4u
 #define MAX_LINE_EXTCAPA  5u
+
+/* DEMO Error messages max size 
+*/
+#define DEMO_ERROR_MAX_MSG_SIZE  25U
 
 
 typedef enum {
@@ -196,6 +211,11 @@ static  int8_t   g_tab_menu_pos[2] = { 0, 0};
 /* avoid multiple joystick event */
 static __IO uint8_t joyevent = 0;
 
+const uint8_t g_tab_error_strings[DEMO_ERROR_TYPE_MAXNBITEMS][DEMO_ERROR_MAX_MSG_SIZE] = {
+  "  POWER SUPPLY ERROR  ",    /* Power Supply error */
+  " FLASH SETTINGS ERROR ",    /* Error in settings stored in flash */
+};
+
 /* Private variables ---------------------------------------------------------*/
 
 /* Counter for Sel Joystick pressed*/
@@ -204,7 +224,6 @@ osMessageQId  LCDMsgBox;
 #endif
 static int8_t portSel =0;
 USBPD_DiscoveryIdentity_TypeDef pIdentity;
-
 
 /* Private function prototypes -----------------------------------------------*/
 static void Display_Selected_port(void);
@@ -248,6 +267,7 @@ DEMO_ErrorCode DEMO_InitBSP(void)
   /* Initialize Joystick */
   BSP_JOY_Init(JOY1, JOY_MODE_EXTI, JOY_ALL);
 
+  /* Initialize Push Button  */
   BSP_PB_Init(BUTTON_USER , BUTTON_MODE_EXTI);
 
   return DEMO_OK;
@@ -310,19 +330,13 @@ void DEMO_PostNotificationMessage(uint8_t PortNum, USBPD_NotifyEventValue_TypeDe
   * @param  EventVal @ref USBPD_NotifyEventValue_TypeDef
   * @retval None
   */
-static uint32_t countmsg=0, trappedmsg=0;
 void DEMO_PostMMIMessage(uint32_t EventVal)
 {
   uint32_t event = DEMO_MSG_MMI | EventVal;
   if (joyevent == 0 )
   {
     joyevent = 1;
-    countmsg++;
-    osMessagePut(LCDMsgBox, event, 0);
-  }
-  else
-  {
-    trappedmsg++;
+    (void)osMessagePut(LCDMsgBox, event, 0);
   }
 }
 #endif
@@ -362,8 +376,8 @@ static void Display_power(void)
     /* Port 0 */
     if(DPM_Ports[USBPD_PORT_0].DPM_IsConnected)
     {
-      vsense = BSP_PWR_VBUSGetVoltage(USBPD_PORT_0);
-      isense = BSP_PWR_VBUSGetCurrent(USBPD_PORT_0);
+      BSP_USBPD_PWR_VBUSGetVoltage(USBPD_PORT_0, &vsense);
+      BSP_USBPD_PWR_VBUSGetCurrent(USBPD_PORT_0, &isense);
       if(isense < 0)
       {
         isense = -isense;
@@ -430,19 +444,26 @@ static void Display_contract_port(uint8_t PortNum)
 
 /**
   * @brief  Display error message
-  * @param  PortNum The handle of the port
+  * @param  PortNum   Port Number
+  * @param  ErrorType Demo error type
   * @retval None
   */
-void DEMO_Display_Error(uint8_t PortNum)
+void DEMO_Display_Error(uint8_t PortNum, uint8_t ErrorType)
 {
+  uint8_t *pmsg;
+  
   Display_clear_info();
 
   GUI_SetFont(&Font16);
   GUI_SetBackColor(GUI_COLOR_RED);
   GUI_SetTextColor(GUI_COLOR_ST_BLUE_DARK);
 
-  /* Dispplay error info */
-  GUI_DisplayStringAt(0, 1 + 6 * Font16.Height, (uint8_t *)"POWER SUPPLY NOT AVAILABLE", CENTER_MODE);
+  /* Display error info */
+  if (ErrorType < DEMO_ERROR_TYPE_MAXNBITEMS)
+  {
+    pmsg = (uint8_t *) g_tab_error_strings[ErrorType];
+    GUI_DisplayStringAt(0, 1 + 6 * Font16.Height, pmsg, CENTER_MODE);
+  }
 }
 
 /**
@@ -768,7 +789,7 @@ static void Display_sinkcapa_menu_nav(uint8_t PortNum, int8_t Nav)
         sprintf((char*)_str, " VAR: %2d.%1d-%2d.%1dV %2d.%dA ", (minvoltage/1000),(minvoltage/100)%10, (maxvoltage/1000),(maxvoltage/100)%10, (maxcurrent/1000), ((maxcurrent % 1000) /100));
       }
       break;
-#if defined(USBPD_REV30_SUPPORT) && _PPS
+#if _PPS
     case USBPD_CORE_PDO_TYPE_APDO :
       {
         uint32_t minvoltage = ((DPM_Ports[PortNum].DPM_ListOfRcvSNKPDO[index] & USBPD_PDO_SRC_APDO_MIN_VOLTAGE_Msk) >> USBPD_PDO_SRC_APDO_MIN_VOLTAGE_Pos) * 100;
@@ -777,7 +798,7 @@ static void Display_sinkcapa_menu_nav(uint8_t PortNum, int8_t Nav)
         sprintf((char*)_str, " APDO:%2d.%1d-%2d.%1dV %2d.%dA ", (minvoltage/1000),(minvoltage/100)%10, (maxvoltage/1000),(maxvoltage/100)%10, (maxcurrent/1000), ((maxcurrent % 1000) /100));
       }
       break;
-#endif /* USBPD_REV30_SUPPORT & _PPS */
+#endif /* _PPS */
     default :
       sprintf((char*)_str,"Not yet managed by demo");
       break;
@@ -876,7 +897,7 @@ static void Display_sourcecapa_menu_nav(uint8_t PortNum, int8_t Nav)
         sprintf((char*)_str, " VAR: %2d.%1d-%2d.%1dV %2d.%dA", (minvoltage/1000),(minvoltage/100)%10, (maxvoltage/1000),(maxvoltage/100)%10, (maxcurrent/1000), ((maxcurrent % 1000) /100));
       }
       break;
-#if defined(USBPD_REV30_SUPPORT) && _PPS
+#if _PPS
     case USBPD_CORE_PDO_TYPE_APDO :
       {
         uint32_t minvoltage = ((DPM_Ports[PortNum].DPM_ListOfRcvSRCPDO[index] & USBPD_PDO_SRC_APDO_MIN_VOLTAGE_Msk) >> USBPD_PDO_SRC_APDO_MIN_VOLTAGE_Pos) * 100;
@@ -885,7 +906,7 @@ static void Display_sourcecapa_menu_nav(uint8_t PortNum, int8_t Nav)
         sprintf((char*)_str, " APDO:%2d.%1d-%2d.%1dV %2d.%dA", (minvoltage/1000),(minvoltage/100)%10, (maxvoltage/1000),(maxvoltage/100)%10, (maxcurrent/1000), ((maxcurrent % 1000) /100));
       }
       break;
-#endif /* USBPD_REV30_SUPPORT & _PPS */
+#endif /* _PPS */
     default :
       sprintf((char*)_str,"Not yet managed by demo");
       break;
@@ -905,7 +926,7 @@ static void Display_sourcecapa_menu_nav(uint8_t PortNum, int8_t Nav)
       GUI_SetBackColor(GUI_COLOR_WHITE);
       GUI_SetTextColor(GUI_COLOR_ST_BLUE_DARK);
     }
-  }  
+  }
 }
 
 /**
@@ -1235,9 +1256,9 @@ static void Display_command_menu_exec(uint8_t PortNum)
     else
       Display_debug_port(PortNum, (uint8_t*)"request not sent");
     break;
-#if defined(_VDM)    
+#if defined(_VDM)
   case COMMAND_REQUEST_VDM_DISCOVERY :
-    USBPD_DPM_RequestVDM_DiscoverySVID(0, USBPD_SOPTYPE_SOP);
+    USBPD_DPM_RequestVDM_DiscoverySVID(PortNum, USBPD_SOPTYPE_SOP);
     break;
 #endif
 #endif /* USBPD_REV30_SUPPORT */
@@ -1343,6 +1364,13 @@ static void Display_debug_port(uint8_t PortNum, uint8_t *msg)
 {
   uint32_t pos;
   static uint8_t TxtMessage[2][4][22];
+
+  if (strlen((char*)msg) > 22)
+  {
+    /* Display not possible */
+    sprintf((char*)TxtMessage[PortNum][3], "Display error\n");
+    return;
+  }
 
   GUI_SetFont(&Font12);
   GUI_SetBackColor(GUI_COLOR_WHITE);
@@ -1453,8 +1481,8 @@ static void DEMO_Manage_event(uint32_t Event)
         /* delay add to avoid multiple press event */
         osDelay(100);
         break;
-      case DEMO_MMI_ACTION_ERROR :
-        DEMO_Display_Error(portSel);
+      case DEMO_MMI_ACTION_ERROR_POWER :
+        DEMO_Display_Error(portSel, DEMO_ERROR_TYPE_POWER);
         break;
       }
     }
@@ -1608,7 +1636,7 @@ void DEMO_Task(void const *queue_id)
 
   for (;;)
   {
-    osEvent event = osMessageGet(queue, osWaitForever);
+    osEvent event = osMessageGet(queue, 1000);
     DEMO_Manage_event(DEMO_MSG_MMI | DEMO_MMI_ACTION_NONE);
     if(osEventMessage == event.status)
     {

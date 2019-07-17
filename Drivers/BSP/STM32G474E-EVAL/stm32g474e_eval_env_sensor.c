@@ -28,7 +28,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -210,7 +210,7 @@ int32_t BSP_ENV_SENSOR_ReadID(uint32_t Instance, uint8_t *Id)
   * @param  Value pointer to environmental sensor value
   * @retval BSP status
   */
-int32_t BSP_ENV_SENSOR_GetValue(uint32_t Instance, uint32_t Function, float *Value)
+int32_t BSP_ENV_SENSOR_GetValue(uint32_t Instance, uint32_t Function, float_t *Value)
 {
   int32_t ret;
 
@@ -288,7 +288,7 @@ int32_t BSP_ENV_SENSOR_Disable(uint32_t Instance, uint32_t Function)
   * @param  Odr pointer to Output Data Rate read value
   * @retval BSP status
   */
-int32_t BSP_ENV_SENSOR_GetOutputDataRate(uint32_t Instance, uint32_t Function, float *Odr)
+int32_t BSP_ENV_SENSOR_GetOutputDataRate(uint32_t Instance, uint32_t Function, float_t *Odr)
 {
   int32_t ret = BSP_ERROR_NONE;
 
@@ -312,7 +312,7 @@ int32_t BSP_ENV_SENSOR_GetOutputDataRate(uint32_t Instance, uint32_t Function, f
   * @param  Odr Output Data Rate value to be set
   * @retval BSP status
   */
-int32_t BSP_ENV_SENSOR_SetOutputDataRate(uint32_t Instance, uint32_t Function, float Odr)
+int32_t BSP_ENV_SENSOR_SetOutputDataRate(uint32_t Instance, uint32_t Function, float_t Odr)
 {
   if( (Instance >= ENV_INSTANCES_NBR) || ( Function != ENV_TEMPERATURE ) )
   {

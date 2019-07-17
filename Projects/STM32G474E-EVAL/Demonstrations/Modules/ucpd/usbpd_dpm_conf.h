@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics International N.V.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics International N.V.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -32,6 +32,7 @@
 #include "usbpd_dpm_user.h"
 #if defined(_GUI_INTERFACE)
 #include "usbpd_gui_memmap.h"
+#include "gui_api.h"
 #endif /* _GUI_INTERFACE */
 
 /* Define   ------------------------------------------------------------------*/
@@ -122,6 +123,7 @@ USBPD_SettingsTypeDef DPM_Settings[USBPD_PORT_COUNT] =
 #else
       .Is_FirmUpdateRequest_Supported   = USBPD_FALSE,    /*!< Firmware update response message supported by PE */
 #endif /* _FWUPD */
+      .Is_SnkCapaExt_Supported          = USBPD_FALSE,     /*!< Sink_Capabilities_Extended message supported or not by DPM */
     },
 #else
     .reserved = 0,                              /* uint32_t reserved:16;                                   */
@@ -132,6 +134,9 @@ USBPD_SettingsTypeDef DPM_Settings[USBPD_PORT_COUNT] =
 };
 
 
+/* USER CODE BEGIN Variable */
+/* Section where Variable can be added */
+#if !defined(_GUI_INTERFACE)
 USBPD_USER_SettingsTypeDef DPM_USER_Settings[USBPD_PORT_COUNT] =
 {
   {
@@ -174,6 +179,38 @@ USBPD_USER_SettingsTypeDef DPM_USER_Settings[USBPD_PORT_COUNT] =
         .SourcePDP = (uint8_t)USBPD_PDP_SRC_IN_WATTS,       /*!< Source PDP  5V*3A                                    */
       },
 #endif /* _SRC_CAPA_EXT && (_SRC || _DRP) */
+#if _SNK_CAPA_EXT && (defined(_SNK)||defined(_DRP))
+    .DPM_SNKExtendedCapa =                        /*!< SRC Extended Capability           */
+      {
+        .VID                = USBPD_VID, /*!< Vendor ID (assigned by the USB-IF)                             */
+        .PID                = USBPD_PID, /*!< Product ID (assigned by the manufacturer)                      */
+        .XID                = USBPD_XID, /*!< Value provided by the USB-IF assigned to the product           */
+        .FW_revision        = 1,         /*!< Firmware version number                                        */
+        .HW_revision        = 2,         /*!< Hardware version number                                        */
+        .SKEDB_Version      = USBPD_SKEDB_VERSION_1P0, /*!< SKEDB Version (not the specification Version)
+                                                            based on @ref USBPD_SKEDB_VERSION                */
+        .LoadStep           = USBPD_SKEDB_LOADSTEP_150MA, /*!< Load Step based on @ref USBPD_SKEDB_LOADSTEP  */
+        .SinkLoadCharac.b   =          /*!< Sink Load Characteristics                */
+        {
+          .PercentOverload  = 0,         /*!< Percent overload in 10% increments Values higher than 25
+                                               (11001b) are clipped to 250%. 00000b is the default.    */
+          .OverloadPeriod   = 0,         /*!< Overload period in 20ms when bits 0-4 non-zero.          */
+          .DutyCycle        = 0,         /*!< Duty cycle in 5% increments when bits 0-4 are non-zero.  */
+          .VBusVoltageDrop  = 0,         /*!< Can tolerate VBUS Voltage drop.                          */
+        },
+        .Compliance         = 0,         /*!< Compliance based on combination of @ref USBPD_SKEDB_COMPLIANCE */
+        .Touchtemp          = USBPD_SKEDB_TOUCHTEMP_NA, /*!< Touch Temp based on @ref USBPD_SKEDB_TOUCHTEMP  */
+        .BatteryInfo        = 0,         /*!< Battery info                                                   */
+        .SinkModes          = 0,         /*!< Sink Modes based on combination of @ref USBPD_SKEDB_SINKMODES  */
+        .SinkMinimumPDP     = 0,         /*!< The Minimum PDP required by the Sink to operate without
+                                              consuming any power from its Battery(s) should it have one     */
+        .SinkOperationalPDP = 0,         /*!< The PDP the Sink requires to operate normally. For Sinks with
+                                              a Battery, it is the PDP Rating of the charger supplied with
+                                              it or recommended for it.                                      */
+        .SinkMaximumPDP     = 0,         /*!< The Maximum PDP the Sink can consume to operate and
+                                              charge its Battery(s) should it have one.                      */
+      },
+#endif /* _SNK_CAPA_EXT && (_SNK || _DRP) */
 #if _MANU_INFO
     .DPM_ManuInfoPort =                      /*!< Manufacturer information used for the port            */
     {
@@ -197,7 +234,9 @@ USBPD_USER_SettingsTypeDef DPM_USER_Settings[USBPD_PORT_COUNT] =
 #endif /* _GUI_INTERFACE */
   }
 };
+#endif /* !_GUI_INTERFACE */
 #endif /* !__USBPD_DPM_CORE_C */
+/* USER CODE END Variable */
 
 /* Exported define -----------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/

@@ -16,7 +16,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -58,11 +58,12 @@
   */
 
 #if !defined (STM32G431xx) && !defined (STM32G441xx) && \
-    !defined (STM32G471xx) && !defined (STM32G473xx) && !defined (STM32G474xx) && !defined (STM32G484xx) && !defined (STM32GBK1CB)
+    !defined (STM32G471xx) && !defined (STM32G473xx) && !defined (STM32G474xx) && !defined (STM32G483xx) && !defined (STM32G484xx) && !defined (STM32GBK1CB)
   /* #define STM32G431xx */   /*!< STM32G431xx Devices */
   /* #define STM32G441xx */   /*!< STM32G441xx Devices */
   /* #define STM32G471xx */   /*!< STM32G471xx Devices */
   /* #define STM32G473xx */   /*!< STM32G473xx Devices */
+  /* #define STM32G483xx */   /*!< STM32G483xx Devices */
   /* #define STM32G474xx */   /*!< STM32G474xx Devices */
   /* #define STM32G484xx */   /*!< STM32G484xx Devices */
   /* #define STM32GBK1CB */   /*!< STM32GBK1CB Devices */
@@ -84,7 +85,7 @@
   * @brief CMSIS Device version number $VERSION$
   */
 #define __STM32G4_CMSIS_VERSION_MAIN   (0x01U) /*!< [31:24] main version */
-#define __STM32G4_CMSIS_VERSION_SUB1   (0x00U) /*!< [23:16] sub1 version */
+#define __STM32G4_CMSIS_VERSION_SUB1   (0x01U) /*!< [23:16] sub1 version */
 #define __STM32G4_CMSIS_VERSION_SUB2   (0x00U) /*!< [15:8]  sub2 version */
 #define __STM32G4_CMSIS_VERSION_RC     (0x00U) /*!< [7:0]  release candidate */
 #define __STM32G4_CMSIS_VERSION        ((__STM32G4_CMSIS_VERSION_MAIN << 24)\
@@ -108,6 +109,8 @@
   #include "stm32g471xx.h"
 #elif defined(STM32G473xx)
   #include "stm32g473xx.h"
+#elif defined(STM32G483xx)
+  #include "stm32g483xx.h"
 #elif defined(STM32G474xx)
   #include "stm32g474xx.h"
 #elif defined(STM32G484xx)

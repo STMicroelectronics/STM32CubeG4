@@ -9,7 +9,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -104,6 +104,7 @@ int main(void)
 {
   /* USER CODE BEGIN 1 */
   /* USER CODE END 1 */
+  
 
   /* MCU Configuration--------------------------------------------------------*/
 
@@ -312,10 +313,16 @@ static void MX_RTC_Init(void)
   LL_EXTI_EnableRisingTrig_0_31(LL_EXTI_LINE_19);
 
   /* USER CODE END RTC_Init 1 */
+  /** Initialize RTC and set the Time and Date 
+  */
   RTC_InitStruct.HourFormat = LL_RTC_HOURFORMAT_AMPM;
   RTC_InitStruct.AsynchPrescaler = RTC_ASYNCH_PREDIV;
   RTC_InitStruct.SynchPrescaler = RTC_SYNCH_PREDIV;
   LL_RTC_Init(RTC, &RTC_InitStruct);
+  /** Initialize RTC and set the Time and Date 
+  */
+  if(LL_RTC_BKP_GetRegister(RTC,LL_RTC_BKP_DR0) != 0x32F2){
+  
   RTC_TimeStruct.TimeFormat = LL_RTC_TIME_FORMAT_AM_OR_24;
   RTC_TimeStruct.Hours = 0x11;
   RTC_TimeStruct.Minutes = 0x59;
@@ -328,6 +335,8 @@ static void MX_RTC_Init(void)
   RTC_DateStruct.Year = 0x16;
 
   LL_RTC_DATE_Init(RTC, LL_RTC_FORMAT_BCD, &RTC_DateStruct);
+    LL_RTC_BKP_SetRegister(RTC,LL_RTC_BKP_DR0,0x32F2);
+  }
   /* USER CODE BEGIN RTC_Init 2 */
 
   /* Enable RTC registers write protection */

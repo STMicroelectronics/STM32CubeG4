@@ -1,4 +1,4 @@
-﻿/**
+/**
   @page RTC_Tamper_Init RTC example
   
   @verbatim
@@ -36,7 +36,7 @@ The associated firmware performs the following:
 2. It writes the data to all RTC Backup data registers, then check whether the
    data were correctly written. If yes, LED2 toggles with a fast period,
    otherwise LED2 toggles with a period of 1s.
-3. Applying a low level on the tamper 1 (pin PC13)
+3. Applying a low level on the tamper 1(pin PC13 (connected to pin 23 in CN7))
    the RTC backup data registers are reset and the Tamper interrupt is generated. 
    The corresponding ISR then checks whether the RTC Backup data registers are cleared.
    If yes LED2 turns on, otherwise LED2 toggles with a period of 1s.

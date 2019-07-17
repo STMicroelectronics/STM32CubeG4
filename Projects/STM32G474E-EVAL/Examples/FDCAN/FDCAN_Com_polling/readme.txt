@@ -9,7 +9,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -71,6 +71,7 @@ FDCAN, Polling, FD, BRS, TxDelay
 
 @par Directory contents
 
+  - FDCAN/FDCAN_Com_polling/Inc/stm32g474e_eval_conf.h     BSP configuration file
   - FDCAN/FDCAN_Loopback/Inc/stm32g4xx_hal_conf.h    HAL configuration file
   - FDCAN/FDCAN_Loopback/Inc/stm32g4xx_it.h          Header for stm32g4xx_it.c
   - FDCAN/FDCAN_Loopback/Inc/main.h                  Header for main.c module

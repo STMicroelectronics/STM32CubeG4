@@ -8,7 +8,7 @@
   * @brief   Description of the GPIO IO Toggle example.
   ******************************************************************************
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -42,6 +42,7 @@ System, GPIO, Input, Output, Alternate function, Push-pull, Toggle
 
 @par Directory contents 
 
+  - GPIO/GPIO_IOToggle/Inc/stm32g474e_eval_conf.h     BSP configuration file
   - GPIO/GPIO_IOToggle/Inc/stm32g4xx_hal_conf.h    HAL configuration file
   - GPIO/GPIO_IOToggle/Inc/stm32g4xx_it.h          Interrupt handlers header file
   - GPIO/GPIO_IOToggle/Inc/main.h                  Header for main.c module  

@@ -8,7 +8,7 @@
   * @brief   Description of the code execution from QSPI memory example.
   ******************************************************************************
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -48,6 +48,7 @@ Memory, QSPI, Erase, Write, Execute, Mapped
 
 @par Directory contents 
 
+  - QSPI/QSPI_ExecuteInPlace/Inc/stm32g474e_eval_conf.h     BSP configuration file
   - QSPI/QSPI_ExecuteInPlace/Inc/stm32g4xx_hal_conf.h HAL configuration file
   - QSPI/QSPI_ExecuteInPlace/Inc/stm32g4xx_it.h       Interrupt handlers header file
   - QSPI/QSPI_ExecuteInPlace/Inc/main.h               Header for main.c module  

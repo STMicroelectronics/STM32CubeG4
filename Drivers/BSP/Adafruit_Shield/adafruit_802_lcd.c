@@ -81,9 +81,9 @@
 /** @defgroup ADAFRUIT_802_LCD_Private_Variables LCD Private Variables
   * @{
   */
-static void                 *CompObj = NULL;
-static LCD_Drv_t            *LcdDrv = NULL;
-ADAFRUIT_802_LCD_Ctx_t      LcdCtx[LCD_INSTANCES_NBR];
+static void                 *Lcd_CompObj = NULL;
+static LCD_Drv_t            *Lcd_Drv = NULL;
+ADAFRUIT_802_LCD_Ctx_t      Lcd_Ctx[LCD_INSTANCES_NBR];
 
 /**
   * @}
@@ -139,7 +139,6 @@ static int32_t LCD_IO_SendData(uint8_t *pData, uint32_t Length);
 int32_t ADAFRUIT_802_LCD_Init(uint32_t Instance, uint32_t Orientation)
 {
   int32_t ret;
-  uint32_t x_size, y_size;
 
   if((Orientation > LCD_ORIENTATION_LANDSCAPE_ROT180) || (Instance >= LCD_INSTANCES_NBR))
   {
@@ -151,18 +150,18 @@ int32_t ADAFRUIT_802_LCD_Init(uint32_t Instance, uint32_t Orientation)
     {
       ret = BSP_ERROR_UNKNOWN_COMPONENT;
     }
-    else if(ADAFRUIT_802_LCD_GetXSize(Instance, &x_size) != BSP_ERROR_NONE)
+    else if(ADAFRUIT_802_LCD_GetXSize(Instance, &Lcd_Ctx[Instance].XSize) != BSP_ERROR_NONE)
     {
       ret = BSP_ERROR_COMPONENT_FAILURE;
     }
-    else if(ADAFRUIT_802_LCD_GetYSize(Instance, &y_size) != BSP_ERROR_NONE)
+    else if(ADAFRUIT_802_LCD_GetYSize(Instance, &Lcd_Ctx[Instance].YSize) != BSP_ERROR_NONE)
     {
       ret = BSP_ERROR_COMPONENT_FAILURE;
     }
     else
     {
       /* Clear the LCD screen with white color */
-      ret = ADAFRUIT_802_LCD_FillRect(Instance, 0U, 0U, x_size, y_size, 0xFFFFFFFFU);
+      ret = ADAFRUIT_802_LCD_FillRect(Instance, 0U, 0U, Lcd_Ctx[Instance].XSize, Lcd_Ctx[Instance].YSize, 0xFFFFFFFFU);
     }
   }
   return ret;
@@ -228,7 +227,7 @@ int32_t ADAFRUIT_802_LCD_GetXSize(uint32_t Instance, uint32_t *XSize)
   }
   else
   {
-    if(LcdDrv->GetXSize(CompObj, XSize) != BSP_ERROR_NONE)
+    if(Lcd_Drv->GetXSize(Lcd_CompObj, XSize) < 0)
     {
       ret = BSP_ERROR_COMPONENT_FAILURE;
     }
@@ -253,7 +252,7 @@ int32_t ADAFRUIT_802_LCD_GetYSize(uint32_t Instance, uint32_t *YSize)
   }
   else
   {
-    if(LcdDrv->GetYSize(CompObj, YSize) != BSP_ERROR_NONE)
+    if(Lcd_Drv->GetYSize(Lcd_CompObj, YSize) < 0)
     {
       ret = BSP_ERROR_COMPONENT_FAILURE;
     }
@@ -291,9 +290,9 @@ int32_t ADAFRUIT_802_LCD_WritePixel(uint32_t Instance, uint32_t Xpos, uint32_t Y
   {
     ret = BSP_ERROR_WRONG_PARAM;
   }
-  else if(LcdDrv->SetPixel != NULL)
+  else if(Lcd_Drv->SetPixel != NULL)
   {
-    if(LcdDrv->SetPixel(CompObj, Xpos, Ypos, Color) != BSP_ERROR_NONE)
+    if(Lcd_Drv->SetPixel(Lcd_CompObj, Xpos, Ypos, Color) < 0)
     {
       ret = BSP_ERROR_COMPONENT_FAILURE;
     }
@@ -323,9 +322,9 @@ int32_t ADAFRUIT_802_LCD_DrawHLine(uint32_t Instance, uint32_t Xpos, uint32_t Yp
   {
     ret = BSP_ERROR_WRONG_PARAM;
   }
-  else if(LcdDrv->DrawHLine != NULL)
+  else if(Lcd_Drv->DrawHLine != NULL)
   {
-    if(LcdDrv->DrawHLine(CompObj, Xpos, Ypos, Length, Color) != BSP_ERROR_NONE)
+    if(Lcd_Drv->DrawHLine(Lcd_CompObj, Xpos, Ypos, Length, Color) < 0)
     {
       ret = BSP_ERROR_COMPONENT_FAILURE;
     }
@@ -355,9 +354,9 @@ int32_t ADAFRUIT_802_LCD_DrawVLine(uint32_t Instance, uint32_t Xpos, uint32_t Yp
   {
     ret = BSP_ERROR_WRONG_PARAM;
   }
-  else if(LcdDrv->DrawVLine != NULL)
+  else if(Lcd_Drv->DrawVLine != NULL)
   {
-    if(LcdDrv->DrawVLine(CompObj, Xpos, Ypos, Length, Color) != BSP_ERROR_NONE)
+    if(Lcd_Drv->DrawVLine(Lcd_CompObj, Xpos, Ypos, Length, Color) < 0)
     {
       ret = BSP_ERROR_COMPONENT_FAILURE;
     }
@@ -386,9 +385,9 @@ int32_t ADAFRUIT_802_LCD_DrawBitmap(uint32_t Instance, uint32_t Xpos, uint32_t Y
   {
     ret = BSP_ERROR_WRONG_PARAM;
   }
-  else if(LcdDrv->DrawBitmap != NULL)
+  else if(Lcd_Drv->DrawBitmap != NULL)
   {
-    if(LcdDrv->DrawBitmap(CompObj, Xpos, Ypos, pBmp) != BSP_ERROR_NONE)
+    if(Lcd_Drv->DrawBitmap(Lcd_CompObj, Xpos, Ypos, pBmp) < 0)
     {
       ret = BSP_ERROR_COMPONENT_FAILURE;
     }
@@ -419,10 +418,10 @@ int32_t ADAFRUIT_802_LCD_FillRGBRect(uint32_t Instance, uint32_t Xpos, uint32_t 
   {
     ret = BSP_ERROR_WRONG_PARAM;
   }
-  else if(LcdDrv->FillRGBRect != NULL)
+  else if(Lcd_Drv->FillRGBRect != NULL)
   {
     /* Draw the horizontal line on LCD */
-    if (LcdDrv->FillRGBRect(CompObj, Xpos, Ypos, pData, Width, Height) != BSP_ERROR_NONE)
+    if (Lcd_Drv->FillRGBRect(Lcd_CompObj, Xpos, Ypos, pData, Width, Height) < 0)
     {
       ret = BSP_ERROR_COMPONENT_FAILURE;
     }
@@ -453,9 +452,9 @@ int32_t ADAFRUIT_802_LCD_FillRect(uint32_t Instance, uint32_t Xpos, uint32_t Ypo
   {
     ret = BSP_ERROR_WRONG_PARAM;
   }
-  else if(LcdDrv->FillRect != NULL)
+  else if(Lcd_Drv->FillRect != NULL)
   {
-    if(LcdDrv->FillRect(CompObj, Xpos, Ypos, Width, Height, Color) != BSP_ERROR_NONE)
+    if(Lcd_Drv->FillRect(Lcd_CompObj, Xpos, Ypos, Width, Height, Color) < 0)
     {
       ret = BSP_ERROR_COMPONENT_FAILURE;
     }
@@ -481,9 +480,9 @@ int32_t ADAFRUIT_802_LCD_DisplayOn(uint32_t Instance)
   {
     ret = BSP_ERROR_WRONG_PARAM;
   }
-  else if(LcdDrv->DisplayOn != NULL)
+  else if(Lcd_Drv->DisplayOn != NULL)
   {
-    if(LcdDrv->DisplayOn(CompObj) != BSP_ERROR_NONE)
+    if(Lcd_Drv->DisplayOn(Lcd_CompObj) < 0)
     {
       ret = BSP_ERROR_COMPONENT_FAILURE;
     }
@@ -509,9 +508,9 @@ int32_t ADAFRUIT_802_LCD_DisplayOff(uint32_t Instance)
   {
     ret = BSP_ERROR_WRONG_PARAM;
   }
-  else if(LcdDrv->DisplayOff != NULL)
+  else if(Lcd_Drv->DisplayOff != NULL)
   {
-    if(LcdDrv->DisplayOff(CompObj) != BSP_ERROR_NONE)
+    if(Lcd_Drv->DisplayOff(Lcd_CompObj) < 0)
     {
       ret = BSP_ERROR_COMPONENT_FAILURE;
     }
@@ -539,9 +538,9 @@ int32_t ADAFRUIT_802_LCD_SetBrightness(uint32_t Instance, uint32_t Brightness)
   {
     ret = BSP_ERROR_WRONG_PARAM;
   }
-  else if(LcdDrv->SetBrightness != NULL)
+  else if(Lcd_Drv->SetBrightness != NULL)
   {
-    if(LcdDrv->SetBrightness(CompObj, Brightness) != BSP_ERROR_NONE)
+    if(Lcd_Drv->SetBrightness(Lcd_CompObj, Brightness) < 0)
     {
       ret = BSP_ERROR_COMPONENT_FAILURE;
     }
@@ -568,9 +567,9 @@ int32_t ADAFRUIT_802_LCD_GetBrightness(uint32_t Instance, uint32_t *Brightness)
   {
     ret = BSP_ERROR_WRONG_PARAM;
   }
-  else if(LcdDrv->GetBrightness != NULL)
+  else if(Lcd_Drv->GetBrightness != NULL)
   {
-    if(LcdDrv->GetBrightness(CompObj, Brightness) != BSP_ERROR_NONE)
+    if(Lcd_Drv->GetBrightness(Lcd_CompObj, Brightness) < 0)
     {
       ret = BSP_ERROR_COMPONENT_FAILURE;
     }
@@ -616,10 +615,10 @@ static int32_t ST7735_Probe(uint32_t Orientation)
   }
   else
   {
-    CompObj = &ST7735Obj;
+    Lcd_CompObj = &ST7735Obj;
 
-    LcdDrv = (LCD_Drv_t *) (void*)&ST7735_LCD_Driver;
-    if(LcdDrv->Init(CompObj, ST7735_FORMAT_DEFAULT, Orientation) != ST7735_OK)
+    Lcd_Drv = (LCD_Drv_t *) &ST7735_LCD_Driver;
+    if(Lcd_Drv->Init(Lcd_CompObj, ST7735_FORMAT_DEFAULT, Orientation) != ST7735_OK)
     {
       ret = BSP_ERROR_COMPONENT_FAILURE;
     }

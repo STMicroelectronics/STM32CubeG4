@@ -1,208 +1,196 @@
 <!DOCTYPE html>
-<html><head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-
-<title>Release Notes for STM32 USB-C Power Delivery Core Stack Library</title><style>
-div.Section1 {
-page: Section1;
-font-family: Arial,Helvetica,sans-serif;
-}
-h1 {
-font-size: 24pt;
-font-weight: bold;
-font-family: Arial,Helvetica,sans-serif;
-text-align: center;
-color: #3366ff;
-}
-h2 {
-margin: 12pt 0in 3pt;
-page-break-after: avoid;
-font-weight: bold;
-font-family: Arial,Helvetica,sans-serif;
-background-color: #3366ff;
-color: white;
-padding-left: 5px;
-font-size: 16pt;
-}
-h3 {
-margin-left: 0in;
-font-weight: bold;
-font-family: Arial,Helvetica,sans-serif;
-background-color: #3366ff;
-width: 200px;
-margin-right: 500pt;
-color: white;
-padding-left: 5px;
-padding-top: 2px;
-padding-bottom: 2px;
-font-size: 12pt;
-}
-h4 {
-font-family: Arial,Helvetica,sans-serif;
-font-weight: bold;
-text-decoration: underline;
-font-size: 12pt;
-}
-p {
-margin: 0px 0px 0px 0in;
-font-family: Arial,Helvetica,sans-serif;
-padding-top: 3px;
-padding-bottom: 3px;
-font-size: 12pt;
-}
-ul {
-font-family: Arial,Helvetica,sans-serif;
-margin-top: 3px;
-margin-bottom: 3px;
-font-size: 10pt;
-}
-caption {
-margin-top: 10px;
-font-family: Arial,Helvetica,sans-serif;
-font-size: 11pt;
-}
-hr {
-width: 100%;
-}
-.guidance {
-background-color: #e5b8b7;
-font-style: italic;
-font-family: Arial,Helvetica,sans-serif;
-padding-top: 3px;
-padding-bottom: 3px;
-margin-top: 3px;
-margin-bottom: 3px;
-font-size: 10pt;
-}
-.guidance_title {
-font-style: normal;
-font-weight: bold;
-text-decoration: underline;
-font-family: Arial,Helvetica,sans-serif;
-font-size: 10pt;
-}
-.tickets {
-border: 1pt solid #9cc2e5;
-font-family: Arial,Helvetica,sans-serif;
-margin-bottom: 3px;
-margin-top: 3px;
-font-size: 10pt;
-}
-.tickets th {
-border: 1pt solid #9cc2e5;
-font-size: 12pt;
-background-color: #39a9dc;
-color: white;
-text-align: center;
-}
-.tickets td {
-border: 1pt solid #9cc2e5;
-min-height: 32px;
-}
-tr:nth-child(even) {background-color: #cee2f2;}
-tr:nth-child(even) {background-color: #e8f1f9;}
-.topic1 {
-margin-top: 3px;
-margin-bottom: 3px;
-margin-left: 40px;
-}
-.topic2 {
-margin-top: 3px;
-margin-bottom: 3px;
-}
-.topic3 {
-margin-top: 3px;
-margin-bottom: 3px;
-margin-left: 20px;
-}
-#purpose {
-margin-top: 3px;
-margin-bottom: 3px;
-}
-#identification {
-margin-top: 3px;
-margin-bottom: 3px;
-}
-</style></head>
-<body link="blue" vlink="blue">
-<script type="text/javascript">
-var toggle_hist_disp = true;
-function toggle_history()
-{
-if (toggle_hist_disp)
-{
-toggle_hist_disp = false;
-var filter_off_text = document.createTextNode("Hide History");
-document.getElementById('filter_hist').innerHTML = "";
-document.getElementById('filter_hist').appendChild(filter_off_text);
-document.getElementById("history").hidden = false;
-}
-else
-{
-toggle_hist_disp = true;
-var filter_on_text = document.createTextNode("Show History");
-document.getElementById('filter_hist').innerHTML = "";
-document.getElementById('filter_hist').appendChild(filter_on_text);
-document.getElementById("history").hidden = true;
-}
-}</script><small><a href="../../../../../Release_Notes.html">Back to Release page</a></small>
-<div style="width: 1034px;" class="Section1">
-
-<div id="header">
-<h1>Release
-Notes for&nbsp;<span style="background-color: white;">STM32 USB-C Power Delivery G4 Device Driver</span></h1>
-<p style="text-align: center;">Copyright 2018
-STMicroelectronics</p>
-<p style="text-align: center;"><img style="width: 104px; height: 77px;" id="st_logo" alt="&lt;ST logo&gt; image" src="../../../../../_htmresc/st_logo.png"></p>
-</div>
-<div id="license" class="topic1">
-<h2>License</h2>
-<p>This software component is licensed by ST under Ultimate Liberty
-license SLA0044, the "License"; You may not use this component except
-in compliance with the License. You may obtain a copy of the License at:</p>
-<p style="text-align: center; color: white;"><a href="http://www.st.com/SLA0044" target="_blank">http://www.st.com/SLA0044</a></p>
-</div>
-
-<div id="release_container" class="topic1">
-<div class="topic2" id="identification">
-<h3>2.7.0 / 25-Mar-2019</h3>
-</div><div class="topic3" id="contents"><h4>Contents</h4><ul type="disc"><li class="MsoNormal"><span style="font-size: 10pt; font-family: &quot;Arial&quot;,sans-serif;" lang="EN-US">Removal of usbpd_pwr.c/.h files : </span>BSP PWR functions defined at Device level are now expected to be provided&nbsp;by STM32G474E_EVAL BSP component.</li><li class="MsoNormal">Alignment on APIs, following latest updates done in all STM32xx USPBD Devices components<span style="font-size: 10pt; font-family: &quot;Arial&quot;,sans-serif;" lang="EN-US">.</span></li><li class="MsoNormal"><span style="font-size: 10pt; font-family: &quot;Arial&quot;,sans-serif;" lang="EN-US">Update of usbpd_devices_conf_template.h file.<br></span></li></ul><br></div>
-</div>
-<div style="margin-left: 40px;"><button id="filter_hist" onclick="toggle_history()">Show
-History</button><br>
-</div>
-<div id="history" class="topic1" hidden="">
-<h2>Update History</h2>
-<br>
-
-<div id="release_container" class="topic1">
-
-<div class="topic2" id="identification">
-<h3>2.6.0 / 23-Jan-2019</h3><div class="topic3" id="contents"><h4>Contents</h4><ul type="disc"><li class="MsoNormal"><span style="font-size: 10pt; font-family: &quot;Arial&quot;,sans-serif;" lang="EN-US">Editorial
-     modifications (Astyle)</span></li><li class="MsoNormal"><span style="font-size: 10pt; font-family: &quot;Arial&quot;,sans-serif;" lang="EN-US"></span><span style="font-size: 10pt; font-family: &quot;Arial&quot;,sans-serif;" lang="EN-US">Update
-     in Discharge handling for MB1397 when VBUS is not supplied.</span></li></ul></div><h3>2.5.0 / 10-Dec.-2018</h3><div class="topic3" id="contents"><h4>Contents</h4>
-<ul><li>Correction link with renaming toogle by toggle</li></ul>
-<ul><li>Wrong parameter for errorrecovery</li></ul>
-</div><h3>2.4.0 / 15-November-2018</h3>
-<div class="topic3" id="contents"><h4>Contents</h4>
-<ul><li>First official version for STM32G4xx device (source code available)</li></ul>
-<ul><li>Ready for cubemx integration</li></ul>
-<ul><li>Remove BSP reference, now managed trough the header file usbpd_devices_conf.h</li></ul>
-<ul><li>Update for errorrecovery managment</li></ul>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Release Notes for STM32 USB-C Power Delivery G4 Device Driver</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <link rel="stylesheet" href="_htmresc/mini-st.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<div class="row">
+<div class="col-sm-12 col-lg-4">
+<div class="card fluid">
+<div class="sectione dark">
+<center>
+<h1 id="release-notes-for-stm32-usb-c-power-delivery-g4-device-driver"><small>Release Notes for</small> STM32 USB-C Power Delivery G4 Device Driver</h1>
+<p>Copyright © 2019 STMicroelectronics<br />
+</p>
+<a href="https://www.st.com" class="logo"><img src="_htmresc/st_logo.png" alt="ST logo" /></a>
+</center>
 </div>
 </div>
-<div id="release_container" class="topic1">
+<h1 id="license">License</h1>
+<p>This software component is licensed by ST under Ultimate Liberty license SLA0044, the "License"; You may not use this component except in compliance with the License. You may obtain a copy of the License at:</p>
+<p><a href="http://www.st.com/SLA0044">http://www.st.com/SLA0044</a></p>
+<h1 id="purpose">Purpose</h1>
+<p>The USB-PD device driver provides a set of functions to manage the physical layer (i.e. low level of the type C state machine and low level of message transport). This includes :</p>
+<ul>
+<li><p>Type C state machine: SRC, SNK or DRP</p></li>
+<li><p>Physical layer : message handling SOP, SOP’, SOP’’, HARDRESET, …</p></li>
+<li><p>Timer server to handle GOODCRC, PRL repetition timing</p></li>
+</ul>
+<p>The USB-PD library is developed following the Universal Serial Bus Power Delivery Specification Revision 3.0, V1.2 (June 06, 2018) and Universal Serial Bus type-C Cable and Connector Specification, Revision 1.3 (July 14, 2017).</p>
 </div>
-
-<br>
-<br>
+<div class="col-sm-12 col-lg-8">
+<h1 id="update-history">Update History</h1>
+<div class="collapse">
+<input type="checkbox" id="collapse-section6" checked aria-hidden="true"> <label for="collapse-section6" aria-hidden="true">V2.8.0 / 06-May-2019</label>
+<div>
+<h2 id="main-changes">Main Changes</h2>
+<h3 id="maintenance-release">Maintenance release</h3>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Headline</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Update of G4 USBPD device following new version of BSP APIs for USBPD Power management (BSP V2)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Update of Device state state machines : definition of new functions for each Attached and AttachedWait states</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Addition of support of G4 Discovery board B-G474E-DPOW1 (MB1428) in usbpd\_devices\_conf\_template.h file.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Low Power consumption specific code has been added under compilation switch (Not enabled yet)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Update of Retry timer value (945 to 905 microsecs)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="known-limitations">Known Limitations</h2>
+<p>Outstanding bugs list : None</p>
+<p>Requirements not met or planned in a forthcoming release : None</p>
+<h2 id="development-toolchains-and-compilers">Development Toolchains and Compilers</h2>
+<ul>
+<li>IAR Embedded Workbench for ARM (EWARM) toolchain V8.20.2</li>
+<li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.25</li>
+<li>System Workbench STM32 (SW4STM32) toolchain V2.7.2</li>
+</ul>
+<h2 id="supported-devices-and-boards">Supported Devices and boards</h2>
+<p>All STM32G4xx devices embedding USBPD IP</p>
+<h2 id="backward-compatibility">Backward compatibility</h2>
+<p>No compatibility break with previous version</p>
+<h2 id="dependencies">Dependencies</h2>
+<p>This software release is compatible with USB-C Power Delivery Core Stack Library v2.6.0</p>
 </div>
-<div id="product_doc" class="topic1">
-<hr>
-<p style="text-align: center;">For complete
-documentation on&nbsp;<span style="background-color: white;">STM32 Microcontrollers</span>, visit: <span style="background-color: white;"><a href="http://www.st.com/STM32" target="_blank">www.st.com/STM32</a></span></p>
-
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section5" aria-hidden="true"> <label for="collapse-section5" aria-hidden="true">V2.7.0 / 25-Mar-2019</label>
+<div>
+<h2 id="main-changes-1">Main Changes</h2>
+<h3 id="maintenance-release-1">Maintenance release</h3>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Headline</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Removal of usbpd_pwr.c/.h files : BSP PWR functions defined at Device level are now expected to be provided by STM32G474E EVAL BSP component.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Alignment on APIs, following latest updates done in all STM32xx</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">USPBD Devices components</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Update of usbpd_devices_conf_template.h file.</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
-</div></body></html>
+<div class="collapse">
+<input type="checkbox" id="collapse-section4" aria-hidden="true"> <label for="collapse-section4" aria-hidden="true">V2.6.0 / 23-Jan-2019</label>
+<div>
+<h2 id="main-changes-2">Main Changes</h2>
+<h3 id="maintenance-release-2">Maintenance release</h3>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Headline</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Editorial modifications (Astyle)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Update in Discharge handling for MB1397 when VBUS is not supplied</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section3" aria-hidden="true"> <label for="collapse-section3" aria-hidden="true">V2.5.0 / 10-Dec-2018</label>
+<div>
+<h2 id="main-changes-3">Main Changes</h2>
+<h3 id="maintenance-release-3">Maintenance release</h3>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Headline</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Editorial correction (renaming toogle by toggle)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section2" aria-hidden="true"> <label for="collapse-section2" aria-hidden="true">V2.4.0 / 15-Nov-2018</label>
+<div>
+<h2 id="main-changes-4">Main Changes</h2>
+<h3 id="initial-release">Initial release</h3>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Headline</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">First official version for STM32G4xx device (source code available)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ready for cubemx integration</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Remove BSP reference, now managed trough the header file usbpd_devices_conf.h</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Update for errorrecovery management</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<footer class="sticky">
+<p>For complete documentation on <strong>STM32 32-bit Arm Cortex MCUs</strong>, visit: <a href="http://www.st.com/STM32">http://www.st.com/STM32</a></p>
+This release note uses up to date web standards and, for this reason, should not be opened with Internet Explorer but preferably with popular browsers such as Google Chrome, Mozilla Firefox, Opera or Microsoft Edge.
+</footer>
+</body>
+</html>

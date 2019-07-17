@@ -13,11 +13,10 @@
 ;*                        calls main()).
 ;*                      After Reset the Cortex-M4 processor is in Thread mode,
 ;*                      priority is Privileged, and the Stack is set to Main.
-;* <<< Use Configuration Wizard in Context Menu >>>
 ;********************************************************************************
 ;* @attention
 ;*
-;* <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
+;* <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
 ;* All rights reserved.</center></h2>
 ;*
 ;* This software component is licensed by ST under BSD 3-Clause license,
@@ -26,6 +25,8 @@
 ;*                        opensource.org/licenses/BSD-3-Clause
 ;*
 ;*******************************************************************************
+;* <<< Use Configuration Wizard in Context Menu >>>
+;
 ; Amount of memory (in bytes) allocated for Stack
 ; Tailor this value to your application needs
 ; <h> Stack Configuration

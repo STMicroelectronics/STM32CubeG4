@@ -8,7 +8,7 @@
   * @brief   Description of the SAI audio play example.
   ******************************************************************************
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -42,6 +42,7 @@ Once started, LED1 is toggling on STM32G474E-EVAL Rev B.
 
 @par Directory contents
 
+  - SAI/SAI_AudioPlay/Inc/stm32g474e_eval_conf.h     BSP configuration file
   - SAI/SAI_AudioPlay/Src/main.c                  Main program
   - SAI/SAI_AudioPlay/Src/system_stm32g4xx.c      STM32G4xx system source file
   - SAI/SAI_AudioPlay/Src/stm32g4xx_it.c          Interrupt handlers

@@ -72,7 +72,7 @@
 /*---------- -----------*/
 #define USBD_MAX_STR_DESC_SIZ     48U
 /*---------- -----------*/
-#define USBD_SUPPORT_USER_STRING     1U
+#define USBD_SUPPORT_USER_STRING_DESC     1U
 /*---------- -----------*/
 #define USBD_DEBUG_LEVEL     0U
 /*---------- -----------*/

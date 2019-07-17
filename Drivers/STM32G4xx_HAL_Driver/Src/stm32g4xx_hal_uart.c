@@ -142,7 +142,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -1015,13 +1015,16 @@ HAL_StatusTypeDef HAL_UART_UnRegisterCallback(UART_HandleTypeDef *huart, HAL_UAR
 
 /**
   * @brief Send an amount of data in blocking mode.
+  * @note   When UART parity is not enabled (PCE = 0), and Word Length is configured to 9 bits (M1-M0 = 01),
+  *         the sent data is handled as a set of u16. In this case, Size must indicate the number
+  *         of u16 provided through pData.
   * @note When FIFO mode is enabled, writing a data in the TDR register adds one
   *       data to the TXFIFO. Write operations to the TDR register are performed
   *       when TXFNF flag is set. From hardware perspective, TXFNF flag and
   *       TXE are mapped on the same bit-field.
   * @param huart   UART handle.
-  * @param pData   Pointer to data buffer.
-  * @param Size    Amount of data to be sent.
+  * @param pData   Pointer to data buffer (u8 or u16 data elements).
+  * @param Size    Amount of data elements (u8 or u16) to be sent.
   * @param Timeout Timeout duration.
   * @retval HAL status
   */
@@ -1101,13 +1104,16 @@ HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, uint8_t *pData, u
 
 /**
   * @brief Receive an amount of data in blocking mode.
+  * @note   When UART parity is not enabled (PCE = 0), and Word Length is configured to 9 bits (M1-M0 = 01),
+  *         the received data is handled as a set of u16. In this case, Size must indicate the number
+  *         of u16 available through pData.
   * @note When FIFO mode is enabled, the RXFNE flag is set as long as the RXFIFO
   *       is not empty. Read operations from the RDR register are performed when
   *       RXFNE flag is set. From hardware perspective, RXFNE flag and
   *       RXNE are mapped on the same bit-field.
   * @param huart   UART handle.
-  * @param pData   Pointer to data buffer.
-  * @param Size    Amount of data to be received.
+  * @param pData   Pointer to data buffer (u8 or u16 data elements).
+  * @param Size    Amount of data elements (u8 or u16) to be received.
   * @param Timeout Timeout duration.
   * @retval HAL status
   */
@@ -1188,9 +1194,12 @@ HAL_StatusTypeDef HAL_UART_Receive(UART_HandleTypeDef *huart, uint8_t *pData, ui
 
 /**
   * @brief Send an amount of data in interrupt mode.
+  * @note   When UART parity is not enabled (PCE = 0), and Word Length is configured to 9 bits (M1-M0 = 01),
+  *         the sent data is handled as a set of u16. In this case, Size must indicate the number
+  *         of u16 provided through pData.
   * @param huart UART handle.
-  * @param pData Pointer to data buffer.
-  * @param Size  Amount of data to be sent.
+  * @param pData Pointer to data buffer (u8 or u16 data elements).
+  * @param Size  Amount of data elements (u8 or u16) to be sent.
   * @retval HAL status
   */
 HAL_StatusTypeDef HAL_UART_Transmit_IT(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size)
@@ -1259,9 +1268,12 @@ HAL_StatusTypeDef HAL_UART_Transmit_IT(UART_HandleTypeDef *huart, uint8_t *pData
 
 /**
   * @brief Receive an amount of data in interrupt mode.
+  * @note   When UART parity is not enabled (PCE = 0), and Word Length is configured to 9 bits (M1-M0 = 01),
+  *         the received data is handled as a set of u16. In this case, Size must indicate the number
+  *         of u16 available through pData.
   * @param huart UART handle.
-  * @param pData Pointer to data buffer.
-  * @param Size  Amount of data to be received.
+  * @param pData Pointer to data buffer (u8 or u16 data elements).
+  * @param Size  Amount of data elements (u8 or u16) to be received.
   * @retval HAL status
   */
 HAL_StatusTypeDef HAL_UART_Receive_IT(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size)
@@ -1337,9 +1349,12 @@ HAL_StatusTypeDef HAL_UART_Receive_IT(UART_HandleTypeDef *huart, uint8_t *pData,
 
 /**
   * @brief Send an amount of data in DMA mode.
+  * @note   When UART parity is not enabled (PCE = 0), and Word Length is configured to 9 bits (M1-M0 = 01),
+  *         the sent data is handled as a set of u16. In this case, Size must indicate the number
+  *         of u16 provided through pData.
   * @param huart UART handle.
-  * @param pData Pointer to data buffer.
-  * @param Size  Amount of data to be sent.
+  * @param pData Pointer to data buffer (u8 or u16 data elements).
+  * @param Size  Amount of data elements (u8 or u16) to be sent.
   * @retval HAL status
   */
 HAL_StatusTypeDef HAL_UART_Transmit_DMA(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size)
@@ -1410,9 +1425,12 @@ HAL_StatusTypeDef HAL_UART_Transmit_DMA(UART_HandleTypeDef *huart, uint8_t *pDat
   * @brief Receive an amount of data in DMA mode.
   * @note   When the UART parity is enabled (PCE = 1), the received data contain
   *         the parity bit (MSB position).
+  * @note   When UART parity is not enabled (PCE = 0), and Word Length is configured to 9 bits (M1-M0 = 01),
+  *         the received data is handled as a set of u16. In this case, Size must indicate the number
+  *         of u16 available through pData.
   * @param huart UART handle.
-  * @param pData Pointer to data buffer.
-  * @param Size  Amount of data to be received.
+  * @param pData Pointer to data buffer (u8 or u16 data elements).
+  * @param Size  Amount of data elements (u8 or u16) to be received.
   * @retval HAL status
   */
 HAL_StatusTypeDef HAL_UART_Receive_DMA(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size)
@@ -2735,6 +2753,7 @@ HAL_StatusTypeDef UART_SetConfig(UART_HandleTypeDef *huart)
   uint32_t usartdiv                   = 0x00000000U;
   HAL_StatusTypeDef ret               = HAL_OK;
   uint32_t lpuart_ker_ck_pres         = 0x00000000U;
+  uint32_t pclk;
 
   /* Check the parameters */
   assert_param(IS_UART_BAUDRATE(huart->Init.BaudRate));
@@ -2811,7 +2830,6 @@ HAL_StatusTypeDef UART_SetConfig(UART_HandleTypeDef *huart)
       case UART_CLOCKSOURCE_LSE:
         lpuart_ker_ck_pres = ((uint32_t)LSE_VALUE / UART_GET_DIV_FACTOR(huart->Init.ClockPrescaler));
         break;
-      case UART_CLOCKSOURCE_UNDEFINED:
       default:
         ret = HAL_ERROR;
         break;
@@ -2831,18 +2849,19 @@ HAL_StatusTypeDef UART_SetConfig(UART_HandleTypeDef *huart)
         switch (clocksource)
         {
           case UART_CLOCKSOURCE_PCLK1:
-            usartdiv = (uint32_t)(UART_DIV_LPUART(HAL_RCC_GetPCLK1Freq(), huart->Init.BaudRate, huart->Init.ClockPrescaler));
+            pclk = HAL_RCC_GetPCLK1Freq();
+            usartdiv = (uint32_t)(UART_DIV_LPUART(pclk, huart->Init.BaudRate, huart->Init.ClockPrescaler));
             break;
           case UART_CLOCKSOURCE_HSI:
             usartdiv = (uint32_t)(UART_DIV_LPUART(HSI_VALUE, huart->Init.BaudRate, huart->Init.ClockPrescaler));
             break;
           case UART_CLOCKSOURCE_SYSCLK:
-            usartdiv = (uint32_t)(UART_DIV_LPUART(HAL_RCC_GetSysClockFreq(), huart->Init.BaudRate, huart->Init.ClockPrescaler));
+            pclk = HAL_RCC_GetSysClockFreq();
+            usartdiv = (uint32_t)(UART_DIV_LPUART(pclk, huart->Init.BaudRate, huart->Init.ClockPrescaler));
             break;
           case UART_CLOCKSOURCE_LSE:
             usartdiv = (uint32_t)(UART_DIV_LPUART(LSE_VALUE, huart->Init.BaudRate, huart->Init.ClockPrescaler));
             break;
-          case UART_CLOCKSOURCE_UNDEFINED:
           default:
             ret = HAL_ERROR;
             break;
@@ -2866,21 +2885,23 @@ HAL_StatusTypeDef UART_SetConfig(UART_HandleTypeDef *huart)
     switch (clocksource)
     {
       case UART_CLOCKSOURCE_PCLK1:
-        usartdiv = (uint16_t)(UART_DIV_SAMPLING8(HAL_RCC_GetPCLK1Freq(), huart->Init.BaudRate, huart->Init.ClockPrescaler));
+        pclk = HAL_RCC_GetPCLK1Freq();
+        usartdiv = (uint16_t)(UART_DIV_SAMPLING8(pclk, huart->Init.BaudRate, huart->Init.ClockPrescaler));
         break;
       case UART_CLOCKSOURCE_PCLK2:
-        usartdiv = (uint16_t)(UART_DIV_SAMPLING8(HAL_RCC_GetPCLK2Freq(), huart->Init.BaudRate, huart->Init.ClockPrescaler));
+        pclk = HAL_RCC_GetPCLK2Freq();
+        usartdiv = (uint16_t)(UART_DIV_SAMPLING8(pclk, huart->Init.BaudRate, huart->Init.ClockPrescaler));
         break;
       case UART_CLOCKSOURCE_HSI:
         usartdiv = (uint16_t)(UART_DIV_SAMPLING8(HSI_VALUE, huart->Init.BaudRate, huart->Init.ClockPrescaler));
         break;
       case UART_CLOCKSOURCE_SYSCLK:
-        usartdiv = (uint16_t)(UART_DIV_SAMPLING8(HAL_RCC_GetSysClockFreq(), huart->Init.BaudRate, huart->Init.ClockPrescaler));
+        pclk = HAL_RCC_GetSysClockFreq();
+        usartdiv = (uint16_t)(UART_DIV_SAMPLING8(pclk, huart->Init.BaudRate, huart->Init.ClockPrescaler));
         break;
       case UART_CLOCKSOURCE_LSE:
         usartdiv = (uint16_t)(UART_DIV_SAMPLING8((uint32_t)LSE_VALUE, huart->Init.BaudRate, huart->Init.ClockPrescaler));
         break;
-      case UART_CLOCKSOURCE_UNDEFINED:
       default:
         ret = HAL_ERROR;
         break;
@@ -2903,21 +2924,23 @@ HAL_StatusTypeDef UART_SetConfig(UART_HandleTypeDef *huart)
     switch (clocksource)
     {
       case UART_CLOCKSOURCE_PCLK1:
-        usartdiv = (uint16_t)(UART_DIV_SAMPLING16(HAL_RCC_GetPCLK1Freq(), huart->Init.BaudRate, huart->Init.ClockPrescaler));
+        pclk = HAL_RCC_GetPCLK1Freq();
+        usartdiv = (uint16_t)(UART_DIV_SAMPLING16(pclk, huart->Init.BaudRate, huart->Init.ClockPrescaler));
         break;
       case UART_CLOCKSOURCE_PCLK2:
-        usartdiv = (uint16_t)(UART_DIV_SAMPLING16(HAL_RCC_GetPCLK2Freq(), huart->Init.BaudRate, huart->Init.ClockPrescaler));
+        pclk = HAL_RCC_GetPCLK2Freq();
+        usartdiv = (uint16_t)(UART_DIV_SAMPLING16(pclk, huart->Init.BaudRate, huart->Init.ClockPrescaler));
         break;
       case UART_CLOCKSOURCE_HSI:
         usartdiv = (uint16_t)(UART_DIV_SAMPLING16(HSI_VALUE, huart->Init.BaudRate, huart->Init.ClockPrescaler));
         break;
       case UART_CLOCKSOURCE_SYSCLK:
-        usartdiv = (uint16_t)(UART_DIV_SAMPLING16(HAL_RCC_GetSysClockFreq(), huart->Init.BaudRate, huart->Init.ClockPrescaler));
+        pclk = HAL_RCC_GetSysClockFreq();
+        usartdiv = (uint16_t)(UART_DIV_SAMPLING16(pclk, huart->Init.BaudRate, huart->Init.ClockPrescaler));
         break;
       case UART_CLOCKSOURCE_LSE:
         usartdiv = (uint16_t)(UART_DIV_SAMPLING16((uint32_t)LSE_VALUE, huart->Init.BaudRate, huart->Init.ClockPrescaler));
         break;
-      case UART_CLOCKSOURCE_UNDEFINED:
       default:
         ret = HAL_ERROR;
         break;

@@ -6,12 +6,12 @@
   * @brief   USBPD PWR user code
   ******************************************************************************
   *
-  * Copyright (c) 2018 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under Ultimate Liberty license
   * SLA0044, the "License"; You may not use this file except in compliance with
   * the License. You may obtain a copy of the License at:
-  *                               www.st.com/SLA0044
+  *                             www.st.com/SLA0044
   *
   ******************************************************************************
   */
@@ -38,6 +38,7 @@
   * @{
   */
 /* USER CODE BEGIN POWER_Private_Typedef */
+
 /* USER CODE END POWER_Private_Typedef */
 /**
   * @}
@@ -100,6 +101,7 @@
   * @{
   */
 /* USER CODE BEGIN POWER_Private_Macros */
+
 /* USER CODE END POWER_Private_Macros */
 /**
   * @}
@@ -109,6 +111,7 @@
   * @{
   */
 /* USER CODE BEGIN POWER_Private_Variables */
+
 /* USER CODE END POWER_Private_Variables */
 /**
   * @}
@@ -133,6 +136,7 @@ static void PWR_Activate_ADC(void);
   * @{
   */
 /* USER CODE BEGIN POWER_Exported_Variables */
+
 /* USER CODE END POWER_Exported_Variables */
 /**
   * @}
@@ -142,385 +146,560 @@ static void PWR_Activate_ADC(void);
   * @{
   */
 /**
- * @brief  Initialize the hardware resources used by the Type-C power delivery (PD)
- *         controller.
- * @param  PortId Type-C port identifier
- *         This parameter can be take one of the following values:
- *         @arg TYPE_C_PORT_1
- *         @arg TYPE_C_PORT_2
- * @retval PD controller status
- */
-PWR_StatusTypeDef BSP_PWR_VBUSInit(uint32_t               PortId)
+  * @brief  Global initialization of PWR resource used by USB-PD
+  * @param  Instance Type-C port identifier
+  *         This parameter can be take one of the following values:
+  *         @arg @ref USBPD_PWR_TYPE_C_PORT_1
+  * @retval BSP status
+  */
+int32_t BSP_USBPD_PWR_Init(uint32_t Instance)
 {
-/* USER CODE BEGIN BSP_PWR_VBUSInit */
-  /* For Sink cases */
-  PWR_Configure_ADC();
-  PWR_Activate_ADC();
-  /*  MeasureVrefAnalog(); */
-  LL_ADC_REG_StartConversion(VSENSE_ADC_INSTANCE);
+  /* USER CODE BEGIN BSP_USBPD_PWR_Init */
+  /* Check if instance is valid       */
+  int32_t ret = BSP_ERROR_NONE;
 
-  /* Enable the peripheral clock of GPIO Port for SOURCE_EN */
-  SOURCE_EN_GPIO_ENABLE_CLOCK();
-
-  /* For SRC cases VBUS On/OFF */
-  LL_GPIO_SetPinMode(SOURCE_EN_GPIO_PORT, SOURCE_EN_GPIO_PIN, LL_GPIO_MODE_OUTPUT);
-  LL_GPIO_SetPinOutputType(SOURCE_EN_GPIO_PORT, SOURCE_EN_GPIO_PIN, LL_GPIO_OUTPUT_PUSHPULL);
-  LL_GPIO_SetPinPull(SOURCE_EN_GPIO_PORT, SOURCE_EN_GPIO_PIN, LL_GPIO_PULL_NO);
-  /* Open path for USBPD_VBUS to to USB_PD_VBUS */
-  SOURCE_EN_SET_OFF();
-
-  /* Enable the peripheral clock of GPIO Port for DISCHARGE */
-  DISCHARGE_GPIO_ENABLE_CLOCK();
-
-  /* VBUS Discharge */
-  LL_GPIO_SetPinMode(DISCHARGE_GPIO_PORT, DISCHARGE_GPIO_PIN, LL_GPIO_MODE_OUTPUT);
-  LL_GPIO_SetPinOutputType(DISCHARGE_GPIO_PORT, DISCHARGE_GPIO_PIN, LL_GPIO_OUTPUT_PUSHPULL);
-  LL_GPIO_SetPinPull(DISCHARGE_GPIO_PORT, DISCHARGE_GPIO_PIN, LL_GPIO_PULL_DOWN);
-
-  /* Need to keep DISCHARGE ON as soon as not powering VBUS on MB1397 */
-  DISCHARGE_SET_ON();
-
-  return PWR_OK;
-/* USER CODE END BSP_PWR_VBUSInit */
+  if (Instance >= USBPD_PWR_INSTANCES_NBR)
+  {
+    ret = BSP_ERROR_WRONG_PARAM;
+  }
+  return ret;
+  /* USER CODE END BSP_USBPD_PWR_Init */
 }
 
 /**
- * @brief  Release the hardware resources used by the Type-C power delivery (PD)
- *         controller.
- * @param  PortId Type-C port identifier
- *         This parameter can be take one of the following values:
- *         @arg TYPE_C_PORT_1
- *         @arg TYPE_C_PORT_2
- * @retval PD controller status
- */
-PWR_StatusTypeDef BSP_PWR_VBUSDeInit(uint32_t PortId)
+  * @brief  Global de-initialization of PWR resource used by USB-PD
+  * @param  Instance Type-C port identifier
+  *         This parameter can be take one of the following values:
+  *         @arg @ref USBPD_PWR_TYPE_C_PORT_1
+  * @retval BSP status
+  */
+int32_t BSP_USBPD_PWR_Deinit(uint32_t Instance)
 {
-/* USER CODE BEGIN BSP_PWR_VBUSDeInit */
-  return PWR_ERROR;
-/* USER CODE END BSP_PWR_VBUSDeInit */
+  /* USER CODE BEGIN BSP_USBPD_PWR_Deinit */
+  /* Check if instance is valid       */
+  int32_t ret = BSP_ERROR_NONE;
+
+  if (Instance >= USBPD_PWR_INSTANCES_NBR)
+  {
+    ret = BSP_ERROR_WRONG_PARAM;
+  }
+  return ret;
+  /* USER CODE END BSP_USBPD_PWR_Deinit */
 }
 
 /**
- * @brief  Enable power supply over VBUS.
- * @param  PortId Type-C port identifier
- *         This parameter can be take one of the following values:
- *         @arg TYPE_C_PORT_1
- * @retval PD controller status
- */
-PWR_StatusTypeDef BSP_PWR_VBUSOn(uint32_t PortId)
+  * @brief  Initialize the hardware resources used by the Type-C power delivery (PD)
+  *         controller.
+  * @param  Instance Type-C port identifier
+  *         This parameter can be take one of the following values:
+  *         @arg @ref USBPD_PWR_TYPE_C_PORT_1
+  * @retval BSP status
+  */
+int32_t BSP_USBPD_PWR_VBUSInit(uint32_t Instance)
 {
-/* USER CODE BEGIN BSP_PWR_VBUSOn */
-  DISCHARGE_SET_OFF();
-  SOURCE_EN_SET_ON();
+  /* USER CODE BEGIN BSP_USBPD_PWR_VBUSInit */
+  /* Check if instance is valid       */
+  int32_t ret = BSP_ERROR_NONE;
 
-  return PWR_OK;
-/* USER CODE END BSP_PWR_VBUSOn */
+  if (Instance >= USBPD_PWR_INSTANCES_NBR)
+  {
+    ret = BSP_ERROR_WRONG_PARAM;
+  }
+  else
+  {
+    /* For Sink cases */
+    PWR_Configure_ADC();
+    PWR_Activate_ADC();
+    /*  MeasureVrefAnalog(); */
+    LL_ADC_REG_StartConversion(VSENSE_ADC_INSTANCE);
+
+    /* Enable the peripheral clock of GPIO Port for SOURCE_EN */
+    SOURCE_EN_GPIO_ENABLE_CLOCK();
+
+    /* For SRC cases VBUS On/OFF */
+    LL_GPIO_SetPinMode(SOURCE_EN_GPIO_PORT, SOURCE_EN_GPIO_PIN, LL_GPIO_MODE_OUTPUT);
+    LL_GPIO_SetPinOutputType(SOURCE_EN_GPIO_PORT, SOURCE_EN_GPIO_PIN, LL_GPIO_OUTPUT_PUSHPULL);
+    LL_GPIO_SetPinPull(SOURCE_EN_GPIO_PORT, SOURCE_EN_GPIO_PIN, LL_GPIO_PULL_NO);
+    /* Open path for USBPD_VBUS to to USB_PD_VBUS */
+    SOURCE_EN_SET_OFF();
+
+    /* Enable the peripheral clock of GPIO Port for DISCHARGE */
+    DISCHARGE_GPIO_ENABLE_CLOCK();
+
+    /* VBUS Discharge */
+    LL_GPIO_SetPinMode(DISCHARGE_GPIO_PORT, DISCHARGE_GPIO_PIN, LL_GPIO_MODE_OUTPUT);
+    LL_GPIO_SetPinOutputType(DISCHARGE_GPIO_PORT, DISCHARGE_GPIO_PIN, LL_GPIO_OUTPUT_PUSHPULL);
+    LL_GPIO_SetPinPull(DISCHARGE_GPIO_PORT, DISCHARGE_GPIO_PIN, LL_GPIO_PULL_DOWN);
+
+    /* Need to keep DISCHARGE ON as soon as not powering VBUS on MB1397 */
+    DISCHARGE_SET_ON();
+  }
+  return ret;
+  /* USER CODE END BSP_USBPD_PWR_VBUSInit */
 }
 
 /**
- * @brief  Disable power supply over VBUS.
- * @param  PortId Type-C port identifier
- *         This parameter can be take one of the following values:
- *         @arg TYPE_C_PORT_1
- * @retval PD controller status
- */
-PWR_StatusTypeDef BSP_PWR_VBUSOff(uint32_t PortId)
+  * @brief  Release the hardware resources used by the Type-C power delivery (PD)
+  *         controller.
+  * @param  Instance Type-C port identifier
+  *         This parameter can be take one of the following values:
+  *         @arg @ref USBPD_PWR_TYPE_C_PORT_1
+  * @retval BSP status
+  */
+int32_t BSP_USBPD_PWR_VBUSDeInit(uint32_t Instance)
 {
-/* USER CODE BEGIN BSP_PWR_VBUSOff */
-  PWR_StatusTypeDef status = PWR_OK;
+  /* USER CODE BEGIN BSP_USBPD_PWR_VBUSDeInit */
+  /* Check if instance is valid       */
+  int32_t ret = BSP_ERROR_FEATURE_NOT_SUPPORTED;
 
-  /* switch off VBUS */
-  SOURCE_EN_SET_OFF();
+  if (Instance >= USBPD_PWR_INSTANCES_NBR)
+  {
+    ret = BSP_ERROR_WRONG_PARAM;
+  }
+  return ret;
+  /* USER CODE END BSP_USBPD_PWR_VBUSDeInit */
+}
 
-  /* Discharge VBUS */
-  PWR_VBUSDischarge(PortId, BSP_PWR_LOW_VBUS_THRESHOLD, 0 , 0);
+/**
+  * @brief  Enable power supply over VBUS.
+  * @param  Instance Type-C port identifier
+  *         This parameter can be take one of the following values:
+  *         @arg @ref USBPD_PWR_TYPE_C_PORT_1
+  * @retval BSP status
+  */
+int32_t BSP_USBPD_PWR_VBUSOn(uint32_t Instance)
+{
+  /* USER CODE BEGIN BSP_USBPD_PWR_VBUSOn */
+  /* Check if instance is valid       */
+  int32_t ret = BSP_ERROR_NONE;
 
-  return status;
-/* USER CODE END BSP_PWR_VBUSOff */
+  if (Instance >= USBPD_PWR_INSTANCES_NBR)
+  {
+    ret = BSP_ERROR_WRONG_PARAM;
+  }
+  else
+  {
+    DISCHARGE_SET_OFF();
+    SOURCE_EN_SET_ON();
+  }
+  return ret;
+  /* USER CODE END BSP_USBPD_PWR_VBUSOn */
+}
+
+/**
+  * @brief  Disable power supply over VBUS.
+  * @param  Instance Type-C port identifier
+  *         This parameter can be take one of the following values:
+  *         @arg @ref USBPD_PWR_TYPE_C_PORT_1
+  * @retval BSP status
+  */
+int32_t BSP_USBPD_PWR_VBUSOff(uint32_t Instance)
+{
+  /* USER CODE BEGIN BSP_USBPD_PWR_VBUSOff */
+  /* Check if instance is valid       */
+  int32_t ret = BSP_ERROR_NONE;
+
+  if (Instance >= USBPD_PWR_INSTANCES_NBR)
+  {
+    ret = BSP_ERROR_WRONG_PARAM;
+  }
+  else
+  {
+   /* switch off VBUS */
+    SOURCE_EN_SET_OFF();
+
+    /* Discharge VBUS */
+    PWR_VBUSDischarge(Instance, USBPD_PWR_LOW_VBUS_THRESHOLD, 0 , 0);
+  }
+  return ret;
+  /* USER CODE END BSP_USBPD_PWR_VBUSOff */
 }
 
 /**
   * @brief  Set a fixed/variable PDO and manage the power control.
- * @param  PortId Type-C port identifier
- *         This parameter can be take one of the following values:
- *         @arg TYPE_C_PORT_1
- * @param  VbusTargetInmv the vbus Target (in mV)
- * @param  OperatingCurrent the Operating Current (in mA)
- * @param  MaxOperatingCurrent the Max Operating Current (in mA)
- * @retval PD controller status
- */
-PWR_StatusTypeDef BSP_PWR_VBUSSetVoltage_Fixed(uint32_t PortId,
-                                               uint32_t VbusTargetInmv,
-                                               uint32_t OperatingCurrent,
-                                               uint32_t MaxOperatingCurrent)
+  * @param  Instance Type-C port identifier
+  *         This parameter can be take one of the following values:
+  *         @arg @ref USBPD_PWR_TYPE_C_PORT_1
+  * @param  VbusTargetInmv the vbus Target (in mV)
+  * @param  OperatingCurrent the Operating Current (in mA)
+  * @param  MaxOperatingCurrent the Max Operating Current (in mA)
+  * @retval BSP status
+  */
+int32_t BSP_USBPD_PWR_VBUSSetVoltage_Fixed(uint32_t Instance,
+                                           uint32_t VbusTargetInmv,
+                                           uint32_t OperatingCurrent,
+                                           uint32_t MaxOperatingCurrent)
 {
-/* USER CODE BEGIN BSP_PWR_VBUSSetVoltage_Fixed */
-  return PWR_OK;
-/* USER CODE END BSP_PWR_VBUSSetVoltage_Fixed */
+  /* USER CODE BEGIN BSP_USBPD_PWR_VBUSSetVoltage_Fixed */
+  /* Check if instance is valid       */
+  int32_t ret = BSP_ERROR_NONE;
+
+  if (Instance >= USBPD_PWR_INSTANCES_NBR)
+  {
+    ret = BSP_ERROR_WRONG_PARAM;
+  }
+  return ret;
+  /* USER CODE END BSP_USBPD_PWR_VBUSSetVoltage_Fixed */
 }
 
 /**
- * @brief  Set a fixed/variable PDO and manage the power control.
- * @param  PortId Type-C port identifier
- *         This parameter can be take one of the following values:
- *         @arg TYPE_C_PORT_1
- * @param  VbusTargetMinInmv the vbus Target min (in mV)
- * @param  VbusTargetMaxInmv the vbus Target max (in mV)
- * @param  OperatingCurrent the Operating Current (in mA)
- * @param  MaxOperatingCurrent the Max Operating Current (in mA)
- * @retval PD controller status
- */
-PWR_StatusTypeDef BSP_PWR_VBUSSetVoltage_Variable(uint32_t PortId,
-                                                  uint32_t VbusTargetMinInmv,
-                                                  uint32_t VbusTargetMaxInmv,
-                                                  uint32_t OperatingCurrent,
-                                                  uint32_t MaxOperatingCurrent)
-{
-/* USER CODE BEGIN BSP_PWR_VBUSSetVoltage_Variable */
-  return PWR_ERROR;
-/* USER CODE BEGIN BSP_PWR_VBUSSetVoltage_Variable */
-}
-
-/**
- * @brief  Set a Battery PDO and manage the power control.
- * @param  PortId Type-C port identifier
- *         This parameter can be take one of the following values:
- *         @arg TYPE_C_PORT_1
- * @param  VbusTargetMin the vbus Target min (in mV)
- * @param  VbusTargetMax the vbus Target max (in mV)
- * @param  OperatingPower the Operating Power (in mW)
- * @param  MaxOperatingPower the Max Operating Power (in mW)
- * @retval PD controller status
- */
-PWR_StatusTypeDef BSP_PWR_VBUSSetVoltage_Battery(uint32_t PortId,
-                                                 uint32_t VbusTargetMin,
-                                                 uint32_t VbusTargetMax,
-                                                 uint32_t OperatingPower,
-                                                 uint32_t MaxOperatingPower)
-{
-/* USER CODE BEGIN BSP_PWR_VBUSSetVoltage_Battery */
-  return PWR_ERROR;
-/* USER CODE BEGIN BSP_PWR_VBUSSetVoltage_Battery */
-}
-
-/**
-* @brief  Set a APDO and manage the power control.
-* @param  PortId Type-C port identifier
-*         This parameter can be take one of the following values:
-*         @arg TYPE_C_PORT_1
-* @param  VbusTargetInmv the vbus Target (in mV)
-* @param  OperatingCurrent the Operating current (in mA)
-* @param  Delta Delta between with previous APDO (in mV), 0 means APDO start
-* @retval PD controller status
-*/
-PWR_StatusTypeDef BSP_PWR_VBUSSetVoltage_APDO(uint32_t PortId,
-                                              uint32_t VbusTargetInmv,
+  * @brief  Set a fixed/variable PDO and manage the power control.
+  * @param  Instance Type-C port identifier
+  *         This parameter can be take one of the following values:
+  *         @arg @ref USBPD_PWR_TYPE_C_PORT_1
+  * @param  VbusTargetMinInmv the vbus Target min (in mV)
+  * @param  VbusTargetMaxInmv the vbus Target max (in mV)
+  * @param  OperatingCurrent the Operating Current (in mA)
+  * @param  MaxOperatingCurrent the Max Operating Current (in mA)
+  * @retval BSP status
+  */
+int32_t BSP_USBPD_PWR_VBUSSetVoltage_Variable(uint32_t Instance,
+                                              uint32_t VbusTargetMinInmv,
+                                              uint32_t VbusTargetMaxInmv,
                                               uint32_t OperatingCurrent,
-                                              int32_t Delta)
+                                              uint32_t MaxOperatingCurrent)
 {
-/* USER CODE BEGIN BSP_PWR_VBUSSetVoltage_APDO */
-  return PWR_ERROR;
-/* USER CODE BEGIN BSP_PWR_VBUSSetVoltage_APDO */
+  /* USER CODE BEGIN BSP_USBPD_PWR_VBUSSetVoltage_Variable */
+  /* Check if instance is valid       */
+  int32_t ret = BSP_ERROR_FEATURE_NOT_SUPPORTED;
+
+  if (Instance >= USBPD_PWR_INSTANCES_NBR)
+  {
+    ret = BSP_ERROR_WRONG_PARAM;
+  }
+  return ret;
+  /* USER CODE END BSP_USBPD_PWR_VBUSSetVoltage_Variable */
 }
 
 /**
- * @brief  Get actual voltage level measured on the VBUS line.
- * @param  PortId Type-C port identifier
- *         This parameter can be take one of the following values:
- *         @arg TYPE_C_PORT_1
- *         @arg TYPE_C_PORT_2
- * @retval Voltage measured voltage level (in mV)
- */
-uint32_t  BSP_PWR_VBUSGetVoltage(uint32_t PortId)
+  * @brief  Set a Battery PDO and manage the power control.
+  * @param  Instance Type-C port identifier
+  *         This parameter can be take one of the following values:
+  *         @arg @ref USBPD_PWR_TYPE_C_PORT_1
+  * @param  VbusTargetMin the vbus Target min (in mV)
+  * @param  VbusTargetMax the vbus Target max (in mV)
+  * @param  OperatingPower the Operating Power (in mW)
+  * @param  MaxOperatingPower the Max Operating Power (in mW)
+  * @retval BSP status
+  */
+int32_t BSP_USBPD_PWR_VBUSSetVoltage_Battery(uint32_t Instance,
+                                             uint32_t VbusTargetMin,
+                                             uint32_t VbusTargetMax,
+                                             uint32_t OperatingPower,
+                                             uint32_t MaxOperatingPower)
 {
-/* USER CODE BEGIN BSP_PWR_VBUSGetVoltage */
-  uint32_t val;
+  /* USER CODE BEGIN BSP_USBPD_PWR_VBUSSetVoltage_Battery */
+  /* Check if instance is valid       */
+  int32_t ret = BSP_ERROR_FEATURE_NOT_SUPPORTED;
 
-  val = __LL_ADC_CALC_DATA_TO_VOLTAGE(VDDA_APPLI,  LL_ADC_REG_ReadConversionData12(VSENSE_ADC_INSTANCE), LL_ADC_RESOLUTION_12B); /* mV */
-
-  /* STM32G474E_EVAL board is used */
-  /* Value is multiplied by 7.030 according to board measurments.
-     Theorically, it should have been 7.613 (Divider R323/R244 (49.9K/330K) for VSENSE */
-  val *= 7030;
-  val /= 1000;
-
-  return val;
-/* USER CODE END BSP_PWR_VBUSGetVoltage */
+  if (Instance >= USBPD_PWR_INSTANCES_NBR)
+  {
+    ret = BSP_ERROR_WRONG_PARAM;
+  }
+  return ret;
+  /* USER CODE END BSP_USBPD_PWR_VBUSSetVoltage_Battery */
 }
 
 /**
- * @brief  Get actual current level measured on the VBUS line.
- * @param  PortId Type-C port identifier
- *         This parameter can be take one of the following values:
- *         @arg TYPE_C_PORT_1
- *         @arg TYPE_C_PORT_2
- * @retval Current measured current level (in mA)
- */
-int32_t BSP_PWR_VBUSGetCurrent(uint32_t PortId)
+  * @brief  Set a APDO and manage the power control.
+  * @param  Instance Type-C port identifier
+  *         This parameter can be take one of the following values:
+  *         @arg @ref USBPD_PWR_TYPE_C_PORT_1
+  * @param  VbusTargetInmv the vbus Target (in mV)
+  * @param  OperatingCurrent the Operating current (in mA)
+  * @param  Delta Delta between with previous APDO (in mV), 0 means APDO start
+  * @retval BSP status
+  */
+int32_t BSP_USBPD_PWR_VBUSSetVoltage_APDO(uint32_t Instance,
+                                          uint32_t VbusTargetInmv,
+                                          uint32_t OperatingCurrent,
+                                          int32_t Delta)
 {
-/* USER CODE BEGIN BSP_PWR_VBUSGetCurrent */
-  return 0;
-/* USER CODE END BSP_PWR_VBUSGetCurrent */
+  /* USER CODE BEGIN BSP_USBPD_PWR_VBUSSetVoltage_APDO */
+  /* Check if instance is valid       */
+  int32_t ret = BSP_ERROR_FEATURE_NOT_SUPPORTED;
+
+  if (Instance >= USBPD_PWR_INSTANCES_NBR)
+  {
+    ret = BSP_ERROR_WRONG_PARAM;
+  }
+  return ret;
+  /* USER CODE END BSP_USBPD_PWR_VBUSSetVoltage_APDO */
 }
 
 /**
- * @brief  Initialize VCONN sourcing.
- * @param  PortId Type-C port identifier
- *         This parameter can be take one of the following values:
- *         @arg TYPE_C_PORT_1
- *         @arg TYPE_C_PORT_2
- * @param  CCPinId Type-C CC pin identifier
- *         This parameter can be take one of the following values:
- *         @arg TYPE_C_CC1
- *         @arg TYPE_C_CC2
- * @retval PD controller status
- */
-PWR_StatusTypeDef BSP_PWR_VCONNInit(uint32_t PortId,
-                                    uint32_t CCPinId)
+  * @brief  Get actual voltage level measured on the VBUS line.
+  * @param  Instance Type-C port identifier
+  *         This parameter can be take one of the following values:
+  *         @arg @ref USBPD_PWR_TYPE_C_PORT_1
+  * @param  pVoltage Pointer on measured voltage level (in mV)
+  * @retval BSP status
+  */
+int32_t BSP_USBPD_PWR_VBUSGetVoltage(uint32_t Instance, uint32_t *pVoltage)
 {
-/* USER CODE BEGIN BSP_PWR_VCONNInit */
-  return PWR_ERROR;
-/* USER CODE END BSP_PWR_VCONNInit */
+  /* USER CODE BEGIN BSP_USBPD_PWR_VBUSGetVoltage */
+
+  /* Check if instance is valid       */
+  int32_t ret = BSP_ERROR_NONE;
+  uint32_t val = 0U;
+
+  if ((Instance >= USBPD_PWR_INSTANCES_NBR) || (NULL == pVoltage))
+  {
+    ret = BSP_ERROR_WRONG_PARAM;
+  }
+  else
+  {
+
+    val = __LL_ADC_CALC_DATA_TO_VOLTAGE(VDDA_APPLI,  LL_ADC_REG_ReadConversionData12(VSENSE_ADC_INSTANCE), LL_ADC_RESOLUTION_12B); /* mV */
+
+    /* STM32G474E_EVAL board is used */
+    /* Value is multiplied by 7.030 according to board measurments.
+       Theorically, it should have been 7.613 (Divider R323/R244 (49.9K/330K) for VSENSE */
+    val *= 7030U;
+    val /= 1000U;
+  }
+  *pVoltage = val;
+  return ret;
+  /* USER CODE END BSP_USBPD_PWR_VBUSGetVoltage */
 }
 
 /**
- * @brief  Un-Initialize VCONN sourcing.
- * @param  PortId Type-C port identifier
- *         This parameter can be take one of the following values:
- *         @arg TYPE_C_PORT_1
- *         @arg TYPE_C_PORT_2
- * @param  CCPinId Type-C CC pin identifier
- *         This parameter can be take one of the following values:
- *         @arg TYPE_C_CC1
- *         @arg TYPE_C_CC2
- * @retval PD controller status
- */
-PWR_StatusTypeDef BSP_PWR_VCONNDeInit(uint32_t PortId,
-                                      uint32_t CCPinId)
+  * @brief  Get actual current level measured on the VBUS line.
+  * @param  Instance Type-C port identifier
+  *         This parameter can be take one of the following values:
+  *         @arg @ref USBPD_PWR_TYPE_C_PORT_1
+  * @param  pCurrent Pointer on measured current level (in mA)
+  * @retval BSP status
+  */
+int32_t BSP_USBPD_PWR_VBUSGetCurrent(uint32_t Instance, int32_t *pCurrent)
 {
-/* USER CODE BEGIN BSP_PWR_VCONNDeInit */
-  return PWR_ERROR;
-/* USER CODE END BSP_PWR_VCONNDeInit */
+  /* USER CODE BEGIN BSP_USBPD_PWR_VBUSGetCurrent */
+  /* Check if instance is valid       */
+  int32_t ret = BSP_ERROR_FEATURE_NOT_SUPPORTED;
+
+  if ((Instance >= USBPD_PWR_INSTANCES_NBR) || (NULL == pCurrent))
+  {
+    ret = BSP_ERROR_WRONG_PARAM;
+  }
+  *pCurrent = 0U;
+  return ret;
+  /* USER CODE END BSP_USBPD_PWR_VBUSGetCurrent */
 }
 
 /**
- * @brief  Enable VCONN sourcing.
- * @param  PortId Type-C port identifier
- *         This parameter can be take one of the following values:
- *         @arg TYPE_C_PORT_1
- *         @arg TYPE_C_PORT_2
- * @param  CCPinId Type-C CC pin identifier
- *         This parameter can be take one of the following values:
- *         @arg TYPE_C_CC1
- *         @arg TYPE_C_CC2
- * @retval PD controller status
- */
-PWR_StatusTypeDef BSP_PWR_VCONNOn(uint32_t PortId,
+  * @brief  Initialize VCONN sourcing.
+  * @param  Instance Type-C port identifier
+  *         This parameter can be take one of the following values:
+  *         @arg @ref USBPD_PWR_TYPE_C_PORT_1
+  * @param  CCPinId Type-C CC pin identifier
+  *         This parameter can be take one of the following values:
+  *         @arg @ref USBPD_PWR_TYPE_C_CC1
+  *         @arg @ref USBPD_PWR_TYPE_C_CC2
+  * @retval BSP status
+  */
+int32_t BSP_USBPD_PWR_VCONNInit(uint32_t Instance,
+                                uint32_t CCPinId)
+{
+  /* USER CODE BEGIN BSP_USBPD_PWR_VCONNInit */
+  /* Check if instance is valid       */
+  int32_t ret = BSP_ERROR_FEATURE_NOT_SUPPORTED;
+
+  if (Instance >= USBPD_PWR_INSTANCES_NBR)
+  {
+    ret = BSP_ERROR_WRONG_PARAM;
+  }
+  return ret;
+  /* USER CODE END BSP_USBPD_PWR_VCONNInit */
+}
+
+/**
+  * @brief  Un-Initialize VCONN sourcing.
+  * @param  Instance Type-C port identifier
+  *         This parameter can be take one of the following values:
+  *         @arg @ref USBPD_PWR_TYPE_C_PORT_1
+  * @param  CCPinId Type-C CC pin identifier
+  *         This parameter can be take one of the following values:
+  *         @arg @ref USBPD_PWR_TYPE_C_CC1
+  *         @arg @ref USBPD_PWR_TYPE_C_CC2
+  * @retval BSP status
+  */
+int32_t BSP_USBPD_PWR_VCONNDeInit(uint32_t Instance,
                                   uint32_t CCPinId)
 {
-/* USER CODE BEGIN BSP_PWR_VCONNOn */
-  return PWR_ERROR;
-/* USER CODE END BSP_PWR_VCONNOn */
-}
+  /* USER CODE BEGIN BSP_USBPD_PWR_VCONNDeInit */
+  /* Check if instance is valid       */
+  int32_t ret = BSP_ERROR_FEATURE_NOT_SUPPORTED;
 
-/**
- * @brief  Disable VCONN sourcing.
- * @param  PortId Type-C port identifier
- *         This parameter can be take one of the following values:
- *         @arg TYPE_C_PORT_1
- *         @arg TYPE_C_PORT_2
- * @param  CCPinId CC pin identifier
- *         This parameter can be take one of the following values:
- *         @arg TYPE_C_CC1
- *         @arg TYPE_C_CC2
- * @retval PD controller status
- */
-PWR_StatusTypeDef BSP_PWR_VCONNOff(uint32_t PortId,
-                                   uint32_t CCPinId)
-{
-/* USER CODE BEGIN BSP_PWR_VCONNOff */
-  return PWR_ERROR;
-/* USER CODE END BSP_PWR_VCONNOff */
-}
-
-/**
- * @brief  Set the VBUS disconnection voltage threshold.
- * @note   Callback funtion registered through BSP_PWR_RegisterVBUSDetectCallback
- *         function call is invoked when VBUS falls below programmed threshold.
- * @note   By default VBUS disconnection threshold is set to 3.3V
- * @param  PortId Type-C port identifier
- *         This parameter can be take one of the following values:
- *         @arg TYPE_C_PORT_1
- *         @arg TYPE_C_PORT_2
- * @param  VoltageThreshold: VBUS disconnection voltage threshold (in mV)
- * @retval PD controller status
- */
-void BSP_PWR_SetVBUSDisconnectionThreshold(uint32_t PortId,
-                                           uint32_t VoltageThreshold)
-{
-/* USER CODE BEGIN BSP_PWR_SetVBUSDisconnectionThreshold */
-/* USER CODE END BSP_PWR_SetVBUSDisconnectionThreshold */
-}
-
-/**
- * @brief  Register USB Type-C Current callback function.
- * @note   Callback function invoked when VBUS rises above 4V (VBUS present) or
- *         when VBUS falls below programmed threshold (VBUS absent).
- * @note   Callback funtion is un-registered when callback function pointer
- *         argument is NULL.
- * @param  PortId Type-C port identifier
- *         This parameter can be take one of the following values:
- *         @arg TYPE_C_PORT_1
- *         @arg TYPE_C_PORT_2
- * @param  pfnVBUSDetectCallback callback function pointer
-* @retval 0 success else fail
- */
-PWR_StatusTypeDef BSP_PWR_RegisterVBUSDetectCallback(uint32_t                       PortId,
-                                                     PWR_VBUSDetectCallbackFunc *   pfnVBUSDetectCallback)
-{
-/* USER CODE BEGIN BSP_PWR_RegisterVBUSDetectCallback */
-  return PWR_ERROR;
-/* USER CODE END BSP_PWR_RegisterVBUSDetectCallback */
-}
-
-/**
- * @brief  Get actual VBUS status.
- * @param  PortId Type-C port identifier
- *         This parameter can be take one of the following values:
- *         @arg TYPE_C_PORT_1
- * @retval VBUS status (1: On, 0: Off)
- */
-uint8_t BSP_PWR_VBUSIsOn(uint32_t PortId)
-{
-/* USER CODE BEGIN BSP_PWR_VBUSIsOn */
-  uint8_t ret = 0u;
-
-  if (IS_SOURCE_EN_SET_ON())
+  if (Instance >= USBPD_PWR_INSTANCES_NBR)
   {
-    ret = 1;
+    ret = BSP_ERROR_WRONG_PARAM;
   }
-
   return ret;
-/* USER CODE END BSP_PWR_VBUSIsOn */
+  /* USER CODE END BSP_USBPD_PWR_VCONNDeInit */
 }
 
 /**
- * @brief  Get actual VCONN status.
- * @param  PortId Type-C port identifier
- *         This parameter can be take one of the following values:
- *         @arg TYPE_C_PORT_1
- * @param  CCPinId Type-C CC pin identifier
- *         This parameter can be take one of the following values:
- *         @arg TYPE_C_CC1
- *         @arg TYPE_C_CC2
- * @retval VCONN status (1: On, 0: Off)
- */
-uint8_t BSP_PWR_VCONNIsOn(uint32_t PortId,
-                          uint32_t CCPinId)
+  * @brief  Enable VCONN sourcing.
+  * @param  Instance Type-C port identifier
+  *         This parameter can be take one of the following values:
+  *         @arg @ref USBPD_PWR_TYPE_C_PORT_1
+  * @param  CCPinId Type-C CC pin identifier
+  *         This parameter can be take one of the following values:
+  *         @arg @ref USBPD_PWR_TYPE_C_CC1
+  *         @arg @ref USBPD_PWR_TYPE_C_CC2
+  * @retval BSP status
+  */
+int32_t BSP_USBPD_PWR_VCONNOn(uint32_t Instance,
+                              uint32_t CCPinId)
 {
-/* USER CODE BEGIN BSP_PWR_VCONNIsOn */
-  return 0;
-/* USER CODE END BSP_PWR_VCONNIsOn */
+  /* USER CODE BEGIN BSP_USBPD_PWR_VCONNOn */
+  /* Check if instance is valid       */
+  int32_t ret = BSP_ERROR_FEATURE_NOT_SUPPORTED;
+
+  if (Instance >= USBPD_PWR_INSTANCES_NBR)
+  {
+    ret = BSP_ERROR_WRONG_PARAM;
+  }
+  return ret;
+  /* USER CODE END BSP_USBPD_PWR_VCONNOn */
+}
+
+/**
+  * @brief  Disable VCONN sourcing.
+  * @param  Instance Type-C port identifier
+  *         This parameter can be take one of the following values:
+  *         @arg @ref USBPD_PWR_TYPE_C_PORT_1
+  * @param  CCPinId CC pin identifier
+  *         This parameter can be take one of the following values:
+  *         @arg @ref USBPD_PWR_TYPE_C_CC1
+  *         @arg @ref USBPD_PWR_TYPE_C_CC2
+  * @retval BSP status
+  */
+int32_t BSP_USBPD_PWR_VCONNOff(uint32_t Instance,
+                               uint32_t CCPinId)
+{
+  /* USER CODE BEGIN BSP_USBPD_PWR_VCONNOff */
+  /* Check if instance is valid       */
+  int32_t ret = BSP_ERROR_FEATURE_NOT_SUPPORTED;
+
+  if (Instance >= USBPD_PWR_INSTANCES_NBR)
+  {
+    ret = BSP_ERROR_WRONG_PARAM;
+  }
+  return ret;
+  /* USER CODE END BSP_USBPD_PWR_VCONNOff */
+}
+
+/**
+  * @brief  Get actual VCONN status.
+  * @param  Instance Type-C port identifier
+  *         This parameter can be take one of the following values:
+  *         @arg @ref USBPD_PWR_TYPE_C_PORT_1
+  * @param  CCPinId Type-C CC pin identifier
+  *         This parameter can be take one of the following values:
+  *         @arg @ref USBPD_PWR_TYPE_C_CC1
+  *         @arg @ref USBPD_PWR_TYPE_C_CC2
+  * @param  pState VCONN status (1: On, 0: Off)
+  * @retval BSP status
+  */
+int32_t BSP_USBPD_PWR_VCONNIsOn(uint32_t Instance,
+                                uint32_t CCPinId, uint8_t *pState)
+{
+  /* USER CODE BEGIN BSP_USBPD_PWR_VCONNIsOn */
+  /* Check if instance is valid       */
+  int32_t ret = BSP_ERROR_FEATURE_NOT_SUPPORTED;
+
+  if (Instance >= USBPD_PWR_INSTANCES_NBR)
+  {
+    ret = BSP_ERROR_WRONG_PARAM;
+  }
+  *pState = 0u;
+  return ret;
+  /* USER CODE END BSP_USBPD_PWR_VCONNIsOn */
+}
+
+/**
+  * @brief  Set the VBUS disconnection voltage threshold.
+  * @note   Callback funtion registered through BSP_USBPD_PWR_RegisterVBUSDetectCallback
+  *         function call is invoked when VBUS falls below programmed threshold.
+  * @note   By default VBUS disconnection threshold is set to 3.3V
+  * @param  Instance Type-C port identifier
+  *         This parameter can be take one of the following values:
+  *         @arg @ref USBPD_PWR_TYPE_C_PORT_1
+  * @param  VoltageThreshold VBUS disconnection voltage threshold (in mV)
+  * @retval BSP status
+  */
+int32_t BSP_USBPD_PWR_SetVBUSDisconnectionThreshold(uint32_t Instance,
+                                                    uint32_t VoltageThreshold)
+{
+  /* USER CODE BEGIN BSP_USBPD_PWR_SetVBUSDisconnectionThreshold */
+  /* Check if instance is valid       */
+  int32_t ret = BSP_ERROR_FEATURE_NOT_SUPPORTED;
+
+  if (Instance >= USBPD_PWR_INSTANCES_NBR)
+  {
+    ret = BSP_ERROR_WRONG_PARAM;
+  }
+  return ret;
+  /* USER CODE END BSP_USBPD_PWR_SetVBUSDisconnectionThreshold */
+}
+
+/**
+  * @brief  Register USB Type-C Current callback function.
+  * @note   Callback function invoked when VBUS rises above 4V (VBUS present) or
+  *         when VBUS falls below programmed threshold (VBUS absent).
+  * @note   Callback funtion is un-registered when callback function pointer
+  *         argument is NULL.
+  * @param  Instance Type-C port identifier
+  *         This parameter can be take one of the following values:
+  *         @arg @ref USBPD_PWR_TYPE_C_PORT_1
+  * @param  pfnVBUSDetectCallback callback function pointer
+  * @retval BSP status
+  */
+int32_t BSP_USBPD_PWR_RegisterVBUSDetectCallback(uint32_t  Instance,
+                                                 USBPD_PWR_VBUSDetectCallbackFunc *pfnVBUSDetectCallback)
+{
+  /* USER CODE BEGIN BSP_USBPD_PWR_RegisterVBUSDetectCallback */
+  /* Check if instance is valid       */
+  int32_t ret = BSP_ERROR_FEATURE_NOT_SUPPORTED;
+
+  if (Instance >= USBPD_PWR_INSTANCES_NBR)
+  {
+    ret = BSP_ERROR_WRONG_PARAM;
+  }
+  return ret;
+  /* USER CODE END BSP_USBPD_PWR_RegisterVBUSDetectCallback */
+}
+
+/**
+  * @brief  Get actual VBUS status.
+  * @param  Instance Type-C port identifier
+  *         This parameter can be take one of the following values:
+  *         @arg @ref USBPD_PWR_TYPE_C_PORT_1
+  * @param  pState VBUS status (1: On, 0: Off)
+  * @retval BSP status
+  */
+int32_t BSP_USBPD_PWR_VBUSIsOn(uint32_t Instance, uint8_t *pState)
+{
+  /* USER CODE BEGIN BSP_USBPD_PWR_VBUSIsOn */
+  /* Check if instance is valid       */
+  int32_t ret = BSP_ERROR_NONE;
+  uint8_t state = 0U;
+
+  if (Instance >= USBPD_PWR_INSTANCES_NBR)
+  {
+    ret = BSP_ERROR_WRONG_PARAM;
+  }
+  else
+  {
+    if (IS_SOURCE_EN_SET_ON())
+    {
+      state = 1U;
+    }
+  }
+  *pState = state;
+  return ret;
+  /* USER CODE END BSP_USBPD_PWR_VBUSIsOn */
 }
 
 /**
@@ -554,7 +733,7 @@ void PWR_VBUSDischarge(uint32_t PortId,
 
   do{
     HAL_Delay(1);
-    vbus = BSP_PWR_VBUSGetVoltage(PortId);
+    BSP_USBPD_PWR_VBUSGetVoltage(PortId, &vbus);
   } while(vbus >= (VbusStopInmV));
 
   /* Need to keep DISCHARGE ON as soon as not powering VBUS on MB1397 */

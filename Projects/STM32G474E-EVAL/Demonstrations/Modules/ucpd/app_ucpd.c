@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -40,6 +40,9 @@
 #include "usbpd_hw_if.h"
 #include "usbpd_pwr_if.h"
 #include "demo_application.h"
+#if defined(_GUI_INTERFACE)
+#include "gui_api.h"
+#endif /* _GUI_INTERFACE */
 
 /* Private typedef ----------------------------------------------------------*/
 /* Private constants ----------------------------------------------------------*/
@@ -89,6 +92,11 @@ KMODULE_RETURN _UcpdConfig(void)
     /* error the RTOS can't be started  */
     while(1);
   }
+
+#if defined(_GUI_INTERFACE)
+  /* Initialize GUI before retrieving PDO from RAM */
+  GUI_Init(BSP_GetHWBoardVersionName, BSP_GetPDTypeName, HW_IF_PWR_GetVoltage, HW_IF_PWR_GetCurrent);
+#endif /* _GUI_INTERFACE */
 
   /* Initialise the DPM application */
   if (USBPD_OK != USBPD_DPM_UserInit())

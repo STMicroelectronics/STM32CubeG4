@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -66,9 +66,6 @@ typedef struct
 
   uint32_t TriggerMode;        /*!< Set the comparator output triggering External Interrupt Line (EXTI).
                                     This parameter can be a value of @ref COMP_EXTI_TriggerMode */
-
-  uint32_t DeglitcherMode;     /*!< Set comparator deglitcher mode.
-                                    This parameter can be a value of @ref COMP_DeglitcherMode */
 
 } COMP_InitTypeDef;
 
@@ -268,15 +265,6 @@ typedef  void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer 
 #define COMP_TRIGGERMODE_EVENT_RISING         (COMP_EXTI_EVENT | COMP_EXTI_RISING)                      /*!< Comparator output triggering External Interrupt Line event only (without interruption), on rising edge */
 #define COMP_TRIGGERMODE_EVENT_FALLING        (COMP_EXTI_EVENT | COMP_EXTI_FALLING)                     /*!< Comparator output triggering External Interrupt Line event only (without interruption), on falling edge */
 #define COMP_TRIGGERMODE_EVENT_RISING_FALLING (COMP_EXTI_EVENT | COMP_EXTI_RISING | COMP_EXTI_FALLING)  /*!< Comparator output triggering External Interrupt Line event only (without interruption), on both rising and falling edges */
-/**
-  * @}
-  */
-
-/** @defgroup COMP_DeglitcherMode COMP deglitcher mode
-  * @{
-  */
-#define COMP_DEGLITCHER_DISABLED        (0x00000000UL)            /*!< Comparator deglitcher disabled */
-#define COMP_DEGLITCHER_ENABLED         (COMP_CSR_DEGLITCHEN)     /*!< Comparator deglitcher enabled */
 /**
   * @}
   */
@@ -691,7 +679,7 @@ typedef  void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer 
   */
 #define __HAL_COMP_COMP4_EXTI_CLEAR_FLAG()            LL_EXTI_ClearFlag_0_31(COMP_EXTI_LINE_COMP4)
 
-#if  defined(STM32G474xx) || defined(STM32G484xx) || defined(STM32G473xx)
+#if  defined(STM32G474xx) || defined(STM32G484xx) || defined(STM32G473xx) || defined(STM32G483xx)
 /**
   * @brief  Enable the COMP5 EXTI line rising edge trigger.
   * @retval None
@@ -776,8 +764,8 @@ typedef  void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer 
   */
 #define __HAL_COMP_COMP5_EXTI_CLEAR_FLAG()            LL_EXTI_ClearFlag_0_31(COMP_EXTI_LINE_COMP5)
 
-#endif /* STM32G474xx || STM32G484xx || STM32G473xx */
-#if  defined(STM32G474xx) || defined(STM32G484xx) || defined(STM32G473xx)
+#endif /* STM32G474xx || STM32G484xx || STM32G473xx || STM32G483xx*/
+#if  defined(STM32G474xx) || defined(STM32G484xx) || defined(STM32G473xx) || defined(STM32G483xx)
 /**
   * @brief  Enable the COMP6 EXTI line rising edge trigger.
   * @retval None
@@ -862,8 +850,8 @@ typedef  void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer 
   */
 #define __HAL_COMP_COMP6_EXTI_CLEAR_FLAG()            LL_EXTI_ClearFlag_32_63(COMP_EXTI_LINE_COMP6)
 
-#endif /* STM32G474xx || STM32G484xx || STM32G473xx */
-#if  defined(STM32G474xx) || defined(STM32G484xx) || defined(STM32G473xx)
+#endif /* STM32G474xx || STM32G484xx || STM32G473xx || STM32G483xx*/
+#if  defined(STM32G474xx) || defined(STM32G484xx) || defined(STM32G473xx) || defined(STM32G483xx)
 /**
   * @brief  Enable the COMP7 EXTI line rising edge trigger.
   * @retval None
@@ -948,7 +936,7 @@ typedef  void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer 
   */
 #define __HAL_COMP_COMP7_EXTI_CLEAR_FLAG()            LL_EXTI_ClearFlag_32_63(COMP_EXTI_LINE_COMP7)
 
-#endif /* STM32G474xx || STM32G484xx || STM32G473xx */
+#endif /* STM32G474xx || STM32G484xx || STM32G473xx || STM32G483xx */
 /**
   * @}
   */
@@ -971,7 +959,7 @@ typedef  void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer 
 #define COMP_EXTI_LINE_COMP2           (LL_EXTI_LINE_22)  /*!< EXTI line 22 connected to COMP2 output. Note: For COMPx instance availability, please refer to datasheet */
 #define COMP_EXTI_LINE_COMP3           (LL_EXTI_LINE_29)  /*!< EXTI line 29 connected to COMP3 output. Note: For COMPx instance availability, please refer to datasheet */
 #define COMP_EXTI_LINE_COMP4           (LL_EXTI_LINE_30)  /*!< EXTI line 30 connected to COMP4 output. Note: For COMPx instance availability, please refer to datasheet */
-#if defined(STM32G474xx) || defined(STM32G484xx) || defined(STM32G473xx)
+#if defined(STM32G474xx) || defined(STM32G484xx) || defined(STM32G473xx) || defined(STM32G483xx)
 #define COMP_EXTI_LINE_COMP5           (LL_EXTI_LINE_31)  /*!< EXTI line 31 connected to COMP5 output. Note: For COMPx instance availability, please refer to datasheet */
 #define COMP_EXTI_LINE_COMP6           (LL_EXTI_LINE_32)  /*!< EXTI line 32 connected to COMP6 output. Note: For COMPx instance availability, please refer to datasheet */
 #define COMP_EXTI_LINE_COMP7           (LL_EXTI_LINE_33)  /*!< EXTI line 33 connected to COMP7 output. Note: For COMPx instance availability, please refer to datasheet */
@@ -1008,7 +996,7 @@ typedef  void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer 
   * @param  __INSTANCE__  specifies the COMP instance.
   * @retval value of @ref COMP_ExtiLine
   */
-#if defined(STM32G474xx) || defined(STM32G484xx) || defined(STM32G473xx)
+#if defined(STM32G474xx) || defined(STM32G484xx) || defined(STM32G473xx) || defined(STM32G483xx)
 #define COMP_GET_EXTI_LINE(__INSTANCE__)    (((__INSTANCE__) == COMP1) ? COMP_EXTI_LINE_COMP1  \
                                              :((__INSTANCE__) == COMP2) ? COMP_EXTI_LINE_COMP2 \
                                              :((__INSTANCE__) == COMP3) ? COMP_EXTI_LINE_COMP3 \
@@ -1032,7 +1020,7 @@ typedef  void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer 
 #define IS_COMP_INPUT_PLUS(__COMP_INSTANCE__, __INPUT_PLUS__) (((__INPUT_PLUS__) == COMP_INPUT_PLUS_IO1) || \
                                                                ((__INPUT_PLUS__) == COMP_INPUT_PLUS_IO2))
 
-#if defined(STM32G474xx) || defined(STM32G484xx) || defined(STM32G473xx)
+#if defined(STM32G474xx) || defined(STM32G484xx) || defined(STM32G473xx) || defined(STM32G483xx)
 #define IS_COMP_INPUT_MINUS(__COMP_INSTANCE__, __INPUT_MINUS__) (((__INPUT_MINUS__) == COMP_INPUT_MINUS_1_4VREFINT)  || \
                                                                  ((__INPUT_MINUS__) == COMP_INPUT_MINUS_1_2VREFINT)  || \
                                                                  ((__INPUT_MINUS__) == COMP_INPUT_MINUS_3_4VREFINT)  || \
@@ -1145,7 +1133,7 @@ typedef  void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer 
    || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM15_OC1)          \
    || ((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_TIM4_OC3)           \
   )
-#if defined(STM32G474xx) || defined(STM32G484xx) || defined(STM32G473xx)
+#if defined(STM32G474xx) || defined(STM32G484xx) || defined(STM32G473xx) || defined(STM32G483xx)
 #define IS_COMP_BLANKINGSRC_INSTANCE(__INSTANCE__, __OUTPUT_BLANKING_SOURCE__)  \
    ((((__INSTANCE__) == COMP1) &&                                               \
     (((__OUTPUT_BLANKING_SOURCE__) == COMP_BLANKINGSRC_NONE)            ||      \
@@ -1244,8 +1232,6 @@ typedef  void (*pCOMP_CallbackTypeDef)(COMP_HandleTypeDef *hcomp); /*!< pointer 
 #define IS_COMP_OUTPUT_LEVEL(__OUTPUT_LEVEL__) (((__OUTPUT_LEVEL__) == COMP_OUTPUT_LEVEL_LOW)     || \
                                                 ((__OUTPUT_LEVEL__) == COMP_OUTPUT_LEVEL_HIGH))
 
-#define IS_COMP_DEGLITCHER_MODE(__MODE__)   (((__MODE__) == COMP_DEGLITCHER_DISABLED)  || \
-                                             ((__MODE__) == COMP_DEGLITCHER_ENABLED))
 /**
   * @}
   */

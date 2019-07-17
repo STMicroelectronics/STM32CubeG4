@@ -137,7 +137,7 @@ USBPD_StatusTypeDef USBPD_PHY_Init(uint8_t PortNum, const USBPD_PHY_Callbacks *p
 uint16_t USBPD_PHY_GetRetryTimerValue(uint8_t PortNum)
 {
   (void)PortNum;
-  return 945u;
+  return 905u;
 }
 
 /**

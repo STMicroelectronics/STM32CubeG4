@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -80,9 +80,9 @@ TIMEx_BreakInputConfigTypeDef;
 typedef struct
 {
   uint32_t Polarity;                  /*!< TIM Encoder index polarity.
-                                           This parameter can be a value of @ref TIM_Encoder_Index_Polarity */
+                                           This parameter can be a value of @ref TIMEx_Encoder_Index_Polarity */
   uint32_t Prescaler;                 /*!< TIM Encoder index prescaler.
-                                           This parameter can be a value of @ref TIM_Encoder_Index_Prescaler */
+                                           This parameter can be a value of @ref TIMEx_Encoder_Index_Prescaler */
   uint32_t Filter;                    /*!< TIM Encoder index filter.
                                            This parameter can be a number between Min_Data = 0x0 and Max_Data = 0xF */
   FunctionalState  FirstIndexEnable;  /*!< Specifies whether or not the encoder first index is enabled.

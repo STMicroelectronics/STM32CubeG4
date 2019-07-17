@@ -93,7 +93,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; COPYRIGHT(c) 2017 STMicroelectronics</center></h2>
+  * <h2><center>&copy; COPYRIGHT(c) 2019 STMicroelectronics</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -542,13 +542,18 @@ HAL_StatusTypeDef HAL_RTCEx_SetWakeUpTimer(RTC_HandleTypeDef *hrtc, uint32_t Wak
   /* Disable the write protection for RTC registers */
   __HAL_RTC_WRITEPROTECTION_DISABLE(hrtc);
 
-  /* Check RTC WUTWF flag is reset only when wake up timer enabled*/
-  if (READ_BIT(RTC->CR, RTC_CR_WUTE) != 0U)
+  /* Clear WUTE in RTC_CR to disable the wakeup timer */
+  CLEAR_BIT(hrtc->Instance->CR, RTC_CR_WUTE);
+
+  /* Poll WUTWF until it is set in RTC_ICSR to make sure the access to wakeup autoreload
+     counter and to WUCKSEL[2:0] bits is allowed. This step must be skipped in
+     calendar initialization mode. */
+  if (READ_BIT(hrtc->Instance->ICSR, RTC_ICSR_INITF) == 0U)
   {
     tickstart = HAL_GetTick();
 
     /* Wait till RTC WUTWF flag is reset and if Time out is reached exit */
-    while (READ_BIT(RTC->ICSR, RTC_ICSR_WUTWF) != 0U)
+    while (READ_BIT(hrtc->Instance->ICSR, RTC_ICSR_WUTWF) == 0U)
     {
       if ((HAL_GetTick() - tickstart) > RTC_TIMEOUT_VALUE)
       {
@@ -565,42 +570,14 @@ HAL_StatusTypeDef HAL_RTCEx_SetWakeUpTimer(RTC_HandleTypeDef *hrtc, uint32_t Wak
     }
   }
 
-  /* Disable Wake Up timer */
-  CLEAR_BIT(RTC->CR, RTC_CR_WUTE);
-
-  /* Clear flag Wake-Up */
-  WRITE_REG(RTC->SCR, RTC_SCR_CWUTF);
-
-  tickstart = HAL_GetTick();
-
-  /* Wait till RTC WUTWF flag is set and if Time out is reached exit */
-  while (READ_BIT(RTC->ICSR, RTC_ICSR_WUTWF) == 0U)
-  {
-    if ((HAL_GetTick() - tickstart) > RTC_TIMEOUT_VALUE)
-    {
-      /* Enable the write protection for RTC registers */
-      __HAL_RTC_WRITEPROTECTION_ENABLE(hrtc);
-
-      hrtc->State = HAL_RTC_STATE_TIMEOUT;
-
-      /* Process Unlocked */
-      __HAL_UNLOCK(hrtc);
-
-      return HAL_TIMEOUT;
-    }
-  }
+  /* Configure the clock source */
+  MODIFY_REG(hrtc->Instance->CR, RTC_CR_WUCKSEL, (uint32_t)WakeUpClock);
 
   /* Configure the Wakeup Timer counter */
-  WRITE_REG(RTC->WUTR, (uint32_t)WakeUpCounter);
-
-  /* Clear the Wakeup Timer clock source bits in CR register */
-  CLEAR_BIT(RTC->CR, RTC_CR_WUCKSEL);
-
-  /* Configure the clock source */
-  MODIFY_REG(RTC->CR, RTC_CR_WUCKSEL, (uint32_t)WakeUpClock);
+  WRITE_REG(hrtc->Instance->WUTR, (uint32_t)WakeUpCounter);
 
   /* Enable the Wakeup Timer */
-  SET_BIT(RTC->CR, RTC_CR_WUTE);
+  SET_BIT(hrtc->Instance->CR, RTC_CR_WUTE);
 
   /* Enable the write protection for RTC registers */
   __HAL_RTC_WRITEPROTECTION_ENABLE(hrtc);
@@ -636,13 +613,21 @@ HAL_StatusTypeDef HAL_RTCEx_SetWakeUpTimer_IT(RTC_HandleTypeDef *hrtc, uint32_t 
   /* Disable the write protection for RTC registers */
   __HAL_RTC_WRITEPROTECTION_DISABLE(hrtc);
 
-  /* Check RTC WUTWF flag is reset only when wake up timer enabled */
-  if (READ_BIT(RTC->CR, RTC_CR_WUTE) != 0U)
+  /* Clear WUTE in RTC_CR to disable the wakeup timer */
+  CLEAR_BIT(hrtc->Instance->CR, RTC_CR_WUTE);
+
+  /* Clear flag Wake-Up */
+  __HAL_RTC_WAKEUPTIMER_CLEAR_FLAG(hrtc, RTC_FLAG_WUTF);
+
+  /* Poll WUTWF until it is set in RTC_ICSR to make sure the access to wakeup autoreload
+     counter and to WUCKSEL[2:0] bits is allowed. This step must be skipped in
+     calendar initialization mode. */
+  if (READ_BIT(hrtc->Instance->ICSR, RTC_ICSR_INITF) == 0U)
   {
     tickstart = HAL_GetTick();
 
     /* Wait till RTC WUTWF flag is reset and if Time out is reached exit */
-    while (READ_BIT(RTC->ICSR, RTC_ICSR_WUTWF) != 0U)
+    while (READ_BIT(hrtc->Instance->ICSR, RTC_ICSR_WUTWF) == 0U)
     {
       if ((HAL_GetTick() - tickstart) > RTC_TIMEOUT_VALUE)
       {
@@ -658,37 +643,8 @@ HAL_StatusTypeDef HAL_RTCEx_SetWakeUpTimer_IT(RTC_HandleTypeDef *hrtc, uint32_t 
       }
     }
   }
-  /* Disable the Wake-Up timer */
-  CLEAR_BIT(RTC->CR, RTC_CR_WUTE);
-
-  /* Clear flag Wake-Up */
-  WRITE_REG(RTC->SCR, RTC_SCR_CWUTF);
-  __HAL_RTC_WAKEUPTIMER_EXTI_CLEAR_IT();
-
-  tickstart = HAL_GetTick();
-
-  /* Wait till RTC WUTWF flag is set and if Time out is reached exit */
-  while (READ_BIT(RTC->ICSR, RTC_ICSR_WUTWF) == 0U)
-  {
-    if ((HAL_GetTick() - tickstart) > RTC_TIMEOUT_VALUE)
-    {
-      /* Enable the write protection for RTC registers */
-      __HAL_RTC_WRITEPROTECTION_ENABLE(hrtc);
-
-      hrtc->State = HAL_RTC_STATE_TIMEOUT;
-
-      /* Process Unlocked */
-      __HAL_UNLOCK(hrtc);
-
-      return HAL_TIMEOUT;
-    }
-  }
-
   /* Configure the Wakeup Timer counter */
   WRITE_REG(RTC->WUTR, (uint32_t)WakeUpCounter);
-
-  /* Clear the Wakeup Timer clock source bits in CR register */
-  CLEAR_BIT(RTC->CR, RTC_CR_WUCKSEL);
 
   /* Configure the clock source */
   MODIFY_REG(RTC->CR, RTC_CR_WUCKSEL, (uint32_t)WakeUpClock);
@@ -697,7 +653,7 @@ HAL_StatusTypeDef HAL_RTCEx_SetWakeUpTimer_IT(RTC_HandleTypeDef *hrtc, uint32_t 
   __HAL_RTC_WAKEUPTIMER_EXTI_ENABLE_IT();
   __HAL_RTC_WAKEUPTIMER_EXTI_RISING_IT();
 
-  /* Configure the Interrupt in the RTC_CR register and Enable the Wakeup Timer*/
+  /* Configure the Interrupt in the RTC_CR register and Enable the Wakeup Timer */ 
   SET_BIT(RTC->CR, (RTC_CR_WUTIE | RTC_CR_WUTE));
 
   /* Enable the write protection for RTC registers */
@@ -1134,6 +1090,8 @@ HAL_StatusTypeDef HAL_RTCEx_DeactivateCalibrationOutPut(RTC_HandleTypeDef *hrtc)
   */
 HAL_StatusTypeDef HAL_RTCEx_SetRefClock(RTC_HandleTypeDef *hrtc)
 {
+  HAL_StatusTypeDef status;
+
   /* Process Locked */
   __HAL_LOCK(hrtc);
 
@@ -1142,39 +1100,29 @@ HAL_StatusTypeDef HAL_RTCEx_SetRefClock(RTC_HandleTypeDef *hrtc)
   /* Disable the write protection for RTC registers */
   __HAL_RTC_WRITEPROTECTION_DISABLE(hrtc);
 
-  /* Set Initialization mode */
-  if (RTC_EnterInitMode(hrtc) != HAL_OK)
-  {
-    /* Enable the write protection for RTC registers */
-    __HAL_RTC_WRITEPROTECTION_ENABLE(hrtc);
-
-    /* Set RTC state*/
-    hrtc->State = HAL_RTC_STATE_ERROR;
-
-    /* Process Unlocked */
-    __HAL_UNLOCK(hrtc);
-
-    return HAL_ERROR;
-  }
-  else
+  /* Enter Initialization mode */
+  status = RTC_EnterInitMode(hrtc);
+  if (status == HAL_OK)
   {
     /* Enable clockref detection */
     SET_BIT(RTC->CR, RTC_CR_REFCKON);
 
     /* Exit Initialization mode */
-    CLEAR_BIT(RTC->ICSR, RTC_ICSR_INIT);
+    status = RTC_ExitInitMode(hrtc);
   }
 
   /* Enable the write protection for RTC registers */
   __HAL_RTC_WRITEPROTECTION_ENABLE(hrtc);
 
-  /* Change RTC state */
-  hrtc->State = HAL_RTC_STATE_READY;
+  if (status == HAL_OK)
+  {
+    hrtc->State = HAL_RTC_STATE_READY;
+  }
 
   /* Process Unlocked */
   __HAL_UNLOCK(hrtc);
 
-  return HAL_OK;
+  return status;
 }
 
 /**
@@ -1184,6 +1132,8 @@ HAL_StatusTypeDef HAL_RTCEx_SetRefClock(RTC_HandleTypeDef *hrtc)
   */
 HAL_StatusTypeDef HAL_RTCEx_DeactivateRefClock(RTC_HandleTypeDef *hrtc)
 {
+  HAL_StatusTypeDef status;
+
   /* Process Locked */
   __HAL_LOCK(hrtc);
 
@@ -1192,39 +1142,29 @@ HAL_StatusTypeDef HAL_RTCEx_DeactivateRefClock(RTC_HandleTypeDef *hrtc)
   /* Disable the write protection for RTC registers */
   __HAL_RTC_WRITEPROTECTION_DISABLE(hrtc);
 
-  /* Set Initialization mode */
-  if (RTC_EnterInitMode(hrtc) != HAL_OK)
-  {
-    /* Enable the write protection for RTC registers */
-    __HAL_RTC_WRITEPROTECTION_ENABLE(hrtc);
-
-    /* Set RTC state*/
-    hrtc->State = HAL_RTC_STATE_ERROR;
-
-    /* Process Unlocked */
-    __HAL_UNLOCK(hrtc);
-
-    return HAL_ERROR;
-  }
-  else
+  /* Enter Initialization mode */
+  status = RTC_EnterInitMode(hrtc);
+  if (status == HAL_OK)
   {
     /* Disable clockref detection */
     CLEAR_BIT(RTC->CR, RTC_CR_REFCKON);
 
     /* Exit Initialization mode */
-    CLEAR_BIT(RTC->ICSR, RTC_ICSR_INIT);
+    status = RTC_ExitInitMode(hrtc);
   }
 
   /* Enable the write protection for RTC registers */
   __HAL_RTC_WRITEPROTECTION_ENABLE(hrtc);
 
-  /* Change RTC state */
-  hrtc->State = HAL_RTC_STATE_READY;
+  if (status == HAL_OK)
+  {
+    hrtc->State = HAL_RTC_STATE_READY;
+  }
 
   /* Process Unlocked */
   __HAL_UNLOCK(hrtc);
 
-  return HAL_OK;
+  return status;
 }
 
 /**

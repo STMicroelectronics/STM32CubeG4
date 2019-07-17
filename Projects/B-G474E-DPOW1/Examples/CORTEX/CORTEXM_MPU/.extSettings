@@ -1,0 +1,9 @@
+[ProjectFiles]
+HeaderPath=..\..\..\..\..\..\Drivers\BSP\B-G474E-DPOW1
+[Others]
+Define=
+HALModule=
+[Groups]
+Application/User=../Src/stm32_mpu.c;
+Doc=../readme.txt;
+Drivers/BSP/B-G474E-DPOW1=../../../../../../Drivers/BSP/B-G474E-DPOW1/b_g474e_dpow1.c;

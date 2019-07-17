@@ -67,13 +67,12 @@ extern const GUI_Drv_t LCD_Driver;
 /** @defgroup ADAFRUIT_802_LCD_Exported_Types LCD Exported Types
   * @{
   */
-typedef uint32_t(*ConvertColor_Func)(uint32_t);
-
 typedef struct
 {
-  uint32_t ActiveLayer;
+  uint32_t XSize;
+  uint32_t YSize;
+  uint32_t PixelFormat;
   uint32_t IsMspCallbacksValid;
-  ConvertColor_Func pConvert;
 } ADAFRUIT_802_LCD_Ctx_t;
 
 /**

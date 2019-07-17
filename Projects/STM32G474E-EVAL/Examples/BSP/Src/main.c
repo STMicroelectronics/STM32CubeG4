@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -233,7 +233,7 @@ static void Display_DemoDescription(void)
   BSP_LCD_DrawBitmap(0, (x_size - 80)/2, 65, (uint8_t *)stlogo);
 
   GUI_SetFont(&Font12);
-  GUI_DisplayStringAt( 0, y_size - 20, (uint8_t *)"Copyright (c) STMicroelectronics 2018", CENTER_MODE);
+  GUI_DisplayStringAt( 0, y_size - 20, (uint8_t *)"Copyright (c) STMicroelectronics 2019", CENTER_MODE);
 
   GUI_SetFont(&Font16);
   BSP_LCD_FillRect(0, 0, y_size/2 + 15, x_size, 60, LCD_COLOR_RGB565_BLUE);

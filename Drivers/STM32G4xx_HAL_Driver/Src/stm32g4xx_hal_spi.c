@@ -65,16 +65,16 @@
           Use Functions HAL_SPI_RegisterCallback() to register an interrupt callback.
 
           Function HAL_SPI_RegisterCallback() allows to register following callbacks:
-            (+) TxCpltCallback        : SPI Tx Completed callback
-            (+) RxCpltCallback        : SPI Rx Completed callback
-            (+) TxRxCpltCallback      : SPI TxRx Completed callback
-            (+) TxHalfCpltCallback    : SPI Tx Half Completed callback
-            (+) RxHalfCpltCallback    : SPI Rx Half Completed callback
-            (+) TxRxHalfCpltCallback  : SPI TxRx Half Completed callback
-            (+) ErrorCallback         : SPI Error callback
-            (+) AbortCpltCallback     : SPI Abort callback
-            (+) MspInitCallback       : SPI Msp Init callback
-            (+) MspDeInitCallback     : SPI Msp DeInit callback
+            (++) TxCpltCallback        : SPI Tx Completed callback
+            (++) RxCpltCallback        : SPI Rx Completed callback
+            (++) TxRxCpltCallback      : SPI TxRx Completed callback
+            (++) TxHalfCpltCallback    : SPI Tx Half Completed callback
+            (++) RxHalfCpltCallback    : SPI Rx Half Completed callback
+            (++) TxRxHalfCpltCallback  : SPI TxRx Half Completed callback
+            (++) ErrorCallback         : SPI Error callback
+            (++) AbortCpltCallback     : SPI Abort callback
+            (++) MspInitCallback       : SPI Msp Init callback
+            (++) MspDeInitCallback     : SPI Msp DeInit callback
           This function takes as parameters the HAL peripheral handle, the Callback ID
           and a pointer to the user callback function.
 
@@ -84,17 +84,18 @@
           HAL_SPI_UnRegisterCallback takes as parameters the HAL peripheral handle,
           and the Callback ID.
           This function allows to reset following callbacks:
-            (+) TxCpltCallback        : SPI Tx Completed callback
-            (+) RxCpltCallback        : SPI Rx Completed callback
-            (+) TxRxCpltCallback      : SPI TxRx Completed callback
-            (+) TxHalfCpltCallback    : SPI Tx Half Completed callback
-            (+) RxHalfCpltCallback    : SPI Rx Half Completed callback
-            (+) TxRxHalfCpltCallback  : SPI TxRx Half Completed callback
-            (+) ErrorCallback         : SPI Error callback
-            (+) AbortCpltCallback     : SPI Abort callback
-            (+) MspInitCallback       : SPI Msp Init callback
-            (+) MspDeInitCallback     : SPI Msp DeInit callback
+            (++) TxCpltCallback        : SPI Tx Completed callback
+            (++) RxCpltCallback        : SPI Rx Completed callback
+            (++) TxRxCpltCallback      : SPI TxRx Completed callback
+            (++) TxHalfCpltCallback    : SPI Tx Half Completed callback
+            (++) RxHalfCpltCallback    : SPI Rx Half Completed callback
+            (++) TxRxHalfCpltCallback  : SPI TxRx Half Completed callback
+            (++) ErrorCallback         : SPI Error callback
+            (++) AbortCpltCallback     : SPI Abort callback
+            (++) MspInitCallback       : SPI Msp Init callback
+            (++) MspDeInitCallback     : SPI Msp DeInit callback
 
+       [..]
        By default, after the HAL_SPI_Init() and when the state is HAL_SPI_STATE_RESET
        all callbacks are set to the corresponding weak functions:
        examples HAL_SPI_MasterTxCpltCallback(), HAL_SPI_MasterRxCpltCallback().
@@ -104,6 +105,7 @@
        If MspInit or MspDeInit are not null, the HAL_SPI_Init()/ HAL_SPI_DeInit()
        keep and use the user MspInit/MspDeInit callbacks (registered beforehand) whatever the state.
 
+       [..]
        Callbacks can be registered/unregistered in HAL_SPI_STATE_READY state only.
        Exception done MspInit/MspDeInit functions that can be registered/unregistered
        in HAL_SPI_STATE_READY or HAL_SPI_STATE_RESET state,
@@ -112,7 +114,8 @@
        using HAL_SPI_RegisterCallback() before calling HAL_SPI_DeInit()
        or HAL_SPI_Init() function.
 
-       When The compilation define USE_HAL_PPP_REGISTER_CALLBACKS is set to 0 or
+       [..]
+       When the compilation define USE_HAL_PPP_REGISTER_CALLBACKS is set to 0 or
        not defined, the callback registering feature is not available
        and weak (surcharged) callbacks are used.
 
@@ -184,7 +187,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,

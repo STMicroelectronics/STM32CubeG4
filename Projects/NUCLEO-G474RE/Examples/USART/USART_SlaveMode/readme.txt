@@ -8,7 +8,7 @@
   * @brief   Description of the USART_SlaveMode example.
   ******************************************************************************
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -85,6 +85,7 @@ The SystemClock_Config() function is used to configure the system clock for STM3
 
 @par Directory contents
 
+  - USART/USART_SlaveMode/Inc/stm32g4xx_nucleo_conf.h     BSP configuration file
   - USART/USART_SlaveMode/Src/main.c                 Main program
   - USART/USART_SlaveMode/Src/system_stm32g4xx.c     STM32G4xx system clock configuration file
   - USART/USART_SlaveMode/Src/stm32g4xx_it.c         Interrupt handlers

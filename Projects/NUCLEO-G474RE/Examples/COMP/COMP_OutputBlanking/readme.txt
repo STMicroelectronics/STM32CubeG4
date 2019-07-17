@@ -8,7 +8,7 @@
   * @brief   Description of the COMP output blanking Example
   ******************************************************************************
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -28,7 +28,7 @@ In this example COMP1 and TIM2 are used:
 COMP1 is configured as following:
  - Non Inverting input is connected to PB1
  - Inverting input is connected to VREFINT (1.22V)
- - Output is available on PA6 (pin 13 on connector CN10 or D12 on connector CN5) 
+ - Output is available on PA6 (pin 13 on connector CN10)
  - Blanking source is connected internally to TIM2 TIM_CHANNEL_3
 
 
@@ -52,7 +52,9 @@ Comparator output signal expected:
  - Between t=duty cycle pulse and t=period: Comparator positive input at level low, blanking source at level low.
    Comparator positive input is higher than negative input, therefore comparator output is low.
 
-LED2 is also toggling indicating that the program is running.
+NUCLEO-G474RE RevC board's LED is be used to monitor the program execution status:
+  - LED2 is toggling every 500ms when test pass successfully.
+  - LED2 is "ON" when an error occurred.
 
 @note Care must be taken when using HAL_Delay(), this function provides 
       accurate delay (in milliseconds) based on variable incremented in SysTick ISR. 
@@ -70,6 +72,7 @@ comparator, output blanking.
 
 @par Directory contents 
 
+  - COMP/COMP_OutputBlanking/Inc/stm32g4xx_nucleo_conf.h     BSP configuration file
   - COMP/COMP_OutputBlanking/Inc/stm32g4xx_hal_conf.h    HAL configuration file
   - COMP/COMP_OutputBlanking/Inc/stm32g4xx_it.h          COMP interrupt handlers header file
   - COMP/COMP_OutputBlanking/Inc/main.h                  Header for main.c module

@@ -8,7 +8,7 @@
   * @brief   Description of the UART_WakeUpFromStopUsingFIFO example.
   ******************************************************************************
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -86,6 +86,7 @@ The UART is configured as follows:
 
 @par Directory contents
 
+  - UART/UART_WakeUpFromStopUsingFIFO/Inc/stm32g4xx_nucleo_conf.h     BSP configuration file
   - UART/UART_WakeUpFromStopUsingFIFO/Src/main.c                 Main program
   - UART/UART_WakeUpFromStopUsingFIFO/Src/system_stm32g4xx.c     STM32G4xx system clock configuration file
   - UART/UART_WakeUpFromStopUsingFIFO/Src/stm32g4xx_it.c         Interrupt handlers

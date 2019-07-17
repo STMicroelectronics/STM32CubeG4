@@ -229,8 +229,6 @@
           <state>DATA_CACHE_ENABLE=1</state>
           <state>STM32G431xx</state>
           <state></state>
-          <state></state>
-          <state></state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1090,18 +1088,6 @@
       <name>CMSIS</name>
       <file>
         <name>$PROJ_DIR$/../Src/system_stm32g4xx.c</name>
-      </file>
-    </group>
-  </group>
-  <group>
-    <name>Example</name>
-    <group>
-      <name>User</name>
-      <file>
-        <name>$PROJ_DIR$/../Src/main.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../Src/stm32g4xx_it.c</name>
       </file>
     </group>
   </group>

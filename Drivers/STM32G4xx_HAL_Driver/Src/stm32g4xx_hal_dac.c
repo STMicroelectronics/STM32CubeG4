@@ -134,8 +134,6 @@
          & DAC_ChannelConfTypeDef.DAC_SampleAndHoldConfig.DAC_SampleTime,
            DAC_HoldTime & DAC_RefreshTime;
 
-
-
        *** DAC calibration feature ***
        ===================================
       [..]
@@ -316,8 +314,6 @@
       not defined, the callback registering feature is not available
       and weak (surcharged) callbacks are used.
 
-
-
      *** DAC HAL driver macros list ***
      =============================================
      [..]
@@ -335,7 +331,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -375,7 +371,6 @@
   * @}
   */
 
-/* Private macro -------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
@@ -593,7 +588,7 @@ HAL_StatusTypeDef HAL_DAC_Start(DAC_HandleTypeDef *hdac, uint32_t Channel)
   if (Channel == DAC_CHANNEL_1)
   {
     /* Check if software trigger enabled */
-    if ((hdac->Instance->CR & (DAC_CR_TEN1 | DAC_CR_TSEL1)) == DAC_CR_TEN1)
+    if ((hdac->Instance->CR & (DAC_CR_TEN1 | DAC_CR_TSEL1)) == DAC_TRIGGER_SOFTWARE)
     {
       /* Enable the selected DAC software conversion */
       SET_BIT(hdac->Instance->SWTRIGR, DAC_SWTRIGR_SWTRIG1);
@@ -602,7 +597,7 @@ HAL_StatusTypeDef HAL_DAC_Start(DAC_HandleTypeDef *hdac, uint32_t Channel)
   else
   {
     /* Check if software trigger enabled */
-    if ((hdac->Instance->CR & (DAC_CR_TEN2 | DAC_CR_TSEL2)) == DAC_CR_TEN2)
+    if ((hdac->Instance->CR & (DAC_CR_TEN2 | DAC_CR_TSEL2)) == (DAC_TRIGGER_SOFTWARE << (Channel & 0x10UL)))
     {
       /* Enable the selected DAC software conversion*/
       SET_BIT(hdac->Instance->SWTRIGR, DAC_SWTRIGR_SWTRIG2);
@@ -1279,7 +1274,6 @@ HAL_StatusTypeDef HAL_DAC_ConfigChannel(DAC_HandleTypeDef *hdac, DAC_ChannelConf
   tmpreg1 |= tmpreg2 << (Channel & 0x10UL);
   /* Write to DAC CR */
   hdac->Instance->CR = tmpreg1;
-
   /* Disable wave generation */
   hdac->Instance->CR &= ~(DAC_CR_WAVE1 << (Channel & 0x10UL));
 
@@ -1373,8 +1367,8 @@ uint32_t HAL_DAC_GetError(DAC_HandleTypeDef *hdac)
   *          @arg @ref HAL_DAC_CH2_HALF_COMPLETE_CB_ID  DAC CH2 Half Complete Callback ID
   *          @arg @ref HAL_DAC_CH2_ERROR_ID             DAC CH2 Error Callback ID
   *          @arg @ref HAL_DAC_CH2_UNDERRUN_CB_ID       DAC CH2 UnderRun Callback ID
-  *          @arg @ref HAL_DAC_MSP_INIT_CB_ID           DAC MSP Init Callback ID
-  *          @arg @ref HAL_DAC_MSP_DEINIT_CB_ID         DAC MSP DeInit Callback ID
+  *          @arg @ref HAL_DAC_MSPINIT_CB_ID            DAC MSP Init Callback ID
+  *          @arg @ref HAL_DAC_MSPDEINIT_CB_ID          DAC MSP DeInit Callback ID
   *
   * @param  pCallback pointer to the Callback function
   * @retval status
@@ -1422,10 +1416,10 @@ HAL_StatusTypeDef HAL_DAC_RegisterCallback(DAC_HandleTypeDef *hdac, HAL_DAC_Call
       case HAL_DAC_CH2_UNDERRUN_CB_ID :
         hdac->DMAUnderrunCallbackCh2 = pCallback;
         break;
-      case HAL_DAC_MSP_INIT_CB_ID :
+      case HAL_DAC_MSPINIT_CB_ID :
         hdac->MspInitCallback = pCallback;
         break;
-      case HAL_DAC_MSP_DEINIT_CB_ID :
+      case HAL_DAC_MSPDEINIT_CB_ID :
         hdac->MspDeInitCallback = pCallback;
         break;
       default :
@@ -1440,10 +1434,10 @@ HAL_StatusTypeDef HAL_DAC_RegisterCallback(DAC_HandleTypeDef *hdac, HAL_DAC_Call
   {
     switch (CallbackID)
     {
-      case HAL_DAC_MSP_INIT_CB_ID :
+      case HAL_DAC_MSPINIT_CB_ID :
         hdac->MspInitCallback = pCallback;
         break;
-      case HAL_DAC_MSP_DEINIT_CB_ID :
+      case HAL_DAC_MSPDEINIT_CB_ID :
         hdac->MspDeInitCallback = pCallback;
         break;
       default :
@@ -1481,8 +1475,8 @@ HAL_StatusTypeDef HAL_DAC_RegisterCallback(DAC_HandleTypeDef *hdac, HAL_DAC_Call
   *          @arg @ref HAL_DAC_CH2_HALF_COMPLETE_CB_ID     DAC CH2 Half Complete Callback ID
   *          @arg @ref HAL_DAC_CH2_ERROR_ID                DAC CH2 Error Callback ID
   *          @arg @ref HAL_DAC_CH2_UNDERRUN_CB_ID          DAC CH2 UnderRun Callback ID
-  *          @arg @ref HAL_DAC_MSP_INIT_CB_ID              DAC MSP Init Callback ID
-  *          @arg @ref HAL_DAC_MSP_DEINIT_CB_ID            DAC MSP DeInit Callback ID
+  *          @arg @ref HAL_DAC_MSPINIT_CB_ID               DAC MSP Init Callback ID
+  *          @arg @ref HAL_DAC_MSPDEINIT_CB_ID             DAC MSP DeInit Callback ID
   *          @arg @ref HAL_DAC_ALL_CB_ID                   DAC All callbacks
   * @retval status
   */
@@ -1521,10 +1515,10 @@ HAL_StatusTypeDef HAL_DAC_UnRegisterCallback(DAC_HandleTypeDef *hdac, HAL_DAC_Ca
       case HAL_DAC_CH2_UNDERRUN_CB_ID :
         hdac->DMAUnderrunCallbackCh2 = HAL_DACEx_DMAUnderrunCallbackCh2;
         break;
-      case HAL_DAC_MSP_INIT_CB_ID :
+      case HAL_DAC_MSPINIT_CB_ID :
         hdac->MspInitCallback = HAL_DAC_MspInit;
         break;
-      case HAL_DAC_MSP_DEINIT_CB_ID :
+      case HAL_DAC_MSPDEINIT_CB_ID :
         hdac->MspDeInitCallback = HAL_DAC_MspDeInit;
         break;
       case HAL_DAC_ALL_CB_ID :
@@ -1551,10 +1545,10 @@ HAL_StatusTypeDef HAL_DAC_UnRegisterCallback(DAC_HandleTypeDef *hdac, HAL_DAC_Ca
   {
     switch (CallbackID)
     {
-      case HAL_DAC_MSP_INIT_CB_ID :
+      case HAL_DAC_MSPINIT_CB_ID :
         hdac->MspInitCallback = HAL_DAC_MspInit;
         break;
-      case HAL_DAC_MSP_DEINIT_CB_ID :
+      case HAL_DAC_MSPDEINIT_CB_ID :
         hdac->MspDeInitCallback = HAL_DAC_MspDeInit;
         break;
       default :

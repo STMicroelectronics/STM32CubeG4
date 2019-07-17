@@ -8,7 +8,7 @@
   * @brief   Description of the TIM_PWMOutput_Init example.
   ******************************************************************************
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -48,8 +48,9 @@ half the auto-reload value meaning a initial duty cycle of 50%.
 Generally speaking this duty cycle is calculated as follows:
 Duty cycle = (CCR1 / ARR) * 100
 
-The timer output channel must be connected to TIM2_CH1 on board NUCLEO-G474RE RevC.
-Thus TIM2_CH1 status (on/off) mirrors the timer output level (active v.s. inactive).
+The timer output channel is mapped on the pin PA.05 (connected to LED2 on board
+NUCLEO-G474RE RevC).
+Thus LED2 status (on/off) mirrors the timer output level (active v.s. inactive).
 
 User push-button can be used to change the duty cycle from 0% up to 100% by
 steps of 10%. Duty cycle is periodically measured. It can be observed through

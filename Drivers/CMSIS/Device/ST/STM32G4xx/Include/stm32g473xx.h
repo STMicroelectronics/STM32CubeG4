@@ -12,7 +12,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -2364,10 +2364,6 @@ typedef struct
 #define COMP_CSR_EN_Pos            (0U)
 #define COMP_CSR_EN_Msk            (0x1UL << COMP_CSR_EN_Pos)                  /*!< 0x00000001 */
 #define COMP_CSR_EN                COMP_CSR_EN_Msk                             /*!< Comparator enable */
-
-#define COMP_CSR_DEGLITCHEN_Pos    (1U)
-#define COMP_CSR_DEGLITCHEN_Msk    (0x1UL << COMP_CSR_DEGLITCHEN_Pos)          /*!< 0x00000002 */
-#define COMP_CSR_DEGLITCHEN        COMP_CSR_DEGLITCHEN_Msk                     /*!< Comparator deglitcher enable */
 
 #define COMP_CSR_INMSEL_Pos        (4U)
 #define COMP_CSR_INMSEL_Msk        (0xFUL << COMP_CSR_INMSEL_Pos)              /*!< 0x00000070 */

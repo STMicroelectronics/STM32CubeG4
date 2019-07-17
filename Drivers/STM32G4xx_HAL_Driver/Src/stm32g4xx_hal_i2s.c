@@ -115,13 +115,13 @@
           Use Functions HAL_I2S_RegisterCallback() to register an interrupt callback.
 
           Function HAL_I2S_RegisterCallback() allows to register following callbacks:
-            (+) TxCpltCallback        : I2S Tx Completed callback
-            (+) RxCpltCallback        : I2S Rx Completed callback
-            (+) TxHalfCpltCallback    : I2S Tx Half Completed callback
-            (+) RxHalfCpltCallback    : I2S Rx Half Completed callback
-            (+) ErrorCallback         : I2S Error callback
-            (+) MspInitCallback       : I2S Msp Init callback
-            (+) MspDeInitCallback     : I2S Msp DeInit callback
+            (++) TxCpltCallback        : I2S Tx Completed callback
+            (++) RxCpltCallback        : I2S Rx Completed callback
+            (++) TxHalfCpltCallback    : I2S Tx Half Completed callback
+            (++) RxHalfCpltCallback    : I2S Rx Half Completed callback
+            (++) ErrorCallback         : I2S Error callback
+            (++) MspInitCallback       : I2S Msp Init callback
+            (++) MspDeInitCallback     : I2S Msp DeInit callback
           This function takes as parameters the HAL peripheral handle, the Callback ID
           and a pointer to the user callback function.
 
@@ -131,14 +131,15 @@
           HAL_I2S_UnRegisterCallback takes as parameters the HAL peripheral handle,
           and the Callback ID.
           This function allows to reset following callbacks:
-            (+) TxCpltCallback        : I2S Tx Completed callback
-            (+) RxCpltCallback        : I2S Rx Completed callback
-            (+) TxHalfCpltCallback    : I2S Tx Half Completed callback
-            (+) RxHalfCpltCallback    : I2S Rx Half Completed callback
-            (+) ErrorCallback         : I2S Error callback
-            (+) MspInitCallback       : I2S Msp Init callback
-            (+) MspDeInitCallback     : I2S Msp DeInit callback
+            (++) TxCpltCallback        : I2S Tx Completed callback
+            (++) RxCpltCallback        : I2S Rx Completed callback
+            (++) TxHalfCpltCallback    : I2S Tx Half Completed callback
+            (++) RxHalfCpltCallback    : I2S Rx Half Completed callback
+            (++) ErrorCallback         : I2S Error callback
+            (++) MspInitCallback       : I2S Msp Init callback
+            (++) MspDeInitCallback     : I2S Msp DeInit callback
 
+       [..]
        By default, after the HAL_I2S_Init() and when the state is HAL_I2S_STATE_RESET
        all callbacks are set to the corresponding weak functions:
        examples HAL_I2S_MasterTxCpltCallback(), HAL_I2S_MasterRxCpltCallback().
@@ -148,6 +149,7 @@
        If MspInit or MspDeInit are not null, the HAL_I2S_Init()/ HAL_I2S_DeInit()
        keep and use the user MspInit/MspDeInit callbacks (registered beforehand) whatever the state.
 
+       [..]
        Callbacks can be registered/unregistered in HAL_I2S_STATE_READY state only.
        Exception done MspInit/MspDeInit functions that can be registered/unregistered
        in HAL_I2S_STATE_READY or HAL_I2S_STATE_RESET state,
@@ -156,7 +158,8 @@
        using HAL_I2S_RegisterCallback() before calling HAL_I2S_DeInit()
        or HAL_I2S_Init() function.
 
-       When The compilation define USE_HAL_I2S_REGISTER_CALLBACKS is set to 0 or
+       [..]
+       When the compilation define USE_HAL_I2S_REGISTER_CALLBACKS is set to 0 or
        not defined, the callback registering feature is not available
        and weak (surcharged) callbacks are used.
 
@@ -164,7 +167,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,

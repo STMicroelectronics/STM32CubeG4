@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; COPYRIGHT(c) 2017 STMicroelectronics</center></h2>
+  * <h2><center>&copy; COPYRIGHT(c) 2019 STMicroelectronics</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -469,10 +469,10 @@ typedef  void (*pRTC_CallbackTypeDef)(RTC_HandleTypeDef *hrtc); /*!< pointer to 
   * @}
   */
 
-/** @defgroup RTC_Interruption_Mask    RTC Interruptions Flag Mask
+/** @defgroup RTC_Flag_Mask    RTC Flag Mask (5bits) describe in RTC_Flags_Definitions
   * @{
   */
-#define RTC_IT_MASK                         0x001FU                  /*!< RTC interruptions flags mask */
+#define RTC_FLAG_MASK                       0x001FU            /*!< RTC flags mask (5bits) */
 /**
   * @}
   */
@@ -482,24 +482,24 @@ typedef  void (*pRTC_CallbackTypeDef)(RTC_HandleTypeDef *hrtc); /*!< pointer to 
   *           - YYYYY  : Interrupt flag position in the XX register (5bits)
   *           - XX  : Interrupt status register (2bits)
   *                 - 01: ICSR register
-  *                 - 10: SR register
+  *                 - 10: SR or SCR or MISR registers
   * @{
   */
-#define RTC_FLAG_RECALPF                    0x00000110U    /*!< Recalibration pending Flag */
-#define RTC_FLAG_INITF                      0x00000106U    /*!< Initialization flag */
-#define RTC_FLAG_RSF                        0x00000105U    /*!< Registers synchronization flag */
-#define RTC_FLAG_INITS                      0x00000104U    /*!< Initialization status flag */
-#define RTC_FLAG_SHPF                       0x00000103U    /*!< Shift operation pending flag */
-#define RTC_FLAG_WUTWF                      0x00000102U    /*!< Wakeup timer write flag */
-#define RTC_FLAG_ALRBWF                     0x00000101U    /*!< Alarm B write flag */
-#define RTC_FLAG_ALRAWF                     0x00000100U    /*!< Alarm A write flag */
-#define RTC_FLAG_ITSF                       0x00000205U    /*!< Clear Internal Time-stamp flag */
-#define RTC_FLAG_TSOVF                      0x00000204U    /*!< Clear Time-stamp overflow flag */
-#define RTC_FLAG_TSF                        0x00000203U    /*!< Clear Time-stamp flag */
-#define RTC_FLAG_WUTF                       0x00000202U    /*!< Clear Wakeup timer flag */
-#define RTC_FLAG_ALRBF                      0x00000201U    /*!< Clear Alarm B flag */
-#define RTC_FLAG_ALRAF                      0x00000200U    /*!< Clear Alarm A flag */
-/**
+#define RTC_FLAG_RECALPF                    (0x00000100U | RTC_ICSR_RECALPF_Pos) /*!< Recalibration pending Flag */
+#define RTC_FLAG_INITF                      (0x00000100U | RTC_ICSR_INITF_Pos)   /*!< Initialization flag */
+#define RTC_FLAG_RSF                        (0x00000100U | RTC_ICSR_RSF_Pos)     /*!< Registers synchronization flag */
+#define RTC_FLAG_INITS                      (0x00000100U | RTC_ICSR_INITS_Pos)   /*!< Initialization status flag */
+#define RTC_FLAG_SHPF                       (0x00000100U | RTC_ICSR_SHPF_Pos)    /*!< Shift operation pending flag */
+#define RTC_FLAG_WUTWF                      (0x00000100U | RTC_ICSR_WUTWF_Pos)   /*!< Wakeup timer write flag */
+#define RTC_FLAG_ALRBWF                     (0x00000100U | RTC_ICSR_ALRBWF_Pos)  /*!< Alarm B write flag */
+#define RTC_FLAG_ALRAWF                     (0x00000100U | RTC_ICSR_ALRAWF_Pos)  /*!< Alarm A write flag */
+#define RTC_FLAG_ITSF                       (0x00000200U | RTC_SR_ITSF_Pos)      /*!< Internal Time-stamp flag */
+#define RTC_FLAG_TSOVF                      (0x00000200U | RTC_SR_TSOVF_Pos)     /*!< Time-stamp overflow flag */
+#define RTC_FLAG_TSF                        (0x00000200U | RTC_SR_TSF_Pos)       /*!< Time-stamp flag */
+#define RTC_FLAG_WUTF                       (0x00000200U | RTC_SR_WUTF_Pos)      /*!< Wakeup timer flag */
+#define RTC_FLAG_ALRBF                      (0x00000200U | RTC_SR_ALRBF_Pos)     /*!< Alarm B flag */
+#define RTC_FLAG_ALRAF                      (0x00000200U | RTC_SR_ALRAF_Pos)     /*!< Alarm A flag */
+ /**
   * @}
   */
 
@@ -982,6 +982,7 @@ HAL_RTCStateTypeDef HAL_RTC_GetState(RTC_HandleTypeDef *hrtc);
   * @{
   */
 HAL_StatusTypeDef  RTC_EnterInitMode(RTC_HandleTypeDef *hrtc);
+HAL_StatusTypeDef  RTC_ExitInitMode(RTC_HandleTypeDef *hrtc);
 uint8_t            RTC_ByteToBcd2(uint8_t Value);
 uint8_t            RTC_Bcd2ToByte(uint8_t Value);
 /**

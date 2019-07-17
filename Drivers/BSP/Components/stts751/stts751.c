@@ -18,7 +18,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stts751.h"
-#include "cmsis_iar.h"
+#include "stm32g474xx.h"
 
 /** @addtogroup BSP
   * @{
@@ -353,24 +353,25 @@ int32_t STTS751_TEMP_GetOutputDataRate(STTS751_Object_t *pObj, float *Odr )
 }
 
 /**
- * @brief Set the STTS751 temperature sensor output data rate
- * @param pObj the device pObj
- * @param odr the output data rate value to be set
- * @retval 0 in case of success, an error code otherwise
- */
+* @brief Set the STTS751 temperature sensor output data rate
+* @param pObj the device pObj
+* @param odr the output data rate value to be set
+* @retval 0 in case of success, an error code otherwise
+*/
 int32_t STTS751_TEMP_SetOutputDataRate( STTS751_Object_t *pObj, float Odr )
 {
   uint8_t tmp;
   int32_t ret;
 
-  tmp =  ( __iar_builtin_CLZ(__iar_builtin_RBIT((int)(Odr * 16)))); /*POSITION_VAL((Odr * 16));*/
-
+  tmp =  ( __CLZ(__RBIT((int)(Odr * 16)))); /*POSITION_VAL((Odr * 16));*/
+  
   ret = stts751_write_reg(&(pObj->Ctx), STTS751_CONVERSION_RATE, &tmp, 1);
   if(ret == STTS751_OK){
     STTS751_TEMP_Config.conv_mode = tmp;
   }
   return ret;
 }
+
 
 /**
  * @brief Get the STTS751 temperature value

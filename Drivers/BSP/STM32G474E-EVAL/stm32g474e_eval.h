@@ -12,7 +12,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -227,11 +227,6 @@ typedef enum
 /** @defgroup STM32G474E-EVAL_Exported_Constants Exported Constants
   * @{
   */
-#if defined(_GUI_INTERFACE)
-const uint8_t HWBoardVersionName[]  = "STM32G474E-EVAL";
-const uint8_t PDTypeName[]          = "MB1397B";
-#endif /* _GUI_INTERFACE */
-
 /** @defgroup STM32G474E-EVAL_LED LED Constants
   * @{
   */
@@ -349,7 +344,7 @@ const uint8_t PDTypeName[]          = "MB1397B";
 #define POT1_SAMPLING_TIME           ADC_SAMPLETIME_47CYCLES_5
 #define POT1_PRESCALER               ADC_CLOCKPRESCALER_PCLK_DIV4
 #define POT_ADC_POLL_TIMEOUT         1000U
-#define POT_CONVERT2PERC(x)          (((x) * 100UL)/0xFFFUL)
+#define POT_CONVERT2PERC(x) (((int32_t)(x) * 100) / 0xFFF)
 
 #endif /* USE_BSP_POT_FEATURE > 0 */
 /**

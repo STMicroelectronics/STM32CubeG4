@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -1339,7 +1339,7 @@ void              HAL_RCCEx_CRS_ErrorCallback(uint32_t Error);
                 (((__SELECTION__) & RCC_PERIPHCLK_QSPI)        == RCC_PERIPHCLK_QSPI)    || \
                 (((__SELECTION__) & RCC_PERIPHCLK_RTC)         == RCC_PERIPHCLK_RTC))
 
-#elif defined(STM32G473xx)
+#elif defined(STM32G473xx) || defined(STM32G483xx)
 
 #define IS_RCC_PERIPHCLOCK(__SELECTION__)  \
                ((((__SELECTION__) & RCC_PERIPHCLK_USART1)      == RCC_PERIPHCLK_USART1)  || \

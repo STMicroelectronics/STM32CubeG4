@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -470,16 +470,6 @@ static const uint32_t REG_MASK_TAB_CPT[] =
 
 /* Private macros ------------------------------------------------------------*/
 /* Exported types ------------------------------------------------------------*/
-#if defined(USE_FULL_LL_DRIVER)
-/** @defgroup HRTIM_LL_ES_INIT HRTIM Exported Init structure
-  * @{
-  */
-/* TO BE COMPLETED */
-/**
-  * @}
-  */
-#endif /* USE_FULL_LL_DRIVER */
-
 /* Exported constants --------------------------------------------------------*/
 /** @defgroup HRTIM_LL_Exported_Constants HRTIM Exported Constants
   * @{

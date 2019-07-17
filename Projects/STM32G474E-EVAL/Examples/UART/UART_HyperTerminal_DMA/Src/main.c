@@ -10,7 +10,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -162,20 +162,20 @@ int main(void)
   {
   }
 
-  /*##-6- Send the End Message ###############################################*/  
+  /*##-6- Send the End Message ###############################################*/
   if(HAL_UART_Transmit_DMA(&huart1, (uint8_t*)aTxEndMessage, TXENDMESSAGESIZE)!= HAL_OK)
   {
     /* Transfer error in transmission process */
     Error_Handler();
   }
-  
-  /*##-7- Wait for the end of the transfer ###################################*/  
+
+  /*##-7- Wait for the end of the transfer ###################################*/
   while (HAL_UART_GetState(&huart1) != HAL_UART_STATE_READY)
   {
   }
 
   /* Turn on LED1 if test passes then enter infinite loop */
-  BSP_LED_On(LED1); 
+  BSP_LED_On(LED1);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -207,7 +207,7 @@ void SystemClock_Config(void)
   */
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
-  RCC_OscInitStruct.HSICalibrationValue = 64;
+  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
   RCC_OscInitStruct.PLL.PLLM = RCC_PLLM_DIV4;

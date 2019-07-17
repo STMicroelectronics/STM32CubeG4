@@ -26,7 +26,7 @@ extern "C"
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "stts751_regs.h"
+#include "stts751_reg.h"
 #include <stddef.h>
 #include <string.h>
 

@@ -1,13 +1,13 @@
 /**
   @page Demo Demo NUCLEO-G431RB RevC
   @verbatim
-  ******************** (C) COPYRIGHT 2018 STMicroelectronics *******************
+  ******************** (C) COPYRIGHT 2019 STMicroelectronics *******************
   * @file    Adafruit_LCD_1_8_SD_Joystick/readme.txt
   * @author  MCD Application Team
   * @brief   Description of the NUCLEO-G431RB RevC Demo.
   ******************************************************************************
   *
-  * Copyright (c) 2018 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under Ultimate Liberty license
   * SLA0044, the "License"; You may not use this file except in compliance with

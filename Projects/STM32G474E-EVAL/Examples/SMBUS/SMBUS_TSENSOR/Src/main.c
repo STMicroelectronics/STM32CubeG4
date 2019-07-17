@@ -14,7 +14,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics. 
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics. 
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -106,6 +106,7 @@ int main(void)
        - Low Level Initialization
      */
   /* USER CODE END 1 */
+  
 
   /* MCU Configuration--------------------------------------------------------*/
 
@@ -259,7 +260,7 @@ void SystemClock_Config(void)
   */
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
-  RCC_OscInitStruct.HSICalibrationValue = 64;
+  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
   RCC_OscInitStruct.PLL.PLLM = RCC_PLLM_DIV4;
@@ -383,7 +384,7 @@ static void Display_ExampleDescription(void)
   GUI_DrawBitmap((x_size - 80)/2, 65, (uint8_t *)stlogo);
   
   GUI_SetFont(&Font12);
-  GUI_DisplayStringAt(0, y_size- 20, (uint8_t *)"Copyright (c) STMicroelectronics 2018", CENTER_MODE);
+  GUI_DisplayStringAt(0, y_size- 20, (uint8_t *)"Copyright (c) STMicroelectronics 2019", CENTER_MODE);
   
   GUI_SetFont(&Font16);
   GUI_FillRect(0, y_size/2 + 15, x_size, 60, GUI_COLOR_ST_BLUE_DARK);

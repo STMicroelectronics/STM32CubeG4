@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -147,6 +147,14 @@ typedef struct
 #define EP_TYPE_BULK                           2U
 #define EP_TYPE_INTR                           3U
 #define EP_TYPE_MSK                            3U
+/**
+  * @}
+  */
+
+/** @defgroup USB_LL Device Speed
+  * @{
+  */
+#define USBD_FS_SPEED                          2U
 /**
   * @}
   */

@@ -2,13 +2,11 @@
   ******************************************************************************
   * @file    sd_diskio.c
   * @author  MCD Application Team
-  * @version V2.0.1
-  * @date    10-July-2018
   * @brief   SD Disk I/O driver.
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,

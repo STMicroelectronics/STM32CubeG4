@@ -3,12 +3,12 @@
 
   @verbatim
   ******************************************************************************
-  * @file    CORTEXM/CORTEXM_ProcessStack/readme.txt 
+  * @file    CORTEX/CORTEXM_ProcessStack/readme.txt
   * @author  MCD Application Team
   * @brief   Description of the Cortex-M4 Mode Privilege example.
   ******************************************************************************
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -51,13 +51,14 @@ System, Cortex, Process Stack, HCLK, Thread mode Stack, main stack, process stac
 
 @par Directory contents 
 
-  - CORTEXM/CORTEXM_ProcessStack/Inc/stm32g4xx_hal_conf.h    HAL configuration file
-  - CORTEXM/CORTEXM_ProcessStack/Inc/stm32g4xx_it.h          Interrupt handlers header file
-  - CORTEXM/CORTEXM_ProcessStack/Inc/main.h                  Header for main.c module  
-  - CORTEXM/CORTEXM_ProcessStack/Src/stm32g4xx_it.c          Interrupt handlers
-  - CORTEXM/CORTEXM_ProcessStack/Src//stm32g4xx_hal_msp.c     HAL MSP file
-  - CORTEXM/CORTEXM_ProcessStack/Src/main.c                  Main program
-  - CORTEXM/CORTEXM_ProcessStack/Src/system_stm32g4xx.c      STM32G4xx system source file
+  - CORTEX/CORTEXM_ProcessStack/Inc/stm32g4xx_nucleo_conf.h     BSP configuration file
+  - CORTEX/CORTEXM_ProcessStack/Inc/stm32g4xx_hal_conf.h    HAL configuration file
+  - CORTEX/CORTEXM_ProcessStack/Inc/stm32g4xx_it.h          Interrupt handlers header file
+  - CORTEX/CORTEXM_ProcessStack/Inc/main.h                  Header for main.c module
+  - CORTEX/CORTEXM_ProcessStack/Src/stm32g4xx_it.c          Interrupt handlers
+  - CORTEX/CORTEXM_ProcessStack/Src//stm32g4xx_hal_msp.c     HAL MSP file
+  - CORTEX/CORTEXM_ProcessStack/Src/main.c                  Main program
+  - CORTEX/CORTEXM_ProcessStack/Src/system_stm32g4xx.c      STM32G4xx system source file
 
 @par Hardware and Software environment
 

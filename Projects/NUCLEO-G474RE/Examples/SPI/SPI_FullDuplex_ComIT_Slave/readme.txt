@@ -8,7 +8,7 @@
   * @brief   Description of the SPI Full Duplex IT example.
   ******************************************************************************
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -99,6 +99,7 @@ Connectivity, SPI, Full-duplex, Interrupt, Transmission, Reception, Master, Slav
 
 @par Directory contents 
 
+  - SPI/SPI_FullDuplex_ComIT_Slave/Inc/stm32g4xx_nucleo_conf.h     BSP configuration file
   - SPI/SPI_FullDuplex_ComIT_Slave/Inc/stm32g4xx_hal_conf.h    HAL configuration file
   - SPI/SPI_FullDuplex_ComIT_Slave/Inc/stm32g4xx_it.h          Interrupt handlers header file
   - SPI/SPI_FullDuplex_ComIT_Slave/Inc/main.h                  Header for main.c module  

@@ -44,7 +44,6 @@ USBPD_StatusTypeDef USBPD_DPM_InitCore(void);
 USBPD_StatusTypeDef USBPD_DPM_InitOS(void);
 void                USBPD_DPM_Run(void);
 void                USBPD_DPM_TimerCounter(void);
-
 #ifdef __cplusplus
 }
 #endif

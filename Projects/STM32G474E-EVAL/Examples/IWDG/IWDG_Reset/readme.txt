@@ -2,13 +2,13 @@
   @page IWDG_Reset Independent Watchdog Reset Example
   
   @verbatim
-  ********************* COPYRIGHT(c) 2017 STMicroelectronics *******************
+  ********************* COPYRIGHT(c) 2019 STMicroelectronics *******************
   * @file    IWDG/IWDG_Reset/readme.txt 
   * @author  MCD Application Team
   * @brief   Description of the IWDG Reset.
   ******************************************************************************
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -83,6 +83,7 @@ System, IWDG, reload counter, MCU Reset, Timeout, Software fault
 
 @par Directory contents 
 
+  - IWDG/IWDG_Reset/Inc/stm32g474e_eval_conf.h     BSP configuration file
   - IWDG/IWDG_Reset/Inc/stm32g4xx_hal_conf.h    HAL configuration file
   - IWDG/IWDG_Reset/Inc/stm32g4xx_it.h          Interrupt handlers header file
   - IWDG/IWDG_Reset/Inc/main.h                  Header for main.c module  

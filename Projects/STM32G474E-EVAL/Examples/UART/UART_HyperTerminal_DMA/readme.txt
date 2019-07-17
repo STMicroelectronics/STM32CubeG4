@@ -8,7 +8,7 @@
   * @brief   Description of the UART Hyperterminal example.
   ******************************************************************************
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -20,13 +20,13 @@
 
 @par Example Description
 
-UART transmission (transmit/receive) in DMA mode 
+UART transmission (transmit/receive) in DMA mode
 between a board and an HyperTerminal PC application.
 
 Board: STM32G474E-EVAL (embeds a STM32G474QET6 device)
 Tx Pin: PA9
 Rx Pin: PA10
-   _________________________ 
+   _________________________
   |           ______________|                       _______________
   |          |USART         |                      | HyperTerminal |
   |          |              |                      |               |
@@ -102,6 +102,7 @@ Transmission, Reception, Asynchronous
 
 @par Directory contents
 
+  - UART/UART_HyperTerminal_DMA/Inc/stm32g474e_eval_conf.h     BSP configuration file
   - UART/UART_HyperTerminal_DMA/Inc/stm32g4xx_hal_conf.h    HAL configuration file
   - UART/UART_HyperTerminal_DMA/Inc/stm32g4xx_it.h          DMA interrupt handlers header file
   - UART/UART_HyperTerminal_DMA/Inc/main.h                  Header for main.c module
@@ -114,7 +115,7 @@ Transmission, Reception, Asynchronous
 @par Hardware and Software environment
 
   - This example runs on STM32G474QETx devices.
-    
+
   - This example has been tested with STM32G474E-EVAL board and can be
     easily tailored to any other supported device and development board.
 
@@ -130,7 +131,7 @@ Transmission, Reception, Asynchronous
     - BaudRate = 9600 baud
     - Flow control: None
 
-@par How to use it ? 
+@par How to use it ?
 
 In order to make the program work, you must do the following :
  - Open your preferred toolchain

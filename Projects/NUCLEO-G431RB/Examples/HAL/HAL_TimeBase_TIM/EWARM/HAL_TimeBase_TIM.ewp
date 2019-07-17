@@ -219,8 +219,6 @@
           <state>USE_HAL_DRIVER</state>
           <state>STM32G431xx</state>
           <state></state>
-          <state></state>
-          <state></state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1058,6 +1056,15 @@
   <group>
     <name>Drivers</name>
     <group>
+      <name>BSP</name>
+      <group>
+        <name>STM32G4xx_Nucleo</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Drivers/BSP/STM32G4xx_Nucleo/stm32g4xx_nucleo.c</name>
+        </file>
+      </group>
+    </group>
+    <group>
       <name>STM32G4xx_HAL_Driver</name>
       <file>
         <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_exti.c</name>
@@ -1110,15 +1117,6 @@
       <file>
         <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_cortex.c</name>
       </file>
-    </group>
-    <group>
-      <name>BSP</name>
-      <group>
-        <name>STM32G4xx_Nucleo</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../Drivers/BSP/STM32G4xx_Nucleo/stm32g4xx_nucleo.c</name>
-        </file>
-      </group>
     </group>
     <group>
       <name>CMSIS</name>

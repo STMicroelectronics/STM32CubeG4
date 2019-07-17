@@ -229,8 +229,6 @@
           <state>DATA_CACHE_ENABLE=1</state>
           <state>STM32G474xx</state>
           <state></state>
-          <state></state>
-          <state></state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1061,6 +1059,9 @@
     <name>Drivers</name>
     <group>
       <name>STM32G4xx_HAL_Driver</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_rcc.c</name>
+      </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_utils.c</name>
       </file>

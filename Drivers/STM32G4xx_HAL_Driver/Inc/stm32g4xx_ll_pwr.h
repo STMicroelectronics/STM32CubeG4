@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -1087,7 +1087,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsWakeUpPinPolarityLow(uint32_t WakeUpPin)
   */
 __STATIC_INLINE void LL_PWR_EnableGPIOPullUp(uint32_t GPIO, uint32_t GPIONumber)
 {
-  SET_BIT(*((uint32_t *)GPIO), GPIONumber);
+  SET_BIT(*((__IO uint32_t *)GPIO), GPIONumber);
 }
 
 /**
@@ -1130,7 +1130,7 @@ __STATIC_INLINE void LL_PWR_EnableGPIOPullUp(uint32_t GPIO, uint32_t GPIONumber)
   */
 __STATIC_INLINE void LL_PWR_DisableGPIOPullUp(uint32_t GPIO, uint32_t GPIONumber)
 {
-  CLEAR_BIT(*((uint32_t *)GPIO), GPIONumber);
+  CLEAR_BIT(*((__IO uint32_t *)GPIO), GPIONumber);
 }
 
 /**
@@ -1173,10 +1173,7 @@ __STATIC_INLINE void LL_PWR_DisableGPIOPullUp(uint32_t GPIO, uint32_t GPIONumber
   */
 __STATIC_INLINE uint32_t LL_PWR_IsEnabledGPIOPullUp(uint32_t GPIO, uint32_t GPIONumber)
 {
-  uint32_t temp;
-  temp = READ_BIT(*((uint32_t *)(GPIO)), GPIONumber);
-
-  return ((temp == (GPIONumber))?1U:0U);
+  return ((READ_BIT(*((__IO uint32_t *)GPIO), GPIONumber) == (GPIONumber)) ? 1UL : 0UL);
 }
 
 /**
@@ -1219,8 +1216,7 @@ __STATIC_INLINE uint32_t LL_PWR_IsEnabledGPIOPullUp(uint32_t GPIO, uint32_t GPIO
   */
 __STATIC_INLINE void LL_PWR_EnableGPIOPullDown(uint32_t GPIO, uint32_t GPIONumber)
 {
-  register uint32_t temp = (uint32_t)(GPIO) + 4U;
-  SET_BIT(*((uint32_t *)(temp)), GPIONumber);
+  SET_BIT(*((__IO uint32_t *)(GPIO + 4U)), GPIONumber);
 }
 
 /**
@@ -1263,8 +1259,7 @@ __STATIC_INLINE void LL_PWR_EnableGPIOPullDown(uint32_t GPIO, uint32_t GPIONumbe
   */
 __STATIC_INLINE void LL_PWR_DisableGPIOPullDown(uint32_t GPIO, uint32_t GPIONumber)
 {
-  register uint32_t temp = (uint32_t)(GPIO) + 4U;
-  CLEAR_BIT(*((uint32_t *)(temp)), GPIONumber);
+  CLEAR_BIT(*((__IO uint32_t *)(GPIO + 4U)), GPIONumber);
 }
 
 /**
@@ -1307,12 +1302,7 @@ __STATIC_INLINE void LL_PWR_DisableGPIOPullDown(uint32_t GPIO, uint32_t GPIONumb
   */
 __STATIC_INLINE uint32_t LL_PWR_IsEnabledGPIOPullDown(uint32_t GPIO, uint32_t GPIONumber)
 {
-  register uint32_t temp_reg = (uint32_t)(GPIO) + 4U;
-  uint32_t temp;
-  temp = READ_BIT(*((uint32_t *)(temp_reg)), GPIONumber);
-
-  return ((temp == (GPIONumber))?1U:0U);
-
+  return ((READ_BIT(*((__IO uint32_t *)(GPIO + 4U)), GPIONumber) == (GPIONumber)) ? 1UL : 0UL);
 }
 
 /**

@@ -44,7 +44,7 @@
                 </option>
                 <option>
                     <name>MemFile</name>
-                    <state>$TOOLKIT_DIR$\CONFIG\debugger\ST\STM32G4_v0r5.ddf</state>
+                    <state>$TOOLKIT_DIR$\CONFIG\debugger\ST\STM32G4xx.ddf</state>
                 </option>
                 <option>
                     <name>RunToEnable</name>

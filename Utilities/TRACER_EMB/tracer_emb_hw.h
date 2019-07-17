@@ -37,6 +37,7 @@ void  HW_TRACER_EMB_IRQHandlerDMA(void);
 void  HW_TRACER_EMB_IRQHandlerUSART(void);
 void  HW_TRACER_EMB_StartRX(void);
 void  HW_TRACER_EMB_SendData(uint8_t *data, uint32_t size);
+uint8_t HW_TRACER_EMB_ReadData(void);
 
 #ifdef __cplusplus
 }

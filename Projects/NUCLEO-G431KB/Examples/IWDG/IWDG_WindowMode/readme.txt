@@ -2,13 +2,13 @@
   @page IWDG_WindowMode IWDG Reset with window mode
   
   @verbatim
-  ********************* COPYRIGHT(c) 2018 STMicroelectronics *******************
+  ********************* COPYRIGHT(c) 2019 STMicroelectronics *******************
   * @file    IWDG/IWDG_WindowMode/readme.txt 
   * @author  MCD Application Team
   * @brief   Description of the IWDG Reset with window mode.
   ******************************************************************************
   *
-  * Copyright (c) 2018 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -73,6 +73,7 @@ System, IWDG, reload counter, MCU Reset, Window mode, Timeout, Software fault
 
 @par Directory contents 
 
+  - IWDG/IWDG_WindowMode/Inc/stm32g4xx_nucleo_conf.h     BSP configuration file
   - IWDG/IWDG_WindowMode/Inc/stm32g4xx_hal_conf.h    HAL configuration file
   - IWDG/IWDG_WindowMode/Inc/stm32g4xx_it.h          Interrupt handlers header file
   - IWDG/IWDG_WindowMode/Inc/main.h                  Header for main.c module  

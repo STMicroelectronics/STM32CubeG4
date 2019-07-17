@@ -8,7 +8,7 @@
   * @brief   Description of the RCC Clock Recovery Service example.
   ******************************************************************************
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -41,8 +41,8 @@ In this test, this is the scenario:
  - Toggle quickly LED2 when SYNC WARN is detected
  - Increase tollerance (FELIM value) when SYNC WARN is detected
  - At the end of the test LED2 should stay ON
-In case of error , LED2 is slowly blinking (1 sec. period) 
-Note: HSI48 frequency can be checked with oscilloscope using MCO PIN PA.08(pin 23 connector CN10 )
+
+Note: HSI48 frequency can be checked with oscilloscope using MCO PIN PA.08
 
 @par Keywords
 
@@ -50,6 +50,7 @@ RCC, System, Clock Configuration, CRS, System clock, Oscillator, PLL
 
 @par Directory contents
 
+  - RCC/RCC_CRS_Synchronization_IT/Inc/stm32g4xx_nucleo_conf.h     BSP configuration file
   - RCC/RCC_CRS_Synchonization_IT/Inc/stm32g4xx_hal_conf.h    HAL configuration file
   - RCC/RCC_CRS_Synchonization_IT/Inc/stm32g4xx_it.h          Interrupt handlers header file
   - RCC/RCC_CRS_Synchonization_IT/Inc/main.h                        Header for main.c module

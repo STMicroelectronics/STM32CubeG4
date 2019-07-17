@@ -119,6 +119,31 @@ void TRACER_EMB_IRQHandlerUSART(void);
 
 void TRACER_EMB_StartRX(void (*callbackRX)(uint8_t, uint8_t));
 
+
+/**
+  * @brief  function to initialize LPM for emb tracer.
+  * @retval Timing
+  */
+void TRACER_EMB_LowPowerInit(void);
+
+/**
+  * @brief  function to manage LPM when sending data.
+  * @retval Timing
+  */
+void TRACER_EMB_LowPowerSendData(void);
+
+/**
+  * @brief  function to manage LPM when data send complete.
+  * @retval Timing
+  */
+void TRACER_EMB_LowPowerSendDataComplete(void);
+
+/**
+  * @brief  function to wakeup TX process when sending a message.
+  * @retval Timing
+  */
+void TRACER_EMB_WakeUpProcess(void);
+
 /**
   * @}
   */

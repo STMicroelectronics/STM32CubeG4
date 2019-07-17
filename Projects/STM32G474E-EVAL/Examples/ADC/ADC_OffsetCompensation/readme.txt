@@ -8,7 +8,7 @@
   * @brief   Description of the ADC_OffsetCompensation example.
   ******************************************************************************
   *
-  * Copyright (c) 2017 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -79,6 +79,7 @@ Analog, ADC, Analog to Digital, Single conversion, Offset compensation, Timer tr
 
 @par Directory contents 
 
+  - ADC/ADC_OffsetCompensation/Inc/stm32g474e_eval_conf.h     BSP configuration file
   - ADC/ADC_OffsetCompensation/Inc/stm32g4xx_it.h          Interrupt handlers header file
   - ADC/ADC_OffsetCompensation/Inc/main.h                        Header for main.c module  
   - ADC/ADC_OffsetCompensation/Src/stm32g4xx_it.c          Interrupt handlers

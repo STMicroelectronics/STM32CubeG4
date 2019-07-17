@@ -26,7 +26,7 @@
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "hx8347d_regs.h"
+#include "hx8347d_reg.h"
 #include <stddef.h>
 
 /** @addtogroup BSP
