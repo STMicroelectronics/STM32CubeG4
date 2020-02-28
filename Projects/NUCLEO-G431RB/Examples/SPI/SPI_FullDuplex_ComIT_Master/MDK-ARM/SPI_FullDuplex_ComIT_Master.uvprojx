@@ -358,9 +358,9 @@
             <useXO>0</useXO>
             <VariousControls>
               <MiscControls/>
-              <Define>USE_NUCLEO_64,USE_HAL_DRIVER,STM32G431xx,</Define>
+              <Define>USE_NUCLEO_64,USE_HAL_DRIVER,STM32G431xx</Define>
               <Undefine/>
-              <IncludePath>../Inc;../../../../../../Drivers/STM32G4xx_HAL_Driver/Inc;../../../../../../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy;../../../../../../Drivers/CMSIS/Device/ST/STM32G4xx/Include;../../../../../../Drivers/CMSIS/Include;../../../../../../Drivers/BSP/STM32G4xx_Nucleo</IncludePath>
+              <IncludePath>../Inc; ../../../../../../Drivers/STM32G4xx_HAL_Driver/Inc; ../../../../../../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy; ../../../../../../Drivers/CMSIS/Device/ST/STM32G4xx/Include; ../../../../../../Drivers/CMSIS/Include; ../../../../../../Drivers/BSP/STM32G4xx_Nucleo</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -481,16 +481,6 @@
               <FilePath>../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_spi_ex.c</FilePath>
             </File>
             <File>
-              <FileName>stm32g4xx_hal_tim.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32g4xx_hal_tim_ex.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim_ex.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32g4xx_hal.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.c</FilePath>
@@ -549,6 +539,21 @@
               <FileName>stm32g4xx_hal_cortex.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_cortex.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32g4xx_hal_tim.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32g4xx_hal_tim_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim_ex.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32g4xx_ll_pwr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_pwr.c</FilePath>
             </File>
           </Files>
         </Group>

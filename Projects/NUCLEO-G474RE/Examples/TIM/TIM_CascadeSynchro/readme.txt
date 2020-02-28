@@ -90,9 +90,9 @@ Timer, PWM, Cascade Synchronization, Master, Slave, Duty Cycle, Waveform, Oscill
 
   - NUCLEO-G474RE Set-up
    Connect the following pins to an oscilloscope to monitor the different waveforms:
-      - TIM2 CH1 (PA0)
-      - TIM3 CH1 (PA6)
-      - TIM4 CH1 (PA11)
+      - TIM2 CH1 (PA0 (pin 28 in CN7 connector))
+      - TIM3 CH1 (PA6 (pin 13 in CN10 connector))
+      - TIM4 CH1 (PA11 (pin 14 in CN10 connector))
 
 @par How to use it ? 
 

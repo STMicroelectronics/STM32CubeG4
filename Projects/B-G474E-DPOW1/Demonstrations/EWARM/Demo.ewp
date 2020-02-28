@@ -1026,6 +1026,12 @@
         </settings>
     </configuration>
     <group>
+        <name>Doc</name>
+        <file>
+          <name>$PROJ_DIR$\..\readme.txt</name>
+        </file>
+    </group>
+    <group>
         <name>Drivers</name>
         <group>
             <name>BSP</name>
@@ -1096,7 +1102,13 @@
                 <name>$PROJ_DIR$\..\..\..\..\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_rtc.c</name>
             </file>
             <file>
+                <name>$PROJ_DIR$\..\..\..\..\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_rtc_ex.c</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\..\..\..\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_uart.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\..\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_uart_ex.c</name>
             </file>
         </group>
     </group>

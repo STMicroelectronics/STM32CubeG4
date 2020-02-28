@@ -29,6 +29,10 @@
   Green LED: blinks during normal operation
   Green LED: ON when the ERROR handler is entered
 
+@par Keywords
+
+HRTIM, Timers, non-PWM, waveforms, Arbitrary Waveform, frequency.
+
 @par Directory contents 
 
   - HRTIM/HRTIM_Basic_Arbitrary_Waveform/Inc/stm32g4xx_it.h          IT interrupt handlers header file

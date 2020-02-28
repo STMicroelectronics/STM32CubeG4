@@ -35,21 +35,21 @@ In this example TIM2 input clock (TIM2CLK) is set to APB1 clock (PCLK1),
        Prescaler = (TIM2CLK / TIM2 counter clock) - 1
        Prescaler = ((SystemCoreClock) /1500000 Hz) - 1
 
-LD4 led is connected to TIM2_CH1, so that brightness represent the mean of output signal.
+LED2 is connected to TIM2_CH1, so that brightness represent the mean of output signal.
 
 Example execution:
 At initialization, period count (5 TIM2 ticks) and pulse count (1 TIM2 tick) are voluntarily very low,
 so that dithering effect is easily visible on oscilloscope.
 Dithering is activated but fractional part is null,
 thus there is only regular pulses with 1/5 = 20% duty cycle.
-And LD4 led brightness is quite low (about 20% of max intensity).
+And LED2 brightness is quite low (about 20% of max intensity).
 PWM waveforms can be displayed using an oscilloscope.
   TIM2_CH1
            _     _     _     _     _     _     _     _     _     _     _     _     _     _     _     _     _
          _| |___| |___| |___| |___| |___| |___| |___| |___| |___| |___| |___| |___| |___| |___| |___| |___| |__
 
 Then timer compare match is incremented regularly. This add 1 more cycle to x pulse out of 16 period (x fractional part = Compare modulo 16).
-And LD4 led brightness is slightly increased.
+And LED2 brightness is slightly increased.
 
 Fractional part = 1 --> 1 pulse out of 16 periods is longer (1 more cycle). Dither duty cycle = (1+1)/5 = 40%:
 
@@ -59,7 +59,7 @@ Fractional part = 1 --> 1 pulse out of 16 periods is longer (1 more cycle). Dith
           <---------------------------------------------------------------------------------------------->
            ^                                       16 periods
     Longer pulse
-LD4 led brightness is slightly increased.
+LED2 brightness is slightly increased.
 
 Fractional part = 2 --> 2 pulses out of 16 periods are longer (1 more cycle):
   TIM2_CH1
@@ -68,7 +68,7 @@ Fractional part = 2 --> 2 pulses out of 16 periods are longer (1 more cycle):
           <---------------------------------------------------------------------------------------------->
            ^                                               ^                  16 periods
        Longer pulse                                   Longer pulse
-LD4 led brightness is slightly increased.
+LED2 brightness is slightly increased.
 
 ... and so on.
 
@@ -77,10 +77,10 @@ and only 1 out of 16 have 20% duty cycle.
 Then compare match continue to be incremented, this means that integer part is incremented and fractional part is reset.
 Thus all pulse are regular with a longer duration (40% duty cycle).
 The cycle of fractional part increment restarts.
-And LD4 led brightness continue to increased slightly.
-When Pulse becomes longer than period, pulse is reset to restart from the beginning, (LD4 led brightness very low).
+And LED2 brightness continue to increased slightly.
+When Pulse becomes longer than period, pulse is reset to restart from the beginning, (LED2 brightness very low).
 
-With dithering LD4 led brightness increases smoothly with (dither * period_count) 16 * 5 = 80 intermediate steps.
+With dithering LED2 brightness increases smoothly with (dither * period_count) 16 * 5 = 80 intermediate steps.
 
 @note When dithering is activated, TIM2_CHTIM2_CH2 is configured in PWM output with a pulse 1/16 so that oscilloscope can be synchronized.
 Pulse on CHTIM2_CH2 will appear every 16 periods.
@@ -91,7 +91,7 @@ Pulse on CHTIM2_CH2 will appear every 16 periods.
           <---------------------------------------------------------------------------------------------->
                                                   16 periods
 
-If BUTTON_USER is pressed, dithering is deactivated. LD4 led brightness increases roughly with only 5 intermediate steps (= period_count).
+If BUTTON_USER is pressed, dithering is deactivated. LED2 brightness increases roughly with only 5 intermediate steps (= period_count).
 
  TIM2_CH1
            _     _     _     _     _     _     _     _     _     _     _     _     _     _     _     _     _
@@ -113,6 +113,10 @@ If BUTTON_USER is pressed again dithering is reactivated.
 
 @note The application need to ensure that the SysTick time base is always set to 1 millisecond
       to have correct HAL operation.
+
+@par Keywords
+
+Timer, Dithering, PWM, Frequency, Duty Cycle, Waveform, Oscilloscope, Output, Signal.
 
 @par Directory contents
 
@@ -137,8 +141,8 @@ If BUTTON_USER is pressed again dithering is reactivated.
 
   - NUCLEO-G474RE RevC Set-up
    Connect the following pins to an oscilloscope to monitor the waveforms:
-        - TIM2_CHTIM2_CH1 : PA5
-        - TIM2_CHTIM2_CH2 : PA1 Oscilloscope synchronization in dithering mode (1 pulse every 16 periods)
+        - TIM2_CHTIM2_CH1 : PA5 (pin 11 in CN10 connector)
+        - TIM2_CHTIM2_CH2 : PA1 (pin 30 in CN7 connector) Oscilloscope synchronization in dithering mode (1 pulse every 16 periods)
 
 
 @par How to use it ?

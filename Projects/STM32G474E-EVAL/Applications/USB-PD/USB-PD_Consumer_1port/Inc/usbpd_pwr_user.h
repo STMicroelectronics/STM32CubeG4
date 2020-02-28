@@ -118,8 +118,13 @@ typedef void USBPD_PWR_VBUSDetectCallbackFunc(uint32_t Instance,
 /**
   * @brief  VBUS disconnection threshold values (in mV)
   */
-#define USBPD_PWR_HIGH_VBUS_THRESHOLD     (4500U)
-#define USBPD_PWR_LOW_VBUS_THRESHOLD       (800U)
+#define USBPD_PWR_HIGH_VBUS_THRESHOLD     (2800U)
+#define USBPD_PWR_LOW_VBUS_THRESHOLD       (750U)
+#define USBPD_PWR_VBUS_THRESHOLD_5V       (2150U)
+#define USBPD_PWR_VBUS_THRESHOLD_9V       (7000U)
+#define USBPD_PWR_VBUS_THRESHOLD_15V      (12500U)
+#define USBPD_PWR_VBUS_THRESHOLD_20V      (17000U)
+#define USBPD_PWR_VBUS_THRESHOLD_APDO     (2150U)
 
 /**
   * @brief  VBUS discharge parameters

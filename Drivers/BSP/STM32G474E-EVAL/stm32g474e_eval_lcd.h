@@ -200,8 +200,6 @@ int32_t BSP_LCD_WriteReg(uint16_t Reg, uint8_t *pData, uint16_t Length);
 int32_t BSP_LCD_ReadReg(uint16_t Reg, uint8_t *pData, uint16_t Length);
 int32_t BSP_LCD_SendData(uint8_t *pData, uint16_t Length);
 
-static void LCD_MspInit(void);
-static void LCD_MspDeInit(void);
 /**
   * @}
   */

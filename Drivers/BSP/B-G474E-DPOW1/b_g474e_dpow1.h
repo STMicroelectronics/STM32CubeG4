@@ -54,11 +54,11 @@ typedef void (* BSP_EXTI_LineCallback) (void);
   */
 
 /**
- * @brief B-G474E-DPOW1 BSP Driver version number V1.0.0
+ * @brief B-G474E-DPOW1 BSP Driver version number V1.1.1
    */
 #define	B_G474E_DPOW1_BSP_VERSION_MAIN   (uint32_t)(0x01) /*!< [31:24] main version */
-#define	B_G474E_DPOW1_BSP_VERSION_SUB1   (uint32_t)(0x00) /*!< [23:16] sub1 version */
-#define	B_G474E_DPOW1_BSP_VERSION_SUB2   (uint32_t)(0x00) /*!< [15:8]  sub2 version */
+#define	B_G474E_DPOW1_BSP_VERSION_SUB1   (uint32_t)(0x01) /*!< [23:16] sub1 version */
+#define	B_G474E_DPOW1_BSP_VERSION_SUB2   (uint32_t)(0x01) /*!< [15:8]  sub2 version */
 #define	B_G474E_DPOW1_BSP_VERSION_RC     (uint32_t)(0x00) /*!< [7:0]  release candidate */
 #define	B_G474E_DPOW1_BSP_VERSION        ((B_G474E_DPOW1_BSP_VERSION_MAIN << 24)\
                                          |(B_G474E_DPOW1_BSP_VERSION_SUB1 << 16)\
@@ -79,6 +79,9 @@ typedef void (* BSP_EXTI_LineCallback) (void);
 #ifndef USE_BSP_JOY_FEATURE
    #define USE_BSP_JOY_FEATURE                  1U
 #endif
+
+#define B_G474E_DPOW1_BSP_BOARD_NAME  "B-G474E-DPOW1"
+#define B_G474E_DPOW1_BSP_BOARD_ID    "MB1428B"
 
 typedef enum
 {
@@ -327,10 +330,13 @@ extern UART_HandleTypeDef hcom_uart[COMn];
   * @{
   */
 int32_t  BSP_GetVersion(void);
-#if defined(_GUI_INTERFACE)
-const uint8_t* BSP_GetHWBoardVersionName(void);
-const uint8_t* BSP_GetPDTypeName(void);
-#endif /* _GUI_INTERFACE */
+const uint8_t* BSP_GetBoardName(void);
+const uint8_t* BSP_GetBoardID(void);
+
+/* Legacy APIs aliases */
+#define BSP_GetHWBoardVersionName    BSP_GetBoardName
+#define BSP_GetPDTypeName            BSP_GetBoardID
+
 int32_t  BSP_LED_Init(Led_TypeDef Led);
 int32_t  BSP_LED_DeInit(Led_TypeDef Led);
 int32_t  BSP_LED_On(Led_TypeDef Led);

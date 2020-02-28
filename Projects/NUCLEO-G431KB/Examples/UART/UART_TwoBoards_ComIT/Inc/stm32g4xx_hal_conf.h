@@ -2,9 +2,7 @@
   ******************************************************************************
   * @file    stm32g4xx_hal_conf.h
   * @author  MCD Application Team
-  * @brief   HAL configuration template file.
-  *          This file should be copied to the application folder and renamed
-  *          to stm32g4xx_hal_conf.h.
+  * @brief   HAL configuration file
   ******************************************************************************
   * @attention
   *
@@ -60,6 +58,7 @@
 /*#define HAL_RTC_MODULE_ENABLED   */
 /*#define HAL_SAI_MODULE_ENABLED   */
 /*#define HAL_SMARTCARD_MODULE_ENABLED   */
+/*#define HAL_SMBUS_MODULE_ENABLED   */
 /*#define HAL_SPI_MODULE_ENABLED   */
 /*#define HAL_SRAM_MODULE_ENABLED   */
 /*#define HAL_TIM_MODULE_ENABLED   */

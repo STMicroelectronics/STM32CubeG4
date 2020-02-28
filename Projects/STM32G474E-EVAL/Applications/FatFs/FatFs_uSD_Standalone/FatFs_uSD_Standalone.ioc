@@ -144,4 +144,4 @@ VP_FATFS_VS_Generic.Mode=User_defined
 VP_FATFS_VS_Generic.Signal=FATFS_VS_Generic
 VP_SYS_VS_Systick.Mode=SysTick
 VP_SYS_VS_Systick.Signal=SYS_VS_Systick
-board=STM32G081B-EVAL
+board=custom

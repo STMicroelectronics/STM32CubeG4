@@ -351,9 +351,7 @@
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\B-G474E-DPOW1</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\BSP\Components\Common</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Utilities</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Utilities\Log</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Utilities\Fonts</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Utilities\CPU</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>

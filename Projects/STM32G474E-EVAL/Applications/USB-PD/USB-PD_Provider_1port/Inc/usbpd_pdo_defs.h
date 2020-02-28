@@ -27,12 +27,18 @@
 #endif 
 
 /* Includes ------------------------------------------------------------------*/
+#include "main.h"
+#include "usbpd_def.h"
 
 /* USER CODE BEGIN Includes */
 
 /* USER CODE END Includes */
 
 /* Define   ------------------------------------------------------------------*/
+#define PORT0_NB_SOURCEPDO         1U   /* Number of Source PDOs (applicable for port 0)   */
+#define PORT0_NB_SINKPDO           0U   /* Number of Sink PDOs (applicable for port 0)     */
+#define PORT1_NB_SOURCEPDO         0U   /* Number of Source PDOs (applicable for port 1)   */
+#define PORT1_NB_SINKPDO           0U   /* Number of Sink PDOs (applicable for port 1)     */
 
 /* USER CODE BEGIN Define */
 
@@ -77,13 +83,14 @@
 /* USER CODE END variables */
 
 #ifndef __USBPD_PWR_IF_C
-extern const uint32_t PORT0_PDO_ListSRC[USBPD_MAX_NB_PDO];
-extern const uint32_t PORT0_PDO_ListSNK[USBPD_MAX_NB_PDO];
-extern const uint32_t PORT1_PDO_ListSRC[USBPD_MAX_NB_PDO];
-extern const uint32_t PORT1_PDO_ListSNK[USBPD_MAX_NB_PDO];
+extern uint8_t USBPD_NbPDO[4];
+extern uint32_t PORT0_PDO_ListSRC[USBPD_MAX_NB_PDO];
+extern uint32_t PORT0_PDO_ListSNK[USBPD_MAX_NB_PDO];
 #else
+uint8_t USBPD_NbPDO[4] = {(PORT0_NB_SINKPDO),
+                          (PORT0_NB_SOURCEPDO)};
 /* Definition of Source PDO for Port 0 */
-const uint32_t PORT0_PDO_ListSRC[USBPD_MAX_NB_PDO] =
+uint32_t PORT0_PDO_ListSRC[USBPD_MAX_NB_PDO] =
 {
   /* PDO 1 */
         (0x0201912CU),
@@ -102,7 +109,7 @@ const uint32_t PORT0_PDO_ListSRC[USBPD_MAX_NB_PDO] =
 };
 
 /* Definition of Sink PDO for Port 0 */
-const uint32_t PORT0_PDO_ListSNK[USBPD_MAX_NB_PDO] = 
+uint32_t PORT0_PDO_ListSNK[USBPD_MAX_NB_PDO] =
 {
   /* PDO 1 */
         (0x00000000U),

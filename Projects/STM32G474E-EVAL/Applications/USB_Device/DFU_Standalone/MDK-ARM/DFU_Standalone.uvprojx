@@ -16,9 +16,9 @@
         <TargetCommonOption>
           <Device>STM32G474QETx</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>STMicroelectronics.STM32G4xx_DFP.0.0.6</PackID>
-          <PackURL>http://www.ST.com/</PackURL>
-          <Cpu>IROM(0x08000000-0x807FFFF) IRAM(0x20000000-0x2001FFFF) IRAM(0x10000000-0x10007FFF) CLOCK(8000000) FPU2 CPUTYPE("Cortex-M4")</Cpu>
+          <PackID>Keil.STM32G4xx_DFP.1.1.2</PackID>
+          <PackURL>http://www.keil.com/pack</PackURL>
+          <Cpu>IRAM(0x20000000-0x2001FFFF) IROM(0x8000000-0x807FFFF) CLOCK(8000000) FPU2 CPUTYPE("Cortex-M4")</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
           <FlashDriverDll></FlashDriverDll>
@@ -33,7 +33,7 @@
           <SLE66CMisc></SLE66CMisc>
           <SLE66AMisc></SLE66AMisc>
           <SLE66LinkerMisc></SLE66LinkerMisc>
-          <SFDFile>$$Device:STM32G474QETx$CMSIS\SVD\STM32G4xx.svd</SFDFile>
+          <SFDFile>$$Device:STM32G474QETx$Drivers\CMSIS\SVD\STM32G474xx.svd</SFDFile>
           <bCustSvd>0</bCustSvd>
           <UseEnv>0</UseEnv>
           <BinPath></BinPath>
@@ -48,13 +48,13 @@
             <NotGenerated>0</NotGenerated>
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
-          <OutputDirectory>DFU_Standalone\Exe\</OutputDirectory>
+          <OutputDirectory>DFU_Standalone\</OutputDirectory>
           <OutputName>DFU_Standalone</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
           <DebugInformation>1</DebugInformation>
-          <BrowseInformation>1</BrowseInformation>
+          <BrowseInformation>0</BrowseInformation>
           <ListingPath></ListingPath>
           <HexFormatSelection>1</HexFormatSelection>
           <Merge32K>0</Merge32K>
@@ -184,6 +184,7 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>2</RvdsVP>
+            <RvdsMve>0</RvdsMve>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -243,8 +244,8 @@
               </Ocm6>
               <IRAM>
                 <Type>0</Type>
-                <StartAddress>0x10000000</StartAddress>
-                <Size>0x8000</Size>
+                <StartAddress>0x20000000</StartAddress>
+                <Size>0x20000</Size>
               </IRAM>
               <IROM>
                 <Type>1</Type>
@@ -335,7 +336,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>USE_HAL_DRIVER,STM32G474xx,</Define>
+              <Define>USE_HAL_DRIVER,STM32G474xx</Define>
               <Undefine></Undefine>
               <IncludePath>../USB_Device/App;../USB_Device/Target;../Core/Inc;../../../../../../Drivers/STM32G4xx_HAL_Driver/Inc;../../../../../../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy;../../../../../../Middlewares/ST/STM32_USB_Device_Library/Core/Inc;../../../../../../Middlewares/ST/STM32_USB_Device_Library/Class/DFU/Inc;../../../../../../Drivers/CMSIS/Device/ST/STM32G4xx/Include;../../../../../../Drivers/CMSIS/Include;../../../../../../Drivers/BSP/STM32G474E-EVAL;../../../../../../Drivers/BSP/Components/mfxstm32l152</IncludePath>
             </VariousControls>
@@ -379,9 +380,6 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>::CMSIS</GroupName>
-        </Group>
-        <Group>
           <GroupName>Application/MDK-ARM</GroupName>
           <Files>
             <File>
@@ -392,12 +390,25 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>Application/User/USB_Device/Target</GroupName>
+          <GroupName>::CMSIS</GroupName>
+        </Group>
+        <Group>
+          <GroupName>Application/User/Core</GroupName>
           <Files>
             <File>
-              <FileName>usbd_conf.c</FileName>
+              <FileName>main.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../USB_Device/Target/usbd_conf.c</FilePath>
+              <FilePath>../Core/Src/main.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32g4xx_it.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../Core/Src/stm32g4xx_it.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32g4xx_hal_msp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../Core/Src/stm32g4xx_hal_msp.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -422,22 +433,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>Application/User/Core</GroupName>
+          <GroupName>Application/User/USB_Device/Target</GroupName>
           <Files>
             <File>
-              <FileName>main.c</FileName>
+              <FileName>usbd_conf.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../Core/Src/main.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32g4xx_it.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../Core/Src/stm32g4xx_it.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32g4xx_hal_msp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../Core/Src/stm32g4xx_hal_msp.c</FilePath>
+              <FilePath>../USB_Device/Target/usbd_conf.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -448,6 +449,21 @@
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Drivers/BSP/Components</GroupName>
+          <Files>
+            <File>
+              <FileName>mfxstm32l152_reg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Drivers/BSP/Components/mfxstm32l152/mfxstm32l152_reg.c</FilePath>
+            </File>
+            <File>
+              <FileName>mfxstm32l152.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Drivers/BSP/Components/mfxstm32l152/mfxstm32l152.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -468,21 +484,6 @@
               <FileName>stm32g474e_eval.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../Drivers/BSP/STM32G474E-EVAL/stm32g474e_eval.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>Drivers/BSP/Components</GroupName>
-          <Files>
-            <File>
-              <FileName>mfxstm32l152_reg.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../Drivers/BSP/Components/mfxstm32l152/mfxstm32l152_reg.c</FilePath>
-            </File>
-            <File>
-              <FileName>mfxstm32l152.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../Drivers/BSP/Components/mfxstm32l152/mfxstm32l152.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -528,16 +529,6 @@
               <FileName>stm32g4xx_ll_usb.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_usb.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32g4xx_hal_tim.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32g4xx_hal_tim_ex.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim_ex.c</FilePath>
             </File>
             <File>
               <FileName>stm32g4xx_hal.c</FileName>
@@ -598,6 +589,21 @@
               <FileName>stm32g4xx_hal_cortex.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_cortex.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32g4xx_hal_tim.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32g4xx_hal_tim_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim_ex.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32g4xx_ll_pwr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_pwr.c</FilePath>
             </File>
           </Files>
         </Group>

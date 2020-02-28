@@ -40,6 +40,9 @@ Each time a reception buffer is full, user data process callback is called.
 Data processing consists in echoing data buffer content on PC Com port, and making LED2 toggle.
 In case of errors, LED2 is blinking.
 
+@par Keywords
+
+Connectivity, USART, Asynchroneous mode, RS-232, Baud rate, Interrupt, HyperTerminal, Reception.
 
 @par Directory contents 
 

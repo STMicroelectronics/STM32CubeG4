@@ -71,6 +71,10 @@ STM32G474E-EVAL Rev B's board's LEDs can be used to monitor the application stat
 For more details about FatFs implementation on STM32Cube, please refer to UM1721 "Developing Applications 
 on STM32Cube with FatFs".
 
+@par Keywords
+
+RAMDisk, SDRAM, FatFS, FAT, File system, Mount, Format.
+
 
 @par Directory contents
  

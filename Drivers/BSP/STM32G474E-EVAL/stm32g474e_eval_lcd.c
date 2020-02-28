@@ -124,6 +124,8 @@ static LCD_Drv_t     *LcdDrv = NULL;
   */
 /*******************************************************************************
  ********************************* LINK LCD ***********************************/
+static void LCD_MspInit(void);
+static void LCD_MspDeInit(void);
 static int32_t LCD_IO_Init(void);
 static int32_t LCD_IO_DeInit(void);
 

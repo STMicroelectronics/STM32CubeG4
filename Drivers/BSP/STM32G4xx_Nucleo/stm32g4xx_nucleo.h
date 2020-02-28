@@ -159,6 +159,9 @@ typedef struct
  #define USE_STM32G4XX_NUCLEO
 #endif
 
+#define STM32G4XX_NUCLEO_BSP_BOARD_NAME  "STM32G474-NUCLEO"
+#define STM32G4XX_NUCLEO_BSP_BOARD_ID    "MB1367"
+
 /** @defgroup STM32G4XX_NUCLEO_LOW_LEVEL_LED LOW LEVEL LED
   * @{
   */
@@ -253,6 +256,13 @@ extern UART_HandleTypeDef hcom_uart[];
   * @{
   */
 int32_t  BSP_GetVersion(void);
+const uint8_t* BSP_GetBoardName(void);
+const uint8_t* BSP_GetBoardID(void);
+
+/* Legacy APIs aliases */
+#define BSP_GetHWBoardVersionName    BSP_GetBoardName
+#define BSP_GetPDTypeName            BSP_GetBoardID
+
 int32_t  BSP_LED_Init(Led_TypeDef Led);
 int32_t  BSP_LED_DeInit(Led_TypeDef Led);
 int32_t  BSP_LED_On(Led_TypeDef Led);

@@ -7,13 +7,13 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) $COPYRIGHT_YEAR$ STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
-  * This software component is licensed by ST under Ultimate Liberty license
-  * SLA0044, the "License"; You may not use this file except in compliance with
-  * the License. You may obtain a copy of the License at:
-  *                             www.st.com/SLA0044
+  * This software component is licensed by ST under BSD 3-Clause license,
+  * the "License"; You may not use this file except in compliance with the
+  * License. You may obtain a copy of the License at:
+  *                        opensource.org/licenses/BSD-3-Clause
   *
   ******************************************************************************
   */
@@ -41,10 +41,14 @@
 
 /* Exported define -----------------------------------------------------------*/
 
-/* Start of the FLASH base address used to save the USBPD parameters */
-#define INDEX_PAGE              (FLASH_PAGE_NB - 1)          /* Index of latest page                      */
-#define ADDR_FLASH_LAST_PAGE    (FLASH_BASE + (INDEX_PAGE * FLASH_PAGE_SIZE))  /* Base @ of latest pages  */
-#define ADDR_FLASH_PAGE_END     (ADDR_FLASH_LAST_PAGE + FLASH_PAGE_SIZE - 1) 
+/* Following definitions should be adapted to used Flash configuration :
+   INDEX_PAGE : represents the number of the page used for storing USBPD settings (usually the last page)
+   ADDR_FLASH_LAST_PAGE : Flash address value of begining of USBPD settings page
+   ADDR_FLASH_PAGE_END : Flash address value of end of USBPD settings page
+*/
+#define INDEX_PAGE              (FLASH_PAGE_NB - 1u)          /* Index of latest page                      */
+#define ADDR_FLASH_LAST_PAGE    (FLASH_BASE + (INDEX_PAGE * FLASH_PAGE_SIZE))  /* Base @ of latest page    */
+#define ADDR_FLASH_PAGE_END     (ADDR_FLASH_LAST_PAGE + FLASH_PAGE_SIZE - 1u) 
 
 #define GUI_FLASH_ADDR_NB_PDO_SNK_P0  (ADDR_FLASH_LAST_PAGE)
 #define GUI_FLASH_ADDR_NB_PDO_SRC_P0  (ADDR_FLASH_LAST_PAGE + 1U)

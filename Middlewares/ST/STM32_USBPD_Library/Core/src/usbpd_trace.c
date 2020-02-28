@@ -20,7 +20,6 @@
 /* Includes ------------------------------------------------------------------*/
 #define USBPD_TRACE_C
 
-#include "stdint.h"
 #include "usbpd_def.h"
 #include "usbpd_core.h"
 #include "usbpd_trace.h"

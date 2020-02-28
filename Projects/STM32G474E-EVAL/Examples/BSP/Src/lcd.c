@@ -218,11 +218,11 @@ int32_t Lcd_demo(void)
     GUI_SetFont(&Font24);
     GUI_SetBackColor(GUI_COLOR_BLACK);
     GUI_SetTextColor(GUI_COLOR_GREEN);
-    GUI_DisplayStringAtLine(3, "Test of LCD");
+    GUI_DisplayStringAtLine(3, (uint8_t*)"Test of LCD");
     GUI_SetFont(&Font12);
     GUI_SetBackColor(GUI_COLOR_BLUE);
     GUI_SetTextColor(GUI_COLOR_ORANGE);
-    GUI_DisplayStringAt(0, 112, "Test of LCD", CENTER_MODE);
+    GUI_DisplayStringAt(0, 112, (uint8_t*)"Test of LCD", CENTER_MODE);
 
     /* Draw bitmap */
     GUI_DrawBitmap(5, 130, (uint8_t *)stlogo);
@@ -234,6 +234,7 @@ int32_t Lcd_demo(void)
     if (BSP_LCD_DeInit(0) != BSP_ERROR_NONE) result--;
   }
 
+  BSP_LCD_Init(0, Orientation[1]);
   return result;
 }
 

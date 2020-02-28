@@ -1143,6 +1143,9 @@
       <file>
         <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_cortex.c</name>
       </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_pwr.c</name>
+      </file>
     </group>
     <group>
       <name>CMSIS</name>

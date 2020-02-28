@@ -73,7 +73,7 @@ BSP_QSPI_Interface_t InterfaceMode[INTERFACE_MODE_NUMBER] = {
   BSP_QSPI_QPI_MODE
 };
 
-uint8_t* InterfaceModeText[INTERFACE_MODE_NUMBER] =
+char* InterfaceModeText[INTERFACE_MODE_NUMBER] =
 {
   "SPI_MODE",
   "SPI_1I2O_MODE",
@@ -89,7 +89,7 @@ BSP_QSPI_Transfer_t TransferRate[TRANSFER_RATE_NUMBER] = {
   BSP_QSPI_DTR_TRANSFER
 };
 
-uint8_t* TransferRateText[TRANSFER_RATE_NUMBER] =
+char* TransferRateText[TRANSFER_RATE_NUMBER] =
 {
   "STR",
   "DTR"
@@ -100,7 +100,7 @@ BSP_QSPI_DualFlash_t DualFlashMode[DUALFLASH_MODE_NUMBER] = {
   BSP_QSPI_DUALFLASH_ENABLE
 };
 
-uint8_t* DualFlashModeText[DUALFLASH_MODE_NUMBER] =
+char* DualFlashModeText[DUALFLASH_MODE_NUMBER] =
 {
   "SingleFlash",
   "DualFlash"
@@ -245,19 +245,19 @@ static void QSPI_Indirect_Mode(void)
       }
 
       GUI_SetTextColor(GUI_COLOR_BLACK);
-      GUI_DisplayStringAt(Xpos, Ypos, "Indirect", LEFT_MODE);
+      GUI_DisplayStringAt(Xpos, Ypos, (uint8_t*)"Indirect", LEFT_MODE);
       GUI_DisplayStringAt(Xpos+(10*CHAR_WIDE), Ypos, (uint8_t*)TransferRateText[k], LEFT_MODE);
       GUI_DisplayStringAt(Xpos+(14*CHAR_WIDE), Ypos, (uint8_t*)DualFlashModeText[l], LEFT_MODE);
-      GUI_DisplayStringAt(Xpos+(26*CHAR_WIDE), Ypos, ":", LEFT_MODE);
+      GUI_DisplayStringAt(Xpos+(26*CHAR_WIDE), Ypos, (uint8_t*)":", LEFT_MODE);
       if(error_code == 0)
       {
         GUI_SetTextColor(GUI_COLOR_GREEN);
-        GUI_DisplayStringAt(Xpos+(28*CHAR_WIDE), Ypos, "OK", LEFT_MODE);
+        GUI_DisplayStringAt(Xpos+(28*CHAR_WIDE), Ypos, (uint8_t*)"OK", LEFT_MODE);
       }
       else
       {
         GUI_SetTextColor(GUI_COLOR_RED);
-        GUI_DisplayStringAt(Xpos+(28*CHAR_WIDE), Ypos, "FAILED", LEFT_MODE);
+        GUI_DisplayStringAt(Xpos+(28*CHAR_WIDE), Ypos, (uint8_t*)"FAILED", LEFT_MODE);
         error_code = 0;
       }
       NEXT_LINE
@@ -349,19 +349,19 @@ static void QSPI_MemoryMapped_Mode(void)
       }
 
       GUI_SetTextColor(GUI_COLOR_BLACK);
-      GUI_DisplayStringAt(Xpos, Ypos, "MemoryMap", LEFT_MODE);
+      GUI_DisplayStringAt(Xpos, Ypos, (uint8_t*)"MemoryMap", LEFT_MODE);
       GUI_DisplayStringAt(Xpos+(10*CHAR_WIDE), Ypos, (uint8_t*)TransferRateText[k], LEFT_MODE);
       GUI_DisplayStringAt(Xpos+(14*CHAR_WIDE), Ypos, (uint8_t*)DualFlashModeText[l], LEFT_MODE);
-      GUI_DisplayStringAt(Xpos+(26*CHAR_WIDE), Ypos, ":", LEFT_MODE);
+      GUI_DisplayStringAt(Xpos+(26*CHAR_WIDE), Ypos, (uint8_t*)":", LEFT_MODE);
       if(error_code == 0)
       {
         GUI_SetTextColor(GUI_COLOR_GREEN);
-        GUI_DisplayStringAt(Xpos+(28*CHAR_WIDE), Ypos, "OK", LEFT_MODE);
+        GUI_DisplayStringAt(Xpos+(28*CHAR_WIDE), Ypos, (uint8_t*)"OK", LEFT_MODE);
       }
       else
       {
         GUI_SetTextColor(GUI_COLOR_RED);
-        GUI_DisplayStringAt(Xpos+(28*CHAR_WIDE), Ypos, "FAILED", LEFT_MODE);
+        GUI_DisplayStringAt(Xpos+(28*CHAR_WIDE), Ypos, (uint8_t*)"FAILED", LEFT_MODE);
         error_code = 0;
       }
       NEXT_LINE
@@ -457,17 +457,17 @@ static void QSPI_FlashId(void)
   }
 
   GUI_SetTextColor(GUI_COLOR_BLACK);
-  GUI_DisplayStringAt(Xpos, Ypos, "Flash ID 1", LEFT_MODE);
-  GUI_DisplayStringAt(Xpos+(26*CHAR_WIDE), Ypos, ":", LEFT_MODE);
+  GUI_DisplayStringAt(Xpos, Ypos, (uint8_t*)"Flash ID 1", LEFT_MODE);
+  GUI_DisplayStringAt(Xpos+(26*CHAR_WIDE), Ypos, (uint8_t*)":", LEFT_MODE);
   if(error_code == 0)
   {
     GUI_SetTextColor(GUI_COLOR_GREEN);
-    GUI_DisplayStringAt(Xpos+(28*CHAR_WIDE), Ypos, "OK", LEFT_MODE);
+    GUI_DisplayStringAt(Xpos+(28*CHAR_WIDE), Ypos, (uint8_t*)"OK", LEFT_MODE);
   }
   else
   {
     GUI_SetTextColor(GUI_COLOR_RED);
-    GUI_DisplayStringAt(Xpos+(28*CHAR_WIDE), Ypos, "FAILED", LEFT_MODE);
+    GUI_DisplayStringAt(Xpos+(28*CHAR_WIDE), Ypos, (uint8_t*)"FAILED", LEFT_MODE);
     error_code = 0;
   }
   NEXT_LINE
@@ -491,17 +491,17 @@ static void QSPI_FlashId(void)
   }
 
   GUI_SetTextColor(GUI_COLOR_BLACK);
-  GUI_DisplayStringAt(Xpos, Ypos, "Flash ID 2", LEFT_MODE);
-  GUI_DisplayStringAt(Xpos+(26*CHAR_WIDE), Ypos, ":", LEFT_MODE);
+  GUI_DisplayStringAt(Xpos, Ypos, (uint8_t*)"Flash ID 2", LEFT_MODE);
+  GUI_DisplayStringAt(Xpos+(26*CHAR_WIDE), Ypos, (uint8_t*)":", LEFT_MODE);
   if(error_code == 0)
   {
     GUI_SetTextColor(GUI_COLOR_GREEN);
-    GUI_DisplayStringAt(Xpos+(28*CHAR_WIDE), Ypos, "OK", LEFT_MODE);
+    GUI_DisplayStringAt(Xpos+(28*CHAR_WIDE), Ypos, (uint8_t*)"OK", LEFT_MODE);
   }
   else
   {
     GUI_SetTextColor(GUI_COLOR_RED);
-    GUI_DisplayStringAt(Xpos+(28*CHAR_WIDE), Ypos, "FAILED", LEFT_MODE);
+    GUI_DisplayStringAt(Xpos+(28*CHAR_WIDE), Ypos, (uint8_t*)"FAILED", LEFT_MODE);
     error_code = 0;
   }
   NEXT_LINE

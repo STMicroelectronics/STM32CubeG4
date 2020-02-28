@@ -16,8 +16,8 @@
         <TargetCommonOption>
           <Device>STM32G474RETx</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>STMicroelectronics.STM32G4xx_DFP.0.0.4</PackID>
-          <PackURL>http://www.ST.com/</PackURL>
+          <PackID>Keil.STM32G4xx_DFP.1.1.0</PackID>
+          <PackURL>http://www.keil.com/pack</PackURL>
           <Cpu>IROM(0x08000000-0x807FFFF) IRAM(0x20000000-0x2001FFFF) IRAM(0x10000000-0x10007FFF) CLOCK(8000000) FPU2 CPUTYPE("Cortex-M4")</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
@@ -184,6 +184,7 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>2</RvdsVP>
+            <RvdsMve>0</RvdsMve>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -379,9 +380,6 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>::CMSIS</GroupName>
-        </Group>
-        <Group>
           <GroupName>Application/MDK-ARM</GroupName>
           <Files>
             <File>
@@ -465,6 +463,9 @@
               <FilePath>../Src/system_stm32g4xx.c</FilePath>
             </File>
           </Files>
+        </Group>
+        <Group>
+          <GroupName>::CMSIS</GroupName>
         </Group>
       </Groups>
     </Target>

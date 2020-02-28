@@ -39,11 +39,6 @@ void USBPD_PORT0_IRQHandler(void)
   PORTx_IRQHandler(USBPD_PORT_0);
 }
 
-void USBPD_PORT1_IRQHandler(void)
-{
-  PORTx_IRQHandler(USBPD_PORT_1);
-}
-
 void PORTx_IRQHandler(uint8_t PortNum)
 {
   UCPD_TypeDef *hucpd = Ports[PortNum].husbpd;
@@ -164,26 +159,14 @@ void PORTx_IRQHandler(uint8_t PortNum)
       return;
     }
 
-    /* check TYPECEVT1IE/TYPECEVT1IE */
-    if (UCPD_SR_TYPECEVT1 == (_interrupt & UCPD_SR_TYPECEVT1))
+    /* check TYPECEVT1IE/TYPECEVT1IE || check TYPECEVT2IE/TYPECEVT2IE */
+    if ((UCPD_SR_TYPECEVT1 == (_interrupt & UCPD_SR_TYPECEVT1)) || (UCPD_SR_TYPECEVT2 == (_interrupt & UCPD_SR_TYPECEVT2)))
     {
-      Ports[PortNum].PIN_CC1 = hucpd->SR & UCPD_SR_TYPEC_VSTATE_CC1;
-      Ports[PortNum].PIN_CC2 = hucpd->SR & UCPD_SR_TYPEC_VSTATE_CC2;
       /* clear both interrupt */
       LL_UCPD_ClearFlag_TypeCEventCC1(hucpd);
-      Ports[PortNum].USBPD_CAD_WakeUp();
-      /* Wakeup CAD to check the detection event */
-      return;
-    }
-
-    /* check TYPECEVT1IE/TYPECEVT1IE */
-    if (UCPD_SR_TYPECEVT2 == (_interrupt & UCPD_SR_TYPECEVT2))
-    {
-      Ports[PortNum].PIN_CC1 = hucpd->SR & UCPD_SR_TYPEC_VSTATE_CC1;
-      Ports[PortNum].PIN_CC2 = hucpd->SR & UCPD_SR_TYPEC_VSTATE_CC2;
       LL_UCPD_ClearFlag_TypeCEventCC2(hucpd);
-      /* Wakeup CAD to check the detection event */
       Ports[PortNum].USBPD_CAD_WakeUp();
+      /* Wakeup CAD to check the detection event */
       return;
     }
 

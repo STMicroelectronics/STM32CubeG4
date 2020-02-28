@@ -85,10 +85,12 @@ Timer, Low Power, PWM, Stop mode, Interrupt, External Clock, Output, Duty Cycle
   - This example has been tested with STMicroelectronics NUCLEO-G431RB RevC
     board and can be easily tailored to any other supported device
     and development board.   
-	
+
   - Connect a clock signal to PB5 (pin 29 in CN10 connector).
   - Connect PB2 (pin 22 in CN10 connector) to an oscilloscope 
     to monitor the LPTIM output waveform.
+
+  - For coherent behavior with the readme description, you must run the program after injecting an external clock signal into input pin PB5.
 
 @par How to use it ? 
 

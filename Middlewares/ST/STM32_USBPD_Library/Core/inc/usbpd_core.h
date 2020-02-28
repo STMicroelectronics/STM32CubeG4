@@ -182,14 +182,12 @@ typedef enum
   USBPD_TRACE_SRC         = 7,
   USBPD_TRACE_SNK         = 8,
   USBPD_TRACE_NOTIF       = 9,
-  USBPD_TRACE_POWER       = 10
+  USBPD_TRACE_POWER       = 10,
+  USBPD_TRACE_TCPM        = 11
 }
 TRACE_EVENT;
 
 typedef void (*TRACE_ENTRY_POINT)(TRACE_EVENT type, uint8_t port, uint8_t sop, uint8_t *ptr, uint32_t size);
-
-extern uint32_t Crc;
-extern TRACE_ENTRY_POINT USBPD_Trace;
 
 /**
   * @}
@@ -213,6 +211,7 @@ extern TRACE_ENTRY_POINT USBPD_Trace;
   * */
 typedef struct
 {
+#if defined(USBPDCORE_SVDM) || defined(USBPDCORE_VCONN_SUPPORT)
   /**
     * @brief  VDM Discovery identity callback
     * @note   Function is called to get Discovery identity information linked to the device and answer
@@ -390,6 +389,7 @@ typedef struct
     */
   void (*USBPD_VDM_InformSpecific)(uint8_t PortNum, USBPD_SOPType_TypeDef SOPType, USBPD_VDM_Command_Typedef VDMCommand, uint8_t *pNbData, uint32_t *pVDO);
 
+#endif /* USBPDCORE_SVDM || USBPDCORE_VCONN_SUPPORT */
 #if defined(USBPDCORE_UVDM)
   /**
     * @brief  VDM Send Unstructured message callback
@@ -748,6 +748,7 @@ USBPD_StatusTypeDef USBPD_PE_Send_Request(uint8_t PortNum, uint32_t Rdo, USBPD_C
 #endif /* USBPDCORE_SNK || USBPDCORE_DRP */
 
 #if defined(USBPD_REV30_SUPPORT)
+#if defined(USBPDCORE_BATTERY) || defined(USBPDCORE_MANU_INFO) || defined(USBPDCORE_SECURITY_MSG) || defined(USBPDCORE_FWUPD)
 /**
   * @brief  This function send an extended message
   * @Note   The managment of chunk or unchunked message is manage inside the
@@ -759,6 +760,7 @@ USBPD_StatusTypeDef USBPD_PE_Send_Request(uint8_t PortNum, uint32_t Rdo, USBPD_C
   * @retval status       @ref USBPD_OK, @ref USBPD_BUSY, @ref USBPD_ERROR or @ref USBPD_FAIL
   */
 USBPD_StatusTypeDef USBPD_PE_SendExtendedMessage(uint8_t PortNum, USBPD_SOPType_TypeDef SOPType, USBPD_ExtendedMsg_TypeDef MessageType, uint8_t *Ptrdata, uint16_t DataSize);
+#endif
 
 #if defined(USBPDCORE_FASTROLESWAP)
 /**

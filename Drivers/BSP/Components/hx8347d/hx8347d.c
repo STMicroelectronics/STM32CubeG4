@@ -166,7 +166,7 @@ int32_t HX8347D_RegisterBusIO(HX8347D_Object_t *pObj, HX8347D_IO_t *pIO)
 */
 int32_t HX8347D_Init(HX8347D_Object_t *pObj, uint32_t ColorCoding, uint32_t Orientation)
 {
-  int32_t ret;
+  int32_t ret = HX8347D_OK;
   uint8_t pdata;
   volatile uint8_t *data;
 
@@ -174,134 +174,140 @@ int32_t HX8347D_Init(HX8347D_Object_t *pObj, uint32_t ColorCoding, uint32_t Orie
   {
     ret = HX8347D_ERROR;
   }
-  else if (pObj->IsInitialized == 0)
+  else
   {
-    pObj->IsInitialized = 1;
-    ret = HX8347D_OK;
-    /* Driving ability setting */
-    pdata = 0x00;
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_POWER_CTRL_INTERNAL_USED1, &pdata, 1);
-    pdata = 0x20;
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_POWER_CTRL_INTERNAL_USED2, &pdata, 1);
-    pdata = 0x0C;
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_SOURCE_CTRL_INTERNAl_USED1, &pdata, 1);
-    pdata = 0xC4;
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_SOURCE_CTRL_INTERNAl_USED2, &pdata, 1);
-    pdata = 0x40;
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_SOURCE_OP_CTRL1, &pdata, 1);
-    pdata = 0x38;
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_SOURCE_OP_CTRL2, &pdata, 1);
-    pdata = 0xA3;
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_DISPLAY_CTRL2, &pdata, 1);
+    if (pObj->IsInitialized == 0)
+    {
+      pObj->IsInitialized = 1;
+      /* Driving ability setting */
+      pdata = 0x00;
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_POWER_CTRL_INTERNAL_USED1, &pdata, 1);
+      pdata = 0x20;
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_POWER_CTRL_INTERNAL_USED2, &pdata, 1);
+      pdata = 0x0C;
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_SOURCE_CTRL_INTERNAl_USED1, &pdata, 1);
+      pdata = 0xC4;
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_SOURCE_CTRL_INTERNAl_USED2, &pdata, 1);
+      pdata = 0x40;
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_SOURCE_OP_CTRL1, &pdata, 1);
+      pdata = 0x38;
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_SOURCE_OP_CTRL2, &pdata, 1);
+      pdata = 0xA3;
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_DISPLAY_CTRL2, &pdata, 1);
 
-    /* Adjust the Gamma Curve */
-    pdata = 0x01;
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL1, &pdata, 1);
-    pdata = 0x00;
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL2, &pdata, 1);
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL3, &pdata, 1);
-    pdata = 0x10;
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL4, &pdata, 1);
-    pdata = 0x0E;
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL5, &pdata, 1);
-    pdata = 0x24;
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL6, &pdata, 1);
-    pdata = 0x04;
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL7, &pdata, 1);
-    pdata = 0x50;
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL8, &pdata, 1);
-    pdata = 0x02;
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL9, &pdata, 1);
-    pdata = 0x13;
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL10, &pdata, 1);
-    pdata = 0x19;
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL11, &pdata, 1);
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL12, &pdata, 1);
-    pdata = 0x16;
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL13, &pdata, 1);
-    pdata = 0x1B;
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL14, &pdata, 1);
-    pdata = 0x31;
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL15, &pdata, 1);
-    pdata = 0x2F;
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL16, &pdata, 1);
-    pdata = 0x3F;
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL17, &pdata, 1);
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL18, &pdata, 1);
-    pdata = 0x3E;
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL19, &pdata, 1);
-    pdata = 0x2F;
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL20, &pdata, 1);
-    pdata = 0x7B;
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL21, &pdata, 1);
-    pdata = 0x09;
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL22, &pdata, 1);
-    pdata = 0x06;
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL23, &pdata, 1);
-    pdata = 0x06;
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL24, &pdata, 1);
-    pdata = 0x0C;
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL25, &pdata, 1);
-    pdata = 0x1D;
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL26, &pdata, 1);
-    pdata = 0xCC;
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL27, &pdata, 1);
-
-    /* Power voltage setting */
-    pdata = 0x1B;
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_POWER_CTRL2, &pdata, 1);
-    pdata = 0x01;
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_POWER_CTRL1, &pdata, 1);
-    pdata = 0x2F;
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_VCOM_CTRL2, &pdata, 1);
-    pdata = 0x57;
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_VCOM_CTRL3, &pdata, 1);
-    /*****VCOM offset ****/
-    pdata = 0x86;
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_VCOM_CTRL1, &pdata, 1);
-
-    /* Power on setting up flow */
-    pdata = 0x36;
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_OSC_CTRL1, &pdata, 1); /* Display frame rate = 70Hz RADJ = '0110' */
-    pdata = 0x01;
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_OSC_CTRL2, &pdata, 1); /* OSC_EN = 1 */
-    pdata = 0x06;
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_POWER_CTRL3, &pdata, 1); /* AP[2:0] = 111 */
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_POWER_CTRL4, &pdata, 1); /* AP[2:0] = 111 */
-    pdata = 0x90;
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_POWER_CTRL6, &pdata, 1); /* GAS=1, VOMG=00, PON=1, DK=0, XDK=0, DVDH_TRI=0, STB=0*/
-    pdata = 0x01;
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_DISPLAY_CTRL1, &pdata, 1); /* REF = 1 */
-
-    (void)HX8347D_IO_Delay(pObj, 10);
-    /* 262k/65k color selection */
-    pdata = 0x05;
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_COLMOD_CTRL, &pdata, 1); /* default 0x06 262k color,  0x05 65k color */
-    /* SET PANEL */
-    pdata = 0x09;
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_PANEL_CTRL, &pdata, 1); /* SS_PANEL = 1, GS_PANEL = 0,REV_PANEL = 0, BGR_PANEL = 1 */
-
-    /* Display ON flow */
-    pdata = 0x38U;
-    data = (uint8_t *)&pdata;
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_DISPLAY_CTRL3, (uint8_t *)data, 1);
-    (void)HX8347D_IO_Delay(pObj, 100);
-    pdata = 0x3CU;
-    data = (uint8_t *)&pdata;
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_DISPLAY_CTRL3, (uint8_t *)data, 1);
-    (void)HX8347D_IO_Delay(pObj, 100);
-
-    /* Set GRAM Area - Partial Display Control */
-    pdata = 0x00U;
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_DISPLAY_MODE_CTRL, &pdata, 1); /* DP_STB = 0, DP_STB_S = 0, SCROLL = 0, */
-    /* Set Display orientation */
-    ret += HX8347D_SetOrientation(pObj, Orientation);
-
-    /* Set the Cursor */
-    ret += HX8347D_SetCursor(pObj, 0, 0);
-
-    /* Prepare to write GRAM */
-    ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_READ_DATA, &pdata, 1);
+      /* Adjust the Gamma Curve */
+      pdata = 0x01;
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL1, &pdata, 1);
+      pdata = 0x00;
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL2, &pdata, 1);
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL3, &pdata, 1);
+      pdata = 0x10;
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL4, &pdata, 1);
+      pdata = 0x0E;
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL5, &pdata, 1);
+      pdata = 0x24;
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL6, &pdata, 1);
+      pdata = 0x04;
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL7, &pdata, 1);
+      pdata = 0x50;
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL8, &pdata, 1);
+      pdata = 0x02;
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL9, &pdata, 1);
+      pdata = 0x13;
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL10, &pdata, 1);
+      pdata = 0x19;
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL11, &pdata, 1);
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL12, &pdata, 1);
+      pdata = 0x16;
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL13, &pdata, 1);
+      pdata = 0x1B;
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL14, &pdata, 1);
+      pdata = 0x31;
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL15, &pdata, 1);
+      pdata = 0x2F;
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL16, &pdata, 1);
+      pdata = 0x3F;
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL17, &pdata, 1);
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL18, &pdata, 1);
+      pdata = 0x3E;
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL19, &pdata, 1);
+      pdata = 0x2F;
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL20, &pdata, 1);
+      pdata = 0x7B;
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL21, &pdata, 1);
+      pdata = 0x09;
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL22, &pdata, 1);
+      pdata = 0x06;
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL23, &pdata, 1);
+      pdata = 0x06;
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL24, &pdata, 1);
+      pdata = 0x0C;
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL25, &pdata, 1);
+      pdata = 0x1D;
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL26, &pdata, 1);
+      pdata = 0xCC;
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_GAMMA_CTRL27, &pdata, 1);
+   
+      /* Power voltage setting */
+      pdata = 0x1B;
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_POWER_CTRL2, &pdata, 1);
+      pdata = 0x01;
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_POWER_CTRL1, &pdata, 1);
+      pdata = 0x2F;
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_VCOM_CTRL2, &pdata, 1);
+      pdata = 0x57;
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_VCOM_CTRL3, &pdata, 1);
+      /*****VCOM offset ****/
+      pdata = 0x86;
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_VCOM_CTRL1, &pdata, 1);
+   
+      /* Power on setting up flow */
+      pdata = 0x36;
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_OSC_CTRL1, &pdata, 1); /* Display frame rate = 70Hz RADJ = '0110' */
+      pdata = 0x01;
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_OSC_CTRL2, &pdata, 1); /* OSC_EN = 1 */
+      pdata = 0x06;
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_POWER_CTRL3, &pdata, 1); /* AP[2:0] = 111 */
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_POWER_CTRL4, &pdata, 1); /* AP[2:0] = 111 */
+      pdata = 0x90;
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_POWER_CTRL6, &pdata, 1); /* GAS=1, VOMG=00, PON=1, DK=0, XDK=0, DVDH_TRI=0, STB=0*/
+      pdata = 0x01;
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_DISPLAY_CTRL1, &pdata, 1); /* REF = 1 */
+   
+      (void)HX8347D_IO_Delay(pObj, 10);
+      /* 262k/65k color selection */
+      pdata = 0x05;
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_COLMOD_CTRL, &pdata, 1); /* default 0x06 262k color,  0x05 65k color */
+      /* SET PANEL */
+      pdata = 0x09;
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_PANEL_CTRL, &pdata, 1); /* SS_PANEL = 1, GS_PANEL = 0,REV_PANEL = 0, BGR_PANEL = 1 */
+   
+      /* Display ON flow */
+      pdata = 0x38U;
+      data = (uint8_t *)&pdata;
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_DISPLAY_CTRL3, (uint8_t *)data, 1);
+      (void)HX8347D_IO_Delay(pObj, 100);
+      pdata = 0x3CU;
+      data = (uint8_t *)&pdata;
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_DISPLAY_CTRL3, (uint8_t *)data, 1);
+      (void)HX8347D_IO_Delay(pObj, 100);
+   
+      /* Set GRAM Area - Partial Display Control */
+      pdata = 0x00U;
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_DISPLAY_MODE_CTRL, &pdata, 1); /* DP_STB = 0, DP_STB_S = 0, SCROLL = 0, */
+      /* Set Display orientation */
+      ret += HX8347D_SetOrientation(pObj, Orientation);
+   
+      /* Set the Cursor */
+      ret += HX8347D_SetCursor(pObj, 0, 0);
+   
+      /* Prepare to write GRAM */
+      ret += hx8347d_write_reg(&pObj->Ctx, HX8347D_READ_DATA, &pdata, 1);
+    }
+    else
+    {
+      ret = HX8347D_ERROR;
+    }
   }
 
   if(ret != HX8347D_OK)

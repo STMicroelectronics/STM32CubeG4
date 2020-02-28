@@ -56,6 +56,10 @@ example by modifying defines values in the file main.h.
 @note This example need to ensure that the SysTick time base is always set to 1 millisecond
       to have correct HAL operation.
 
+@par Keywords
+
+System, DMA, Data Transfer, Memory to memory, Channel, Flash, RAM.
+
 @par Directory contents
 
   - DMA/DMA_FLASHToRAM/Src/system_stm32g4xx.c      STM32G4xx system clock configuration file

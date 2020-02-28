@@ -143,8 +143,8 @@
 #define HX8347D_CABC_CTRL6                      0xC5U
 #define HX8347D_CABC_CTRL7                      0xC7U
 #define HX8347D_GAIN_SELECT0                    0xCBU
-#define HX8347D_GAIN_SELECT1                    0xCDU
-#define HX8347D_GAIN_SELECT2                    0xCCU
+#define HX8347D_GAIN_SELECT1                    0xCCU
+#define HX8347D_GAIN_SELECT2                    0xCDU
 #define HX8347D_GAIN_SELECT3                    0xCEU
 #define HX8347D_GAIN_SELECT4                    0xCFU
 #define HX8347D_GAIN_SELECT5                    0xD0U

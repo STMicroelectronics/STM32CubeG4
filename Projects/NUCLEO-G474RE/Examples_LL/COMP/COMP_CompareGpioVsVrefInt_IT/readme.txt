@@ -60,6 +60,9 @@ Other peripheral used:
   1 GPIO for analog input of comparator: PA.01 (Morpho connector CN6 pin 30, Arduino connector CN11 pin A1)
   EXTI line 21 (connected to COMP1 output)
 
+@par Keywords
+
+COMP, Comparator, Voltage, Interrupt mode, Internal voltage reference, VREFINT, Analog mode, EXTI, External power supply.
 
 @par Directory contents 
 

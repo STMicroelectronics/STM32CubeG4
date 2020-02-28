@@ -68,7 +68,7 @@ static uint8_t iFrequency = 0;
 /* Measured frequency */
 __IO uint32_t uwMeasuredFrequency = 0;
 
-/* TIM2 Clock */
+/* TIM3 Clock */
 static uint32_t TimOutClock = 1;
 static uint32_t tim_period = 0;
 static uint32_t tim_pulse_value = 0;
@@ -79,7 +79,7 @@ static uint32_t tim_pulse_value = 0;
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_TIM1_Init(void);
-static void MX_TIM2_Init(void);
+static void MX_TIM3_Init(void);
 /* USER CODE BEGIN PFP */
 __STATIC_INLINE void Configure_Frequency(uint32_t Frequency);
 __STATIC_INLINE void LED_Blinking(uint32_t Period);
@@ -99,7 +99,7 @@ int main(void)
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */
-  
+
 
   /* MCU Configuration--------------------------------------------------------*/
 
@@ -113,6 +113,10 @@ int main(void)
 
   /* System interrupt init*/
 
+  /** Disable the internal Pull-Up in Dead Battery pins of UCPD peripheral 
+  */
+  LL_PWR_DisableDeadBatteryPD();
+
   /* USER CODE BEGIN Init */
 
   /* USER CODE END Init */
@@ -123,9 +127,9 @@ int main(void)
   /* USER CODE BEGIN SysInit */
 
   /* Set the auto-reload value to have a counter frequency of 2 kHz           */
-  /* TIM2CLK = SystemCoreClock / (APB prescaler & multiplier)                 */
+  /* TIM3CLK = SystemCoreClock / (APB prescaler & multiplier)                 */
   TimOutClock = SystemCoreClock/(2/2);
-  /* TIM2 counter frequency = TimOutClock / (ARR + 1)                   */
+  /* TIM3 counter frequency = TimOutClock / (ARR + 1)                   */
   tim_period = __LL_TIM_CALC_ARR(TimOutClock, 0, aFrequency[0]);
 
   /* Set compare value to half of the counter period (50% duty cycle )*/
@@ -136,7 +140,7 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_TIM1_Init();
-  MX_TIM2_Init();
+  MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
 
   /**************************/
@@ -154,19 +158,19 @@ int main(void)
   /* Enable counter */
   LL_TIM_EnableCounter(TIM1);
 
-  /* Enable TIM2_CCR1 register preload. Read/Write operations access the      */
-  /* preload register. TIM2_CCR1 preload value is loaded in the active        */
+  /* Enable TIM3_CCR1 register preload. Read/Write operations access the      */
+  /* preload register. TIM3_CCR1 preload value is loaded in the active        */
   /* at each update event.                                                    */
-  LL_TIM_OC_EnablePreload(TIM2, LL_TIM_CHANNEL_CH1);
+  LL_TIM_OC_EnablePreload(TIM3, LL_TIM_CHANNEL_CH1);
   
   /**********************************/
   /* Start output signal generation */
   /**********************************/
   /* Enable output channel 1 */
-  LL_TIM_CC_EnableChannel(TIM2, LL_TIM_CHANNEL_CH1);
+  LL_TIM_CC_EnableChannel(TIM3, LL_TIM_CHANNEL_CH1);
     
   /* Enable counter */
-  LL_TIM_EnableCounter(TIM2);
+  LL_TIM_EnableCounter(TIM3);
 
   /* USER CODE END 2 */
 
@@ -223,7 +227,9 @@ void SystemClock_Config(void)
   LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
   LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
   LL_RCC_SetAPB2Prescaler(LL_RCC_APB1_DIV_1);
+
   LL_Init1msTick(170000000);
+
   LL_SetSystemCoreClock(170000000);
 }
 
@@ -290,16 +296,16 @@ static void MX_TIM1_Init(void)
 }
 
 /**
-  * @brief TIM2 Initialization Function
+  * @brief TIM3 Initialization Function
   * @param None
   * @retval None
   */
-static void MX_TIM2_Init(void)
+static void MX_TIM3_Init(void)
 {
 
-  /* USER CODE BEGIN TIM2_Init 0 */
+  /* USER CODE BEGIN TIM3_Init 0 */
 
-  /* USER CODE END TIM2_Init 0 */
+  /* USER CODE END TIM3_Init 0 */
 
   LL_TIM_InitTypeDef TIM_InitStruct = {0};
   LL_TIM_OC_InitTypeDef TIM_OC_InitStruct = {0};
@@ -307,44 +313,44 @@ static void MX_TIM2_Init(void)
   LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
 
   /* Peripheral clock enable */
-  LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_TIM2);
+  LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_TIM3);
 
-  /* USER CODE BEGIN TIM2_Init 1 */
+  /* USER CODE BEGIN TIM3_Init 1 */
 
-  /* USER CODE END TIM2_Init 1 */
+  /* USER CODE END TIM3_Init 1 */
   TIM_InitStruct.Prescaler = 0;
   TIM_InitStruct.CounterMode = LL_TIM_COUNTERMODE_UP;
   TIM_InitStruct.Autoreload = tim_period;
   TIM_InitStruct.ClockDivision = LL_TIM_CLOCKDIVISION_DIV1;
-  LL_TIM_Init(TIM2, &TIM_InitStruct);
-  LL_TIM_EnableARRPreload(TIM2);
-  LL_TIM_OC_EnablePreload(TIM2, LL_TIM_CHANNEL_CH1);
+  LL_TIM_Init(TIM3, &TIM_InitStruct);
+  LL_TIM_EnableARRPreload(TIM3);
+  LL_TIM_OC_EnablePreload(TIM3, LL_TIM_CHANNEL_CH1);
   TIM_OC_InitStruct.OCMode = LL_TIM_OCMODE_PWM1;
   TIM_OC_InitStruct.OCState = LL_TIM_OCSTATE_DISABLE;
   TIM_OC_InitStruct.OCNState = LL_TIM_OCSTATE_DISABLE;
   TIM_OC_InitStruct.CompareValue = tim_pulse_value;
   TIM_OC_InitStruct.OCPolarity = LL_TIM_OCPOLARITY_HIGH;
-  LL_TIM_OC_Init(TIM2, LL_TIM_CHANNEL_CH1, &TIM_OC_InitStruct);
-  LL_TIM_OC_DisableFast(TIM2, LL_TIM_CHANNEL_CH1);
-  LL_TIM_SetOCRefClearInputSource(TIM2, LL_TIM_OCREF_CLR_INT_COMP1);
-  LL_TIM_DisableExternalClock(TIM2);
-  LL_TIM_ConfigETR(TIM2, LL_TIM_ETR_POLARITY_NONINVERTED, LL_TIM_ETR_PRESCALER_DIV1, LL_TIM_ETR_FILTER_FDIV1);
-  LL_TIM_SetTriggerOutput(TIM2, LL_TIM_TRGO_RESET);
-  LL_TIM_DisableMasterSlaveMode(TIM2);
-  /* USER CODE BEGIN TIM2_Init 2 */
+  LL_TIM_OC_Init(TIM3, LL_TIM_CHANNEL_CH1, &TIM_OC_InitStruct);
+  LL_TIM_OC_DisableFast(TIM3, LL_TIM_CHANNEL_CH1);
+  LL_TIM_SetOCRefClearInputSource(TIM3, LL_TIM_OCREF_CLR_INT_COMP1);
+  LL_TIM_DisableExternalClock(TIM3);
+  LL_TIM_ConfigETR(TIM3, LL_TIM_ETR_POLARITY_NONINVERTED, LL_TIM_ETR_PRESCALER_DIV1, LL_TIM_ETR_FILTER_FDIV1);
+  LL_TIM_SetTriggerOutput(TIM3, LL_TIM_TRGO_RESET);
+  LL_TIM_DisableMasterSlaveMode(TIM3);
+  /* USER CODE BEGIN TIM3_Init 2 */
 
-  /* USER CODE END TIM2_Init 2 */
+  /* USER CODE END TIM3_Init 2 */
   LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOA);
-  /**TIM2 GPIO Configuration  
-  PA5   ------> TIM2_CH1 
+  /**TIM3 GPIO Configuration  
+  PA6   ------> TIM3_CH1 
   */
-  GPIO_InitStruct.Pin = LED2_Pin;
+  GPIO_InitStruct.Pin = TIM3_CH1_Pin;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_ALTERNATE;
   GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
   GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
   GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
-  GPIO_InitStruct.Alternate = LL_GPIO_AF_1;
-  LL_GPIO_Init(LED2_GPIO_Port, &GPIO_InitStruct);
+  GPIO_InitStruct.Alternate = LL_GPIO_AF_2;
+  LL_GPIO_Init(TIM3_CH1_GPIO_Port, &GPIO_InitStruct);
 
 }
 
@@ -356,10 +362,14 @@ static void MX_TIM2_Init(void)
 static void MX_GPIO_Init(void)
 {
   LL_EXTI_InitTypeDef EXTI_InitStruct = {0};
+  LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
 
   /* GPIO Ports Clock Enable */
   LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOC);
   LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOA);
+
+  /**/
+  LL_GPIO_ResetOutputPin(LED2_GPIO_Port, LED2_Pin);
 
   /**/
   LL_SYSCFG_SetEXTISource(LL_SYSCFG_EXTI_PORTC, LL_SYSCFG_EXTI_LINE13);
@@ -376,6 +386,14 @@ static void MX_GPIO_Init(void)
 
   /**/
   LL_GPIO_SetPinMode(USER_BUTTON_GPIO_Port, USER_BUTTON_Pin, LL_GPIO_MODE_INPUT);
+
+  /**/
+  GPIO_InitStruct.Pin = LED2_Pin;
+  GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
+  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+  GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
+  LL_GPIO_Init(LED2_GPIO_Port, &GPIO_InitStruct);
 
   /* EXTI interrupt init*/
   NVIC_SetPriority(EXTI15_10_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
@@ -395,11 +413,11 @@ static void MX_GPIO_Init(void)
 __STATIC_INLINE void Configure_Frequency(uint32_t Frequency)
 {
   /* Set the auto-reload value to have the requested frequency */
-  /* Frequency = TIM2CLK / (ARR + 1)                   */
-  LL_TIM_SetAutoReload(TIM2, __LL_TIM_CALC_ARR(TimOutClock, LL_TIM_GetPrescaler(TIM2), Frequency));
+  /* Frequency = TIM3CLK / (ARR + 1)                   */
+  LL_TIM_SetAutoReload(TIM3, __LL_TIM_CALC_ARR(TimOutClock, LL_TIM_GetPrescaler(TIM3), Frequency));
  
   /* Set compare value to half of the counter period (50% duty cycle )*/
-  LL_TIM_OC_SetCompareCH1(TIM2, (LL_TIM_GetAutoReload(TIM2) / 2));
+  LL_TIM_OC_SetCompareCH1(TIM3, (LL_TIM_GetAutoReload(TIM3) / 2));
 }
 
 /**
@@ -427,7 +445,7 @@ __STATIC_INLINE void LED_Blinking(uint32_t Period)
 /**
   * @brief  User button interrupt processing
   * @note   When the user key button is pressed the frequency of the  
-  *         PWM signal generated by TIM2 is updated. 
+  *         PWM signal generated by TIM3 is updated. 
   * @param  None
   * @retval None
   */
@@ -546,7 +564,7 @@ void Error_Handler(void)
   * @retval None
   */
 void assert_failed(uint8_t *file, uint32_t line)
-{ 
+{
   /* USER CODE BEGIN 6 */
   /* User can add his own implementation to report the file name and line number,
      tex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */

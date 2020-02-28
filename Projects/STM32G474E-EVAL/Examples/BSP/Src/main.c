@@ -45,12 +45,16 @@ BSP_DemoTypedef  BSP_examples[]=
  // {Idd_demo,    "IDD"},
 #endif
 //  {Pot_demo,    "POTENTIOMETER"}, /* Please test POT without other tests to avoid perturbation from MFX on PA0 */
-  {AudioPlay_demo, "SET VOLUME/ SET SAMPLE RATE"},
-//  {AudioRecAnalog_demo, "ANALOG REC"},
-  {Bus_demo,    "BUS"},
+
+#if defined(__GNUC__)  || defined(__ICCARM__)   
+  {AudioPlay_demo, "AUDIO PLAY"},
+#endif 
+
+   //{AudioRecAnalog_demo, "ANALOG REC"},
+  {SD_demo,     "SD polling"},
 //  {Com_demo,    "COM"}, /* Please test COM without other tests and with USE_COM_LOG = 1 */
 //  {SRAM_demo,   "SRAM"},
-  {SD_demo,     "SD polling"},
+  {Bus_demo,    "BUS"},
 //  {QSPI_demo,   "QSPI"},
 };
 
@@ -59,7 +63,9 @@ __IO uint32_t UserButtonPressed = 0;
 /* Private define ------------------------------------------------------------*/
 #define KEYS_NUMBER              6 /* Button + joystick */
 #define DEBOUNCE                 100 /* 100ms */
-
+#if defined(__GNUC__)
+extern void initialise_monitor_handles(void);
+#endif
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 uint8_t DemoIndex = 0;
@@ -85,6 +91,9 @@ static void Flush_scanf(void);
   */
 int main(void)
 {
+#if defined(__GNUC__)
+  initialise_monitor_handles();
+#endif
   HAL_Init();
 
   /* Configure the system clock to 170 MHz */
@@ -109,7 +118,7 @@ int main(void)
   BSP_PB_Init(BUTTON_USER, BUTTON_MODE_EXTI);
 
   /* Run Application */
-  while (1)
+  while(1)
   {
     if(UserButtonPressed == 1)
     {
@@ -207,7 +216,7 @@ static void SystemClock_Config(void)
   */
 static void Display_DemoDescription(void)
 {
-  char desc[50];
+  char desc[58];
   uint32_t x_size;
   uint32_t y_size;
 
@@ -268,22 +277,28 @@ uint8_t CheckForUserInput(void)
 uint32_t CheckResult(void)
 {
   uint32_t result = 0;
-  uint8_t tmp = 0;
+  BSP_JOY_Init(JOY1, JOY_MODE_GPIO, JOY_RIGHT);
+  BSP_JOY_Init(JOY1, JOY_MODE_GPIO, JOY_LEFT);
 
-  printf("If result is OK press p (PASS), otherwise press other Key (FAIL) \n");
-  scanf("%c", &tmp);
-  if (tmp != 'p')
+  printf("If result is OK press JOY_RIGHT (pass), otherwise press JOY_LEFT (fail) \n");
+
+   while ((BSP_JOY_GetState(JOY1) == JOY_RIGHT) || (BSP_JOY_GetState(JOY1) != JOY_RIGHT));
+  if (BSP_JOY_GetState(JOY1) == JOY_LEFT)
   {
-    Flush_scanf();
     printf("Test is FAIL!!!\n");
+    HAL_Delay(1000);
     result = 1;
   }
   else
   {
-    Flush_scanf();
     printf("Test is PASS\n");
+    HAL_Delay(1000);
+    result = 0;
   }
+  BSP_JOY_DeInit(JOY1, JOY_RIGHT);
+  BSP_JOY_DeInit(JOY1, JOY_LEFT);
   return result;
+
 }
 
 /**

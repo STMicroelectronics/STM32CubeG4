@@ -77,7 +77,7 @@ extern void Error_Handler(void);
 static void HRTIM_Config(void);
 static void HRTIM_DeConfig(void);
 static void HRTIM_SetBurstCompare(float BurstCompare);
-static void SystemClock_Config(void);
+void SystemClock_Config(void);
 
 /* Private Variable ----------------------------------------------------------*/
 

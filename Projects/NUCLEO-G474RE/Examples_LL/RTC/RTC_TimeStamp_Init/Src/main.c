@@ -104,7 +104,7 @@ int main(void)
 {
   /* USER CODE BEGIN 1 */
   /* USER CODE END 1 */
-  
+
 
   /* MCU Configuration--------------------------------------------------------*/
 
@@ -117,6 +117,10 @@ int main(void)
   NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
 
   /* System interrupt init*/
+
+  /** Disable the internal Pull-Up in Dead Battery pins of UCPD peripheral 
+  */
+  LL_PWR_DisableDeadBatteryPD();
 
   /* USER CODE BEGIN Init */
 
@@ -266,7 +270,9 @@ void SystemClock_Config(void)
   LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
   LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
   LL_RCC_SetAPB2Prescaler(LL_RCC_APB1_DIV_1);
+
   LL_Init1msTick(170000000);
+
   LL_SetSystemCoreClock(170000000);
   LL_RCC_SetRTCClockSource(LL_RCC_RTC_CLKSOURCE_LSI);
   LL_RCC_EnableRTC();
@@ -486,7 +492,7 @@ void Error_Handler(void)
   * @retval None
   */
 void assert_failed(uint8_t *file, uint32_t line)
-{ 
+{
   /* USER CODE BEGIN 6 */
   /* User can add his own implementation to report the file name and line number,
      ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */

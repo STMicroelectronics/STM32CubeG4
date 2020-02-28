@@ -63,6 +63,9 @@ Other peripheral used:
   1 GPIO for OPAMP output: PA.06 (Arduino connector CN5 pin D12, Morpho connector CN10 pin 13)
   For waveform voltage generation: 1 DAC channel, 1 DMA channel, 1 timer.
 
+@par Keywords
+
+OPAMP, PGA mode, DMA, DAC, DMA half transfer, Oscilloscope.
 
 @par Directory contents 
 

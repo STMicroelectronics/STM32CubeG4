@@ -703,6 +703,10 @@ void USBPD_DPM_Notification(uint8_t PortNum, USBPD_NotifyEventValue_TypeDef Even
         USBPD_SNKRDO_TypeDef rdo;
         rdo.d32                                   = DPM_Ports[PortNum].DPM_RequestDOMsg;
         DPM_Ports[PortNum].DPM_RDOPosition        = rdo.GenericRDO.ObjectPosition;
+        if (NULL != DPM_GUI_SaveInfo)
+        {
+          DPM_GUI_SaveInfo(PortNum, USBPD_CORE_DATATYPE_RDO_POSITION, (uint8_t*)&DPM_Ports[PortNum].DPM_RDOPosition, 4);
+        }
       }
     break;
     /*
@@ -957,14 +961,14 @@ void USBPD_DPM_GetDataInfo(uint8_t PortNum, USBPD_CORE_DataInfoType_TypeDef Data
     }
     break;
 #endif /* _SRC_CAPA_EXT && (_SRC || _DRP) */
-#if _SNK_CAPA_EXT && (defined(_SNK)||defined(_DRP))
+#if defined(_SNK)||defined(_DRP)
   case USBPD_CORE_SNK_EXTENDED_CAPA :
     {
       *Size = sizeof(USBPD_SKEDB_TypeDef);
       memcpy((uint8_t*)Ptr, (uint8_t *)&DPM_USER_Settings[PortNum].DPM_SNKExtendedCapa, *Size);
      }
      break;
-#endif /* _SNK_CAPA_EXT && (_SNK || _DRP) */
+#endif /* _SNK || _DRP */
 #if _STATUS
   case USBPD_CORE_INFO_STATUS :
     {
@@ -1200,7 +1204,6 @@ void USBPD_DPM_SetDataInfo(uint8_t PortNum, USBPD_CORE_DataInfoType_TypeDef Data
     }
     break;
 #endif /* _SRC_CAPA_EXT */
-#if _SNK_CAPA_EXT
   case USBPD_CORE_SNK_EXTENDED_CAPA :
     {
       uint8_t*  _snk_ext_capa;
@@ -1208,7 +1211,6 @@ void USBPD_DPM_SetDataInfo(uint8_t PortNum, USBPD_CORE_DataInfoType_TypeDef Data
       memcpy(_snk_ext_capa, Ptr, Size);
     }
     break;
-#endif /* _SNK_CAPA_EXT */
 #if _MANU_INFO
   case USBPD_CORE_GET_MANUFACTURER_INFO:
     {
@@ -1620,6 +1622,7 @@ void USBPD_DPM_ExtendedMessageReceived(uint8_t PortNum, USBPD_ExtendedMsg_TypeDe
     default:
       break;
   }
+/* USER CODE END USBPD_DPM_ExtendedMessageReceived */
 }
 #endif /* USBPD_REV30_SUPPORT */
 
@@ -1638,7 +1641,6 @@ void USBPD_DPM_EnterErrorRecovery(uint8_t PortNum)
 
   /* Inform CAD to enter recovery mode */
   USBPD_CAD_EnterErrorRecovery(PortNum);
-/* USER CODE END USBPD_DPM_ExtendedMessageReceived */
 }
 #endif /* _ERROR_RECOVERY */
 
@@ -1651,7 +1653,9 @@ USBPD_StatusTypeDef USBPD_DPM_EvaluateDataRoleSwap(uint8_t PortNum)
 {
 /* USER CODE BEGIN USBPD_DPM_EvaluateDataRoleSwap */
   USBPD_StatusTypeDef status = USBPD_REJECT;
-  if (USBPD_TRUE == DPM_USER_Settings[PortNum].PE_DataSwap)
+  if ((USBPD_TRUE == DPM_USER_Settings[PortNum].PE_DataSwap)
+    && (((USBPD_TRUE == DPM_USER_Settings[PortNum].PE_DR_Swap_To_DFP) && (USBPD_PORTDATAROLE_UFP == DPM_Params[PortNum].PE_DataRole))
+     || ((USBPD_TRUE == DPM_USER_Settings[PortNum].PE_DR_Swap_To_UFP) && (USBPD_PORTDATAROLE_DFP == DPM_Params[PortNum].PE_DataRole))))
   {
     status = USBPD_ACCEPT;
   }
@@ -1923,7 +1927,6 @@ USBPD_StatusTypeDef USBPD_DPM_RequestVDM_ExitMode(uint8_t PortNum, USBPD_SOPType
   return USBPD_PE_SVDM_RequestModeExit(PortNum, SOPType, SVID, ModeIndex);
 }
 
-
 /**
   * @brief  Request the PE to send a Display Port status
   * @param  PortNum   The current port number
@@ -2018,11 +2021,7 @@ USBPD_StatusTypeDef USBPD_DPM_RequestGetSourceCapabilityExt(uint8_t PortNum)
   */
 USBPD_StatusTypeDef USBPD_DPM_RequestGetSinkCapabilityExt(uint8_t PortNum)
 {
-#if _SNK_CAPA_EXT
   return USBPD_PE_Request_CtrlMessage(PortNum, USBPD_CONTROLMSG_GET_SNK_CAPEXT, USBPD_SOPTYPE_SOP);
-#else
-  return USBPD_ERROR;
-#endif /* _SNK_CAPA_EXT */
 }
 
 /**

@@ -218,8 +218,6 @@
           <state>USE_HAL_DRIVER</state>
           <state>STM32G474xx</state>
           <state></state>
-          <state></state>
-          <state></state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1040,24 +1038,6 @@
     <group>
       <name>User</name>
       <group>
-        <name>USB_Device</name>
-        <group>
-          <name>Target</name>
-          <file>
-            <name>$PROJ_DIR$/../USB_Device/Target/usbd_conf.c</name>
-          </file>
-        </group>
-        <group>
-          <name>App</name>
-          <file>
-            <name>$PROJ_DIR$/../USB_Device/App/usbd_desc.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../USB_Device/App/usb_device.c</name>
-          </file>
-        </group>
-      </group>
-      <group>
         <name>Core</name>
         <file>
           <name>$PROJ_DIR$/../Core/Src/main.c</name>
@@ -1068,6 +1048,24 @@
         <file>
           <name>$PROJ_DIR$/../Core/Src/stm32g4xx_hal_msp.c</name>
         </file>
+      </group>
+      <group>
+        <name>USB_Device</name>
+        <group>
+          <name>App</name>
+          <file>
+            <name>$PROJ_DIR$/../USB_Device/App/usbd_desc.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../USB_Device/App/usb_device.c</name>
+          </file>
+        </group>
+        <group>
+          <name>Target</name>
+          <file>
+            <name>$PROJ_DIR$/../USB_Device/Target/usbd_conf.c</name>
+          </file>
+        </group>
       </group>
     </group>
   </group>
@@ -1082,6 +1080,15 @@
     <group>
       <name>BSP</name>
       <group>
+        <name>Components</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Drivers/BSP/Components/mfxstm32l152/mfxstm32l152_reg.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Drivers/BSP/Components/mfxstm32l152/mfxstm32l152.c</name>
+        </file>
+      </group>
+      <group>
         <name>STM32G474E-EVAL</name>
         <file>
           <name>$PROJ_DIR$/../../../../../../Drivers/BSP/STM32G474E-EVAL/stm32g474e_eval_bus.c</name>
@@ -1091,15 +1098,6 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../Drivers/BSP/STM32G474E-EVAL/stm32g474e_eval.c</name>
-        </file>
-      </group>
-      <group>
-        <name>Components</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../Drivers/BSP/Components/mfxstm32l152/mfxstm32l152_reg.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../Drivers/BSP/Components/mfxstm32l152/mfxstm32l152.c</name>
         </file>
       </group>
     </group>
@@ -1128,12 +1126,6 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_usb.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim_ex.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.c</name>
@@ -1170,6 +1162,15 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_cortex.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim_ex.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_pwr.c</name>
       </file>
     </group>
     <group>

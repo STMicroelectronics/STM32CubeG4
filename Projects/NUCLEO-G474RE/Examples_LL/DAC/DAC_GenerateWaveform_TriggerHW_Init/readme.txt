@@ -53,6 +53,9 @@ Other peripheral used:
   1 GPIO for DAC channel output PA.04 (Arduino connector CN8 pin A2, Morpho connector CN7 pin 32)
   For waveform voltage generation: 1 DMA channel, 1 timer.
 
+@par Keywords
+
+Analog, DAC, Conversion, Voltage output, Oscilloscope, Signal, Conversion trigger, DMA, Timer, Waveform.
 
 @par Directory contents 
 

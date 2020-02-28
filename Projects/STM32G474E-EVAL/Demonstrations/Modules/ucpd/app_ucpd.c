@@ -87,7 +87,7 @@ KMODULE_RETURN _UcpdConfig(void)
   USBPD_HW_IF_GlobalHwInit();
   
   /* Initialize the Device Policy Manager */
-  if( USBPD_ERROR == USBPD_DPM_InitCore())
+  if (USBPD_OK != USBPD_DPM_InitCore())
   {
     /* error the RTOS can't be started  */
     while(1);
@@ -95,7 +95,7 @@ KMODULE_RETURN _UcpdConfig(void)
 
 #if defined(_GUI_INTERFACE)
   /* Initialize GUI before retrieving PDO from RAM */
-  GUI_Init(BSP_GetHWBoardVersionName, BSP_GetPDTypeName, HW_IF_PWR_GetVoltage, HW_IF_PWR_GetCurrent);
+  GUI_Init(BSP_GetBoardName, BSP_GetBoardID, HW_IF_PWR_GetVoltage, HW_IF_PWR_GetCurrent);
 #endif /* _GUI_INTERFACE */
 
   /* Initialise the DPM application */
@@ -105,7 +105,7 @@ KMODULE_RETURN _UcpdConfig(void)
   }
 
   /* Initialize the Device Policy Manager */
-  if( USBPD_ERROR == USBPD_DPM_InitOS())
+  if (USBPD_OK != USBPD_DPM_InitOS())
   {
     /* error the RTOS can't be started  */
     while(1);

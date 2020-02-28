@@ -63,7 +63,7 @@ These steps are repeated in an infinite loop.
   
 @par Keywords
 
-Power, PWR, stop mode, wake-up, external reset, Interrupt, low power mode    
+Power, PWR, Stop mode, Wake-up, External reset, Interrupt, Low power mode.    
 
 @par Directory contents 
 

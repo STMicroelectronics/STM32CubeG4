@@ -20,7 +20,7 @@
 /* USER CODE END Header */
 
 /* Includes ------------------------------------------------------------------*/
-
+ 
 #include "usb_device.h"
 #include "usbd_core.h"
 #include "usbd_desc.h"
@@ -54,7 +54,6 @@ extern USBD_DescriptorsTypeDef HID_Desc;
  * -- Insert your variables declaration here --
  */
 /* USER CODE BEGIN 0 */
-
 /**
   * @brief USB Clock Configuration
   * @retval None
@@ -93,7 +92,6 @@ void USBD_Clock_Config(void)
   /* Start automatic synchronization */
   HAL_RCCEx_CRSConfig (&RCC_CRSInitStruct);
 }
-
 /* USER CODE END 0 */
 
 /*
@@ -182,12 +180,10 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 void MX_USB_Device_Init(void)
 {
   /* USER CODE BEGIN USB_Device_Init_PreTreatment */
-
   /* USB Clock Initialization */
    USBD_Clock_Config();
-
   /* USER CODE END USB_Device_Init_PreTreatment */
-
+  
   /* Init Device Library, add supported class and start the library. */
   if (USBD_Init(&hUsbDeviceFS, &HID_Desc, DEVICE_FS) != USBD_OK) {
     Error_Handler();

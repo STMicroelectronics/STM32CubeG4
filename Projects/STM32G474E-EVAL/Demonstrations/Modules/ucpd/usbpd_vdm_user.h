@@ -34,6 +34,7 @@
   */
 
 /* Exported typedef ----------------------------------------------------------*/
+#if !defined(_GUI_INTERFACE)
 typedef struct
 {
   uint32_t VDM_XID_SOP                      :32; /*!< A decimal number assigned by USB-IF before certification */
@@ -51,6 +52,7 @@ typedef struct
   uint32_t Reserved3                        :10; /*!< Reserved bits */
 #endif /* USBPD_REV30_SUPPORT */
 } USBPD_VDM_SettingsTypeDef;
+#endif /* !_GUI_INTERFACE */
 
 /*
  * DisplayPort Status VDO

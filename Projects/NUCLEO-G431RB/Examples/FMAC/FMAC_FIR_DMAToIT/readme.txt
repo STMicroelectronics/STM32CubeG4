@@ -82,6 +82,10 @@ STM32 board LED is used to monitor the example status:
 @note The application need to ensure that the SysTick time base is always set to
       1 millisecond to have correct HAL operation.
 
+@par Keywords
+
+FMAC, FIR,  Filter, DMA mode, IT mode.
+
 @par Directory contents
 
   - FMAC/FMAC_FIR_DMAToIT/Src/main.c                 Main program

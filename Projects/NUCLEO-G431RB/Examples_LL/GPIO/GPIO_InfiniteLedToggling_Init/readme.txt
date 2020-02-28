@@ -29,6 +29,9 @@ On NUCLEO-G431RB RevC board this IO is connected to LED2.
 
 In this example, HCLK is configured at 170 MHz.
 
+@par Keywords
+
+GPIO, Pushpull mode, Toggle, LED.
 
 @par Directory contents 
 

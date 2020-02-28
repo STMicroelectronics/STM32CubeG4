@@ -34,15 +34,141 @@
 <p><a href="http://www.opensource.org/licenses/BSD-3-Clause">http://www.opensource.org/licenses/BSD-3-Clause</a></p>
 <h1 id="purpose">Purpose</h1>
 <p>This driver is used in a STM32 application (embedded side) communicating with STM32CubeMonitor-UCPD.</p>
+<p>The application can be found in ST website:</p>
+<p><a href="https://www.st.com/en/development-tools/stm32cubemonucpd.html">https://www.st.com/en/development-tools/stm32cubemonucpd.html</a></p>
 </div>
 <div class="col-sm-12 col-lg-8">
 <h1 id="update-history">Update History</h1>
 <div class="collapse">
-<input type="checkbox" id="collapse-section10" checked aria-hidden="true"> <label for="collapse-section10" aria-hidden="true">V1.7.0 / 23-May-2019</label>
+<input type="checkbox" id="collapse-section12" checked aria-hidden="true"> <label for="collapse-section12" aria-hidden="true">V1.9.0 / 15-Nov-2019</label>
 <div>
 <h2 id="main-changes">Main Changes</h2>
 <h3 id="maintenance-release">Maintenance release</h3>
 <h2 id="contents">Contents</h2>
+<table>
+<caption>Fixed bugs list</caption>
+<thead>
+<tr class="header">
+<th>Headline</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Ticket 74534 - clean code linked to USBPD_CORE_DATATYPE_REQUEST_DO</td>
+</tr>
+<tr class="even">
+<td>Ticket 71492 - PE_Dataswap parameter needs to be duplicated in gui_api</td>
+</tr>
+<tr class="odd">
+<td>Ticket 74120 - Compilation issue in case of GUI_INTERFACE use without FreeRTOS</td>
+</tr>
+<tr class="even">
+<td>Ticket 73678 - Initialize CAD_tDRP &amp; CAD_dcSRC_DRP at GUI initialization</td>
+</tr>
+<tr class="odd">
+<td>Ticket 73064 - SNK_extended_cap must be answered while SNK or DRP</td>
+</tr>
+<tr class="even">
+<td>Remove warning in NRTOS mode</td>
+</tr>
+<tr class="odd">
+<td>Remove dependance with USBPD internal variable</td>
+</tr>
+</tbody>
+</table>
+<h2 id="known-limitations">Known Limitations</h2>
+<p>Outstanding bugs list : None</p>
+<p>Requirements not met or planned in a forthcoming release : None</p>
+<h2 id="development-toolchains-and-compilers">Development Toolchains and Compilers</h2>
+<ul>
+<li>IAR Embedded Workbench for ARM (EWARM) toolchain V8.32.3</li>
+<li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.26</li>
+<li>System Workbench STM32 (SW4STM32) toolchain V2.7.2</li>
+</ul>
+<h2 id="supported-devices-and-boards">Supported Devices and boards</h2>
+<p>All STM32xx devices implementing a USBPD application able to communicate with CubeMonitor_UCPD</p>
+<h2 id="backward-compatibility">Backward compatibility</h2>
+<p>No compatibility break with previous version</p>
+<h2 id="dependencies">Dependencies</h2>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section11" aria-hidden="true"> <label for="collapse-section11" aria-hidden="true">V1.8.0 / 06-Sept-2019</label>
+<div>
+<h2 id="main-changes-1">Main Changes</h2>
+<h3 id="maintenance-release-1">Maintenance release</h3>
+<h2 id="contents-1">Contents</h2>
+<table>
+<caption>Fixed bugs list</caption>
+<thead>
+<tr class="header">
+<th>Headline</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>[USBPD][GUI] Increase GUI_STACK_SIZE_ADDON_FOR_CMSIS in case of CMSIS OS V2.</td>
+</tr>
+<tr class="even">
+<td>[USBPD][GUI] Ticket 66690 - [FOSS-Audit] SLA0044 headers in Utilities files</td>
+</tr>
+<tr class="odd">
+<td>[USBPD][GUI] Ticket 71488 - project settings (and also behavior) differs vs _Gui_Interface switch activation</td>
+</tr>
+<tr class="even">
+<td>[USBPD][GUI] Remove useless include file + use of Nb ports define for USBPD_NbPDO initialisation</td>
+</tr>
+<tr class="odd">
+<td>[USBPD][GUI] Update in template of usbpd_gui_memmap_template.h</td>
+</tr>
+<tr class="even">
+<td>[USBPD][GUI] Ticket 70835 - PE_Dataswap parameter needs to be duplicated in gui_api</td>
+</tr>
+<tr class="odd">
+<td>[USBPD][GUI] Update in Flash erase function to be able to address F0/G0/G4 and L5 Dual bank flashes</td>
+</tr>
+<tr class="even">
+<td>[USBPD][GUI]rename GUI_NbPDO to USBPD_NbPDO</td>
+</tr>
+<tr class="odd">
+<td>[USBPD][GUI] All the DPM_User_Settings should be initialized to be able to pass MQP tests</td>
+</tr>
+<tr class="even">
+<td>[USBPD][GUI] Set DataRoleSwap as TRUE when GUI is enabled</td>
+</tr>
+<tr class="odd">
+<td>[USBPD][GUI] Move PE_DataSwap &amp; PE_VconnSwap in the USBPD_USER_SettingsTypeDef for integration in cubeMX</td>
+</tr>
+<tr class="even">
+<td>[USBPD][GUI] Ticket 67078 - Use common defines for XID, VID &amp; PID</td>
+</tr>
+<tr class="odd">
+<td>[USBPD][GUI] Ticket 66284 - [CubeMx-UBSPD] Update generated code to make it compatible with CMSIS-RTOS v2</td>
+</tr>
+</tbody>
+</table>
+<h2 id="known-limitations-1">Known Limitations</h2>
+<p>Outstanding bugs list : None</p>
+<p>Requirements not met or planned in a forthcoming release : None</p>
+<h2 id="development-toolchains-and-compilers-1">Development Toolchains and Compilers</h2>
+<ul>
+<li>IAR Embedded Workbench for ARM (EWARM) toolchain V8.32.3</li>
+<li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.26</li>
+<li>System Workbench STM32 (SW4STM32) toolchain V2.7.2</li>
+</ul>
+<h2 id="supported-devices-and-boards-1">Supported Devices and boards</h2>
+<p>All STM32xx devices implementing a USBPD application able to communicate with CubeMonitor_UCPD</p>
+<h2 id="backward-compatibility-1">Backward compatibility</h2>
+<p>No compatibility break with previous version</p>
+<h2 id="dependencies-1">Dependencies</h2>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section10" aria-hidden="true"> <label for="collapse-section10" aria-hidden="true">V1.7.0 / 23-May-2019</label>
+<div>
+<h2 id="main-changes-2">Main Changes</h2>
+<h3 id="maintenance-release-2">Maintenance release</h3>
+<h2 id="contents-2">Contents</h2>
 <table>
 <caption>Fixed bugs list</caption>
 <thead>
@@ -65,28 +191,28 @@
 </tr>
 </tbody>
 </table>
-<h2 id="known-limitations">Known Limitations</h2>
+<h2 id="known-limitations-2">Known Limitations</h2>
 <p>Outstanding bugs list : None</p>
 <p>Requirements not met or planned in a forthcoming release : None</p>
-<h2 id="development-toolchains-and-compilers">Development Toolchains and Compilers</h2>
+<h2 id="development-toolchains-and-compilers-2">Development Toolchains and Compilers</h2>
 <ul>
 <li>IAR Embedded Workbench for ARM (EWARM) toolchain V8.20.2</li>
 <li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.25</li>
 <li>System Workbench STM32 (SW4STM32) toolchain V2.7.2</li>
 </ul>
-<h2 id="supported-devices-and-boards">Supported Devices and boards</h2>
+<h2 id="supported-devices-and-boards-2">Supported Devices and boards</h2>
 <p>All STM32xx devices implementing a USBPD application able to communicate with CubeMonitor_UCPD</p>
-<h2 id="backward-compatibility">Backward compatibility</h2>
+<h2 id="backward-compatibility-2">Backward compatibility</h2>
 <p>No compatibility break with previous version</p>
-<h2 id="dependencies">Dependencies</h2>
+<h2 id="dependencies-2">Dependencies</h2>
 </div>
 </div>
 <div class="collapse">
 <input type="checkbox" id="collapse-section9" aria-hidden="true"> <label for="collapse-section9" aria-hidden="true">V1.6.0 / 10-April-2019</label>
 <div>
-<h2 id="main-changes-1">Main Changes</h2>
-<h3 id="maintenance-release-1">Maintenance release</h3>
-<h2 id="contents-1">Contents</h2>
+<h2 id="main-changes-3">Main Changes</h2>
+<h3 id="maintenance-release-3">Maintenance release</h3>
+<h2 id="contents-3">Contents</h2>
 <table>
 <caption>Fixed bugs list</caption>
 <thead>
@@ -139,76 +265,6 @@
 </tr>
 </tbody>
 </table>
-<h2 id="known-limitations-1">known limitations</h2>
-<h2 id="development-toolchains-and-compilers-1">Development Toolchains and Compilers</h2>
-<ul>
-<li>IAR Embedded Workbench for ARM (EWARM) toolchain V8.20.2</li>
-<li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.25</li>
-<li>System Workbench STM32 (SW4STM32) toolchain V2.7.2</li>
-</ul>
-<h2 id="supported-devices-and-boards-1">Supported Devices and boards</h2>
-<h2 id="backward-compatibility-1">backward compatibility</h2>
-<h2 id="dependencies-1">Dependencies</h2>
-</div>
-</div>
-<div class="collapse">
-<input type="checkbox" id="collapse-section8" aria-hidden="true"> <label for="collapse-section8" aria-hidden="true">V1.5.0 / 28-Jan-2019</label>
-<div>
-<h2 id="main-changes-2">Main Changes</h2>
-<h3 id="maintenance-release-2">Maintenance release</h3>
-<p>Maintenance release</p>
-<h2 id="contents-2">Contents</h2>
-<table>
-<caption>Fixed bugs list</caption>
-<thead>
-<tr class="header">
-<th>Headline</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Ticket 60213 - STM32G071B-DISCO_Demonstrations_USBPD_Analyzer_SW4STM32_Compilation Warnings. Modifications in GUI_INTERFACE module for solving compilation warnings under SW4STM32 (Gcc)</td>
-</tr>
-</tbody>
-</table>
-<h2 id="known-limitations-2">known limitations</h2>
-<h2 id="development-toolchains-and-compilers-2">Development Toolchains and Compilers</h2>
-<ul>
-<li>IAR Embedded Workbench for ARM (EWARM) toolchain V8.20.2</li>
-<li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.25</li>
-<li>System Workbench STM32 (SW4STM32) toolchain V2.7.2</li>
-</ul>
-<h2 id="supported-devices-and-boards-2">Supported Devices and boards</h2>
-<h2 id="backward-compatibility-2">backward compatibility</h2>
-<h2 id="dependencies-2">Dependencies</h2>
-</div>
-</div>
-<div class="collapse">
-<input type="checkbox" id="collapse-section7" aria-hidden="true"> <label for="collapse-section7" aria-hidden="true">V1.4.0 / 19-Dec-2018</label>
-<div>
-<h2 id="main-changes-3">Main Changes</h2>
-<h3 id="maintenance-release-3">Maintenance release</h3>
-<p>Maintenance release</p>
-<h2 id="contents-3">Contents</h2>
-<table>
-<caption>Fixed bugs list</caption>
-<thead>
-<tr class="header">
-<th>Headline</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>correction link with renaming toogle toggle</td>
-</tr>
-<tr class="even">
-<td>Ticket 57478 - SKEDB not implemented</td>
-</tr>
-<tr class="odd">
-<td>Remove extern GUI_Flag variable from application</td>
-</tr>
-</tbody>
-</table>
 <h2 id="known-limitations-3">known limitations</h2>
 <h2 id="development-toolchains-and-compilers-3">Development Toolchains and Compilers</h2>
 <ul>
@@ -222,7 +278,7 @@
 </div>
 </div>
 <div class="collapse">
-<input type="checkbox" id="collapse-section6" aria-hidden="true"> <label for="collapse-section6" aria-hidden="true">V1.3.0 / 10-Dec-2018</label>
+<input type="checkbox" id="collapse-section8" aria-hidden="true"> <label for="collapse-section8" aria-hidden="true">V1.5.0 / 28-Jan-2019</label>
 <div>
 <h2 id="main-changes-4">Main Changes</h2>
 <h3 id="maintenance-release-4">Maintenance release</h3>
@@ -237,13 +293,7 @@
 </thead>
 <tbody>
 <tr class="odd">
-<td>correction link with renaming toogle toggle</td>
-</tr>
-<tr class="even">
-<td>Ticket 57478 - SKEDB not implemented</td>
-</tr>
-<tr class="odd">
-<td>Remove extern GUI_Flag variable from application</td>
+<td>Ticket 60213 - STM32G071B-DISCO_Demonstrations_USBPD_Analyzer_SW4STM32_Compilation Warnings. Modifications in GUI_INTERFACE module for solving compilation warnings under SW4STM32 (Gcc)</td>
 </tr>
 </tbody>
 </table>
@@ -260,12 +310,88 @@
 </div>
 </div>
 <div class="collapse">
-<input type="checkbox" id="collapse-section5" aria-hidden="true"> <label for="collapse-section5" aria-hidden="true">V1.2.0 / 15-Nov-2018</label>
+<input type="checkbox" id="collapse-section7" aria-hidden="true"> <label for="collapse-section7" aria-hidden="true">V1.4.0 / 19-Dec-2018</label>
 <div>
 <h2 id="main-changes-5">Main Changes</h2>
 <h3 id="maintenance-release-5">Maintenance release</h3>
 <p>Maintenance release</p>
 <h2 id="contents-5">Contents</h2>
+<table>
+<caption>Fixed bugs list</caption>
+<thead>
+<tr class="header">
+<th>Headline</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>correction link with renaming toogle toggle</td>
+</tr>
+<tr class="even">
+<td>Ticket 57478 - SKEDB not implemented</td>
+</tr>
+<tr class="odd">
+<td>Remove extern GUI_Flag variable from application</td>
+</tr>
+</tbody>
+</table>
+<h2 id="known-limitations-5">known limitations</h2>
+<h2 id="development-toolchains-and-compilers-5">Development Toolchains and Compilers</h2>
+<ul>
+<li>IAR Embedded Workbench for ARM (EWARM) toolchain V8.20.2</li>
+<li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.25</li>
+<li>System Workbench STM32 (SW4STM32) toolchain V2.7.2</li>
+</ul>
+<h2 id="supported-devices-and-boards-5">Supported Devices and boards</h2>
+<h2 id="backward-compatibility-5">backward compatibility</h2>
+<h2 id="dependencies-5">Dependencies</h2>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section6" aria-hidden="true"> <label for="collapse-section6" aria-hidden="true">V1.3.0 / 10-Dec-2018</label>
+<div>
+<h2 id="main-changes-6">Main Changes</h2>
+<h3 id="maintenance-release-6">Maintenance release</h3>
+<p>Maintenance release</p>
+<h2 id="contents-6">Contents</h2>
+<table>
+<caption>Fixed bugs list</caption>
+<thead>
+<tr class="header">
+<th>Headline</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>correction link with renaming toogle toggle</td>
+</tr>
+<tr class="even">
+<td>Ticket 57478 - SKEDB not implemented</td>
+</tr>
+<tr class="odd">
+<td>Remove extern GUI_Flag variable from application</td>
+</tr>
+</tbody>
+</table>
+<h2 id="known-limitations-6">known limitations</h2>
+<h2 id="development-toolchains-and-compilers-6">Development Toolchains and Compilers</h2>
+<ul>
+<li>IAR Embedded Workbench for ARM (EWARM) toolchain V8.20.2</li>
+<li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.25</li>
+<li>System Workbench STM32 (SW4STM32) toolchain V2.7.2</li>
+</ul>
+<h2 id="supported-devices-and-boards-6">Supported Devices and boards</h2>
+<h2 id="backward-compatibility-6">backward compatibility</h2>
+<h2 id="dependencies-6">Dependencies</h2>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section5" aria-hidden="true"> <label for="collapse-section5" aria-hidden="true">V1.2.0 / 15-Nov-2018</label>
+<div>
+<h2 id="main-changes-7">Main Changes</h2>
+<h3 id="maintenance-release-7">Maintenance release</h3>
+<p>Maintenance release</p>
+<h2 id="contents-7">Contents</h2>
 <table>
 <caption>Fixed bugs list</caption>
 <thead>
@@ -285,25 +411,25 @@
 </tr>
 </tbody>
 </table>
-<h2 id="known-limitations-5">known limitations</h2>
-<h2 id="development-toolchains-and-compilers-5">Development Toolchains and Compilers</h2>
+<h2 id="known-limitations-7">known limitations</h2>
+<h2 id="development-toolchains-and-compilers-7">Development Toolchains and Compilers</h2>
 <ul>
 <li>IAR Embedded Workbench for ARM (EWARM) toolchain V8.20.2</li>
 <li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.25</li>
 <li>System Workbench STM32 (SW4STM32) toolchain V2.7.2</li>
 </ul>
-<h2 id="supported-devices-and-boards-5">Supported Devices and boards</h2>
-<h2 id="backward-compatibility-5">backward compatibility</h2>
-<h2 id="dependencies-5">Dependencies</h2>
+<h2 id="supported-devices-and-boards-7">Supported Devices and boards</h2>
+<h2 id="backward-compatibility-7">backward compatibility</h2>
+<h2 id="dependencies-7">Dependencies</h2>
 </div>
 </div>
 <div class="collapse">
 <input type="checkbox" id="collapse-section4" aria-hidden="true"> <label for="collapse-section4" aria-hidden="true">V1.1.2 / 25-Sept.-2018</label>
 <div>
-<h2 id="main-changes-6">Main Changes</h2>
-<h3 id="maintenance-release-6">Maintenance release</h3>
+<h2 id="main-changes-8">Main Changes</h2>
+<h3 id="maintenance-release-8">Maintenance release</h3>
 <p>Maintenance release</p>
-<h2 id="contents-6">Contents</h2>
+<h2 id="contents-8">Contents</h2>
 <table>
 <caption>Fixed bugs list</caption>
 <thead>
@@ -323,25 +449,25 @@
 </tr>
 </tbody>
 </table>
-<h2 id="known-limitations-6">known limitations</h2>
-<h2 id="development-toolchains-and-compilers-6">Development Toolchains and Compilers</h2>
+<h2 id="known-limitations-8">known limitations</h2>
+<h2 id="development-toolchains-and-compilers-8">Development Toolchains and Compilers</h2>
 <ul>
 <li>IAR Embedded Workbench for ARM (EWARM) toolchain V8.20.2</li>
 <li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.25</li>
 <li>System Workbench STM32 (SW4STM32) toolchain V2.7.2</li>
 </ul>
-<h2 id="supported-devices-and-boards-6">Supported Devices and boards</h2>
-<h2 id="backward-compatibility-6">backward compatibility</h2>
-<h2 id="dependencies-6">Dependencies</h2>
+<h2 id="supported-devices-and-boards-8">Supported Devices and boards</h2>
+<h2 id="backward-compatibility-8">backward compatibility</h2>
+<h2 id="dependencies-8">Dependencies</h2>
 </div>
 </div>
 <div class="collapse">
 <input type="checkbox" id="collapse-section3" aria-hidden="true"> <label for="collapse-section3" aria-hidden="true">V1.1.1 / 10-Sept.-2018</label>
 <div>
-<h2 id="main-changes-7">Main Changes</h2>
-<h3 id="maintenance-release-7">Maintenance release</h3>
+<h2 id="main-changes-9">Main Changes</h2>
+<h3 id="maintenance-release-9">Maintenance release</h3>
 <p>Maintenance release</p>
-<h2 id="contents-7">Contents</h2>
+<h2 id="contents-9">Contents</h2>
 <table>
 <caption>Fixed bugs list</caption>
 <thead>
@@ -355,25 +481,25 @@
 </tr>
 </tbody>
 </table>
-<h2 id="known-limitations-7">known limitations</h2>
-<h2 id="development-toolchains-and-compilers-7">Development Toolchains and Compilers</h2>
+<h2 id="known-limitations-9">known limitations</h2>
+<h2 id="development-toolchains-and-compilers-9">Development Toolchains and Compilers</h2>
 <ul>
 <li>IAR Embedded Workbench for ARM (EWARM) toolchain V8.20.2</li>
 <li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.25</li>
 <li>System Workbench STM32 (SW4STM32) toolchain V2.7.2</li>
 </ul>
-<h2 id="supported-devices-and-boards-7">Supported Devices and boards</h2>
-<h2 id="backward-compatibility-7">backward compatibility</h2>
-<h2 id="dependencies-7">Dependencies</h2>
+<h2 id="supported-devices-and-boards-9">Supported Devices and boards</h2>
+<h2 id="backward-compatibility-9">backward compatibility</h2>
+<h2 id="dependencies-9">Dependencies</h2>
 </div>
 </div>
 <div class="collapse">
 <input type="checkbox" id="collapse-section2" aria-hidden="true"> <label for="collapse-section2" aria-hidden="true">V1.1.0 / 06-Sept.-2018</label>
 <div>
-<h2 id="main-changes-8">Main Changes</h2>
-<h3 id="maintenance-release-8">Maintenance release</h3>
+<h2 id="main-changes-10">Main Changes</h2>
+<h3 id="maintenance-release-10">Maintenance release</h3>
 <p>Maintenance release</p>
-<h2 id="contents-8">Contents</h2>
+<h2 id="contents-10">Contents</h2>
 <table>
 <caption>Fixed bugs list</caption>
 <thead>
@@ -390,25 +516,25 @@
 </tr>
 </tbody>
 </table>
-<h2 id="known-limitations-8">known limitations</h2>
-<h2 id="development-toolchains-and-compilers-8">Development Toolchains and Compilers</h2>
+<h2 id="known-limitations-10">known limitations</h2>
+<h2 id="development-toolchains-and-compilers-10">Development Toolchains and Compilers</h2>
 <ul>
 <li>IAR Embedded Workbench for ARM (EWARM) toolchain V8.20.2</li>
 <li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.25</li>
 <li>System Workbench STM32 (SW4STM32) toolchain V2.7.2</li>
 </ul>
-<h2 id="supported-devices-and-boards-8">Supported Devices and boards</h2>
-<h2 id="backward-compatibility-8">backward compatibility</h2>
-<h2 id="dependencies-8">Dependencies</h2>
+<h2 id="supported-devices-and-boards-10">Supported Devices and boards</h2>
+<h2 id="backward-compatibility-10">backward compatibility</h2>
+<h2 id="dependencies-10">Dependencies</h2>
 </div>
 </div>
 <div class="collapse">
 <input type="checkbox" id="collapse-section2" aria-hidden="true"> <label for="collapse-section2" aria-hidden="true">V1.0.0 / 19-Jun-2018</label>
 <div>
-<h2 id="main-changes-9">Main Changes</h2>
-<h3 id="maintenance-release-9">Maintenance release</h3>
+<h2 id="main-changes-11">Main Changes</h2>
+<h3 id="maintenance-release-11">Maintenance release</h3>
 <p>Maintenance release</p>
-<h2 id="contents-9">Contents</h2>
+<h2 id="contents-11">Contents</h2>
 <table>
 <caption>Fixed bugs list</caption>
 <thead>
@@ -422,16 +548,16 @@
 </tr>
 </tbody>
 </table>
-<h2 id="known-limitations-9">known limitations</h2>
-<h2 id="development-toolchains-and-compilers-9">Development Toolchains and Compilers</h2>
+<h2 id="known-limitations-11">known limitations</h2>
+<h2 id="development-toolchains-and-compilers-11">Development Toolchains and Compilers</h2>
 <ul>
 <li>IAR Embedded Workbench for ARM (EWARM) toolchain V8.20.2</li>
 <li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.25</li>
 <li>System Workbench STM32 (SW4STM32) toolchain V2.7.2</li>
 </ul>
-<h2 id="supported-devices-and-boards-9">Supported Devices and boards</h2>
-<h2 id="backward-compatibility-9">backward compatibility</h2>
-<h2 id="dependencies-9">Dependencies</h2>
+<h2 id="supported-devices-and-boards-11">Supported Devices and boards</h2>
+<h2 id="backward-compatibility-11">backward compatibility</h2>
+<h2 id="dependencies-11">Dependencies</h2>
 </div>
 </div>
 </div>

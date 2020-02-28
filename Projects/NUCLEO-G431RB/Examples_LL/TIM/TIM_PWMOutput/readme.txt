@@ -57,9 +57,14 @@ steps of 10%. Duty cycle is periodically measured. It can be observed through
 the debugger by watching the variable uwMeasuredDutyCycle.
 
 Initially the output channel is configured in output compare toggle mode.
+
 @note The LED2 is not toggling. In fact, if the dutycycle is 0% so the LED2 is OFF. When pushing 
 successively the user button, the LED2 is ON and its luminosity rises as the dutycycle value keep 
 increasing.
+
+@par Keywords
+
+Timers, TIM, Output, Signal, PWM, Frequency, Duty cycle, Waveform, Auto-reload.
 
 @par Directory contents 
 

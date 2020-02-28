@@ -51,6 +51,10 @@ STM32 board LEDs are used to monitor the example status:
 @note The example needs to ensure that the SysTick time base is always set to 1 millisecond
       to have correct HAL operation.
 
+@par Keywords
+
+CORDIC, Sine, DMA mode.
+
 @par Directory contents
 
   - CORDIC/CORDIC_Sin_DMA/Inc/stm32g474e_eval_conf.h     BSP configuration file

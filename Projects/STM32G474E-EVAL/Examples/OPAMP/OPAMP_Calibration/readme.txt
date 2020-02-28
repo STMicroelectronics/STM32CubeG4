@@ -63,6 +63,9 @@ Note: In case of error, LED1 is toggling twice at a frequency of 1Hz.
 For debug: variables to monitor with debugger watch window:
  - "UserButtonPressState": represents the number of button press
 
+@par Keywords
+
+OPAMP, Calibration, Trimming, Oscilloscope, signal, DAC. 
 
 @par Directory contents 
 

@@ -34,9 +34,11 @@ This example unrolls as follows:
 - AES Encryption (Plain Data --> Encrypted Data)
 - AES Decryption with key derivation (Encrypted Data --> Decrypted Data)
 
-When resorting to AC6 SW4STM32 IDE:
- In Debug configuration window\ Startup, in addition to "monitor reset halt" add the command "monitor arm semihosting enable"
- Command Code is displayed on debugger as follows: Window--> Show View--> Console.
+- When resorting to STM32CubeIDE:
+Command Code is displayed on debugger as follows: Window--> Show View--> Console.
+In Debug configuration : 
+ - Window\Debugger, select the Debug probe : ST-LINK(OpenOCD)
+ - Window\Startup,add the command "monitor arm semihosting enable"  
 
 When all ciphering and deciphering operations are successful, LED1 is turned on.
 In case of ciphering or deciphering issue, LED3 toggle each 200ms.

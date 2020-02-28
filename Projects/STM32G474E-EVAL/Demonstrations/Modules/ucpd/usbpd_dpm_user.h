@@ -44,6 +44,11 @@
 #if !defined(_GUI_INTERFACE)
 typedef struct
 {
+  uint32_t PE_DataSwap                                    : 1;  /*!< support data swap                                     */
+  uint32_t PE_VconnSwap                                   : 1;  /*!< support VCONN swap                                    */
+  uint32_t PE_DR_Swap_To_DFP                              : 1U; /*!< If supported, DR Swap to DFP can be accepted or not by the user else directly rejected */
+  uint32_t PE_DR_Swap_To_UFP                              : 1U; /*!< If supported, DR Swap to UFP can be accepted or not by the user else directly rejected */
+  uint32_t Reserved1                                      : 28U;  /*!< Reserved bits */
 #if defined(_SNK) || defined(_DRP)
   USBPD_SNKPowerRequest_TypeDef DPM_SNKRequestedPower;          /*!< Requested Power by the sink board                     */
 #else
@@ -55,12 +60,12 @@ typedef struct
 #else
   uint32_t            ReservedSrcCapa[6];                       /*!< Reserved bits to match with SrcCapa information            */
 #endif /* _SRC_CAPA_EXT && (_SRC || _DRP) */
-#if _SNK_CAPA_EXT && (defined(_SNK)||defined(_DRP))
+#if defined(_SNK)||defined(_DRP)
   USBPD_SKEDB_TypeDef DPM_SNKExtendedCapa;                      /*!< SNK Extended Capability                                */
   uint8_t             ReservedSnkCapa[3];                       /*!< Reserved bits to match with SnkCapaExt information     */
 #else
   uint32_t            ReservedSnkCapa[6];                       /*!< Reserved bits to match with SnkCapaExt information     */
-#endif /* _SNK_CAPA_EXT && (_SNK || _DRP) */
+#endif /* _SNK || _DRP */
 #if _MANU_INFO
   USBPD_MIDB_TypeDef  DPM_ManuInfoPort;                         /*!< Manufacturer information used for the port            */
   uint16_t            ReservedManu;                             /*!< Reserved bits to match with Manufacturer information            */
@@ -70,21 +75,15 @@ typedef struct
 #else
   uint32_t            ReservedRev3[13];                         /*!< Reserved bits to match with PD3.0 information            */
 #endif /* USBPD_REV30_SUPPORT */
-  uint32_t PE_DataSwap                                    : 1;  /*!< support data swap                                     */
-  uint32_t PE_VconnSwap                                   : 1;  /*!< support VCONN swap                                    */
-  uint32_t Reserved1                                      :30;  /*!< Reserved bits */
-  uint32_t PWR_AccessoryDetection                         : 1; /*!< It enables or disables powered accessory detection */
-  uint32_t PWR_AccessoryTransition                        : 1; /*!< It enables or disables transition from Powered.accessory to Try.SNK */
-  USBPD_CORE_PDO_ExtPowered_TypeDef PWR_UnconstrainedPower: 1; /*!< UUT has an external power source available that is sufficient to adequately power the system while charging external devices or the UUT primary function is to charge external devices. */
-  CAD_SNK_Source_Current_Adv_Typedef PWR_RpResistorValue  : 2; /*!< RP resitor value based on @ref CAD_SNK_Source_Current_Adv_Typedef */
-  USBPD_CORE_PDO_USBCommCapable_TypeDef USB_Support       : 1; /*!< USB_Comms_Capable, is the UUT capable of enumerating as a USB host or device? */
-  uint32_t USB_Device                                     : 1; /*!< Type_C_Can_Act_As_Device, Indicates whether the UUT can communicate with USB 2.0 or USB 3.1 as a device or as the Upstream Facing Port of a hub. */
-  uint32_t USB_Host                                       : 1; /*!<  Type_C_Can_Act_As_Host, Indicates whether the UUT can communicate with USB 2.0 or USB 3.1 as a host or as the Downstream Facing Port of a hub */
-  USBPD_CORE_PDO_USBSuspendSupport_TypeDef USB_SuspendSupport: 1; /*!<  USB Suspend support values in PDO definition (Source) */
-  uint32_t CAD_tDRP                                       :7;  /*!< The period that DRP shall complete a Source to Sink and back advertisement */
-  uint32_t CAD_dcSRC_DRP                                  :7;  /*!< The percent of time that a DRP shall advertise Source during tDRP (in %) */
-  uint32_t Reserved2                                      :31;  /*!< reserved bits */
+  uint32_t ReservedByte;                                        /*!< Reserved bits */
 } USBPD_USER_SettingsTypeDef;
+
+typedef struct
+{
+  uint32_t XID;               /*!< Value provided by the USB-IF assigned to the product   */
+  uint16_t VID;               /*!< Vendor ID (assigned by the USB-IF)                     */
+  uint16_t PID;               /*!< Product ID (assigned by the manufacturer)              */
+} USBPD_IdSettingsTypeDef;
 #endif /* !_GUI_INTERFACE */
 
 typedef enum {
@@ -145,9 +144,7 @@ typedef struct
 #if _SRC_CAPA_EXT
   USBPD_SCEDB_TypeDef           DPM_RcvSRCExtendedCapa;                  /*!< SRC Extended Capability received by port partner                     */
 #endif /* _SRC_CAPA_EXT */
-#if _SNK_CAPA_EXT
   USBPD_SKEDB_TypeDef           DPM_RcvSNKExtendedCapa;                  /*!< SNK Extended Capability received by port partner                     */
-#endif /* _SNK_CAPA_EXT */
 #if _MANU_INFO
   USBPD_GMIDB_TypeDef           DPM_GetManufacturerInfo;                 /*!< Get Manufacturer Info                                                */
 #endif /* _MANU_INFO */
@@ -196,17 +193,13 @@ typedef void     (*GUI_SAVE_INFO)(uint8_t PortNum, uint8_t DataId, uint8_t *Ptr,
 /*
  * USBPD FW version
  */
-#define USBPD_FW_VERSION  0x16042019u
+#define USBPD_FW_VERSION  0x15102019u
 
 /*
  * USBPD Start Port Number
  */
 #define USBPD_START_PORT_NUMBER  1u
 
-/*
- * Number af thread defined by user to include in the low power control
- */
-#define USBPD_USER_THREAD_COUNT    0
 /* Exported constants --------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/
 /* Exported variables --------------------------------------------------------*/
@@ -224,9 +217,7 @@ USBPD_HandleTypeDef DPM_Ports[USBPD_PORT_COUNT] =
     .DPM_TimerSRCExtendedCapa = 0,                  /*!< timer to request the extended capa                                   */
     .DPM_RcvSRCExtendedCapa = {0},                  /*!< SRC Extended Capability received by port partner                     */
 #endif /* _SRC_CAPA_EXT */
-#if _SNK_CAPA_EXT
     .DPM_RcvSNKExtendedCapa = {0},                  /*!< SNK Extended Capability received by port partner                     */
-#endif /* _SNK_CAPA_EXT */
 #if _MANU_INFO
     .DPM_GetManufacturerInfo = {0},                 /*!< Get Manufacturer Info                                                */
 #endif /* _MANU_INFO */
@@ -251,9 +242,7 @@ USBPD_HandleTypeDef DPM_Ports[USBPD_PORT_COUNT] =
     .DPM_TimerSRCExtendedCapa = 0,                  /*!< timer to request the extended capa                                   */
     .DPM_RcvSRCExtendedCapa = {0},                  /*!< SRC Extended Capability received by port partner                     */
 #endif /* _SRC_CAPA_EXT */
-#if _SNK_CAPA_EXT
     .DPM_RcvSNKExtendedCapa = {0},                  /*!< SNK Extended Capability received by port partner                     */
-#endif /* _SNK_CAPA_EXT */
 #if _MANU_INFO
     .DPM_GetManufacturerInfo = {0},                 /*!< Get Manufacturer Info                                                */
 #endif /* _MANU_INFO */
@@ -324,9 +313,7 @@ USBPD_StatusTypeDef USBPD_DPM_PE_VconnPwr(uint8_t PortNum, USBPD_FunctionalState
 void                USBPD_DPM_EnterErrorRecovery(uint8_t PortNum);
 #endif /* _ERROR_RECOVERY */
 USBPD_StatusTypeDef USBPD_DPM_EvaluateDataRoleSwap(uint8_t PortNum);
-#if defined(_SNK) || defined(_DRP)
 USBPD_FunctionalState USBPD_DPM_IsPowerReady(uint8_t PortNum, USBPD_VSAFE_StatusTypeDef Vsafe);
-#endif /* _SNK || _DRP */
 
 /**
   * @}

@@ -109,10 +109,16 @@ int32_t AudioPlay_demo (void)
   AudioFreq_ptr = &AudioFreq[0]; /*96K*/
 
   uint8_t FreqStr[256] = {0};
-  Point Points2[] = {{100, 140}, {160, 180}, {100, 220}};
+  Point Points2[] = {{10, 140}, {50, 160}, {10, 180}};
 
   uwPauseEnabledStatus = 1; /* 0 when audio is running, 1 when Pause is on */
   uwVolume = 40;
+  printf("\r\n Test of Audio Play \n");
+  printf("\r\n Use Joy key Press to Pause/Resume \n");
+  printf("\r\n Use Joy key up/down to change Volume \n");
+  printf("\r\n Use Joy keys left/right to set output device \n");
+  printf("\r\n Press User Button to go to next demo \n");
+
 
   Audio_SetHint(0);
   GUI_SetFont(&Font20);
@@ -129,7 +135,7 @@ int32_t AudioPlay_demo (void)
   {
     GUI_SetBackColor(GUI_COLOR_WHITE);
     GUI_SetTextColor(GUI_COLOR_GREEN);
-    GUI_DisplayStringAt(0, y_size - 95, (uint8_t *)"  AUDIO CODEC   OK  ", CENTER_MODE);
+    GUI_DisplayStringAt(20, y_size - 95, (uint8_t *)"  AUDIO CODEC   OK  ", CENTER_MODE);
   }
   else
   {
@@ -155,28 +161,27 @@ int32_t AudioPlay_demo (void)
    GUI_DisplayStringAt(0, LINE(8), (uint8_t *)" ERROR  file not found", CENTER_MODE);
    return -1;
   }
-   
+
   AUDIO_Start((uint32_t *)AUDIO_SRC_FILE_ADDRESS, (uint32_t)AudioSize);
   /* Display the state on the screen */
   GUI_SetBackColor(GUI_COLOR_WHITE);
   GUI_SetTextColor(GUI_COLOR_BLUE);
-  GUI_DisplayStringAt(0, LINE(8), (uint8_t *)"       PLAYING...     ", CENTER_MODE);
+  GUI_DisplayStringAt(0, 160, (uint8_t *)"       PLAYING...     ", CENTER_MODE);
 
-  sprintf((char*)FreqStr, "       VOL:    %3d     ", uwVolume);
-  GUI_DisplayStringAt(0,  LINE(9), (uint8_t *)FreqStr, CENTER_MODE);
+  sprintf((char*)FreqStr, "       VOL:    %3ld     ", uwVolume);
+  GUI_DisplayStringAt(0,  180, (uint8_t *)FreqStr, CENTER_MODE);
 
-  sprintf((char*)FreqStr, "      FREQ: %6d     ", *AudioFreq_ptr);
-  GUI_DisplayStringAt(0, LINE(10), (uint8_t *)FreqStr, CENTER_MODE);
+  sprintf((char*)FreqStr, "      FREQ: %6ld     ", *AudioFreq_ptr);
+  GUI_DisplayStringAt(0, 200, (uint8_t *)FreqStr, CENTER_MODE);
 
-  GUI_SetFont(&Font16);
-  GUI_DisplayStringAt(0, y_size - 40, (uint8_t *)"Hear nothing ? Have you copied the audio file with STM-LINK UTILITY ?", CENTER_MODE);
-
+  GUI_SetFont(&Font12);
+  GUI_DisplayStringAt(0, y_size - 20, (uint8_t *)"Hear nothing? Have you copied ", CENTER_MODE);
+  GUI_DisplayStringAt(0, y_size - 10, (uint8_t *)"the audio file with STM-LINK UTILITY?", CENTER_MODE);
   GUI_SetFont(&Font20);
 
   /* Audio is playing */
-  GUI_FillPolygon(Points2, 3, GUI_COLOR_WHITE);
-  BSP_LCD_FillRect(0, 100, 140, 25 , 80, LCD_COLOR_RGB565_BLACK);
-  BSP_LCD_FillRect(0, 140, 140, 25 , 80, LCD_COLOR_RGB565_BLACK);
+  BSP_LCD_FillRect(0, 10, 140, 15 , 40, LCD_COLOR_RGB565_BLACK);
+  BSP_LCD_FillRect(0, 35, 140, 15 , 40, LCD_COLOR_RGB565_BLACK);
 
   /* IMPORTANT:
   AUDIO_Process() is called by the SysTick Handler, as it should be called
@@ -185,85 +190,94 @@ int32_t AudioPlay_demo (void)
   /* Infinite loop */
   while (1)
   {
-   /* IMPORTANT: AUDIO_Process() should be called within a periodic process */
-    AUDIO_Process();
-    AudioDeviceUpdate();
-
-    /* Get the Joystick State */
-    switch (BSP_JOY_GetState(JOY1))
+    if (UserButtonPressed == 1)
     {
-    case JOY_UP:
-      /* Increase volume by 5% */
-      if (uwVolume < 95)
-        uwVolume += 5;
-      else
-        uwVolume = 100;
-      sprintf((char*)FreqStr, "       VOL:    %3d     ", uwVolume);
-      BSP_AUDIO_OUT_SetVolume(0, uwVolume);
-      GUI_DisplayStringAt(0, LINE(9), (uint8_t *)FreqStr, CENTER_MODE);
-      break;
-    case JOY_DOWN:
-      /* Decrease volume by 5% */
-      if (uwVolume > 5)
-        uwVolume -= 5;
-      else
-        uwVolume = 0;
-      sprintf((char*)FreqStr, "       VOL:    %3d     ", uwVolume);
-      BSP_AUDIO_OUT_SetVolume(0, uwVolume);
-      GUI_DisplayStringAt(0, LINE(9), (uint8_t *)FreqStr, CENTER_MODE);
-      break;
-    case JOY_LEFT:
-      /*Decrease Frequency */
-      if (*AudioFreq_ptr != 8000)
-      {
-        AudioFreq_ptr++;
-        sprintf((char*)FreqStr, "      FREQ: %6d     ", *AudioFreq_ptr);
-        BSP_AUDIO_OUT_Pause(0);
-        BSP_AUDIO_OUT_SetSampleRate(0, *AudioFreq_ptr);
-        BSP_AUDIO_OUT_Resume(0);
-        BSP_AUDIO_OUT_SetVolume(0, uwVolume);
-      }
-      GUI_DisplayStringAt(0, LINE(10), (uint8_t *)FreqStr, CENTER_MODE);
-      break;
-    case JOY_RIGHT:
-      /* Increase Frequency */
-      if (*AudioFreq_ptr != 96000)
-      {
-        AudioFreq_ptr--;
-        sprintf((char*)FreqStr, "      FREQ: %6d     ", *AudioFreq_ptr);
-        BSP_AUDIO_OUT_Pause(0);
-        BSP_AUDIO_OUT_SetSampleRate(0, *AudioFreq_ptr);
-        BSP_AUDIO_OUT_Resume(0);
-        BSP_AUDIO_OUT_SetVolume(0, uwVolume);
-      }
-
-      GUI_DisplayStringAt(0, LINE(10), (uint8_t *)FreqStr, CENTER_MODE);
-      break;
-    case JOY_SEL:
-      /* Set Pause / Resume */
-      if (uwPauseEnabledStatus == 1)
-      { /* Pause is enabled, call Resume */
-        BSP_AUDIO_OUT_Resume(0);
-        uwPauseEnabledStatus = 0;
-        GUI_DisplayStringAt(0, LINE(8), (uint8_t *)"       PLAYING...     ", CENTER_MODE);
-        GUI_FillPolygon(Points2, 3, GUI_COLOR_WHITE);
-        BSP_LCD_FillRect(0, 100, 140, 25 , 80, LCD_COLOR_RGB565_BLACK);
-        BSP_LCD_FillRect(0, 140, 140, 25 , 80, LCD_COLOR_RGB565_BLACK);
-      }
-      else
-      { /* Pause the playback */
-        BSP_AUDIO_OUT_Pause(0);
-        uwPauseEnabledStatus = 1;
-        GUI_DisplayStringAt(0, LINE(8), (uint8_t *)"       PAUSE  ...     ", CENTER_MODE);
-        BSP_LCD_FillRect(0, 100, 140, 80 , 80, LCD_COLOR_RGB565_WHITE);
-        GUI_FillPolygon(Points2, 3, GUI_COLOR_GREEN);
-      }
-      HAL_Delay(200);
-      break;
-
-    default:
-      break;
+      return 0;
     }
+   /* IMPORTANT: AUDIO_Process() should be called within a periodic process */
+   AUDIO_Process();
+   AudioDeviceUpdate();
+
+   /* Get the Joystick State */
+   switch (BSP_JOY_GetState(JOY1))
+   {
+   case JOY_UP:
+     /* Increase volume by 5% */
+     if (uwVolume < 95)
+       uwVolume += 5;
+     else
+       uwVolume = 100;
+     GUI_SetFont(&Font20);
+     sprintf((char*)FreqStr, "       VOL:    %3ld     ", uwVolume);
+     BSP_AUDIO_OUT_SetVolume(0, uwVolume);
+     GUI_DisplayStringAt(0, 180, (uint8_t *)FreqStr, CENTER_MODE);
+     break;
+   case JOY_DOWN:
+     /* Decrease volume by 5% */
+     if (uwVolume > 5)
+       uwVolume -= 5;
+     else
+       uwVolume = 0;
+     GUI_SetFont(&Font20);
+     sprintf((char*)FreqStr, "       VOL:    %3ld     ", uwVolume);
+     BSP_AUDIO_OUT_SetVolume(0, uwVolume);
+     GUI_DisplayStringAt(0, 180, (uint8_t *)FreqStr, CENTER_MODE);
+     break;
+   case JOY_LEFT:
+     /*Decrease Frequency */
+     if (*AudioFreq_ptr != 8000)
+     {
+       AudioFreq_ptr++;
+       sprintf((char*)FreqStr, "      FREQ: %6ld     ", *AudioFreq_ptr);
+       BSP_AUDIO_OUT_Pause(0);
+       BSP_AUDIO_OUT_SetSampleRate(0, *AudioFreq_ptr);
+       BSP_AUDIO_OUT_Resume(0);
+       BSP_AUDIO_OUT_SetVolume(0, uwVolume);
+     }
+     GUI_SetFont(&Font20);
+     GUI_DisplayStringAt(0, 200, (uint8_t *)FreqStr, CENTER_MODE);
+     break;
+   case JOY_RIGHT:
+     /* Increase Frequency */
+     if (*AudioFreq_ptr != 96000)
+     {
+       AudioFreq_ptr--;
+       sprintf((char*)FreqStr, "      FREQ: %6ld     ", *AudioFreq_ptr);
+       BSP_AUDIO_OUT_Pause(0);
+       BSP_AUDIO_OUT_SetSampleRate(0, *AudioFreq_ptr);
+       BSP_AUDIO_OUT_Resume(0);
+       BSP_AUDIO_OUT_SetVolume(0, uwVolume);
+       GUI_SetFont(&Font20);
+       GUI_DisplayStringAt(0, 200, (uint8_t *)FreqStr, CENTER_MODE);
+     }
+     break;
+   case JOY_SEL:
+     /* Set Pause / Resume */
+     if (uwPauseEnabledStatus == 1)
+     { /* Pause is enabled, call Resume */
+       BSP_AUDIO_OUT_Resume(0);
+       uwPauseEnabledStatus = 0;
+       GUI_SetFont(&Font20);
+       GUI_DisplayStringAt(0, 160, (uint8_t *)"       PLAYING...     ", CENTER_MODE);
+       GUI_FillPolygon(Points2, 3, GUI_COLOR_WHITE);
+       BSP_LCD_FillRect(0, 10, 140, 15 , 40, LCD_COLOR_RGB565_BLACK);
+       BSP_LCD_FillRect(0, 35, 140, 15 , 40, LCD_COLOR_RGB565_BLACK);
+     }
+     else
+     { /* Pause the playback */
+       BSP_AUDIO_OUT_Pause(0);
+       uwPauseEnabledStatus = 1;
+       GUI_SetFont(&Font20);
+       GUI_DisplayStringAt(0, 160, (uint8_t *)"       PAUSE  ...     ", CENTER_MODE);
+       BSP_LCD_FillRect(0, 10, 140, 40 , 40, LCD_COLOR_RGB565_WHITE);
+       GUI_FillPolygon(Points2, 3, GUI_COLOR_GREEN);
+     }
+     HAL_Delay(200);
+     break;
+
+   default:
+     break;
+   }
   }
 }
 
@@ -318,10 +332,10 @@ int32_t AudioPlay_demo2 (void)
   GUI_SetTextColor(GUI_COLOR_BLUE);
   GUI_DisplayStringAt(0, LINE(8), (uint8_t *)"       PLAYING...     ", CENTER_MODE);
 
-  sprintf((char*)FreqStr, "       VOL:    %3d     ", uwVolume);
+  sprintf((char*)FreqStr, "       VOL:    %3ld     ", uwVolume);
   GUI_DisplayStringAt(0,  LINE(9), (uint8_t *)FreqStr, CENTER_MODE);
 
-  sprintf((char*)FreqStr, "      FREQ: %6d     ", *AudioFreq_ptr);
+  sprintf((char*)FreqStr, "      FREQ: %6ld     ", *AudioFreq_ptr);
   GUI_DisplayStringAt(0, LINE(10), (uint8_t *)FreqStr, CENTER_MODE);
 
   GUI_SetFont(&Font16);
@@ -352,7 +366,7 @@ int32_t AudioPlay_demo2 (void)
 static void Audio_SetHint(uint32_t Index)
 {
   uint32_t x_size, y_size;
-  uint8_t texte[30];
+  uint32_t texte[30];
 
   BSP_LCD_GetXSize(0, &x_size);
   BSP_LCD_GetYSize(0, &y_size);
@@ -364,7 +378,7 @@ static void Audio_SetHint(uint32_t Index)
   BSP_LCD_FillRect(0, 0, 0, x_size, 120, LCD_COLOR_RGB565_BLUE);
   GUI_SetTextColor(GUI_COLOR_WHITE);
   GUI_SetBackColor(GUI_COLOR_BLUE);
-  GUI_SetFont(&Font20);
+  GUI_SetFont(&Font12);
   if(Index == 0)
   {
   GUI_DisplayStringAt(0, 0, (uint8_t *)"SET MUTE / SET VOLUME / SET SAMPLE RATE", CENTER_MODE);
@@ -372,10 +386,10 @@ static void Audio_SetHint(uint32_t Index)
   GUI_DisplayStringAt(0, 30, (uint8_t *)"Press User button for next menu          ", CENTER_MODE);
   GUI_DisplayStringAt(0, 45, (uint8_t *)"    ", CENTER_MODE);
   sprintf((char *)texte, "copy audio file at @ 0x%x", AUDIO_SRC_FILE_ADDRESS);
-  GUI_DisplayStringAt( 30, 154, (uint8_t *)texte, LEFT_MODE);
-  GUI_DisplayStringAt(0, 60, (uint8_t *)"Use touch screen +/- to change Frequency ", CENTER_MODE);
-  GUI_DisplayStringAt(0, 75, (uint8_t *)"Touch upper part of the screen to Pause/Resume    ", CENTER_MODE);
-  GUI_DisplayStringAt(0, 90, (uint8_t *)"Use Joy keys to set output device    ", CENTER_MODE);
+  GUI_DisplayStringAt( 50, 145, (uint8_t *)texte, LEFT_MODE);
+  GUI_DisplayStringAt(0, 60, (uint8_t *)"Use Joy keys left/right to set output device ", CENTER_MODE);
+  GUI_DisplayStringAt(0, 75, (uint8_t *)"Use Joy key Press to Pause/Resume", CENTER_MODE);
+  GUI_DisplayStringAt(0, 90, (uint8_t *)"Use Joy key up/down to change Volume", CENTER_MODE);
   }
   else
   {
@@ -385,9 +399,6 @@ static void Audio_SetHint(uint32_t Index)
   GUI_DisplayStringAt(0, 45, (uint8_t *)"Use Joy keys UP/DOWN to set Channels Number    ", CENTER_MODE);
   GUI_DisplayStringAt(0, 60, (uint8_t *)"Use Joy keys LEFT/RIGHT to set resolution    ", CENTER_MODE);
   }
-
-  GUI_DrawRect(10, 120, x_size - 20, y_size - 130, GUI_COLOR_RED);
-  GUI_DrawRect(11, 121, x_size - 22, y_size - 132, GUI_COLOR_RED);
 }
 
 
@@ -595,29 +606,36 @@ static void AudioDeviceUpdate(void)
   switch(JoyState)
   {
   case JOY_UP:
+    BSP_LCD_FillRect(0, 0, 240, 320 , 10, LCD_COLOR_RGB565_WHITE);
     BSP_AUDIO_OUT_Pause(0);
     BSP_AUDIO_OUT_SetDevice(0, AUDIO_OUT_DEVICE_HEADPHONE);
     BSP_AUDIO_OUT_Resume(0);
-
-    GUI_DisplayStringAt(0, LINE(11), (uint8_t *)"AUDIO_OUT_DEVICE_HEADPHONE   ", CENTER_MODE);
+    GUI_SetFont(&Font16);
+    GUI_DisplayStringAt(0, 220, (uint8_t *)"  AUDIO_OUT_DEVICE_HEADPHONE   ", LEFT_MODE);
     break;
   case JOY_DOWN:
+    BSP_LCD_FillRect(0, 0, 240, 320 , 10, LCD_COLOR_RGB565_WHITE);
     BSP_AUDIO_OUT_Pause(0);
     BSP_AUDIO_OUT_SetDevice(0, AUDIO_OUT_DEVICE_HEADPHONE);
     BSP_AUDIO_OUT_Resume(0);
-    GUI_DisplayStringAt(0, LINE(11), (uint8_t *)"AUDIO_OUT_DEVICE_SPEAKER   ", CENTER_MODE);
+    GUI_SetFont(&Font16);
+    GUI_DisplayStringAt(0, 220, (uint8_t *)"  AUDIO_OUT_DEVICE_SPEAKER   ", LEFT_MODE);
     break;
   case JOY_LEFT:
+    BSP_LCD_FillRect(0, 0, 240, 320 , 10, LCD_COLOR_RGB565_WHITE);
     BSP_AUDIO_OUT_Pause(0);
     BSP_AUDIO_OUT_SetDevice(0, AUDIO_OUT_DEVICE_HEADPHONE);
     BSP_AUDIO_OUT_Resume(0);
-    GUI_DisplayStringAt(0, LINE(11), (uint8_t *)"AUDIO_OUT_DEVICE_SPK_HP   ", CENTER_MODE);
+    GUI_SetFont(&Font16);
+    GUI_DisplayStringAt(0, 220, (uint8_t *)"  AUDIO_OUT_DEVICE_SPK_HP   ", LEFT_MODE);
     break;
   case JOY_RIGHT:
+    BSP_LCD_FillRect(0, 0, 240, 320 , 10, LCD_COLOR_RGB565_WHITE);
     BSP_AUDIO_OUT_Pause(0);
     BSP_AUDIO_OUT_SetDevice(0, AUDIO_OUT_DEVICE_HEADPHONE);
     BSP_AUDIO_OUT_Resume(0);
-    GUI_DisplayStringAt(0, LINE(11), (uint8_t *)"AUDIO_OUT_DEVICE_AUTO      ", CENTER_MODE);
+    GUI_SetFont(&Font16);
+    GUI_DisplayStringAt(0, 220, (uint8_t *)"  AUDIO_OUT_DEVICE_AUTO      ", LEFT_MODE);
     break;
   default:
     break;

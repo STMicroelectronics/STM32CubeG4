@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -35,7 +35,7 @@
   
 #define HAL_MODULE_ENABLED  
 
-  /*#define HAL_ADC_MODULE_ENABLED   */
+  #define HAL_ADC_MODULE_ENABLED
 /*#define HAL_COMP_MODULE_ENABLED   */
 /*#define HAL_CORDIC_MODULE_ENABLED   */
 /*#define HAL_CRC_MODULE_ENABLED   */

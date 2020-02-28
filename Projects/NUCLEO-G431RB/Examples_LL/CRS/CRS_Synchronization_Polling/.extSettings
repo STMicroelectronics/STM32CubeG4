@@ -5,4 +5,3 @@ Define=
 HALModule=
 [Groups]
 Doc=../readme.txt;
-Example/User=../Src/main.c;../Src/stm32g4xx_it.c;

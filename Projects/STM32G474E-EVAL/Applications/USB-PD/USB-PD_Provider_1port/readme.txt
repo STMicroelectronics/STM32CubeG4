@@ -1,11 +1,11 @@
 /**
-  @page USB-PD_Consumer USBPD provider example
+  @page USB-PD_Provider USBPD provider example
 
   @verbatim
   ******************************************************************************
   * @file    USB-PD/USB-PD_Provider_1port/readme.txt
   * @author  MCD Application Team
-  * @brief   Description of the consumer example.
+  * @brief   Description of the Provider example.
   ******************************************************************************
   *
   * Copyright (c) 2019 STMicroelectronics. All rights reserved.
@@ -26,6 +26,8 @@ This application initializes the type C port 1 in source mode with only one PDO 
 
 Connect UCPD cube Monitor on the VCP associated to our board (only available if USB cable is connected)
 The UCPD Cube Monitor will be used to trace all the messages exchange between the ports partner.
+GUI interface has been enabled in this project. It allows to interact with the device (send and receive
+messages).
 
 @note Care must be taken when using HAL_Delay(), this function provides accurate
       delay (in milliseconds) based on variable incremented in HAL time base ISR.
@@ -46,7 +48,7 @@ on STM32Cube with RTOS".
 
 @par Keywords
 
-Middleware, USCPD, Type C, USBPD, FreeRTOS,
+USCPD, Type C, USBPD, FreeRTOS
 
 @par Directory contents
     - USB-PD/USB-PD_Provider_1port/Src/main.c                       Main program file

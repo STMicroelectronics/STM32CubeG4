@@ -42,6 +42,10 @@ LED2 is On if data is well received.
 
 In case of errors, LED2 is blinking Slowly (1s).
 
+@par Keywords
+
+Connectivity, SPI, Half-duplex, Interrupt mode, Transmission, Reception, Master, Slave, MISO, MOSI, EXTI
+
 @par Directory contents 
 
   - SPI/SPI_OneBoard_HalfDuplex_IT_Init/Inc/stm32g4xx_it.h          Interrupt handlers header file

@@ -763,7 +763,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$/stm32g431xx_flash.icf</state>
+          <state>$PROJ_DIR$/stm32g431xx_sram.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>

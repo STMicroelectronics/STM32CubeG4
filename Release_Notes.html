@@ -63,8 +63,8 @@
 <p>For <strong>quick getting started with the STM32CubeG4 firmware package</strong>, refer to <a href="Documentation/STM32CubeG4GettingStarted.pdf">UM2492</a> and you can download firmware updates and all the latest documentation from <a href="http://www.st.com/stm32cubefw">www.st.com/stm32cubefw</a></p>
 <p>Here is the list of references to user documents:</p>
 <ul>
-<li><a href="https://www.st.com/resource/en/user_manual/DM00550255%20.pdf">UM2492</a> : Getting started with STM32CubeG4 firmware package for STM32G4xx series</li>
-<li><a href="https://www.st.com/resource/en/user_manual/DM00610707%20.pdf">UM2570</a> : Description of STM32G4 HAL and LL Drivers</li>
+<li><a href="https://www.st.com/resource/en/user_manual/DM00550255.pdf">UM2492</a> : Getting started with STM32CubeG4 firmware package for STM32G4xx series</li>
+<li><a href="https://www.st.com/resource/en/user_manual/DM00610707.pdf">UM2570</a> : Description of STM32G4 HAL and LL Drivers</li>
 <li><a href="https://www.st.com/resource/en/user_manual/DM00611131.pdf">UM2573</a> : STM32CubeG4 Nucleo demonstration firmware</li>
 <li><a href="https://www.st.com/resource/en/user_manual/DM00617561.pdf">UM2583</a> : STM32CubeG4 STM32G474E-EVAL demonstration software</li>
 <li><a href="https://www.st.com/resource/en/user_manual/DM00105259.pdf">UM1721</a> : Developing Applications on STM32Cube with FatFs.</li>
@@ -75,15 +75,200 @@
 <div class="col-sm-12 col-lg-8">
 <h1 id="update-history">Update History</h1>
 <div class="collapse">
-<input type="checkbox" id="collapse-section3" checked aria-hidden="true"> <label for="collapse-section3" aria-hidden="true">v1.1.0 / 28-June-2019 </label>
+<input type="checkbox" id="collapse-section4" checked aria-hidden="true"> <label for="collapse-section4" aria-hidden="true">V1.2.0 / 14-February-2020 </label>
 <div>
 <h2 id="main-changes">Main Changes</h2>
 <h3 id="maintenance-release">Maintenance release</h3>
-<p>Maintenance release of STM32CubeG4 (STM32Cube for STM32G4 Series) Firmware package supporting STM32G431xx/41xx/71xx devices, STM32G473xx/<strong>83xx</strong> devices and STM32G474xx/84xx devices.</p>
-<p>A Discovery kit, B-G474E-DPOW, is introduced in this release to enable demonstration of Buck and Boost in voltage mode, High brightness RGB LED control and USB audio streaming.</p>
-<p>In the STM32CubeG4 MCU Package, examples and applications projects are generated with the STM32CubeMX tool to initialize the system, peripherals and middleware stacks. User can open the provided ioc file in STM32CubeMX to modify the settings, add additional peripherals and/or middleware, to build his final application.</p>
-<p>Demonstrations binaries are no more delivered within the STM32CubeG4 MCU package. They are available for download, in addition to their required media files if any, in a standalone package accessible through each hardware board official webpage. Please refer to the corresponding demonstration binary readme.txt to get webpage for each board.</p>
-<h2 id="contents">Contents</h2>
+<ul>
+<li>Add support for CubeIDE Toolchain to replace System Workbench for STM32 (SW4STM32)toolchain</li>
+<li>Add new Digital_Power application running on B-G474E-DPOW1 board</li>
+<li>Add new OpenBootloader application running on STM32G474E-EVAL board</li>
+<li><strong>HAL</strong>
+<ul>
+<li>General updates to fix known defects and enhancements implementation</li>
+</ul></li>
+<li><strong>HAL/LL CRYP</strong> update
+<ul>
+<li>Correct MISRA C:2012 warnings reported by rules 2.2_c, 10.1_R6, 10.3, 10.4_a, 10.6, 12.1, 13.5 15.7</li>
+<li>Add new parameter in the CRYP_HandleTypeDef structure
+<ul>
+<li>Add SizesSum_saved to save the SizesSum when processing is suspended</li>
+<li>Update the HAL_CRYP_Suspend() and HAL_CRYP_Resume() API by adding this new parameter</li>
+</ul></li>
+<li>Add missing interruptions re-enabling operations following an all flags clear-up in the CRYP_PhaseProcessingResume() API</li>
+<li>Support AAD with all possible byte sizes, not only multiple of 4 bytes
+<ul>
+<li>Update CRYP_GCMCCM_SetHeaderPhase() API</li>
+<li>Add new parameter HeaderWidthUnit in the CRYP_ConfigTypeDef structure which contains the Cryp Header Width Unit</li>
+<li>Add new definition of the CRYP Header size Unit
+<ul>
+<li>CRYP_HEADERWIDTHUNIT_WORD</li>
+<li>CRYP_HEADERWIDTHUNIT_BYTE</li>
+</ul></li>
+</ul></li>
+<li>Support data encryption and decryption with length not only multiple of 16 bytes
+<ul>
+<li>Update IS_CRYP_BUFFERSIZE() macro</li>
+<li>Update AES functions : CRYP_AES_ProcessData() / CRYP_AES_IT() / CRYP_AESCCM_Process() / CRYP_AESGCM_Process_DMA()</li>
+<li>Update CRYP_GCMCCM_SetPayloadPhase_IT() API</li>
+</ul></li>
+</ul></li>
+<li><strong>HAL HRTIM</strong> update
+<ul>
+<li>Update HAL_HRTIM_WaveformCompareConfig() to clear HRTIM_TIMxCR.DELCMP bitfield when the auto-delayed protection mode is disabled.</li>
+<li>Correct some “HRTIM_OUTPUTSET_TIMxx” constant names which are not compliant with Timer Events Mapping specified in the reference manual
+<ul>
+<li>Remove HRTIM_OUTPUTSET_TIMCEV1_TIMACMP1, HRTIM_OUTPUTSET_TIMEEV5_TIMDCMP2 , HRTIM_OUTPUTRESET_TIMCEV1_TIMACMP1 and HRTIM_OUTPUTRESET_TIMEEV5_TIMDCMP2</li>
+<li>Add HRTIM_OUTPUTSET_TIMEEV5_TIMCCMP2 and HRTIM_OUTPUTSET_TIMCEV2_TIMACMP3 , HRTIM_OUTPUTRESET_TIMCEV2_TIMACMP3 and HRTIM_OUTPUTRESET_TIMEEV5_TIMCCMP2</li>
+<li>Update HRTIM_OUTPUTSET_TIMCEV2_TIMACMP2 and HRTIM_OUTPUTRESET_TIMCEV2_TIMACMP2 definitions</li>
+</ul></li>
+<li>Update HAL_HRTIM_DLLCalibrationStart() and HAL_HRTIM_DLLCalibrationStart_IT() API by setting HRTIM state ready to avoid some unstable behavior of the TIMER E.</li>
+<li>Add new check field in the IS_HRTIM_EVENTSRC() macro to check also on EVENT</li>
+<li>Add a new check in the HAL_HRTIM_EventConfig() API on event and event source thru the IS_HRTIM_EVENTSRC() macro</li>
+<li>Remove UPDGAT bits reset from the HRTIM_TimingUnitWaveform_Control() API</li>
+<li>Add a lock and unlock handle process in the HAL_HRTIM_SimpleOCChannelConfig() API</li>
+</ul></li>
+<li><strong>HAL I2C</strong> update
+<ul>
+<li>Update HAL I2C processes to report ErrorCode when wrong I2C start condition occurs
+<ul>
+<li>Add new ErrorCode define: HAL_I2C_WRONG_START</li>
+<li>Set ErrorCode parameter in I2C handle to HAL_I2C_WRONG_START</li>
+</ul></li>
+<li>Update I2C_DMAAbort() APIs to fix hardfault issue when hdmatx and hdmarx parameters in i2c handle aren’t initialized (NULL pointer).
+<ul>
+<li>Add additional check on hi2c-&gt;hdmtx and hi2c-&gt;hdmarx before resetting DMA Tx/Rx complete callbacks</li>
+</ul></li>
+<li>Fix HAL I2C slave interrupt handling issue with I2C sequential transfers.
+<ul>
+<li>Update I2C_Slave_ISR_IT() and I2C_Slave_ISR_DMA() APIs to check on STOP condition and handle it before clearing the ADDR flag</li>
+</ul></li>
+</ul></li>
+<li><strong>HAL LPTIM</strong> update
+<ul>
+<li>Add a polling mechanism to check on LPTIM_FLAG_XXOK flags in different API
+<ul>
+<li>Add LPTIM_WaitForFlag() API to wait for flag set.</li>
+<li>Perform new checks on HAL_LPTIM_STATE_TIMEOUT.</li>
+</ul></li>
+<li>Apply digital filter for external clock for all LPTIM clock source.
+<ul>
+<li>Update HAL_LPTIM_Init() API</li>
+</ul></li>
+<li>Correct the input1source and input2source selection
+<ul>
+<li>Update LL_LPTIM_SetInput1Src and LL_LPTIM_SetInput2Src
+<ul>
+<li>Remove WRITE_REG and replace it by MODIFY_REG</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><strong>HAL TIM</strong> update
+<ul>
+<li>Update Encoder interface mode to keep TIM_CCER_CCxNP bits low
+<ul>
+<li>Add TIM_ENCODERINPUTPOLARITY_RISING and TIM_ENCODERINPUTPOLARITY_FALLING definitions to determine encoder input polarity.</li>
+<li>Add IS_TIM_ENCODERINPUT_POLARITY() macro to check the encoder input polarity.</li>
+<li>Update HAL_TIM_Encoder_Init() API
+<ul>
+<li>Replace IS_TIM_IC_POLARITY() macro by IS_TIM_ENCODERINPUT_POLARITY() macro.</li>
+</ul></li>
+</ul></li>
+<li>Provide new API to set and clear UIFREMAP
+<ul>
+<li>Add new definition for TIM Update Interrupt Flag Remap
+<ul>
+<li>TIM_UIFREMAP_DISABLE</li>
+<li>TIM_UIFREMAP_ENABLE</li>
+</ul></li>
+<li>Add new macro in HAL driver to enable and desable the Update Interrupt Flag Remap
+<ul>
+<li>__HAL_TIM_UIFREMAP_ENABLE()</li>
+<li>__HAL_TIM_UIFREMAP_DISABLE()/__HAL_TIM_GET_UIFCPY macro</li>
+</ul></li>
+<li>Add new mecanism to check whether the update interrupt flag (UIF) copy is set or not
+<ul>
+<li>Add the __HAL_TIM_GET_UIFCPY() macro in the HAL driver</li>
+<li>Add LL_TIM_IsActiveUIFCPY() API in the LL driver</li>
+</ul></li>
+<li>Add new macro to check on the Update Interrupt Flag Remap mode
+<ul>
+<li>IS_TIM_UIFREMAP_MODE()</li>
+</ul></li>
+</ul></li>
+<li>Remove useless TIM trigger selector</li>
+<li>Fix bug when using multiple DMA request to different channels of same timer
+<ul>
+<li>Introduce DMA burst state managment mechanism
+<ul>
+<li>Add a new stucture for DMA Burst States definition : HAL_TIM_DMABurstStateTypeDef</li>
+<li>Update __HAL_TIM_RESET_HANDLE_STATE to support DMABurstState</li>
+<li>Add a new API HAL_TIM_DMABurstState() to get the actual state of a DMA burst operation</li>
+<li>Add DMABurstState, the DMA burst operation state, in the TIM_HandleTypeDef structure</li>
+<li>Add new API TIM_DMAErrorCCxN() for TIM DMA error callback (complementary channel)</li>
+<li>Add new API TIM_DMADelayPulseNCplt() for TIM DMA Delay Pulse complete callback (complementary channel)</li>
+</ul></li>
+</ul></li>
+<li>Implement TIM channel state managment mechanism
+<ul>
+<li>Add new macro
+<ul>
+<li>TIM_CHANNEL_STATE_SET_ALL and TIM_CHANNEL_N_STATE_SET_ALL</li>
+<li>TIM_CHANNEL_STATE_SET and TIM_CHANNEL_N_STATE_SET</li>
+<li>TIM_CHANNEL_STATE_GET and TIM_CHANNEL_N_STATE_GET</li>
+</ul></li>
+<li>Add new API HAL_TIM_GetActiveChannel()</li>
+<li>Add new API HAL_TIM_GetChannelState() to get actual state of the TIM channel</li>
+<li>Add a new stucture for TIM channel States definition : HAL_TIM_ChannelStateTypeDef</li>
+<li>Update __HAL_TIM_RESET_HANDLE_STATE to support ChannelState and ChannelNState</li>
+<li>Add a new element in the TIM_HandleTypeDef structure : ChannelState to manage TIM channel operation stat.</li>
+<li>Add a new element in the TIM_HandleTypeDef structure : ChannelNState to manage TIM complementary channel operation state</li>
+</ul></li>
+</ul></li>
+<li><strong>HAL/LL USART</strong> update
+<ul>
+<li>Add support to the Receiver Timeout Interrupt in the HAL_USART_IRQHandler</li>
+<li>Fix wrong value for SlaveMode field in USART handle after HAL_USARTEx_DisableSlaveMode() call
+<ul>
+<li>Set USART_SLAVEMODE_DISABLE instead of USART_SLAVEMODE_ENABLE</li>
+</ul></li>
+</ul></li>
+<li><strong>Middlewares</strong>
+<ul>
+<li>USBPD: USB-PD Core library upgrade to use V2.9.0 and G4 USBPD Device Driver upgrade to use g4_V3.0.0, including :
+<ul>
+<li>Addition of new library configurations (Minimum Sink, Type-C without PD)</li>
+<li>MSC and documentation update</li>
+<li>Maintenance corrections (including updates for Conformance testing)</li>
+<li>Addition of compatibility with CMSIS OS V2</li>
+</ul></li>
+<li>Upgrade to use <strong>FreeRTOS V10.2.1</strong> ST modified <strong>V10.2.1_20191213</strong></li>
+<li>Upgrade to use <strong>FatFs r0.12c</strong> ST modified <strong>r0.12c_20191011</strong></li>
+<li>Add OpenBootloader MW stack support</li>
+</ul></li>
+<li><strong>BSP</strong>
+<ul>
+<li>General updates to fix known defects and enhancements implementation</li>
+</ul></li>
+<li><strong>Projects</strong>
+<ul>
+<li>General updates to fix known defects and enhancements implementation</li>
+<li>General updates to be compliant with CubeMx 5.6.0</li>
+<li>Add new OpenBootloader application runnig on STM32G474E-EVAL board</li>
+<li>Add new Digital_Power application running on B-G474E-DPOW1 board</li>
+<li>Add support for CubeIDE Toolchain to replace System Workbench for STM32 (SW4STM32)toolchain</li>
+<li>Add missing MDK-ARM projects</li>
+<li>USBPD Aplications: general corrections for conformance testing
+<ul>
+<li>Update of structures definitions and declarations in Inc/usbpd_dpm_user.h, Inc/usbpd_vdm_user.h and Inc/usbpd_dpm_conf.h</li>
+<li>Update of PDO definition for ability to support connection with UCPD-Monitor in Inc/usbpd_pdo_defs.h</li>
+<li>Update of services for VBUS management in Inc/usbpd_pwr_if.h, Inc/usbpd_pwr_user.h and Src/usbpd_pwr_if.c</li>
+<li>Align Src/usbpd_dpm_core.c with latest USBPD Core library</li>
+<li>New template of default functions added in Inc/usbpd_dpm_user.h and Src/usbpd_dpm_user.c</li>
+</ul></li>
+</ul></li>
+<li>For the complete list of changes, please refer to the release notes of each firmware component ## Contents</li>
+</ul>
 <h3 id="projects">Projects</h3>
 <p>The STM32CubeG4 Firmware package comes with a rich set of examples running on STMicroelectronics boards, organized by board and provided with preconfigured projects for the main supported toolchains.</p>
 <p>The exhaustive list of projects is provided in this table (<a href="Projects/STM32CubeProjectsList.html">STM32CubeProjectsList.html</a>).</p>
@@ -107,6 +292,316 @@
 </tbody>
 </table>
 <h3 id="components">Components</h3>
+<table>
+<caption>Released Drivers components :</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Version</th>
+<th style="text-align: left;">License</th>
+<th style="text-align: left;">Release note</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">CMSIS Core</td>
+<td style="text-align: left;">V5.4.0_cm4</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/Apache-2.0">Apache 2.0</a></td>
+<td style="text-align: left;"><a href="Drivers/CMSIS/README.md">release note</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32G4xx CMSIS Device</td>
+<td style="text-align: left;"><strong>V1.1.1</strong></td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/Apache-2.0">Apache 2.0</a></td>
+<td style="text-align: left;"><a href="Drivers/CMSIS/Device/ST/STM32G4xx/Release_Notes.html">release note</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STM32G4xx HAL Drivers</td>
+<td style="text-align: left;"><strong>V1.1.1</strong></td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;"><a href="Drivers/STM32G4xx_HAL_Driver/Release_Notes.html">release note</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BSP STM32G4xx_Nucleo</td>
+<td style="text-align: left;"><strong>V1.0.1</strong></td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;"><a href="Drivers/BSP/STM32G4xx_Nucleo/Release_Notes.html">release note</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BSP STM32G474E-EVAL</td>
+<td style="text-align: left;"><strong>V1.1.1</strong></td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;"><a href="Drivers/BSP/STM32G474E-EVAL/Release_Notes.html">release note</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BSP B-G474E-DPOW1</td>
+<td style="text-align: left;"><strong>V1.1.1</strong></td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;"><a href="Drivers/BSP/B-G474E-DPOW1/Release_Notes.html">release note</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BSP Adafruit Shield (reference ID 802)</td>
+<td style="text-align: left;">V4.0.2</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;"><a href="Drivers/BSP/Adafruit_Shield/Release_Notes.html">release note</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BSP Common</td>
+<td style="text-align: left;">V6.0.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;"><a href="Drivers/BSP/Components/Common/Release_Notes.html">release note</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BSP hx8347d</td>
+<td style="text-align: left;"><strong>V2.1.1</strong></td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;"><a href="Drivers/BSP/Components/hx8347d/Release_Notes.html">release note</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BSP mfxstm32l152</td>
+<td style="text-align: left;">V3.0.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;"><a href="Drivers/BSP/Components/mfxstm32l152/Release_Notes.html">release note</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BSP mt25ql512abb</td>
+<td style="text-align: left;">V1.0.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;"><a href="Drivers/BSP/Components/mt25ql512abb/Release_Notes.html">release note</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BSP st7735</td>
+<td style="text-align: left;">V2.0.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;"><a href="Drivers/BSP/Components/st7735/Release_Notes.html">release note</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BSP stts751</td>
+<td style="text-align: left;"><strong>V2.0.1</strong></td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;"><a href="Drivers/BSP/Components/stts751/Release_Notes.html">release note</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BSP wm8994</td>
+<td style="text-align: left;">V3.0.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;"><a href="Drivers/BSP/Components/wm8994/Release_Notes.html">release note</a></td>
+</tr>
+</tbody>
+</table>
+<table>
+<caption>Released Middlewares components :</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Version</th>
+<th style="text-align: left;">License</th>
+<th style="text-align: left;">Release note</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">STM32 USB Device Library</td>
+<td style="text-align: left;">V2.5.3</td>
+<td style="text-align: left;"><a href="http://www.st.com/SLA0044">SLA0044</a></td>
+<td style="text-align: left;"><a href="Middlewares/ST/STM32_USB_Device_Library/Release_Notes.html">release note</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32 USB Power Delivery Core Library</td>
+<td style="text-align: left;"><strong>V2.9.0</strong></td>
+<td style="text-align: left;"><a href="http://www.st.com/SLA0044">SLA0044</a></td>
+<td style="text-align: left;"><a href="Middlewares/ST/STM32_USBPD_Library/Core/Release_Notes.html">release note</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STM32 USB Power Delivery Device Library</td>
+<td style="text-align: left;"><strong>g4_V3.0.0</strong></td>
+<td style="text-align: left;"><a href="http://www.st.com/SLA0044">SLA0044</a></td>
+<td style="text-align: left;"><a href="Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/Release_Notes.html">release note</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">FatFS</td>
+<td style="text-align: left;"><strong>R0.12c</strong></td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;"><a href="Middlewares/Third_Party/FatFs/doc/updates.txt">release note</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><strong>ST modified 20191011</strong></td>
+<td style="text-align: left;"><a href="http://www.st.com/SLA0044">SLA0044</a></td>
+<td style="text-align: left;"><a href="Middlewares/Third_Party/FatFs/src/st_readme.txt">release note ST</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">FreeRTOS</td>
+<td style="text-align: left;"><strong>V10.2.1</strong></td>
+<td style="text-align: left;"><a href="Middlewares/Third_Party/FreeRTOS/License/license.txt">MIT</a></td>
+<td style="text-align: left;"><a href="Middlewares/Third_Party/FreeRTOS/Source/readme.txt">release note</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><strong>ST modified 20200117</strong></td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;"><a href="Middlewares/Third_Party/FreeRTOS/Source/st_readme.txt">release note ST</a></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Version</th>
+<th style="text-align: left;">License</th>
+<th style="text-align: left;">Release note</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Basic GUI</td>
+<td style="text-align: left;">V1.0.1</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;"><a href="Utilities/Basic_GUI/Release_Notes.html">release note</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Fonts</td>
+<td style="text-align: left;">V2.0.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;"><a href="Utilities/Fonts/Release_Notes.html">release note</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">GUI Interface</td>
+<td style="text-align: left;"><strong>GUI_V1.9.0</strong></td>
+<td style="text-align: left;"><a href="http://www.st.com/SLA0044">SLA0044</a></td>
+<td style="text-align: left;"><a href="Utilities/GUI_INTERFACE/Release_Notes.html">release note</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Tracer Emb</td>
+<td style="text-align: left;"><strong>V1.2.0</strong></td>
+<td style="text-align: left;"><a href="http://www.st.com/SLA0044">SLA0044</a></td>
+<td style="text-align: left;"><a href="Utilities/TRACER_EMB/Release_Notes.html">release note</a></td>
+</tr>
+</tbody>
+</table>
+<p>Note: in the tables above, version <strong>highlighted</strong> have changed since previous release.</p>
+<h2 id="known-limitations">Known Limitations</h2>
+<h2 id="development-toolchains-and-compilers">Development Toolchains and Compilers</h2>
+<table>
+<caption>Development Toolchains :</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: center;">Version</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">IAR Embedded Workbench for ARM (EWARM)toolchain</td>
+<td style="text-align: center;">V8.32.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">RealView Microcontroller DevelopmentKit (MDK-ARM) toolchain</td>
+<td style="text-align: center;">V5.27.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">System Workbench for STM32 (SW4STM32)toolchain</td>
+<td style="text-align: center;">V2.9</td>
+</tr>
+</tbody>
+</table>
+<h2 id="supported-devices-and-boards">Supported Devices and boards</h2>
+<table>
+<caption>Supported Devices :</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">STM32G431xx, STM32G441xx</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32G471xx</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STM32G473xx, STM32G483xx</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32G474xx, STM32G484xx</td>
+</tr>
+</tbody>
+</table>
+<table>
+<caption>Supported Boards :</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">NUCLEO-G431KB Nucleo32 kit</td>
+<td style="text-align: left;">MB1430 A-01</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NUCLEO-G431RB Nucleo kit</td>
+<td style="text-align: left;">MB1367 C-01</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NUCLEO-G474RE Nucleo kit</td>
+<td style="text-align: left;">MB1367 C-01</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32G474E-EVAL Evaluation Board</td>
+<td style="text-align: left;">MB1397 B-01</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">B-G474E-DPOW1 Discovery Kit</td>
+<td style="text-align: left;">MB1428 B-01</td>
+</tr>
+</tbody>
+</table>
+<h2 id="backward-compatibility">Backward Compatibility</h2>
+<p>None</p>
+<h2 id="dependencies">Dependencies</h2>
+<p>This software release is compatible with:</p>
+<ul>
+<li>STM32CubeMX V5.6.0</li>
+</ul>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section3" checked aria-hidden="true"> <label for="collapse-section3" aria-hidden="true">v1.1.0 / 28-June-2019 </label>
+<div>
+<h2 id="main-changes-1">Main Changes</h2>
+<h3 id="maintenance-release-1">Maintenance release</h3>
+<p>Maintenance release of STM32CubeG4 (STM32Cube for STM32G4 Series) Firmware package supporting STM32G431xx/41xx/71xx devices, STM32G473xx/<strong>83xx</strong> devices and STM32G474xx/84xx devices.</p>
+<p>A Discovery kit, B-G474E-DPOW, is introduced in this release to enable demonstration of Buck and Boost in voltage mode, High brightness RGB LED control and USB audio streaming.</p>
+<p>In the STM32CubeG4 MCU Package, examples and applications projects are generated with the STM32CubeMX tool to initialize the system, peripherals and middleware stacks. User can open the provided ioc file in STM32CubeMX to modify the settings, add additional peripherals and/or middleware, to build his final application.</p>
+<p>Demonstrations binaries are no more delivered within the STM32CubeG4 MCU package. They are available for download, in addition to their required media files if any, in a standalone package accessible through each hardware board official webpage. Please refer to the corresponding demonstration binary readme.txt to get webpage for each board.</p>
+<h2 id="contents">Contents</h2>
+<h3 id="projects-1">Projects</h3>
+<p>The STM32CubeG4 Firmware package comes with a rich set of examples running on STMicroelectronics boards, organized by board and provided with preconfigured projects for the main supported toolchains.</p>
+<p>The exhaustive list of projects is provided in this table (<a href="Projects/STM32CubeProjectsList.html">STM32CubeProjectsList.html</a>).</p>
+<table>
+<caption>Projects :</caption>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th style="text-align: left;">Version</th>
+<th style="text-align: left;">License</th>
+<th style="text-align: left;">Release notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Projects</td>
+<td style="text-align: left;">See Projects Release note for details</td>
+<td style="text-align: left;">See Projects Release note for details</td>
+<td style="text-align: left;"><a href="Projects/Release_Notes.html">release notes</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="components-1">Components</h3>
 <table>
 <caption>Released Drivers components :</caption>
 <thead>
@@ -169,8 +664,8 @@
 <tr class="odd">
 <td style="text-align: left;">BSP hx8347d</td>
 <td style="text-align: left;"><strong>V2.1.0</strong></td>
-<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
-<td style="text-align: left;"><a href="Drivers/BSP/Components/hx8347d/Release_Notes.html">release note</a></td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a> [rel</td>
+<td style="text-align: left;">ease note](Drivers/BSP/Components/hx8347d/Release_Notes.html)</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">BSP mfxstm32l152</td>
@@ -298,8 +793,8 @@
 </table>
 <p><strong>CPU and Log Utilities</strong> are not more part of STM32CubeG4 Firmware Package (obsolete components)</p>
 <p>Note: in the tables above, version <strong>highlighted</strong> have changed since previous release.</p>
-<h2 id="known-limitations">Known Limitations</h2>
-<h2 id="development-toolchains-and-compilers">Development Toolchains and Compilers</h2>
+<h2 id="known-limitations-1">Known Limitations</h2>
+<h2 id="development-toolchains-and-compilers-1">Development Toolchains and Compilers</h2>
 <table>
 <caption>Development Toolchains :</caption>
 <thead>
@@ -323,7 +818,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="supported-devices-and-boards">Supported Devices and boards</h2>
+<h2 id="supported-devices-and-boards-1">Supported Devices and boards</h2>
 <table>
 <caption>Supported Devices :</caption>
 <thead>
@@ -377,9 +872,9 @@
 </tr>
 </tbody>
 </table>
-<h2 id="backward-compatibility">Backward Compatibility</h2>
+<h2 id="backward-compatibility-1">Backward Compatibility</h2>
 <p>None</p>
-<h2 id="dependencies">Dependencies</h2>
+<h2 id="dependencies-1">Dependencies</h2>
 <p>This software release is compatible with:</p>
 <ul>
 <li>STM32CubeMX V5.3.0</li>
@@ -389,7 +884,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section2" aria-hidden="true"> <label for="collapse-section2" aria-hidden="true">v1.0.1 / 29-May-2019 </label>
 <div>
-<h2 id="main-changes-1">Main Changes</h2>
+<h2 id="main-changes-2">Main Changes</h2>
 <h3 id="patch-release">Patch release</h3>
 <p>Update of <strong>HRTIM examples</strong> and new release of <strong>STM32G4 patches for Keil IDE</strong>:</p>
 <ul>
@@ -434,7 +929,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section1" aria-hidden="true"> <label for="collapse-section1" aria-hidden="true">v1.0.0 / 12-April-2019 </label>
 <div>
-<h2 id="main-changes-2">Main Changes</h2>
+<h2 id="main-changes-3">Main Changes</h2>
 <h3 id="first-release">First release</h3>
 <p>First release of STM32CubeG4 (STM32Cube for STM32G4 Series) supporting <strong>STM32G431xx/41xx</strong>, <strong>STM32G471xx</strong>, <strong>STM32G473xx/83xx</strong> and <strong>STM32G474xx/84xx</strong> devices.</p>
 <p>In the STM32CubeG4 MCU Package, most of the examples and applications projects are generated with the STM32CubeMX tool to initialize the system, peripherals and middleware stacks. User can open the provided ioc file in STM32CubeMX to modify the settings, add additional peripherals and/or middleware, to build his final application.</p>
@@ -654,7 +1149,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="known-limitations-1">Known Limitations</h2>
+<h2 id="known-limitations-2">Known Limitations</h2>
 <table>
 <caption>Requirements not met or planned in a forthcoming release :</caption>
 <thead>
@@ -674,7 +1169,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="development-toolchains-and-compilers-1">Development Toolchains and Compilers</h2>
+<h2 id="development-toolchains-and-compilers-2">Development Toolchains and Compilers</h2>
 <table>
 <caption>Development Toolchains :</caption>
 <thead>
@@ -698,7 +1193,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="supported-devices-and-boards-1">Supported Devices and boards</h2>
+<h2 id="supported-devices-and-boards-2">Supported Devices and boards</h2>
 <table>
 <thead>
 <tr class="header">
@@ -733,9 +1228,9 @@
 </tr>
 </tbody>
 </table>
-<h2 id="backward-compatibility-1">Backward Compatibility</h2>
+<h2 id="backward-compatibility-2">Backward Compatibility</h2>
 <p>None</p>
-<h2 id="dependencies-1">Dependencies</h2>
+<h2 id="dependencies-2">Dependencies</h2>
 <p>This software release is compatible with:</p>
 <ul>
 <li>STM32CubeMX V5.2.0</li>

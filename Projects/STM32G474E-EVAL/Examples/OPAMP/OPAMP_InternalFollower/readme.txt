@@ -48,6 +48,10 @@ STM32G474E-EVAL Rev B board's LED is be used to monitor the program execution st
     - Turn-on if OPAMP output is equal to non-inverting input
  - Error: In case of error, LED1 is toggling at a frequency of 1Hz.
 
+@par Keywords
+
+OPAMP, Internal follower mode, DAC, ADC, Waveform.
+
 @par Directory contents 
 
   - OPAMP/OPAMP_InternalFollower/Inc/stm32g474e_eval_conf.h     BSP configuration file

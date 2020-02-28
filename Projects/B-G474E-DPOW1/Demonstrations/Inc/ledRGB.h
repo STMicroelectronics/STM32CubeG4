@@ -36,13 +36,6 @@
 /* Exported types ------------------------------------------------------------*/
 /* Exported variables --------------------------------------------------------*/
 /* Private Variable ----------------------------------------------------------*/
-static COMP_HandleTypeDef CompRedHandle;
-static COMP_HandleTypeDef CompGreenHandle;
-static COMP_HandleTypeDef CompBlueHandle;
-
-static DAC_HandleTypeDef  DacRedHandle;
-static DAC_HandleTypeDef  DacGreenHandle;
-static DAC_HandleTypeDef  DacBlueHandle;
 
 /* Exported constants --------------------------------------------------------*/
 /* Exported macros -----------------------------------------------------------*/

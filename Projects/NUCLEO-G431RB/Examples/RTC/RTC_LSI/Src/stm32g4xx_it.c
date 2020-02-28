@@ -60,7 +60,6 @@
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
-extern TIM_HandleTypeDef htim16;
 /* USER CODE BEGIN EV */
 /* RTC handler declared in "main.c" file */
 extern RTC_HandleTypeDef hrtc;
@@ -71,7 +70,7 @@ extern TIM_HandleTypeDef htim16;
 /* USER CODE END EV */
 
 /******************************************************************************/
-/*           Cortex-M4 Processor Interruption and Exception Handlers          */ 
+/*           Cortex-M4 Processor Interruption and Exception Handlers          */
 /******************************************************************************/
 /**
   * @brief This function handles System service call via SWI instruction.
@@ -121,6 +120,20 @@ void SysTick_Handler(void)
 /******************************************************************************/
 
 /**
+  * @brief This function handles RTC wake-up interrupt through EXTI line 20.
+  */
+void RTC_WKUP_IRQHandler(void)
+{
+  /* USER CODE BEGIN RTC_WKUP_IRQn 0 */
+
+  /* USER CODE END RTC_WKUP_IRQn 0 */
+  HAL_RTCEx_WakeUpTimerIRQHandler(&hrtc);
+  /* USER CODE BEGIN RTC_WKUP_IRQn 1 */
+
+  /* USER CODE END RTC_WKUP_IRQn 1 */
+}
+
+/**
   * @brief This function handles TIM1 update interrupt and TIM16 global interrupt.
   */
 void TIM1_UP_TIM16_IRQHandler(void)
@@ -135,15 +148,6 @@ void TIM1_UP_TIM16_IRQHandler(void)
 }
 
 /* USER CODE BEGIN 1 */
-/**
-  * @brief  This function handles RTC wakeup interrupt request.
-  * @param  None
-  * @retval None
-  */
-void RTC_WKUP_IRQHandler(void)
-{
-  HAL_RTCEx_WakeUpTimerIRQHandler(&hrtc);
-}
 
 /* USER CODE END 1 */
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

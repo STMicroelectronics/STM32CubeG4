@@ -4,10 +4,8 @@
   * @author  MCD Application Team
   * @brief   This file contains the device define.
   ******************************************************************************
-  * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2018 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under Ultimate Liberty license
   * SLA0044, the "License"; You may not use this file except in compliance with
@@ -36,9 +34,10 @@ extern "C" {
 #include "stm32g4xx_ll_pwr.h"
 #include "stm32g4xx_ll_tim.h"
 
+/* Following include file may be replaced with the BSP UBSPD PWR header file */
 #if defined(MB1397) || defined(USE_STM32G474E_EVAL)
 #include "stm32g474e_eval_usbpd_pwr.h"
-#elif defined(MB1428)  /* B-G474E-DPOW1 */
+#elif defined(MB1428)
 #include "b_g474e_dpow1_usbpd_pwr.h"
 #else
 #include "usbpd_bsp_pwr.h"

@@ -100,6 +100,7 @@ typedef enum {
   * @}
   */
 #endif /* _VDM */
+#define VDM_CABLE_INFO      USBPD_CORE_SNK_EXTENDED_CAPA + 1U
 /* USER CODE END Private_define */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -187,9 +188,9 @@ static USBPD_StatusTypeDef USBPD_VDM_ReceiveUVDM(uint8_t PortNum, USBPD_UVDMHead
 USBPD_VDM_SettingsTypeDef DPM_VDM_Settings[USBPD_PORT_COUNT] =
 {
   {
-    .VDM_XID_SOP                = 0x0000AAAAu,    /*!< A decimal number assigned by USB-IF before certification */
+    .VDM_XID_SOP                = USBPD_XID,    /*!< A decimal number assigned by USB-IF before certification */
     .VDM_USB_VID_SOP            = USBPD_VID,      /*!< A decimal number assigned by USB-IF before certification */
-    .VDM_PID_SOP                = 0xAAAAu,        /*!< A unique number assigned by the Vendor ID holder identifying the product. */
+    .VDM_PID_SOP                = USBPD_PID,        /*!< A unique number assigned by the Vendor ID holder identifying the product. */
     .VDM_ModalOperation         = MODAL_OPERATION_NONSUPP, /*!< Product support Modes based on @ref USBPD_ModalOp_TypeDef */
     .VDM_bcdDevice_SOP          = 0xAAAAu,        /*!< A unique number assigned by the Vendor ID holder containing identity information relevant to the release version of the product. */
     .VDM_USBHostSupport         = USB_NOTCAPABLE, /*!< Indicates whether the UUT is capable of enumerating USB Host */
@@ -369,7 +370,17 @@ static USBPD_StatusTypeDef USBPD_VDM_DiscoverIdentity(uint8_t PortNum, USBPD_Dis
     IDHeaderVDO[PortNum].b20.ModalOperation         = DPM_VDM_Settings[PortNum].VDM_ModalOperation;
     IDHeaderVDO[PortNum].b20.USBHostCapability      = DPM_VDM_Settings[PortNum].VDM_USBHostSupport;
     IDHeaderVDO[PortNum].b20.USBDevCapability       = DPM_VDM_Settings[PortNum].VDM_USBDeviceSupport;
+#if defined(USBPD_REV30_SUPPORT)
+    if ((PRODUCT_TYPE_PSD == DPM_VDM_Settings[PortNum].VDM_ProductTypeUFPorCP)
+     || (PRODUCT_TYPE_VPD == DPM_VDM_Settings[PortNum].VDM_ProductTypeUFPorCP))
+    {
+      IDHeaderVDO[PortNum].b20.ProductTypeUFPorCP   = PRODUCT_TYPE_UNDEFINED;
+    }
+    else
+#endif /* USBPD_REV30_SUPPORT */
+    {
     IDHeaderVDO[PortNum].b20.ProductTypeUFPorCP     = DPM_VDM_Settings[PortNum].VDM_ProductTypeUFPorCP;
+    }
 #if defined(USBPD_REV30_SUPPORT)
   }
 #endif /* USBPD_REV30_SUPPORT */
@@ -405,32 +416,6 @@ static USBPD_StatusTypeDef USBPD_VDM_DiscoverIdentity(uint8_t PortNum, USBPD_Dis
     sIdentity[PortNum].AMA_VDO.d32          = ama_vdo.d32;
   }
   }
-#if defined(USBPD_REV30_SUPPORT)
-  else
-  {
-    if (((DPM_Params[PortNum].PE_SpecRevision) > USBPD_SPECIFICATION_REV2)
-      && (PRODUCT_TYPE_AMC == IDHeaderVDO[PortNum].b30.ProductTypeDFP))
-  {
-    USBPD_AMAVdo_TypeDef      ama_vdo =
-    {
-#if defined (USB_BILLBOARD)
-      .b.AMA_USB_SS_Support   = AMA_USB2P0_BILLBOARD,
-#else
-      .b.AMA_USB_SS_Support   = AMA_USB2P0_ONLY,
-#endif /* USB_BILLBOARD */
-      .b.VBUSRequirement      = VBUS_REQUIRED,
-      .b.VCONNRequirement     = VCONN_NOT_REQUIRED,
-      .b.VCONNPower           = VCONN_1W,
-      .b.Reserved             = 0x0000,
-      .b.AMAFWVersion         = 0x1,
-      .b.AMAHWVersion         = 0x1,
-    };
-
-    sIdentity[PortNum].AMA_VDO_Presence     = 1;
-    sIdentity[PortNum].AMA_VDO.d32          = ama_vdo.d32;
-  }
-  }
-#endif /* USBPD_REV30_SUPPORT */
 
   *pIdentity = sIdentity[PortNum];
 

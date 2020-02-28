@@ -369,7 +369,6 @@
                     <state>$PROJ_DIR$\..\..\Config</state>
                     <state>$PROJ_DIR$\..\..\Common\Inc</state>
                     <state>$PROJ_DIR$\..\..\Core\Inc</state>
-                    <state>$PROJ_DIR$\..\..\Demo\Modules\lowpower</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\CMSIS\Device\ST\STM32G4xx\Include</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\CMSIS\Include</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Drivers\CMSIS\DSP\Include</state>
@@ -384,7 +383,7 @@
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\include</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\STM32_USBPD_Library\Core\inc</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\STM32_USBPD_Library\Devices\STM32G4xx\inc</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Middlewares\ST\STM32_USBPD_Library\Devices\STM32G4XX\inc</state>
                     <state>$PROJ_DIR$\..\..\Modules\audio</state>
                     <state>$PROJ_DIR$\..\..\Modules\lowpower</state>
                     <state>$PROJ_DIR$\..\..\Modules\filebrowser</state>

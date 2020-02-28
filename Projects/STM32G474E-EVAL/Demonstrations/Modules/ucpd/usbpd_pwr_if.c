@@ -5,6 +5,7 @@
   * @author  MCD Application Team
   * @brief   This file contains power interface control functions.
   ******************************************************************************
+  * @attention
   *
   * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
@@ -34,6 +35,9 @@
 #include "usbpd_core.h"
 #include "usbpd_trace.h"
 #endif
+#if defined(_GUI_INTERFACE)
+#include "gui_api.h"
+#endif /* _GUI_INTERFACE */
 /* USER CODE BEGIN Include */
 #include "string.h"
 #include "stdio.h"
@@ -75,10 +79,11 @@
 
 #define ABS(__VAL__) ((__VAL__) < 0 ? - (__VAL__) : (__VAL__))
 
-/* USER CODE END Private_Define */
 /**
   * @}
   */
+/* USER CODE END Private_Define */
+
 /* Private macros ------------------------------------------------------------*/
 /* USER CODE BEGIN Private_Macro */
 /** @addtogroup STM32_USBPD_APPLICATION_POWER_IF_Private_Macros
@@ -166,6 +171,11 @@
 /** @addtogroup STM32_USBPD_APPLICATION_POWER_IF_Private_Variables
   * @{
   */
+/**
+  * @brief  USBPD Port safety data
+  */
+uint32_t                 vbus_disconnect = 0;
+uint32_t                 vbus_transition = 0;
 
 /**
   * @brief  USBPD Port PDO Storage array declaration
@@ -220,7 +230,6 @@ void     _PWR_CheckPDOContent(uint8_t PortNum);
   */
 /* USER CODE END USBPD_USER_PRIVATE_FUNCTIONS_Prototypes */
 
-/* Private functions ---------------------------------------------------------*/
 /** @addtogroup STM32_USBPD_APPLICATION_POWER_IF_Exported_Functions
   * @{
   */
@@ -299,7 +308,7 @@ USBPD_StatusTypeDef USBPD_PWR_IF_SetProfile(uint8_t PortNum)
 
   /* Check if valid port */
   /* Check if profile nb is valid for this port */
-  if(( !USBPD_PORT_IsValid(PortNum) ) || (_PowerProfileSelected >= PWR_Port_PDO_Storage[PortNum].SourcePDO.NumberOfPDO)
+  if (( !USBPD_PORT_IsValid(PortNum) ) || (_PowerProfileSelected >= PWR_Port_PDO_Storage[PortNum].SourcePDO.NumberOfPDO)
      || (0 == PWR_Port_PDO_Storage[PortNum].SourcePDO.NumberOfPDO))
   {
     return _ret;
@@ -376,7 +385,7 @@ USBPD_StatusTypeDef USBPD_PWR_IF_SetProfile(uint8_t PortNum)
       BSP_USBPD_PWR_VBUSGetVoltage(PortNum, &_vbusOriginInmv);
 #ifdef _TRACE
       char str[10];
-      sprintf(str, "V:%5d", _vbusOriginInmv);
+      sprintf(str, "V:%5ld", _vbusOriginInmv);
       POWER_IF_TRACE(PortNum, (uint8_t*)str, strlen(str));
 #endif /* _TRACE */
       _delta = _vbusOriginInmv - _vbusTargetInmv;
@@ -698,8 +707,8 @@ USBPD_StatusTypeDef USBPD_PWR_IF_SearchRequestedPDO(uint8_t PortNum, uint32_t Rd
   return USBPD_OK;
 /* USER CODE END USBPD_PWR_IF_SearchRequestedPDO */
 }
-
 #endif /* _SRC || _DRP */
+
 /**
   * @brief  the function is called in case of critical issue is detected to switch in safety mode.
   * @retval None
@@ -779,7 +788,7 @@ USBPD_StatusTypeDef USBPD_PWR_IF_CheckUpdateSNKPower(uint8_t PortNum)
         _current = PWR_DECODE_50MA(pdo.SRCSNKAPDO.MaxCurrentIn50mAunits);
         _PWR_UPDATE_CURRENT_MAX(_current, _max_current);
         break;
-#endif /*_USBPD_REV30_SUPPORT && PPS*/
+#endif /* _PPS*/
       default:
         break;
     }
@@ -794,6 +803,137 @@ USBPD_StatusTypeDef USBPD_PWR_IF_CheckUpdateSNKPower(uint8_t PortNum)
   return _status;
 }
 #endif /* _SNK) || _DRP */
+
+/**
+  * @brief Function is called to get VBUS power status.
+  * @param PortNum Port number
+  * @param PowerTypeStatus  Power type status based on @ref USBPD_VBUSPOWER_STATUS
+  * @retval UBBPD_TRUE or USBPD_FALSE
+  */
+uint8_t USBPD_PWR_IF_GetVBUSStatus(uint8_t PortNum, USBPD_VBUSPOWER_STATUS PowerTypeStatus)
+{
+/* USER CODE BEGIN USBPD_PWR_IF_GetVBUSStatus */
+  uint8_t _status = USBPD_FALSE;
+  uint32_t _vbus = HW_IF_PWR_GetVoltage(PortNum);
+#if defined (_TRACE)
+  uint8_t str[20];
+#endif /* _TRACE */
+    
+  switch(PowerTypeStatus)
+  {
+  case USBPD_PWR_BELOWVSAFE0V :
+    if (_vbus < USBPD_PWR_LOW_VBUS_THRESHOLD) _status = USBPD_TRUE;
+    break;
+  case USBPD_PWR_VSAFE5V :
+    if (_vbus >= USBPD_PWR_HIGH_VBUS_THRESHOLD) _status = USBPD_TRUE;
+    vbus_disconnect = vbus_transition = USBPD_PWR_HIGH_VBUS_THRESHOLD;
+    break;
+  case USBPD_PWR_SNKDETACH:
+    if(vbus_transition != vbus_disconnect)
+    {
+      if( vbus_transition > vbus_disconnect)
+      {
+        /* Voltage increase the disconnect value is under vbus_transition */
+        if (_vbus > (vbus_transition*1.1))
+        {
+          /* the power transition is complete so disconnect thresold shall be updated */
+          vbus_disconnect = vbus_transition;
+#if defined (_TRACE)
+          POWER_IF_TRACE(PortNum,"TRANSITION COMPLETE", 19);
+          sprintf((char *)str,"THRESHOLD::%ld",vbus_disconnect);
+          POWER_IF_TRACE(PortNum,str, strlen((char *)str));
+#endif /* _TRACE */
+        }
+      }
+      else
+      {
+        /* voltage decrease, the disconnect voltage shall be switched to new level */
+        vbus_disconnect = vbus_transition;
+#if defined (_TRACE)
+        POWER_IF_TRACE(PortNum,"NEW THRESHOLD", 14);
+        sprintf((char *)str,"THRESHOLD::%ld",vbus_disconnect);
+        POWER_IF_TRACE(PortNum,str, strlen((char *)str));
+#endif /* _TRACE */
+      }
+    }
+
+    /* check disconnect according the current threshold */
+    if (_vbus < vbus_disconnect) _status = USBPD_TRUE;
+    break;
+  default :
+    break;
+  }
+  return _status;
+/* USER CODE END USBPD_PWR_IF_GetVBUSStatus */
+}
+
+/**
+  * @brief Function is called to set the VBUS threshold when a request has been accepted.
+  * @param PortNum Port number
+  * @retval None
+  */
+void USBPD_PWR_IF_UpdateVbusThreshold(uint8_t PortNum)
+{
+/* USER CODE BEGIN USBPD_PWR_IF_UpdateVbusThreshold */
+  USBPD_SNKRDO_TypeDef rdo;              /* get the requested RDO */
+  USBPD_PDO_TypeDef    SelectedPDO;
+  
+  rdo.d32 = DPM_Ports[PortNum].DPM_RequestDOMsg;
+  SelectedPDO.d32 = DPM_Ports[PortNum].DPM_ListOfRcvSRCPDO[rdo.GenericRDO.ObjectPosition-1];
+  
+  switch(SelectedPDO.GenericPDO.PowerObject)
+  {
+  case USBPD_CORE_PDO_TYPE_FIXED : 
+    {
+      switch(SelectedPDO.SRCFixedPDO.VoltageIn50mVunits * 50)
+      {
+      case 5000 :
+        vbus_transition = USBPD_PWR_VBUS_THRESHOLD_5V;
+        break;
+      case 9000 :
+        vbus_transition = USBPD_PWR_VBUS_THRESHOLD_9V;
+        break;
+      case 15000 :
+        vbus_transition = USBPD_PWR_VBUS_THRESHOLD_15V;
+        break;
+      case 20000 :
+        vbus_transition = USBPD_PWR_VBUS_THRESHOLD_20V;
+        break;
+      }
+      break;
+    }
+    
+#if defined(USBPD_REV30_SUPPORT) && defined(USBPDCORE_PPS)
+  case USBPD_CORE_PDO_TYPE_APDO :
+    {
+      vbus_transition = USBPD_PWR_VBUS_THRESHOLD_APDO;
+      break;
+    }
+#endif /*_USBPD_REV30_SUPPORT && PPS*/
+    
+  case USBPD_CORE_PDO_TYPE_BATTERY : 
+  case USBPD_CORE_PDO_TYPE_VARIABLE :
+    {
+      /* Not yet handled */
+      break;
+    }
+  }
+/* USER CODE END USBPD_PWR_IF_UpdateVbusThreshold */
+}
+
+/**
+  * @brief Function is called to reset the VBUS threshold when there is a power reset.
+  * @param PortNum Port number
+  * @retval None
+  */
+void USBPD_PWR_IF_ResetVbusThreshold(uint8_t PortNum)
+{
+/* USER CODE BEGIN USBPD_PWR_IF_ResetVbusThreshold */
+  POWER_IF_TRACE(PortNum,"RESET THRESHOLD", 15);
+  vbus_disconnect = vbus_transition = USBPD_PWR_HIGH_VBUS_THRESHOLD;
+/* USER CODE END USBPD_PWR_IF_ResetVbusThreshold */
+}
+
 /**
   * @}
   */

@@ -72,7 +72,6 @@
   * @{
   */
 /* USER CODE BEGIN POWER_Private_Macros */
-
 /* USER CODE END POWER_Private_Macros */
 /**
   * @}
@@ -82,7 +81,6 @@
   * @{
   */
 /* USER CODE BEGIN POWER_Private_Variables */
-
 /* USER CODE END POWER_Private_Variables */
 /**
   * @}
@@ -308,9 +306,10 @@ int32_t BSP_USBPD_PWR_VBUSSetVoltage_Fixed(uint32_t Instance,
   /* USER CODE BEGIN BSP_USBPD_PWR_VBUSSetVoltage_Fixed */
   /* Check if instance is valid       */
   int32_t ret = BSP_ERROR_NONE;
-  UNUSED(VbusTargetInmv);
-  UNUSED(OperatingCurrent);
   UNUSED(MaxOperatingCurrent);
+  UNUSED(OperatingCurrent);
+  UNUSED(VbusTargetInmv);
+
   if (Instance >= USBPD_PWR_INSTANCES_NBR)
   {
     ret = BSP_ERROR_WRONG_PARAM;
@@ -339,10 +338,10 @@ int32_t BSP_USBPD_PWR_VBUSSetVoltage_Variable(uint32_t Instance,
   /* USER CODE BEGIN BSP_USBPD_PWR_VBUSSetVoltage_Variable */
   /* Check if instance is valid       */
   int32_t ret;
-  UNUSED(VbusTargetMinInmv);
-  UNUSED(VbusTargetMaxInmv);
-  UNUSED(OperatingCurrent);
   UNUSED(MaxOperatingCurrent);
+  UNUSED(OperatingCurrent);
+  UNUSED(VbusTargetMaxInmv);
+  UNUSED(VbusTargetMinInmv);
 
   if (Instance >= USBPD_PWR_INSTANCES_NBR)
   {
@@ -376,9 +375,9 @@ int32_t BSP_USBPD_PWR_VBUSSetVoltage_Battery(uint32_t Instance,
   /* USER CODE BEGIN BSP_USBPD_PWR_VBUSSetVoltage_Battery */
   /* Check if instance is valid       */
   int32_t ret;
-  UNUSED(VbusTargetMin);
-  UNUSED(VbusTargetMax);
   UNUSED(OperatingPower);
+  UNUSED(VbusTargetMax);
+  UNUSED(VbusTargetMin);
   UNUSED(MaxOperatingPower);
 
   if (Instance >= USBPD_PWR_INSTANCES_NBR)
@@ -387,6 +386,10 @@ int32_t BSP_USBPD_PWR_VBUSSetVoltage_Battery(uint32_t Instance,
   }
   else
   {
+    /* Set the power, the precision must be at 5% */
+    /* Set the current limitation */
+    /* not implemented */
+
     ret = BSP_ERROR_FEATURE_NOT_SUPPORTED;
   }
   return ret;
@@ -411,9 +414,9 @@ int32_t BSP_USBPD_PWR_VBUSSetVoltage_APDO(uint32_t Instance,
   /* USER CODE BEGIN BSP_USBPD_PWR_VBUSSetVoltage_APDO */
   /* Check if instance is valid       */
   int32_t ret;
-  UNUSED(VbusTargetInmv);
-  UNUSED(OperatingCurrent);
   UNUSED(Delta);
+  UNUSED(OperatingCurrent);
+  UNUSED(VbusTargetInmv);
 
   if (Instance >= USBPD_PWR_INSTANCES_NBR)
   {
@@ -438,7 +441,6 @@ int32_t BSP_USBPD_PWR_VBUSSetVoltage_APDO(uint32_t Instance,
 int32_t BSP_USBPD_PWR_VBUSGetVoltage(uint32_t Instance, uint32_t *pVoltage)
 {
   /* USER CODE BEGIN BSP_USBPD_PWR_VBUSGetVoltage */
-
   /* Check if instance is valid       */
   int32_t ret = BSP_ERROR_NONE;
 
@@ -450,7 +452,7 @@ int32_t BSP_USBPD_PWR_VBUSGetVoltage(uint32_t Instance, uint32_t *pVoltage)
   {
     uint32_t voltage;
 
-    voltage = __LL_ADC_CALC_DATA_TO_VOLTAGE(VDDA_APPLI,  ((uint32_t)LL_ADC_REG_ReadConversionData12(VSENSE_ADC_INSTANCE)), LL_ADC_RESOLUTION_12B); /* mV */
+    voltage = (uint32_t) __LL_ADC_CALC_DATA_TO_VOLTAGE(VDDA_APPLI, (uint32_t)LL_ADC_REG_ReadConversionData12(VSENSE_ADC_INSTANCE), LL_ADC_RESOLUTION_12B); /* mV */
 
     /* STM32G474E_EVAL board is used */
     /* Value is multiplied by 7.030 according to board measurments.
@@ -507,8 +509,8 @@ int32_t BSP_USBPD_PWR_VCONNInit(uint32_t Instance,
 {
   /* USER CODE BEGIN BSP_USBPD_PWR_VCONNInit */
   /* Check if instance is valid       */
-  int32_t ret;
   UNUSED(CCPinId);
+  int32_t ret;
 
   if (Instance >= USBPD_PWR_INSTANCES_NBR)
   {
@@ -538,8 +540,8 @@ int32_t BSP_USBPD_PWR_VCONNDeInit(uint32_t Instance,
 {
   /* USER CODE BEGIN BSP_USBPD_PWR_VCONNDeInit */
   /* Check if instance is valid       */
-  int32_t ret;
   UNUSED(CCPinId);
+  int32_t ret;
 
   if (Instance >= USBPD_PWR_INSTANCES_NBR)
   {
@@ -569,8 +571,8 @@ int32_t BSP_USBPD_PWR_VCONNOn(uint32_t Instance,
 {
   /* USER CODE BEGIN BSP_USBPD_PWR_VCONNOn */
   /* Check if instance is valid       */
-  int32_t ret;
   UNUSED(CCPinId);
+  int32_t ret;
 
   if (Instance >= USBPD_PWR_INSTANCES_NBR)
   {
@@ -600,8 +602,8 @@ int32_t BSP_USBPD_PWR_VCONNOff(uint32_t Instance,
 {
   /* USER CODE BEGIN BSP_USBPD_PWR_VCONNOff */
   /* Check if instance is valid       */
-  int32_t ret;
   UNUSED(CCPinId);
+  int32_t ret;
 
   if (Instance >= USBPD_PWR_INSTANCES_NBR)
   {
@@ -632,8 +634,8 @@ int32_t BSP_USBPD_PWR_VCONNIsOn(uint32_t Instance,
 {
   /* USER CODE BEGIN BSP_USBPD_PWR_VCONNIsOn */
   /* Check if instance is valid       */
-  int32_t ret;
   UNUSED(CCPinId);
+  int32_t ret;
 
   if ((Instance >= USBPD_PWR_INSTANCES_NBR) || (NULL == pState))
   {
@@ -641,7 +643,6 @@ int32_t BSP_USBPD_PWR_VCONNIsOn(uint32_t Instance,
   }
   else
   {
-    *pState = 0U;
     ret = BSP_ERROR_FEATURE_NOT_SUPPORTED;
   }
   return ret;
@@ -664,8 +665,8 @@ int32_t BSP_USBPD_PWR_SetVBUSDisconnectionThreshold(uint32_t Instance,
 {
   /* USER CODE BEGIN BSP_USBPD_PWR_SetVBUSDisconnectionThreshold */
   /* Check if instance is valid       */
-  int32_t ret;
   UNUSED(VoltageThreshold);
+  int32_t ret;
 
   if (Instance >= USBPD_PWR_INSTANCES_NBR)
   {
@@ -775,6 +776,35 @@ static void PWR_VBUSDischarge(uint32_t Instance, uint32_t VbusStopInmV)
   /* Need to keep DISCHARGE ON as soon as not powering VBUS on MB1397 */
 }
 
+/**
+  * @brief  Configure ADC (ADC instance) and GPIO used by ADC channels.
+  * @note   In case re-use of this function outside of this example:
+  *         This function includes checks of ADC hardware constraints before
+  *         executing some configuration functions.
+  *         - In this example, all these checks are not necessary but are
+  *           implemented anyway to show the best practice usages
+  *           corresponding to reference manual procedure.
+  *           (On some STM32 series, setting of ADC features are not
+  *           conditioned to ADC state. However, in order to be compliant with
+  *           other STM32 series and to show the best practice usages,
+  *           ADC state is checked anyway with same constraints).
+  *           Software can be optimized by removing some of these checks,
+  *           if they are not relevant considering previous settings and actions
+  *           in user application.
+  *         - If ADC is not in the appropriate state to modify some parameters,
+  *           the setting of these parameters is bypassed without error
+  *           reporting:
+  *           it can be the expected behavior in case of recall of this
+  *           function to update only a few parameters (which update fullfills
+  *           the ADC state).
+  *           Otherwise, it is up to the user to set the appropriate error
+  *           reporting in user application.
+  * @note   Peripheral configuration is minimal configuration from reset values.
+  *         Thus, some useless LL unitary functions calls below are provided as
+  *         commented examples - setting is default configuration from reset.
+  * @param  None
+  * @retval None
+  */
 static void PWR_Configure_ADC(void)
 {
   /*## Configuration of GPIO used by ADC channels ############################*/
@@ -807,7 +837,7 @@ static void PWR_Configure_ADC(void)
   /*       they are not relevant considering previous settings and actions    */
   /*       in user application.                                               */
   uint32_t IsEnabled = __LL_ADC_IS_ENABLED_ALL_COMMON_INSTANCE(VSENSE_ADC_COMMON);
-  if (0U == IsEnabled)
+  if (IsEnabled == 0U)
   {
     /* Note: Call of the functions below are commented because they are       */
     /*       useless in this example:                                         */
@@ -835,7 +865,7 @@ static void PWR_Configure_ADC(void)
   /*       On this STM32 serie, setting of these features is conditioned to   */
   /*       ADC state:                                                         */
   /*       ADC must be disabled.                                              */
-  if (0U == LL_ADC_IsEnabled(VSENSE_ADC_INSTANCE))
+  if (LL_ADC_IsEnabled(VSENSE_ADC_INSTANCE) == 0U)
   {
     /* Delay for internal voltage reference stabilization time.               */
     /* Compute number of CPU cycles to wait for, from delay in us.            */
@@ -844,7 +874,7 @@ static void PWR_Configure_ADC(void)
     /* Note: If system core clock frequency is below 200kHz, wait time        */
     /*       is only a few CPU processing cycles.                             */
     wait_loop_index = ((LL_ADC_DELAY_VREFINT_STAB_US * (SystemCoreClock / (100000U * 2U))) / 10U);
-    while (0U != wait_loop_index)
+    while (wait_loop_index != 0U)
     {
       wait_loop_index--;
     }
@@ -858,9 +888,9 @@ static void PWR_Configure_ADC(void)
   /*       ADC state:                                                         */
   /*       ADC must be disabled or enabled without conversion on going        */
   /*       on group regular.                                                  */
-  uint32_t is_conversion = LL_ADC_REG_IsConversionOngoing(VSENSE_ADC_INSTANCE);
-  uint32_t is_enabled = LL_ADC_IsEnabled(VSENSE_ADC_INSTANCE);
-  if ((0U == is_conversion) || (0U == is_enabled))
+  uint32_t is_convreg_ongoing = LL_ADC_REG_IsConversionOngoing(VSENSE_ADC_INSTANCE);
+  if ((LL_ADC_IsEnabled(VSENSE_ADC_INSTANCE) == 0U) ||
+      (is_convreg_ongoing == 0U))
   {
     /* Set ADC group regular trigger source */
     LL_ADC_REG_SetTriggerSource(VSENSE_ADC_INSTANCE, LL_ADC_REG_TRIG_SOFTWARE);
@@ -888,7 +918,6 @@ static void PWR_Configure_ADC(void)
     /* Set ADC group regular sequence: channel on rank corresponding to       */
     /* channel number.                                                        */
     LL_ADC_REG_SetSequencerRanks(VSENSE_ADC_INSTANCE, VSENSE_ADC_RANK, VSENSE_ADC_CHANNEL);
-
   }
 
   /*## Configuration of ADC hierarchical scope: ADC group injected ###########*/
@@ -903,10 +932,11 @@ static void PWR_Configure_ADC(void)
   /*       ADC state:                                                         */
   /*       ADC must be disabled or enabled without conversion on going        */
   /*       on either groups regular or injected.                              */
-  uint32_t reg_is_ongoing = LL_ADC_REG_IsConversionOngoing(VSENSE_ADC_INSTANCE);
-  uint32_t inj_is_ongoing = LL_ADC_INJ_IsConversionOngoing(VSENSE_ADC_INSTANCE);
-  uint32_t adc_is_enabled = LL_ADC_IsEnabled(VSENSE_ADC_INSTANCE);
-  if ((0U == adc_is_enabled) || ((0U == reg_is_ongoing) && (0U == inj_is_ongoing)))
+  is_convreg_ongoing = LL_ADC_REG_IsConversionOngoing(VSENSE_ADC_INSTANCE);
+  uint32_t is_convinj_ongoing = LL_ADC_INJ_IsConversionOngoing(VSENSE_ADC_INSTANCE);
+  if ((LL_ADC_IsEnabled(VSENSE_ADC_INSTANCE) == 0U)                    ||
+      ((is_convreg_ongoing == 0U) &&
+       (is_convinj_ongoing == 0U)))
   {
     /* Set ADC channels sampling time */
     LL_ADC_SetChannelSamplingTime(VSENSE_ADC_INSTANCE, VSENSE_ADC_CHANNEL, LL_ADC_SAMPLINGTIME_247CYCLES_5);
@@ -937,7 +967,7 @@ static void PWR_Configure_ADC(void)
 
 /**
   * @brief  Perform ADC activation procedure to make it ready to convert
-  *         (ADC instance: ADC1).
+  *         (ADC instance: VSENSE_ADC_INSTANCE).
   * @note   Operations:
   *         - ADC instance
   *           - Run ADC self calibration
@@ -954,7 +984,7 @@ static void PWR_Activate_ADC(void)
   __IO uint32_t wait_loop_index = 0;
   __IO uint32_t backup_setting_adc_dma_transfer;
 #if (USE_TIMEOUT == 1)
-  uint32_t Timeout = 0; /* Variable used for timeout management */
+  uint32_t Timeout = 0U; /* Variable used for timeout management */
 #endif /* USE_TIMEOUT */
 
   /*## Operation on ADC hierarchical scope: ADC instance #####################*/
@@ -970,7 +1000,7 @@ static void PWR_Activate_ADC(void)
   /*       Software can be optimized by removing some of these checks, if     */
   /*       they are not relevant considering previous settings and actions    */
   /*       in user application.                                               */
-  if (0U == LL_ADC_IsEnabled(VSENSE_ADC_INSTANCE))
+  if (LL_ADC_IsEnabled(VSENSE_ADC_INSTANCE) == 0U)
   {
     /* Disable ADC deep power down mode */
     LL_ADC_DisableDeepPowerDown(VSENSE_ADC_INSTANCE);
@@ -985,7 +1015,7 @@ static void PWR_Activate_ADC(void)
     /* Note: If system core clock frequency is below 200kHz, wait time        */
     /*       is only a few CPU processing cycles.                             */
     wait_loop_index = ((LL_ADC_DELAY_INTERNAL_REGUL_STAB_US * (SystemCoreClock / (100000U * 2U))) / 10U);
-    while (0U != wait_loop_index)
+    while (wait_loop_index != 0U)
     {
       wait_loop_index--;
     }
@@ -1007,13 +1037,13 @@ static void PWR_Activate_ADC(void)
     Timeout = ADC_CALIBRATION_TIMEOUT_MS;
 #endif /* USE_TIMEOUT */
 
-    while (0U != LL_ADC_IsCalibrationOnGoing(VSENSE_ADC_INSTANCE))
+    while (LL_ADC_IsCalibrationOnGoing(VSENSE_ADC_INSTANCE) != 0U)
     {
 #if (USE_TIMEOUT == 1)
       /* Check Systick counter flag to decrement the time-out value */
       if (LL_SYSTICK_IsActiveCounterFlag())
       {
-        if (0U == Timeout--)
+        if (Timeout-- == 0U)
         {
           /* Time-out occurred. Set LED to blinking mode */
           LED_Blinking(LED_BLINK_ERROR);
@@ -1029,7 +1059,7 @@ static void PWR_Activate_ADC(void)
     /* Note: Variable divided by 2 to compensate partially                    */
     /*       CPU processing cycles (depends on compilation optimization).     */
     wait_loop_index = (ADC_DELAY_CALIB_ENABLE_CPU_CYCLES >> 1U);
-    while (0U != wait_loop_index)
+    while (wait_loop_index != 0U)
     {
       wait_loop_index--;
     }
@@ -1042,13 +1072,13 @@ static void PWR_Activate_ADC(void)
     Timeout = ADC_ENABLE_TIMEOUT_MS;
 #endif /* USE_TIMEOUT */
 
-    while (0U == LL_ADC_IsActiveFlag_ADRDY(VSENSE_ADC_INSTANCE))
+    while (LL_ADC_IsActiveFlag_ADRDY(VSENSE_ADC_INSTANCE) == 0U)
     {
 #if (USE_TIMEOUT == 1)
       /* Check Systick counter flag to decrement the time-out value */
       if (LL_SYSTICK_IsActiveCounterFlag())
       {
-        if (0U == Timeout--)
+        if (Timeout-- == 0U)
         {
           /* Time-out occurred. Set LED to blinking mode */
           LED_Blinking(LED_BLINK_ERROR);

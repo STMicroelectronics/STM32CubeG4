@@ -95,6 +95,7 @@ int main(void)
   /* USER CODE BEGIN 1 */
   /* USER CODE END 1 */
 
+
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
@@ -106,6 +107,10 @@ int main(void)
   NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
 
   /* System interrupt init*/
+
+  /** Disable the internal Pull-Up in Dead Battery pins of UCPD peripheral 
+  */
+  LL_PWR_DisableDeadBatteryPD();
 
   /* USER CODE BEGIN Init */
 
@@ -134,7 +139,7 @@ int main(void)
                          LL_DMA_CHANNEL_3,
                          (uint32_t)aTxBuffer, LL_SPI_DMA_GetRegAddr(SPI1),
                          LL_DMA_GetDataTransferDirection(DMA1, LL_DMA_CHANNEL_3));
-  LL_DMA_SetDataLength(DMA1, LL_DMA_CHANNEL_3, ubNbDataToReceive);
+  LL_DMA_SetDataLength(DMA1, LL_DMA_CHANNEL_3, ubNbDataToTransmit);
 
   LL_DMA_SetPeriphRequest(DMA1, LL_DMA_CHANNEL_3, LL_DMAMUX_REQ_SPI1_TX);
 
@@ -147,7 +152,7 @@ int main(void)
                         LL_DMA_PDATAALIGN_BYTE | LL_DMA_MDATAALIGN_BYTE);
   LL_DMA_ConfigAddresses(DMA1, LL_DMA_CHANNEL_1, LL_SPI_DMA_GetRegAddr(SPI1), (uint32_t)aRxBuffer,
                          LL_DMA_GetDataTransferDirection(DMA1, LL_DMA_CHANNEL_1));
-  LL_DMA_SetDataLength(DMA1, LL_DMA_CHANNEL_1, ubNbDataToTransmit);
+  LL_DMA_SetDataLength(DMA1, LL_DMA_CHANNEL_1, ubNbDataToReceive);
   LL_DMA_SetPeriphRequest(DMA1, LL_DMA_CHANNEL_1, LL_DMAMUX_REQ_SPI1_RX);
 
 
@@ -232,7 +237,9 @@ void SystemClock_Config(void)
   LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
   LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
   LL_RCC_SetAPB2Prescaler(LL_RCC_APB1_DIV_1);
+
   LL_Init1msTick(170000000);
+
   LL_SetSystemCoreClock(170000000);
 }
 
@@ -344,11 +351,12 @@ static void MX_SPI1_Init(void)
 
 }
 
-/** 
+/**
   * Enable DMA controller clock
   */
-static void MX_DMA_Init(void) 
+static void MX_DMA_Init(void)
 {
+
   /* Init with LL driver */
   /* DMA controller clock enable */
   LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_DMAMUX1);
@@ -627,7 +635,7 @@ void Error_Handler(void)
   * @retval None
   */
 void assert_failed(uint8_t *file, uint32_t line)
-{ 
+{
   /* USER CODE BEGIN 6 */
   /* User can add his own implementation to report the file name and line number,
      tex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */

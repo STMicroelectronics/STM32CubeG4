@@ -46,7 +46,7 @@ on STM32Cube with RTOS".
 
 @par Keywords
 
-Middleware, USCPD, Type C, USBPD, FreeRTOS,
+USCPD, Type C, USBPD, FreeRTOS
 
 @par Directory contents
     - USB-PD/USB-PD_Consumer_1port/Src/main.c                       Main program file

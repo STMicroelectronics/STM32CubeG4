@@ -49,6 +49,10 @@ This example shows how to use the built-in PGA mode (OPAMP programmable gain).
         (OPAMP output)
       - Press User push-button button to switch between steps.
       - Connect a wire between DAC output (PA4 - pin 32 on connector CN7) to OPAMP non inverting input (PB0 - pin 34 on connector CN7)
+
+@par Keywords
+
+OPAMP, PGA mode, DMA, DAC, Cortex, Circular mode, DMA half transfer, Oscilloscope.
     
 @par Directory contents 
 

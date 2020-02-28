@@ -73,7 +73,7 @@ int main(void)
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */
-  
+
 
   /* MCU Configuration--------------------------------------------------------*/
 
@@ -172,6 +172,9 @@ void SystemClock_Config(void)
   LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
   LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
   LL_RCC_SetAPB2Prescaler(LL_RCC_APB1_DIV_1);
+
+  LL_Init1msTick(170000000);
+
   LL_SetSystemCoreClock(170000000);
 }
 
@@ -273,7 +276,7 @@ static void MX_HRTIM1_Init(void)
   LL_HRTIM_TIM_SetCompare1(HRTIM1, LL_HRTIM_TIMER_D, DEADTIME);
   LL_HRTIM_TIM_SetCompareMode(HRTIM1, LL_HRTIM_TIMER_D, LL_HRTIM_COMPAREUNIT_2, LL_HRTIM_COMPAREMODE_DELAY_CMP3);
   LL_HRTIM_TIM_SetCompare2(HRTIM1, LL_HRTIM_TIMER_D, DEADTIME);
-  LL_HRTIM_TIM_SetCompare3(HRTIM1, LL_HRTIM_TIMER_D, TIMD_PERIOD/2);
+  LL_HRTIM_TIM_SetCompare3(HRTIM1, LL_HRTIM_TIMER_D, 0x0000);
   LL_HRTIM_TIM_SetCompare4(HRTIM1, LL_HRTIM_TIMER_D, DEADTIME);
   LL_HRTIM_TIM_SetCompareMode(HRTIM1, LL_HRTIM_TIMER_D, LL_HRTIM_COMPAREUNIT_4, LL_HRTIM_COMPAREMODE_DELAY_NOTIMEOUT);
   LL_HRTIM_TIM_SetCaptureTrig(HRTIM1, LL_HRTIM_TIMER_D, LL_HRTIM_CAPTUREUNIT_1, LL_HRTIM_CAPTURETRIG_EEV_8);
@@ -382,7 +385,7 @@ void Error_Handler(void)
   * @retval None
   */
 void assert_failed(uint8_t *file, uint32_t line)
-{ 
+{
   /* USER CODE BEGIN 6 */
   while(1);
   /* USER CODE END 6 */

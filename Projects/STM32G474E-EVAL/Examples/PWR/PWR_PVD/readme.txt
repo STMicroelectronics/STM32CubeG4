@@ -63,6 +63,10 @@ Power, PWR, EXTI, PVD, Interrupt, Wakeup, External reset
     and development board.
 
   - STM32G474E-EVAL Rev B Set-up :
+    - Jumper JP11 has to be in position 2-3 ( VDD_ADJ),
+    - Power Supply can be adjusted thanks to the potentiometer VDD_ADJ/RV3 [1.62V to 3.61V]
+    - LED1 (GREEN) connected to PG.09 pin indicates the behavior of
+      the test software as explained above.
 
 @par How to use it ? 
 

@@ -93,6 +93,10 @@ As stated in the application note AN5305, using an oscilloscope:
 @note The application need to ensure that the SysTick time base is always set to
       1 millisecond to have correct HAL operation.
 
+@par Keywords
+
+FMAC, IIR, Filter, Voltage mode controller, Polling mode,IT mode, DMA mode, HRTIM, AN5305, Oscilloscope.
+
 @par Directory contents
 
   - FMAC/FMAC_Buck_VoltageMode_HW_AN5305/Src/main.c                  Main program

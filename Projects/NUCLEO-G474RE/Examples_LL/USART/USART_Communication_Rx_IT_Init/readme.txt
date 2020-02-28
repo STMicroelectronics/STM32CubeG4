@@ -37,6 +37,10 @@ Received character is echoed on Tx line.
 On press on push button, LED2 is turned Off.
 In case of errors, LED2 is blinking.
 
+@par Keywords
+
+Connectivity, USART, Asynchroneous mode, RS-232, Baud rate, Interrupt, HyperTerminal, Reception.
+
 @par Directory contents 
 
   - USART/USART_Communication_Rx_IT_Init/Inc/stm32g4xx_it.h          Interrupt handlers header file

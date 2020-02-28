@@ -377,9 +377,6 @@ void BSP_JOY_Callback(JOY_TypeDef JOY, JOYPin_TypeDef JoyPin)
   {
     switch(JoyPin)
     {
-    case SD_DETECT_PIN :
-      kStorage_SdDetection(BSP_SD_IsDetected(SD_INSTANCE));
-      break;
     case JOY_DOWN :
     case JOY_UP :
     case JOY_SEL :

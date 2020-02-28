@@ -66,7 +66,7 @@ extern PCD_HandleTypeDef hpcd_USB_FS;
 /* USER CODE END EV */
 
 /******************************************************************************/
-/*           Cortex-M4 Processor Interruption and Exception Handlers          */
+/*           Cortex-M4 Processor Interruption and Exception Handlers          */ 
 /******************************************************************************/
 /**
   * @brief This function handles Non maskable interrupt.
@@ -221,9 +221,8 @@ void USB_LP_IRQHandler(void)
 void USBWakeUp_IRQHandler(void)
 {
   /* USER CODE BEGIN USBWakeUp_IRQn 0 */
-
-  /* USER CODE END USBWakeUp_IRQn 0 */
   SystemClockConfig_Resume();
+  /* USER CODE END USBWakeUp_IRQn 0 */
   HAL_PCD_IRQHandler(&hpcd_USB_FS);
   /* USER CODE BEGIN USBWakeUp_IRQn 1 */
 

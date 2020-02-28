@@ -28,8 +28,11 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "usbpd_pdo_defs.h"
-#include "usbpd_vdm_user.h"
 #include "usbpd_dpm_user.h"
+#include "usbpd_vdm_user.h"
+
+#include "gui_api.h"
+#include "usbpd_gui_memmap.h"
 
 /* USER CODE BEGIN Includes */
 /* Section where include file can be added */
@@ -56,6 +59,8 @@
 /* Private variables ---------------------------------------------------------*/
 #ifndef __USBPD_DPM_CORE_C
 extern USBPD_SettingsTypeDef            DPM_Settings[USBPD_PORT_COUNT];
+extern USBPD_IdSettingsTypeDef          DPM_ID_Settings[USBPD_PORT_COUNT];
+extern USBPD_USER_SettingsTypeDef       DPM_USER_Settings[USBPD_PORT_COUNT];
 #else /* __USBPD_DPM_CORE_C */
 USBPD_SettingsTypeDef       DPM_Settings[USBPD_PORT_COUNT] =
 {
@@ -68,7 +73,7 @@ USBPD_SettingsTypeDef       DPM_Settings[USBPD_PORT_COUNT] =
     .PE_RespondsToDiscovSOP = USBPD_FALSE,      /*!< Can respond successfully to a Discover Identity */
     .PE_AttemptsDiscovSOP = USBPD_FALSE,        /*!< Can send a Discover Identity */
     .PE_PingSupport = USBPD_FALSE,              /* support Ping (only for PD3.0)                                            */
-    .PE_CapscounterSupport = USBPD_TRUE,       /* support caps counter                                    */
+    .PE_CapscounterSupport = USBPD_FALSE,       /* support caps counter                                    */
     .CAD_RoleToggle = USBPD_FALSE,               /* CAD role toggle                                         */
     .CAD_DefaultResistor = 0x02u,
     .CAD_TryFeature = 0,              /* CAD try feature                                         */
@@ -86,7 +91,7 @@ USBPD_SettingsTypeDef       DPM_Settings[USBPD_PORT_COUNT] =
       .Is_GetCountryInfo_Supported      = USBPD_FALSE,  /*!< Country_Info message supported or not by DPM */
       .Is_SecurityRequest_Supported     = USBPD_FALSE,  /*!< Security_Response message supported or not by DPM */
       .Is_FirmUpdateRequest_Supported   = USBPD_FALSE,  /*!< Firmware update response message supported by PE */
-      .Is_SnkCapaExt_Supported          = USBPD_FALSE,  /*!< Sink_Capabilities_Extended message supported by PE */
+      .Is_GetBattery_Supported          = USBPD_FALSE,  /*!< Get Battery Capabitity and Status messages supported by PE */
     },
 
     .CAD_SRCToggleTime = 0,                    /* uint8_t CAD_SRCToggleTime; */
@@ -94,7 +99,36 @@ USBPD_SettingsTypeDef       DPM_Settings[USBPD_PORT_COUNT] =
   }
 };
 
-#endif
+USBPD_IdSettingsTypeDef          DPM_ID_Settings[USBPD_PORT_COUNT] =
+{
+  {
+    .XID = USBPD_XID,     /*!< Value provided by the USB-IF assigned to the product   */
+    .VID = USBPD_VID,     /*!< Vendor ID (assigned by the USB-IF)                     */
+    .PID = USBPD_PID,     /*!< Product ID (assigned by the manufacturer)              */
+  },
+};
+
+USBPD_USER_SettingsTypeDef       DPM_USER_Settings[USBPD_PORT_COUNT] =
+{
+  {
+    .PE_DataSwap = USBPD_TRUE,                  /* support data swap                                       */
+    .PE_VconnSwap = USBPD_FALSE,                 /* support VCONN swap                                  */
+    .PE_DR_Swap_To_DFP = USBPD_TRUE,                  /*  Support of DR Swap to DFP                                  */
+    .PE_DR_Swap_To_UFP = USBPD_TRUE,                  /*  Support of DR Swap to UFP                                  */
+#if defined(USBPD_REV30_SUPPORT)
+#if _MANU_INFO
+    .DPM_ManuInfoPort =                      /*!< Manufacturer information used for the port            */
+    {
+      .VID = USBPD_VID,                      /*!< Vendor ID (assigned by the USB-IF)        */
+      .PID = USBPD_PID,                      /*!< Product ID (assigned by the manufacturer) */
+      .ManuString = "STMicroelectronics",    /*!< Vendor defined byte array                 */
+    },
+#endif /* _MANU_INFO */
+#endif /* USBPD_REV30_SUPPORT */
+  },
+};
+
+#endif /* !__USBPD_DPM_CORE_C */
 
 /* USER CODE BEGIN Variable */
 /* Section where Variable can be added */

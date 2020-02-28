@@ -77,6 +77,10 @@ void HAL_MspInit(void)
 
   /* System interrupt init*/
 
+  /** Disable the internal Pull-Up in Dead Battery pins of UCPD peripheral 
+  */
+  LL_PWR_DisableDeadBatteryPD();
+
   /* USER CODE BEGIN MspInit 1 */
 
   /* USER CODE END MspInit 1 */
@@ -97,7 +101,7 @@ void HAL_FMAC_MspInit(FMAC_HandleTypeDef* hfmac)
   /* USER CODE END FMAC_MspInit 0 */
     /* Peripheral clock enable */
     __HAL_RCC_FMAC_CLK_ENABLE();
-
+  
     /* FMAC DMA Init */
     /* FMAC_PRELOAD Init */
     hdma_fmac_preload.Instance = DMA1_Channel1;

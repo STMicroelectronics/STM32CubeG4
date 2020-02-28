@@ -72,6 +72,10 @@ void HAL_MspInit(void)
 
   /* System interrupt init*/
 
+  /** Disable the internal Pull-Up in Dead Battery pins of UCPD peripheral 
+  */
+  LL_PWR_DisableDeadBatteryPD();
+
   /* USER CODE BEGIN MspInit 1 */
 
   /* USER CODE END MspInit 1 */
@@ -149,7 +153,6 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
 
 void HAL_SAI_MspDeInit(SAI_HandleTypeDef* hsai)
 {
-
 /* SAI1 */
     if(hsai->Instance==SAI1_Block_A)
     {

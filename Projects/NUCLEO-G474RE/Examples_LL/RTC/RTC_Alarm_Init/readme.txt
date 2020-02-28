@@ -51,6 +51,7 @@ The current time and date are updated and displayed on the debugger in aShowTime
 and aShowDate variables (watch or live watch).
 
 In case of error, LED2 is toggling.
+
 @par Keywords
 
 System, RTC, Alarm, wakeup timer, Backup domain, Counter, LSE, LSI

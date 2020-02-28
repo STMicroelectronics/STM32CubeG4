@@ -66,7 +66,7 @@
 /* USER CODE END EV */
 
 /******************************************************************************/
-/*           Cortex-M4 Processor Interruption and Exception Handlers          */ 
+/*           Cortex-M4 Processor Interruption and Exception Handlers          */
 /******************************************************************************/
 /**
   * @brief This function handles Non maskable interrupt.
@@ -207,7 +207,15 @@ void SysTick_Handler(void)
 void DMA1_Channel3_IRQHandler(void)
 {
   /* USER CODE BEGIN DMA1_Channel3_IRQn 0 */
-
+  /* Check whether DMA transfer error caused the DMA interruption */
+  if(LL_DMA_IsActiveFlag_TE3(DMA1) == 1)
+  {
+    /* Clear flag DMA transfer error */
+    LL_DMA_ClearFlag_TE3(DMA1);
+    
+    /* Call interruption treatment function */
+    DacDmaTransferError_Callback();
+  }
   /* USER CODE END DMA1_Channel3_IRQn 0 */
   
   /* USER CODE BEGIN DMA1_Channel3_IRQn 1 */
@@ -227,7 +235,10 @@ void EXTI15_10_IRQHandler(void)
   {
     LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_13);
     /* USER CODE BEGIN LL_EXTI_LINE_13 */
-    
+
+    /* Call interruption treatment function */
+    UserButton_Callback();
+
     /* USER CODE END LL_EXTI_LINE_13 */
   }
   /* USER CODE BEGIN EXTI15_10_IRQn 1 */
@@ -241,7 +252,15 @@ void EXTI15_10_IRQHandler(void)
 void TIM6_DAC_IRQHandler(void)
 {
   /* USER CODE BEGIN TIM6_DAC_IRQn 0 */
-
+  /* Check whether DAC channel1 under-run caused the DAC interruption */
+  if(LL_DAC_IsActiveFlag_DMAUDR1(DAC1) != 0)
+  {
+    /* Clear flag DAC channel1 under-run */
+    LL_DAC_ClearFlag_DMAUDR1(DAC1);
+    
+    /* Call interruption treatment function */
+    DacUnderrunError_Callback();
+  }
   /* USER CODE END TIM6_DAC_IRQn 0 */
   
   /* USER CODE BEGIN TIM6_DAC_IRQn 1 */

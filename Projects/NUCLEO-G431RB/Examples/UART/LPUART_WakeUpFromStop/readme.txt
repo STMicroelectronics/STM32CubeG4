@@ -1,4 +1,4 @@
-/**
+﻿/**
   @page LPUART_WakeUpFromStop LPUART Wake up from Stop mode example
 
   @verbatim
@@ -139,7 +139,7 @@ The LPUART is configured as follows:
 
 @par Keywords
 
-Connectivity, UART, Printf, Baud rate, RS-232, HyperTerminal, full-duplex, HyperTerminal,Transmission, Reception, Asynchronous
+Connectivity, LPUART, Printf, Baud rate, RS-232, Full-duplex, HyperTerminal,Transmission, Reception, Asynchronous, Low power.
 
 @par Directory contents
 

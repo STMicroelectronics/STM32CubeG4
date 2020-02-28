@@ -72,10 +72,6 @@ extern "C" {
                                                         mean in uint8_t equivalent at 0x2D and this value can be
                                                         seen in the OAR1 register in bits OA1[1:7] */
 
-/* Definition for usage of internal pull up */
-/* Enable this define, for an integration of this example inside
-   an ecosystem board with external pull-up */
-#define EXTERNAL_PULL_UP_AVAILABLE      0
 /* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/

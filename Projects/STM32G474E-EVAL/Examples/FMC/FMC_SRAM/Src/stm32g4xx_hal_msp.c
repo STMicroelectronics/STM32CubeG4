@@ -72,6 +72,10 @@ void HAL_MspInit(void)
 
   /* System interrupt init*/
 
+  /** Disable the internal Pull-Up in Dead Battery pins of UCPD peripheral 
+  */
+  LL_PWR_DisableDeadBatteryPD();
+
   /* USER CODE BEGIN MspInit 1 */
 
   /* USER CODE END MspInit 1 */
@@ -88,6 +92,7 @@ static void HAL_FMC_MspInit(void){
     return;
   }
   FMC_Initialized = 1;
+
   /* Peripheral clock enable */
   __HAL_RCC_FMC_CLK_ENABLE();
   

@@ -75,6 +75,7 @@ static USBPD_StatusTypeDef USBPD_VDM_ReceiveUVDM(uint8_t PortNum, USBPD_UVDMHead
 /* USER CODE END Private_prototypes */
 
 /* Private variables ---------------------------------------------------------*/
+
 /* USER CODE BEGIN Private_variables */
 const USBPD_VDM_Callbacks vdmCallbacks =
 {

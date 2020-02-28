@@ -22,22 +22,22 @@
 
 This application shows how to use the USB device application based on the Mass Storage Class (MSC) on the STM32G4xx devices.
 
-This is a typical application on how to use the STM32G4xx USB Device peripheral to communicate with a PC
+This is a typical application on how to use the stm32g4xx USB Device peripheral to communicate with a PC
 Host using the Bulk Only Transfer (BOT) and Small Computer System Interface (SCSI) transparent commands,
 while the microSD card is used as storage media. The STM32 MCU is enumerated as a MSC device using the
 native PC Host MSC driver to which the STM32G474E-EVAL Rev B board is connected.
 
 At the beginning of the main program the HAL_Init() function is called to reset all the peripherals,
 initialize the Flash interface and the systick. The user is provided with the SystemClock_Config()
-function to configure the system clock (SYSCLK) to run at 64 MHz. The Full Speed (FS) USB module uses
+function to configure the system clock (SYSCLK). The Full Speed (FS) USB module uses
 internally a 48-MHz clock, which is generated from an internal PLL.
 
 
- 
+
 When the application is started, the user has just to plug the USB cable into a PC host and the device
 is automatically detected. A new removable drive appears in the system window and write/read/format
 operations can be performed as with any other removable drive.
- 
+
 @note Care must be taken when using HAL_Delay(), this function provides accurate delay (in milliseconds)
       based on variable incremented in SysTick ISR. This implies that if HAL_Delay() is called from
       a peripheral ISR process, then the SysTick interrupt must have higher priority (numerically lower)
@@ -76,19 +76,19 @@ Connectivity, USB Device, MSC, Full Speed, flash, microSD card
 @par Hardware and Software environment
 
   - This application runs on STM32G4xx devices.
-    
+
   - This application has been tested with STMicroelectronics STM32G474E-EVAL Rev B boards
     and can be easily tailored to any other supported device and development board.
   - STM32G474E-EVAL Rev B Set-up
     - Insert a microSD card into the STM32G474E-EVAL Rev B
-    - Connect the STM32G474E-EVAL Rev B board to the PC through 'USB TYPE-C'
-      cable to the connector: CN22: to use USB Full Speed (FS)
+  - Connect the STM32G474E-EVAL Rev B board CN22 to the PC through "TYPE-C" to "Standard A" cable
+
 @par How to use it ?
 
 In order to make the program work, you must do the following :
  - Open your preferred toolchain
  - Rebuild all files and load your image into target memory
  - Run the application
-  
+
  * <h3><center>&copy; COPYRIGHT STMicroelectronics</center></h3>
  */

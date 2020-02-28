@@ -53,6 +53,9 @@ LED2 is On if data is well received.
 
 In case of errors, LED2 is blinking.
 
+@par Keywords
+
+Connectivity, Communication, I2C, DMA, Interrupt, Master, Slave, Transmission, Reception, Fast mode.
 
 @par Directory contents 
 

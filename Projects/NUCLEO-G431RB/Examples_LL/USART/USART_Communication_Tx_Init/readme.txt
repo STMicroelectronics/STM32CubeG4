@@ -41,6 +41,10 @@ In case of errors, LED2 is blinking (1sec period).
 
 Program is written so that, any new press on User push-button will lead to new transmission of complete buffer.
 
+@par Keywords
+
+Connectivity, USART, Asynchroneous mode, RS-232, Baud rate, Polling, HyperTerminal, Transmission.
+
 @par Directory contents 
 
   - USART/USART_Communication_Tx_Init/Inc/stm32g4xx_it.h          Interrupt handlers header file

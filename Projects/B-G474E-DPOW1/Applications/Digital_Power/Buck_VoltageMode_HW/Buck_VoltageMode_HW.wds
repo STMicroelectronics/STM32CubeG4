@@ -1,0 +1,3182 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<WDSArchive version="1.0">
+    <Settings>
+        <DisplayComp>0</DisplayComp>
+        <DisplayOpen>1</DisplayOpen>
+        <DisplayBode>1</DisplayBode>
+        <DisplaySpice>0</DisplaySpice>
+        <erroramptype_prev>0</erroramptype_prev>
+        <isotype_prev>0</isotype_prev>
+        <isolated_prev>1</isolated_prev>
+    </Settings>
+    <Symbols>
+        <Symbol>
+            <Name>Cc</Name>
+            <UserValue>9.9999999999999995e-008</UserValue>
+            <CalcValue>9.9999999999999995e-008</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vcc_per</Name>
+            <UserValue>0.025000000000000001</UserValue>
+            <CalcValue>0.025000000000000001</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ICcRms</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Rcc</Name>
+            <UserValue>0.01</UserValue>
+            <CalcValue>0.01</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Np</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>NpCalc</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Lm</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Lc</Name>
+            <UserValue>0.00043999999999999996</UserValue>
+            <CalcValue>0.00043999999999999996</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Llkg</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vclamp</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Rclamp</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Psnb</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Im</Name>
+            <UserValue>0.25</UserValue>
+            <CalcValue>0.25</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Im_sat</Name>
+            <UserValue>0.25</UserValue>
+            <CalcValue>0.25</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Im_per</Name>
+            <UserValue>0.10000000000000001</UserValue>
+            <CalcValue>0.10000000000000001</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Rxts</Name>
+            <UserValue>0.001</UserValue>
+            <CalcValue>0.001</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Rxtp</Name>
+            <UserValue>0.001</UserValue>
+            <CalcValue>0.001</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vs</Name>
+            <UserValue>5</UserValue>
+            <CalcValue>100</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vs_max</Name>
+            <UserValue>5</UserValue>
+            <CalcValue>9</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vs_min</Name>
+            <UserValue>5</UserValue>
+            <CalcValue>6</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vin</Name>
+            <UserValue>5</UserValue>
+            <CalcValue>5</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vin_max</Name>
+            <UserValue>5</UserValue>
+            <CalcValue>5</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vin_min</Name>
+            <UserValue>5</UserValue>
+            <CalcValue>5</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vout</Name>
+            <UserValue>3.2999999999999998</UserValue>
+            <CalcValue>3</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vr_per</Name>
+            <UserValue>0.5</UserValue>
+            <CalcValue>0.5</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vr</Name>
+            <UserValue>0.016500000000000001</UserValue>
+            <CalcValue>0.016500000000000001</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vr_actual</Name>
+            <UserValue>0.018099185903500077</UserValue>
+            <CalcValue>0.018099185903500077</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vramp</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vtrip</Name>
+            <UserValue>2.5</UserValue>
+            <CalcValue>2.5</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vsense</Name>
+            <UserValue>1.6485399999999999</UserValue>
+            <CalcValue>1.6485399999999999</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vswitch</Name>
+            <UserValue>0.011200000000000002</UserValue>
+            <CalcValue>0.011200000000000002</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>D</Name>
+            <UserValue>0.6795261725628301</UserValue>
+            <CalcValue>0.6795261725628301</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Dmax</Name>
+            <UserValue>0.6795261725628301</UserValue>
+            <CalcValue>0.6795261725628301</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Dmin</Name>
+            <UserValue>0.6795261725628301</UserValue>
+            <CalcValue>0.6795261725628301</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Dlim</Name>
+            <UserValue>0.90000000000000002</UserValue>
+            <CalcValue>0.90000000000000002</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Dswitch</Name>
+            <UserValue>0.6795261725628301</UserValue>
+            <CalcValue>0.6795261725628301</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Dswitch_max</Name>
+            <UserValue>0.6795261725628301</UserValue>
+            <CalcValue>0.6795261725628301</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Dswitch_min</Name>
+            <UserValue>0.6795261725628301</UserValue>
+            <CalcValue>0.6795261725628301</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Dswitch_lim</Name>
+            <UserValue>0.90000000000000002</UserValue>
+            <CalcValue>0.90000000000000002</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Dswitch_min_lim</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vref</Name>
+            <UserValue>0.65471999999999997</UserValue>
+            <CalcValue>0.65471999999999997</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vpullup</Name>
+            <UserValue>5.0999999999999996</UserValue>
+            <CalcValue>5.0999999999999996</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vbias</Name>
+            <UserValue>14</UserValue>
+            <CalcValue>14</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>IL0_ripple</Name>
+            <UserValue>0.25</UserValue>
+            <CalcValue>0.25</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>IL0_ripple_actual</Name>
+            <UserValue>0.53722539760261423</UserValue>
+            <CalcValue>0.53722539760261423</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>L0</Name>
+            <UserValue>5.1e-005</UserValue>
+            <CalcValue>0.00010959398111093331</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Rdcr</Name>
+            <UserValue>0.38</UserValue>
+            <CalcValue>0.057391304347826015</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>C0</Name>
+            <UserValue>9.9999999999999991e-005</UserValue>
+            <CalcValue>0.00048039878168158669</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Resr</Name>
+            <UserValue>0.17000000000000001</UserValue>
+            <CalcValue>0.028018389124311784</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Fesr</Name>
+            <UserValue>9362.0554759938423</UserValue>
+            <CalcValue>9362.0554759938423</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vdiode</Name>
+            <UserValue>0.02</UserValue>
+            <CalcValue>0.59999999999999998</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Rdiode</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Rswitch</Name>
+            <UserValue>0.056000000000000001</UserValue>
+            <CalcValue>0.02</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Io</Name>
+            <UserValue>0.20000000000000001</UserValue>
+            <CalcValue>0.5</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Io_step_per</Name>
+            <UserValue>0.5</UserValue>
+            <CalcValue>0.5</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Io_max</Name>
+            <UserValue>0.20000000000000001</UserValue>
+            <CalcValue>0.20000000000000001</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Io_min</Name>
+            <UserValue>0.20000000000000001</UserValue>
+            <CalcValue>0.20000000000000001</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Pout_dcm</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vovershoot</Name>
+            <UserValue>0.0050000000000000001</UserValue>
+            <CalcValue>0.66000000000000003</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vos_actual</Name>
+            <UserValue>0.026168413662331198</UserValue>
+            <CalcValue>0.026168413662331198</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>RI</Name>
+            <UserValue>0.95999999999999996</UserValue>
+            <CalcValue>1.6770400000000001</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>RImax</Name>
+            <UserValue>1.6770400000000001</UserValue>
+            <CalcValue>1.6770400000000001</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Ncs</Name>
+            <UserValue>10</UserValue>
+            <CalcValue>10</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Rsense</Name>
+            <UserValue>9.5999999999999996</UserValue>
+            <CalcValue>9.5999999999999996</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Fs</Name>
+            <UserValue>200000</UserValue>
+            <CalcValue>200000</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Fx</Name>
+            <UserValue>8000</UserValue>
+            <CalcValue>10000</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Fx_calc</Name>
+            <UserValue>7999.9999999999991</UserValue>
+            <CalcValue>7999.9999999999991</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Wx</Name>
+            <UserValue>50265.482457436687</UserValue>
+            <CalcValue>50265.482457436687</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Omd</Name>
+            <UserValue>50</UserValue>
+            <CalcValue>60</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Omd_calc</Name>
+            <UserValue>50</UserValue>
+            <CalcValue>50</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Gm_calc</Name>
+            <UserValue>11.432254459873377</UserValue>
+            <CalcValue>11.432254459873377</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Qc_user</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Se_opt</Name>
+            <UserValue>22367.599999999999</UserValue>
+            <CalcValue>22367.599999999999</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Se_mag</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Ve_opt</Name>
+            <UserValue>0.11183799999999999</UserValue>
+            <CalcValue>0.11183799999999999</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Ve_mag</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Ve_ext</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>0.11183800000000001</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Ve_ext_slope</Name>
+            <UserValue>200</UserValue>
+            <CalcValue>200</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Fcp0</Name>
+            <UserValue>1195.7801514600549</UserValue>
+            <CalcValue>1195.7801514600549</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Fcp1</Name>
+            <UserValue>9362.0554759938441</UserValue>
+            <CalcValue>9362.0554759938441</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Fcp2</Name>
+            <UserValue>100000</UserValue>
+            <CalcValue>100000</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Fcz1</Name>
+            <UserValue>1843.4629804760707</UserValue>
+            <CalcValue>1843.4629804760707</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Fcz2</Name>
+            <UserValue>2217.2221870216499</UserValue>
+            <CalcValue>2217.2221870216499</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Fcp0actual</Name>
+            <UserValue>11139.799999999999</UserValue>
+            <CalcValue>11139.799999999999</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Fcp1actual</Name>
+            <UserValue>11824.299999999999</UserValue>
+            <CalcValue>11824.299999999999</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Fcp2actual</Name>
+            <UserValue>100000</UserValue>
+            <CalcValue>100000</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Fcz1actual</Name>
+            <UserValue>5707.7700000000004</UserValue>
+            <CalcValue>5707.7700000000004</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Fcz2actual</Name>
+            <UserValue>1495.3099999999999</UserValue>
+            <CalcValue>1495.3099999999999</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Fcz1_sub</Name>
+            <UserValue>5707.7700000000004</UserValue>
+            <CalcValue>5707.7700000000004</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Fcz2_sub</Name>
+            <UserValue>1495.3099999999999</UserValue>
+            <CalcValue>1495.3099999999999</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Ipd</Name>
+            <UserValue>0.001</UserValue>
+            <CalcValue>0.001</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Ipd_actual</Name>
+            <UserValue>0.001</UserValue>
+            <CalcValue>0.001</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>R1</Name>
+            <UserValue>800</UserValue>
+            <CalcValue>800</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>R1pd</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Rb</Name>
+            <UserValue>2500</UserValue>
+            <CalcValue>2500</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Rbpd</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>R2</Name>
+            <UserValue>3018.3600000000001</UserValue>
+            <CalcValue>3018.3600000000001</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>R3</Name>
+            <UserValue>12.1441</UserValue>
+            <CalcValue>12.1441</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>C1</Name>
+            <UserValue>9.2380900000000003e-009</UserValue>
+            <CalcValue>9.2380900000000003e-009</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>C2</Name>
+            <UserValue>1.31055e-007</UserValue>
+            <CalcValue>1.31055e-007</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>C3</Name>
+            <UserValue>8.6207499999999996e-009</UserValue>
+            <CalcValue>8.6207499999999996e-009</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Rled</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Fclk</Name>
+            <UserValue>5440000000</UserValue>
+            <CalcValue>60000000</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Fsamp</Name>
+            <UserValue>200000</UserValue>
+            <CalcValue>200000</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Td</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>0.5</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Kpd</Name>
+            <UserValue>0.19839999999999999</UserValue>
+            <CalcValue>0.89049651150544995</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>K</Name>
+            <UserValue>110.48091693252982</UserValue>
+            <CalcValue>110.48091693252982</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Kmicrochip</Name>
+            <UserValue>13.810114616566228</UserValue>
+            <CalcValue>13.810114616566228</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Kifx</Name>
+            <UserValue>110.48091693252982</UserValue>
+            <CalcValue>110.48091693252982</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Kti</Name>
+            <UserValue>110.48091693252982</UserValue>
+            <CalcValue>110.48091693252982</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Kuser</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ifx_Kuser</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Guser</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>GuserUnity</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>GuserScaled</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ifx_Guser</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ifx_GuserUnity</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ifx_GuserScaled</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>A1</Name>
+            <UserValue>1.5215588028864291</UserValue>
+            <CalcValue>1.5215588028864291</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>A2</Name>
+            <UserValue>-0.35645887261986176</UserValue>
+            <CalcValue>-0.35645887261986176</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>A3</Name>
+            <UserValue>-0.16509993026656725</UserValue>
+            <CalcValue>-0.16509993026656725</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>B0</Name>
+            <UserValue>1.553498602786147</UserValue>
+            <CalcValue>1.553498602786147</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>B1</Name>
+            <UserValue>-1.3614923525117371</UserValue>
+            <CalcValue>-1.3614923525117371</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>B2</Name>
+            <UserValue>-1.5476130289508334</UserValue>
+            <CalcValue>-1.5476130289508334</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>B3</Name>
+            <UserValue>1.3673779263470507</UserValue>
+            <CalcValue>1.3673779263470507</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Kmicrochip</Name>
+            <UserValue>13.810114616566228</UserValue>
+            <CalcValue>13.810114616566228</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>A1scaled</Name>
+            <UserValue>1.5215588028864291</UserValue>
+            <CalcValue>1.5215588028864291</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>A2scaled</Name>
+            <UserValue>-0.35645887261986176</UserValue>
+            <CalcValue>-0.35645887261986176</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>A3scaled</Name>
+            <UserValue>-0.16509993026656725</UserValue>
+            <CalcValue>-0.16509993026656725</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>B0scaled</Name>
+            <UserValue>21.45399376115218</UserValue>
+            <CalcValue>21.45399376115218</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>B1scaled</Name>
+            <UserValue>-18.802365437765481</UserValue>
+            <CalcValue>-18.802365437765481</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>B2scaled</Name>
+            <UserValue>-21.372713311902238</UserValue>
+            <CalcValue>-21.372713311902238</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>B3scaled</Name>
+            <UserValue>18.883645887015422</UserValue>
+            <CalcValue>18.883645887015422</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ifx_K</Name>
+            <UserValue>110.48091693252982</UserValue>
+            <CalcValue>110.48091693252982</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ifx_A1</Name>
+            <UserValue>1.5215588028864291</UserValue>
+            <CalcValue>1.5215588028864291</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ifx_A2</Name>
+            <UserValue>-0.35645887261986176</UserValue>
+            <CalcValue>-0.35645887261986176</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ifx_A3</Name>
+            <UserValue>-0.16509993026656725</UserValue>
+            <CalcValue>-0.16509993026656725</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ifx_B0</Name>
+            <UserValue>1.553498602786147</UserValue>
+            <CalcValue>1.553498602786147</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ifx_B1</Name>
+            <UserValue>-1.3614923525117371</UserValue>
+            <CalcValue>-1.3614923525117371</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ifx_B2</Name>
+            <UserValue>-1.5476130289508334</UserValue>
+            <CalcValue>-1.5476130289508334</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ifx_B3</Name>
+            <UserValue>1.3673779263470507</UserValue>
+            <CalcValue>1.3673779263470507</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>A1unity</Name>
+            <UserValue>0.047548712590200909</UserValue>
+            <CalcValue>0.047548712590200909</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>A2unity</Name>
+            <UserValue>-0.01113933976937068</UserValue>
+            <CalcValue>-0.01113933976937068</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>A3unity</Name>
+            <UserValue>-0.0051593728208302264</UserValue>
+            <CalcValue>-0.0051593728208302264</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>B0unity</Name>
+            <UserValue>0.67043730503600563</UserValue>
+            <CalcValue>0.67043730503600563</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>B1unity</Name>
+            <UserValue>-0.58757391993017127</UserValue>
+            <CalcValue>-0.58757391993017127</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>B2unity</Name>
+            <UserValue>-0.66789729099694495</UserValue>
+            <CalcValue>-0.66789729099694495</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>B3unity</Name>
+            <UserValue>0.59011393396923195</UserValue>
+            <CalcValue>0.59011393396923195</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Kunity</Name>
+            <UserValue>0.03125</UserValue>
+            <CalcValue>0.03125</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ifx_Kunity</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Kunity_bs</Name>
+            <UserValue>5</UserValue>
+            <CalcValue>5</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ifx_Kunity_bs</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Error_bs</Name>
+            <UserValue>3</UserValue>
+            <CalcValue>3</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ifx_Error_bs</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>REF</Name>
+            <UserValue>812</UserValue>
+            <CalcValue>812</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>MIN</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>MAX</Name>
+            <UserValue>24480</UserValue>
+            <CalcValue>24480</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Step</Name>
+            <UserValue>2.0833299999999999e-010</UserValue>
+            <CalcValue>2.0833299999999999e-010</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Steps</Name>
+            <UserValue>24000</UserValue>
+            <CalcValue>24000</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Ramp</Name>
+            <UserValue>19854.5</UserValue>
+            <CalcValue>19854.5</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>RampDelta</Name>
+            <UserValue>0.82727300000000004</UserValue>
+            <CalcValue>0.82727300000000004</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ifx_RampDelta</Name>
+            <UserValue>200</UserValue>
+            <CalcValue>200</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Ic</Name>
+            <UserValue>0.0050000000000000001</UserValue>
+            <CalcValue>0.0050000000000000001</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Ic_actual</Name>
+            <UserValue>0.0050000000000000001</UserValue>
+            <CalcValue>0.0050000000000000001</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>If_max</Name>
+            <UserValue>0.001</UserValue>
+            <CalcValue>0.001</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Ibias</Name>
+            <UserValue>0.001</UserValue>
+            <CalcValue>0.001</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Ibias_actual</Name>
+            <UserValue>0.001</UserValue>
+            <CalcValue>0.001</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vka</Name>
+            <UserValue>30</UserValue>
+            <CalcValue>30</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Ika</Name>
+            <UserValue>0.029999999999999999</UserValue>
+            <CalcValue>0.029999999999999999</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Iz</Name>
+            <UserValue>0.01</UserValue>
+            <CalcValue>0.01</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Iz_actual</Name>
+            <UserValue>0.0050000000000000001</UserValue>
+            <CalcValue>0.0050000000000000001</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>CTRmin</Name>
+            <UserValue>0.80000000000000004</UserValue>
+            <CalcValue>0.80000000000000004</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>CTRmax</Name>
+            <UserValue>0.80000000000000004</UserValue>
+            <CalcValue>0.80000000000000004</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>CTR</Name>
+            <UserValue>0.80000000000000004</UserValue>
+            <CalcValue>0.80000000000000004</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Copto</Name>
+            <UserValue>8.0000000000000005e-009</UserValue>
+            <CalcValue>8.0000000000000005e-009</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vce_sat</Name>
+            <UserValue>0.69999999999999996</UserValue>
+            <CalcValue>0.69999999999999996</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vf</Name>
+            <UserValue>1.2</UserValue>
+            <CalcValue>1.2</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Rbias</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Rpullup</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Wesr</Name>
+            <UserValue>58823.529411764706</UserValue>
+            <CalcValue>58823.529411764706</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Frhpz</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>FrhpzMin</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>FrhpzMax</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Wp3</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Wp4</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>M</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>tau_l</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Wlc</Name>
+            <UserValue>13931.217868247018</UserValue>
+            <CalcValue>13931.217868247018</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Q</Name>
+            <UserValue>1.1491564457914105</UserValue>
+            <CalcValue>1.1491564457914105</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>m_c_user</Name>
+            <UserValue>1.2418400000000001</UserValue>
+            <CalcValue>1.2418400000000001</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Sn</Name>
+            <UserValue>92487.800000000003</UserValue>
+            <CalcValue>92487.800000000003</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Sf</Name>
+            <UserValue>-52804.900000000001</UserValue>
+            <CalcValue>-52804.900000000001</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>gm</Name>
+            <UserValue>9.9999999999999991e-005</UserValue>
+            <CalcValue>9.9999999999999991e-005</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Se_total</Name>
+            <UserValue>200000</UserValue>
+            <CalcValue>200000</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>m_c</Name>
+            <UserValue>3.1624500000000002</UserValue>
+            <CalcValue>3.1624500000000002</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Qc</Name>
+            <UserValue>0.20096800000000001</UserValue>
+            <CalcValue>0.20096800000000001</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Wn</Name>
+            <UserValue>628319</UserValue>
+            <CalcValue>628319</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Wop</Name>
+            <UserValue>7517.9899999999998</UserValue>
+            <CalcValue>7517.9899999999998</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Rled_max</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vz</Name>
+            <UserValue>3.2999999999999998</UserValue>
+            <CalcValue>3.2999999999999998</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Rz</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>TestComp</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>nADC</Name>
+            <UserValue>12</UserValue>
+            <CalcValue>12</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>nDAC</Name>
+            <UserValue>12</UserValue>
+            <CalcValue>10</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>nRamp</Name>
+            <UserValue>16</UserValue>
+            <CalcValue>16</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>vADC</Name>
+            <UserValue>3.2999999999999998</UserValue>
+            <CalcValue>3.2999999999999998</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>vDAC</Name>
+            <UserValue>3.2999999999999998</UserValue>
+            <CalcValue>3.2999999999999998</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>PWMticks</Name>
+            <UserValue>27200</UserValue>
+            <CalcValue>27200</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>SwitchVpk</Name>
+            <UserValue>5.0199999999999996</UserValue>
+            <CalcValue>5.0199999999999996</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>SwitchIavg</Name>
+            <UserValue>0.13590523451256603</UserValue>
+            <CalcValue>0.13590523451256603</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>SwitchIrms</Name>
+            <UserValue>0.16683757456287476</UserValue>
+            <CalcValue>0.16683757456287476</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>SwitchIpk</Name>
+            <UserValue>0.25372253976026143</UserValue>
+            <CalcValue>0.25372253976026143</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>SwitchLoss</Name>
+            <UserValue>0.0015587474720172767</UserValue>
+            <CalcValue>0.0015587474720172767</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>DiodeVpk</Name>
+            <UserValue>4.9886537225397607</UserValue>
+            <CalcValue>4.9886537225397607</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>DiodeIavg</Name>
+            <UserValue>0.06409476548743398</UserValue>
+            <CalcValue>0.06409476548743398</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>DiodeIrms</Name>
+            <UserValue>0.11457425891857863</UserValue>
+            <CalcValue>0.11457425891857863</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>DiodeIpk</Name>
+            <UserValue>0.25372253976026143</UserValue>
+            <CalcValue>0.25372253976026143</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>DiodeLoss</Name>
+            <UserValue>0.0012818953097486795</UserValue>
+            <CalcValue>0.0012818953097486795</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>L0Irms</Name>
+            <UserValue>0.20239080288581368</UserValue>
+            <CalcValue>0.20239080288581368</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>L0Idcm</Name>
+            <UserValue>0.053349466567481817</UserValue>
+            <CalcValue>0.053349466567481817</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>L0Iavg</Name>
+            <UserValue>0.20000000000000001</UserValue>
+            <CalcValue>0.20000000000000001</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>L0Vpk</Name>
+            <UserValue>1.6128000000000009</UserValue>
+            <CalcValue>1.6128000000000009</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>L0Iac</Name>
+            <UserValue>0.10744507952052286</UserValue>
+            <CalcValue>0.10744507952052286</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>L0Iac_spec</Name>
+            <UserValue>0.050000000000000003</UserValue>
+            <CalcValue>0.050000000000000003</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>L0Ipk</Name>
+            <UserValue>0.25372253976026143</UserValue>
+            <CalcValue>0.25372253976026143</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>L0Ivl</Name>
+            <UserValue>0.14627746023973859</UserValue>
+            <CalcValue>0.14627746023973859</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>L0pd</Name>
+            <UserValue>0.015200000000000003</UserValue>
+            <CalcValue>0.015200000000000003</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>LMIpk</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>LMIavg</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>LMIrms</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>LMIac</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>VCcPk</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Ipri_pkpk</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Ipri_mid</Name>
+            <UserValue>1.#INF</UserValue>
+            <CalcValue>1.#INF</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>C0Irms</Name>
+            <UserValue>0.030700411983091928</UserValue>
+            <CalcValue>0.030700411983091928</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>C0Iac</Name>
+            <UserValue>0.1063493467360232</UserValue>
+            <CalcValue>0.1063493467360232</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>C0Ipk</Name>
+            <UserValue>0.10744507952052285</UserValue>
+            <CalcValue>0.10744507952052285</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>C0Vpk</Name>
+            <UserValue>3.3182656635184888</UserValue>
+            <CalcValue>3.3182656635184888</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>C0pd</Name>
+            <UserValue>0.00016022760030836767</UserValue>
+            <CalcValue>0.00016022760030836767</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>IpriRms</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>IpriAvg</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>IpriPk</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>IsecPk</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>IsecRms</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>IsecAvg</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>nEff</Name>
+            <UserValue>0.92000000000000004</UserValue>
+            <CalcValue>0.84999999999999998</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>PLB_percent</Name>
+            <UserValue>0.40902371193744724</UserValue>
+            <CalcValue>0.40902371193744724</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>PLB_power</Name>
+            <UserValue>0.057391304347826022</UserValue>
+            <CalcValue>0.057391304347826022</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>PLB_remaining</Name>
+            <UserValue>0.040909409038077341</UserValue>
+            <CalcValue>0.040909409038077341</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>TotalLosses</Name>
+            <UserValue>0.023474404337279556</UserValue>
+            <CalcValue>0.023474404337279556</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>XfrmrVs</Name>
+            <UserValue>9.9999999999999995e-007</UserValue>
+            <CalcValue>9.9999999999999995e-007</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>XfrmrLoss</Name>
+            <UserValue>0.033916900010546466</UserValue>
+            <CalcValue>0.033916900010546466</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>XfrmrLoss_Cu</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>SwitchTr</Name>
+            <UserValue>2e-008</UserValue>
+            <CalcValue>2.0154599329612193e-008</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>SwitchTf</Name>
+            <UserValue>2e-008</UserValue>
+            <CalcValue>2.0154599329612193e-008</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>SwitchCoss</Name>
+            <UserValue>7.8999999999999999e-011</UserValue>
+            <CalcValue>2.0292043498355852e-009</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>SwitchSwLoss</Name>
+            <UserValue>0.0052735339552052287</UserValue>
+            <CalcValue>0.0052735339552052287</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>IqI</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>IqQ</Name>
+            <UserValue>15</UserValue>
+            <CalcValue>15</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>IqS</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>IqLen</Name>
+            <UserValue>32</UserValue>
+            <CalcValue>32</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>IqErr</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ifx_IqI</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ifx_IqQ</Name>
+            <UserValue>15</UserValue>
+            <CalcValue>15</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ifx_IqS</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ifx_IqLen</Name>
+            <UserValue>32</UserValue>
+            <CalcValue>32</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ifx_IqErr</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>numDiodes</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>numSwitches</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>numDiodesOn</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>numSwitchesOn</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Slope</Name>
+            <UserValue>-24.459291598311971</UserValue>
+            <CalcValue>-24.459291598311971</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>KADC_norm</Name>
+            <UserValue>133.09701051636534</UserValue>
+            <CalcValue>133.09701051636534</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>REF_norm</Name>
+            <UserValue>812</UserValue>
+            <CalcValue>812</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>KERR_norm</Name>
+            <UserValue>9.9808102345415772</UserValue>
+            <CalcValue>9.9808102345415772</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>KDAC_norm</Name>
+            <UserValue>2.5</UserValue>
+            <CalcValue>2.5</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>KPWM_pre_norm</Name>
+            <UserValue>1.1111111111111112</UserValue>
+            <CalcValue>1.1111111111111112</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>KPWM_norm</Name>
+            <UserValue>24480</UserValue>
+            <CalcValue>24480</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>KBcoeffs_norm</Name>
+            <UserValue>14.816990180677291</UserValue>
+            <CalcValue>14.816990180677291</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>KCshift_norm</Name>
+            <UserValue>-5</UserValue>
+            <CalcValue>-5</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>IntBits_norm</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>QuotientBits_norm</Name>
+            <UserValue>15</UserValue>
+            <CalcValue>15</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>SignBits_norm</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>TotalBits_norm</Name>
+            <UserValue>16</UserValue>
+            <CalcValue>16</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>A1_norm</Name>
+            <UserValue>0.047548712590200909</UserValue>
+            <CalcValue>0.047548712590200909</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>A2_norm</Name>
+            <UserValue>-0.01113933976937068</UserValue>
+            <CalcValue>-0.01113933976937068</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>A3_norm</Name>
+            <UserValue>-0.0051593728208302264</UserValue>
+            <CalcValue>-0.0051593728208302264</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>B0_norm</Name>
+            <UserValue>0.71931792322431976</UserValue>
+            <CalcValue>0.71931792322431976</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>B1_norm</Name>
+            <UserValue>-0.63041308806980101</UserValue>
+            <CalcValue>-0.63041308806980101</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>B2_norm</Name>
+            <UserValue>-0.71659272042039801</UserValue>
+            <CalcValue>-0.71659272042039801</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>B3_norm</Name>
+            <UserValue>0.63313829087372264</UserValue>
+            <CalcValue>0.63313829087372264</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Kuser_TI</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Guser_TI</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Kfloat</Name>
+            <UserValue>110.48091693252982</UserValue>
+            <CalcValue>110.48091693252982</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>A1</Name>
+            <UserValue>1.5215588028864291</UserValue>
+            <CalcValue>1.5215588028864291</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>A2</Name>
+            <UserValue>-0.35645887261986176</UserValue>
+            <CalcValue>-0.35645887261986176</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>A3</Name>
+            <UserValue>-0.16509993026656725</UserValue>
+            <CalcValue>-0.16509993026656725</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>B0float</Name>
+            <UserValue>171.63195008921744</UserValue>
+            <CalcValue>171.63195008921744</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>B1float</Name>
+            <UserValue>-150.41892350212385</UserValue>
+            <CalcValue>-150.41892350212385</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>B2float</Name>
+            <UserValue>-170.98170649521791</UserValue>
+            <CalcValue>-170.98170649521791</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>B3float</Name>
+            <UserValue>151.06916709612338</UserValue>
+            <CalcValue>151.06916709612338</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>top</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ctrl</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>type</Name>
+            <UserValue>3</UserValue>
+            <CalcValue>3</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>measurement_disp</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>plant_measurement_disp</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ad</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ur</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>mt</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>rt</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>isolated</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>isotype</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>erroramptype</Name>
+            <UserValue>2</UserValue>
+            <CalcValue>2</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>calc</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>coeff</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ifx_coeff</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>coeffSigned</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>simRange</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>am</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ti_slope_comp</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ot</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>m180</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>plant180</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>error_shift</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+    </Symbols>
+    <OmicronBode>
+        <OmicronBodeGainData>
+            <Memory id="2" name="1">
+                <DataPoint x="100.0000" y="33.4213"/>
+                <DataPoint x="103.8736" y="32.6468"/>
+                <DataPoint x="107.8972" y="32.9163"/>
+                <DataPoint x="112.0767" y="32.2721"/>
+                <DataPoint x="116.4181" y="32.3455"/>
+                <DataPoint x="120.9277" y="31.4718"/>
+                <DataPoint x="125.6119" y="31.7276"/>
+                <DataPoint x="130.4776" y="31.2407"/>
+                <DataPoint x="135.5318" y="30.7109"/>
+                <DataPoint x="140.7817" y="30.8912"/>
+                <DataPoint x="146.2351" y="30.3756"/>
+                <DataPoint x="151.8996" y="30.2860"/>
+                <DataPoint x="157.7836" y="29.8444"/>
+                <DataPoint x="163.8955" y="29.8169"/>
+                <DataPoint x="170.2441" y="29.3692"/>
+                <DataPoint x="176.8387" y="28.9713"/>
+                <DataPoint x="183.6887" y="28.6683"/>
+                <DataPoint x="190.8040" y="28.5745"/>
+                <DataPoint x="198.1950" y="28.2324"/>
+                <DataPoint x="205.8723" y="27.7991"/>
+                <DataPoint x="213.8469" y="27.5940"/>
+                <DataPoint x="222.1305" y="27.3863"/>
+                <DataPoint x="230.7349" y="26.9152"/>
+                <DataPoint x="239.6726" y="26.7816"/>
+                <DataPoint x="248.9566" y="26.4929"/>
+                <DataPoint x="258.6001" y="26.1073"/>
+                <DataPoint x="268.6173" y="25.8578"/>
+                <DataPoint x="279.0224" y="25.5529"/>
+                <DataPoint x="289.8306" y="25.4576"/>
+                <DataPoint x="301.0574" y="24.9205"/>
+                <DataPoint x="312.7192" y="24.6036"/>
+                <DataPoint x="324.8326" y="24.3852"/>
+                <DataPoint x="337.4153" y="24.1152"/>
+                <DataPoint x="350.4854" y="23.8110"/>
+                <DataPoint x="364.0618" y="23.5000"/>
+                <DataPoint x="378.1641" y="23.0742"/>
+                <DataPoint x="392.8126" y="22.6680"/>
+                <DataPoint x="408.0285" y="22.7908"/>
+                <DataPoint x="423.8339" y="22.2789"/>
+                <DataPoint x="440.2515" y="22.1884"/>
+                <DataPoint x="457.3051" y="21.8961"/>
+                <DataPoint x="475.0192" y="21.5669"/>
+                <DataPoint x="493.4195" y="21.3168"/>
+                <DataPoint x="512.5325" y="21.0368"/>
+                <DataPoint x="532.3860" y="20.5164"/>
+                <DataPoint x="553.0084" y="20.5788"/>
+                <DataPoint x="574.4297" y="20.0630"/>
+                <DataPoint x="596.6808" y="19.8220"/>
+                <DataPoint x="619.7938" y="19.5163"/>
+                <DataPoint x="643.8020" y="19.4671"/>
+                <DataPoint x="668.7403" y="19.1108"/>
+                <DataPoint x="694.6446" y="18.7798"/>
+                <DataPoint x="721.5523" y="18.5728"/>
+                <DataPoint x="749.5023" y="18.5372"/>
+                <DataPoint x="778.5349" y="18.2664"/>
+                <DataPoint x="808.6922" y="17.9861"/>
+                <DataPoint x="840.0176" y="17.7327"/>
+                <DataPoint x="872.5565" y="17.6648"/>
+                <DataPoint x="906.3558" y="17.3211"/>
+                <DataPoint x="941.4643" y="17.1010"/>
+                <DataPoint x="977.9328" y="17.2290"/>
+                <DataPoint x="1015.8139" y="16.8625"/>
+                <DataPoint x="1055.1624" y="16.8401"/>
+                <DataPoint x="1096.0351" y="16.6093"/>
+                <DataPoint x="1138.4910" y="16.5916"/>
+                <DataPoint x="1182.5915" y="16.3364"/>
+                <DataPoint x="1228.4003" y="16.1686"/>
+                <DataPoint x="1275.9835" y="16.2465"/>
+                <DataPoint x="1325.4099" y="16.0506"/>
+                <DataPoint x="1376.7508" y="15.9845"/>
+                <DataPoint x="1430.0805" y="15.8702"/>
+                <DataPoint x="1485.4760" y="15.7689"/>
+                <DataPoint x="1543.0173" y="15.7507"/>
+                <DataPoint x="1602.7875" y="15.4615"/>
+                <DataPoint x="1664.8730" y="15.5713"/>
+                <DataPoint x="1729.3633" y="15.4038"/>
+                <DataPoint x="1796.3518" y="15.2879"/>
+                <DataPoint x="1865.9352" y="15.1465"/>
+                <DataPoint x="1938.2139" y="14.9755"/>
+                <DataPoint x="2013.2924" y="14.8935"/>
+                <DataPoint x="2091.2791" y="14.6167"/>
+                <DataPoint x="2172.2867" y="14.4020"/>
+                <DataPoint x="2256.4322" y="14.1023"/>
+                <DataPoint x="2343.8372" y="13.9171"/>
+                <DataPoint x="2434.6279" y="13.5505"/>
+                <DataPoint x="2528.9355" y="13.2738"/>
+                <DataPoint x="2626.8961" y="12.7619"/>
+                <DataPoint x="2728.6514" y="12.3378"/>
+                <DataPoint x="2834.3482" y="11.8718"/>
+                <DataPoint x="2944.1393" y="11.3427"/>
+                <DataPoint x="3058.1832" y="10.8260"/>
+                <DataPoint x="3176.6447" y="10.2484"/>
+                <DataPoint x="3299.6950" y="9.5820"/>
+                <DataPoint x="3427.5117" y="9.1062"/>
+                <DataPoint x="3560.2795" y="8.6022"/>
+                <DataPoint x="3698.1902" y="8.0671"/>
+                <DataPoint x="3841.4430" y="7.6153"/>
+                <DataPoint x="3990.2449" y="7.0981"/>
+                <DataPoint x="4144.8107" y="6.6509"/>
+                <DataPoint x="4305.3637" y="6.2228"/>
+                <DataPoint x="4472.1360" y="5.8067"/>
+                <DataPoint x="4645.3683" y="5.4476"/>
+                <DataPoint x="4825.3109" y="5.0218"/>
+                <DataPoint x="5012.2237" y="4.5770"/>
+                <DataPoint x="5206.3768" y="4.1293"/>
+                <DataPoint x="5408.0506" y="3.6849"/>
+                <DataPoint x="5617.5364" y="3.2086"/>
+                <DataPoint x="5835.1369" y="2.7684"/>
+                <DataPoint x="6061.1663" y="2.2924"/>
+                <DataPoint x="6295.9511" y="1.8499"/>
+                <DataPoint x="6539.8306" y="1.4163"/>
+                <DataPoint x="6793.1569" y="0.9805"/>
+                <DataPoint x="7056.2961" y="0.5629"/>
+                <DataPoint x="7329.6282" y="0.1558"/>
+                <DataPoint x="7613.5481" y="-0.2782"/>
+                <DataPoint x="7908.4659" y="-0.7111"/>
+                <DataPoint x="8214.8076" y="-1.0961"/>
+                <DataPoint x="8533.0158" y="-1.5225"/>
+                <DataPoint x="8863.5500" y="-1.9249"/>
+                <DataPoint x="9206.8877" y="-2.3475"/>
+                <DataPoint x="9563.5250" y="-2.7501"/>
+                <DataPoint x="9933.9769" y="-3.1739"/>
+                <DataPoint x="10318.7787" y="-3.5779"/>
+                <DataPoint x="10718.4861" y="-3.9741"/>
+                <DataPoint x="11133.6765" y="-4.3880"/>
+                <DataPoint x="11564.9497" y="-4.7804"/>
+                <DataPoint x="12012.9286" y="-5.1758"/>
+                <DataPoint x="12478.2605" y="-5.5872"/>
+                <DataPoint x="12961.6174" y="-5.9818"/>
+                <DataPoint x="13463.6976" y="-6.3852"/>
+                <DataPoint x="13985.2263" y="-6.7892"/>
+                <DataPoint x="14526.9569" y="-7.1931"/>
+                <DataPoint x="15089.6719" y="-7.5878"/>
+                <DataPoint x="15674.1842" y="-7.9857"/>
+                <DataPoint x="16281.3382" y="-8.3915"/>
+                <DataPoint x="16912.0108" y="-8.7889"/>
+                <DataPoint x="17567.1131" y="-9.1611"/>
+                <DataPoint x="18247.5914" y="-9.5579"/>
+                <DataPoint x="18954.4286" y="-9.9780"/>
+                <DataPoint x="19688.6458" y="-10.3896"/>
+                <DataPoint x="20451.3037" y="-10.7657"/>
+                <DataPoint x="21243.5037" y="-11.1629"/>
+                <DataPoint x="22066.3904" y="-11.5334"/>
+                <DataPoint x="22921.1523" y="-11.9217"/>
+                <DataPoint x="23809.0242" y="-12.3283"/>
+                <DataPoint x="24731.2887" y="-12.7201"/>
+                <DataPoint x="25689.2779" y="-13.1207"/>
+                <DataPoint x="26684.3757" y="-13.4952"/>
+                <DataPoint x="27718.0196" y="-13.8705"/>
+                <DataPoint x="28791.7025" y="-14.2951"/>
+                <DataPoint x="29906.9756" y="-14.6900"/>
+                <DataPoint x="31065.4498" y="-15.1420"/>
+                <DataPoint x="32268.7986" y="-15.4761"/>
+                <DataPoint x="33518.7602" y="-15.8379"/>
+                <DataPoint x="34817.1402" y="-16.3574"/>
+                <DataPoint x="36165.8142" y="-16.6810"/>
+                <DataPoint x="37566.7303" y="-17.1418"/>
+                <DataPoint x="39021.9121" y="-17.5454"/>
+                <DataPoint x="40533.4618" y="-18.0518"/>
+                <DataPoint x="42103.5627" y="-18.4526"/>
+                <DataPoint x="43734.4830" y="-18.8159"/>
+                <DataPoint x="45428.5784" y="-19.3413"/>
+                <DataPoint x="47188.2962" y="-19.8130"/>
+                <DataPoint x="49016.1782" y="-20.4430"/>
+                <DataPoint x="50914.8650" y="-20.8494"/>
+                <DataPoint x="52887.0991" y="-21.1518"/>
+                <DataPoint x="54935.7296" y="-21.8162"/>
+                <DataPoint x="57063.7156" y="-22.4689"/>
+                <DataPoint x="59274.1311" y="-23.0147"/>
+                <DataPoint x="61570.1691" y="-23.6785"/>
+                <DataPoint x="63955.1462" y="-24.3489"/>
+                <DataPoint x="66432.5077" y="-24.9577"/>
+                <DataPoint x="69005.8320" y="-25.7553"/>
+                <DataPoint x="71678.8363" y="-26.8280"/>
+                <DataPoint x="74455.3820" y="-27.9893"/>
+                <DataPoint x="77339.4797" y="-29.1655"/>
+                <DataPoint x="80335.2956" y="-30.2880"/>
+                <DataPoint x="83447.1572" y="-31.9571"/>
+                <DataPoint x="86679.5596" y="-33.9015"/>
+                <DataPoint x="90037.1721" y="-36.9812"/>
+                <DataPoint x="93524.8448" y="-40.5993"/>
+                <DataPoint x="97147.6157" y="-48.3908"/>
+                <DataPoint x="100910.7179" y="-59.1061"/>
+                <DataPoint x="104819.5874" y="-44.2489"/>
+                <DataPoint x="108879.8706" y="-39.8771"/>
+                <DataPoint x="113097.4325" y="-36.7700"/>
+                <DataPoint x="117478.3656" y="-34.9016"/>
+                <DataPoint x="122028.9982" y="-33.5731"/>
+                <DataPoint x="126755.9037" y="-32.8752"/>
+                <DataPoint x="131665.9102" y="-32.1262"/>
+                <DataPoint x="136766.1104" y="-31.3540"/>
+                <DataPoint x="142063.8715" y="-30.8485"/>
+                <DataPoint x="147566.8463" y="-30.5838"/>
+                <DataPoint x="153282.9838" y="-30.4553"/>
+                <DataPoint x="159220.5412" y="-30.2706"/>
+                <DataPoint x="165388.0953" y="-30.3810"/>
+                <DataPoint x="171794.5554" y="-30.1348"/>
+                <DataPoint x="178449.1755" y="-30.6569"/>
+                <DataPoint x="185361.5685" y="-31.0464"/>
+                <DataPoint x="192541.7194" y="-34.1092"/>
+                <DataPoint x="200000.0000" y="-62.5612"/>
+            </Memory>
+            <Memory id="3" name="2">
+                <DataPoint x="100.0000" y="33.8180"/>
+                <DataPoint x="103.8736" y="33.8262"/>
+                <DataPoint x="107.8972" y="33.0546"/>
+                <DataPoint x="112.0767" y="33.2706"/>
+                <DataPoint x="116.4181" y="32.3877"/>
+                <DataPoint x="120.9277" y="32.1776"/>
+                <DataPoint x="125.6119" y="31.9871"/>
+                <DataPoint x="130.4776" y="31.7411"/>
+                <DataPoint x="135.5318" y="31.3499"/>
+                <DataPoint x="140.7817" y="31.1362"/>
+                <DataPoint x="146.2351" y="30.8078"/>
+                <DataPoint x="151.8996" y="30.3730"/>
+                <DataPoint x="157.7836" y="30.1591"/>
+                <DataPoint x="163.8955" y="29.8818"/>
+                <DataPoint x="170.2441" y="29.5724"/>
+                <DataPoint x="176.8387" y="29.5261"/>
+                <DataPoint x="183.6887" y="29.0303"/>
+                <DataPoint x="190.8040" y="28.9363"/>
+                <DataPoint x="198.1950" y="28.5272"/>
+                <DataPoint x="205.8723" y="28.3597"/>
+                <DataPoint x="213.8469" y="27.6901"/>
+                <DataPoint x="222.1305" y="27.5165"/>
+                <DataPoint x="230.7349" y="27.1661"/>
+                <DataPoint x="239.6726" y="26.9157"/>
+                <DataPoint x="248.9566" y="26.6505"/>
+                <DataPoint x="258.6001" y="26.2746"/>
+                <DataPoint x="268.6173" y="26.2910"/>
+                <DataPoint x="279.0224" y="25.6607"/>
+                <DataPoint x="289.8306" y="25.3248"/>
+                <DataPoint x="301.0574" y="25.2322"/>
+                <DataPoint x="312.7192" y="24.8279"/>
+                <DataPoint x="324.8326" y="24.5989"/>
+                <DataPoint x="337.4153" y="24.2095"/>
+                <DataPoint x="350.4854" y="24.1433"/>
+                <DataPoint x="364.0618" y="23.5349"/>
+                <DataPoint x="378.1641" y="23.5745"/>
+                <DataPoint x="392.8126" y="22.9192"/>
+                <DataPoint x="408.0285" y="22.8015"/>
+                <DataPoint x="423.8339" y="22.5316"/>
+                <DataPoint x="440.2515" y="22.2793"/>
+                <DataPoint x="457.3051" y="21.9082"/>
+                <DataPoint x="475.0192" y="21.6315"/>
+                <DataPoint x="493.4195" y="21.2740"/>
+                <DataPoint x="512.5325" y="21.1270"/>
+                <DataPoint x="532.3860" y="20.6782"/>
+                <DataPoint x="553.0084" y="20.6100"/>
+                <DataPoint x="574.4297" y="20.3649"/>
+                <DataPoint x="596.6808" y="20.2722"/>
+                <DataPoint x="619.7938" y="19.7937"/>
+                <DataPoint x="643.8020" y="19.6227"/>
+                <DataPoint x="668.7403" y="19.4606"/>
+                <DataPoint x="694.6446" y="19.2117"/>
+                <DataPoint x="721.5523" y="18.9196"/>
+                <DataPoint x="749.5023" y="18.7425"/>
+                <DataPoint x="778.5349" y="18.3010"/>
+                <DataPoint x="808.6922" y="18.1970"/>
+                <DataPoint x="840.0176" y="17.8530"/>
+                <DataPoint x="872.5565" y="17.6883"/>
+                <DataPoint x="906.3558" y="17.5949"/>
+                <DataPoint x="941.4643" y="17.5031"/>
+                <DataPoint x="977.9328" y="17.3701"/>
+                <DataPoint x="1015.8139" y="17.0243"/>
+                <DataPoint x="1055.1624" y="16.8248"/>
+                <DataPoint x="1096.0351" y="16.6458"/>
+                <DataPoint x="1138.4910" y="16.5535"/>
+                <DataPoint x="1182.5915" y="16.5169"/>
+                <DataPoint x="1228.4003" y="16.3184"/>
+                <DataPoint x="1275.9835" y="16.3293"/>
+                <DataPoint x="1325.4099" y="16.1535"/>
+                <DataPoint x="1376.7508" y="15.9844"/>
+                <DataPoint x="1430.0805" y="15.8100"/>
+                <DataPoint x="1485.4760" y="15.7264"/>
+                <DataPoint x="1543.0173" y="15.5408"/>
+                <DataPoint x="1602.7875" y="15.5113"/>
+                <DataPoint x="1664.8730" y="15.4454"/>
+                <DataPoint x="1729.3633" y="15.2937"/>
+                <DataPoint x="1796.3518" y="15.2214"/>
+                <DataPoint x="1865.9352" y="15.0998"/>
+                <DataPoint x="1938.2139" y="14.9079"/>
+                <DataPoint x="2013.2924" y="14.7435"/>
+                <DataPoint x="2091.2791" y="14.5025"/>
+                <DataPoint x="2172.2867" y="14.2257"/>
+                <DataPoint x="2256.4322" y="13.8624"/>
+                <DataPoint x="2343.8372" y="13.7397"/>
+                <DataPoint x="2434.6279" y="13.2859"/>
+                <DataPoint x="2528.9355" y="12.8898"/>
+                <DataPoint x="2626.8961" y="12.4297"/>
+                <DataPoint x="2728.6514" y="12.0281"/>
+                <DataPoint x="2834.3482" y="11.2943"/>
+                <DataPoint x="2944.1393" y="10.7364"/>
+                <DataPoint x="3058.1832" y="10.1368"/>
+                <DataPoint x="3176.6447" y="9.4846"/>
+                <DataPoint x="3299.6950" y="8.8142"/>
+                <DataPoint x="3427.5117" y="8.2320"/>
+                <DataPoint x="3560.2795" y="7.6611"/>
+                <DataPoint x="3698.1902" y="7.0889"/>
+                <DataPoint x="3841.4430" y="6.5074"/>
+                <DataPoint x="3990.2449" y="6.0357"/>
+                <DataPoint x="4144.8107" y="5.5550"/>
+                <DataPoint x="4305.3637" y="5.1184"/>
+                <DataPoint x="4472.1360" y="4.7114"/>
+                <DataPoint x="4645.3683" y="4.2321"/>
+                <DataPoint x="4825.3109" y="3.8075"/>
+                <DataPoint x="5012.2237" y="3.4168"/>
+                <DataPoint x="5206.3768" y="3.0034"/>
+                <DataPoint x="5408.0506" y="2.5643"/>
+                <DataPoint x="5617.5364" y="2.0993"/>
+                <DataPoint x="5835.1369" y="1.7071"/>
+                <DataPoint x="6061.1663" y="1.2765"/>
+                <DataPoint x="6295.9511" y="0.8604"/>
+                <DataPoint x="6539.8306" y="0.4731"/>
+                <DataPoint x="6793.1569" y="0.0637"/>
+                <DataPoint x="7056.2961" y="-0.3073"/>
+                <DataPoint x="7329.6282" y="-0.6842"/>
+                <DataPoint x="7613.5481" y="-1.0888"/>
+                <DataPoint x="7908.4659" y="-1.4511"/>
+                <DataPoint x="8214.8076" y="-1.8071"/>
+                <DataPoint x="8533.0158" y="-2.1790"/>
+                <DataPoint x="8863.5500" y="-2.5576"/>
+                <DataPoint x="9206.8877" y="-2.9089"/>
+                <DataPoint x="9563.5250" y="-3.3149"/>
+                <DataPoint x="9933.9769" y="-3.6716"/>
+                <DataPoint x="10318.7787" y="-4.0510"/>
+                <DataPoint x="10718.4861" y="-4.4170"/>
+                <DataPoint x="11133.6765" y="-4.8019"/>
+                <DataPoint x="11564.9497" y="-5.1710"/>
+                <DataPoint x="12012.9286" y="-5.5464"/>
+                <DataPoint x="12478.2605" y="-5.9206"/>
+                <DataPoint x="12961.6174" y="-6.3258"/>
+                <DataPoint x="13463.6976" y="-6.6867"/>
+                <DataPoint x="13985.2263" y="-7.0913"/>
+                <DataPoint x="14526.9569" y="-7.4581"/>
+                <DataPoint x="15089.6719" y="-7.8214"/>
+                <DataPoint x="15674.1842" y="-8.1989"/>
+                <DataPoint x="16281.3382" y="-8.5701"/>
+                <DataPoint x="16912.0108" y="-8.9648"/>
+                <DataPoint x="17567.1131" y="-9.3365"/>
+                <DataPoint x="18247.5914" y="-9.7186"/>
+                <DataPoint x="18954.4286" y="-10.0966"/>
+                <DataPoint x="19688.6458" y="-10.4773"/>
+                <DataPoint x="20451.3037" y="-10.8746"/>
+                <DataPoint x="21243.5037" y="-11.2378"/>
+                <DataPoint x="22066.3904" y="-11.6577"/>
+                <DataPoint x="22921.1523" y="-12.0378"/>
+                <DataPoint x="23809.0242" y="-12.4168"/>
+                <DataPoint x="24731.2887" y="-12.8210"/>
+                <DataPoint x="25689.2779" y="-13.2018"/>
+                <DataPoint x="26684.3757" y="-13.6293"/>
+                <DataPoint x="27718.0196" y="-14.0192"/>
+                <DataPoint x="28791.7025" y="-14.4263"/>
+                <DataPoint x="29906.9756" y="-14.8300"/>
+                <DataPoint x="31065.4498" y="-15.2166"/>
+                <DataPoint x="32268.7986" y="-15.6452"/>
+                <DataPoint x="33518.7602" y="-16.0146"/>
+                <DataPoint x="34817.1402" y="-16.4643"/>
+                <DataPoint x="36165.8142" y="-16.8785"/>
+                <DataPoint x="37566.7303" y="-17.3046"/>
+                <DataPoint x="39021.9121" y="-17.7656"/>
+                <DataPoint x="40533.4618" y="-18.1952"/>
+                <DataPoint x="42103.5627" y="-18.6782"/>
+                <DataPoint x="43734.4830" y="-19.1049"/>
+                <DataPoint x="45428.5784" y="-19.5761"/>
+                <DataPoint x="47188.2962" y="-20.0464"/>
+                <DataPoint x="49016.1782" y="-20.5572"/>
+                <DataPoint x="50914.8650" y="-21.1737"/>
+                <DataPoint x="52887.0991" y="-21.5411"/>
+                <DataPoint x="54935.7296" y="-22.0279"/>
+                <DataPoint x="57063.7156" y="-22.5497"/>
+                <DataPoint x="59274.1311" y="-23.1635"/>
+                <DataPoint x="61570.1691" y="-23.8074"/>
+                <DataPoint x="63955.1462" y="-24.6370"/>
+                <DataPoint x="66432.5077" y="-25.3255"/>
+                <DataPoint x="69005.8320" y="-26.1759"/>
+                <DataPoint x="71678.8363" y="-26.9385"/>
+                <DataPoint x="74455.3820" y="-28.1271"/>
+                <DataPoint x="77339.4797" y="-29.1563"/>
+                <DataPoint x="80335.2956" y="-30.3202"/>
+                <DataPoint x="83447.1572" y="-32.1478"/>
+                <DataPoint x="86679.5596" y="-34.0848"/>
+                <DataPoint x="90037.1721" y="-37.0273"/>
+                <DataPoint x="93524.8448" y="-40.9563"/>
+                <DataPoint x="97147.6157" y="-49.1483"/>
+                <DataPoint x="100910.7179" y="-56.0207"/>
+                <DataPoint x="104819.5874" y="-45.6132"/>
+                <DataPoint x="108879.8706" y="-40.1010"/>
+                <DataPoint x="113097.4325" y="-37.0124"/>
+                <DataPoint x="117478.3656" y="-34.9716"/>
+                <DataPoint x="122028.9982" y="-33.9501"/>
+                <DataPoint x="126755.9037" y="-32.8376"/>
+                <DataPoint x="131665.9102" y="-31.8749"/>
+                <DataPoint x="136766.1104" y="-31.4425"/>
+                <DataPoint x="142063.8715" y="-30.9179"/>
+                <DataPoint x="147566.8463" y="-30.6315"/>
+                <DataPoint x="153282.9838" y="-30.5297"/>
+                <DataPoint x="159220.5412" y="-30.4785"/>
+                <DataPoint x="165388.0953" y="-30.4499"/>
+                <DataPoint x="171794.5554" y="-30.1579"/>
+                <DataPoint x="178449.1755" y="-30.5430"/>
+                <DataPoint x="185361.5685" y="-31.4401"/>
+                <DataPoint x="192541.7194" y="-35.1414"/>
+                <DataPoint x="200000.0000" y="-50.3793"/>
+            </Memory>
+            <Memory id="4" name="3">
+                <DataPoint x="100.0000" y="33.7629"/>
+                <DataPoint x="103.8736" y="33.5516"/>
+                <DataPoint x="107.8972" y="32.8418"/>
+                <DataPoint x="112.0767" y="32.7447"/>
+                <DataPoint x="116.4181" y="32.4755"/>
+                <DataPoint x="120.9277" y="32.4219"/>
+                <DataPoint x="125.6119" y="31.7694"/>
+                <DataPoint x="130.4776" y="31.8699"/>
+                <DataPoint x="135.5318" y="30.9673"/>
+                <DataPoint x="140.7817" y="31.0016"/>
+                <DataPoint x="146.2351" y="30.7536"/>
+                <DataPoint x="151.8996" y="30.2871"/>
+                <DataPoint x="157.7836" y="30.0347"/>
+                <DataPoint x="163.8955" y="29.9164"/>
+                <DataPoint x="170.2441" y="29.6155"/>
+                <DataPoint x="176.8387" y="29.4156"/>
+                <DataPoint x="183.6887" y="28.8927"/>
+                <DataPoint x="190.8040" y="28.9361"/>
+                <DataPoint x="198.1950" y="28.5392"/>
+                <DataPoint x="205.8723" y="27.9573"/>
+                <DataPoint x="213.8469" y="27.8361"/>
+                <DataPoint x="222.1305" y="27.3881"/>
+                <DataPoint x="230.7349" y="27.0999"/>
+                <DataPoint x="239.6726" y="26.8248"/>
+                <DataPoint x="248.9566" y="26.2420"/>
+                <DataPoint x="258.6001" y="26.1160"/>
+                <DataPoint x="268.6173" y="26.0451"/>
+                <DataPoint x="279.0224" y="25.5092"/>
+                <DataPoint x="289.8306" y="25.3591"/>
+                <DataPoint x="301.0574" y="24.7691"/>
+                <DataPoint x="312.7192" y="24.5262"/>
+                <DataPoint x="324.8326" y="24.2505"/>
+                <DataPoint x="337.4153" y="23.9506"/>
+                <DataPoint x="350.4854" y="23.4860"/>
+                <DataPoint x="364.0618" y="23.3982"/>
+                <DataPoint x="378.1641" y="22.9658"/>
+                <DataPoint x="392.8126" y="22.4656"/>
+                <DataPoint x="408.0285" y="22.3530"/>
+                <DataPoint x="423.8339" y="21.9229"/>
+                <DataPoint x="440.2515" y="21.6751"/>
+                <DataPoint x="457.3051" y="21.3762"/>
+                <DataPoint x="475.0192" y="20.8962"/>
+                <DataPoint x="493.4195" y="20.6281"/>
+                <DataPoint x="512.5325" y="20.4067"/>
+                <DataPoint x="532.3860" y="20.0884"/>
+                <DataPoint x="553.0084" y="19.6110"/>
+                <DataPoint x="574.4297" y="19.2646"/>
+                <DataPoint x="596.6808" y="19.0430"/>
+                <DataPoint x="619.7938" y="18.5505"/>
+                <DataPoint x="643.8020" y="18.2727"/>
+                <DataPoint x="668.7403" y="17.8699"/>
+                <DataPoint x="694.6446" y="17.6089"/>
+                <DataPoint x="721.5523" y="17.2513"/>
+                <DataPoint x="749.5023" y="16.8838"/>
+                <DataPoint x="778.5349" y="16.4314"/>
+                <DataPoint x="808.6922" y="16.1389"/>
+                <DataPoint x="840.0176" y="15.8976"/>
+                <DataPoint x="872.5565" y="15.3762"/>
+                <DataPoint x="906.3558" y="15.0934"/>
+                <DataPoint x="941.4643" y="14.6991"/>
+                <DataPoint x="977.9328" y="14.4243"/>
+                <DataPoint x="1015.8139" y="14.0198"/>
+                <DataPoint x="1055.1624" y="13.8044"/>
+                <DataPoint x="1096.0351" y="13.3649"/>
+                <DataPoint x="1138.4910" y="12.9790"/>
+                <DataPoint x="1182.5915" y="12.5177"/>
+                <DataPoint x="1228.4003" y="12.1657"/>
+                <DataPoint x="1275.9835" y="11.6973"/>
+                <DataPoint x="1325.4099" y="11.2743"/>
+                <DataPoint x="1376.7508" y="10.7638"/>
+                <DataPoint x="1430.0805" y="10.3042"/>
+                <DataPoint x="1485.4760" y="9.8005"/>
+                <DataPoint x="1543.0173" y="9.3745"/>
+                <DataPoint x="1602.7875" y="8.9593"/>
+                <DataPoint x="1664.8730" y="8.5115"/>
+                <DataPoint x="1729.3633" y="8.0738"/>
+                <DataPoint x="1796.3518" y="7.6913"/>
+                <DataPoint x="1865.9352" y="7.3310"/>
+                <DataPoint x="1938.2139" y="6.8786"/>
+                <DataPoint x="2013.2924" y="6.5698"/>
+                <DataPoint x="2091.2791" y="6.1875"/>
+                <DataPoint x="2172.2867" y="5.8472"/>
+                <DataPoint x="2256.4322" y="5.5141"/>
+                <DataPoint x="2343.8372" y="5.2071"/>
+                <DataPoint x="2434.6279" y="4.8707"/>
+                <DataPoint x="2528.9355" y="4.5411"/>
+                <DataPoint x="2626.8961" y="4.2902"/>
+                <DataPoint x="2728.6514" y="4.0044"/>
+                <DataPoint x="2834.3482" y="3.7445"/>
+                <DataPoint x="2944.1393" y="3.4296"/>
+                <DataPoint x="3058.1832" y="3.2290"/>
+                <DataPoint x="3176.6447" y="2.9750"/>
+                <DataPoint x="3299.6950" y="2.7307"/>
+                <DataPoint x="3427.5117" y="2.5138"/>
+                <DataPoint x="3560.2795" y="2.2783"/>
+                <DataPoint x="3698.1902" y="2.0602"/>
+                <DataPoint x="3841.4430" y="1.8680"/>
+                <DataPoint x="3990.2449" y="1.6054"/>
+                <DataPoint x="4144.8107" y="1.3932"/>
+                <DataPoint x="4305.3637" y="1.2214"/>
+                <DataPoint x="4472.1360" y="1.0301"/>
+                <DataPoint x="4645.3683" y="0.8275"/>
+                <DataPoint x="4825.3109" y="0.6204"/>
+                <DataPoint x="5012.2237" y="0.3874"/>
+                <DataPoint x="5206.3768" y="0.1851"/>
+                <DataPoint x="5408.0506" y="-0.0163"/>
+                <DataPoint x="5617.5364" y="-0.2091"/>
+                <DataPoint x="5835.1369" y="-0.4110"/>
+                <DataPoint x="6061.1663" y="-0.6421"/>
+                <DataPoint x="6295.9511" y="-0.8663"/>
+                <DataPoint x="6539.8306" y="-1.0734"/>
+                <DataPoint x="6793.1569" y="-1.2997"/>
+                <DataPoint x="7056.2961" y="-1.5491"/>
+                <DataPoint x="7329.6282" y="-1.8014"/>
+                <DataPoint x="7613.5481" y="-2.0442"/>
+                <DataPoint x="7908.4659" y="-2.3418"/>
+                <DataPoint x="8214.8076" y="-2.5983"/>
+                <DataPoint x="8533.0158" y="-2.8862"/>
+                <DataPoint x="8863.5500" y="-3.1718"/>
+                <DataPoint x="9206.8877" y="-3.4491"/>
+                <DataPoint x="9563.5250" y="-3.7537"/>
+                <DataPoint x="9933.9769" y="-4.0456"/>
+                <DataPoint x="10318.7787" y="-4.3668"/>
+                <DataPoint x="10718.4861" y="-4.6766"/>
+                <DataPoint x="11133.6765" y="-5.0117"/>
+                <DataPoint x="11564.9497" y="-5.3222"/>
+                <DataPoint x="12012.9286" y="-5.6555"/>
+                <DataPoint x="12478.2605" y="-6.0114"/>
+                <DataPoint x="12961.6174" y="-6.3532"/>
+                <DataPoint x="13463.6976" y="-6.6763"/>
+                <DataPoint x="13985.2263" y="-7.0752"/>
+                <DataPoint x="14526.9569" y="-7.3994"/>
+                <DataPoint x="15089.6719" y="-7.7327"/>
+                <DataPoint x="15674.1842" y="-8.0873"/>
+                <DataPoint x="16281.3382" y="-8.4853"/>
+                <DataPoint x="16912.0108" y="-8.8361"/>
+                <DataPoint x="17567.1131" y="-9.2099"/>
+                <DataPoint x="18247.5914" y="-9.5737"/>
+                <DataPoint x="18954.4286" y="-9.9585"/>
+                <DataPoint x="19688.6458" y="-10.3411"/>
+                <DataPoint x="20451.3037" y="-10.6973"/>
+                <DataPoint x="21243.5037" y="-11.0734"/>
+                <DataPoint x="22066.3904" y="-11.4529"/>
+                <DataPoint x="22921.1523" y="-11.8239"/>
+                <DataPoint x="23809.0242" y="-12.2120"/>
+                <DataPoint x="24731.2887" y="-12.5873"/>
+                <DataPoint x="25689.2779" y="-12.9588"/>
+                <DataPoint x="26684.3757" y="-13.3379"/>
+                <DataPoint x="27718.0196" y="-13.7284"/>
+                <DataPoint x="28791.7025" y="-14.1074"/>
+                <DataPoint x="29906.9756" y="-14.5127"/>
+                <DataPoint x="31065.4498" y="-14.9369"/>
+                <DataPoint x="32268.7986" y="-15.3080"/>
+                <DataPoint x="33518.7602" y="-15.7478"/>
+                <DataPoint x="34817.1402" y="-16.1341"/>
+                <DataPoint x="36165.8142" y="-16.4974"/>
+                <DataPoint x="37566.7303" y="-16.8917"/>
+                <DataPoint x="39021.9121" y="-17.3604"/>
+                <DataPoint x="40533.4618" y="-17.6992"/>
+                <DataPoint x="42103.5627" y="-18.2068"/>
+                <DataPoint x="43734.4830" y="-18.7117"/>
+                <DataPoint x="45428.5784" y="-19.1200"/>
+                <DataPoint x="47188.2962" y="-19.6099"/>
+                <DataPoint x="49016.1782" y="-20.0242"/>
+                <DataPoint x="50914.8650" y="-20.6422"/>
+                <DataPoint x="52887.0991" y="-20.9879"/>
+                <DataPoint x="54935.7296" y="-21.5466"/>
+                <DataPoint x="57063.7156" y="-22.1136"/>
+                <DataPoint x="59274.1311" y="-22.7975"/>
+                <DataPoint x="61570.1691" y="-23.4002"/>
+                <DataPoint x="63955.1462" y="-24.0680"/>
+                <DataPoint x="66432.5077" y="-24.7863"/>
+                <DataPoint x="69005.8320" y="-25.6042"/>
+                <DataPoint x="71678.8363" y="-26.4930"/>
+                <DataPoint x="74455.3820" y="-27.6123"/>
+                <DataPoint x="77339.4797" y="-28.6266"/>
+                <DataPoint x="80335.2956" y="-30.0387"/>
+                <DataPoint x="83447.1572" y="-31.6574"/>
+                <DataPoint x="86679.5596" y="-33.7151"/>
+                <DataPoint x="90037.1721" y="-36.8349"/>
+                <DataPoint x="93524.8448" y="-40.3839"/>
+                <DataPoint x="97147.6157" y="-47.4491"/>
+                <DataPoint x="100910.7179" y="19.5050"/>
+                <DataPoint x="104819.5874" y="-44.7382"/>
+                <DataPoint x="108879.8706" y="-38.9488"/>
+                <DataPoint x="113097.4325" y="-36.9039"/>
+                <DataPoint x="117478.3656" y="-34.6449"/>
+                <DataPoint x="122028.9982" y="-33.4055"/>
+                <DataPoint x="126755.9037" y="-32.2620"/>
+                <DataPoint x="131665.9102" y="-31.3512"/>
+                <DataPoint x="136766.1104" y="-30.7826"/>
+                <DataPoint x="142063.8715" y="-30.3081"/>
+                <DataPoint x="147566.8463" y="-30.1150"/>
+                <DataPoint x="153282.9838" y="-29.8998"/>
+                <DataPoint x="159220.5412" y="-29.9951"/>
+                <DataPoint x="165388.0953" y="-30.0822"/>
+                <DataPoint x="171794.5554" y="-30.1184"/>
+                <DataPoint x="178449.1755" y="-30.7201"/>
+                <DataPoint x="185361.5685" y="-31.8918"/>
+                <DataPoint x="192541.7194" y="-36.2276"/>
+                <DataPoint x="200000.0000" y="-47.9365"/>
+            </Memory>
+        </OmicronBodeGainData>
+        <OmicronBodePhaseData>
+            <Memory id="2" name="1">
+                <DataPoint x="100.0000" y="1.7126"/>
+                <DataPoint x="103.8736" y="1.7336"/>
+                <DataPoint x="107.8972" y="1.7466"/>
+                <DataPoint x="112.0767" y="1.7389"/>
+                <DataPoint x="116.4181" y="1.7464"/>
+                <DataPoint x="120.9277" y="1.7285"/>
+                <DataPoint x="125.6119" y="1.7024"/>
+                <DataPoint x="130.4776" y="1.7191"/>
+                <DataPoint x="135.5318" y="1.7007"/>
+                <DataPoint x="140.7817" y="1.7337"/>
+                <DataPoint x="146.2351" y="1.7211"/>
+                <DataPoint x="151.8996" y="1.7249"/>
+                <DataPoint x="157.7836" y="1.7133"/>
+                <DataPoint x="163.8955" y="1.7343"/>
+                <DataPoint x="170.2441" y="1.7549"/>
+                <DataPoint x="176.8387" y="1.7278"/>
+                <DataPoint x="183.6887" y="1.7509"/>
+                <DataPoint x="190.8040" y="1.7626"/>
+                <DataPoint x="198.1950" y="1.7165"/>
+                <DataPoint x="205.8723" y="1.7393"/>
+                <DataPoint x="213.8469" y="1.7313"/>
+                <DataPoint x="222.1305" y="1.7476"/>
+                <DataPoint x="230.7349" y="1.7565"/>
+                <DataPoint x="239.6726" y="1.7774"/>
+                <DataPoint x="248.9566" y="1.7445"/>
+                <DataPoint x="258.6001" y="1.7417"/>
+                <DataPoint x="268.6173" y="1.7445"/>
+                <DataPoint x="279.0224" y="1.7449"/>
+                <DataPoint x="289.8306" y="1.7539"/>
+                <DataPoint x="301.0574" y="1.7738"/>
+                <DataPoint x="312.7192" y="1.7593"/>
+                <DataPoint x="324.8326" y="1.7671"/>
+                <DataPoint x="337.4153" y="1.7647"/>
+                <DataPoint x="350.4854" y="1.7884"/>
+                <DataPoint x="364.0618" y="1.7867"/>
+                <DataPoint x="378.1641" y="1.8135"/>
+                <DataPoint x="392.8126" y="1.7910"/>
+                <DataPoint x="408.0285" y="1.7891"/>
+                <DataPoint x="423.8339" y="1.7980"/>
+                <DataPoint x="440.2515" y="1.7955"/>
+                <DataPoint x="457.3051" y="1.8076"/>
+                <DataPoint x="475.0192" y="1.8127"/>
+                <DataPoint x="493.4195" y="1.8513"/>
+                <DataPoint x="512.5325" y="1.8467"/>
+                <DataPoint x="532.3860" y="1.8630"/>
+                <DataPoint x="553.0084" y="1.8536"/>
+                <DataPoint x="574.4297" y="1.8703"/>
+                <DataPoint x="596.6808" y="1.8524"/>
+                <DataPoint x="619.7938" y="1.8810"/>
+                <DataPoint x="643.8020" y="1.8840"/>
+                <DataPoint x="668.7403" y="1.9089"/>
+                <DataPoint x="694.6446" y="1.9146"/>
+                <DataPoint x="721.5523" y="1.9095"/>
+                <DataPoint x="749.5023" y="1.9092"/>
+                <DataPoint x="778.5349" y="1.9475"/>
+                <DataPoint x="808.6922" y="1.9350"/>
+                <DataPoint x="840.0176" y="1.9593"/>
+                <DataPoint x="872.5565" y="1.9545"/>
+                <DataPoint x="906.3558" y="1.9408"/>
+                <DataPoint x="941.4643" y="1.9665"/>
+                <DataPoint x="977.9328" y="1.9651"/>
+                <DataPoint x="1015.8139" y="1.9674"/>
+                <DataPoint x="1055.1624" y="1.9775"/>
+                <DataPoint x="1096.0351" y="1.9908"/>
+                <DataPoint x="1138.4910" y="1.9791"/>
+                <DataPoint x="1182.5915" y="1.9798"/>
+                <DataPoint x="1228.4003" y="1.9646"/>
+                <DataPoint x="1275.9835" y="1.9523"/>
+                <DataPoint x="1325.4099" y="1.9805"/>
+                <DataPoint x="1376.7508" y="1.9668"/>
+                <DataPoint x="1430.0805" y="1.9601"/>
+                <DataPoint x="1485.4760" y="1.9320"/>
+                <DataPoint x="1543.0173" y="1.9323"/>
+                <DataPoint x="1602.7875" y="1.8982"/>
+                <DataPoint x="1664.8730" y="1.8926"/>
+                <DataPoint x="1729.3633" y="1.8777"/>
+                <DataPoint x="1796.3518" y="1.8481"/>
+                <DataPoint x="1865.9352" y="1.8142"/>
+                <DataPoint x="1938.2139" y="1.7917"/>
+                <DataPoint x="2013.2924" y="1.7610"/>
+                <DataPoint x="2091.2791" y="1.7299"/>
+                <DataPoint x="2172.2867" y="1.7002"/>
+                <DataPoint x="2256.4322" y="1.6688"/>
+                <DataPoint x="2343.8372" y="1.6283"/>
+                <DataPoint x="2434.6279" y="1.6059"/>
+                <DataPoint x="2528.9355" y="1.5683"/>
+                <DataPoint x="2626.8961" y="1.5161"/>
+                <DataPoint x="2728.6514" y="1.4955"/>
+                <DataPoint x="2834.3482" y="1.4653"/>
+                <DataPoint x="2944.1393" y="1.4337"/>
+                <DataPoint x="3058.1832" y="1.3979"/>
+                <DataPoint x="3176.6447" y="1.3730"/>
+                <DataPoint x="3299.6950" y="1.3454"/>
+                <DataPoint x="3427.5117" y="1.3204"/>
+                <DataPoint x="3560.2795" y="1.2973"/>
+                <DataPoint x="3698.1902" y="1.2763"/>
+                <DataPoint x="3841.4430" y="1.2615"/>
+                <DataPoint x="3990.2449" y="1.2421"/>
+                <DataPoint x="4144.8107" y="1.2242"/>
+                <DataPoint x="4305.3637" y="1.2082"/>
+                <DataPoint x="4472.1360" y="1.1977"/>
+                <DataPoint x="4645.3683" y="1.1824"/>
+                <DataPoint x="4825.3109" y="1.1689"/>
+                <DataPoint x="5012.2237" y="1.1535"/>
+                <DataPoint x="5206.3768" y="1.1459"/>
+                <DataPoint x="5408.0506" y="1.1372"/>
+                <DataPoint x="5617.5364" y="1.1250"/>
+                <DataPoint x="5835.1369" y="1.1173"/>
+                <DataPoint x="6061.1663" y="1.1121"/>
+                <DataPoint x="6295.9511" y="1.1016"/>
+                <DataPoint x="6539.8306" y="1.0957"/>
+                <DataPoint x="6793.1569" y="1.0872"/>
+                <DataPoint x="7056.2961" y="1.0786"/>
+                <DataPoint x="7329.6282" y="1.0729"/>
+                <DataPoint x="7613.5481" y="1.0628"/>
+                <DataPoint x="7908.4659" y="1.0560"/>
+                <DataPoint x="8214.8076" y="1.0470"/>
+                <DataPoint x="8533.0158" y="1.0379"/>
+                <DataPoint x="8863.5500" y="1.0271"/>
+                <DataPoint x="9206.8877" y="1.0209"/>
+                <DataPoint x="9563.5250" y="1.0080"/>
+                <DataPoint x="9933.9769" y="0.9998"/>
+                <DataPoint x="10318.7787" y="0.9882"/>
+                <DataPoint x="10718.4861" y="0.9763"/>
+                <DataPoint x="11133.6765" y="0.9678"/>
+                <DataPoint x="11564.9497" y="0.9552"/>
+                <DataPoint x="12012.9286" y="0.9432"/>
+                <DataPoint x="12478.2605" y="0.9298"/>
+                <DataPoint x="12961.6174" y="0.9163"/>
+                <DataPoint x="13463.6976" y="0.9026"/>
+                <DataPoint x="13985.2263" y="0.8907"/>
+                <DataPoint x="14526.9569" y="0.8738"/>
+                <DataPoint x="15089.6719" y="0.8601"/>
+                <DataPoint x="15674.1842" y="0.8418"/>
+                <DataPoint x="16281.3382" y="0.8264"/>
+                <DataPoint x="16912.0108" y="0.8117"/>
+                <DataPoint x="17567.1131" y="0.7901"/>
+                <DataPoint x="18247.5914" y="0.7739"/>
+                <DataPoint x="18954.4286" y="0.7519"/>
+                <DataPoint x="19688.6458" y="0.7328"/>
+                <DataPoint x="20451.3037" y="0.7122"/>
+                <DataPoint x="21243.5037" y="0.6890"/>
+                <DataPoint x="22066.3904" y="0.6648"/>
+                <DataPoint x="22921.1523" y="0.6410"/>
+                <DataPoint x="23809.0242" y="0.6161"/>
+                <DataPoint x="24731.2887" y="0.5915"/>
+                <DataPoint x="25689.2779" y="0.5629"/>
+                <DataPoint x="26684.3757" y="0.5317"/>
+                <DataPoint x="27718.0196" y="0.5014"/>
+                <DataPoint x="28791.7025" y="0.4689"/>
+                <DataPoint x="29906.9756" y="0.4347"/>
+                <DataPoint x="31065.4498" y="0.3926"/>
+                <DataPoint x="32268.7986" y="0.3623"/>
+                <DataPoint x="33518.7602" y="0.3191"/>
+                <DataPoint x="34817.1402" y="0.2786"/>
+                <DataPoint x="36165.8142" y="0.2443"/>
+                <DataPoint x="37566.7303" y="0.1900"/>
+                <DataPoint x="39021.9121" y="0.1471"/>
+                <DataPoint x="40533.4618" y="0.0968"/>
+                <DataPoint x="42103.5627" y="0.0480"/>
+                <DataPoint x="43734.4830" y="-0.0128"/>
+                <DataPoint x="45428.5784" y="-0.0700"/>
+                <DataPoint x="47188.2962" y="-0.1200"/>
+                <DataPoint x="49016.1782" y="-0.1912"/>
+                <DataPoint x="50914.8650" y="-0.2459"/>
+                <DataPoint x="52887.0991" y="-0.3333"/>
+                <DataPoint x="54935.7296" y="-0.3935"/>
+                <DataPoint x="57063.7156" y="-0.4585"/>
+                <DataPoint x="59274.1311" y="-0.5452"/>
+                <DataPoint x="61570.1691" y="-0.6272"/>
+                <DataPoint x="63955.1462" y="-0.7295"/>
+                <DataPoint x="66432.5077" y="-0.8425"/>
+                <DataPoint x="69005.8320" y="-0.9122"/>
+                <DataPoint x="71678.8363" y="-1.0434"/>
+                <DataPoint x="74455.3820" y="-1.1578"/>
+                <DataPoint x="77339.4797" y="-1.2835"/>
+                <DataPoint x="80335.2956" y="-1.3946"/>
+                <DataPoint x="83447.1572" y="-1.5498"/>
+                <DataPoint x="86679.5596" y="-1.6833"/>
+                <DataPoint x="90037.1721" y="-1.8682"/>
+                <DataPoint x="93524.8448" y="-2.0627"/>
+                <DataPoint x="97147.6157" y="-2.1976"/>
+                <DataPoint x="100910.7179" y="-5.1722"/>
+                <DataPoint x="104819.5874" y="-5.6554"/>
+                <DataPoint x="108879.8706" y="-5.7919"/>
+                <DataPoint x="113097.4325" y="-6.0124"/>
+                <DataPoint x="117478.3656" y="-6.2276"/>
+                <DataPoint x="122028.9982" y="-6.3701"/>
+                <DataPoint x="126755.9037" y="-6.5567"/>
+                <DataPoint x="131665.9102" y="-6.8001"/>
+                <DataPoint x="136766.1104" y="-7.0101"/>
+                <DataPoint x="142063.8715" y="-7.1810"/>
+                <DataPoint x="147566.8463" y="-7.4168"/>
+                <DataPoint x="153282.9838" y="-7.6167"/>
+                <DataPoint x="159220.5412" y="-7.8676"/>
+                <DataPoint x="165388.0953" y="-8.1576"/>
+                <DataPoint x="171794.5554" y="-8.4092"/>
+                <DataPoint x="178449.1755" y="-8.7670"/>
+                <DataPoint x="185361.5685" y="-9.2773"/>
+                <DataPoint x="192541.7194" y="-10.1167"/>
+                <DataPoint x="200000.0000" y="-8.8244"/>
+            </Memory>
+            <Memory id="3" name="2">
+                <DataPoint x="100.0000" y="1.6939"/>
+                <DataPoint x="103.8736" y="1.7765"/>
+                <DataPoint x="107.8972" y="1.7933"/>
+                <DataPoint x="112.0767" y="1.6956"/>
+                <DataPoint x="116.4181" y="1.7687"/>
+                <DataPoint x="120.9277" y="1.7427"/>
+                <DataPoint x="125.6119" y="1.6793"/>
+                <DataPoint x="130.4776" y="1.6708"/>
+                <DataPoint x="135.5318" y="1.6924"/>
+                <DataPoint x="140.7817" y="1.7111"/>
+                <DataPoint x="146.2351" y="1.7683"/>
+                <DataPoint x="151.8996" y="1.7015"/>
+                <DataPoint x="157.7836" y="1.7172"/>
+                <DataPoint x="163.8955" y="1.7114"/>
+                <DataPoint x="170.2441" y="1.7484"/>
+                <DataPoint x="176.8387" y="1.6952"/>
+                <DataPoint x="183.6887" y="1.6956"/>
+                <DataPoint x="190.8040" y="1.7300"/>
+                <DataPoint x="198.1950" y="1.7149"/>
+                <DataPoint x="205.8723" y="1.7391"/>
+                <DataPoint x="213.8469" y="1.7594"/>
+                <DataPoint x="222.1305" y="1.7232"/>
+                <DataPoint x="230.7349" y="1.7222"/>
+                <DataPoint x="239.6726" y="1.7251"/>
+                <DataPoint x="248.9566" y="1.7261"/>
+                <DataPoint x="258.6001" y="1.7373"/>
+                <DataPoint x="268.6173" y="1.7465"/>
+                <DataPoint x="279.0224" y="1.7749"/>
+                <DataPoint x="289.8306" y="1.7273"/>
+                <DataPoint x="301.0574" y="1.7543"/>
+                <DataPoint x="312.7192" y="1.7509"/>
+                <DataPoint x="324.8326" y="1.7583"/>
+                <DataPoint x="337.4153" y="1.7725"/>
+                <DataPoint x="350.4854" y="1.7797"/>
+                <DataPoint x="364.0618" y="1.7967"/>
+                <DataPoint x="378.1641" y="1.7859"/>
+                <DataPoint x="392.8126" y="1.7885"/>
+                <DataPoint x="408.0285" y="1.8038"/>
+                <DataPoint x="423.8339" y="1.7965"/>
+                <DataPoint x="440.2515" y="1.7928"/>
+                <DataPoint x="457.3051" y="1.8224"/>
+                <DataPoint x="475.0192" y="1.8124"/>
+                <DataPoint x="493.4195" y="1.8242"/>
+                <DataPoint x="512.5325" y="1.8141"/>
+                <DataPoint x="532.3860" y="1.8262"/>
+                <DataPoint x="553.0084" y="1.8104"/>
+                <DataPoint x="574.4297" y="1.8458"/>
+                <DataPoint x="596.6808" y="1.8529"/>
+                <DataPoint x="619.7938" y="1.8770"/>
+                <DataPoint x="643.8020" y="1.8706"/>
+                <DataPoint x="668.7403" y="1.8786"/>
+                <DataPoint x="694.6446" y="1.8869"/>
+                <DataPoint x="721.5523" y="1.8781"/>
+                <DataPoint x="749.5023" y="1.9070"/>
+                <DataPoint x="778.5349" y="1.9074"/>
+                <DataPoint x="808.6922" y="1.9172"/>
+                <DataPoint x="840.0176" y="1.9203"/>
+                <DataPoint x="872.5565" y="1.9293"/>
+                <DataPoint x="906.3558" y="1.9368"/>
+                <DataPoint x="941.4643" y="1.9321"/>
+                <DataPoint x="977.9328" y="1.9586"/>
+                <DataPoint x="1015.8139" y="1.9450"/>
+                <DataPoint x="1055.1624" y="1.9634"/>
+                <DataPoint x="1096.0351" y="1.9738"/>
+                <DataPoint x="1138.4910" y="1.9500"/>
+                <DataPoint x="1182.5915" y="1.9578"/>
+                <DataPoint x="1228.4003" y="1.9377"/>
+                <DataPoint x="1275.9835" y="1.9597"/>
+                <DataPoint x="1325.4099" y="1.9577"/>
+                <DataPoint x="1376.7508" y="1.9122"/>
+                <DataPoint x="1430.0805" y="1.9203"/>
+                <DataPoint x="1485.4760" y="1.9026"/>
+                <DataPoint x="1543.0173" y="1.9005"/>
+                <DataPoint x="1602.7875" y="1.8796"/>
+                <DataPoint x="1664.8730" y="1.8576"/>
+                <DataPoint x="1729.3633" y="1.8397"/>
+                <DataPoint x="1796.3518" y="1.8170"/>
+                <DataPoint x="1865.9352" y="1.7941"/>
+                <DataPoint x="1938.2139" y="1.7687"/>
+                <DataPoint x="2013.2924" y="1.7372"/>
+                <DataPoint x="2091.2791" y="1.7146"/>
+                <DataPoint x="2172.2867" y="1.6996"/>
+                <DataPoint x="2256.4322" y="1.6492"/>
+                <DataPoint x="2343.8372" y="1.6166"/>
+                <DataPoint x="2434.6279" y="1.5827"/>
+                <DataPoint x="2528.9355" y="1.5488"/>
+                <DataPoint x="2626.8961" y="1.5261"/>
+                <DataPoint x="2728.6514" y="1.4931"/>
+                <DataPoint x="2834.3482" y="1.4676"/>
+                <DataPoint x="2944.1393" y="1.4478"/>
+                <DataPoint x="3058.1832" y="1.4270"/>
+                <DataPoint x="3176.6447" y="1.4064"/>
+                <DataPoint x="3299.6950" y="1.3909"/>
+                <DataPoint x="3427.5117" y="1.3786"/>
+                <DataPoint x="3560.2795" y="1.3675"/>
+                <DataPoint x="3698.1902" y="1.3575"/>
+                <DataPoint x="3841.4430" y="1.3466"/>
+                <DataPoint x="3990.2449" y="1.3385"/>
+                <DataPoint x="4144.8107" y="1.3211"/>
+                <DataPoint x="4305.3637" y="1.3196"/>
+                <DataPoint x="4472.1360" y="1.3136"/>
+                <DataPoint x="4645.3683" y="1.3062"/>
+                <DataPoint x="4825.3109" y="1.2972"/>
+                <DataPoint x="5012.2237" y="1.2947"/>
+                <DataPoint x="5206.3768" y="1.2896"/>
+                <DataPoint x="5408.0506" y="1.2806"/>
+                <DataPoint x="5617.5364" y="1.2729"/>
+                <DataPoint x="5835.1369" y="1.2684"/>
+                <DataPoint x="6061.1663" y="1.2621"/>
+                <DataPoint x="6295.9511" y="1.2515"/>
+                <DataPoint x="6539.8306" y="1.2440"/>
+                <DataPoint x="6793.1569" y="1.2357"/>
+                <DataPoint x="7056.2961" y="1.2256"/>
+                <DataPoint x="7329.6282" y="1.2186"/>
+                <DataPoint x="7613.5481" y="1.2072"/>
+                <DataPoint x="7908.4659" y="1.1986"/>
+                <DataPoint x="8214.8076" y="1.1857"/>
+                <DataPoint x="8533.0158" y="1.1740"/>
+                <DataPoint x="8863.5500" y="1.1589"/>
+                <DataPoint x="9206.8877" y="1.1478"/>
+                <DataPoint x="9563.5250" y="1.1338"/>
+                <DataPoint x="9933.9769" y="1.1198"/>
+                <DataPoint x="10318.7787" y="1.1050"/>
+                <DataPoint x="10718.4861" y="1.0910"/>
+                <DataPoint x="11133.6765" y="1.0766"/>
+                <DataPoint x="11564.9497" y="1.0582"/>
+                <DataPoint x="12012.9286" y="1.0449"/>
+                <DataPoint x="12478.2605" y="1.0252"/>
+                <DataPoint x="12961.6174" y="1.0076"/>
+                <DataPoint x="13463.6976" y="0.9919"/>
+                <DataPoint x="13985.2263" y="0.9703"/>
+                <DataPoint x="14526.9569" y="0.9501"/>
+                <DataPoint x="15089.6719" y="0.9296"/>
+                <DataPoint x="15674.1842" y="0.9101"/>
+                <DataPoint x="16281.3382" y="0.8884"/>
+                <DataPoint x="16912.0108" y="0.8658"/>
+                <DataPoint x="17567.1131" y="0.8423"/>
+                <DataPoint x="18247.5914" y="0.8194"/>
+                <DataPoint x="18954.4286" y="0.7918"/>
+                <DataPoint x="19688.6458" y="0.7677"/>
+                <DataPoint x="20451.3037" y="0.7432"/>
+                <DataPoint x="21243.5037" y="0.7132"/>
+                <DataPoint x="22066.3904" y="0.6845"/>
+                <DataPoint x="22921.1523" y="0.6587"/>
+                <DataPoint x="23809.0242" y="0.6290"/>
+                <DataPoint x="24731.2887" y="0.5993"/>
+                <DataPoint x="25689.2779" y="0.5678"/>
+                <DataPoint x="26684.3757" y="0.5352"/>
+                <DataPoint x="27718.0196" y="0.5039"/>
+                <DataPoint x="28791.7025" y="0.4706"/>
+                <DataPoint x="29906.9756" y="0.4344"/>
+                <DataPoint x="31065.4498" y="0.4039"/>
+                <DataPoint x="32268.7986" y="0.3579"/>
+                <DataPoint x="33518.7602" y="0.3274"/>
+                <DataPoint x="34817.1402" y="0.2841"/>
+                <DataPoint x="36165.8142" y="0.2458"/>
+                <DataPoint x="37566.7303" y="0.1978"/>
+                <DataPoint x="39021.9121" y="0.1543"/>
+                <DataPoint x="40533.4618" y="0.1097"/>
+                <DataPoint x="42103.5627" y="0.0631"/>
+                <DataPoint x="43734.4830" y="0.0101"/>
+                <DataPoint x="45428.5784" y="-0.0412"/>
+                <DataPoint x="47188.2962" y="-0.1150"/>
+                <DataPoint x="49016.1782" y="-0.1850"/>
+                <DataPoint x="50914.8650" y="-0.2223"/>
+                <DataPoint x="52887.0991" y="-0.3007"/>
+                <DataPoint x="54935.7296" y="-0.3830"/>
+                <DataPoint x="57063.7156" y="-0.4587"/>
+                <DataPoint x="59274.1311" y="-0.5302"/>
+                <DataPoint x="61570.1691" y="-0.6115"/>
+                <DataPoint x="63955.1462" y="-0.7068"/>
+                <DataPoint x="66432.5077" y="-0.8135"/>
+                <DataPoint x="69005.8320" y="-0.9180"/>
+                <DataPoint x="71678.8363" y="-0.9896"/>
+                <DataPoint x="74455.3820" y="-1.1253"/>
+                <DataPoint x="77339.4797" y="-1.2262"/>
+                <DataPoint x="80335.2956" y="-1.3603"/>
+                <DataPoint x="83447.1572" y="-1.4790"/>
+                <DataPoint x="86679.5596" y="-1.6633"/>
+                <DataPoint x="90037.1721" y="-1.8084"/>
+                <DataPoint x="93524.8448" y="-1.8921"/>
+                <DataPoint x="97147.6157" y="-2.1123"/>
+                <DataPoint x="100910.7179" y="-4.9803"/>
+                <DataPoint x="104819.5874" y="-5.7727"/>
+                <DataPoint x="108879.8706" y="-5.7298"/>
+                <DataPoint x="113097.4325" y="-5.8722"/>
+                <DataPoint x="117478.3656" y="-6.1150"/>
+                <DataPoint x="122028.9982" y="-6.3425"/>
+                <DataPoint x="126755.9037" y="-6.5215"/>
+                <DataPoint x="131665.9102" y="-6.7307"/>
+                <DataPoint x="136766.1104" y="-6.8885"/>
+                <DataPoint x="142063.8715" y="-7.1428"/>
+                <DataPoint x="147566.8463" y="-7.3505"/>
+                <DataPoint x="153282.9838" y="-7.5775"/>
+                <DataPoint x="159220.5412" y="-7.7776"/>
+                <DataPoint x="165388.0953" y="-8.0606"/>
+                <DataPoint x="171794.5554" y="-8.3036"/>
+                <DataPoint x="178449.1755" y="-8.6439"/>
+                <DataPoint x="185361.5685" y="-9.0787"/>
+                <DataPoint x="192541.7194" y="-9.7894"/>
+                <DataPoint x="200000.0000" y="-9.1911"/>
+            </Memory>
+            <Memory id="4" name="3">
+                <DataPoint x="100.0000" y="1.7373"/>
+                <DataPoint x="103.8736" y="1.6577"/>
+                <DataPoint x="107.8972" y="1.6584"/>
+                <DataPoint x="112.0767" y="1.6361"/>
+                <DataPoint x="116.4181" y="1.6362"/>
+                <DataPoint x="120.9277" y="1.6414"/>
+                <DataPoint x="125.6119" y="1.6553"/>
+                <DataPoint x="130.4776" y="1.6117"/>
+                <DataPoint x="135.5318" y="1.6555"/>
+                <DataPoint x="140.7817" y="1.6139"/>
+                <DataPoint x="146.2351" y="1.5967"/>
+                <DataPoint x="151.8996" y="1.6092"/>
+                <DataPoint x="157.7836" y="1.6125"/>
+                <DataPoint x="163.8955" y="1.5885"/>
+                <DataPoint x="170.2441" y="1.6256"/>
+                <DataPoint x="176.8387" y="1.6224"/>
+                <DataPoint x="183.6887" y="1.6161"/>
+                <DataPoint x="190.8040" y="1.6240"/>
+                <DataPoint x="198.1950" y="1.6394"/>
+                <DataPoint x="205.8723" y="1.5821"/>
+                <DataPoint x="213.8469" y="1.6418"/>
+                <DataPoint x="222.1305" y="1.6152"/>
+                <DataPoint x="230.7349" y="1.6216"/>
+                <DataPoint x="239.6726" y="1.6046"/>
+                <DataPoint x="248.9566" y="1.5859"/>
+                <DataPoint x="258.6001" y="1.5858"/>
+                <DataPoint x="268.6173" y="1.6065"/>
+                <DataPoint x="279.0224" y="1.5948"/>
+                <DataPoint x="289.8306" y="1.6017"/>
+                <DataPoint x="301.0574" y="1.5892"/>
+                <DataPoint x="312.7192" y="1.5681"/>
+                <DataPoint x="324.8326" y="1.5796"/>
+                <DataPoint x="337.4153" y="1.5788"/>
+                <DataPoint x="350.4854" y="1.5816"/>
+                <DataPoint x="364.0618" y="1.5494"/>
+                <DataPoint x="378.1641" y="1.5547"/>
+                <DataPoint x="392.8126" y="1.5564"/>
+                <DataPoint x="408.0285" y="1.5598"/>
+                <DataPoint x="423.8339" y="1.5521"/>
+                <DataPoint x="440.2515" y="1.5553"/>
+                <DataPoint x="457.3051" y="1.5563"/>
+                <DataPoint x="475.0192" y="1.5381"/>
+                <DataPoint x="493.4195" y="1.5683"/>
+                <DataPoint x="512.5325" y="1.5424"/>
+                <DataPoint x="532.3860" y="1.5381"/>
+                <DataPoint x="553.0084" y="1.5489"/>
+                <DataPoint x="574.4297" y="1.5543"/>
+                <DataPoint x="596.6808" y="1.5435"/>
+                <DataPoint x="619.7938" y="1.5323"/>
+                <DataPoint x="643.8020" y="1.5398"/>
+                <DataPoint x="668.7403" y="1.5449"/>
+                <DataPoint x="694.6446" y="1.5462"/>
+                <DataPoint x="721.5523" y="1.5361"/>
+                <DataPoint x="749.5023" y="1.5507"/>
+                <DataPoint x="778.5349" y="1.5497"/>
+                <DataPoint x="808.6922" y="1.5255"/>
+                <DataPoint x="840.0176" y="1.5286"/>
+                <DataPoint x="872.5565" y="1.5454"/>
+                <DataPoint x="906.3558" y="1.5336"/>
+                <DataPoint x="941.4643" y="1.5508"/>
+                <DataPoint x="977.9328" y="1.5340"/>
+                <DataPoint x="1015.8139" y="1.5358"/>
+                <DataPoint x="1055.1624" y="1.5418"/>
+                <DataPoint x="1096.0351" y="1.5346"/>
+                <DataPoint x="1138.4910" y="1.5399"/>
+                <DataPoint x="1182.5915" y="1.5336"/>
+                <DataPoint x="1228.4003" y="1.5402"/>
+                <DataPoint x="1275.9835" y="1.5325"/>
+                <DataPoint x="1325.4099" y="1.5408"/>
+                <DataPoint x="1376.7508" y="1.5375"/>
+                <DataPoint x="1430.0805" y="1.5435"/>
+                <DataPoint x="1485.4760" y="1.5506"/>
+                <DataPoint x="1543.0173" y="1.5563"/>
+                <DataPoint x="1602.7875" y="1.5655"/>
+                <DataPoint x="1664.8730" y="1.5615"/>
+                <DataPoint x="1729.3633" y="1.5687"/>
+                <DataPoint x="1796.3518" y="1.5823"/>
+                <DataPoint x="1865.9352" y="1.5819"/>
+                <DataPoint x="1938.2139" y="1.5890"/>
+                <DataPoint x="2013.2924" y="1.6014"/>
+                <DataPoint x="2091.2791" y="1.6129"/>
+                <DataPoint x="2172.2867" y="1.6086"/>
+                <DataPoint x="2256.4322" y="1.6228"/>
+                <DataPoint x="2343.8372" y="1.6255"/>
+                <DataPoint x="2434.6279" y="1.6359"/>
+                <DataPoint x="2528.9355" y="1.6413"/>
+                <DataPoint x="2626.8961" y="1.6439"/>
+                <DataPoint x="2728.6514" y="1.6526"/>
+                <DataPoint x="2834.3482" y="1.6548"/>
+                <DataPoint x="2944.1393" y="1.6631"/>
+                <DataPoint x="3058.1832" y="1.6605"/>
+                <DataPoint x="3176.6447" y="1.6654"/>
+                <DataPoint x="3299.6950" y="1.6716"/>
+                <DataPoint x="3427.5117" y="1.6707"/>
+                <DataPoint x="3560.2795" y="1.6687"/>
+                <DataPoint x="3698.1902" y="1.6661"/>
+                <DataPoint x="3841.4430" y="1.6687"/>
+                <DataPoint x="3990.2449" y="1.6659"/>
+                <DataPoint x="4144.8107" y="1.6589"/>
+                <DataPoint x="4305.3637" y="1.6582"/>
+                <DataPoint x="4472.1360" y="1.6547"/>
+                <DataPoint x="4645.3683" y="1.6459"/>
+                <DataPoint x="4825.3109" y="1.6384"/>
+                <DataPoint x="5012.2237" y="1.6324"/>
+                <DataPoint x="5206.3768" y="1.6167"/>
+                <DataPoint x="5408.0506" y="1.6128"/>
+                <DataPoint x="5617.5364" y="1.5993"/>
+                <DataPoint x="5835.1369" y="1.5793"/>
+                <DataPoint x="6061.1663" y="1.5674"/>
+                <DataPoint x="6295.9511" y="1.5534"/>
+                <DataPoint x="6539.8306" y="1.5365"/>
+                <DataPoint x="6793.1569" y="1.5202"/>
+                <DataPoint x="7056.2961" y="1.5024"/>
+                <DataPoint x="7329.6282" y="1.4858"/>
+                <DataPoint x="7613.5481" y="1.4671"/>
+                <DataPoint x="7908.4659" y="1.4521"/>
+                <DataPoint x="8214.8076" y="1.4342"/>
+                <DataPoint x="8533.0158" y="1.4147"/>
+                <DataPoint x="8863.5500" y="1.3964"/>
+                <DataPoint x="9206.8877" y="1.3783"/>
+                <DataPoint x="9563.5250" y="1.3589"/>
+                <DataPoint x="9933.9769" y="1.3396"/>
+                <DataPoint x="10318.7787" y="1.3236"/>
+                <DataPoint x="10718.4861" y="1.3031"/>
+                <DataPoint x="11133.6765" y="1.2857"/>
+                <DataPoint x="11564.9497" y="1.2641"/>
+                <DataPoint x="12012.9286" y="1.2456"/>
+                <DataPoint x="12478.2605" y="1.2274"/>
+                <DataPoint x="12961.6174" y="1.2057"/>
+                <DataPoint x="13463.6976" y="1.1861"/>
+                <DataPoint x="13985.2263" y="1.1647"/>
+                <DataPoint x="14526.9569" y="1.1462"/>
+                <DataPoint x="15089.6719" y="1.1220"/>
+                <DataPoint x="15674.1842" y="1.1014"/>
+                <DataPoint x="16281.3382" y="1.0810"/>
+                <DataPoint x="16912.0108" y="1.0566"/>
+                <DataPoint x="17567.1131" y="1.0326"/>
+                <DataPoint x="18247.5914" y="1.0097"/>
+                <DataPoint x="18954.4286" y="0.9871"/>
+                <DataPoint x="19688.6458" y="0.9603"/>
+                <DataPoint x="20451.3037" y="0.9353"/>
+                <DataPoint x="21243.5037" y="0.9083"/>
+                <DataPoint x="22066.3904" y="0.8823"/>
+                <DataPoint x="22921.1523" y="0.8510"/>
+                <DataPoint x="23809.0242" y="0.8207"/>
+                <DataPoint x="24731.2887" y="0.7913"/>
+                <DataPoint x="25689.2779" y="0.7600"/>
+                <DataPoint x="26684.3757" y="0.7235"/>
+                <DataPoint x="27718.0196" y="0.6900"/>
+                <DataPoint x="28791.7025" y="0.6523"/>
+                <DataPoint x="29906.9756" y="0.6137"/>
+                <DataPoint x="31065.4498" y="0.5753"/>
+                <DataPoint x="32268.7986" y="0.5348"/>
+                <DataPoint x="33518.7602" y="0.4957"/>
+                <DataPoint x="34817.1402" y="0.4458"/>
+                <DataPoint x="36165.8142" y="0.4018"/>
+                <DataPoint x="37566.7303" y="0.3633"/>
+                <DataPoint x="39021.9121" y="0.3130"/>
+                <DataPoint x="40533.4618" y="0.2537"/>
+                <DataPoint x="42103.5627" y="0.2019"/>
+                <DataPoint x="43734.4830" y="0.1407"/>
+                <DataPoint x="45428.5784" y="0.0889"/>
+                <DataPoint x="47188.2962" y="0.0384"/>
+                <DataPoint x="49016.1782" y="-0.0229"/>
+                <DataPoint x="50914.8650" y="-0.0860"/>
+                <DataPoint x="52887.0991" y="-0.1654"/>
+                <DataPoint x="54935.7296" y="-0.2359"/>
+                <DataPoint x="57063.7156" y="-0.3098"/>
+                <DataPoint x="59274.1311" y="-0.3956"/>
+                <DataPoint x="61570.1691" y="-0.4913"/>
+                <DataPoint x="63955.1462" y="-0.5829"/>
+                <DataPoint x="66432.5077" y="-0.6768"/>
+                <DataPoint x="69005.8320" y="-0.7826"/>
+                <DataPoint x="71678.8363" y="-0.8680"/>
+                <DataPoint x="74455.3820" y="-0.9834"/>
+                <DataPoint x="77339.4797" y="-1.0948"/>
+                <DataPoint x="80335.2956" y="-1.2642"/>
+                <DataPoint x="83447.1572" y="-1.3865"/>
+                <DataPoint x="86679.5596" y="-1.5184"/>
+                <DataPoint x="90037.1721" y="-1.6881"/>
+                <DataPoint x="93524.8448" y="-1.7804"/>
+                <DataPoint x="97147.6157" y="-2.1231"/>
+                <DataPoint x="100910.7179" y="-1.5707"/>
+                <DataPoint x="104819.5874" y="0.8331"/>
+                <DataPoint x="108879.8706" y="0.6928"/>
+                <DataPoint x="113097.4325" y="0.4930"/>
+                <DataPoint x="117478.3656" y="0.3114"/>
+                <DataPoint x="122028.9982" y="0.1125"/>
+                <DataPoint x="126755.9037" y="-0.0725"/>
+                <DataPoint x="131665.9102" y="-0.2862"/>
+                <DataPoint x="136766.1104" y="-0.4746"/>
+                <DataPoint x="142063.8715" y="-0.6786"/>
+                <DataPoint x="147566.8463" y="-0.9053"/>
+                <DataPoint x="153282.9838" y="-1.1206"/>
+                <DataPoint x="159220.5412" y="-1.3570"/>
+                <DataPoint x="165388.0953" y="-1.5627"/>
+                <DataPoint x="171794.5554" y="-1.8698"/>
+                <DataPoint x="178449.1755" y="-2.2164"/>
+                <DataPoint x="185361.5685" y="-2.6557"/>
+                <DataPoint x="192541.7194" y="-3.2223"/>
+                <DataPoint x="200000.0000" y="-2.8005"/>
+            </Memory>
+        </OmicronBodePhaseData>
+    </OmicronBode>
+</WDSArchive>

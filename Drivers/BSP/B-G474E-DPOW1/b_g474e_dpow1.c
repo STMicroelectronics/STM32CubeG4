@@ -45,16 +45,6 @@
   * @{
   */
 
-/** @defgroup B-G474E-DPOW1_Private_Defines Private Defines
-  * @{
-  */
-#if defined(_GUI_INTERFACE)
-const uint8_t HWBoardVersionName[]  = "B-G474E-DPOW1";
-const uint8_t PDTypeName[]          = "MB1428B";
-#endif /* _GUI_INTERFACE */
-/**
-  * @}
-  */
 
 /** @defgroup B-G474E-DPOW1_Private_Variables Private Variables
   * @{
@@ -151,35 +141,33 @@ static void UP_JOY_EXTI_Callback(void);
   * @{
   */
 
-  /**
+/**
   * @brief  This method returns the B-G474E-DPOW1 BSP Driver revision
-  * @retval version: 0xXYZR (8bits for each decimal, R for RC)
+  * @retval version 0xXYZR (8bits for each decimal, R for RC)
   */
 int32_t BSP_GetVersion(void)
 {
   return (int32_t)B_G474E_DPOW1_BSP_VERSION;
 }
 
-#if defined(_GUI_INTERFACE)
 /**
-  * @brief  This method returns HW board version name
-  * @retval HW Board version name
+  * @brief  This method returns the board name
+  * @retval pointer to the board name string
   */
-const uint8_t* BSP_GetHWBoardVersionName(void)
+const uint8_t* BSP_GetBoardName(void)
 {
-  return HWBoardVersionName;
+  return (const uint8_t*)B_G474E_DPOW1_BSP_BOARD_NAME;
 }
 
 /**
-  * @brief  This method returns HW PD Type name
-  * @retval HW Board version name
+  * @brief  This method returns the board ID
+  * @retval pointer to the board ID string
   */
-const uint8_t* BSP_GetPDTypeName(void)
+const uint8_t* BSP_GetBoardID(void)
 {
-  return PDTypeName;
+  return (const uint8_t*)B_G474E_DPOW1_BSP_BOARD_ID;
 }
 
-#endif /* _GUI_INTERFACE */
 /**
   * @brief  Configures LED on GPIO.
   * @param  Led LED to be configured.

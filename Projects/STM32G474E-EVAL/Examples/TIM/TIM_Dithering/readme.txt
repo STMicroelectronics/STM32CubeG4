@@ -114,6 +114,10 @@ If BUTTON_USER is pressed again dithering is reactivated.
 @note The application need to ensure that the SysTick time base is always set to 1 millisecond
       to have correct HAL operation.
 
+@par Keywords
+
+Timer, TIM, Dithering, PWM, Frequency, Duty Cycle, Waveform, Oscilloscope, Output, Signal.
+
 @par Directory contents
 
   - TIM/TIM_Dithering/Inc/stm32g474e_eval_conf.h     BSP configuration file
@@ -137,8 +141,8 @@ If BUTTON_USER is pressed again dithering is reactivated.
 
   - STM32G474E-EVAL Rev B Set-up
    Connect the following pins to an oscilloscope to monitor the waveforms:
-        - TIM3_CHTIM3_CH3 : PC8
-        - TIM3_CHTIM3_CH4 : PC9 Oscilloscope synchronization in dithering mode (1 pulse every 16 periods)
+        - TIM3_CHTIM3_CH3 : PC8 (pin 1 in CN5 connector)
+        - TIM3_CHTIM3_CH4 : PC9 (pin 11 in CN5 connector) Oscilloscope synchronization in dithering mode (1 pulse every 16 periods)
 
 
 @par How to use it ?

@@ -64,7 +64,7 @@ generation is stopped.
 
 @par Keywords
 
-Timer, Low Power, PWM, Stop mode, Interrupt, External Clock, Output, Duty Cycle
+Timer, LPTIM, Low Power, PWM, Stop mode, Interrupt, External Clock, Output, Duty Cycle
 
 @par Directory contents  
 

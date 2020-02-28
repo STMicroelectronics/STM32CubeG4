@@ -167,7 +167,7 @@ int32_t Idd_demo(void)
             break;
       }
 
-      printf("PreDelay = %04d ms; AcquisitionDuration = %04d ms ", IddConfig.PreDelay, IddConfig.AcquisitionDuration);
+      printf("PreDelay = %04ld ms; AcquisitionDuration = %04ld ms ", IddConfig.PreDelay, IddConfig.AcquisitionDuration);
 
       status = BSP_IDD_Config(0, &IddConfig);
 
@@ -215,7 +215,7 @@ int32_t Idd_demo(void)
         Idd_Convert(IddValue, &idd);
 
         printf("Measured value = %s %s ", idd.value, idd.unit);
-        printf("Expected time = %04d ms; Elapsed Time = %04d ms\n", \
+        printf("Expected time = %04ld ms; Elapsed Time = %04ld ms\n", \
           IddConfig.PreDelay + IddConfig.AcquisitionDuration, \
           HAL_GetTick() - sav_systick \
           );

@@ -59,11 +59,11 @@
   */
 
 /**
- * @brief STM32G474E-EVAL BSP Driver version number V2.0.0
+ * @brief STM32G474E-EVAL BSP Driver version number V1.1.1
  */
 #define	STM32G474E_EVAL_BSP_VERSION_MAIN   (uint32_t)(0x01) /*!< [31:24] main version */
-#define	STM32G474E_EVAL_BSP_VERSION_SUB1   (uint32_t)(0x00) /*!< [23:16] sub1 version */
-#define	STM32G474E_EVAL_BSP_VERSION_SUB2   (uint32_t)(0x00) /*!< [15:8]  sub2 version */
+#define	STM32G474E_EVAL_BSP_VERSION_SUB1   (uint32_t)(0x01) /*!< [23:16] sub1 version */
+#define	STM32G474E_EVAL_BSP_VERSION_SUB2   (uint32_t)(0x01) /*!< [15:8]  sub2 version */
 #define	STM32G474E_EVAL_BSP_VERSION_RC     (uint32_t)(0x00) /*!< [7:0]  release candidate */
 #define	STM32G474E_EVAL_BSP_VERSION        ((STM32G474E_EVAL_BSP_VERSION_MAIN << 24)\
                                             |(STM32G474E_EVAL_BSP_VERSION_SUB1 << 16)\
@@ -97,6 +97,9 @@
   #define BSP_BUTTON_USER_IT_PRIORITY          15U
 #endif
 
+#define STM32G474E_EVAL_BSP_BOARD_NAME  "STM32G474E-EVAL"
+#define STM32G474E_EVAL_BSP_BOARD_ID    "MB1397B"
+
 typedef enum
 {
   LED1 = 0U,
@@ -126,7 +129,7 @@ typedef enum
 {
   COM1 = 0U,
   COMn,
-  }COM_TypeDef;
+}COM_TypeDef;
 
 typedef enum
 {
@@ -397,10 +400,13 @@ extern COMP_HandleTypeDef hpot_comp[POTn];
   * @{
   */
 int32_t  BSP_GetVersion(void);
-#if defined(_GUI_INTERFACE)
-const uint8_t* BSP_GetHWBoardVersionName(void);
-const uint8_t* BSP_GetPDTypeName(void);
-#endif /* _GUI_INTERFACE */
+const uint8_t* BSP_GetBoardName(void);
+const uint8_t* BSP_GetBoardID(void);
+
+/* Legacy APIs aliases */
+#define BSP_GetHWBoardVersionName    BSP_GetBoardName
+#define BSP_GetPDTypeName            BSP_GetBoardID
+
 int32_t  BSP_LED_Init(Led_TypeDef Led);
 int32_t  BSP_LED_DeInit(Led_TypeDef Led);
 int32_t  BSP_LED_On(Led_TypeDef Led);

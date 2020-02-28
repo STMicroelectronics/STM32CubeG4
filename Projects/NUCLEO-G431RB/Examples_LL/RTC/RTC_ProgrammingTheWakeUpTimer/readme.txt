@@ -32,7 +32,7 @@ GPIO associated to User push-button is linked with EXTI.
 
 Example execution:
    - Plug cable " USB to TTL 3V3 " (from USB to UART adapter)
-   - Connect USB Adapter Rx to USART1 Tx(PA.02)and USB Adapter to USART1 Rx(PA.03)
+   - Connect USB Adapter Rx to USART1 Tx(PA.09)and USB Adapter to USART1 Rx(PA.10)
    - Launch serial communication SW
    - Launch the program (LED2 should toggle at each WUT (every 1 second))
    - The time should be print on the interface
@@ -50,6 +50,10 @@ Example execution:
       LSE (when available on board) is delivered by a 32.768 kHz crystal.
 
 - LED2 is toggling faster: This indicates that the system generates an error.
+
+@par Keywords
+
+System, RTC, RTC Wakeup timer, WUT, LSI, LSE, Interrupt.
 
 @par Directory contents 
 
@@ -69,10 +73,10 @@ Example execution:
     easily tailored to any other supported device and development board.
 
   - NUCLEO-G431RB RevC Set-up
-    Connect GPIOs connected to USART1 TX/RX (PA.02 and PA.03)
+    Connect GPIOs connected to USART1 TX/RX (PA.09 and PA.10)
     to respectively RX and TX pins of PC UART (could be done through a USB to UART adapter).
-      - USART1_TX  PA.02: connected to pin 21 of CN10 connector 
-      - USART1_RX  PA.03: connected to pin 33 of CN10 connector 
+      - USART1_TX  PA.09: connected to pin 21 of CN10 connector 
+      - USART1_RX  PA.10: connected to pin 33 of CN10 connector 
     Connect GND between STM32 board and PC UART.
 
   - Launch serial communication SW on PC (as HyperTerminal or TeraTerm) with proper configuration 

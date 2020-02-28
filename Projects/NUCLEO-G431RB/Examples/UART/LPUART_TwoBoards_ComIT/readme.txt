@@ -97,6 +97,10 @@ The LPUART is configured as follows:
 @note The application needs to ensure that the SysTick time base is always set to
       1 millisecond to have correct HAL operation.
 
+@par Keywords
+
+Connectivity, LPUART, Baud rate, RS-232, Full-duplex, DMA, Parity, Stop bit, Transmission, Reception, Low power.
+
 @par Directory contents
 
   - UART/LPUART_TwoBoards_ComIT/Inc/stm32g4xx_nucleo_conf.h     BSP configuration file

@@ -396,7 +396,7 @@ void BuckBoost_LoadSelection(void)
   * @param  None
   * @retval None
   */
-static void CheckInputVoltage(void)
+void CheckInputVoltage(void)
 {
   ADC_ChannelConfTypeDef sConfig = {0};
   uint16_t ADCInput = 0;
@@ -1040,7 +1040,7 @@ static void FMAC_DeInit(void)
 uint16_t HAL_HRTIM_NsToTicks(HRTIM_HandleTypeDef *hhrtim, uint32_t Timers, int ns)
 {
   int scaleIndex = __HAL_HRTIM_GETCLOCKPRESCALER(hhrtim, Timers);
-  uint32_t ticks = (uint32_t)(fHRTIM_HZ * scaleTable[scaleIndex] * ns * 1.0e-9f);
+  uint32_t ticks = (uint32_t)((float)fHRTIM_HZ * scaleTable[scaleIndex] * (float)ns * 1.0e-9f);
 
   return MIN(ticks, UINT16_MAX);
 }
@@ -1056,7 +1056,7 @@ uint16_t HAL_HRTIM_NsToTicks(HRTIM_HandleTypeDef *hhrtim, uint32_t Timers, int n
 uint16_t HAL_HRTIM_FreqToTicks(HRTIM_HandleTypeDef *hhrtim, uint32_t Timers, int Freq)
 {
   int scaleIndex = __HAL_HRTIM_GETCLOCKPRESCALER(hhrtim, Timers);
-  uint32_t ticks = (uint32_t)(fHRTIM_HZ * scaleTable[scaleIndex] / Freq);
+  uint32_t ticks = (uint32_t)((float)fHRTIM_HZ * scaleTable[scaleIndex] / (float)Freq);
 
   return MIN(ticks, UINT16_MAX);
 }

@@ -215,8 +215,6 @@
         </option>
         <option>
           <name>CCDefines</name>
-          <state>__DEBUG_CAD</state>
-          <state>MB1397</state>
           <state>USE_FULL_LL_DRIVER</state>
           <state>_TRACE</state>
           <state>USBPD_PORT_COUNT=1</state>
@@ -225,6 +223,7 @@
           <state>_SRC</state>
           <state>USE_HAL_DRIVER</state>
           <state>STM32G474xx</state>
+          <state>_GUI_INTERFACE</state>
           <state></state>
           <state></state>
           <state></state>
@@ -365,6 +364,7 @@
           <state>$PROJ_DIR$/../../../../../../Middlewares/ST/STM32_USBPD_Library/../../../Drivers/STM32G4xx_HAL_Driver/Inc</state>
           <state>$PROJ_DIR$/../../../../../../Drivers/CMSIS/Device/ST/STM32G4xx/Include</state>
           <state>$PROJ_DIR$/../../../../../../Drivers/CMSIS/Include</state>
+          <state>$PROJ_DIR$/../../../../../../Utilities/GUI_INTERFACE</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -626,7 +626,7 @@
         </option>
         <option>
           <name>AUserIncludes</name>
-          <state>$PROJ_DIR$\..\\Inc</state>
+          <state>$PROJ_DIR$\..\Inc</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -1082,12 +1082,6 @@
     </group>
   </group>
   <group>
-    <name>Doc</name>
-    <file>
-      <name>$PROJ_DIR$/../readme.txt</name>
-    </file>
-  </group>
-  <group>
     <name>Drivers</name>
     <group>
       <name>STM32G4xx_HAL_Driver</name>
@@ -1101,28 +1095,16 @@
         <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_gpio.c</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc_ex.c</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_adc.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_dma.c</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_gpio.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim_ex.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_ucpd.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_usart.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_rcc.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.c</name>
@@ -1159,6 +1141,30 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_cortex.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_dma.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim_ex.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_pwr.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_usart.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_lpuart.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_ucpd.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_rcc.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../Middlewares/ST/STM32_USBPD_Library/../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_tim.c</name>
@@ -1254,6 +1260,15 @@
   </group>
   <group>
     <name>Utilities</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../Utilities/GUI_INTERFACE/data_struct_tlv.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../Utilities/GUI_INTERFACE/bsp_gui.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../Utilities/GUI_INTERFACE/gui_api.c</name>
+    </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../Utilities/TRACER_EMB/tracer_emb.c</name>
     </file>

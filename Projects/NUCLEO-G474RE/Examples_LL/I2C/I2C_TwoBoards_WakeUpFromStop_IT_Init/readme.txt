@@ -59,6 +59,14 @@ in the "main.h" file:
 - Comment "#define SLAVE_BOARD" to select Master board.
 - Uncomment "#define SLAVE_BOARD" to select Slave board.
 
+The user can disable internal pull-up by opening ioc file.
+For that, user can follow the procedure :
+1- Double click on the I2C_TwoBoards_WakeUpFromStop_IT_Init.ioc file
+2- When CUBEMX tool is opened, select System Core category
+3- Then in the configuration of GPIO/I2C1, change Pull-up to No pull-up and no pull-down for the both pins
+4- Last step, generate new code thanks to button "GENERATE CODE"
+The example is updated with no pull on each pin used for I2C communication
+
 A first program launch, BOARD SLAVE is in Stop 1 mode and BOARD MASTER is waiting User action on User push-button.
 LED2 blinks quickly on BOARD MASTER to wait for user-button press.
 
@@ -79,6 +87,10 @@ LED2 is ON on Slave side if the byte is well transmitted.
 LED2 is ON on Master side if the expected byte is well received.
 
 In case of errors, LED2 is blinking slowly (1s).
+
+@par Keywords
+
+Connectivity, Communication, I2C, Interrupt, Transmission, Reception, Fast mode, SDA, SCL, Wake up, Stop mode.
 
 @par Directory contents
 

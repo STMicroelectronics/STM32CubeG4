@@ -1,13 +1,12 @@
+/* USER CODE BEGIN Header */
 /**
   ******************************************************************************
   * @file    usbpd_dpm_conf.h
   * @author  MCD Application Team
   * @brief   Header file for stack/application settings file
   ******************************************************************************
-  * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics International N.V.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
   *
   * This software component is licensed by ST under BSD 3-Clause license,
   * the "License"; You may not use this file except in compliance with the
@@ -16,6 +15,7 @@
   *
   ******************************************************************************
   */
+/* USER CODE END Header */
 
 #ifndef __USBPD_DPM_CONF_H_
 #define __USBPD_DPM_CONF_H_
@@ -34,12 +34,21 @@
 #include "usbpd_gui_memmap.h"
 #include "gui_api.h"
 #endif /* _GUI_INTERFACE */
+/* USER CODE BEGIN Includes */
+/* Section where include file can be added */
+
+/* USER CODE END Includes */
 
 /* Define   ------------------------------------------------------------------*/
 /* Define VID, PID,... manufacturer parameters */
 #define USBPD_VID (0x0483u)     /*!< Vendor ID (assigned by the USB-IF)                     */
 #define USBPD_PID (0x0002u)     /*!< Product ID (assigned by the manufacturer)              */
 #define USBPD_XID (0xF0000003u) /*!< Value provided by the USB-IF assigned to the product   */
+
+/* USER CODE BEGIN Define */
+/* Section where Define can be added */
+
+/* USER CODE END Define */
 /* Define board operating power and max power */
 /* Request 5V and 1500mA in sink mode */
 #define USBPD_BOARD_REQUESTED_VOLTAGE_MV       5000
@@ -48,9 +57,15 @@
 #define USBPD_BOARD_MAX_CURRENT_MA             1500
 
 /* Exported typedef ----------------------------------------------------------*/
+/* USER CODE BEGIN Typedef */
+/* Section where Typedef can be added */
+
+/* USER CODE END Typedef */
+
 /* Private variables ---------------------------------------------------------*/
 #ifndef __USBPD_DPM_CORE_C
 extern USBPD_SettingsTypeDef      DPM_Settings[USBPD_PORT_COUNT];
+extern USBPD_IdSettingsTypeDef    DPM_ID_Settings[USBPD_PORT_COUNT];
 extern USBPD_USER_SettingsTypeDef DPM_USER_Settings[USBPD_PORT_COUNT];
 #else /* __USBPD_DPM_CORE_C */
 
@@ -123,23 +138,46 @@ USBPD_SettingsTypeDef DPM_Settings[USBPD_PORT_COUNT] =
 #else
       .Is_FirmUpdateRequest_Supported   = USBPD_FALSE,    /*!< Firmware update response message supported by PE */
 #endif /* _FWUPD */
-      .Is_SnkCapaExt_Supported          = USBPD_FALSE,     /*!< Sink_Capabilities_Extended message supported or not by DPM */
+      .Is_GetBattery_Supported          = USBPD_FALSE,          /*!< Get Battery Capabitity and Status messages supported by PE */
     },
 #else
     .reserved = 0,                              /* uint32_t reserved:16;                                   */
 #endif /* USBPD_REV30_SUPPORT */
+#if defined(_SRC) || defined(_DRP)
+    .CAD_DefaultResistor = vRp_3_0A,
+#endif /* _SRC || _DRP*/
     .CAD_SRCToggleTime = 40,                    /* uint8_t CAD_SRCToggleTime; */
     .CAD_SNKToggleTime = 40,                    /* uint8_t CAD_SNKToggleTime; */
   }
 };
 
+USBPD_IdSettingsTypeDef          DPM_ID_Settings[USBPD_PORT_COUNT] =
+{
+  {
+    .XID = USBPD_XID,     /*!< Value provided by the USB-IF assigned to the product   */
+    .VID = USBPD_VID,     /*!< Vendor ID (assigned by the USB-IF)                     */
+    .PID = USBPD_PID,     /*!< Product ID (assigned by the manufacturer)              */
+  },
+#if USBPD_PORT_COUNT >= 2
+  {
+    .XID = USBPD_XID,     /*!< Value provided by the USB-IF assigned to the product   */
+    .VID = USBPD_VID,     /*!< Vendor ID (assigned by the USB-IF)                     */
+    .PID = USBPD_PID,     /*!< Product ID (assigned by the manufacturer)              */
+  }
+#endif /* USBPD_PORT_COUNT >= 2 */
+};
 
-/* USER CODE BEGIN Variable */
-/* Section where Variable can be added */
-#if !defined(_GUI_INTERFACE)
 USBPD_USER_SettingsTypeDef DPM_USER_Settings[USBPD_PORT_COUNT] =
 {
   {
+      .PE_DataSwap = USBPD_TRUE,                  /* support data swap                                       */
+      .PE_DR_Swap_To_DFP = USBPD_TRUE,                  /*  Support of DR Swap to DFP                                  */
+      .PE_DR_Swap_To_UFP = USBPD_TRUE,                  /*  Support of DR Swap to UFP                                  */
+#ifdef _VCONN_SUPPORT
+      .PE_VconnSwap = USBPD_TRUE,                 /* support VCONN swap                                  */
+#else
+      .PE_VconnSwap = USBPD_FALSE,                /* support VCONN swap                                  */
+#endif /* _VCONN_SUPPORT */
 #if defined(_SNK) || defined(_DRP)
     .DPM_SNKRequestedPower =                                             /*!< Requested Power by the sink board                                    */
     {
@@ -151,12 +189,6 @@ USBPD_USER_SettingsTypeDef DPM_USER_Settings[USBPD_PORT_COUNT] =
       .MaxOperatingPowerInmWunits   = (USBPD_CORE_PDO_SNK_FIXED_MAX_CURRENT * USBPD_BOARD_MAX_VOLTAGE_MV)/1000
     },
 #endif /* SNK || _DRP */
-      .PE_DataSwap = USBPD_TRUE,                  /* support data swap                                       */
-#ifdef _VCONN_SUPPORT
-      .PE_VconnSwap = USBPD_TRUE,                 /* support VCONN swap                                  */
-#else
-      .PE_VconnSwap = USBPD_FALSE,                /* support VCONN swap                                  */
-#endif /* _VCONN_SUPPORT */
 #if defined(USBPD_REV30_SUPPORT)
 #if _SRC_CAPA_EXT && (defined(_SRC)||defined(_DRP))
     .DPM_SRCExtendedCapa =                        /*!< SRC Extended Capability           */
@@ -179,7 +211,7 @@ USBPD_USER_SettingsTypeDef DPM_USER_Settings[USBPD_PORT_COUNT] =
         .SourcePDP = (uint8_t)USBPD_PDP_SRC_IN_WATTS,       /*!< Source PDP  5V*3A                                    */
       },
 #endif /* _SRC_CAPA_EXT && (_SRC || _DRP) */
-#if _SNK_CAPA_EXT && (defined(_SNK)||defined(_DRP))
+#if defined(_SNK)||defined(_DRP)
     .DPM_SNKExtendedCapa =                        /*!< SRC Extended Capability           */
       {
         .VID                = USBPD_VID, /*!< Vendor ID (assigned by the USB-IF)                             */
@@ -210,7 +242,7 @@ USBPD_USER_SettingsTypeDef DPM_USER_Settings[USBPD_PORT_COUNT] =
         .SinkMaximumPDP     = 0,         /*!< The Maximum PDP the Sink can consume to operate and
                                               charge its Battery(s) should it have one.                      */
       },
-#endif /* _SNK_CAPA_EXT && (_SNK || _DRP) */
+#endif /* _SNK || _DRP */
 #if _MANU_INFO
     .DPM_ManuInfoPort =                      /*!< Manufacturer information used for the port            */
     {
@@ -234,15 +266,20 @@ USBPD_USER_SettingsTypeDef DPM_USER_Settings[USBPD_PORT_COUNT] =
 #endif /* _GUI_INTERFACE */
   }
 };
-#endif /* !_GUI_INTERFACE */
 #endif /* !__USBPD_DPM_CORE_C */
 /* USER CODE END Variable */
 
-/* Exported define -----------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
+/* USER CODE BEGIN Constant */
+/* Section where Constant can be added */
+
+/* USER CODE END Constant */
+
 /* Exported macro ------------------------------------------------------------*/
-/* Exported variables --------------------------------------------------------*/
-/* Exported functions --------------------------------------------------------*/
+/* USER CODE BEGIN Macro */
+/* Section where Macro can be added */
+
+/* USER CODE END Macro */
 
 #ifdef __cplusplus
 }

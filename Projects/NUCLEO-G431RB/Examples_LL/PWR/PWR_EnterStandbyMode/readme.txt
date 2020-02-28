@@ -24,11 +24,11 @@ How to enter the Standby mode and wake up from this mode by using an external
 reset or a wakeup interrupt.
 
 In the associated software, the system clock is set to 170 MHz.
-An EXTI line is connected to the User push-button thru PC.13 and configured to generate an 
+An EXTI line is connected to the User push-button through PC.13 and configured to generate an 
 interrupt on falling edge upon key press.
 LED2 toggles in order to indicate that MCU is in RUN mode:
-- slowly (each 200ms) if program starts from reset
-- quickly (each 500ms) if program wakes up from Standby mode
+- quickly (each 200ms) if program starts from reset
+- slowly (each 500ms) if program wakes up from Standby mode
 
 When a falling edge is detected on the EXTI line, an interrupt is generated. 
 In the EXTI handler routine, the wake-up pin LL_PWR_WAKEUP_PIN2 is enabled and the 
@@ -45,11 +45,13 @@ After wake-up from Standby mode, program execution restarts in the same way as
 after a RESET and LED2 restarts toggling.
 
 LED2 is used to monitor the system state as follows:
- - LED2 fast toggling: system in RUN mode
- - LED2 slow toggling: system in RUN mode after exiting from Standby mode
+ - LED2 fast toggling: system in Run mode
+ - LED2 slow toggling: system in Run mode after exiting from Standby mode
  - LED2 off : system in Standby mode
 
 These steps are repeated in an infinite loop.
+
+@note System in Standby mode : LED state at this step depends on blinking state at the instant of user button is pressed.
 
 @note To measure the current consumption in Standby mode, remove JP6 jumper 
       and connect an ampere meter to JP6 to measure IDD current.
@@ -58,6 +60,7 @@ These steps are repeated in an infinite loop.
 @note This example can not be used in DEBUG mode due to the fact 
       that the Cortex-M4 core is no longer clocked during low power mode 
       so debugging features are disabled.
+
 
 @par Keywords
 
@@ -71,7 +74,6 @@ Power, PWR, Standby mode, Interrupt, EXTI, Wakeup, Low Power, External reset,
   - PWR/PWR_EnterStandbyMode/Src/stm32g4xx_it.c          Interrupt handlers
   - PWR/PWR_EnterStandbyMode/Src/main.c                  Main program
   - PWR/PWR_EnterStandbyMode/Src/system_stm32g4xx.c      STM32G4xx system source file
-
 
 @par Hardware and Software environment
 

@@ -329,7 +329,6 @@ static uint32_t GetPage(uint32_t Address)
 
   return page;
 }
-
 /**
   * @brief  Gets the Bank of a given address
   * @param  Address: Address of the FLASH Memory

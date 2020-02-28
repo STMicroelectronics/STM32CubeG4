@@ -41,10 +41,14 @@ The minimum frequency value to measure is TIM1 counter clock / TIMx_CCR1 MAX
 Due to TIM1 interrupt routine processing time (around 0.27us), the maximum
 frequency value to measure is around 3.7 MHz.
 
-TIM2_CH1 is configured to generate a PWM signal.  User push-button can be used to
+TIM3_CH1 is configured to generate a PWM signal.  User push-button can be used to
 change the frequency of this signal from 4 kHz up to 22 kHz by steps of 2 kHz.
 It is then possible to run this example without a signal generator by connecting
-TIM2_CH1 to TIM1_CH1.
+TIM3_CH1 to TIM1_CH1.
+
+@par Keywords
+
+Timers, TIM, Frequency, Input, Capture, External Signal, Measurement.
 
 @par Directory contents 
 
@@ -64,9 +68,9 @@ TIM2_CH1 to TIM1_CH1.
     easily tailored to any other supported device and development board.
 
   - NUCLEO-G474RE RevC Set-up
-    - When no signal generator is used TIM2_CH1 can be connected to TIM1_CH1:
+    - When no signal generator is used TIM3_CH1 can be connected to TIM1_CH1:
       - TIM1_CH1  PA8: connected to pin 23 of Morpho connector CN10 ( Arduino connector CN09 pin D7 )  
-      - TIM2_CH1  PA5: connected to pin 11 of Morpho connector CN10 ( Arduino connector CN05 pin D13 ) 
+      - TIM3_CH1  PA6: connected to pin 13 of Morpho connector CN10 ( Arduino connector CN05 pin D12 ) 
 
 @par How to use it ? 
 

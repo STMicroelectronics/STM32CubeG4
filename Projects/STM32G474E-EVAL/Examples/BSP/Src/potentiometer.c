@@ -71,7 +71,7 @@ int32_t Pot_demo(void)
     }
     else
     {
-      printf("Potentiometer value is %d percent\n", PotValue);
+      printf("Potentiometer value is %ld percent\n", PotValue);
     }
 
     /* Wait 1 second for next measure */

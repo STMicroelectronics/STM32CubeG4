@@ -30,6 +30,10 @@ a memory management fault is generated and LED2 is ON.
 To generate an MPU memory fault exception due to an access right error, press 
 user button.
 
+@par Keywords
+
+CORTEX, MPU, Memory, Privilege mode, Privileged, Read, Write.
+
 @par Directory contents 
 
   - CORTEX/CORTEX_MPU/Inc/stm32g4xx_it.h          Interrupt handlers header file

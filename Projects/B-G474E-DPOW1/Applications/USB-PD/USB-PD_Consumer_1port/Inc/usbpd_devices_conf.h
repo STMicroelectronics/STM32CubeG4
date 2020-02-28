@@ -37,9 +37,10 @@
 #include "stm32g4xx_ll_ucpd.h"
 #include "stm32g4xx_ll_pwr.h"
 #include "stm32g4xx_ll_tim.h"
+#include "usbpd_pwr_user.h"
+#include "usbpd_pwr_if.h"
 
 /* USER CODE BEGIN Includes */
-#include "usbpd_pwr_user.h"
 
 /* USER CODE END Includes */
 

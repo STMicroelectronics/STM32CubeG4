@@ -29,13 +29,11 @@ This is a typical application on how to use the STM32G4xx USB Device peripheral 
 behaves as a USB-to-UART bridge following the Virtual COM Port (VCP) implementation.
  - On one side, the STM32 exchanges data with a PC host through USB interface in Device mode.
  - On the other side, the STM32 exchanges data with other devices (same host, other host,
-   other devices
-).
+   other devices…).
 
 At the beginning of the main program the HAL_Init() function is called to reset
 all the peripherals, initialize the Flash interface and the systick. The user is
-provided with the SystemClock_Config()function to configure the clock (SYSCLK) to run at 64 MHz.
-In this application the system clock is set to 64MHz.
+provided with the SystemClock_Config()function to configure the clock (SYSCLK).
 
 When the VCP application is started, the STM32 MCU is enumerated as serial communication port and is
 configured in the same way (baudrate, data format, parity, stop bit) as it would configure a standard
@@ -125,12 +123,14 @@ For more details about the STM32Cube USB Device library, please refer to UM1734
 
   - This example has been tested with STMicroelectronics STM32G474E-EVAL Rev B
     board and can be easily tailored to any other supported device and development board.
-- STM32G474E-EVAL Rev B Set-up
-    - Connect the STM32G474E-EVAL Rev B board to the PC through "TYPE-C" to standard A Male cable.
+
+  - STM32G474E-EVAL Rev B Set-up
+  - Connect the STM32G474E-EVAL Rev B board CN22 to the PC through "TYPE-C" to "Standard A" cable.
     - For loopback mode test: connect directly USART1 TX and RX pins,
-  The USART1 interface available on PA9(CN5 pin 8) and PA10(CN5 pin 4) of the microcontroller can be
+  The USART1  interface available on PA9 and PA10 of the microcontroller can be
   connected to ST-LINK MCU. The choice can be changed by setting the related jumpers.
-  By default the USART1 communication between the target MCU and ST-LINK MCU is enabled.
+  By default the USART1  communication between the target MCU and ST-LINK MCU is enabled.
+
   - Hyperterminal configuration:
     - BaudRate = 115200 baud
     - Word Length = 8 Bits

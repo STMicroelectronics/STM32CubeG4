@@ -64,11 +64,11 @@ typedef enum {
 
 /* Exported constants --------------------------------------------------------*/
 /* The Audio file is flashed with ST-Link Utility @ flash address =  AUDIO_SRC_FILE_ADDRESS */
-#define AUDIO_SRC_FILE_ADDRESS            0x08080000   /* Audio file address in flash */
+#define AUDIO_SRC_FILE_ADDRESS            0x08023000  /* Audio file address in flash */
 
 /* LCD Frame Buffer address */
 #define LCD_FRAME_BUFFER                  0xC0000000 /* LCD Frame buffer of size 800x480 in ARGB8888 */
-#define AUDIO_REC_START_ADDR              0x08081000
+#define AUDIO_REC_START_ADDR              0x08024000
 
 #define SD_DMA_MODE                       0U
 #define SD_IT_MODE                        1U

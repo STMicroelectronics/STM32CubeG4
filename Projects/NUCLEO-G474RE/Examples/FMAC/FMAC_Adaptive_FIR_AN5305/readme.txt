@@ -77,6 +77,10 @@ PRINT_OUTPUT is enabled in main.h.
 @note The application need to ensure that the SysTick time base is always set to
       1 millisecond to have correct HAL operation.
 
+@par Keywords
+
+FMAC, FIR, DMA mode, FMAC, Filter, AN5305.
+
 @par Directory contents
 
   - FMAC/FMAC_Adaptive_FIR_AN5305/Src/main.c                  Main program

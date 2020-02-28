@@ -83,6 +83,10 @@ The SystemClock_Config() function is used to configure the system clock for STM3
 @note The application needs to ensure that the SysTick time base is always set to
       1 millisecond to have correct HAL operation.
 
+@par Keywords
+
+USART, Slave mode, SPI, Transmit, Receive, Master, Full duplex, Synchroneous mode.
+
 @par Directory contents
 
   - USART/USART_SlaveMode/Inc/stm32g4xx_nucleo_conf.h     BSP configuration file

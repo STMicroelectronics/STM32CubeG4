@@ -1,9 +1,0 @@
-[ProjectFiles]
-HeaderPath=
-[Others]
-Define=__DEBUG_CAD;MB1397
-HALModule=
-[Groups]
-Application/User=
-Doc=../readme.txt;
-Drivers/STM32G4xx_HAL_Driver=

@@ -66,7 +66,7 @@
 /* USER CODE END EV */
 
 /******************************************************************************/
-/*           Cortex-M4 Processor Interruption and Exception Handlers          */ 
+/*           Cortex-M4 Processor Interruption and Exception Handlers          */
 /******************************************************************************/
 /**
   * @brief This function handles Non maskable interrupt.
@@ -200,6 +200,50 @@ void SysTick_Handler(void)
 /* For the available peripheral interrupt handler names,                      */
 /* please refer to the startup file (startup_stm32g4xx.s).                    */
 /******************************************************************************/
+
+/**
+  * @brief This function handles DMA1 channel1 global interrupt.
+  */
+void DMA1_Channel1_IRQHandler(void)
+{
+  /* USER CODE BEGIN DMA1_Channel1_IRQn 0 */
+
+/* Check whether DMA transfer complete caused the DMA interruption */
+  if(LL_DMA_IsActiveFlag_TC1(DMA1) == 1)
+  {
+    /* Clear flag DMA transfer complete */
+    LL_DMA_ClearFlag_TC1(DMA1);
+    
+    /* Call interruption treatment function */
+    AdcDmaTransferComplete_Callback();
+  }
+  
+  /* Check whether DMA half transfer caused the DMA interruption */
+  if(LL_DMA_IsActiveFlag_HT1(DMA1) == 1)
+  {
+    /* Clear flag DMA half transfer */
+    LL_DMA_ClearFlag_HT1(DMA1);
+    
+    /* Call interruption treatment function */
+    AdcDmaTransferHalf_Callback();
+  }
+
+  /* USER CODE END DMA1_Channel1_IRQn 0 */
+  
+  /* USER CODE BEGIN DMA1_Channel1_IRQn 1 */
+
+  /* Check whether DMA transfer error caused the DMA interruption */
+  if(LL_DMA_IsActiveFlag_TE1(DMA1) == 1)
+  {
+    /* Clear flag DMA transfer error */
+    LL_DMA_ClearFlag_TE1(DMA1);
+    
+    /* Call interruption treatment function */
+    AdcDmaTransferError_Callback();
+  }
+
+  /* USER CODE END DMA1_Channel1_IRQn 1 */
+}
 
 /* USER CODE BEGIN 1 */
 /**

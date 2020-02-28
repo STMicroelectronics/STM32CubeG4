@@ -56,7 +56,6 @@ DMA_Channel_TypeDef *USBPD_HW_Init_DMARxInstance(uint8_t PortNum)
   DMA_InitStruct.PeriphRequest = UCPDDMA_INSTANCE0_REQUEST_RX;
 
   (void)LL_DMA_Init(UCPDDMA_INSTANCE0_DMA_RX, UCPDDMA_INSTANCE0_LL_CHANNEL_RX, &DMA_InitStruct);
-
   return UCPDDMA_INSTANCE0_CHANNEL_RX;
 }
 
@@ -87,7 +86,6 @@ DMA_Channel_TypeDef *USBPD_HW_Init_DMATxInstance(uint8_t PortNum)
   DMA_InitStruct.PeriphRequest = UCPDDMA_INSTANCE0_REQUEST_TX;
   DMA_InitStruct.Priority = LL_DMA_PRIORITY_MEDIUM;
   (void)LL_DMA_Init(UCPDDMA_INSTANCE0_DMA_TX, UCPDDMA_INSTANCE0_LL_CHANNEL_TX, &DMA_InitStruct);
-
   return UCPDDMA_INSTANCE0_CHANNEL_TX;
 }
 
@@ -105,6 +103,7 @@ uint32_t USBPD_HW_GetRpResistorValue(uint8_t PortNum)
 void USBPD_HW_SetFRSSignalling(uint8_t PortNum, uint8_t cc)
 {
   (void)PortNum;
+
   /* Configure the GPIO with the AF corresponding to UCPD */
   if (1u == cc)
   {

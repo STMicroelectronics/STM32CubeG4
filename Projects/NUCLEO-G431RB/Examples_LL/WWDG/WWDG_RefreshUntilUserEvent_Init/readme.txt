@@ -32,7 +32,11 @@ Example Execution:
 When User push-button is pressed, the Downcounter automatic refresh mechanism is disable and thus, reset will occur.
 After a reset when re-entering in the main, RCC WWDG Reset Flag will be checked and if we are back from a WWDG reset the LED2 will be switch ON.
 
-Waiting a new User push-button pressed to re-activate the WWDG
+Waiting a new User push-button pressed to re-activate the WWDG.
+
+@par Keywords
+
+System, WWDG, Timeout, Refresh, Counter update, MCU Reset, Downcounter, Event, Window.
 
 @par Directory contents 
 

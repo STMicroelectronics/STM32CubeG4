@@ -26,7 +26,7 @@ capability to program the embedded Flash memory through the USB peripheral.
 
 At the beginning of the main program the HAL_Init() function is called to reset all the peripherals,
 initialize the Flash interface and the systick. The user is provided with the SystemClock_Config()
-function to configure the system clock (SYSCLK) to run at 64 MHz. The Full Speed (FS) USB module uses
+function to configure the system clock (SYSCLK). The Full Speed (FS) USB module uses
 internally a 48-MHz clock, which is generated from an integrated PLL.
 
 The DFU transactions are based on Endpoint 0 (control endpoint) transfer. All requests and status
@@ -97,21 +97,21 @@ Middleware, USB Device, DFU, Firmware upgrade
 
 @par Directory contents
 
-  - USB_Device/DFU_Standalone/Core/Src/main.c                   Main program
-  - USB_Device/DFU_Standalone/Core/Src/system_stm32g4xx.c       stm32g4xx system clock configuration file
-  - USB_Device/DFU_Standalone/Core/Src/stm32g4xx_it.c           Interrupt handlers
-  - USB_Device/DFU_Standalone/Core/Src/stm32g4xx_hal_msp.c      HAL MSP Module
-  - USB_Device/DFU_Standalone/USB_Device/App/usb_device.c       USB Device application code
-  - USB_Device/DFU_Standalone/USB_Device/App/usb_desc.c         USB device descriptor
-  - USB_Device/DFU_Standalone/USB_Device/App/usbd_dfu_flash.c   Internal flash memory management
-  - USB_Device/DFU_Standalone/USB_Device/Target/usbd_conf.c     General low level driver configuration
-  - USB_Device/DFU_Standalone/Core/Inc/main.h                   Main program header file
-  - USB_Device/DFU_Standalone/Core/Inc/stm32g4xx_it.h           Interrupt handlers header file
-  - USB_Device/DFU_Standalone/Core/Inc/stm32g4xx_hal_conf.h     HAL configuration file
-  - USB_Device/DFU_Standalone/USB_Device/App/usb_device.h       USB Device application header file
-  - USB_Device/DFU_Standalone/USB_Device/App/usbd_desc.h        USB device descriptor header file
-  - USB_Device/DFU_Standalone/USB_Device/App/usbd_dfu_flash.h   Internal flash memory management header file
-  - USB_Device/DFU_Standalone/USB_Device/Target/usbd_conf.h     USB device driver Configuration file
+  - USB_Device/DFU_Standalone/Core/Src/main.c                           Main program
+  - USB_Device/DFU_Standalone/Core/Src/system_stm32g4xx.c         stm32g4xx system clock configuration file
+  - USB_Device/DFU_Standalone/Core/Src/stm32g4xx_it.c             Interrupt handlers
+  - USB_Device/DFU_Standalone/Core/Src/stm32g4xx_hal_msp.c        HAL MSP Module
+  - USB_Device/DFU_Standalone/USB_Device/App/usb_device.c               USB Device application code
+  - USB_Device/DFU_Standalone/USB_Device/App/usb_desc.c                 USB device descriptor
+  - USB_Device/DFU_Standalone/USB_Device/App/usbd_dfu_flash.c           Internal flash memory management
+  - USB_Device/DFU_Standalone/USB_Device/Target/usbd_conf.c             General low level driver configuration
+  - USB_Device/DFU_Standalone/Core/Inc/main.h                           Main program header file
+  - USB_Device/DFU_Standalone/Core/Inc/stm32g4xx_it.h             Interrupt handlers header file
+  - USB_Device/DFU_Standalone/Core/Inc/stm32g4xx_hal_conf.h       HAL configuration file
+  - USB_Device/DFU_Standalone/USB_Device/App/usb_device.h               USB Device application header file
+  - USB_Device/DFU_Standalone/USB_Device/App/usbd_desc.h                USB device descriptor header file
+  - USB_Device/DFU_Standalone/USB_Device/App/usbd_dfu_flash.h           Internal flash memory management header file
+  - USB_Device/DFU_Standalone/USB_Device/Target/usbd_conf.h             USB device driver Configuration file
 
 
 @par Hardware and Software environment
@@ -127,7 +127,7 @@ Middleware, USB Device, DFU, Firmware upgrade
       For Windows 8.1 and later : Update STM32 DFU device driver manually from Windows Device Manager.
       The install of required device driver is available under:
       "Program Files\STMicroelectronics\Software\DfuSe v3.0.5\Bin\Driver\Win8.1" directory.
-    - Connect the STM32G474E-EVAL Rev B board to the PC.
+    - Connect the STM32G474E-EVAL Rev B board CN22 to the PC through "TYPE-C" to "Standard A" cable.
 
 
 @par How to use it ?
@@ -141,7 +141,7 @@ In order to make the program work, you must do the following:
    - For Windows 8.1 and later : Update STM32 DFU device driver manually from Windows Device Manager.
      The install of required device driver is available under:
      "Program Files\STMicroelectronics\Software\DfuSe v3.0.6\Bin\Driver\Win8.1" directory.
-   - Open "DfuSe Demo", choose the "stm32g474e_eval_LED_Toggle_@0x0800C000.dfu" provided in Binary
+   - Open "DfuSe Demo", choose the "stm32g474e_eval_LED_Toggle_@0x0800C000.dfu" provided in Core\Binary
      directory, upgrade and verify to check that it is successfully downloaded.
    - This application allows also to upload a dfu file (either the provided DFU file or by creating a new dfu file).
      To check that the upload was successfully performed, choose the dfu uploaded file, upgrade and verify.

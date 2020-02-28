@@ -25,6 +25,7 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
+#include "usbpd_core.h"
 /** @addtogroup STM32_USBPD_LIBRARY
   * @{
   */

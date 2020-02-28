@@ -62,6 +62,10 @@ In case of exceeding residual error, the LED1 is turned off and stops blinking.
 @note The example needs to ensure that the SysTick time base is always set to 1 millisecond
       to have correct HAL operation.
 
+@par Keywords
+
+CORDIC, Sine, Cosine, DMA mode.
+
 @par Directory contents
 
   - CORDIC/CORDIC_SinCos_DMA_Perf/Inc/stm32g474e_eval_conf.h     BSP configuration file

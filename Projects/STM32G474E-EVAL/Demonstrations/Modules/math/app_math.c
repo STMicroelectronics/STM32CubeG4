@@ -1068,9 +1068,9 @@ static void Cordic_DisplayInfo(char * SWLibName, uint32_t PeriphTime, uint32_t S
   GUI_SetFont(&Font16);
   GUI_SetBackColor(GUI_COLOR_WHITE);
   GUI_SetTextColor(GUI_COLOR_ST_BLUE);
-  GUI_DisplayStringAt(170, LINE(line++), "Time to compl.", LEFT_MODE);
+  GUI_DisplayStringAt(170, LINE(line++), (uint8_t*)"Time to compl.", LEFT_MODE);
   GUI_SetTextColor(GUI_COLOR_ST_PINK);
-  sprintf((char*)StringToDisplay,"%d cycles ", PeriphTime);
+  sprintf((char*)StringToDisplay,"%ld cycles ", PeriphTime);
   GUI_DisplayStringAt(170, LINE(line++), (uint8_t *)StringToDisplay, LEFT_MODE);
 
   if ((DisplayStyle & MATH_DISPLAY_CPULOAD) != 0)
@@ -1087,7 +1087,7 @@ static void Cordic_DisplayInfo(char * SWLibName, uint32_t PeriphTime, uint32_t S
   GUI_DisplayStringAt(170, LINE(line++), (uint8_t *)SWLibName, LEFT_MODE);
   GUI_SetTextColor(GUI_COLOR_ST_PINK);
 
-  sprintf((char*)StringToDisplay,"%d cycles ", SWLibTime);
+  sprintf((char*)StringToDisplay,"%ld cycles ", SWLibTime);
   GUI_DisplayStringAt(170, LINE(line++), (uint8_t *)StringToDisplay, LEFT_MODE);
 
   if ((DisplayStyle & MATH_DISPLAY_CPULOAD) != 0)
@@ -1128,12 +1128,12 @@ static void Fmac_DisplayInfo(char * SWLibName, uint32_t SWLibCpuLoad)
   GUI_SetTextColor(GUI_COLOR_ST_BLUE);
   GUI_DisplayStringAt(170, LINE(line++), (uint8_t *)SWLibName, LEFT_MODE);
   GUI_SetTextColor(GUI_COLOR_ST_PINK);
-  sprintf((char*)StringToDisplay,"%d%% cpu load   ", SWLibCpuLoad);
+  sprintf((char*)StringToDisplay,"%ld%% cpu load   ", SWLibCpuLoad);
   GUI_DisplayStringAt(170, LINE(line++), (uint8_t *)StringToDisplay, LEFT_MODE);
 
   line = 12;
   GUI_SetTextColor(GUI_COLOR_ST_BLUE);
-  sprintf((char*)StringToDisplay,"%dKHz sampling", FMAC_FREQ_SAMPLING_KHZ);
+  sprintf((char*)StringToDisplay,"%ldKHz sampling", (uint32_t)FMAC_FREQ_SAMPLING_KHZ);
   GUI_DisplayStringAt(2, LINE(line++), (uint8_t *)StringToDisplay, LEFT_MODE);
 }
 

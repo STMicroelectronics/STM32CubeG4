@@ -45,6 +45,9 @@ NUCLEO-G431RB's LED2 can be used to monitor the transfer status:
 - LED2 is turned ON if the DMA data transfer is successfully completed.
 - LED2 is blinking every 1 sec in case of error.
 
+@par Keywords
+
+DMA, System, Data Transfer, Memory to memory, Flash, SRAM, RAM, Trigger.
 
 @par Directory contents 
 

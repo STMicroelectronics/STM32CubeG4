@@ -16,7 +16,7 @@
         <TargetCommonOption>
           <Device>STM32G431RBTx</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32G4xx_DFP.1.1.1</PackID>
+          <PackID>Keil.STM32G4xx_DFP.1.1.0</PackID>
           <PackURL>http://www.keil.com/pack</PackURL>
           <Cpu>IROM(0x08000000-0x801FFFF) IRAM(0x20000000-0x20007FFF) IRAM(0x10000000-0x100027FF) CLOCK(8000000) FPU2 CPUTYPE("Cortex-M4")</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>USE_FULL_LL_DRIVER,HSE_VALUE=8000000,HSE_STARTUP_TIMEOUT=100,LSE_STARTUP_TIMEOUT=5000,LSE_VALUE=32768,EXTERNAL_CLOCK_VALUE=12288000,HSI_VALUE=16000000,LSI_VALUE=32000,VDD_VALUE=3300,PREFETCH_ENABLE=0,INSTRUCTION_CACHE_ENABLE=1,DATA_CACHE_ENABLE=1,STM32G431xx,HSE_VALUE=24000000</Define>
               <Undefine></Undefine>
-              <IncludePath>../Inc;../../../../../../Drivers/STM32G4xx_HAL_Driver/Inc;../../../../../../Drivers/CMSIS/Device/ST/STM32G4xx/Include;../../../../../../Drivers/CMSIS/Include</IncludePath>
+              <IncludePath>../Inc; ../../../../../../Drivers/STM32G4xx_HAL_Driver/Inc; ../../../../../../Drivers/CMSIS/Device/ST/STM32G4xx/Include; ../../../../../../Drivers/CMSIS/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -379,9 +379,6 @@
         </TargetArmAds>
       </TargetOption>
       <Groups>
-        <Group>
-          <GroupName>::CMSIS</GroupName>
-        </Group>
         <Group>
           <GroupName>Application/MDK-ARM</GroupName>
           <Files>
@@ -431,9 +428,9 @@
           <GroupName>Drivers/STM32G4xx_HAL_Driver</GroupName>
           <Files>
             <File>
-              <FileName>stm32g4xx_ll_crc.c</FileName>
+              <FileName>stm32g4xx_ll_utils.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_crc.c</FilePath>
+              <FilePath>../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_utils.c</FilePath>
             </File>
             <File>
               <FileName>stm32g4xx_ll_exti.c</FileName>
@@ -446,16 +443,19 @@
               <FilePath>../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_gpio.c</FilePath>
             </File>
             <File>
+              <FileName>stm32g4xx_ll_crc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_crc.c</FilePath>
+            </File>
+            <File>
               <FileName>stm32g4xx_ll_pwr.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_pwr.c</FilePath>
             </File>
-            <File>
-              <FileName>stm32g4xx_ll_utils.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_utils.c</FilePath>
-            </File>
           </Files>
+        </Group>
+        <Group>
+          <GroupName>::CMSIS</GroupName>
         </Group>
       </Groups>
     </Target>

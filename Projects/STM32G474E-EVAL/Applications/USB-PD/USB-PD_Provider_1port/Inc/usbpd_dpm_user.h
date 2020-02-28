@@ -5,8 +5,10 @@
   * @author  MCD Application Team
   * @brief   Header file for usbpd_dpm_user.c file
   ******************************************************************************
+  * @attention
   *
-  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
+  * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under Ultimate Liberty license
   * SLA0044, the "License"; You may not use this file except in compliance with
@@ -49,6 +51,9 @@ typedef struct
 } USBPD_HandleTypeDef;
 /* USER CODE END Typedef */
 
+typedef void     (*GUI_NOTIFICATION_POST)(uint8_t PortNum, uint16_t EventVal);
+typedef uint32_t (*GUI_NOTIFICATION_FORMAT_SEND)(uint32_t PortNum, uint32_t TypeNotification, uint32_t Value);
+typedef void     (*GUI_SAVE_INFO)(uint8_t PortNum, uint8_t DataId, uint8_t *Ptr, uint32_t Size);
 /* Exported define -----------------------------------------------------------*/
 /* USER CODE BEGIN Define */
 
@@ -66,7 +71,7 @@ typedef struct
 
 /* Exported variables --------------------------------------------------------*/
 /* USER CODE BEGIN Private_Variables */
-extern USBPD_HandleTypeDef DPM_Ports[USBPD_PORT_COUNT];
+
 /* USER CODE END Private_Variables */
 
 /* Exported functions --------------------------------------------------------*/
@@ -77,7 +82,7 @@ extern USBPD_HandleTypeDef DPM_Ports[USBPD_PORT_COUNT];
   * @{
   */
 USBPD_StatusTypeDef USBPD_DPM_UserInit(void);
-void                USBPD_DPM_UserExecute(void const *argument);
+void                USBPD_DPM_SetNotification_GUI(GUI_NOTIFICATION_FORMAT_SEND PtrFormatSend, GUI_NOTIFICATION_POST PtrPost, GUI_SAVE_INFO PtrSaveInfo);
 void                USBPD_DPM_UserCableDetection(uint8_t PortNum, USBPD_CAD_EVENT State);
 void                USBPD_DPM_WaitForTime(uint32_t Time);
 void                USBPD_DPM_UserTimerCounter(uint8_t PortNum);
@@ -113,6 +118,39 @@ USBPD_FunctionalState USBPD_DPM_IsPowerReady(uint8_t PortNum, USBPD_VSAFE_Status
 /** @addtogroup USBPD_USER_EXPORTED_FUNCTIONS_GROUP3
   * @{
   */
+USBPD_StatusTypeDef USBPD_DPM_RequestHardReset(uint8_t PortNum);
+USBPD_StatusTypeDef USBPD_DPM_RequestCableReset(uint8_t PortNum);
+USBPD_StatusTypeDef USBPD_DPM_RequestGotoMin(uint8_t PortNum);
+USBPD_StatusTypeDef USBPD_DPM_RequestPing(uint8_t PortNum);
+USBPD_StatusTypeDef USBPD_DPM_RequestMessageRequest(uint8_t PortNum, uint8_t IndexSrcPDO, uint16_t RequestedVoltage);
+USBPD_StatusTypeDef USBPD_DPM_RequestGetSourceCapability(uint8_t PortNum);
+USBPD_StatusTypeDef USBPD_DPM_RequestGetSinkCapability(uint8_t PortNum);
+USBPD_StatusTypeDef USBPD_DPM_RequestDataRoleSwap(uint8_t PortNum);
+USBPD_StatusTypeDef USBPD_DPM_RequestPowerRoleSwap(uint8_t PortNum);
+USBPD_StatusTypeDef USBPD_DPM_RequestVconnSwap(uint8_t PortNum);
+USBPD_StatusTypeDef USBPD_DPM_RequestSoftReset(uint8_t PortNum, USBPD_SOPType_TypeDef SOPType);
+USBPD_StatusTypeDef USBPD_DPM_RequestSourceCapability(uint8_t PortNum);
+USBPD_StatusTypeDef USBPD_DPM_RequestVDM_DiscoveryIdentify(uint8_t PortNum, USBPD_SOPType_TypeDef SOPType);
+USBPD_StatusTypeDef USBPD_DPM_RequestVDM_DiscoverySVID(uint8_t PortNum, USBPD_SOPType_TypeDef SOPType);
+USBPD_StatusTypeDef USBPD_DPM_RequestVDM_DiscoveryMode(uint8_t PortNum, USBPD_SOPType_TypeDef SOPType, uint16_t SVID);
+USBPD_StatusTypeDef USBPD_DPM_RequestVDM_EnterMode(uint8_t PortNum, USBPD_SOPType_TypeDef SOPType, uint16_t SVID, uint8_t ModeIndex);
+USBPD_StatusTypeDef USBPD_DPM_RequestVDM_ExitMode(uint8_t PortNum, USBPD_SOPType_TypeDef SOPType, uint16_t SVID, uint8_t ModeIndex);
+USBPD_StatusTypeDef USBPD_DPM_RequestDisplayPortStatus(uint8_t PortNum, USBPD_SOPType_TypeDef SOPType, uint16_t SVID, uint32_t *pDPStatus);
+USBPD_StatusTypeDef USBPD_DPM_RequestDisplayPortConfig(uint8_t PortNum, USBPD_SOPType_TypeDef SOPType, uint16_t SVID, uint32_t *pDPConfig);
+USBPD_StatusTypeDef USBPD_DPM_RequestAttention(uint8_t PortNum, USBPD_SOPType_TypeDef SOPType, uint16_t SVID);
+USBPD_StatusTypeDef USBPD_DPM_RequestUVDMMessage(uint8_t PortNum, USBPD_SOPType_TypeDef SOPType);
+USBPD_StatusTypeDef USBPD_DPM_RequestAlert(uint8_t PortNum, USBPD_ADO_TypeDef Alert);
+USBPD_StatusTypeDef USBPD_DPM_RequestGetSourceCapabilityExt(uint8_t PortNum);
+USBPD_StatusTypeDef USBPD_DPM_RequestGetSinkCapabilityExt(uint8_t PortNum);
+USBPD_StatusTypeDef USBPD_DPM_RequestGetManufacturerInfo(uint8_t PortNum, USBPD_SOPType_TypeDef SOPType, uint8_t* pManuInfoData);
+USBPD_StatusTypeDef USBPD_DPM_RequestGetStatus(uint8_t PortNum);
+USBPD_StatusTypeDef USBPD_DPM_RequestFastRoleSwap(uint8_t PortNum);
+USBPD_StatusTypeDef USBPD_DPM_RequestGetPPS_Status(uint8_t PortNum);
+USBPD_StatusTypeDef USBPD_DPM_RequestGetCountryCodes(uint8_t PortNum);
+USBPD_StatusTypeDef USBPD_DPM_RequestGetCountryInfo(uint8_t PortNum, uint16_t CountryCode);
+USBPD_StatusTypeDef USBPD_DPM_RequestGetBatteryCapability(uint8_t PortNum, uint8_t *pBatteryCapRef);
+USBPD_StatusTypeDef USBPD_DPM_RequestGetBatteryStatus(uint8_t PortNum, uint8_t *pBatteryStatusRef);
+USBPD_StatusTypeDef USBPD_DPM_RequestSecurityRequest(uint8_t PortNum);
 /* USER CODE BEGIN Function */
 
 /* USER CODE END Function */

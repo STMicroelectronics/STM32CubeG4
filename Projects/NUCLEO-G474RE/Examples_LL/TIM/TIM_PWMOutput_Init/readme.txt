@@ -61,6 +61,10 @@ Initially the output channel is configured in output compare toggle mode.
 successively the user button, the TIM2_CH1 is ON and its luminosity rises as the dutycycle value keep 
 increasing.
 
+@par Keywords
+
+Timers, TIM, Output, Signal, PWM, Frequency, Duty cycle, Waveform, Auto-reload.
+
 @par Directory contents 
 
   - TIM/TIM_PWMOutput_Init/Inc/stm32g4xx_it.h          Interrupt handlers header file

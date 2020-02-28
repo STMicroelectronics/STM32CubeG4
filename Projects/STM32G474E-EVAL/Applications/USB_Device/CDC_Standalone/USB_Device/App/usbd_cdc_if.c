@@ -510,7 +510,7 @@ static void ComPort_Config(void)
   */
 void HAL_UART_ErrorCallback(UART_HandleTypeDef *UartHandle)
 {
-  /* Transfer error occured in reception and/or transmission process */
+  /* Transfer error occurred in reception and/or transmission process */
   Error_Handler();
 }
 

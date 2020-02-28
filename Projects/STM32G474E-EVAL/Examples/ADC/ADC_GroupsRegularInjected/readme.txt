@@ -59,7 +59,7 @@ Other peripherals used:
 
 Board settings:
  - ADC is configured to convert ADC_CHANNEL_6 (pin 46 on connector CN5).
- - The voltage input on ADC channel is provided by the on-board potentiometer (RV3). Turn RV3 to vary the ADC input voltage and observe behavior.
+ - The voltage input on ADC channel is provided by the on-board potentiometer (RV2). Turn RV2 to vary the ADC input voltage and observe behavior.
  - Connect jumper JP5 on 2-3 position (LDR)
  - Connect a wire between JP5 pin 1 and PC0
 

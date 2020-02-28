@@ -127,6 +127,24 @@ int32_t BSP_GetVersion(void)
 }
 
 /**
+  * @brief  This method returns the board name
+  * @retval pointer to the board name string
+  */
+const uint8_t* BSP_GetBoardName(void)
+{
+  return (const uint8_t*)STM32G4XX_NUCLEO_BSP_BOARD_NAME;
+}
+
+/**
+  * @brief  This method returns the board ID
+  * @retval pointer to the board ID string
+  */
+const uint8_t* BSP_GetBoardID(void)
+{
+  return (const uint8_t*)STM32G4XX_NUCLEO_BSP_BOARD_ID;
+}
+
+/**
   * @brief  Configures LED GPIO.
   * @param  Led Specifies the Led to be configured.
   *         This parameter can be one of following parameters:
@@ -607,6 +625,7 @@ static void COM1_MspDeInit(UART_HandleTypeDef *huart)
   COM1_CLK_DISABLE();
 }
 #endif /* (USE_BSP_COM_FEATURE > 0) */
+
 /**
   * @}
   */

@@ -127,9 +127,6 @@ typedef struct
   USBPD_ParamsTypeDef         *params;
   USBPD_HW_IF_Callbacks        cbs;             /*!< USBPD_PHY_HW_IF callbacks         */
 
-  __IO uint32_t                PIN_CC1;             /*!< CC1 detection state               */
-  __IO uint32_t                PIN_CC2;             /*!< CC2 detection state               */
-
   void (*USBPD_CAD_WakeUp)(void);               /*!< function used to wakeup cad task   */
 
   uint8_t                     *ptr_RxBuff;     /*!< Pointer to Raw Rx transfer Buffer  */

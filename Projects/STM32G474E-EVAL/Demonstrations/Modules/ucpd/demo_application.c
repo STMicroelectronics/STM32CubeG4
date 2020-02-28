@@ -127,6 +127,7 @@ typedef enum {
   MENU_SOURCECAPA_RECEIVED,
   MENU_SINKCAPA_RECEIVED,
   MENU_EXTCAPA_RECEIVED,
+  MENU_SNKEXTCAPA_RECEIVED,
   MENU_BUILD,
   MENU_CABLE,
   MENU_MAX
@@ -148,7 +149,9 @@ typedef enum {
 #if defined(USBPD_REV30_SUPPORT)
   COMMAND_CONTROLMSG_GET_SRC_CAPEXT,
   COMMAND_CONTROLMSG_GET_STATUS,
+  COMMAND_CONTROLMSG_GET_SNK_CAPEXT,
 #endif /* USBPD_REV30_SUPPORT */
+
 } DEMO_COMMAND;
 
 enum {
@@ -166,7 +169,7 @@ typedef struct
 } typedef_COMMANDE;
 
 /* Private macro -------------------------------------------------------------*/
-#define DEMO_MAX_COMMAND  12u
+#define DEMO_MAX_COMMAND  13u
 
 /* Private variables ---------------------------------------------------------*/
 const typedef_COMMANDE g_tab_command_global[DEMO_MAX_COMMAND] = {
@@ -184,21 +187,19 @@ const typedef_COMMANDE g_tab_command_global[DEMO_MAX_COMMAND] = {
 #if defined(USBPD_REV30_SUPPORT)
   { COMMAND_CONTROLMSG_GET_SRC_CAPEXT   ,"GET SOURCE EXT CAPA   ", COMMANDROLE_SNK },
   { COMMAND_CONTROLMSG_GET_STATUS       ,"GET_STATUS            ", 0               },
+  { COMMAND_CONTROLMSG_GET_SNK_CAPEXT   ,"GET SINK EXT CAPA     ", COMMANDROLE_SRC },
 #endif /* USBPD_REV30_SUPPORT */
   { COMMAND_NONE                        ,""                      , 0}
 };
 
 const DEMO_MENU g_tab_menu_next[2][MENU_MAX] = {
-
-  /* MENU_EMPTY, MENU_COMMAND,             MENU_SOURCECAPA_RECEIVED, MENU_SINKCAPA_RECEIVED,    MENU_EXTCAPA_RECEIVED,    MENU_BUILD,   MENU_CABLE      */
-  { MENU_EMPTY,  MENU_SOURCECAPA_RECEIVED, MENU_SINKCAPA_RECEIVED,    MENU_EXTCAPA_RECEIVED,               MENU_CABLE,    MENU_EMPTY,   MENU_COMMAND },
-  { MENU_EMPTY,  MENU_EXTCAPA_RECEIVED,    MENU_COMMAND,             MENU_EMPTY,             MENU_SOURCECAPA_RECEIVED            }
+  { MENU_EMPTY,  MENU_SOURCECAPA_RECEIVED, MENU_SINKCAPA_RECEIVED, MENU_EXTCAPA_RECEIVED, MENU_SNKEXTCAPA_RECEIVED, MENU_CABLE, MENU_COMMAND, MENU_BUILD },
+  { MENU_EMPTY,  MENU_SOURCECAPA_RECEIVED, MENU_EXTCAPA_RECEIVED,  MENU_EMPTY,            MENU_BUILD,               MENU_EMPTY, MENU_COMMAND, MENU_EMPTY }
 };
 
 const DEMO_MENU g_tab_menu_prev[2][MENU_MAX] = {
-  /* MENU_EMPTY,             MENU_COMMAND,    MENU_SOURCECAPA_RECEIVED,   MENU_SINKCAPA_RECEIVED,   MENU_EXTCAPA_RECEIVED,      MENU_BUILD,   MENU_CABLE  */
-  { MENU_EMPTY,                MENU_CABLE,                MENU_COMMAND, MENU_SOURCECAPA_RECEIVED,  MENU_SINKCAPA_RECEIVED,      MENU_EMPTY,   MENU_EXTCAPA_RECEIVED },
-  { MENU_EMPTY,  MENU_SOURCECAPA_RECEIVED,       MENU_EXTCAPA_RECEIVED,               MENU_EMPTY,            MENU_COMMAND                            }
+  { MENU_EMPTY, MENU_CABLE, MENU_COMMAND, MENU_SOURCECAPA_RECEIVED, MENU_SINKCAPA_RECEIVED,   MENU_EXTCAPA_RECEIVED,  MENU_COMMAND,           MENU_SNKEXTCAPA_RECEIVED },
+  { MENU_EMPTY, MENU_BUILD, MENU_COMMAND, MENU_EMPTY,               MENU_SOURCECAPA_RECEIVED, MENU_EMPTY,             MENU_EXTCAPA_RECEIVED,  MENU_EMPTY }
 };
 
 static typedef_COMMANDE g_tab_command_PORT[2][DEMO_MAX_COMMAND];
@@ -238,7 +239,7 @@ static void Display_sourcecapa_menu_nav(uint8_t PortNum, int8_t Or);
 static uint8_t  Display_sourcecapa_menu_exec(uint8_t PortNum);
 
 static void Display_extcapa_menu_nav(uint8_t PortNum, int8_t Or);
-
+static void Display_sinkextcapa_menu_nav(uint8_t PortNum, int8_t Orientation);
 static void Display_command_menu(uint8_t PortNum);
 static void Display_command_menu_nav(uint8_t PortNum, int8_t Or);
 static void Display_command_menu_exec(uint8_t PortNum);
@@ -283,7 +284,7 @@ DEMO_ErrorCode DEMO_InitTask()
   osMessageQDef(MsgBox, LCD_ALARMBOX_MESSAGES_MAX, uint32_t);
 
 #if defined(_GUI_INTERFACE)
-  osThreadDef(LCD, DEMO_Task, osPriorityLow, 0, 240);
+  osThreadDef(LCD, DEMO_Task, osPriorityLow, 0, 400);
 #else
   osThreadDef(LCD, DEMO_Task, osPriorityLow, 0, 280);
 #endif /*_GUI_INTERFACE*/
@@ -293,7 +294,7 @@ DEMO_ErrorCode DEMO_InitTask()
   {
     return DEMO_ERROR;
   }
-#endif
+#endif /* _RTOS */
 
   return DEMO_OK;
 }
@@ -339,7 +340,7 @@ void DEMO_PostMMIMessage(uint32_t EventVal)
     (void)osMessagePut(LCDMsgBox, event, 0);
   }
 }
-#endif
+#endif /* _RTOS */
 
 /**
   * @brief  Function used to save cable information .
@@ -381,13 +382,13 @@ static void Display_power(void)
       if(isense < 0)
       {
         isense = -isense;
-        sprintf(pstr,"%2d.%0.2dV -%1d.%0.2dA",(vsense / 1000), (vsense % 1000)/10, (isense/1000), (isense % 1000)/10);
+        sprintf(pstr,"%2ld.%02ldV -%1ld.%02ldA",(vsense / 1000), (vsense % 1000)/10, (isense/1000), (isense % 1000)/10);
       }
       else
       {
-        sprintf(pstr,"%2d.%0.2dV %1d.%0.2dA",(vsense / 1000), (vsense % 1000)/10, (isense/1000), (isense % 1000)/10);
+        sprintf(pstr,"%2ld.%02ldV %1ld.%02ldA",(vsense / 1000), (vsense % 1000)/10, (isense/1000), (isense % 1000)/10);
       }
-      
+
       GUI_DisplayStringAt(64, Font12.Height * 4, (uint8_t*)pstr,LEFT_MODE);
     }
     else
@@ -456,7 +457,7 @@ void DEMO_Display_Error(uint8_t PortNum, uint8_t ErrorType)
 
   GUI_SetFont(&Font16);
   GUI_SetBackColor(GUI_COLOR_RED);
-  GUI_SetTextColor(GUI_COLOR_ST_BLUE_DARK);
+  GUI_SetTextColor(GUI_COLOR_ST_BLUE_LIGHT);
 
   /* Display error info */
   if (ErrorType < DEMO_ERROR_TYPE_MAXNBITEMS)
@@ -550,7 +551,7 @@ static void Display_build_info(void)
   GUI_DisplayStringAt(0, 1 + (9 * Font16.Height), (uint8_t*)"VDM", CENTER_MODE);
 #endif
 
-  char tab[25] = {0};
+  char tab[27] = {0};
   sprintf(tab,"FW:%6x-STACK:%8x", USBPD_FW_VERSION, _LIB_ID);
   GUI_DisplayStringAt(0, 1 + (10 * Font16.Height), (uint8_t*)tab, CENTER_MODE);
 }
@@ -693,7 +694,7 @@ static void Display_cableinfo_menu(uint8_t PortNum)
   GUI_SetFont(&Font16);
 
   /* Display menu sink capa */
-  GUI_DisplayStringAt(0, 1 + 6 * Font12.Height, "Cable information :", LEFT_MODE);
+  GUI_DisplayStringAt(0, 1 + 6 * Font12.Height, (uint8_t*)"Cable information :", LEFT_MODE);
 
   if(pIdentity.CableVDO_Presence == 0)
   {
@@ -770,7 +771,7 @@ static void Display_sinkcapa_menu_nav(uint8_t PortNum, int8_t Nav)
       {
         uint32_t maxcurrent = ((DPM_Ports[PortNum].DPM_ListOfRcvSNKPDO[index] & USBPD_PDO_SRC_FIXED_MAX_CURRENT_Msk) >> USBPD_PDO_SRC_FIXED_MAX_CURRENT_Pos)*10;
         uint32_t maxvoltage = ((DPM_Ports[PortNum].DPM_ListOfRcvSNKPDO[index] & USBPD_PDO_SRC_FIXED_VOLTAGE_Msk) >> USBPD_PDO_SRC_FIXED_VOLTAGE_Pos)*50;
-        sprintf((char*)_str, " FIXED:       %2dV %2d.%dA", maxvoltage/1000, maxcurrent/1000, (maxcurrent % 1000) /100);
+        sprintf((char*)_str, " FIXED:       %2ldV %2ld.%ldA", maxvoltage/1000, maxcurrent/1000, (maxcurrent % 1000) /100);
       }
       break;
     case USBPD_CORE_PDO_TYPE_BATTERY :
@@ -778,7 +779,7 @@ static void Display_sinkcapa_menu_nav(uint8_t PortNum, int8_t Nav)
         uint32_t maxvoltage = ((DPM_Ports[PortNum].DPM_ListOfRcvSNKPDO[index] & USBPD_PDO_SRC_BATTERY_MAX_VOLTAGE_Msk) >> USBPD_PDO_SRC_BATTERY_MAX_VOLTAGE_Pos) * 50;
         uint32_t minvoltage = ((DPM_Ports[PortNum].DPM_ListOfRcvSNKPDO[index] & USBPD_PDO_SRC_BATTERY_MIN_VOLTAGE_Msk) >> USBPD_PDO_SRC_BATTERY_MIN_VOLTAGE_Pos) * 50;
         uint32_t maxpower = ((DPM_Ports[PortNum].DPM_ListOfRcvSNKPDO[index] & USBPD_PDO_SRC_BATTERY_MAX_POWER_Msk) >> USBPD_PDO_SRC_BATTERY_MAX_POWER_Pos) * 250;
-        sprintf((char*)_str, " BATT:%2d.%1d-%2d.%1dV %2d.%dW", (minvoltage/1000),(minvoltage/100)%10, (maxvoltage/1000),(maxvoltage/100)%10, (maxpower/1000), (maxpower%1000)/100);
+        sprintf((char*)_str, " BATT:%2ld.%1ld-%2ld.%1ldV %2ld.%ldW", (minvoltage/1000),(minvoltage/100)%10, (maxvoltage/1000),(maxvoltage/100)%10, (maxpower/1000), (maxpower%1000)/100);
       }
       break;
     case USBPD_CORE_PDO_TYPE_VARIABLE :
@@ -786,7 +787,7 @@ static void Display_sinkcapa_menu_nav(uint8_t PortNum, int8_t Nav)
         uint32_t maxvoltage = ((DPM_Ports[PortNum].DPM_ListOfRcvSNKPDO[index] & USBPD_PDO_SRC_VARIABLE_MAX_VOLTAGE_Msk) >> USBPD_PDO_SRC_VARIABLE_MAX_VOLTAGE_Pos) * 50;
         uint32_t minvoltage = ((DPM_Ports[PortNum].DPM_ListOfRcvSNKPDO[index] & USBPD_PDO_SRC_VARIABLE_MIN_VOLTAGE_Msk) >> USBPD_PDO_SRC_VARIABLE_MIN_VOLTAGE_Pos) * 50;
         uint32_t maxcurrent = ((DPM_Ports[PortNum].DPM_ListOfRcvSNKPDO[index] & USBPD_PDO_SRC_VARIABLE_MAX_CURRENT_Msk) >> USBPD_PDO_SRC_VARIABLE_MAX_CURRENT_Pos) * 10;
-        sprintf((char*)_str, " VAR: %2d.%1d-%2d.%1dV %2d.%dA ", (minvoltage/1000),(minvoltage/100)%10, (maxvoltage/1000),(maxvoltage/100)%10, (maxcurrent/1000), ((maxcurrent % 1000) /100));
+        sprintf((char*)_str, " VAR: %2ld.%1ld-%2ld.%1ldV %2ld.%ldA ", (minvoltage/1000),(minvoltage/100)%10, (maxvoltage/1000),(maxvoltage/100)%10, (maxcurrent/1000), ((maxcurrent % 1000) /100));
       }
       break;
 #if _PPS
@@ -795,7 +796,7 @@ static void Display_sinkcapa_menu_nav(uint8_t PortNum, int8_t Nav)
         uint32_t minvoltage = ((DPM_Ports[PortNum].DPM_ListOfRcvSNKPDO[index] & USBPD_PDO_SRC_APDO_MIN_VOLTAGE_Msk) >> USBPD_PDO_SRC_APDO_MIN_VOLTAGE_Pos) * 100;
         uint32_t maxvoltage = ((DPM_Ports[PortNum].DPM_ListOfRcvSNKPDO[index] & USBPD_PDO_SRC_APDO_MAX_VOLTAGE_Msk) >> USBPD_PDO_SRC_APDO_MAX_VOLTAGE_Pos) * 100;
         uint32_t maxcurrent = ((DPM_Ports[PortNum].DPM_ListOfRcvSNKPDO[index] & USBPD_PDO_SRC_APDO_MAX_CURRENT_Msk) >> USBPD_PDO_SRC_APDO_MAX_CURRENT_Pos) * 50;
-        sprintf((char*)_str, " APDO:%2d.%1d-%2d.%1dV %2d.%dA ", (minvoltage/1000),(minvoltage/100)%10, (maxvoltage/1000),(maxvoltage/100)%10, (maxcurrent/1000), ((maxcurrent % 1000) /100));
+        sprintf((char*)_str, " APDO:%2ld.%1ld-%2ld.%1ldV %2ld.%ldA ", (minvoltage/1000),(minvoltage/100)%10, (maxvoltage/1000),(maxvoltage/100)%10, (maxcurrent/1000), ((maxcurrent % 1000) /100));
       }
       break;
 #endif /* _PPS */
@@ -834,7 +835,7 @@ static void Display_sourcecapa_menu(uint8_t PortNum)
   GUI_SetFont(&Font16);
 
   /* Display menu source capa */
-  sprintf((char *)str, "Source capa : %d",DPM_Ports[PortNum].DPM_NumberOfRcvSRCPDO);
+  sprintf((char *)str, "Source capa : %ld",DPM_Ports[PortNum].DPM_NumberOfRcvSRCPDO);
   GUI_DisplayStringAt(0, 1 + 6 * Font12.Height, str, LEFT_MODE);
 
   GUI_SetFont(&Font12);
@@ -878,7 +879,7 @@ static void Display_sourcecapa_menu_nav(uint8_t PortNum, int8_t Nav)
       {
         uint32_t maxcurrent = ((DPM_Ports[PortNum].DPM_ListOfRcvSRCPDO[index] & USBPD_PDO_SRC_FIXED_MAX_CURRENT_Msk) >> USBPD_PDO_SRC_FIXED_MAX_CURRENT_Pos)*10;
         uint32_t maxvoltage = ((DPM_Ports[PortNum].DPM_ListOfRcvSRCPDO[index] & USBPD_PDO_SRC_FIXED_VOLTAGE_Msk) >> USBPD_PDO_SRC_FIXED_VOLTAGE_Pos)*50;
-        sprintf((char*)_str, " FIXED:      %2dV %2d.%dA", (maxvoltage/1000), (maxcurrent/1000), ((maxcurrent % 1000) /100));
+        sprintf((char*)_str, " FIXED:      %2ldV %2ld.%ldA", (maxvoltage/1000), (maxcurrent/1000), ((maxcurrent % 1000) /100));
       }
       break;
     case USBPD_CORE_PDO_TYPE_BATTERY :
@@ -886,7 +887,7 @@ static void Display_sourcecapa_menu_nav(uint8_t PortNum, int8_t Nav)
         uint32_t maxvoltage = ((DPM_Ports[PortNum].DPM_ListOfRcvSRCPDO[index] & USBPD_PDO_SRC_BATTERY_MAX_VOLTAGE_Msk) >> USBPD_PDO_SRC_BATTERY_MAX_VOLTAGE_Pos) * 50;
         uint32_t minvoltage = ((DPM_Ports[PortNum].DPM_ListOfRcvSRCPDO[index] & USBPD_PDO_SRC_BATTERY_MIN_VOLTAGE_Msk) >> USBPD_PDO_SRC_BATTERY_MIN_VOLTAGE_Pos) * 50;
         uint32_t maxpower = ((DPM_Ports[PortNum].DPM_ListOfRcvSRCPDO[index] & USBPD_PDO_SRC_BATTERY_MAX_POWER_Msk) >> USBPD_PDO_SRC_BATTERY_MAX_POWER_Pos) * 250;
-        sprintf((char*)_str, " BATT:%2d.%1d-%2d.%1dV %2d.%dW", (minvoltage/1000),(minvoltage/100)%10, (maxvoltage/1000),(maxvoltage/100)%10, (maxpower/1000), (maxpower%1000)/100);
+        sprintf((char*)_str, " BATT:%2ld.%1ld-%2ld.%1ldV %2ld.%ldW", (minvoltage/1000),(minvoltage/100)%10, (maxvoltage/1000),(maxvoltage/100)%10, (maxpower/1000), (maxpower%1000)/100);
       }
       break;
     case USBPD_CORE_PDO_TYPE_VARIABLE :
@@ -894,7 +895,7 @@ static void Display_sourcecapa_menu_nav(uint8_t PortNum, int8_t Nav)
         uint32_t maxvoltage = ((DPM_Ports[PortNum].DPM_ListOfRcvSRCPDO[index] & USBPD_PDO_SRC_VARIABLE_MAX_VOLTAGE_Msk) >> USBPD_PDO_SRC_VARIABLE_MAX_VOLTAGE_Pos) * 50;
         uint32_t minvoltage = ((DPM_Ports[PortNum].DPM_ListOfRcvSRCPDO[index] & USBPD_PDO_SRC_VARIABLE_MIN_VOLTAGE_Msk) >> USBPD_PDO_SRC_VARIABLE_MIN_VOLTAGE_Pos) * 50;
         uint32_t maxcurrent = ((DPM_Ports[PortNum].DPM_ListOfRcvSRCPDO[index] & USBPD_PDO_SRC_VARIABLE_MAX_CURRENT_Msk) >> USBPD_PDO_SRC_VARIABLE_MAX_CURRENT_Pos) * 10;
-        sprintf((char*)_str, " VAR: %2d.%1d-%2d.%1dV %2d.%dA", (minvoltage/1000),(minvoltage/100)%10, (maxvoltage/1000),(maxvoltage/100)%10, (maxcurrent/1000), ((maxcurrent % 1000) /100));
+        sprintf((char*)_str, " VAR: %2ld.%1ld-%2ld.%1ldV %2ld.%ldA", (minvoltage/1000),(minvoltage/100)%10, (maxvoltage/1000),(maxvoltage/100)%10, (maxcurrent/1000), ((maxcurrent % 1000) /100));
       }
       break;
 #if _PPS
@@ -997,14 +998,13 @@ uint8_t Display_sourcecapa_menu_exec(uint8_t PortNum)
     else
     {
       Display_debug_port(PortNum, (uint8_t *)"request not sent");
-      return(1); /* error */
     }
   }
   else
   {
     Display_debug_port(PortNum, (uint8_t *)"not supported by demo");
-    return(1); /* error */
   }
+  return 1;
 #else
   return(1); /* error */
 #endif /* _SNK) || _DRP */
@@ -1081,7 +1081,6 @@ static void Display_extcapa_menu_nav(uint8_t PortNum, int8_t Orientation)
 
   for(int8_t index=_start; index < _end; index++)
   {
-
     if((index - _start) == g_tab_menu_pos[PortNum])
     {
       GUI_SetBackColor(GUI_COLOR_ST_PINK);
@@ -1097,6 +1096,90 @@ static void Display_extcapa_menu_nav(uint8_t PortNum, int8_t Orientation)
     }
   }
 #endif /* _SRC_CAPA_EXT */
+}
+
+/**
+  * @brief  Sink ext capa menu display
+  * @param  PortNum     The handle of the port
+  * @retval None
+  */
+static void Display_sinkextcapa_menu(uint8_t PortNum)
+{
+  uint8_t str[30];
+
+  GUI_SetBackColor(GUI_COLOR_WHITE);
+  GUI_SetTextColor(GUI_COLOR_ST_BLUE_DARK);
+  GUI_SetFont(&Font16);
+
+  /* Display menu source capa */
+  sprintf((char *)str, "Sink Extended capa : ");
+  GUI_DisplayStringAt(0, 1 + 6 * Font12.Height, str, LEFT_MODE);
+
+  Display_sinkextcapa_menu_nav(PortNum, 0);
+}
+
+/**
+  * @brief  Sink ext capa menu navigation
+  * @param  PortNum     The handle of the port
+  * @param  Orientation Orientation
+  * @retval None
+  */
+static void Display_sinkextcapa_menu_nav(uint8_t PortNum, int8_t Orientation)
+{
+  uint8_t _str[15][20];
+  uint8_t _max = 15;  /* Nb field inside sink extended capa */
+  uint8_t _start, _end;
+
+  memset(_str, ' ', sizeof(_str));
+
+  sprintf((char *)_str[0],  "VID:0x%x",            DPM_Ports[PortNum].DPM_RcvSNKExtendedCapa.VID);
+  sprintf((char *)_str[1],  "PID:0x%x",            DPM_Ports[PortNum].DPM_RcvSNKExtendedCapa.PID);
+  sprintf((char *)_str[2],  "XID:0x%lx",           DPM_Ports[PortNum].DPM_RcvSNKExtendedCapa.XID);
+  sprintf((char *)_str[3],  "F rev:0x%x",          DPM_Ports[PortNum].DPM_RcvSNKExtendedCapa.FW_revision);
+  sprintf((char *)_str[4],  "H rev:0x%x",          DPM_Ports[PortNum].DPM_RcvSNKExtendedCapa.HW_revision);
+  sprintf((char *)_str[5],  "SKEDB_Ver:0x%x",      DPM_Ports[PortNum].DPM_RcvSNKExtendedCapa.SKEDB_Version);
+  sprintf((char *)_str[6],  "LoadStep:0x%x",       DPM_Ports[PortNum].DPM_RcvSNKExtendedCapa.LoadStep);
+  sprintf((char *)_str[7],  "SinkLoadCharac:0x%x", DPM_Ports[PortNum].DPM_RcvSNKExtendedCapa.SinkLoadCharac.Value);
+  sprintf((char *)_str[8],  "Compliance:%d",       DPM_Ports[PortNum].DPM_RcvSNKExtendedCapa.Compliance);
+  sprintf((char *)_str[9],  "Ttemp:%d",            DPM_Ports[PortNum].DPM_RcvSNKExtendedCapa.Touchtemp);
+  sprintf((char *)_str[10], "BatteryInfo:0x%x",    DPM_Ports[PortNum].DPM_RcvSNKExtendedCapa.BatteryInfo);
+  sprintf((char *)_str[11], "SinkModes:0x%x",      DPM_Ports[PortNum].DPM_RcvSNKExtendedCapa.SinkModes);
+  sprintf((char *)_str[12], "SinkMinPDP:%d",       DPM_Ports[PortNum].DPM_RcvSNKExtendedCapa.SinkMinimumPDP);
+  sprintf((char *)_str[13], "SinkOpePDP:%d",       DPM_Ports[PortNum].DPM_RcvSNKExtendedCapa.SinkOperationalPDP);
+  sprintf((char *)_str[14], "SinkMaxPDP:%d",       DPM_Ports[PortNum].DPM_RcvSNKExtendedCapa.SinkMaximumPDP);
+
+  for(int8_t i = 0; i < _max; i++)
+  {
+    uint8_t _size = strlen((char *)_str[i]);
+    if(_size < 19 )
+    {
+      _str[i][_size] = ' ';
+      _str[i][19] = '\0';
+    }
+  }
+
+  GUI_SetBackColor(GUI_COLOR_WHITE);
+  GUI_SetTextColor(GUI_COLOR_ST_BLUE_DARK);
+  GUI_SetFont(&Font16);
+
+  Menu_manage_selection(PortNum, _max, MAX_LINE_EXTCAPA, &_start, &_end, Orientation);
+
+  for(int8_t index=_start; index < _end; index++)
+  {
+    if((index - _start) == g_tab_menu_pos[PortNum])
+    {
+      GUI_SetBackColor(GUI_COLOR_ST_PINK);
+      GUI_SetTextColor(GUI_COLOR_WHITE);
+    }
+
+    GUI_DisplayStringAt(0, 1 + 6 * Font12.Height  + (index + 1 - _start) * Font16.Height,  (uint8_t*)_str[index], CENTER_MODE);
+
+    if((index - _start) == g_tab_menu_pos[PortNum])
+    {
+      GUI_SetBackColor(GUI_COLOR_WHITE);
+      GUI_SetTextColor(GUI_COLOR_ST_BLUE_DARK);
+    }
+  }
 }
 #else
 static void Display_extcapa_menu(uint8_t PortNum)
@@ -1246,7 +1329,13 @@ static void Display_command_menu_exec(uint8_t PortNum)
 #if defined(USBPD_REV30_SUPPORT)
   case COMMAND_CONTROLMSG_GET_SRC_CAPEXT :
     if( USBPD_OK == USBPD_PE_Request_CtrlMessage(PortNum, USBPD_CONTROLMSG_GET_SRC_CAPEXT, USBPD_SOPTYPE_SOP))
-      Display_debug_port(PortNum, (uint8_t*)"request extcapa");
+      Display_debug_port(PortNum, (uint8_t*)"request src extcapa");
+    else
+      Display_debug_port(PortNum, (uint8_t*)"request not sent");
+    break;
+  case COMMAND_CONTROLMSG_GET_SNK_CAPEXT :
+    if( USBPD_OK == USBPD_PE_Request_CtrlMessage(PortNum, USBPD_CONTROLMSG_GET_SNK_CAPEXT, USBPD_SOPTYPE_SOP))
+      Display_debug_port(PortNum, (uint8_t*)"request snk extcapa");
     else
       Display_debug_port(PortNum, (uint8_t*)"request not sent");
     break;
@@ -1297,6 +1386,9 @@ static void Display_menuupdate_info(uint8_t PortNum, DEMO_MENU MenuSel)
   case MENU_EXTCAPA_RECEIVED :
     Display_extcapa_menu(PortNum);
     break;
+  case MENU_SNKEXTCAPA_RECEIVED :
+    Display_sinkextcapa_menu(PortNum);
+    break;
   case MENU_CABLE:
     Display_cableinfo_menu(PortNum);
     break;
@@ -1328,6 +1420,9 @@ static void Display_menunav_info(uint8_t PortNum, uint8_t MenuSel, int8_t Nav)
     break;
   case MENU_EXTCAPA_RECEIVED : /* Display menu source capa */
     Display_extcapa_menu_nav(PortNum, Nav);
+    break;
+  case MENU_SNKEXTCAPA_RECEIVED : /* Display menu sink capa */
+    Display_sinkextcapa_menu_nav(PortNum, Nav);
     break;
   }
 }
@@ -1612,13 +1707,21 @@ static void DEMO_Manage_event(uint32_t Event)
       case USBPD_NOTIFY_REQUEST_ENTER_MODE_BUSY :
         Display_debug_port(_portnum, (uint8_t *)"vdm enter mode BSY");
         break;
+      case USBPD_NOTIFY_GET_SNK_CAP_EXT_RECEIVED :
+        Display_debug_port(_portnum, (uint8_t *)"rec get SNK cap ext");
+        break;
+      case USBPD_NOTIFY_SNK_CAP_EXT_SENT :
+        Display_debug_port(_portnum, (uint8_t *)"SNK capa ext sent");
+        break;
+      case USBPD_NOTIFY_SNK_CAP_EXT_RECEIVED :
+        Display_debug_port(_portnum, (uint8_t *)"rec SNK cap ext");
+        break;
       }
     }
   break;
 
   }
   Display_Selected_port();
-  
 }
 
 /**

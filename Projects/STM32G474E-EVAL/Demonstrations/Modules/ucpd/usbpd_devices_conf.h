@@ -36,6 +36,8 @@ extern "C" {
 #include "stm32g4xx_ll_pwr.h"
 #include "stm32g4xx_ll_tim.h"
 
+#include "usbpd_pwr_if.h"   
+
 #if defined(USE_STM32G474E_EVAL)
 #include "stm32g474e_eval_usbpd_pwr.h"
 #else

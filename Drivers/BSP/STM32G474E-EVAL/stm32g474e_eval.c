@@ -112,11 +112,6 @@ static const uint16_t JOY_ALL_PIN[JOYn]   = {JOY_ALL};
 #endif /* USE_BSP_JOY_FEATURE */
 #endif /* USE_BSP_IO_CLASS */
 
-#if defined(_GUI_INTERFACE)
-const uint8_t HWBoardVersionName[]  = "STM32G474E-EVAL";
-const uint8_t PDTypeName[]          = "MB1397B";
-#endif /* _GUI_INTERFACE */
-
 /**
   * @}
   */
@@ -188,26 +183,24 @@ int32_t BSP_GetVersion(void)
   return (int32_t)STM32G474E_EVAL_BSP_VERSION;
 }
 
-#if defined(_GUI_INTERFACE)
 /**
-  * @brief  This method returns HW board version name
-  * @retval HW Board version name
+  * @brief  This method returns the board name
+  * @retval pointer to the board name string
   */
-const uint8_t* BSP_GetHWBoardVersionName(void)
+const uint8_t* BSP_GetBoardName(void)
 {
-  return HWBoardVersionName;
+  return (const uint8_t*)STM32G474E_EVAL_BSP_BOARD_NAME;
 }
 
 /**
-  * @brief  This method returns HW PD Type name
-  * @retval HW Board version name
+  * @brief  This method returns the board ID
+  * @retval pointer to the board ID string
   */
-const uint8_t* BSP_GetPDTypeName(void)
+const uint8_t* BSP_GetBoardID(void)
 {
-  return PDTypeName;
+  return (const uint8_t*)STM32G474E_EVAL_BSP_BOARD_ID;
 }
 
-#endif /* _GUI_INTERFACE */
 /**
   * @brief  Configures LED on GPIO.
   * @param  Led LED to be configured.

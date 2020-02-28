@@ -52,6 +52,7 @@ extern "C" {
       Definitions for TRACE Hw information
 -------------------------------------------------------------------------------*/
 
+#define TRACER_EMB_IS_INSTANCE_LPUART_TYPE           0UL /* set to 1UL if LPUART is used instead of USART */
 #define TRACER_EMB_USART_INSTANCE                    USART1
 
 #define TRACER_EMB_TX_GPIO                           GPIOA
@@ -78,11 +79,12 @@ extern "C" {
                                                        }while(0)
 #define TRACER_EMB_TX_DMA_REQUEST                    LL_DMAMUX_REQ_USART1_TX
 #define TRACER_EMB_TX_DMA_CHANNEL                    LL_DMA_CHANNEL_6
+#define TRACER_EMB_ENABLECHANNEL                     LL_DMA_EnableChannel
+#define TRACER_EMB_DISABLECHANNEL                    LL_DMA_DisableChannel
 #define TRACER_EMB_TX_DMA_IRQ                        DMA1_Channel6_IRQn
 #define TRACER_EMB_TX_DMA_IRQHANDLER                 DMA1_Channel6_IRQHandler
 #define TRACER_EMB_TX_DMA_ACTIVE_FLAG                LL_DMA_IsActiveFlag_TC6
 #define TRACER_EMB_TX_DMA_CLEAR_FLAG                 LL_DMA_ClearFlag_GI6
-
 
 #ifdef __cplusplus
 }

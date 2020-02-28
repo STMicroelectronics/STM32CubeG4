@@ -52,6 +52,10 @@ In case of HAL initialization issue, LED3 is blinking (1 second period).
 @note The application need to ensure that the SysTick time base is always set to 1 millisecond
       to have correct HAL operation.
 
+@par Keywords
+
+FMC, SRAM, Memory, Flash, Systick, Read, Write.
+
 @par Directory contents
 
  - FMC/FMC_SRAM/Inc/stm32g4xx_hal_conf.h        HAL Configuration file

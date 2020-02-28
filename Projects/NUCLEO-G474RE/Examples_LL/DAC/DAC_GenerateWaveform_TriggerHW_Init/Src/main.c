@@ -175,6 +175,7 @@ int main(void)
 
   /* USER CODE END 1 */
 
+
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
@@ -187,9 +188,11 @@ int main(void)
 
   /* System interrupt init*/
 
-  /* USER CODE BEGIN Init */
+  /** Disable the internal Pull-Up in Dead Battery pins of UCPD peripheral 
+  */
+  LL_PWR_DisableDeadBatteryPD();
 
-  TIM_PrescalerReloadCalculation();
+  /* USER CODE BEGIN Init */
 
   /* USER CODE END Init */
 
@@ -197,6 +200,7 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
+  TIM_PrescalerReloadCalculation();
 
   /* USER CODE END SysInit */
 
@@ -324,7 +328,9 @@ void SystemClock_Config(void)
   LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
   LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
   LL_RCC_SetAPB2Prescaler(LL_RCC_APB1_DIV_1);
+
   LL_Init1msTick(150000000);
+
   LL_SetSystemCoreClock(150000000);
 }
 
@@ -371,7 +377,7 @@ static void MX_DAC1_Init(void)
 
   LL_DMA_SetMemoryIncMode(DMA1, LL_DMA_CHANNEL_3, LL_DMA_MEMORY_INCREMENT);
 
-  LL_DMA_SetPeriphSize(DMA1, LL_DMA_CHANNEL_3, LL_DMA_PDATAALIGN_HALFWORD);
+  LL_DMA_SetPeriphSize(DMA1, LL_DMA_CHANNEL_3, LL_DMA_PDATAALIGN_WORD);
 
   LL_DMA_SetMemorySize(DMA1, LL_DMA_CHANNEL_3, LL_DMA_MDATAALIGN_HALFWORD);
 
@@ -385,14 +391,14 @@ static void MX_DAC1_Init(void)
   /** DAC channel OUT1 config 
   */
   LL_DAC_SetSignedFormat(DAC1, LL_DAC_CHANNEL_1, LL_DAC_SIGNED_FORMAT_DISABLE);
-  DAC_InitStruct.TriggerSource = LL_DAC_TRIG_SOFTWARE;
+  DAC_InitStruct.TriggerSource = LL_DAC_TRIG_EXT_TIM6_TRGO;
   DAC_InitStruct.TriggerSource2 = LL_DAC_TRIG_SOFTWARE;
   DAC_InitStruct.WaveAutoGeneration = LL_DAC_WAVE_AUTO_GENERATION_NONE;
   DAC_InitStruct.OutputBuffer = LL_DAC_OUTPUT_BUFFER_ENABLE;
   DAC_InitStruct.OutputConnection = LL_DAC_OUTPUT_CONNECT_GPIO;
   DAC_InitStruct.OutputMode = LL_DAC_OUTPUT_MODE_NORMAL;
   LL_DAC_Init(DAC1, LL_DAC_CHANNEL_1, &DAC_InitStruct);
-  LL_DAC_DisableTrigger(DAC1, LL_DAC_CHANNEL_1);
+  LL_DAC_EnableTrigger(DAC1, LL_DAC_CHANNEL_1);
   LL_DAC_DisableDMADoubleDataMode(DAC1, LL_DAC_CHANNEL_1);
   /* USER CODE BEGIN DAC1_Init 2 */
 
@@ -437,11 +443,12 @@ static void MX_TIM6_Init(void)
 
 }
 
-/** 
+/**
   * Enable DMA controller clock
   */
-static void MX_DMA_Init(void) 
+static void MX_DMA_Init(void)
 {
+
   /* Init with LL driver */
   /* DMA controller clock enable */
   LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_DMAMUX1);
@@ -707,7 +714,7 @@ void Error_Handler(void)
   * @retval None
   */
 void assert_failed(uint8_t *file, uint32_t line)
-{ 
+{
   /* USER CODE BEGIN 6 */
   /* User can add his own implementation to report the file name and line number,
      tex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */

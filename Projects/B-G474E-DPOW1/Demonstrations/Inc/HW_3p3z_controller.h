@@ -45,7 +45,6 @@ extern "C" {
 #include <stdlib.h>
 #include <string.h>
 #include <float.h>
-#include <cmsis_iar.h>
 
 /* Private includes ----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/

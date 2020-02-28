@@ -204,6 +204,7 @@ int8_t STORAGE_GetCapacity_FS(uint8_t lun, uint32_t *block_num, uint16_t *block_
   *block_num = info.LogBlockNbr;
   *block_size = info.LogBlockSize;
 
+
   return ret;
   /* USER CODE END 3 */
 }
@@ -255,9 +256,7 @@ int8_t STORAGE_Read_FS(uint8_t lun, uint8_t *buf, uint32_t blk_addr, uint16_t bl
   /* USER CODE BEGIN 6 */
   int8_t ret = -1;
   uint32_t timeout = 100000;
-
   BSP_SD_ReadBlocks(0,(uint32_t *)buf, blk_addr, blk_len);
-
   while(BSP_SD_GetCardState(0) != BSP_ERROR_NONE)
   {
     if (timeout-- == 0)
@@ -281,9 +280,7 @@ int8_t STORAGE_Write_FS(uint8_t lun, uint8_t *buf, uint32_t blk_addr, uint16_t b
   /* USER CODE BEGIN 7 */
   int8_t ret = -1;
   uint32_t timeout = 100000;
-
   BSP_SD_WriteBlocks(0,(uint32_t *)buf, blk_addr, blk_len);
-
   while(BSP_SD_GetCardState(0) != BSP_ERROR_NONE)
   {
     if (timeout-- == 0)

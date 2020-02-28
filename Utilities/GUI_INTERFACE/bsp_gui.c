@@ -20,10 +20,12 @@
 /* Includes ------------------------------------------------------------------*/
 #if defined(_GUI_INTERFACE)
 #include "bsp_gui.h"
+#include "usbpd_dpm_conf.h"
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private Defines */
 extern USBPD_SettingsTypeDef       DPM_Settings[USBPD_PORT_COUNT];
+extern uint8_t USBPD_NbPDO[4];
 #if defined(_VDM)
 extern USBPD_VDM_SettingsTypeDef   DPM_VDM_Settings[USBPD_PORT_COUNT];
 #endif /* _VDM */
@@ -39,10 +41,16 @@ GUI_StatusTypeDef BSP_GUI_LoadDataFromFlash(void)
   GUI_StatusTypeDef _status = GUI_ERROR;
   uint32_t _addr = GUI_FLASH_ADDR_NB_PDO_SNK_P0;
 
-  /* Update GUI_NbPDO? */
+  /* Check that we did not reach the end of page */
+  if (GUI_FLASH_SIZE_RESERVED < 0)
+  {
+    goto _exit;
+  }
+
+  /* Update USBPD_NbPDO? */
   if (0xFFFFFFFFu != *((uint32_t*)_addr))
   {
-    uint32_t* _ptr = (uint32_t*)GUI_NbPDO;
+    uint32_t* _ptr = (uint32_t*)USBPD_NbPDO;
     USPBPD_WRITE32 (_ptr,*((uint32_t*)_addr));
     _status = GUI_OK;
   }
@@ -72,14 +80,64 @@ GUI_StatusTypeDef BSP_GUI_LoadDataFromFlash(void)
   /* Save DPM_Settings of port 0 */
   _status |= LoadSettingsFromFlash(GUI_FLASH_ADDR_DPM_SETTINGS, (uint32_t*)DPM_Settings, sizeof(USBPD_SettingsTypeDef) * USBPD_PORT_COUNT);
 
+#if defined(GUI_FLASH_ADDR_DPM_ID_SETTINGS)
+  /* Save DPM_ID_Settings */
+  _status |= LoadSettingsFromFlash(GUI_FLASH_ADDR_DPM_ID_SETTINGS, (uint32_t*)DPM_ID_Settings, sizeof(USBPD_IdSettingsTypeDef) * USBPD_PORT_COUNT);
+#endif /* GUI_FLASH_ADDR_DPM_ID_SETTINGS */
+
   /* Save DPM_Settings of port 0 */
   _status |= LoadSettingsFromFlash(GUI_FLASH_ADDR_DPM_USER_SETTINGS, (uint32_t*)DPM_USER_Settings, sizeof(USBPD_USER_SettingsTypeDef) * USBPD_PORT_COUNT);
+#if defined(GUI_FLASH_ADDR_DPM_ID_SETTINGS)
+  /* Overwrite ID Settings in DPM_USER_Settings */
+#if defined(USBPD_REV30_SUPPORT)
+#if _SRC_CAPA_EXT && (defined(_SRC)||defined(_DRP))
+  DPM_USER_Settings[USBPD_PORT_0].DPM_SRCExtendedCapa.XID = DPM_ID_Settings[USBPD_PORT_0].XID;
+  DPM_USER_Settings[USBPD_PORT_0].DPM_SRCExtendedCapa.VID = DPM_ID_Settings[USBPD_PORT_0].VID;
+  DPM_USER_Settings[USBPD_PORT_0].DPM_SRCExtendedCapa.PID = DPM_ID_Settings[USBPD_PORT_0].PID;
+#if USBPD_PORT_COUNT==2
+  DPM_USER_Settings[USBPD_PORT_1].DPM_SRCExtendedCapa.XID = DPM_ID_Settings[USBPD_PORT_1].XID;
+  DPM_USER_Settings[USBPD_PORT_1].DPM_SRCExtendedCapa.VID = DPM_ID_Settings[USBPD_PORT_1].VID;
+  DPM_USER_Settings[USBPD_PORT_1].DPM_SRCExtendedCapa.PID = DPM_ID_Settings[USBPD_PORT_1].PID;
+#endif /* USBPD_PORT_COUNT==2 */
+#endif /* _SRC_CAPA_EXT && (_SRC || _DRP) */
+#if defined(_SNK)||defined(_DRP)
+  DPM_USER_Settings[USBPD_PORT_0].DPM_SNKExtendedCapa.XID = DPM_ID_Settings[USBPD_PORT_0].XID;
+  DPM_USER_Settings[USBPD_PORT_0].DPM_SNKExtendedCapa.VID = DPM_ID_Settings[USBPD_PORT_0].VID;
+  DPM_USER_Settings[USBPD_PORT_0].DPM_SNKExtendedCapa.PID = DPM_ID_Settings[USBPD_PORT_0].PID;
+#if USBPD_PORT_COUNT==2
+  DPM_USER_Settings[USBPD_PORT_1].DPM_SNKExtendedCapa.XID = DPM_ID_Settings[USBPD_PORT_1].XID;
+  DPM_USER_Settings[USBPD_PORT_1].DPM_SNKExtendedCapa.VID = DPM_ID_Settings[USBPD_PORT_1].VID;
+  DPM_USER_Settings[USBPD_PORT_1].DPM_SNKExtendedCapa.PID = DPM_ID_Settings[USBPD_PORT_1].PID;
+#endif /* USBPD_PORT_COUNT==2 */
+#endif /* _SNK || _DRP */
+#if _MANU_INFO
+  DPM_USER_Settings[USBPD_PORT_0].DPM_ManuInfoPort.VID = DPM_ID_Settings[USBPD_PORT_0].VID;
+  DPM_USER_Settings[USBPD_PORT_0].DPM_ManuInfoPort.PID = DPM_ID_Settings[USBPD_PORT_0].PID;
+#if USBPD_PORT_COUNT==2
+  DPM_USER_Settings[USBPD_PORT_1].DPM_ManuInfoPort.VID = DPM_ID_Settings[USBPD_PORT_1].VID;
+  DPM_USER_Settings[USBPD_PORT_1].DPM_ManuInfoPort.PID = DPM_ID_Settings[USBPD_PORT_1].PID;
+#endif /* USBPD_PORT_COUNT==2 */
+#endif /* _MANU_INFO */
+#endif /* USBPD_REV30_SUPPORT */
+#endif /* GUI_FLASH_ADDR_DPM_ID_SETTINGS */
 
 #if defined(_VDM)
   /* Save DPM_Settings of port 0 */
   _status |= LoadSettingsFromFlash(GUI_FLASH_ADDR_DPM_VDM_SETTINGS, (uint32_t*)DPM_VDM_Settings, sizeof(USBPD_VDM_SettingsTypeDef) * USBPD_PORT_COUNT);
+#if defined(GUI_FLASH_ADDR_DPM_ID_SETTINGS)
+  /* Overwrite ID Settings in VDM settings */
+  DPM_VDM_Settings[USBPD_PORT_0].VDM_XID_SOP      = DPM_ID_Settings[USBPD_PORT_0].XID;
+  DPM_VDM_Settings[USBPD_PORT_0].VDM_USB_VID_SOP  = DPM_ID_Settings[USBPD_PORT_0].VID;
+  DPM_VDM_Settings[USBPD_PORT_0].VDM_PID_SOP      = DPM_ID_Settings[USBPD_PORT_0].PID;
+#if USBPD_PORT_COUNT==2
+  DPM_VDM_Settings[USBPD_PORT_1].VDM_XID_SOP      = DPM_ID_Settings[USBPD_PORT_1].XID;
+  DPM_VDM_Settings[USBPD_PORT_1].VDM_USB_VID_SOP  = DPM_ID_Settings[USBPD_PORT_1].VID;
+  DPM_VDM_Settings[USBPD_PORT_1].VDM_PID_SOP      = DPM_ID_Settings[USBPD_PORT_1].PID;
+#endif /* USBPD_PORT_COUNT==2 */
 #endif /* _VDM */
+#endif /* GUI_FLASH_ADDR_DPM_ID_SETTINGS */
 
+_exit:
   return _status;
 }
 
@@ -102,11 +160,13 @@ GUI_StatusTypeDef BSP_GUI_SaveDataInFlash(void)
 #else
   erase_init.Page       = INDEX_PAGE;
 #endif /* STM32F072xB || STM32F051x8 */
+#if defined (FLASH_OPTR_DBANK)
+  erase_init.Banks      = FLASH_BANK_2;
+#endif /* FLASH_OPTR_DBANK */
   erase_init.NbPages    = 1;
 
-#if defined(STM32F072xB)  || defined(STM32F051x8)
-#else
-  /* TEMPORARY */
+#if defined(FLASH_SR_OPTVERR)
+  /* Specific handling of STM32G0 and STM32G4 flash devices for allowing erase operations */
   if(FLASH->SR != 0x00)
   {
     FLASH->SR = FLASH_SR_OPTVERR;
@@ -120,10 +180,10 @@ GUI_StatusTypeDef BSP_GUI_SaveDataInFlash(void)
 #ifdef GUI_FLASH_ADDR_NB_PDO_SNK_P0
     /* Save the nb of sink and src PDO */
     uint64_t value = 0;
-    value |= GUI_NbPDO[0];
-    value |= (GUI_NbPDO[1] << 8);
-    value |= (GUI_NbPDO[2] << 16);
-    value |= (GUI_NbPDO[3] << 24);
+    value |= USBPD_NbPDO[0];
+    value |= (USBPD_NbPDO[1] << 8);
+    value |= (USBPD_NbPDO[2] << 16);
+    value |= (USBPD_NbPDO[3] << 24);
    status = HAL_OK == HAL_FLASH_Program(FLASH_TYPEPROGRAM_DOUBLEWORD, GUI_FLASH_ADDR_NB_PDO_SNK_P0, value)? GUI_OK : GUI_WRITE_ERROR;
 #endif  /* GUI_FLASH_ADDR_NB_PDO_SNK_P0 */
 
@@ -164,20 +224,28 @@ GUI_StatusTypeDef BSP_GUI_SaveDataInFlash(void)
     /* Save DPM_Settings of port 0 */
     if (GUI_OK == status)
     {
-      status = SaveSettingsInFlash(GUI_FLASH_ADDR_DPM_SETTINGS, (uint32_t*)DPM_Settings, sizeof(USBPD_SettingsTypeDef));
+      status = SaveSettingsInFlash(GUI_FLASH_ADDR_DPM_SETTINGS, (uint32_t*)DPM_Settings, sizeof(USBPD_SettingsTypeDef) * USBPD_PORT_COUNT);
     }
+
+#if defined(GUI_FLASH_ADDR_DPM_ID_SETTINGS)
+    /* Save DPM_ID_Settings */
+    if (GUI_OK == status)
+    {
+      status = SaveSettingsInFlash(GUI_FLASH_ADDR_DPM_ID_SETTINGS, (uint32_t*)DPM_ID_Settings, sizeof(USBPD_IdSettingsTypeDef));
+    }
+#endif /* GUI_FLASH_ADDR_DPM_ID_SETTINGS */
 
     /* Save DPM_Settings of port 0 */
     if (GUI_OK == status)
     {
-      status = SaveSettingsInFlash(GUI_FLASH_ADDR_DPM_USER_SETTINGS, (uint32_t*)DPM_USER_Settings, sizeof(USBPD_USER_SettingsTypeDef));
+      status = SaveSettingsInFlash(GUI_FLASH_ADDR_DPM_USER_SETTINGS, (uint32_t*)DPM_USER_Settings, sizeof(USBPD_USER_SettingsTypeDef) * USBPD_PORT_COUNT);
     }
 
 #if defined(_VDM)
     /* Save DPM_Settings of port 0 */
     if (GUI_OK == status)
     {
-      status = SaveSettingsInFlash(GUI_FLASH_ADDR_DPM_VDM_SETTINGS, (uint32_t*)DPM_VDM_Settings, sizeof(USBPD_VDM_SettingsTypeDef));
+      status = SaveSettingsInFlash(GUI_FLASH_ADDR_DPM_VDM_SETTINGS, (uint32_t*)DPM_VDM_Settings, sizeof(USBPD_VDM_SettingsTypeDef) * USBPD_PORT_COUNT);
     }
 #endif /* _VDM */
   }
@@ -185,7 +253,7 @@ GUI_StatusTypeDef BSP_GUI_SaveDataInFlash(void)
   /* Lock the flash afer end of operations */
   HAL_FLASH_Lock();
 
-  /* Disable interrupts */
+  /* Enable interrupts */
   __enable_irq();
 
   return status;

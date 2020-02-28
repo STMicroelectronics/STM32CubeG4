@@ -42,6 +42,9 @@ STM32 board LED2 is used to monitor the example status:
   - LED2 is blinking (2 second period) when exceeding residual error
     on CORDIC results is detected or when there is an initialization error.
 
+@par Keywords
+
+CORDIC, Cosine, Sine. 
 
 @par Directory contents
 

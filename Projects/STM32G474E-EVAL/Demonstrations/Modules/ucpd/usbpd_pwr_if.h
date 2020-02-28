@@ -43,6 +43,13 @@
   * @{
   */
 
+/* Enumeration of the different power status available for VBUS */    
+typedef enum{
+  USBPD_PWR_BELOWVSAFE0V,
+  USBPD_PWR_VSAFE5V,
+  USBPD_PWR_SNKDETACH
+} USBPD_VBUSPOWER_STATUS;
+
 /* Macros used to convert values into PDO representation */
 #define PWR_V_20MV(_V_)        ((uint16_t)(( (_V_) * 1000) / 20))   /* From Volt to 20mV multiples      */
 #define PWR_V_50MV(_V_)        ((uint16_t)(( (_V_) * 1000) / 50))   /* From Volt to 50mV multiples      */
@@ -167,11 +174,6 @@ void USBPD_PWR_IF_GetPortPDOs(uint8_t PortNum, USBPD_CORE_DataInfoType_TypeDef D
 USBPD_StatusTypeDef USBPD_PWR_IF_SearchRequestedPDO(uint8_t PortNum, uint32_t RdoPosition, uint32_t *Pdo);
 
 #endif /* _SRC || _DRP */
-/**
-  * @brief  the function is called in case of critical issue is detected to switch in safety mode.
-  * @retval None
-  */
-void USBPD_PWR_IF_Alarm(void);
 
 #if defined(_SNK) || defined(_DRP)
 /**
@@ -183,8 +185,32 @@ USBPD_StatusTypeDef USBPD_PWR_IF_CheckUpdateSNKPower(uint8_t PortNum);
 #endif /* _SNK) || _DRP */
 
 /**
-  * @}
+  * @brief  the function is called in case of critical issue is detected to switch in safety mode.
+  * @retval None
   */
+void USBPD_PWR_IF_Alarm(void);
+
+/**
+  * @brief Function is called to get VBUS power status.
+  * @param PortNum Port number
+  * @param PowerTypeStatus  Power type status based on @ref USBPD_VBUSPOWER_STATUS
+  * @retval UBBPD_TRUE or USBPD_FALSE
+  */
+uint8_t USBPD_PWR_IF_GetVBUSStatus(uint8_t PortNum, USBPD_VBUSPOWER_STATUS PowerTypeStatus);
+
+/**
+  * @brief Function is called to set the VBUS threshold when a request has been accepted.
+  * @param PortNum Port number
+  * @retval None
+  */
+void USBPD_PWR_IF_UpdateVbusThreshold(uint8_t PortNum);
+
+/**
+  * @brief Function is called to reset the VBUS threshold when there is a power reset.
+  * @param PortNum Port number
+  * @retval None
+  */
+void USBPD_PWR_IF_ResetVbusThreshold(uint8_t PortNum);
 
 /**
   * @}

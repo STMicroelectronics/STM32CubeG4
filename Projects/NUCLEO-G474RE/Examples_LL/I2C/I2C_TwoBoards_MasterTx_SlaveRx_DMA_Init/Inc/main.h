@@ -93,11 +93,6 @@ extern "C" {
 /* Uncomment this line to use the board as slave, if not it is used as master */
 //#define SLAVE_BOARD
 
-/* Definition for usage of internal pull up */
-/* Enable this define, for an integration of this example inside
-   an ecosystem board with external pull-up */
-#define EXTERNAL_PULL_UP_AVAILABLE      0
-
 /* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/

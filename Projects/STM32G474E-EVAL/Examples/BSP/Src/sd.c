@@ -2,7 +2,7 @@
   ******************************************************************************
   * @file    BSP/Src/sd.c
   * @author  MCD Application Team
-  * @brief   This example code shows how to use the SD Driver in the 
+  * @brief   This example code shows how to use the SD Driver in the
   *          STM32G474E EVAL driver
   ******************************************************************************
   * @attention
@@ -37,7 +37,7 @@
 #define SD_CARD_PRESENCE_VALIDATION_MODE      SD_CARD_PRESENCE_INTERRUPT_MODE
 
 #define BLOCK_START_ADDR         0     /* Block start address      */
-#define NUM_OF_BLOCKS            5     /* Total number of blocks   */
+#define NUM_OF_BLOCKS            5    /* Total number of blocks   */
 #define BLOCKSIZE                SD_BLOCKSIZE
 #define BUFFER_WORDS_SIZE        ((BLOCKSIZE * NUM_OF_BLOCKS) >> 2) /* Total data size in bytes */
 
@@ -175,7 +175,7 @@ int32_t SD_demo (void)
   }
 
   printf ("\r\nSD Test done.");
-  printf ("\r\nSD can be removed.");
+  printf ("\r\nSD can be removed.\n");
   GUI_SetTextColor(GUI_COLOR_BLACK);
   GUI_DisplayStringAt(20, 200, (uint8_t *)"SD card test Done     ", LEFT_MODE);
 
@@ -209,15 +209,15 @@ int32_t SD_demo (void)
     }
 #endif
 
-    if (UserButtonPressed != 0)
-    {
-      /* Add delay to avoid rebound and reset it status */
-      HAL_Delay(500);
-      UserButtonPressed = 0;
+  if (UserButtonPressed != 0)
+  {
+    /* Add delay to avoid rebound and reset it status */
+    HAL_Delay(500);
+    UserButtonPressed = 0;
 
-      return result;
-    }
+    return result;
   }
+ }
 }
 
 /**
@@ -230,7 +230,7 @@ static void SD_SetHint(void)
   uint32_t x_size, y_size;
   BSP_LCD_GetXSize(0, &x_size);
   BSP_LCD_GetYSize(0, &y_size);
- 
+
   printf("TEST OF SD card\n");
 
   /* Clear the LCD */
@@ -244,7 +244,6 @@ static void SD_SetHint(void)
   GUI_DisplayStringAt(0, 0, (uint8_t *)"SD", CENTER_MODE);
   GUI_SetFont(&Font12);
   GUI_DisplayStringAt(0, 30, (uint8_t *)"This example shows how to write", CENTER_MODE);
-  BSP_LCD_FillRect(0, 0, 0, x_size, 80, GUI_COLOR_BLUE );
   GUI_DisplayStringAt(0, 45, (uint8_t *)"and read data on the microSD and also", CENTER_MODE);
   GUI_DisplayStringAt(0, 60, (uint8_t *)"how to detect the presence of the card", CENTER_MODE);
 

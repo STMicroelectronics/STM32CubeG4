@@ -297,7 +297,6 @@ static void MX_ADC1_Init(void)
   /* USER CODE END ADC1_Init 0 */
 
   ADC_MultiModeTypeDef multimode = {0};
-  ADC_AnalogWDGConfTypeDef AnalogWDGConfig = {0};
   ADC_ChannelConfTypeDef sConfig = {0};
 
   /* USER CODE BEGIN ADC1_Init 1 */
@@ -332,14 +331,7 @@ static void MX_ADC1_Init(void)
   {
     Error_Handler();
   }
-  /** Configure Analog WatchDog 1
-  */
-  AnalogWDGConfig.Channel = ADC_CHANNEL_1;
-  if (HAL_ADC_AnalogWDGConfig(&hadc1, &AnalogWDGConfig) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /** Configure Regular Channel
+  /** Configure Regular Channel 
   */
   sConfig.Channel = ADC_CHANNEL_4;
   sConfig.Rank = ADC_REGULAR_RANK_1;
@@ -396,7 +388,6 @@ static void MX_HRTIM1_Init(void)
 
   /* USER CODE BEGIN HRTIM1_Init 0 */
 
-  /* USER CODE END HRTIM1_Init 0 */
   /* USER CODE END HRTIM1_Init 0 */
 
   HRTIM_ADCTriggerCfgTypeDef pADCTriggerCfg = {0};
@@ -576,6 +567,7 @@ static void MX_RTC_Init(void)
   */
 static void MX_DMA_Init(void)
 {
+
   /* DMA controller clock enable */
   __HAL_RCC_DMAMUX1_CLK_ENABLE();
   __HAL_RCC_DMA1_CLK_ENABLE();

@@ -29,7 +29,6 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32g4xx_hal.h"
-#include "stm32g4xx_ll_adc.h"
 #include "stm32g4xx_ll_dma.h"
 #include "stm32g4xx_ll_rcc.h"
 #include "stm32g4xx_ll_bus.h"
@@ -72,10 +71,15 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define USBPD_FW_VERSION 0x24102019
 #define VSENSE_Pin LL_GPIO_PIN_0
 #define VSENSE_GPIO_Port GPIOC
 #define DISCHARGE_Pin LL_GPIO_PIN_2
 #define DISCHARGE_GPIO_Port GPIOB
+#define USART1_TX_Pin LL_GPIO_PIN_9
+#define USART1_TX_GPIO_Port GPIOA
+#define USART1_RX_Pin LL_GPIO_PIN_10
+#define USART1_RX_GPIO_Port GPIOA
 #define SOURCE_EN_Pin LL_GPIO_PIN_11
 #define SOURCE_EN_GPIO_Port GPIOC
 /* USER CODE BEGIN Private defines */

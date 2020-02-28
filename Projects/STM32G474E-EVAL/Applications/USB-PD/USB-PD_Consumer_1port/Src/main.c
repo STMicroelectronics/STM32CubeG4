@@ -4,13 +4,15 @@
   * @file           : main.c
   * @brief          : Main program body
   ******************************************************************************
+  * @attention
   *
-  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
+  * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under Ultimate Liberty license
   * SLA0044, the "License"; You may not use this file except in compliance with
   * the License. You may obtain a copy of the License at:
-  *                               www.st.com/SLA0044
+  *                             www.st.com/SLA0044
   *
   ******************************************************************************
   */
@@ -33,7 +35,6 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -42,6 +43,7 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
+ADC_HandleTypeDef hadc1;
 
 osThreadId defaultTaskHandle;
 /* USER CODE BEGIN PV */
@@ -50,10 +52,11 @@ osThreadId defaultTaskHandle;
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
-void MX_GPIO_Init(void);
-void MX_DMA_Init(void);
+static void MX_GPIO_Init(void);
+static void MX_DMA_Init(void);
 void MX_UCPD1_Init(void);
-void MX_ADC1_Init(void);
+void MX_USBPD_Init(void);
+static void MX_ADC1_Init(void);
 void MX_USART1_UART_Init(void);
 void StartDefaultTask(void const * argument);
 
@@ -90,11 +93,13 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-  HAL_NVIC_SetPriority(SysTick_IRQn, TICK_INT_PRIORITY ,0U);
-  LL_SYSTICK_EnableIT();
+
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
+  MX_GPIO_Init();
+  MX_DMA_Init();
+  MX_ADC1_Init();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
@@ -119,17 +124,16 @@ int main(void)
 
   /* Create the thread(s) */
   /* definition and creation of defaultTask */
-  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
+  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 64);
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
-
   /* USER CODE END RTOS_THREADS */
 
   /* Start scheduler */
   osKernelStart();
-  
+ 
   /* We should never get here as control is now taken by the scheduler */
 
   /* Infinite loop */
@@ -141,6 +145,7 @@ int main(void)
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
+
 }
 
 /**
@@ -165,7 +170,9 @@ void SystemClock_Config(void)
   }
   LL_RCC_HSI_SetCalibTrimming(64);
   LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSI, LL_RCC_PLLM_DIV_4, 75, LL_RCC_PLLR_DIV_2);
+  LL_RCC_PLL_ConfigDomain_ADC(LL_RCC_PLLSOURCE_HSI, LL_RCC_PLLM_DIV_4, 75, LL_RCC_PLLP_DIV_5);
   LL_RCC_PLL_EnableDomain_SYS();
+  LL_RCC_PLL_EnableDomain_ADC();
   LL_RCC_PLL_Enable();
 
    /* Wait till PLL is ready */
@@ -190,10 +197,15 @@ void SystemClock_Config(void)
   LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
   LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
   LL_RCC_SetAPB2Prescaler(LL_RCC_APB1_DIV_1);
-  LL_Init1msTick(150000000);
   LL_SetSystemCoreClock(150000000);
+
+   /* Update the time base */
+  if (HAL_InitTick (TICK_INT_PRIORITY) != HAL_OK)
+  {
+    Error_Handler();  
+  };
   LL_RCC_SetUSARTClockSource(LL_RCC_USART1_CLKSOURCE_PCLK2);
-  LL_RCC_SetADCClockSource(LL_RCC_ADC12_CLKSOURCE_SYSCLK);
+  LL_RCC_SetADCClockSource(LL_RCC_ADC12_CLKSOURCE_PLL);
 }
 
 /**
@@ -201,69 +213,77 @@ void SystemClock_Config(void)
   * @param None
   * @retval None
   */
-void MX_ADC1_Init(void)
+static void MX_ADC1_Init(void)
 {
 
   /* USER CODE BEGIN ADC1_Init 0 */
 
   /* USER CODE END ADC1_Init 0 */
 
-  LL_ADC_InitTypeDef ADC_InitStruct = {0};
-  LL_ADC_REG_InitTypeDef ADC_REG_InitStruct = {0};
-  LL_ADC_CommonInitTypeDef ADC_CommonInitStruct = {0};
-
-  LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
-
-  /* Peripheral clock enable */
-  LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_ADC12);
-  
-  LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOC);
-  /**ADC1 GPIO Configuration  
-  PC0   ------> ADC1_IN6 
-  */
-  GPIO_InitStruct.Pin = VSENSE_Pin;
-  GPIO_InitStruct.Mode = LL_GPIO_MODE_ANALOG;
-  GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
-  LL_GPIO_Init(VSENSE_GPIO_Port, &GPIO_InitStruct);
+  ADC_MultiModeTypeDef multimode = {0};
+  ADC_AnalogWDGConfTypeDef AnalogWDGConfig = {0};
+  ADC_ChannelConfTypeDef sConfig = {0};
 
   /* USER CODE BEGIN ADC1_Init 1 */
 
   /* USER CODE END ADC1_Init 1 */
   /** Common config 
   */
-  ADC_InitStruct.Resolution = LL_ADC_RESOLUTION_12B;
-  ADC_InitStruct.DataAlignment = LL_ADC_DATA_ALIGN_RIGHT;
-  ADC_InitStruct.LowPowerMode = LL_ADC_LP_MODE_NONE;
-  LL_ADC_Init(ADC1, &ADC_InitStruct);
-  ADC_REG_InitStruct.TriggerSource = LL_ADC_REG_TRIG_SOFTWARE;
-  ADC_REG_InitStruct.SequencerLength = LL_ADC_REG_SEQ_SCAN_DISABLE;
-  ADC_REG_InitStruct.SequencerDiscont = LL_ADC_REG_SEQ_DISCONT_DISABLE;
-  ADC_REG_InitStruct.ContinuousMode = LL_ADC_REG_CONV_CONTINUOUS;
-  ADC_REG_InitStruct.DMATransfer = LL_ADC_REG_DMA_TRANSFER_NONE;
-  ADC_REG_InitStruct.Overrun = LL_ADC_REG_OVR_DATA_OVERWRITTEN;
-  LL_ADC_REG_Init(ADC1, &ADC_REG_InitStruct);
-  LL_ADC_SetGainCompensation(ADC1, 0);
-  LL_ADC_SetOverSamplingScope(ADC1, LL_ADC_OVS_DISABLE);
-  LL_ADC_DisableIT_EOC(ADC1);
-  LL_ADC_DisableIT_EOS(ADC1);
-  LL_ADC_DisableDeepPowerDown(ADC1);
-  LL_ADC_EnableInternalRegulator(ADC1);
-  ADC_CommonInitStruct.CommonClock = LL_ADC_CLOCK_ASYNC_DIV4;
-  ADC_CommonInitStruct.Multimode = LL_ADC_MULTI_INDEPENDENT;
-  LL_ADC_CommonInit(__LL_ADC_COMMON_INSTANCE(ADC1), &ADC_CommonInitStruct);
+  hadc1.Instance = ADC1;
+  hadc1.Init.ClockPrescaler = ADC_CLOCK_ASYNC_DIV4;
+  hadc1.Init.Resolution = ADC_RESOLUTION_12B;
+  hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
+  hadc1.Init.GainCompensation = 0;
+  hadc1.Init.ScanConvMode = ADC_SCAN_DISABLE;
+  hadc1.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
+  hadc1.Init.LowPowerAutoWait = DISABLE;
+  hadc1.Init.ContinuousConvMode = ENABLE;
+  hadc1.Init.NbrOfConversion = 1;
+  hadc1.Init.DiscontinuousConvMode = DISABLE;
+  hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
+  hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
+  hadc1.Init.DMAContinuousRequests = DISABLE;
+  hadc1.Init.Overrun = ADC_OVR_DATA_OVERWRITTEN;
+  hadc1.Init.OversamplingMode = DISABLE;
+  if (HAL_ADC_Init(&hadc1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /** Configure the ADC multi-mode 
+  */
+  multimode.Mode = ADC_MODE_INDEPENDENT;
+  if (HAL_ADCEx_MultiModeConfigChannel(&hadc1, &multimode) != HAL_OK)
+  {
+    Error_Handler();
+  }
   /** Configure Analog WatchDog 1 
   */
-  LL_ADC_SetAnalogWDMonitChannels(ADC1, LL_ADC_AWD1, LL_ADC_AWD_ALL_CHANNELS_REG);
-  LL_ADC_ConfigAnalogWDThresholds(ADC1, LL_ADC_AWD1, 700, 600);
-  LL_ADC_SetAWDFilteringConfiguration(ADC1, LL_ADC_AWD1, LL_ADC_AWD_FILTERING_NONE);
-  LL_ADC_DisableIT_AWD1(ADC1);
+  AnalogWDGConfig.WatchdogNumber = ADC_ANALOGWATCHDOG_1;
+  AnalogWDGConfig.WatchdogMode = ADC_ANALOGWATCHDOG_ALL_REG;
+  AnalogWDGConfig.ITMode = DISABLE;
+  AnalogWDGConfig.HighThreshold = 700;
+  AnalogWDGConfig.LowThreshold = 600;
+  AnalogWDGConfig.FilteringConfig = ADC_AWD_FILTERING_NONE;
+
+  if (HAL_ADC_AnalogWDGConfig(&hadc1, &AnalogWDGConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
   /** Configure Regular Channel 
   */
-  LL_ADC_REG_SetSequencerRanks(ADC1, LL_ADC_REG_RANK_1, LL_ADC_CHANNEL_6);
-  LL_ADC_SetChannelSamplingTime(ADC1, LL_ADC_CHANNEL_6, LL_ADC_SAMPLINGTIME_247CYCLES_5);
-  LL_ADC_SetChannelSingleDiff(ADC1, LL_ADC_CHANNEL_6, LL_ADC_SINGLE_ENDED);
+  sConfig.Channel = ADC_CHANNEL_6;
+  sConfig.Rank = ADC_REGULAR_RANK_1;
+  sConfig.SamplingTime = ADC_SAMPLETIME_247CYCLES_5;
+  sConfig.SingleDiff = ADC_SINGLE_ENDED;
+  sConfig.OffsetNumber = ADC_OFFSET_NONE;
+  sConfig.Offset = 0;
+  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
   /* USER CODE BEGIN ADC1_Init 2 */
-
+  HAL_ADCEx_Calibration_Start(&hadc1, ADC_SINGLE_ENDED);
+  HAL_ADC_Start(&hadc1);
   /* USER CODE END ADC1_Init 2 */
 
 }
@@ -280,8 +300,25 @@ void MX_UCPD1_Init(void)
 
   /* USER CODE END UCPD1_Init 0 */
 
+  LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
+
   /* Peripheral clock enable */
   LL_APB1_GRP2_EnableClock(LL_APB1_GRP2_PERIPH_UCPD1);
+  
+  LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOB);
+  /**UCPD1 GPIO Configuration  
+  PB4   ------> UCPD1_CC2
+  PB6   ------> UCPD1_CC1 
+  */
+  GPIO_InitStruct.Pin = LL_GPIO_PIN_4;
+  GPIO_InitStruct.Mode = LL_GPIO_MODE_ANALOG;
+  GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
+  LL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  GPIO_InitStruct.Pin = LL_GPIO_PIN_6;
+  GPIO_InitStruct.Mode = LL_GPIO_MODE_ANALOG;
+  GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
+  LL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /* UCPD1 DMA Init */
   
@@ -400,7 +437,7 @@ void MX_USART1_UART_Init(void)
   /* USER CODE END USART1_Init 1 */
   USART_InitStruct.PrescalerValue = LL_USART_PRESCALER_DIV1;
   USART_InitStruct.BaudRate = 921600;
-  USART_InitStruct.DataWidth = LL_USART_DATAWIDTH_7B;
+  USART_InitStruct.DataWidth = LL_USART_DATAWIDTH_8B;
   USART_InitStruct.StopBits = LL_USART_STOPBITS_1;
   USART_InitStruct.Parity = LL_USART_PARITY_NONE;
   USART_InitStruct.TransferDirection = LL_USART_DIRECTION_TX_RX;
@@ -431,7 +468,7 @@ void MX_USART1_UART_Init(void)
 /** 
   * Enable DMA controller clock
   */
-void MX_DMA_Init(void) 
+static void MX_DMA_Init(void) 
 {
 
   /* Init with LL driver */
@@ -457,7 +494,7 @@ void MX_DMA_Init(void)
   * @param None
   * @retval None
   */
-void MX_GPIO_Init(void)
+static void MX_GPIO_Init(void)
 {
   LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
 
@@ -503,7 +540,6 @@ void MX_GPIO_Init(void)
 /* USER CODE END Header_StartDefaultTask */
 void StartDefaultTask(void const * argument)
 {
-
   /* USER CODE BEGIN 5 */
   /* Infinite loop */
   for(;;)

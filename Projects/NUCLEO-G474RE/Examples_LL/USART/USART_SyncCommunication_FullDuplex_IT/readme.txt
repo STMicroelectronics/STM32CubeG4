@@ -42,6 +42,10 @@ At end of transmission, both received buffers are compared to expected ones.
 In case of both transfers successfully completed, LED2 is turned on.
 In case of errors, LED2 is blinking Slowly (1s).
 
+@par Keywords
+
+Connectivity, USART, Synchroneous mode, RS-232, Baud rate, Interrupt, SPI, Reception, Transmission, Full duplex.
+
 @par Directory contents 
 
   - USART/USART_SyncCommunication_FullDuplex_IT/Inc/stm32g4xx_it.h          Interrupt handlers header file

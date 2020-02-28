@@ -29,6 +29,10 @@
   Green LED: blinks during normal operation
   Green LED: ON when the ERROR handler is entered
 
+@par Keywords
+
+HRTIM, Timers, PWM, waveforms, Single PWM, frequency.
+
 @par Directory contents 
 
   - HRTIM/HRTIM_Basic_Single_PWM/Inc/main.h                  Header for main.c module  

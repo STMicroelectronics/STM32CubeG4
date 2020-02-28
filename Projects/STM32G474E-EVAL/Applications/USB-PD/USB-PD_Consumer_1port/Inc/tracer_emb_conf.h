@@ -3,7 +3,7 @@
   ******************************************************************************
   * @file    tracer_emb_conf.h
   * @author  MCD Application Team
-  * @brief   This file contains the device define.
+  * @brief   This file contains the Trace HW related defines.
   ******************************************************************************
   * @attention
   *
@@ -83,6 +83,8 @@ extern "C" {
                                                        }while(0)
 #define TRACER_EMB_TX_DMA_REQUEST                    LL_DMAMUX_REQ_USART1_TX
 #define TRACER_EMB_TX_DMA_CHANNEL                    LL_DMA_CHANNEL_6
+#define TRACER_EMB_ENABLECHANNEL                     LL_DMA_EnableChannel
+#define TRACER_EMB_DISABLECHANNEL                    LL_DMA_DisableChannel
 #define TRACER_EMB_TX_DMA_IRQ                        DMA1_Channel6_IRQn
 #define TRACER_EMB_TX_DMA_IRQHANDLER                 DMA1_Channel6_IRQHandler
 #define TRACER_EMB_TX_DMA_ACTIVE_FLAG                LL_DMA_IsActiveFlag_TC6

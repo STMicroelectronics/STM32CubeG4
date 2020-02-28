@@ -21,19 +21,18 @@
 @par Application Description
 
 Use of the USB device application based on the Human Interface (HID).
-
-This is a typical application on how to use the STM32G4xx USB OTG Device peripheral where the STM32 MCU is
+  This is a typical application on how to use the stm32g4xx USB Device peripheral, where the STM32 MCU is
 enumerated as a HID device using the native PC Host HID driver to which the STM32G474E-EVAL Rev B
-board is connected, in order to emulate the Mouse directions using User push-button (B2 USER) mounted on the
+board is connected, in order to emulate the Mouse directions using User push-button mounted on the
 STM32G474E-EVAL Rev B board.
 
 At the beginning of the main program the HAL_Init() function is called to reset all the peripherals,
 initialize the Flash interface and the systick. The user is provided with the SystemClock_Config()
-function to configure the system clock (SYSCLK) to run at 64 MHz. The Full Speed (FS) USB module uses
+function to configure the system clock (SYSCLK). The Full Speed (FS) USB module uses
 internally a 48-MHz clock which is coming from a specific output of two PLLs (PLL or PLL SAI) or from MSI
 
 This example supports remote wakeup (which is the ability of a USB device to bring a suspended bus back
-to the active condition), and the User push-button (B2 User) is used as the remote wakeup source.
+to the active condition), and the User push-button is used as the remote wakeup source.
 
 By default, in Windows powered PC the Power Management feature of USB mouse devices is turned off.
 This setting is different from classic PS/2 computer functionality. Therefore, to enable the Wake from
@@ -88,8 +87,8 @@ Connectivity, USB Device, HID, Full Speed, Mouse, Remote Wakeup
     and can be easily tailored to any other supported device and development board.
 
   - STM32G474E-EVAL Rev B board Set-up
-    - Connect the STM32G474E-EVAL Rev B board to the PC through "TYPE-C" to standard A Male cable.
-    - Press the user key sw1 to move the cursor.
+    -Connect the STM32G474E-EVAL Rev B board CN22 to the PC through "TYPE-C" to "Standard A" cable.
+    - Press the User push-button  to move the cursor.
 
 @par How to use it ?
 

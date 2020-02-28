@@ -63,6 +63,10 @@ Power, PWR, EXTI, PVD, Interrupt, Wakeup, External reset
     and development board.
 
   - NUCLEO-G474RE RevC Set-up :
+    - Remove jumper on JP6 connector.
+    - Provide power supply (DC voltage) to JP6 connector, pin "VDD".
+    - LED2 (GREEN) connected to PA.05 pin indicates the behavior of
+      the test software as explained above.
 
 @par How to use it ? 
 

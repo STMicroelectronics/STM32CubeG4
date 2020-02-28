@@ -43,6 +43,10 @@ value defined by the aCCValue buffer.
 The PWM waveform can be displayed using an oscilloscope.
 
 Whenever a DMA transfer fails LED2 flashes with a frequency of 1 Hz.
+
+@par Keywords
+
+Timers, DMA, PWM, Frequency, Duty Cycle, Waveform, Oscilloscope, Output, Signal.
  
 @note PWM signal frequency value mentioned above is theoretical (obtained when
       the system clock frequency is exactly 170 MHz). Since the generated system

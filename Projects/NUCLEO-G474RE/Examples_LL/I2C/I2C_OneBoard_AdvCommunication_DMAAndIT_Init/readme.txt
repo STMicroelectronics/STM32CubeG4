@@ -1,9 +1,9 @@
 /**
   @page I2C_OneBoard_AdvCommunication_DMAAndIT I2C (Master DMA Mode)
-  
+
   @verbatim
   ******************************************************************************
-  * @file    Examples_LL/I2C/I2C_OneBoard_AdvCommunication_DMAAndIT_Init/readme.txt 
+  * @file    Examples_LL/I2C/I2C_OneBoard_AdvCommunication_DMAAndIT_Init/readme.txt
   * @author  MCD Application Team
   * @brief   Description of the I2C_OneBoard_AdvCommunication_DMAAndIT_Init I2C example (Master DMA Mode).
   ******************************************************************************
@@ -20,24 +20,30 @@
 
 @par Example Description
 
-How to exchange data between an I2C master device in DMA mode and an I2C slave 
-device in interrupt mode. The peripheral is initialized with LL unitary service 
+How to exchange data between an I2C master device in DMA mode and an I2C slave
+device in interrupt mode. The peripheral is initialized with LL unitary service
 functions to optimize for performance and size.
 
 This example guides you through the different configuration steps by mean of LL API
 to configure GPIO, DMA and I2C peripherals using only one NUCLEO-G474RE RevC.
 
-The user can disable internal pull-up through "#define EXTERNAL_PULL_UP_AVAILABLE"
-This help for an integration of this example inside an ecosystem board with external pull-up */
+The user can disable internal pull-up by opening ioc file.
+For that, user can follow the procedure :
+1- Double click on the I2C_OneBoard_AdvCommunication_DMAAndIT_Init.ioc file
+2- When CUBEMX tool is opened, select System Core category
+3- Then in the configuration of GPIO/I2C1, change Pull-up to No pull-up and no pull-down for the both pins
+4- Same action in the configuration of GPIO/I2C3, change Pull-up to No pull-up and no pull-down for the both pins
+5- Last step, generate new code thanks to button "GENERATE CODE"
+The example is updated with no pull on each pin used for I2C communication
 
 I2C1 Peripheral is configured in Slave mode with EXTI (Clock 400Khz, Own address 7-bit enabled).
 I2C3 Peripheral is configured in Master mode with DMA (Clock 400Khz).
-GPIO associated to User push-button is linked with EXTI. 
+GPIO associated to User push-button is linked with EXTI.
 
-LED2 blinks quickly to wait for user-button press. 
+LED2 blinks quickly to wait for user-button press.
 
 Example execution:
-Press the User push-button to initiate a write request by Master through Handle_I2C_Master_Transmit() or 
+Press the User push-button to initiate a write request by Master through Handle_I2C_Master_Transmit() or
 through Handle_I2C_Master_TransmitReceive() routine depends on Command Code type.
 
 Command code type is decomposed in two categories :
@@ -107,16 +113,22 @@ Note that
  - When resorting to MDK-ARM KEIL IDE:
  Command Code is displayed on debugger as follows: View --> Serial Viewer --> Debug (printf) Viewer
 
-- When resorting to AC6 SW4STM32 IDE:
- In Debug configuration window\ Startup, in addition to "monitor reset halt" add the command "monitor arm semihosting enable"
- Command Code is displayed on debugger as follows: Window--> Show View--> Console.
+- When resorting to STM32CubeIDE:
+Command Code is displayed on debugger as follows: Window--> Show View--> Console.
+In Debug configuration : 
+ - Window\Debugger, select the Debug probe : ST-LINK(OpenOCD)
+ - Window\Startup,add the command "monitor arm semihosting enable"
 
 After each use cases, the LED2 blinks quickly to wait for a new user-button press to send a new Command code to the Slave device.
 
 In all cases, if an error occurs, LED2 is blinking slowly.
 
+@par Keywords
 
-@par Directory contents 
+Connectivity, Communication, I2C, DMA, Interrupt, Master, Slave, Transmission, Reception, Fast mode,
+Command, Acknowledgement.
+
+@par Directory contents
 
   - I2C/I2C_OneBoard_AdvCommunication_DMAAndIT_Init/Inc/stm32g4xx_it.h          Interrupt handlers header file
   - I2C/I2C_OneBoard_AdvCommunication_DMAAndIT_Init/Inc/main.h                  Header for main.c module
@@ -128,20 +140,20 @@ In all cases, if an error occurs, LED2 is blinking slowly.
 @par Hardware and Software environment
 
   - This example runs on STM32G474RETx devices.
-    
+
   - This example has been tested with NUCLEO-G474RE RevC board and can be
     easily tailored to any other supported device and development board.
 
   - NUCLEO-G474RE RevC Set-up
     - Connect GPIOs connected to I2C1 SCL/SDA (PB.8 and PB.9)
     to respectively SCL and SDA pins of I2C3 (PC.8 and PC.9).
-      - I2C1_SCL  PB.8 (CN10, pin 3) : connected to I2C3_SCL PC.8 (CN10, pin 2) 
+      - I2C1_SCL  PB.8 (CN10, pin 3) : connected to I2C3_SCL PC.8 (CN10, pin 2)
       - I2C1_SDA  PB.9 (CN10, pin 5) : connected to I2C3_SDA PC.9 (CN10, pin 1)
 
-  - Launch the program in debug mode to benefit of Terminal I/O information. Press User push-button to initiate a write request by Master 
+  - Launch the program in debug mode to benefit of Terminal I/O information. Press User push-button to initiate a write request by Master
       then Slave receive bytes.
 
-@par How to use it ? 
+@par How to use it ?
 
 In order to make the program work, you must do the following :
  - Open your preferred toolchain

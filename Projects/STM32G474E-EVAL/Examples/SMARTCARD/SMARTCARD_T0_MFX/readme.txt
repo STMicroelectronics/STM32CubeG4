@@ -53,6 +53,10 @@ STM32 MCU and Smartcard :
 @note The application need to ensure that the SysTick time base is always set to
       1 millisecond to have correct HAL operation.
 
+@par Keywords
+
+SMARTCARD, smartcard mode, USART, ISO7816-3/4, GSM SIM card, APDU, PTS, IMSI, ICCID.
+
 @par Directory contents
 
   - SMARTCARD/SMARTCARD_T0_MFX/Inc/stm32g474e_eval_conf.h     BSP configuration file

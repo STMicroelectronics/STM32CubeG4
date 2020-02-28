@@ -70,6 +70,10 @@ The Encoder CH1/CH2, Index(ETR) and Pulse On Compare waveforms can be displayed 
 @note The application need to ensure that the SysTick time base is always set to 1 millisecond
       to have correct HAL operation.
 
+@par Keywords
+
+Timers, TIM, Output, signals, encoder mode, Pulse On Compare, Oscilloscope, Waveform, Encoder index.
+
 @par Directory contents
 
   - TIM/TIM_EncoderIndex_PulseOnCompare/Inc/stm32g4xx_nucleo_conf.h     BSP configuration file

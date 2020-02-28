@@ -5,13 +5,15 @@
   * @author  MCD Application Team
   * @brief   This file contains power interface control functions.
   ******************************************************************************
+  * @attention
   *
-  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
+  * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under Ultimate Liberty license
   * SLA0044, the "License"; You may not use this file except in compliance with
   * the License. You may obtain a copy of the License at:
-  *                               www.st.com/SLA0044
+  *                             www.st.com/SLA0044
   *
   ******************************************************************************
   */
@@ -27,10 +29,12 @@
 #include "usbpd_dpm_conf.h"
 #include "usbpd_pdo_defs.h"
 #include "usbpd_core.h"
+#if defined(_TRACE)
 #include "usbpd_trace.h"
-
-/* USER CODE BEGIN Include */
+#endif /* _TRACE */
 #include "string.h"
+/* USER CODE BEGIN Include */
+
 /* USER CODE END Include */
 
 /** @addtogroup STM32_USBPD_APPLICATION
@@ -42,9 +46,15 @@
   */
 
 /* Private typedef -----------------------------------------------------------*/
+/** @addtogroup STM32_USBPD_APPLICATION_POWER_IF_Private_TypeDef
+  * @{
+  */
 /* USER CODE BEGIN Private_Typedef */
 
 /* USER CODE END Private_Typedef */
+/**
+  * @}
+  */
 
 /* Private define ------------------------------------------------------------*/
 /** @addtogroup STM32_USBPD_APPLICATION_POWER_IF_Private_Defines
@@ -61,6 +71,11 @@
 /** @addtogroup STM32_USBPD_APPLICATION_POWER_IF_Private_Macros
   * @{
   */
+#if defined(_TRACE)
+#define PWR_IF_DEBUG_TRACE(_PORT_, __MESSAGE__)  USBPD_TRACE_Add(USBPD_TRACE_DEBUG, (_PORT_), 0u, (uint8_t*)(__MESSAGE__), sizeof(__MESSAGE__) - 1u)
+#else
+#define PWR_IF_DEBUG_TRACE(_PORT_, __MESSAGE__)
+#endif /* _TRACE */
 /* USER CODE BEGIN Private_Macro */
 
 /* USER CODE END Private_Macro */
@@ -75,7 +90,6 @@
 /* USER CODE BEGIN Private_Variables */
 
 /* USER CODE END Private_Variables */
-
 /**
   * @}
   */
@@ -84,36 +98,9 @@
 /** @addtogroup STM32_USBPD_APPLICATION_POWER_IF_Private_Functions
   * @{
   */
-
 /* USER CODE BEGIN USBPD_USER_PRIVATE_FUNCTIONS_Prototypes */
 
-/* Functions to initialize Source PDOs */
-uint32_t _PWR_SRCFixedPDO(float  _C_, float _V_,
-                          USBPD_CORE_PDO_PeakCurr_TypeDef _PK_,
-                          USBPD_CORE_PDO_DRDataSupport_TypeDef DRDSupport,
-                          USBPD_CORE_PDO_USBCommCapable_TypeDef UsbCommCapable,
-                          USBPD_CORE_PDO_ExtPowered_TypeDef ExtPower,
-                          USBPD_CORE_PDO_USBSuspendSupport_TypeDef UsbSuspendSupport,
-                          USBPD_CORE_PDO_DRPowerSupport_TypeDef DRPSupport);
-
-uint32_t _PWR_SRCVariablePDO(float _MAXV_, float _MINV_, float _C_);
-
-uint32_t _PWR_SRCBatteryPDO(float _MAXV_,float _MINV_,float _PWR_);
-/* Functions to initialize Sink PDOs */
-
-uint32_t _PWR_SNKFixedPDO(float  _C_, float _V_,
-                          USBPD_CORE_PDO_DRDataSupport_TypeDef DRDSupport,
-                          USBPD_CORE_PDO_USBCommCapable_TypeDef UsbCommCapable,
-                          USBPD_CORE_PDO_ExtPowered_TypeDef ExtPower,
-                          USBPD_CORE_PDO_HigherCapability_TypeDef HigherCapab,
-                          USBPD_CORE_PDO_DRPowerSupport_TypeDef DRPSupport);
-
-uint32_t _PWR_SNKVariablePDO(float  _MAXV_,float _MINV_,float _C_);
-
-uint32_t _PWR_SNKBatteryPDO(float _MAXV_,float _MINV_,float _PWR_);
-
 /* USER CODE END USBPD_USER_PRIVATE_FUNCTIONS_Prototypes */
-
 /**
   * @}
   */
@@ -126,7 +113,7 @@ uint32_t _PWR_SNKBatteryPDO(float _MAXV_,float _MINV_,float _PWR_);
   * @brief  Initialize structures and variables related to power board profiles
   *         used by Sink and Source, for all available ports.
   * @retval USBPD status
-*/
+  */
 USBPD_StatusTypeDef USBPD_PWR_IF_Init(void)
 {
 /* USER CODE BEGIN USBPD_PWR_IF_Init */
@@ -142,31 +129,9 @@ USBPD_StatusTypeDef USBPD_PWR_IF_Init(void)
 USBPD_StatusTypeDef USBPD_PWR_IF_SetProfile(uint8_t PortNum)
 {
 /* USER CODE BEGIN USBPD_PWR_IF_SetProfile */
-  return USBPD_ERROR;
+  USBPD_StatusTypeDef      _status = USBPD_ERROR;
+  return _status;
 /* USER CODE END USBPD_PWR_IF_SetProfile */
-}
-
-/**
-  * @brief  Resets the Power Board
-  * @retval USBPD status
-*/
-USBPD_StatusTypeDef USBPD_PWR_IF_PowerResetGlobal(void)
-{
-/* USER CODE BEGIN USBPD_PWR_IF_PowerResetGlobal */
-  return USBPD_ERROR;
-/* USER CODE END USBPD_PWR_IF_PowerResetGlobal */
-}
-
-/**
-  * @brief  Resets the Power on a specified port
-  * @param  PortNum Port number
-  * @retval USBPD status
-*/
-USBPD_StatusTypeDef USBPD_PWR_IF_PowerReset(uint8_t PortNum)
-{
-/* USER CODE BEGIN USBPD_PWR_IF_PowerReset */
-  return USBPD_ERROR;
-/* USER CODE END USBPD_PWR_IF_PowerReset */
 }
 
 /**
@@ -174,32 +139,11 @@ USBPD_StatusTypeDef USBPD_PWR_IF_PowerReset(uint8_t PortNum)
   * @param  PortNum Port number
   * @param  Vsafe   Vsafe status based on @ref USBPD_VSAFE_StatusTypeDef
   * @retval USBPD status
-*/
+  */
 USBPD_StatusTypeDef USBPD_PWR_IF_SupplyReady(uint8_t PortNum, USBPD_VSAFE_StatusTypeDef Vsafe)
 {
 /* USER CODE BEGIN USBPD_PWR_IF_SupplyReady */
-  USBPD_StatusTypeDef status = USBPD_ERROR;
-  uint32_t voltage;
-
-  /* check for valid port */
-  if (!USBPD_PORT_IsValid(PortNum))
-  {
-    return USBPD_ERROR;
-  }
-
-  BSP_USBPD_PWR_VBUSGetVoltage(PortNum, &voltage);
-  if (USBPD_VSAFE_0V == Vsafe)
-  {
-    /* Vsafe0V */
-    status = ((voltage < USBPD_PWR_HIGH_VBUS_THRESHOLD)? USBPD_OK: USBPD_ERROR);
-  }
-  else
-  {
-    /* Vsafe5V */
-    status = ((voltage > USBPD_PWR_HIGH_VBUS_THRESHOLD)? USBPD_OK: USBPD_ERROR);
-  }
-
-  return status;
+  return USBPD_ERROR;
 /* USER CODE END USBPD_PWR_IF_SupplyReady */
 }
 
@@ -207,7 +151,7 @@ USBPD_StatusTypeDef USBPD_PWR_IF_SupplyReady(uint8_t PortNum, USBPD_VSAFE_Status
   * @brief  Enables VBUS power on a specified port
   * @param  PortNum Port number
   * @retval USBPD status
-*/
+  */
 USBPD_StatusTypeDef USBPD_PWR_IF_VBUSEnable(uint8_t PortNum)
 {
 /* USER CODE BEGIN USBPD_PWR_IF_VBUSEnable */
@@ -219,7 +163,7 @@ USBPD_StatusTypeDef USBPD_PWR_IF_VBUSEnable(uint8_t PortNum)
   * @brief  Disbale VBUS/VCONN the power on a specified port
   * @param  PortNum Port number
   * @retval USBPD status
-*/
+  */
 USBPD_StatusTypeDef USBPD_PWR_IF_VBUSDisable(uint8_t PortNum)
 {
 /* USER CODE BEGIN USBPD_PWR_IF_VBUSDisable */
@@ -228,32 +172,10 @@ USBPD_StatusTypeDef USBPD_PWR_IF_VBUSDisable(uint8_t PortNum)
 }
 
 /**
-  * @brief  Disable the SNK to stop current consumption
-  * @param  PortNum Port number
-  * @retval USBPD status
-  */
-USBPD_StatusTypeDef USBPD_PWR_IF_SNKDisable(uint8_t PortNum)
-{
-/* USER CODE BEGIN USBPD_PWR_IF_SNKDisable */
-  return USBPD_ERROR;
-/* USER CODE END USBPD_PWR_IF_SNKDisable */
-}
-
-/**
-  * @brief  Initialize power on a specified port
-  * @param  PortNum Port number
-  * @retval USBPD status
-  */
-USBPD_StatusTypeDef USBPD_PWR_IF_InitPower(uint8_t PortNum)
-{
-  return USBPD_OK;
-}
-
-/**
   * @brief  Checks if the power on a specified port is enabled
   * @param  PortNum Port number
   * @retval USBPD_ENABLE or USBPD_DISABLE
-*/
+  */
 USBPD_FunctionalState USBPD_PWR_IF_VBUSIsEnabled(uint8_t PortNum)
 {
   /* Get the Status of the port */
@@ -266,7 +188,7 @@ USBPD_FunctionalState USBPD_PWR_IF_VBUSIsEnabled(uint8_t PortNum)
   * @param  pVoltage: The Voltage in mV
   * @param  pCurrent: The Current in mA
   * @retval USBPD_ERROR or USBPD_OK
-*/
+  */
 USBPD_StatusTypeDef USBPD_PWR_IF_ReadVA(uint8_t PortNum, uint16_t *pVoltage, uint16_t *pCurrent)
 {
 /* USER CODE BEGIN USBPD_PWR_IF_ReadVA */
@@ -313,9 +235,12 @@ USBPD_StatusTypeDef USBPD_PWR_IF_Disable_VConn(uint8_t PortNum, CCxPin_TypeDef C
   */
 void USBPD_PWR_IF_GetPortPDOs(uint8_t PortNum, USBPD_CORE_DataInfoType_TypeDef DataId, uint8_t *Ptr, uint32_t *Size)
 {
+    {
+      *Size = PORT0_NB_SINKPDO;
+      memcpy(Ptr,PORT0_PDO_ListSNK, sizeof(uint32_t) * PORT0_NB_SINKPDO);
+    }
 /* USER CODE BEGIN USBPD_PWR_IF_GetPortPDOs */
-  *Size = 1;
-  memcpy(Ptr,PORT0_PDO_ListSNK, sizeof(uint32_t));
+
 /* USER CODE END USBPD_PWR_IF_GetPortPDOs */
 }
 
@@ -331,7 +256,6 @@ void USBPD_PWR_IF_GetPortPDOs(uint8_t PortNum, USBPD_CORE_DataInfoType_TypeDef D
 USBPD_StatusTypeDef USBPD_PWR_IF_SearchRequestedPDO(uint8_t PortNum, uint32_t RdoPosition, uint32_t *Pdo)
 {
 /* USER CODE BEGIN USBPD_PWR_IF_SearchRequestedPDO */
-
   return USBPD_FAIL;
 /* USER CODE END USBPD_PWR_IF_SearchRequestedPDO */
 }
@@ -345,6 +269,58 @@ void USBPD_PWR_IF_Alarm()
 /* USER CODE BEGIN USBPD_PWR_IF_Alarm */
 
 /* USER CODE END USBPD_PWR_IF_Alarm */
+}
+
+/**
+  * @brief Function is called to get VBUS power status.
+  * @param PortNum Port number
+  * @param PowerTypeStatus  Power type status based on @ref USBPD_VBUSPOWER_STATUS
+  * @retval UBBPD_TRUE or USBPD_FALSE
+  */
+uint8_t USBPD_PWR_IF_GetVBUSStatus(uint8_t PortNum, USBPD_VBUSPOWER_STATUS PowerTypeStatus)
+{
+/* USER CODE BEGIN USBPD_PWR_IF_GetVBUSStatus */
+  uint8_t _status = USBPD_FALSE;
+  uint32_t _vbus = HW_IF_PWR_GetVoltage(PortNum);
+
+  switch(PowerTypeStatus)
+  {
+  case USBPD_PWR_BELOWVSAFE0V :
+    if (_vbus < USBPD_PWR_LOW_VBUS_THRESHOLD) _status = USBPD_TRUE;
+    break;
+  case USBPD_PWR_VSAFE5V :
+    if (_vbus >= USBPD_PWR_HIGH_VBUS_THRESHOLD) _status = USBPD_TRUE;
+    break;
+  case USBPD_PWR_SNKDETACH:
+    if (_vbus < USBPD_PWR_HIGH_VBUS_THRESHOLD) _status = USBPD_TRUE;
+    break;
+  default :
+    break;
+  }
+  return _status;
+/* USER CODE END USBPD_PWR_IF_GetVBUSStatus */
+}
+
+/**
+  * @brief Function is called to set the VBUS threshold when a request has been accepted.
+  * @param PortNum Port number
+  * @retval None
+  */
+void USBPD_PWR_IF_UpdateVbusThreshold(uint8_t PortNum)
+{
+/* USER CODE BEGIN USBPD_PWR_IF_UpdateVbusThreshold */
+/* USER CODE END USBPD_PWR_IF_UpdateVbusThreshold */
+}
+
+/**
+  * @brief Function is called to reset the VBUS threshold when there is a power reset.
+  * @param PortNum Port number
+  * @retval None
+  */
+void USBPD_PWR_IF_ResetVbusThreshold(uint8_t PortNum)
+{
+/* USER CODE BEGIN USBPD_PWR_IF_ResetVbusThreshold */
+/* USER CODE END USBPD_PWR_IF_ResetVbusThreshold */
 }
 
 /**

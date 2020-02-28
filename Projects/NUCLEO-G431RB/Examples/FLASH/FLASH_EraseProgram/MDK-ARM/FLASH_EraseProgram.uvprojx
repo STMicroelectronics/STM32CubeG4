@@ -358,9 +358,9 @@
             <useXO>0</useXO>
             <VariousControls>
               <MiscControls/>
-              <Define>USE_HAL_DRIVER,STM32G431xx,USE_NUCLEO_64,</Define>
+              <Define>USE_HAL_DRIVER,STM32G431xx,USE_NUCLEO_64</Define>
               <Undefine/>
-              <IncludePath>../Inc;../../../../../../Drivers/STM32G4xx_HAL_Driver/Inc;../../../../../../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy;../../../../../../Drivers/CMSIS/Device/ST/STM32G4xx/Include;../../../../../../Drivers/CMSIS/Include;../../../../../../Drivers/BSP/STM32G4xx_Nucleo</IncludePath>
+              <IncludePath>../Inc; ../../../../../../Drivers/STM32G4xx_HAL_Driver/Inc; ../../../../../../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy; ../../../../../../Drivers/CMSIS/Device/ST/STM32G4xx/Include; ../../../../../../Drivers/CMSIS/Include; ../../../../../../Drivers/BSP/STM32G4xx_Nucleo</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -479,6 +479,11 @@
               <FileName>stm32g4xx_hal_tim_ex.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim_ex.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32g4xx_ll_pwr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_pwr.c</FilePath>
             </File>
             <File>
               <FileName>stm32g4xx_hal.c</FileName>

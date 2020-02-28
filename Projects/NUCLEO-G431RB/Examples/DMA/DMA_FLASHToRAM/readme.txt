@@ -57,7 +57,7 @@ example by modifying defines values in the file main.h.
 
 @par Keywords
 
-System, DMA, Data Transfer, Memory to memory, Stream, Flash, RAM
+System, DMA, Data Transfer, Memory to memory, Channel, Flash, RAM
 
 @par Directory contents 
 

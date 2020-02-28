@@ -38,8 +38,12 @@ extern "C" {
 #define __PACKEDSTRUCTEND
 #elif defined ( __GNUC__ )
 #define __ASM            __asm                                      /*!< asm keyword for GNU Compiler          */
+#ifndef __INLINE
 #define __INLINE         inline                                     /*!< inline keyword for GNU Compiler       */
+#endif  /* !__INLINE */
+#ifndef __STATIC_INLINE
 #define __STATIC_INLINE  static inline
+#endif  /* !__STATIC_INLINE */
 #ifndef __packed
 #define __packed __attribute__((__packed__))
 #endif /* __packed */
@@ -129,36 +133,51 @@ extern "C" {
 
 #define __DEBUG_PESTATEMACHINE
 
+
 /** @defgroup USBPD_CORE_DEF_Exported_Defines_Swiches USBPD Compilations switches
   * @brief List of compilation switches which can be used to reduce size of the CORE library
   * @{
   */
-
+#if defined(USBPDCORE_LIB_NO_PD)
+#define USBPDCORE_NOPD
+#else
 /* Default Switch */
 #define USBPDCORE_GOTOMIN
 #define USBPDCORE_BIST
 #define USBPDCORE_GETSNKCAP
 #define USBPDCORE_GETSRCCAP
 #define USBPDCORE_GIVESNKCAP
+#define USBPDCORE_ERROR_RECOVERY
 
-#if defined(USBPDCORE_LIB_PD3_FULL) || defined(USBPDCORE_LIB_PD3_CONFIG_1) || defined(USBPD_TCPM_LIB_PD3_FULL) || defined(USBPD_TCPM_LIB_PD3_CONFIG_1)
+#if defined(USBPDCORE_LIB_PD3_FULL) || defined(USBPDCORE_LIB_PD3_CONFIG_1) || defined(USBPD_TCPM_LIB_PD3_FULL) || defined(USBPD_TCPM_LIB_PD3_CONFIG_1) || defined(USBPDCORE_LIB_PD3_CONFIG_MINSRC) || defined(USBPDCORE_LIB_PD3_CONFIG_MINSNK)
+
 /*
    USBPDCORE_LIB_PD3_FULL
    USBPDCORE_LIB_PD3_CONFIG_1  : NO VDM
+   USBPDCORE_LIB_PD3_CONFIG_MINSRC : ONLY SRC and  NO option
+   USBPDCORE_LIB_PD3_CONFIG_MINSNK : ONLY SNK, and NO option
    USBPD_TCPM_LIB_PD3_FULL     : PD3.0 TCPM FULL
    USBPD_TCPM_LIB_PD3_CONFIG_1 : PD3.0 TCPM FULL without VDM
 */
+#define USBPD_REV30_SUPPORT
+
+#if !defined(USBPDCORE_LIB_PD3_CONFIG_MINSNK)
 #define USBPDCORE_SRC
+#endif
+
+#if !defined(USBPDCORE_LIB_PD3_CONFIG_MINSRC)
 #define USBPDCORE_SNK
-#define USBPDCORE_DRP
 #define USBPDCORE_SNK_CAPA_EXT
+#endif
 
 #if defined(USBPDCORE_LIB_PD3_FULL) || defined(USBPD_TCPM_LIB_PD3_FULL)
 #define USBPDCORE_SVDM
 #endif /* USBPDCORE_LIB_PD3_FULL || USBPD_TCPM_LIB_PD3_FULL */
 
+#if defined(USBPDCORE_LIB_PD3_CONFIG_MINSNK)||defined(USBPDCORE_LIB_PD3_CONFIG_MINSRC)
+#else
+#define USBPDCORE_DRP
 #define USBPDCORE_UVDM
-#define USBPD_REV30_SUPPORT
 #define USBPDCORE_FASTROLESWAP
 #define USBPDCORE_PPS
 #define USBPDCORE_ALERT
@@ -171,12 +190,13 @@ extern "C" {
 #define USBPDCORE_COUNTRY_MSG
 #define USBPDCORE_VCONN_SUPPORT
 #define USBPDCORE_DATA_SWAP
-#define USBPDCORE_ERROR_RECOVERY
 #define USBPDCORE_UNCHUNCKED_MODE
 #define USBPDCORE_PING_SUPPORT
+#endif /* USBPDCORE_LIB_PD3_CONFIG_MINSNK || USBPDCORE_LIB_PD3_CONFIG_MINSRC */
 
 #if defined(USBPD_TCPM_LIB_PD3_FULL) || defined(USBPD_TCPM_LIB_PD3_CONFIG_1)
 #define USBPDCORE_TCPM_SUPPORT
+#undef  USBPDCORE_UNCHUNCKED_MODE
 #endif /* TCPM */
 
 #endif /* PD3.0 */
@@ -208,7 +228,6 @@ extern "C" {
 #define USBPDCORE_DRP
 #define USBPDCORE_VCONN_SUPPORT
 #define USBPDCORE_DATA_SWAP
-#define USBPDCORE_ERROR_RECOVERY
 #define USBPDCORE_UVDM
 #endif
 
@@ -236,6 +255,7 @@ extern "C" {
 #define USBPDCORE_UVDM
 #define USBPDCORE_UNCHUNCKED_MODE
 #endif /* USBPDCORE_LIB_PD3_CONFIG_2 */
+#endif /* USBPDCORE_LIB_NO_PD */
 
 /* _LIB_ID definition */
 /*
@@ -258,7 +278,7 @@ extern "C" {
 /* Defines for STACK version */
 #define LIB_STACK_VER_POS   12u
 #define LIB_STACK_VER_MSK   (0xFFFu << LIB_STACK_VER_POS)
-#define LIB_STACK_VER       (0x260u  << LIB_STACK_VER_POS)
+#define LIB_STACK_VER       (0x290u  << LIB_STACK_VER_POS)
 /* Defines for configuration */
 #define LIB_CONFIG_MSK      0xFFFu
 #define LIB_FULL            0x000u
@@ -266,6 +286,7 @@ extern "C" {
 #define LIB_CONFIG_MINSRC   0x002u
 #define LIB_CONFIG_MINSNK   0x004u
 #define LIB_CONFIG_2        0x010u
+#define LIB_CONFIG_NOPD     0x100u
 
 #ifdef USBPDCORE_LIB_PD3_FULL
 #define _LIB_ID   (LIB_PD3 | LIB_CORE | LIB_STACK_VER | LIB_FULL)
@@ -282,8 +303,14 @@ extern "C" {
 #ifdef USBPDCORE_LIB_PD2_CONFIG_MINSRC
 #define _LIB_ID   (LIB_PD2 | LIB_CORE | LIB_STACK_VER | LIB_CONFIG_MINSRC)
 #endif
+#ifdef USBPDCORE_LIB_PD3_CONFIG_MINSRC
+#define _LIB_ID   (LIB_PD3 | LIB_CORE | LIB_STACK_VER | LIB_CONFIG_MINSRC)
+#endif
 #ifdef USBPDCORE_LIB_PD2_CONFIG_MINSNK
 #define _LIB_ID   (LIB_PD2 | LIB_CORE | LIB_STACK_VER | LIB_CONFIG_MINSNK)
+#endif
+#ifdef USBPDCORE_LIB_PD3_CONFIG_MINSNK
+#define _LIB_ID   (LIB_PD3 | LIB_CORE | LIB_STACK_VER | LIB_CONFIG_MINSNK)
 #endif
 #ifdef USBPD_TCPM_LIB_PD2_FULL
 #define _LIB_ID   (LIB_PD2 | LIB_TCPM | LIB_STACK_VER | LIB_FULL)
@@ -305,6 +332,9 @@ extern "C" {
 #endif
 #if defined(USBPDCORE_LIB_PD3_CONFIG_2)
 #define _LIB_ID   (LIB_PD3 | LIB_TCPM | LIB_STACK_VER | LIB_CONFIG_2)
+#endif
+#if defined(USBPDCORE_LIB_NO_PD)
+#define _LIB_ID   (LIB_STACK_VER | LIB_CONFIG_NOPD)
 #endif
 /**
   * @}
@@ -831,12 +861,18 @@ typedef enum
   USBPD_NOEVENT,
   USBPD_DISCARDRX,
 
-  USBPD_MALLOCERROR,
+  /* Stack initialization errors  */
+  USBPD_MALLOCERROR,           /*<! Malloc error during CORE handles creation                                                   */
+  USBPD_INVALID_PORT_NUMBER,   /*<! Port number exceed the maximum of supported ports  by the stack (@ref USBPD_MAXPORT_COUNT)  */
+
+  /* PDFU status  */
 #if defined(USBPDCORE_FWUPD)
   USBPD_PDFU_NODATA,
   USBPD_PDFU_PAUSE,
   USBPD_PDFU_RESUME,
 #endif /* USBPDCORE_FWUPD */
+
+  USPD_ERROR_CALLBACKMISSING,
 }
 USBPD_StatusTypeDef;
 
@@ -1335,18 +1371,30 @@ typedef enum
   * @{
   */
 #define PRODUCT_TYPE_UNDEFINED          0u /*!< Undefined                              */
+
+/* Product Type (UFP): */
 #define PRODUCT_TYPE_HUB                1u /*!< PDUSB Hub (UFP)                        */
 #define PRODUCT_TYPE_PERIPHERAL         2u /*!< PDUSB Host (UFP)                       */
+#if defined(USBPD_REV30_SUPPORT)
+#define PRODUCT_TYPE_PSD                3u /*!< PSD, e.g. power bank (UFP)             */
+#endif /* USBPD_REV30_SUPPORT */
+#define PRODUCT_TYPE_AMA                5u /*!< Alternate Mode Adapter (AMA) (UFP)     */
+#if defined(USBPD_REV30_SUPPORT)
+#define PRODUCT_TYPE_VPD                6u /*!< VCONN-Powered USB Device (VPD) (UFP)   */
+#endif /* USBPD_REV30_SUPPORT */
+
+/* Product Type (Cable Plug): */
+#define PRODUCT_TYPE_PASSIVE_CABLE      3u /*!< Passive Cable (Cable Plug)             */
+#define PRODUCT_TYPE_ACTIVE_CABLE       4u /*!< Active Cable (Cable Plug)              */
+
+/* Product Type (DFP): */
 #if defined(USBPD_REV30_SUPPORT)
 #define PRODUCT_TYPE_HOST               2u /*!< PDUSB Host  (DFP)                      */
 #define PRODUCT_TYPE_POWER_BRICK        3u /*!< Power Brick (DFP)                      */
 #endif /* USBPD_REV30_SUPPORT */
-#define PRODUCT_TYPE_PASSIVE_CABLE      3u /*!< Passive Cable (Cable Plug)             */
-#define PRODUCT_TYPE_ACTIVE_CABLE       4u /*!< Active Cable (Cable Plug)              */
 #if defined(USBPD_REV30_SUPPORT)
 #define PRODUCT_TYPE_AMC                4u /*!<  Alternate Mode Controller (AMC) (DFP) */
 #endif /* USBPD_REV30_SUPPORT */
-#define PRODUCT_TYPE_AMA                5u /*!< Alternate Mode Adapter (AMA) (UFP)     */
 
 typedef uint32_t USBPD_ProductType_TypeDef;
 
@@ -2718,7 +2766,8 @@ typedef union
     uint16_t Is_GetCountryInfo_Supported      : 1u; /*!< Get_Country_Info message supported by PE                                   */
     uint16_t Is_SecurityRequest_Supported     : 1u; /*!< Security_Response message supported by PE                                  */
     uint16_t Is_FirmUpdateRequest_Supported   : 1u; /*!< Firmware update response message supported by PE                           */
-    uint16_t Is_SnkCapaExt_Supported          : 1u; /*!< Sink_Capabilities_Extended message supported by PE                         */
+    uint16_t Reserved2                        : 1u; /*!< Reserved bits: old Is_SnkCapaExt_Supported (SNK_CAPA_EXT msg mandatory)    */
+    uint16_t Is_GetBattery_Supported          : 1u; /*!< Get Battery Capabitity and Status messages supported by PE                 */
     uint16_t reserved                         : 3u; /*!< Reserved bits                                                              */
   } d;
 } USBPD_PD3SupportTypeDef;

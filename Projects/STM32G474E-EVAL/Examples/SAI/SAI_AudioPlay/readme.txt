@@ -40,6 +40,10 @@ Once started, LED1 is toggling on STM32G474E-EVAL Rev B.
 @note The application need to ensure that the SysTick time base is always set to 1 millisecond
       to have correct HAL operation.
 
+@par Keywords
+
+Audio, SAI, DMA, Buffer Update, Play, Headphone, Audio protocol.
+
 @par Directory contents
 
   - SAI/SAI_AudioPlay/Inc/stm32g474e_eval_conf.h     BSP configuration file

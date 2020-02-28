@@ -1348,7 +1348,7 @@ SD_CmdAnswer_typedef SD_SendCmd(uint8_t Cmd, uint32_t Arg, uint8_t Crc, uint8_t 
 {
   uint8_t frame[SD_CMD_LENGTH], frameout[SD_CMD_LENGTH];
   SD_CmdAnswer_typedef retr = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
-  uint8_t counter = 0;
+  uint32_t counter = 0;
 
   /* R1 Length = NCS(0)+ 6 Bytes command + NCR(min1 max8) + 1 Bytes answer + NEC(0) = 15bytes */
   /* R1b identical to R1 + Busy information                                                   */
@@ -1382,7 +1382,7 @@ SD_CmdAnswer_typedef SD_SendCmd(uint8_t Cmd, uint32_t Arg, uint8_t Crc, uint8_t 
         SD_CS_LOW();
 
         /* Wait IO line return 0xFF */      
-        while (( retr.r2 == (uint8_t)0) && (counter  < SD_MAX_TRY))
+        while (( retr.r2 == (uint8_t)0) && (counter  < 200*SD_MAX_TRY))
         { 
           counter++;
           retr.r2 = SD_IO_WriteByte(SD_DUMMY_BYTE);

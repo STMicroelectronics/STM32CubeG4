@@ -97,6 +97,14 @@ typedef enum {
 
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
+static COMP_HandleTypeDef CompRedHandle;
+static COMP_HandleTypeDef CompGreenHandle;
+static COMP_HandleTypeDef CompBlueHandle;
+
+static DAC_HandleTypeDef  DacRedHandle;
+static DAC_HandleTypeDef  DacGreenHandle;
+static DAC_HandleTypeDef  DacBlueHandle;
+
 static OPAMP_HandleTypeDef OpampRedHandle;
 static OPAMP_HandleTypeDef OpampGreenHandle;
 

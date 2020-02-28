@@ -95,19 +95,19 @@
 /**
   * @}
   */
-
+  
 /** @defgroup USBD_DESC_Private_FunctionPrototypes USBD_DESC_Private_FunctionPrototypes
   * @brief Private functions declaration.
   * @{
   */
-
+  
 static void Get_SerialNum(void);
 static void IntToUnicode(uint32_t value, uint8_t * pbuf, uint8_t len);
-
+  
 /**
   * @}
-  */
-
+  */  
+  
 
 /** @defgroup USBD_DESC_Private_FunctionPrototypes USBD_DESC_Private_FunctionPrototypes
   * @brief Private functions declaration.
@@ -122,10 +122,6 @@ uint8_t * USBD_MSC_SerialStrDescriptor(USBD_SpeedTypeDef speed, uint16_t *length
 uint8_t * USBD_MSC_ConfigStrDescriptor(USBD_SpeedTypeDef speed, uint16_t *length);
 uint8_t * USBD_MSC_InterfaceStrDescriptor(USBD_SpeedTypeDef speed, uint16_t *length);
 
-#ifdef USBD_SUPPORT_USER_STRING_DESC
-uint8_t * USBD_MSC_USRStringDesc(USBD_SpeedTypeDef speed, uint8_t idx, uint16_t *length);
-#endif /* USBD_SUPPORT_USER_STRING_DESC */
-
 /**
   * @}
   */
@@ -137,12 +133,12 @@ uint8_t * USBD_MSC_USRStringDesc(USBD_SpeedTypeDef speed, uint8_t idx, uint16_t 
 
 USBD_DescriptorsTypeDef MSC_Desc =
 {
-  USBD_MSC_DeviceDescriptor,
-  USBD_MSC_LangIDStrDescriptor,
-  USBD_MSC_ManufacturerStrDescriptor,
-  USBD_MSC_ProductStrDescriptor,
-  USBD_MSC_SerialStrDescriptor,
-  USBD_MSC_ConfigStrDescriptor,
+  USBD_MSC_DeviceDescriptor, 
+  USBD_MSC_LangIDStrDescriptor, 
+  USBD_MSC_ManufacturerStrDescriptor, 
+  USBD_MSC_ProductStrDescriptor, 
+  USBD_MSC_SerialStrDescriptor, 
+  USBD_MSC_ConfigStrDescriptor, 
   USBD_MSC_InterfaceStrDescriptor
 };
 
@@ -203,7 +199,7 @@ __ALIGN_BEGIN uint8_t USBD_LangIDDesc[USB_LEN_LANGID_STR_DESC] __ALIGN_END =
 __ALIGN_BEGIN uint8_t USBD_StrDesc[USBD_MAX_STR_DESC_SIZ] __ALIGN_END;
 
 #if defined ( __ICCARM__ ) /*!< IAR Compiler */
-  #pragma data_alignment=4
+  #pragma data_alignment=4   
 #endif
 __ALIGN_BEGIN uint8_t USBD_StringSerial[USB_SIZ_STRING_SERIAL] __ALIGN_END = {
   USB_SIZ_STRING_SERIAL,
@@ -227,6 +223,7 @@ __ALIGN_BEGIN uint8_t USBD_StringSerial[USB_SIZ_STRING_SERIAL] __ALIGN_END = {
   */
 uint8_t * USBD_MSC_DeviceDescriptor(USBD_SpeedTypeDef speed, uint16_t *length)
 {
+  UNUSED(speed);
   *length = sizeof(USBD_MSC_DeviceDesc);
   return USBD_MSC_DeviceDesc;
 }
@@ -239,6 +236,7 @@ uint8_t * USBD_MSC_DeviceDescriptor(USBD_SpeedTypeDef speed, uint16_t *length)
   */
 uint8_t * USBD_MSC_LangIDStrDescriptor(USBD_SpeedTypeDef speed, uint16_t *length)
 {
+  UNUSED(speed);
   *length = sizeof(USBD_LangIDDesc);
   return USBD_LangIDDesc;
 }
@@ -270,6 +268,7 @@ uint8_t * USBD_MSC_ProductStrDescriptor(USBD_SpeedTypeDef speed, uint16_t *lengt
   */
 uint8_t * USBD_MSC_ManufacturerStrDescriptor(USBD_SpeedTypeDef speed, uint16_t *length)
 {
+  UNUSED(speed);
   USBD_GetString((uint8_t *)USBD_MANUFACTURER_STRING, USBD_StrDesc, length);
   return USBD_StrDesc;
 }
@@ -282,11 +281,16 @@ uint8_t * USBD_MSC_ManufacturerStrDescriptor(USBD_SpeedTypeDef speed, uint16_t *
   */
 uint8_t * USBD_MSC_SerialStrDescriptor(USBD_SpeedTypeDef speed, uint16_t *length)
 {
+  UNUSED(speed);
   *length = USB_SIZ_STRING_SERIAL;
 
   /* Update the serial number string descriptor with the data from the unique
    * ID */
   Get_SerialNum();
+  
+  /* USER CODE BEGIN USBD_MSC_SerialStrDescriptor */
+  
+  /* USER CODE END USBD_MSC_SerialStrDescriptor */
 
   return (uint8_t *) USBD_StringSerial;
 }
@@ -330,8 +334,8 @@ uint8_t * USBD_MSC_InterfaceStrDescriptor(USBD_SpeedTypeDef speed, uint16_t *len
 }
 
 /**
-  * @brief  Create the serial number string descriptor
-  * @param  None
+  * @brief  Create the serial number string descriptor 
+  * @param  None 
   * @retval None
   */
 static void Get_SerialNum(void)
@@ -352,9 +356,9 @@ static void Get_SerialNum(void)
 }
 
 /**
-  * @brief  Convert Hex 32Bits value into char
+  * @brief  Convert Hex 32Bits value into char 
   * @param  value: value to convert
-  * @param  pbuf: pointer to the buffer
+  * @param  pbuf: pointer to the buffer 
   * @param  len: buffer length
   * @retval None
   */

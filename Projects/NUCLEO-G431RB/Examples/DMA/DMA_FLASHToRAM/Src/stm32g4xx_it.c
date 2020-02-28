@@ -65,7 +65,7 @@ extern DMA_HandleTypeDef hdma_memtomem_dma1_channel1;
 /* USER CODE END EV */
 
 /******************************************************************************/
-/*           Cortex-M4 Processor Interruption and Exception Handlers          */ 
+/*           Cortex-M4 Processor Interruption and Exception Handlers          */
 /******************************************************************************/
 /**
   * @brief This function handles System service call via SWI instruction.

@@ -69,6 +69,10 @@ LED2 is On on both boards if data is well received.
 
 In case of errors, LED2 is blinking Slowly (1s).
 
+@par Keywords
+
+Connectivity, Communication, Full-Duplex, SPI, DMA, Master, Slave, Transmission, Reception, MOSI, MISO, EXTI.
+
 @note You need to perform a reset on Master board, then perform it on Slave board
       to have the correct behaviour of this example.
 

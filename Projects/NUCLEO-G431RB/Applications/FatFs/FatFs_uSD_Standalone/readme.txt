@@ -75,7 +75,7 @@ The USART outputs a message on the HyperTerminal:
 
 @par Keywords
 
-Middleware, SD Card, FatFs, File system, FAT Volume, Format, Mount, Read, Write,
+SD Card, FatFs, File system, FAT Volume, Format, Mount, Read, Write,
 
 @note SD module is part of the Adafruit shield.
 

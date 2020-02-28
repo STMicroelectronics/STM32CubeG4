@@ -38,6 +38,11 @@
   - TIMER_PWM_FREQ
   - DEADTIME_IN_NS
 
+@par Keywords
+
+HRTIM, Timers, PWM, Waveforms, Frequency, Cycle by cycle, CBC, External event, Deadtime.
+
+
 @par Directory contents 
 
   - HRTIM/HRTIM_CBC_Deadtime/Inc/main.h                  Header for main.c module  

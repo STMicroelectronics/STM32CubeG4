@@ -97,6 +97,10 @@ and "main.h" files depending hardware configuration used.
 @note The example need to ensure that the SysTick time base is always set to 1 millisecond
       to have correct HAL operation.
 
+@par Keywords
+
+SMBUS, Temperature, Sensor, I2C, Communication, Transmission, Reception, Interrupt, LCD.
+
 @par Directory contents 
 
   - SMBUS/SMBUS_TSENSOR/Inc/stm32g4xx_hal_conf.h    HAL configuration file

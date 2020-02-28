@@ -87,7 +87,7 @@ int32_t Bus_demo(void)
   /* De-initialize I2C3 bus */
   if (BSP_I2C3_DeInit() != BSP_ERROR_NONE) result--;
 
-  if (result)  printf("      Passed\n");
+  if (result == 0)  printf("      Passed\n");
       else     printf("      Failed\n");
 
   return result;
