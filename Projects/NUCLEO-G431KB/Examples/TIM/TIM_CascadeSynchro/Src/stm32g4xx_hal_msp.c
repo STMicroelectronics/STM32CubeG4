@@ -58,7 +58,7 @@
 /* USER CODE BEGIN 0 */
 
 /* USER CODE END 0 */
-                        
+
 void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
                                                             /**
   * Initializes the Global MSP.
@@ -74,9 +74,9 @@ void HAL_MspInit(void)
 
   /* System interrupt init*/
 
-  /** Disable the internal Pull-Up in Dead Battery pins of UCPD peripheral 
+  /** Disable the internal Pull-Up in Dead Battery pins of UCPD peripheral
   */
-  LL_PWR_DisableDeadBatteryPD();
+  HAL_PWREx_DisableUCPDDeadBattery();
 
   /* USER CODE BEGIN MspInit 1 */
 
@@ -147,8 +147,8 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef* htim)
 
   /* USER CODE END TIM2_MspPostInit 0 */
     __HAL_RCC_GPIOA_CLK_ENABLE();
-    /**TIM2 GPIO Configuration    
-    PA5     ------> TIM2_CH1 
+    /**TIM2 GPIO Configuration
+    PA5     ------> TIM2_CH1
     */
     GPIO_InitStruct.Pin = GPIO_PIN_5;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
@@ -166,10 +166,10 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef* htim)
   /* USER CODE BEGIN TIM3_MspPostInit 0 */
 
   /* USER CODE END TIM3_MspPostInit 0 */
-  
+
     __HAL_RCC_GPIOA_CLK_ENABLE();
-    /**TIM3 GPIO Configuration    
-    PA6     ------> TIM3_CH1 
+    /**TIM3 GPIO Configuration
+    PA6     ------> TIM3_CH1
     */
     GPIO_InitStruct.Pin = GPIO_PIN_6;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
@@ -187,10 +187,10 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef* htim)
   /* USER CODE BEGIN TIM4_MspPostInit 0 */
 
   /* USER CODE END TIM4_MspPostInit 0 */
-  
+
     __HAL_RCC_GPIOA_CLK_ENABLE();
-    /**TIM4 GPIO Configuration    
-    PA11     ------> TIM4_CH1 
+    /**TIM4 GPIO Configuration
+    PA11     ------> TIM4_CH1
     */
     GPIO_InitStruct.Pin = GPIO_PIN_11;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;

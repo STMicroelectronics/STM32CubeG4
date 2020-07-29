@@ -31,10 +31,10 @@
 
   + Display on LCD
      o Clear the whole LCD using the BSP_LCD_Clear() function.
-     o Display a character on the specified line and column using the GUI_DisplayChar()
-       function or a complete string line using the GUI_DisplayStringAtLine() function.
+     o Display a character on the specified line and column using the UTIL_LCD_DisplayChar()
+       function or a complete string line using the UTIL_LCD_DisplayStringAtLine() function.
      o Display a string line on the specified position (x,y in pixel) and align mode
-       using the GUI_DisplayStringAtLine() function.
+       using the UTIL_LCD_DisplayStringAtLine() function.
      o Draw and fill a basic shapes (dot, line, rectangle, circle, ellipse, .. bitmap, raw picture)
        on LCD using a set of functions.
 
@@ -68,8 +68,8 @@
 #define START_BYTE_WRITE        0x72U
 #define START_BYTE_READ         0x73U
 
-/* LINK GUI */
-const GUI_Drv_t LCD_Driver =
+/* LINK UTIL LCD */
+const LCD_UTILS_Drv_t LCD_Driver =
 {
   BSP_LCD_DrawBitmap,
   BSP_LCD_FillRGBRect,

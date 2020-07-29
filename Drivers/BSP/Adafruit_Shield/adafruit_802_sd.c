@@ -161,8 +161,8 @@ typedef enum
 #define SD_TOKEN_START_DATA_SINGLE_BLOCK_READ    0xFEU  /* Data token start byte, Start Single Block Read */
 #define SD_TOKEN_START_DATA_MULTIPLE_BLOCK_READ  0xFEU  /* Data token start byte, Start Multiple Block Read */
 #define SD_TOKEN_START_DATA_SINGLE_BLOCK_WRITE   0xFEU  /* Data token start byte, Start Single Block Write */
-#define SD_TOKEN_START_DATA_MULTIPLE_BLOCK_WRITE 0xFDU  /* Data token start byte, Start Multiple Block Write */
-#define SD_TOKEN_STOP_DATA_MULTIPLE_BLOCK_WRITE  0xFDU  /* Data toke stop byte, Stop Multiple Block Write */
+#define SD_TOKEN_START_DATA_MULTIPLE_BLOCK_WRITE 0xFCU  /* Data token start byte, Start Multiple Block Write */
+#define SD_TOKEN_STOP_DATA_MULTIPLE_BLOCK_WRITE  0xFDU  /* Data token stop byte, Stop Multiple Block Write */
 
 /**
   * @brief  Commands: CMDxx = CMD-number | 0x40
@@ -286,6 +286,9 @@ int32_t ADAFRUIT_802_SD_DeInit(uint32_t Instance)
   */
 int32_t ADAFRUIT_802_SD_DetectITConfig(uint32_t Instance)
 {
+  /* Prevent unused argument(s) compilation warning */
+  UNUSED(Instance);
+
   return BSP_ERROR_FEATURE_NOT_SUPPORTED;
 }
 
@@ -296,6 +299,9 @@ int32_t ADAFRUIT_802_SD_DetectITConfig(uint32_t Instance)
  */
 int32_t ADAFRUIT_802_SD_IsDetected(uint32_t Instance)
 {
+  /* Prevent unused argument(s) compilation warning */
+  UNUSED(Instance);
+
   return BSP_ERROR_FEATURE_NOT_SUPPORTED;
 }
 
@@ -310,7 +316,7 @@ int32_t ADAFRUIT_802_SD_IsDetected(uint32_t Instance)
 int32_t ADAFRUIT_802_SD_ReadBlocks(uint32_t Instance, uint32_t *pData, uint32_t BlockIdx, uint32_t BlocksNbr)
 {
   int32_t ret = BSP_ERROR_NONE;
-  uint32_t response, offset = 0;
+  uint32_t response, offset = 0, blocks_nbr = BlocksNbr;
   uint8_t tmp;
 
   if(Instance >= SD_INSTANCES_NBR)
@@ -346,7 +352,7 @@ int32_t ADAFRUIT_802_SD_ReadBlocks(uint32_t Instance, uint32_t *pData, uint32_t 
         {
           /* Send CMD17 (SD_CMD_READ_SINGLE_BLOCK) to read one block */
           /* Check if the SD acknowledged the read block command: R1 response (0x00: no errors) */
-          response = SD_SendCmd(SD_CMD_READ_SINGLE_BLOCK, (BlockIdx + offset) * (CardType == ADAFRUIT_802_CARD_SDHC ? 1U: ADAFRUIT_SD_BLOCK_SIZE), 0xFFU, (uint8_t)SD_ANSWER_R1_EXPECTED);
+          response = SD_SendCmd(SD_CMD_READ_SINGLE_BLOCK, (BlockIdx + offset) * ((CardType == ADAFRUIT_802_CARD_SDHC) ? 1U: ADAFRUIT_SD_BLOCK_SIZE), 0xFFU, (uint8_t)SD_ANSWER_R1_EXPECTED);
           if ((uint8_t)(response & 0xFFU) != (uint8_t)SD_R1_NO_ERROR)
           {
             /* Send dummy byte: 8 Clock pulses of delay */
@@ -354,55 +360,56 @@ int32_t ADAFRUIT_802_SD_ReadBlocks(uint32_t Instance, uint32_t *pData, uint32_t 
             if(BUS_SPIx_Send(&tmp, 1U) != BSP_ERROR_NONE)
             {
               ret = BSP_ERROR_PERIPH_FAILURE;
-              break;
             }
           }
 
-          /* Now look for the data token to signify the start of the data */
-          if (SD_WaitData(SD_TOKEN_START_DATA_SINGLE_BLOCK_READ) == BSP_ERROR_NONE)
+          if(ret == BSP_ERROR_NONE)
           {
-            /* Read the SD block data : read NumByteToRead data */
-            if(BUS_SPIx_Recv((uint8_t*)pData + offset, ADAFRUIT_SD_BLOCK_SIZE) != BSP_ERROR_NONE)
+            /* Now look for the data token to signify the start of the data */
+            if (SD_WaitData(SD_TOKEN_START_DATA_SINGLE_BLOCK_READ) == BSP_ERROR_NONE)
             {
-              ret = BSP_ERROR_PERIPH_FAILURE;
-              break;
-            }
+              /* Read the SD block data : read NumByteToRead data */
+              if(BUS_SPIx_Recv((uint8_t*)pData + offset, ADAFRUIT_SD_BLOCK_SIZE) != BSP_ERROR_NONE)
+              {
+                ret = BSP_ERROR_PERIPH_FAILURE;
+              }
+              else
+              {
+                /* Set next read address*/
+                offset += ADAFRUIT_SD_BLOCK_SIZE;
+                blocks_nbr--;
 
-            /* Set next read address*/
-            offset += ADAFRUIT_SD_BLOCK_SIZE;
-            BlocksNbr--;
-
-            /* get CRC bytes (not really needed by us, but required by SD) */
-            if(BUS_SPIx_Send(&tmp, 1U) != BSP_ERROR_NONE)
-            {
-              ret = BSP_ERROR_PERIPH_FAILURE;
-              break;
-            }
-            if(BUS_SPIx_Send(&tmp, 1U) != BSP_ERROR_NONE)
-            {
-              ret = BSP_ERROR_PERIPH_FAILURE;
-              break;
+                /* get CRC bytes (not really needed by us, but required by SD) */
+                if(BUS_SPIx_Send(&tmp, 1U) != BSP_ERROR_NONE)
+                {
+                  ret = BSP_ERROR_PERIPH_FAILURE;
+                }
+                else if(BUS_SPIx_Send(&tmp, 1U) != BSP_ERROR_NONE)
+                {
+                  ret = BSP_ERROR_PERIPH_FAILURE;
+                }
+                else
+                {
+                  /* Send dummy byte: 8 Clock pulses of delay */
+                  SD_IO_CSState(1);
+                  if(BUS_SPIx_Send(&tmp, 1U) != BSP_ERROR_NONE)
+                  {
+                    ret = BSP_ERROR_PERIPH_FAILURE;
+                  }
+                }
+                if(ret == BSP_ERROR_NONE)
+                {
+                  /* End the command data read cycle */
+                  SD_IO_CSState(1);
+                  if(BUS_SPIx_Send(&tmp, 1U) != BSP_ERROR_NONE)
+                  {
+                    ret = BSP_ERROR_PERIPH_FAILURE;
+                  }
+                }
+              }
             }
           }
-          else
-          {
-            /* Send dummy byte: 8 Clock pulses of delay */
-            SD_IO_CSState(1);
-            if(BUS_SPIx_Send(&tmp, 1U) != BSP_ERROR_NONE)
-            {
-              ret = BSP_ERROR_PERIPH_FAILURE;
-              break;
-            }
-          }
-
-          /* End the command data read cycle */
-          SD_IO_CSState(1);
-          if(BUS_SPIx_Send(&tmp, 1U) != BSP_ERROR_NONE)
-          {
-            ret = BSP_ERROR_PERIPH_FAILURE;
-            break;
-          }
-        }while ((BlocksNbr != 0U) && (ret == BSP_ERROR_NONE));
+        }while ((blocks_nbr != 0U) && (ret == BSP_ERROR_NONE));
       }
     }
   }
@@ -422,7 +429,7 @@ int32_t ADAFRUIT_802_SD_ReadBlocks(uint32_t Instance, uint32_t *pData, uint32_t 
 int32_t ADAFRUIT_802_SD_WriteBlocks(uint32_t Instance, uint32_t *pData, uint32_t BlockIdx, uint32_t BlocksNbr)
 {
   int32_t ret = BSP_ERROR_NONE;
-  uint32_t response, offset = 0;
+  uint32_t response, offset = 0, blocks_nbr = BlocksNbr;
   uint8_t tmp, data_response;
 
   if(Instance >= SD_INSTANCES_NBR)
@@ -459,7 +466,7 @@ int32_t ADAFRUIT_802_SD_WriteBlocks(uint32_t Instance, uint32_t *pData, uint32_t
         {
           /* Send CMD24 (SD_CMD_WRITE_SINGLE_BLOCK) to write blocks  and
           Check if the SD acknowledged the write block command: R1 response (0x00: no errors) */
-          response = SD_SendCmd(SD_CMD_WRITE_SINGLE_BLOCK, (BlockIdx + offset) * (CardType == ADAFRUIT_802_CARD_SDHC ? 1U : ADAFRUIT_SD_BLOCK_SIZE), 0xFFU, (uint8_t)SD_ANSWER_R1_EXPECTED);
+          response = SD_SendCmd(SD_CMD_WRITE_SINGLE_BLOCK, (BlockIdx + offset) * ((CardType == ADAFRUIT_802_CARD_SDHC) ? 1U : ADAFRUIT_SD_BLOCK_SIZE), 0xFFU, (uint8_t)SD_ANSWER_R1_EXPECTED);
           if ((uint8_t)(response & 0xFFU) != (uint8_t)SD_R1_NO_ERROR)
           {
             /* Send dummy byte: 8 Clock pulses of delay */
@@ -467,80 +474,77 @@ int32_t ADAFRUIT_802_SD_WriteBlocks(uint32_t Instance, uint32_t *pData, uint32_t
             if(BUS_SPIx_Send(&tmp, 1U) != BSP_ERROR_NONE)
             {
               ret = BSP_ERROR_PERIPH_FAILURE;
-              break;
             }
           }
 
-          /* Send dummy byte for NWR timing : one byte between CMDWRITE and TOKEN */
-          if(BUS_SPIx_Send(&tmp, 1U) != BSP_ERROR_NONE)
+          if(ret == BSP_ERROR_NONE)
           {
-            ret = BSP_ERROR_PERIPH_FAILURE;
-            break;
-          }
-          if(BUS_SPIx_Send(&tmp, 1U) != BSP_ERROR_NONE)
-          {
-            ret = BSP_ERROR_PERIPH_FAILURE;
-            break;
-          }
-
-          /* Send the data token to signify the start of the data */
-          tmp = SD_TOKEN_START_DATA_SINGLE_BLOCK_WRITE;
-          if(BUS_SPIx_Send(&tmp, 1U) != BSP_ERROR_NONE)
-          {
-            ret = BSP_ERROR_PERIPH_FAILURE;
-            break;
-          }
-
-          /* Write the block data to SD */
-          if(BUS_SPIx_Send((uint8_t*)pData + offset, ADAFRUIT_SD_BLOCK_SIZE) != BSP_ERROR_NONE)
-          {
-            ret = BSP_ERROR_PERIPH_FAILURE;
-            break;
-          }
-
-          /* Set next write address */
-          offset += ADAFRUIT_SD_BLOCK_SIZE;
-          BlocksNbr--;
-
-          /* get CRC bytes (not really needed by us, but required by SD) */
-          tmp = SD_DUMMY_BYTE;
-          if(BUS_SPIx_Send(&tmp, 1U) != BSP_ERROR_NONE)
-          {
-            ret = BSP_ERROR_PERIPH_FAILURE;
-            break;
-          }
-          if(BUS_SPIx_Send(&tmp, 1U) != BSP_ERROR_NONE)
-          {
-            ret = BSP_ERROR_PERIPH_FAILURE;
-            break;
-          }
-
-          /* Read data response */
-          if(SD_GetDataResponse(&data_response) != BSP_ERROR_NONE)
-          {
-            ret = BSP_ERROR_UNKNOWN_FAILURE;
-            break;
-          }
-
-          if (data_response != (uint8_t)SD_DATA_OK)
-          {
-            /* Set response value to failure */
-            /* Send dummy byte: 8 Clock pulses of delay */
-            SD_IO_CSState(1);
+            /* Send dummy byte for NWR timing : one byte between CMDWRITE and TOKEN */
             if(BUS_SPIx_Send(&tmp, 1U) != BSP_ERROR_NONE)
             {
               ret = BSP_ERROR_PERIPH_FAILURE;
-              break;
+            }
+            else if(BUS_SPIx_Send(&tmp, 1U) != BSP_ERROR_NONE)
+            {
+              ret = BSP_ERROR_PERIPH_FAILURE;
+            }
+            else
+            {
+              /* Send the data token to signify the start of the data */
+              tmp = SD_TOKEN_START_DATA_SINGLE_BLOCK_WRITE;
+              if(BUS_SPIx_Send(&tmp, 1U) != BSP_ERROR_NONE)
+              {
+                ret = BSP_ERROR_PERIPH_FAILURE;
+              }/* Write the block data to SD */
+              else if(BUS_SPIx_Send((uint8_t*)pData + offset, ADAFRUIT_SD_BLOCK_SIZE) != BSP_ERROR_NONE)
+              {
+                ret = BSP_ERROR_PERIPH_FAILURE;
+              }
+              else
+              {
+                /* Set next write address */
+                offset += ADAFRUIT_SD_BLOCK_SIZE;
+                blocks_nbr--;
+
+                /* get CRC bytes (not really needed by us, but required by SD) */
+                tmp = SD_DUMMY_BYTE;
+                if(BUS_SPIx_Send(&tmp, 1U) != BSP_ERROR_NONE)
+                {
+                  ret = BSP_ERROR_PERIPH_FAILURE;
+                }
+                else if(BUS_SPIx_Send(&tmp, 1U) != BSP_ERROR_NONE)
+                {
+                  ret = BSP_ERROR_PERIPH_FAILURE;
+                }/* Read data response */
+                else if(SD_GetDataResponse(&data_response) != BSP_ERROR_NONE)
+                {
+                  ret = BSP_ERROR_UNKNOWN_FAILURE;
+                }
+                else
+                {
+                  if (data_response != (uint8_t)SD_DATA_OK)
+                  {
+                    /* Set response value to failure */
+                    /* Send dummy byte: 8 Clock pulses of delay */
+                    SD_IO_CSState(1);
+                    if(BUS_SPIx_Send(&tmp, 1U) != BSP_ERROR_NONE)
+                    {
+                      ret = BSP_ERROR_PERIPH_FAILURE;
+                    }
+                  }
+                }
+              }
+            }
+            if(ret == BSP_ERROR_NONE)
+            {
+              SD_IO_CSState(1);
+              if(BUS_SPIx_Send(&tmp, 1U) != BSP_ERROR_NONE)
+              {
+                ret = BSP_ERROR_PERIPH_FAILURE;
+              }
             }
           }
-
-          SD_IO_CSState(1);
-          if(BUS_SPIx_Send(&tmp, 1U) != BSP_ERROR_NONE)
-          {
-            ret = BSP_ERROR_PERIPH_FAILURE;
-            break;
-          }
-        }while ((BlocksNbr != 0U) && (ret == BSP_ERROR_NONE));
+        }while ((blocks_nbr != 0U) && (ret == BSP_ERROR_NONE));
       }
     }
   }
@@ -560,6 +564,10 @@ int32_t ADAFRUIT_802_SD_WriteBlocks(uint32_t Instance, uint32_t *pData, uint32_t
 int32_t ADAFRUIT_802_SD_ReadBlocks_DMA(uint32_t Instance, uint32_t *pData, uint32_t BlockIdx, uint32_t BlocksNbr)
 {
   int32_t ret;
+  /* Prevent unused argument(s) compilation warning */
+  UNUSED(pData);
+  UNUSED(BlockIdx);
+  UNUSED(BlocksNbr);
 
   if(Instance >= SD_INSTANCES_NBR)
   {
@@ -585,6 +593,10 @@ int32_t ADAFRUIT_802_SD_ReadBlocks_DMA(uint32_t Instance, uint32_t *pData, uint3
 int32_t ADAFRUIT_802_SD_WriteBlocks_DMA(uint32_t Instance, uint32_t *pData, uint32_t BlockIdx, uint32_t BlocksNbr)
 {
   int32_t ret;
+  /* Prevent unused argument(s) compilation warning */
+  UNUSED(pData);
+  UNUSED(BlockIdx);
+  UNUSED(BlocksNbr);
 
   if(Instance >= SD_INSTANCES_NBR)
   {
@@ -610,6 +622,10 @@ int32_t ADAFRUIT_802_SD_WriteBlocks_DMA(uint32_t Instance, uint32_t *pData, uint
 int32_t ADAFRUIT_802_SD_ReadBlocks_IT(uint32_t Instance, uint32_t *pData, uint32_t BlockIdx, uint32_t BlocksNbr)
 {
   int32_t ret;
+  /* Prevent unused argument(s) compilation warning */
+  UNUSED(pData);
+  UNUSED(BlockIdx);
+  UNUSED(BlocksNbr);
 
   if(Instance >= SD_INSTANCES_NBR)
   {
@@ -635,6 +651,10 @@ int32_t ADAFRUIT_802_SD_ReadBlocks_IT(uint32_t Instance, uint32_t *pData, uint32
 int32_t ADAFRUIT_802_SD_WriteBlocks_IT(uint32_t Instance, uint32_t *pData, uint32_t BlockIdx, uint32_t BlocksNbr)
 {
   int32_t ret;
+  /* Prevent unused argument(s) compilation warning */
+  UNUSED(pData);
+  UNUSED(BlockIdx);
+  UNUSED(BlocksNbr);
 
   if(Instance >= SD_INSTANCES_NBR)
   {
@@ -669,7 +689,7 @@ int32_t ADAFRUIT_802_SD_Erase(uint32_t Instance, uint32_t BlockIdx, uint32_t Blo
   else
   {
     /* Send CMD32 (Erase group start) and check if the SD acknowledged the erase command: R1 response (0x00: no errors) */
-    response = SD_SendCmd(SD_CMD_SD_ERASE_GRP_START, BlockIdx * (CardType == ADAFRUIT_802_CARD_SDHC ? 1U : ADAFRUIT_SD_BLOCK_SIZE), 0xFFU, (uint8_t)SD_ANSWER_R1_EXPECTED);
+    response = SD_SendCmd(SD_CMD_SD_ERASE_GRP_START, BlockIdx * ((CardType == ADAFRUIT_802_CARD_SDHC) ? 1U : ADAFRUIT_SD_BLOCK_SIZE), 0xFFU, (uint8_t)SD_ANSWER_R1_EXPECTED);
     SD_IO_CSState(1);
     tmp = SD_DUMMY_BYTE;
     if(BUS_SPIx_Send(&tmp, 1U) != BSP_ERROR_NONE)
@@ -681,7 +701,7 @@ int32_t ADAFRUIT_802_SD_Erase(uint32_t Instance, uint32_t BlockIdx, uint32_t Blo
       if ((uint8_t)(response & 0xFFU) == (uint8_t)SD_R1_NO_ERROR)
       {
         /* Send CMD33 (Erase group end) and Check if the SD acknowledged the erase command: R1 response (0x00: no errors) */
-        response = SD_SendCmd(SD_CMD_SD_ERASE_GRP_END, ((BlockIdx + BlocksNbr)*ADAFRUIT_SD_BLOCK_SIZE) * (CardType == ADAFRUIT_802_CARD_SDHC ? 1U : ADAFRUIT_SD_BLOCK_SIZE), 0xFFU, (uint8_t)SD_ANSWER_R1_EXPECTED);
+        response = SD_SendCmd(SD_CMD_SD_ERASE_GRP_END, ((BlockIdx + BlocksNbr)*ADAFRUIT_SD_BLOCK_SIZE) * ((CardType == ADAFRUIT_802_CARD_SDHC) ? 1U : ADAFRUIT_SD_BLOCK_SIZE), 0xFFU, (uint8_t)SD_ANSWER_R1_EXPECTED);
         SD_IO_CSState(1);
         if(BUS_SPIx_Send(&tmp, 1U) != BSP_ERROR_NONE)
         {
@@ -790,9 +810,9 @@ int32_t ADAFRUIT_802_SD_GetCardInfo(uint32_t Instance, ADAFRUIT_802_SD_CardInfo_
   else
   {
     CardInfo->CardCapacity = ((uint32_t)CardInfo->Csd.version.v1.DeviceSize + 1U) ;
-    CardInfo->CardCapacity *= (1UL << (CardInfo->Csd.version.v1.DeviceSizeMul + 2U));
+    CardInfo->CardCapacity *= (1UL << ((CardInfo->Csd.version.v1.DeviceSizeMul + 2U) & 0x1FU));
     CardInfo->LogBlockSize = 512U;
-    CardInfo->CardBlockSize = (1UL << (uint32_t)CardInfo->Csd.RdBlockLen);
+    CardInfo->CardBlockSize = (1UL << (uint32_t)(CardInfo->Csd.RdBlockLen & 0x1FU));
     CardInfo->CardCapacity *= CardInfo->CardBlockSize;
     CardInfo->LogBlockNbr = (CardInfo->CardCapacity) / (CardInfo->LogBlockSize);
   }

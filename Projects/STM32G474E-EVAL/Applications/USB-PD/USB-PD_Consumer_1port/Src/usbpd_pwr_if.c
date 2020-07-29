@@ -122,19 +122,6 @@ USBPD_StatusTypeDef USBPD_PWR_IF_Init(void)
 }
 
 /**
-  * @brief  Sets the required power profile, now it works only with Fixed ones
-  * @param  PortNum Port number
-  * @retval USBPD status
-*/
-USBPD_StatusTypeDef USBPD_PWR_IF_SetProfile(uint8_t PortNum)
-{
-/* USER CODE BEGIN USBPD_PWR_IF_SetProfile */
-  USBPD_StatusTypeDef      _status = USBPD_ERROR;
-  return _status;
-/* USER CODE END USBPD_PWR_IF_SetProfile */
-}
-
-/**
   * @brief  Checks if the power on a specified port is ready
   * @param  PortNum Port number
   * @param  Vsafe   Vsafe status based on @ref USBPD_VSAFE_StatusTypeDef
@@ -166,41 +153,6 @@ USBPD_StatusTypeDef USBPD_PWR_IF_SupplyReady(uint8_t PortNum, USBPD_VSAFE_Status
 
   return status;
 /* USER CODE END USBPD_PWR_IF_SupplyReady */
-}
-
-/**
-  * @brief  Enables VBUS power on a specified port
-  * @param  PortNum Port number
-  * @retval USBPD status
-  */
-USBPD_StatusTypeDef USBPD_PWR_IF_VBUSEnable(uint8_t PortNum)
-{
-/* USER CODE BEGIN USBPD_PWR_IF_VBUSEnable */
-  return USBPD_ERROR;
-/* USER CODE END USBPD_PWR_IF_VBUSEnable */
-}
-
-/**
-  * @brief  Disbale VBUS/VCONN the power on a specified port
-  * @param  PortNum Port number
-  * @retval USBPD status
-  */
-USBPD_StatusTypeDef USBPD_PWR_IF_VBUSDisable(uint8_t PortNum)
-{
-/* USER CODE BEGIN USBPD_PWR_IF_VBUSDisable */
-  return USBPD_ERROR;
-/* USER CODE END USBPD_PWR_IF_VBUSDisable */
-}
-
-/**
-  * @brief  Checks if the power on a specified port is enabled
-  * @param  PortNum Port number
-  * @retval USBPD_ENABLE or USBPD_DISABLE
-  */
-USBPD_FunctionalState USBPD_PWR_IF_VBUSIsEnabled(uint8_t PortNum)
-{
-  /* Get the Status of the port */
-  return USBPD_PORT_IsValid(PortNum) ? (USBPD_FunctionalState)HW_IF_PWR_VBUSIsEnabled(PortNum) : USBPD_DISABLE;
 }
 
 /**

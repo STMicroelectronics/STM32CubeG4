@@ -29,7 +29,7 @@
 #include "sd_diskio.h" /* defines SD_Driver as external */
 
 /* Private includes ----------------------------------------------------------*/
-/* USER CODE BEGIN Includes */     
+/* USER CODE BEGIN Includes */
 
 /* USER CODE END Includes */
 

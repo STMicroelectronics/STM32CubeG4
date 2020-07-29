@@ -472,7 +472,7 @@ void LED_Blinking(uint32_t Period)
 void SystemClock_Config(void)
 {
   /* Flash Latency configuration */
-  LL_FLASH_SetLatency(LL_FLASH_LATENCY_7);
+  LL_FLASH_SetLatency(LL_FLASH_LATENCY_4);
 
   /* HSI configuration and activation */
   LL_RCC_HSI_Enable();

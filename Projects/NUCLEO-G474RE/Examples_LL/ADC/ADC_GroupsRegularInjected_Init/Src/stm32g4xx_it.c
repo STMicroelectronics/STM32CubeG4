@@ -188,7 +188,7 @@ void SysTick_Handler(void)
   /* USER CODE BEGIN SysTick_IRQn 0 */
 
   /* USER CODE END SysTick_IRQn 0 */
-  
+
   /* USER CODE BEGIN SysTick_IRQn 1 */
 
   /* USER CODE END SysTick_IRQn 1 */
@@ -229,7 +229,7 @@ void DMA1_Channel1_IRQHandler(void)
   }
 
   /* USER CODE END DMA1_Channel1_IRQn 0 */
-  
+
   /* USER CODE BEGIN DMA1_Channel1_IRQn 1 */
 
   /* Check whether DMA transfer error caused the DMA interruption */

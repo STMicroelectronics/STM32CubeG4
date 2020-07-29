@@ -22,7 +22,7 @@
 #include "stm32g4xx_hal.h"
 #include "stm32g474e_eval.h"
 #include "stm32g474e_eval_lcd.h"
-#include "basic_gui.h"
+#include "stm32_lcd.h"
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private constants ---------------------------------------------------------*/

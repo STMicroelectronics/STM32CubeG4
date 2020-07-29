@@ -333,7 +333,7 @@ void USBPD_DPM_SetNotification_GUI(GUI_NOTIFICATION_FORMAT_SEND PtrFormatSend, G
 }
 
 /**
-  * @brief  User delay implementation which is OS dependant
+  * @brief  User delay implementation which is OS dependent
   * @param  Time time in ms
   * @retval None
   */
@@ -444,7 +444,7 @@ void USBPD_DPM_UserCableDetection(uint8_t PortNum, USBPD_CAD_EVENT State)
         /* display the error */
         DEMO_PostMMIMessage(DEMO_MMI_ACTION_ERROR_POWER);
 
-        /* Should not occurr */
+        /* Should not occur */
         USBPD_DPM_WaitForTime(6000);
         NVIC_SystemReset();
       }
@@ -485,7 +485,7 @@ void USBPD_DPM_UserCableDetection(uint8_t PortNum, USBPD_CAD_EVENT State)
     {
       if (USBPD_OK != USBPD_PWR_IF_VBUSDisable(PortNum))
       {
-        /* Should not occurr */
+        /* Should not occur */
         while(1);
       }
     }
@@ -2535,7 +2535,7 @@ uint32_t USBPD_DPM_SNK_EvaluateMatchWithSRCPDO(uint8_t PortNum, uint32_t SrcPDO,
                 snkmaxvoltage100mv = snkpdo.SRCSNKAPDO.MaxVoltageIn100mV;
                 snkmaxcurrent50ma = snkpdo.SRCSNKAPDO.MaxCurrentIn50mAunits;
 
-                /* Match if voltage matchs with the APDO voltage range */
+                /* Match if voltage matches with the APDO voltage range */
                 if ((PWR_DECODE_100MV(snkminvoltage100mv) <= (*PtrRequestedVoltage))
                  && ((*PtrRequestedVoltage) <= PWR_DECODE_100MV(snkmaxvoltage100mv))
                  && (snkmaxcurrent50ma <= srcmaxcurrent50ma))
@@ -3019,7 +3019,7 @@ static USBPD_StatusTypeDef DPM_USB_Init(void)
     return USBPD_ERROR;
   }
 
-  /* Setup Alternate mode with Index=0x00 as the prefered alternate mode */
+  /* Setup Alternate mode with Index=0x00 as the preferred alternate mode */
   if(USBD_OK != USBD_BB_SetupPreferedAltMode (hUSBDBOSDesc, 0x00))
   {
     return USBPD_ERROR;

@@ -1,0 +1,8 @@
+[ProjectFiles]
+HeaderPath=..\..\..\..\..\..\Drivers\BSP\STM32G4xx_Nucleo
+[Others]
+Define=USE_NUCLEO_64;VECT_TAB_SRAM
+HALModule=CORTEX;GPIO;RCC;FLASH;PWR;EXTI;UART
+[Groups]
+Doc=../readme.txt;
+Drivers/BSP/STM32G4xx_Nucleo=../../../../../../Drivers/BSP/STM32G4xx_Nucleo/stm32g4xx_nucleo.c;

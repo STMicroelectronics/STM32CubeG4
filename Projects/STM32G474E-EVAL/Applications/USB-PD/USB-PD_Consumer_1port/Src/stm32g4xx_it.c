@@ -67,7 +67,7 @@
 /* USER CODE END EV */
 
 /******************************************************************************/
-/*           Cortex-M4 Processor Interruption and Exception Handlers          */ 
+/*           Cortex-M4 Processor Interruption and Exception Handlers          */
 /******************************************************************************/
 /**
   * @brief This function handles Non maskable interrupt.
@@ -195,7 +195,7 @@ void DMA1_Channel6_IRQHandler(void)
   TRACER_EMB_IRQHandlerDMA();
 #endif /* _TRACE */
   /* USER CODE END DMA1_Channel6_IRQn 0 */
-  
+
   /* USER CODE BEGIN DMA1_Channel6_IRQn 1 */
 
   /* USER CODE END DMA1_Channel6_IRQn 1 */

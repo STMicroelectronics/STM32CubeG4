@@ -52,7 +52,7 @@ For more details about the STM32Cube USB Device library, please refer to UM1734
 
 @par Keywords
 
-Connectivity, USB Device, MSC, Full Speed, flash, microSD card
+Connectivity, USB_Device, USB, MSC, Full Speed, flash, microSD card
 
 @par Directory contents
 

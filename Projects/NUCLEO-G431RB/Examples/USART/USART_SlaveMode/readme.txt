@@ -85,7 +85,7 @@ The SystemClock_Config() function is used to configure the system clock for STM3
 
 @par Keywords
 
-USART, Slave mode, SPI, Transmit, Receive, Master, Full duplex, Synchroneous mode.
+USART, Slave mode, SPI, Transmit, Receive, Master, Full duplex, Synchronous mode.
 
 @par Directory contents
 

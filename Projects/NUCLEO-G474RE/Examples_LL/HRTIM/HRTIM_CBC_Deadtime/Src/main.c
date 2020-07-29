@@ -17,7 +17,6 @@
   ******************************************************************************
   */
 /* USER CODE END Header */
-
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
@@ -74,11 +73,9 @@ int main(void)
 
   /* USER CODE END 1 */
 
-
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  
 
   LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_SYSCFG);
   LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_PWR);
@@ -87,9 +84,9 @@ int main(void)
 
   /* System interrupt init*/
 
-  /** Disable the internal Pull-Up in Dead Battery pins of UCPD peripheral 
+  /** Disable the internal Pull-Up in Dead Battery pins of UCPD peripheral
   */
-  LL_PWR_DisableDeadBatteryPD();
+  LL_PWR_DisableUCPDDeadBattery();
 
   /* USER CODE BEGIN Init */
 
@@ -137,32 +134,32 @@ int main(void)
   */
 void SystemClock_Config(void)
 {
-  LL_FLASH_SetLatency(LL_FLASH_LATENCY_8);
+  LL_FLASH_SetLatency(LL_FLASH_LATENCY_4);
+  while(LL_FLASH_GetLatency() != LL_FLASH_LATENCY_4)
+  {
+  }
   LL_PWR_EnableRange1BoostMode();
   LL_RCC_HSE_Enable();
-
    /* Wait till HSE is ready */
   while(LL_RCC_HSE_IsReady() != 1)
   {
-    
   }
+
   LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSE, LL_RCC_PLLM_DIV_6, 85, LL_RCC_PLLR_DIV_2);
   LL_RCC_PLL_EnableDomain_SYS();
   LL_RCC_PLL_Enable();
-
    /* Wait till PLL is ready */
   while(LL_RCC_PLL_IsReady() != 1)
   {
-    
   }
+
   LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_PLL);
   LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_2);
-
    /* Wait till System clock is ready */
   while(LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL)
   {
-  
   }
+
   /* Insure 1µs transition state at intermediate medium speed clock based on DWT */
   CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
   DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
@@ -171,7 +168,7 @@ void SystemClock_Config(void)
   /* Set AHB prescaler*/
   LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
   LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
-  LL_RCC_SetAPB2Prescaler(LL_RCC_APB1_DIV_1);
+  LL_RCC_SetAPB2Prescaler(LL_RCC_APB2_DIV_1);
 
   LL_Init1msTick(170000000);
 
@@ -194,11 +191,11 @@ static void MX_HRTIM1_Init(void)
 
   /* Peripheral clock enable */
   LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_HRTIM1);
-  
+
   LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOB);
-  /**HRTIM1 GPIO Configuration  
+  /**HRTIM1 GPIO Configuration
   PB8-BOOT0   ------> HRTIM1_EEV8
-  PB9   ------> HRTIM1_EEV5 
+  PB9   ------> HRTIM1_EEV5
   */
   GPIO_InitStruct.Pin = LL_GPIO_PIN_8;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_ALTERNATE;
@@ -306,9 +303,9 @@ static void MX_HRTIM1_Init(void)
 
   /* USER CODE END HRTIM1_Init 2 */
   LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOB);
-  /**HRTIM1 GPIO Configuration  
+  /**HRTIM1 GPIO Configuration
   PB14   ------> HRTIM1_CHD1
-  PB15   ------> HRTIM1_CHD2 
+  PB15   ------> HRTIM1_CHD2
   */
   GPIO_InitStruct.Pin = LL_GPIO_PIN_14;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_ALTERNATE;

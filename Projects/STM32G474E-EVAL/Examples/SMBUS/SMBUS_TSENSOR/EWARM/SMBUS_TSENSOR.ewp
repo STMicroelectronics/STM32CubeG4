@@ -352,7 +352,7 @@
           <state>$PROJ_DIR$/../../../../../../Drivers/BSP/STM32G474E-EVAL</state>
           <state>$PROJ_DIR$/../../../../../../Drivers/BSP/Components/mfxstm32l152</state>
           <state>$PROJ_DIR$/../../../../../../Drivers/BSP/Components/Common</state>
-          <state>$PROJ_DIR$/../../../../../../Utilities/Basic_GUI</state>
+          <state>$PROJ_DIR$/../../../../../../Utilities/LCD</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1098,9 +1098,9 @@
     <group>
       <name>Utilities</name>
       <group>
-        <name>Basic_GUI</name>
+        <name>LCD</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../Utilities/Basic_GUI/basic_gui.c</name>
+          <name>$PROJ_DIR$/../../../../../../Utilities/LCD/stm32_lcd.c</name>
         </file>
       </group>
     </group>

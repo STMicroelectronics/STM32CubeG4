@@ -29,7 +29,6 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32g4xx_hal.h"
-#include "stm32g4xx_ll_pwr.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -92,7 +91,7 @@ void Error_Handler(void);
 	  2) by calling HAL API function HAL_RCC_GetSysClockFreq()
 	  3) each time HAL_RCC_ClockConfig() is called to configure the system clock frequency     
 */
-/* Compute the value to be set in ARR regiter to generate signal frequency at 8.78 Khz */
+/* Compute the value to be set in ARR register to generate signal frequency at 8.78 Khz */
  
 #define PERIOD_VALUE  ((SystemCoreClock) / 17570 ) -1
 /* Compute CCR1 value to generate a duty cycle at 50% for channel 1 */

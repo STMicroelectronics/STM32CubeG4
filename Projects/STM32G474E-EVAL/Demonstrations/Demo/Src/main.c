@@ -131,17 +131,17 @@ void kDemo_Initialization(void)
 
   /* Initialize the LCD */
   BSP_LCD_Init(LCD_INSTANCE, LCD_ORIENTATION_LANDSCAPE);
-  GUI_SetFuncDriver(&LCD_Driver); /* SetFunc before setting device */
-  GUI_SetDevice(0);            /* SetDevice after funcDriver is set */
+  UTIL_LCD_SetFuncDriver(&LCD_Driver); /* SetFunc before setting device */
+  UTIL_LCD_SetDevice(0);            /* SetDevice after funcDriver is set */
 
 
-  GUI_Clear(GUI_COLOR_WHITE);
+  UTIL_LCD_Clear(UTIL_LCD_COLOR_WHITE);
 
   /* Check if we return from standby */
   if((PwrSBFlag & PWR_SR1_SBF) != 0x00u)
   {
-    kWindow_Popup("Low Power", GUI_COLOR_WHITE, GUI_COLOR_ST_BLUE,\
-                "\nExit from Standby\n", GUI_COLOR_ST_BLUE, GUI_COLOR_WHITE );
+    kWindow_Popup("Low Power", UTIL_LCD_COLOR_WHITE, UTIL_LCD_COLOR_ST_BLUE,\
+                "\nExit from Standby\n", UTIL_LCD_COLOR_ST_BLUE, UTIL_LCD_COLOR_WHITE );
     /* Let time user to see information */
     HAL_Delay(2000);
   }
@@ -164,15 +164,15 @@ void kDemo_Initialization(void)
   if(RccBootFlags != 0)
   {
     /* Display the demonstration window */
-    GUI_SetFont(&LCD_DEFAULT_FONT);
-    GUI_Clear(GUI_COLOR_WHITE);
-    GUI_SetBackColor(GUI_COLOR_ST_PINK);
-    GUI_SetTextColor(GUI_COLOR_ST_PINK);
+    UTIL_LCD_SetFont(&LCD_DEFAULT_FONT);
+    UTIL_LCD_Clear(UTIL_LCD_COLOR_WHITE);
+    UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_ST_PINK);
+    UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_PINK);
     BSP_LCD_GetXSize(LCD_INSTANCE, &pXSize);
-    GUI_FillRect(0, 0, pXSize, LCD_DEFAULT_FONT.Height*2, GUI_COLOR_ST_PINK);
-    GUI_SetTextColor(GUI_COLOR_WHITE);
-    GUI_DisplayStringAt( 0,              0,      (uint8_t *)EVAL_BOARD, CENTER_MODE);
-    GUI_DisplayStringAt( 0,  LCD_DEFAULT_FONT.Height  , (uint8_t *)"DEMONSTRATION", CENTER_MODE);
+    UTIL_LCD_FillRect(0, 0, pXSize, LCD_DEFAULT_FONT.Height*2, UTIL_LCD_COLOR_ST_PINK);
+    UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
+    UTIL_LCD_DisplayStringAt( 0,              0,      (uint8_t *)EVAL_BOARD, CENTER_MODE);
+    UTIL_LCD_DisplayStringAt( 0,  LCD_DEFAULT_FONT.Height  , (uint8_t *)"DEMONSTRATION", CENTER_MODE);
 
     kStorage_OpenFileDrawPixel(((LCD_DEFAULT_FONT.Height*2) + 1), ((pXSize - 170) / 2), (uint8_t *)"STFILES/STLogo.bmp");
 
@@ -183,10 +183,10 @@ void kDemo_Initialization(void)
   /* Module Initialization */
   kModule_Init();
 
-  /* control the ressources */
+  /* control the resources */
   if(kModule_CheckRessource() != KMODULE_OK)
   {
-    kWindow_Error("ressource file\nmissing\nplease update\nsd card content\n");
+    kWindow_Error("resource file\nmissing\nplease update\nsd card content\n");
     while(1);
   }
 }

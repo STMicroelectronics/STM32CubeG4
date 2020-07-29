@@ -61,7 +61,7 @@ To check comparator threshold, you can:
 Other peripheral used:
   1 GPIO for LED2
   1 GPIO for analog input of comparator: PA.01 (Morpho connector CN7 pin 30, Arduino connector CN8 pin A1)
-  1 GPIO for digital output of comparator: PA.05 (Arduino connector CN8 pin D13, Morpho connector CN7 pin 6)
+  1 GPIO for digital output of comparator: PA.00 (Arduino connector CN8 pin A0, Morpho connector CN7 pin 28)
   
 @par Keywords
 

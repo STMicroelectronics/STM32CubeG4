@@ -63,8 +63,7 @@
   */
 
 /* USER CODE BEGIN PRIVATE_DEFINES */
-#define APP_RX_DATA_SIZE  2048
-#define APP_TX_DATA_SIZE  2048
+
 /* USER CODE END PRIVATE_DEFINES */
 
 /**
@@ -145,6 +144,7 @@ static int8_t CDC_Init_FS(void);
 static int8_t CDC_DeInit_FS(void);
 static int8_t CDC_Control_FS(uint8_t cmd, uint8_t* pbuf, uint16_t length);
 static int8_t CDC_Receive_FS(uint8_t* pbuf, uint32_t *Len);
+static int8_t CDC_TransmitCplt_FS(uint8_t *pbuf, uint32_t *Len, uint8_t epnum);
 
 /* USER CODE BEGIN PRIVATE_FUNCTIONS_DECLARATION */
  void TIM_Config(void);
@@ -160,7 +160,8 @@ USBD_CDC_ItfTypeDef USBD_Interface_fops_FS =
   CDC_Init_FS,
   CDC_DeInit_FS,
   CDC_Control_FS,
-  CDC_Receive_FS
+  CDC_Receive_FS,
+  CDC_TransmitCplt_FS
 };
 
 /* Private functions ---------------------------------------------------------*/
@@ -303,10 +304,11 @@ static int8_t CDC_Control_FS(uint8_t cmd, uint8_t* pbuf, uint16_t length)
   *         through this function.
   *
   *         @note
-  *         This function will block any OUT packet reception on USB endpoint
-  *         untill exiting this function. If you exit this function before transfer
-  *         is complete on CDC interface (ie. using DMA controller) it will result
-  *         in receiving more data while previous ones are still not sent.
+  *         This function will issue a NAK packet on any OUT packet received on
+  *         USB endpoint until exiting this function. If you exit this function
+  *         before transfer is complete on CDC interface (ie. using DMA controller)
+  *         it will result in receiving more data while previous ones are still
+  *         not sent.
   *
   * @param  Buf: Buffer of data to be received
   * @param  Len: Number of data received (in bytes)
@@ -342,6 +344,29 @@ uint8_t CDC_Transmit_FS(uint8_t* Buf, uint16_t Len)
   USBD_CDC_SetTxBuffer(&hUsbDeviceFS, Buf, Len);
   result = USBD_CDC_TransmitPacket(&hUsbDeviceFS);
   /* USER CODE END 7 */
+  return result;
+}
+
+/**
+  * @brief  CDC_TransmitCplt_FS
+  *         Data transmited callback
+  *
+  *         @note
+  *         This function is IN transfer complete callback used to inform user that
+  *         the submitted Data is successfully sent over USB.
+  *
+  * @param  Buf: Buffer of data to be received
+  * @param  Len: Number of data received (in bytes)
+  * @retval Result of the operation: USBD_OK if all operations are OK else USBD_FAIL
+  */
+static int8_t CDC_TransmitCplt_FS(uint8_t *Buf, uint32_t *Len, uint8_t epnum)
+{
+  uint8_t result = USBD_OK;
+  /* USER CODE BEGIN 13 */
+  UNUSED(Buf);
+  UNUSED(Len);
+  UNUSED(epnum);
+  /* USER CODE END 13 */
   return result;
 }
 

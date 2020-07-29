@@ -466,7 +466,7 @@ USBPD_StatusTypeDef USBPD_PWR_IF_VBUSEnable(uint8_t PortNum)
 }
 
 /**
-  * @brief  Disbale VBUS/VCONN the power on a specified port
+  * @brief  Disable VBUS/VCONN the power on a specified port
   * @param  PortNum Port number
   * @retval USBPD status
 */
@@ -836,7 +836,7 @@ uint8_t USBPD_PWR_IF_GetVBUSStatus(uint8_t PortNum, USBPD_VBUSPOWER_STATUS Power
         /* Voltage increase the disconnect value is under vbus_transition */
         if (_vbus > (vbus_transition*1.1))
         {
-          /* the power transition is complete so disconnect thresold shall be updated */
+          /* the power transition is complete so disconnect threshold shall be updated */
           vbus_disconnect = vbus_transition;
 #if defined (_TRACE)
           POWER_IF_TRACE(PortNum,"TRANSITION COMPLETE", 19);

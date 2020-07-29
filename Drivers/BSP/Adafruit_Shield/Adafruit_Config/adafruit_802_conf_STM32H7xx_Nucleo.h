@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * @file    BSP/Inc/adafruit_802_conf.h
+  * @file    adafruit_802_conf.h
   * @author  MCD Application Team
   * @brief   This file includes the nucleo configuration and errno files
   *
@@ -55,7 +55,7 @@
   * @brief  ADC Interface pins
   *         used to detect motion of Joystick available on Adafruit 1.8" TFT shield
   */
-#if defined (USE_NUCLEO_H745ZI_Q) || defined (USE_NUCLEO_H743ZI2) || defined (USE_NUCLEO_H7A3ZI) || defined (USE_NUCLEO_H7A3ZI_Q)
+#if defined (USE_NUCLEO_H745ZI_Q) || defined (USE_NUCLEO_H743ZI2) || defined (USE_NUCLEO_H7A3ZI_Q)
 #define ADAFRUIT_802_ADCx                      ADC1
 #define ADAFRUIT_802_ADCx_CLK_ENABLE()         __HAL_RCC_ADC12_CLK_ENABLE()
 #define ADAFRUIT_802_ADCx_CLK_DISABLE()        __HAL_RCC_ADC12_CLK_DISABLE()
@@ -86,7 +86,7 @@
   * @brief  SD Control Interface pins (shield D4)
   */
 #define ADAFRUIT_802_SD_CS_PIN                               GPIO_PIN_14
-#if defined (USE_NUCLEO_H745ZI_Q) || defined (USE_NUCLEO_H743ZI2) || defined (USE_NUCLEO_H7A3ZI) || defined (USE_NUCLEO_H7A3ZI_Q)
+#if defined (USE_NUCLEO_H745ZI_Q) || defined (USE_NUCLEO_H743ZI2) || defined (USE_NUCLEO_H7A3ZI_Q)
 #define ADAFRUIT_802_SD_CS_GPIO_PORT                         GPIOE
 #define ADAFRUIT_802_SD_CS_GPIO_CLK_ENABLE()                 __HAL_RCC_GPIOE_CLK_ENABLE()
 #define ADAFRUIT_802_SD_CS_GPIO_CLK_DISABLE()                __HAL_RCC_GPIOE_CLK_DISABLE()
@@ -106,7 +106,7 @@
 /**
   * @brief  LCD Data/Command Interface pins (shield D8)
   */
-#if defined (USE_NUCLEO_H743ZI2) || defined (USE_NUCLEO_H7A3ZI)
+#if defined (USE_NUCLEO_H743ZI2)
 #define ADAFRUIT_802_LCD_DC_PIN                               GPIO_PIN_3
 #define ADAFRUIT_802_LCD_DC_GPIO_PORT                         GPIOF
 #define ADAFRUIT_802_LCD_DC_GPIO_CLK_ENABLE()                 __HAL_RCC_GPIOF_CLK_ENABLE()

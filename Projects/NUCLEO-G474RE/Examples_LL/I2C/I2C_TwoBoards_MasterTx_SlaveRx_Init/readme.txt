@@ -45,7 +45,7 @@ SDA Pin: PB.9 (CN10, pin 5)
   |        USER       GND|_____________________|GND         USER      |
   |___STM32G4xx_Nucleo___|                     |___STM32G4xx_Nucleo___|
 
-The project is splitted in two parts the Master Board and the Slave Board
+The project is split in two parts the Master Board and the Slave Board
 - Master Board
   I2C1 Peripheral is configured in Master mode (Clock 400Khz).
   And GPIO associated to User push-button is linked with EXTI.

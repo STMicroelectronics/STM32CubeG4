@@ -220,9 +220,9 @@ static void WhiteLed_AutoDimming(void)
 {
   uint32_t maxsense;
 
-  kWindow_Popup("Automatic Dimming", GUI_COLOR_WHITE, GUI_COLOR_ST_BLUE,\
+  kWindow_Popup("Automatic Dimming", UTIL_LCD_COLOR_WHITE, UTIL_LCD_COLOR_ST_BLUE,\
     "Press joystick\nto exit\n",                  \
-                GUI_COLOR_ST_BLUE, GUI_COLOR_WHITE );
+                UTIL_LCD_COLOR_ST_BLUE, UTIL_LCD_COLOR_WHITE );
 
   /* HRTIM Configuration */
   HRTIM_Config();
@@ -347,9 +347,9 @@ static void WhiteLed_ManualDimming(void)
   /* Start with LED off */
   fIntensity = MIN_INTENSITY;
 
-  kWindow_Popup("Manual Dimming", GUI_COLOR_WHITE, GUI_COLOR_ST_BLUE,\
+  kWindow_Popup("Manual Dimming", UTIL_LCD_COLOR_WHITE, UTIL_LCD_COLOR_ST_BLUE,\
     "Press up/down to\nincrease/decrease\nLED brightness\n\nOther Joystick\nbutton to exit\n",                  \
-                GUI_COLOR_ST_BLUE, GUI_COLOR_WHITE );
+                UTIL_LCD_COLOR_ST_BLUE, UTIL_LCD_COLOR_WHITE );
 
   /* HRTIM Configuration */
   HRTIM_Config();
@@ -463,9 +463,9 @@ static void WhiteLed_Flashing(void)
 {
   uint8_t  toggle      = FALSE;
 
-  kWindow_Popup("Flashing", GUI_COLOR_WHITE, GUI_COLOR_ST_BLUE,\
+  kWindow_Popup("Flashing", UTIL_LCD_COLOR_WHITE, UTIL_LCD_COLOR_ST_BLUE,\
                 "Press joystick \nto stop\n",                  \
-                GUI_COLOR_ST_BLUE, GUI_COLOR_WHITE );
+                UTIL_LCD_COLOR_ST_BLUE, UTIL_LCD_COLOR_WHITE );
 
   /* HRTIM Configuration */
   HRTIM_Config();

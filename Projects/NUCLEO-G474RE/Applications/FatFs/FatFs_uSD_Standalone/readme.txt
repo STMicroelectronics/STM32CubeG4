@@ -73,10 +73,6 @@ The USART outputs a message on the HyperTerminal:
   - ** Success. ** when the application runs successfully.
   - ** Error. ** when any error occurs.
 
-@par Keywords
-
-SD Card, FatFs, File system, FAT Volume, Format, Mount, Read, Write,
-
 @note SD module is part of the Adafruit shield.
 
 @note Care must be taken when using HAL_Delay(), this function provides accurate delay (in milliseconds)
@@ -87,6 +83,10 @@ SD Card, FatFs, File system, FAT Volume, Format, Mount, Read, Write,
 
 @note The application needs to ensure that the SysTick time base is always set to 1 millisecond
       to have correct HAL operation.
+
+@par Keywords
+
+FatFs, SDMMC, SD Card, File system, FAT Volume, Format, Mount, Read, Write,
 
 @par Directory contents
 

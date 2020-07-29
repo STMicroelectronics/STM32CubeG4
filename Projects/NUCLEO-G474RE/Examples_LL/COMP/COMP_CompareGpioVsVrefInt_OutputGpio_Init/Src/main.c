@@ -23,7 +23,6 @@
   ******************************************************************************
   */
 /* USER CODE END Header */
-
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
@@ -79,11 +78,9 @@ int main(void)
 
   /* USER CODE END 1 */
 
-
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  
 
   LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_SYSCFG);
   LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_PWR);
@@ -92,9 +89,9 @@ int main(void)
 
   /* System interrupt init*/
 
-  /** Disable the internal Pull-Up in Dead Battery pins of UCPD peripheral 
+  /** Disable the internal Pull-Up in Dead Battery pins of UCPD peripheral
   */
-  LL_PWR_DisableDeadBatteryPD();
+  LL_PWR_DisableUCPDDeadBattery();
 
   /* USER CODE BEGIN Init */
 
@@ -129,7 +126,7 @@ int main(void)
     /* Note: State of GPIO is monitored for the purpose of this example.      */
     /*       An alternate solution is to monitor directly comparator output   */
     /*       using function "LL_COMP_ReadOutputLevel()".                      */
-    if (LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_5) != 0)
+    if (LL_GPIO_IsInputPinSet(GPIOA, LL_GPIO_PIN_0) != 0)
     {
       LED_On();
     }
@@ -150,38 +147,33 @@ int main(void)
   */
 void SystemClock_Config(void)
 {
-  LL_FLASH_SetLatency(LL_FLASH_LATENCY_7);
-
-   if(LL_FLASH_GetLatency() != LL_FLASH_LATENCY_7)
+  LL_FLASH_SetLatency(LL_FLASH_LATENCY_4);
+  while(LL_FLASH_GetLatency() != LL_FLASH_LATENCY_4)
   {
-    Error_Handler();  
   }
   LL_PWR_SetRegulVoltageScaling(LL_PWR_REGU_VOLTAGE_SCALE1);
   LL_RCC_HSI_Enable();
-
    /* Wait till HSI is ready */
   while(LL_RCC_HSI_IsReady() != 1)
   {
-    
   }
+
   LL_RCC_HSI_SetCalibTrimming(64);
   LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSI, LL_RCC_PLLM_DIV_4, 75, LL_RCC_PLLR_DIV_2);
   LL_RCC_PLL_EnableDomain_SYS();
   LL_RCC_PLL_Enable();
-
    /* Wait till PLL is ready */
   while(LL_RCC_PLL_IsReady() != 1)
   {
-    
   }
+
   LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_PLL);
   LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_2);
-
    /* Wait till System clock is ready */
   while(LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL)
   {
-  
   }
+
   /* Insure 1µs transition state at intermediate medium speed clock based on DWT */
   CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
   DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
@@ -190,7 +182,7 @@ void SystemClock_Config(void)
   /* Set AHB prescaler*/
   LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
   LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
-  LL_RCC_SetAPB2Prescaler(LL_RCC_APB1_DIV_1);
+  LL_RCC_SetAPB2Prescaler(LL_RCC_APB2_DIV_1);
 
   LL_Init1msTick(150000000);
 
@@ -214,8 +206,8 @@ static void MX_COMP1_Init(void)
   LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
 
   LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOA);
-  /**COMP1 GPIO Configuration  
-  PA1   ------> COMP1_INP 
+  /**COMP1 GPIO Configuration
+  PA1   ------> COMP1_INP
   */
   GPIO_InitStruct.Pin = LL_GPIO_PIN_1;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_ANALOG;
@@ -230,14 +222,14 @@ static void MX_COMP1_Init(void)
   LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOA);
 
   /* Configure GPIO output type */
-  LL_GPIO_SetPinOutputType(GPIOA, LL_GPIO_PIN_5, LL_GPIO_OUTPUT_PUSHPULL);
+  LL_GPIO_SetPinOutputType(GPIOA, LL_GPIO_PIN_0, LL_GPIO_OUTPUT_PUSHPULL);
 
   /* Configure GPIO speed */
-  LL_GPIO_SetPinSpeed(GPIOA, LL_GPIO_PIN_5, LL_GPIO_SPEED_FREQ_HIGH);
+  LL_GPIO_SetPinSpeed(GPIOA, LL_GPIO_PIN_0, LL_GPIO_SPEED_FREQ_HIGH);
 
   /* Configure GPIO in alternate function mode to be used as COMP output */
-  LL_GPIO_SetPinMode(GPIOA, LL_GPIO_PIN_5, LL_GPIO_MODE_ALTERNATE);
-  LL_GPIO_SetAFPin_0_7(GPIOA, LL_GPIO_PIN_5, LL_GPIO_AF_7);
+  LL_GPIO_SetPinMode(GPIOA, LL_GPIO_PIN_0, LL_GPIO_MODE_ALTERNATE);
+  LL_GPIO_SetAFPin_0_7(GPIOA, LL_GPIO_PIN_0, LL_GPIO_AF_8);
 
   /* USER CODE END COMP1_Init 1 */
   COMP_InitStruct.InputPlus = LL_COMP_INPUT_PLUS_IO1;

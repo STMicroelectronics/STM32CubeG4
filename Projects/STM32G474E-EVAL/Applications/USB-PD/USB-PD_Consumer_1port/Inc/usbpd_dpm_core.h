@@ -37,6 +37,7 @@ extern "C" {
 /* USER CODE END typedef */
 
 /* Exported define -----------------------------------------------------------*/
+
 /* USER CODE BEGIN define */
 
 /* USER CODE END define */

@@ -103,7 +103,7 @@ void SysTick_Handler(void)
   /* USER CODE BEGIN SysTick_IRQn 0 */
 
   /* USER CODE END SysTick_IRQn 0 */
-  
+
   /* USER CODE BEGIN SysTick_IRQn 1 */
 
   /* USER CODE END SysTick_IRQn 1 */
@@ -125,7 +125,7 @@ void TIM7_DAC_IRQHandler(void)
 
    HAL_TIM_IRQHandler(&htim7);
   /* USER CODE END TIM7_DAC_IRQn 0 */
-  
+  HAL_TIM_IRQHandler(&htim7);
   /* USER CODE BEGIN TIM7_DAC_IRQn 1 */
 
   /* USER CODE END TIM7_DAC_IRQn 1 */

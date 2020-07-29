@@ -61,10 +61,10 @@ void * kWidgets_ProgressBarCreate(kWidgetsProgressBar_t * pProgressBar, uint32_t
     pb->progress = 0;
     pb->maxValue = MaxValue;
     pb->step =  MaxValue / pb->progressBar.width;
-    GUI_SetTextColor(pProgressBar->backgroungColor);
-    GUI_FillRect(pProgressBar->xpos+1, pProgressBar->ypos+1, pProgressBar->width-2, pProgressBar->height-2, pProgressBar->backgroungColor);
-    GUI_SetTextColor(pProgressBar->textColor);
-    GUI_DrawRect(pProgressBar->xpos, pProgressBar->ypos, pProgressBar->width, pProgressBar->height, pProgressBar->textColor);
+    UTIL_LCD_SetTextColor(pProgressBar->backgroungColor);
+    UTIL_LCD_FillRect(pProgressBar->xpos+1, pProgressBar->ypos+1, pProgressBar->width-2, pProgressBar->height-2, pProgressBar->backgroungColor);
+    UTIL_LCD_SetTextColor(pProgressBar->textColor);
+    UTIL_LCD_DrawRect(pProgressBar->xpos, pProgressBar->ypos, pProgressBar->width, pProgressBar->height, pProgressBar->textColor);
   }
 
   return (void *)pb;
@@ -96,8 +96,8 @@ void kWidgets_ProgressBarUpdate(void * hwidgetProgressBar, uint32_t Progress)
 
   if (width >= step )
   {
-    GUI_SetTextColor(pb->progressBar.textColor);
-    GUI_FillRect(pb->progressBar.xpos + (uint32_t)(pb->progress/step),
+    UTIL_LCD_SetTextColor(pb->progressBar.textColor);
+    UTIL_LCD_FillRect(pb->progressBar.xpos + (uint32_t)(pb->progress/step),
                  pb->progressBar.ypos,
                  width/step,
                  pb->progressBar.height,
@@ -116,15 +116,15 @@ void kWidgets_ProgressBarReset(void * hwidgetProgressBar)
   ProgressBar_t * pb = (ProgressBar_t *) hwidgetProgressBar;
 
   pb->progress = 0;
-  GUI_SetBackColor(pb->progressBar.backgroungColor);
-  GUI_SetTextColor(pb->progressBar.backgroungColor);
-  GUI_FillRect(pb->progressBar.xpos + 1,
+  UTIL_LCD_SetBackColor(pb->progressBar.backgroungColor);
+  UTIL_LCD_SetTextColor(pb->progressBar.backgroungColor);
+  UTIL_LCD_FillRect(pb->progressBar.xpos + 1,
                pb->progressBar.ypos + 1,
                pb->progressBar.width - 2,
                pb->progressBar.height - 2,
                pb->progressBar.backgroungColor);
-  GUI_SetTextColor(pb->progressBar.textColor);
-  GUI_DrawRect(pb->progressBar.xpos,
+  UTIL_LCD_SetTextColor(pb->progressBar.textColor);
+  UTIL_LCD_DrawRect(pb->progressBar.xpos,
                pb->progressBar.ypos,
                pb->progressBar.width,
                pb->progressBar.height,

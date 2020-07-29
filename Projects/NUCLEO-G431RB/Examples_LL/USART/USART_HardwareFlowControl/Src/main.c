@@ -39,7 +39,7 @@
 __IO uint8_t ubButtonPress = 0;
 
 /**
-  * @brief Variables used for character tranmission to PC Com port
+  * @brief Variables used for character transmission to PC Com port
   */
 __IO uint8_t ubSend = 0;
 const uint8_t aStringToSend[] = "STM32G4xx USART LL API Example : TX/RX in IT mode\r\nConfiguration UART 115200 bps, 8 data bit/1 stop bit/No parity/HW flow control enabled.\r\nEnter any character (S or s will end program).\r\n";
@@ -365,7 +365,7 @@ void WaitAndCheckEndOfTransfer(void)
 void SystemClock_Config(void)
 {
   /* Flash Latency configuration */
-  LL_FLASH_SetLatency(LL_FLASH_LATENCY_8);
+  LL_FLASH_SetLatency(LL_FLASH_LATENCY_4);
 
   /* Enable boost mode to be able to reach 170MHz */
   LL_PWR_EnableRange1BoostMode();

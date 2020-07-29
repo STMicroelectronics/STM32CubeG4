@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32G474xx,</Define>
               <Undefine></Undefine>
-              <IncludePath>../Inc;../../../../../../Drivers/STM32G4xx_HAL_Driver/Inc;../../../../../../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy;../../../../../../Drivers/CMSIS/Device/ST/STM32G4xx/Include;../../../../../../Drivers/CMSIS/Include;../../../../../../Drivers/BSP/STM32G474E-EVAL;../../../../../../Drivers/BSP/Components/mfxstm32l152;../../../../../../Drivers/BSP/Components/Common;../../../../../../Utilities/Basic_GUI</IncludePath>
+              <IncludePath>../Inc;../../../../../../Drivers/STM32G4xx_HAL_Driver/Inc;../../../../../../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy;../../../../../../Drivers/CMSIS/Device/ST/STM32G4xx/Include;../../../../../../Drivers/CMSIS/Include;../../../../../../Drivers/BSP/STM32G474E-EVAL;../../../../../../Drivers/BSP/Components/mfxstm32l152;../../../../../../Drivers/BSP/Components/Common;../../../../../../Utilities/LCD</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -475,12 +475,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>Drivers/Utilities/Basic_GUI</GroupName>
+          <GroupName>Drivers/Utilities/LCD</GroupName>
           <Files>
             <File>
-              <FileName>basic_gui.c</FileName>
+              <FileName>stm32_lcd.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../Utilities/Basic_GUI/basic_gui.c</FilePath>
+              <FilePath>../../../../../../Utilities/LCD/stm32_lcd.c</FilePath>
             </File>
           </Files>
         </Group>

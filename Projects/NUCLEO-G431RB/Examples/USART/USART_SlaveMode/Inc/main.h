@@ -29,7 +29,6 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32g4xx_hal.h"
-#include "stm32g4xx_ll_pwr.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -44,7 +43,7 @@ extern "C" {
 
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
-/* Size of Trasmission buffer */
+/* Size of Transmission buffer */
 #define TXBUFFERSIZE                (COUNTOF(aTxBuffer) - 1)
 /* Size of Reception buffer */
 #define RXBUFFERSIZE                TXBUFFERSIZE

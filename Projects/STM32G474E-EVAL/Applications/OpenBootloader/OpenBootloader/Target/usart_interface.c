@@ -75,7 +75,7 @@ void OPENBL_USART_Configuration(void)
 {
   GPIO_InitTypeDef GPIO_InitStruct;
 
-  /* Enable all ressources clocks --------------------------------------------*/
+  /* Enable all resources clocks --------------------------------------------*/
   /* Enable used GPIOx clocks */
   __HAL_RCC_GPIOA_CLK_ENABLE();
 

@@ -70,7 +70,7 @@ The TIM1 waveforms can be displayed using an oscilloscope.
 
 @par Keywords
 
-Timer, PWM, Complemntary signal, Duty Cycle, Waveform, Oscilloscope, Output, Signal
+Timer, PWM, Complementary signal, Duty Cycle, Waveform, Oscilloscope, Output, Signal
 
 @par Directory contents
 

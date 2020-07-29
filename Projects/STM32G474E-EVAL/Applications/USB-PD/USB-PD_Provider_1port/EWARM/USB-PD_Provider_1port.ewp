@@ -11,7 +11,7 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>29</version>
+        <version>31</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -66,7 +66,7 @@
         </option>
         <option>
           <name>OGLastSavedByProductVersion</name>
-          <state>8.20.1.14181</state>
+          <state>8.32.3.20186</state>
         </option>
         <option>
           <name>GeneralEnableMisra</name>
@@ -112,11 +112,11 @@
         </option>
         <option>
           <name>RTConfigPath2</name>
-          <state>$TOOLKIT_DIR$\INC\c\DLib_Config_Full.h</state>
+          <state>$TOOLKIT_DIR$\inc\c\DLib_Config_Full.h</state>
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>26</version>
+          <version>27</version>
           <state>39</state>
         </option>
         <option>
@@ -133,17 +133,17 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>26</version>
+          <version>27</version>
           <state>39</state>
         </option>
         <option>
           <name>GFPUDeviceSlave</name>
-          <state></state>
+          <state>STM32G474QE	ST STM32G474QE</state>
         </option>
         <option>
           <name>FPU2</name>
           <version>0</version>
-          <state>6</state>
+          <state>4</state>
         </option>
         <option>
           <name>NrRegs</name>
@@ -156,7 +156,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>26</version>
+          <version>27</version>
           <state>39</state>
         </option>
         <option>
@@ -200,13 +200,22 @@
           <name>DSPExtension</name>
           <state>1</state>
         </option>
+        <option>
+          <name>TrustZone</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>TrustZoneModes</name>
+          <version>0</version>
+          <state>1</state>
+        </option>
       </data>
     </settings>
     <settings>
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>34</version>
+        <version>35</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -224,10 +233,6 @@
           <state>USE_HAL_DRIVER</state>
           <state>STM32G474xx</state>
           <state>_GUI_INTERFACE</state>
-          <state></state>
-          <state></state>
-          <state></state>
-          <state></state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -448,7 +453,7 @@
         <option>
           <name>CCOptStrategySlave</name>
           <version>0</version>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>CCGuardCalls</name>
@@ -477,6 +482,10 @@
         <option>
           <name>IccRTTI2</name>
           <state>0</state>
+        </option>
+        <option>
+          <name>OICompilerExtraOption</name>
+          <state>1</state>
         </option>
       </data>
     </settings>
@@ -698,7 +707,7 @@
       <name>ILINK</name>
       <archiveVersion>0</archiveVersion>
       <data>
-        <version>20</version>
+        <version>22</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1010,6 +1019,14 @@
           <name>IlinkLocaleSelect</name>
           <state>1</state>
         </option>
+        <option>
+          <name>IlinkTrustzoneImportLibraryOut</name>
+          <state>###Unitialized###</state>
+        </option>
+        <option>
+          <name>OILinkExtraOption</name>
+          <state>1</state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -1038,142 +1055,153 @@
       <archiveVersion>0</archiveVersion>
       <data></data>
     </settings>
+    <settings>
+      <name>Coder</name>
+      <archiveVersion>0</archiveVersion>
+      <data></data>
+    </settings>
   </configuration>
   <group>
     <name>Application</name>
     <group>
       <name>EWARM</name>
       <file>
-        <name>$PROJ_DIR$/startup_stm32g474xx.s</name>
+        <name>$PROJ_DIR$\startup_stm32g474xx.s</name>
       </file>
     </group>
     <group>
       <name>User</name>
       <file>
-        <name>$PROJ_DIR$/../Src/main.c</name>
+        <name>$PROJ_DIR$\..\Src\main.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../Src/app_freertos.c</name>
+        <name>$PROJ_DIR$\..\Src\app_freertos.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../Src/usbpd.c</name>
+        <name>$PROJ_DIR$\..\Src\usbpd.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../Src/usbpd_dpm_user.c</name>
+        <name>$PROJ_DIR$\..\Src\usbpd_dpm_user.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../Src/usbpd_pwr_user.c</name>
+        <name>$PROJ_DIR$\..\Src\usbpd_pwr_user.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../Src/usbpd_pwr_if.c</name>
+        <name>$PROJ_DIR$\..\Src\usbpd_pwr_if.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../Src/usbpd_vdm_user.c</name>
+        <name>$PROJ_DIR$\..\Src\usbpd_vdm_user.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../Src/usbpd_dpm_core.c</name>
+        <name>$PROJ_DIR$\..\Src\usbpd_dpm_core.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../Src/stm32g4xx_it.c</name>
+        <name>$PROJ_DIR$\..\Src\stm32g4xx_it.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../Src/stm32g4xx_hal_msp.c</name>
+        <name>$PROJ_DIR$\..\Src\stm32g4xx_hal_msp.c</name>
       </file>
     </group>
   </group>
   <group>
+    <name>Doc</name>
+    <file>
+      <name>$PROJ_DIR$/../readme.txt</name>
+    </file>
+  </group>
+  <group>
     <name>Drivers</name>
-    <group>
-      <name>STM32G4xx_HAL_Driver</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_utils.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_exti.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_gpio.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_adc_ex.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_adc.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_gpio.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc_ex.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ex.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_flash_ramfunc.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_exti.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma_ex.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr_ex.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_cortex.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_dma.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim_ex.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_pwr.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_usart.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_lpuart.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_ucpd.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_rcc.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../Middlewares/ST/STM32_USBPD_Library/../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_tim.c</name>
-      </file>
-    </group>
     <group>
       <name>CMSIS</name>
       <file>
-        <name>$PROJ_DIR$/../Src/system_stm32g4xx.c</name>
+        <name>$PROJ_DIR$\..\Src\system_stm32g4xx.c</name>
+      </file>
+    </group>
+    <group>
+      <name>STM32G4xx_HAL_Driver</name>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_ll_tim.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_ll_utils.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_ll_exti.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_ll_gpio.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_adc.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_adc_ex.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_ll_adc.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_gpio.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_rcc.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_rcc_ex.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_flash.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_flash_ex.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_flash_ramfunc.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_exti.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_dma.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_dma_ex.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_pwr.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_pwr_ex.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_cortex.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_ll_dma.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_tim.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_hal_tim_ex.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_ll_usart.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_ll_lpuart.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_ll_rcc.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32G4xx_HAL_Driver\Src\stm32g4xx_ll_ucpd.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../Middlewares/ST/STM32_USBPD_Library/../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_tim.c</name>
       </file>
     </group>
   </group>
@@ -1182,76 +1210,67 @@
     <group>
       <name>FreeRTOS</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../Middlewares/Third_Party/FreeRTOS/Source/croutine.c</name>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\croutine.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../Middlewares/Third_Party/FreeRTOS/Source/event_groups.c</name>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\event_groups.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../Middlewares/Third_Party/FreeRTOS/Source/list.c</name>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\list.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../Middlewares/Third_Party/FreeRTOS/Source/queue.c</name>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\queue.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c</name>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\stream_buffer.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../Middlewares/Third_Party/FreeRTOS/Source/tasks.c</name>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\tasks.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../Middlewares/Third_Party/FreeRTOS/Source/timers.c</name>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\timers.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c</name>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS\cmsis_os.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c</name>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\portable\MemMang\heap_4.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../Middlewares/Third_Party/FreeRTOS/Source/portable/IAR/ARM_CM4F/port.c</name>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\portable\IAR\ARM_CM4F\port.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../Middlewares/Third_Party/FreeRTOS/Source/portable/IAR/ARM_CM4F/portasm.s</name>
-      </file>
-    </group>
-    <group>
-      <name>TRACER_EMB</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../Utilities/TRACER_EMB/tracer_emb.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../Utilities/TRACER_EMB/tracer_emb_hw.c</name>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\portable\IAR\ARM_CM4F\portasm.s</name>
       </file>
     </group>
     <group>
       <name>USBPD</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../Middlewares/ST/STM32_USBPD_Library/Core/lib/USBPDCORE_PD3_FULL_CM4_wc32.a</name>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\STM32_USBPD_Library\Core\lib\USBPDCORE_PD3_FULL_CM4_wc32.a</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c</name>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\STM32_USBPD_Library\Core\src\usbpd_trace.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_cad_hw_if.c</name>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\STM32_USBPD_Library\Devices\STM32G4XX\src\usbpd_cad_hw_if.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw.c</name>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\STM32_USBPD_Library\Devices\STM32G4XX\src\usbpd_hw.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_hw_if_it.c</name>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\STM32_USBPD_Library\Devices\STM32G4XX\src\usbpd_hw_if_it.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy.c</name>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\STM32_USBPD_Library\Devices\STM32G4XX\src\usbpd_phy.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_phy_hw_if.c</name>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\STM32_USBPD_Library\Devices\STM32G4XX\src\usbpd_phy_hw_if.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_pwr_hw_if.c</name>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\STM32_USBPD_Library\Devices\STM32G4XX\src\usbpd_pwr_hw_if.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/src/usbpd_timersserver.c</name>
+        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\ST\STM32_USBPD_Library\Devices\STM32G4XX\src\usbpd_timersserver.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../Middlewares/ST/STM32_USBPD_Library/../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_tim.c</name>
@@ -1261,19 +1280,19 @@
   <group>
     <name>Utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../Utilities/GUI_INTERFACE/data_struct_tlv.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\..\..\Utilities\GUI_INTERFACE\data_struct_tlv.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../Utilities/GUI_INTERFACE/bsp_gui.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\..\..\Utilities\GUI_INTERFACE\bsp_gui.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../Utilities/GUI_INTERFACE/gui_api.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\..\..\Utilities\GUI_INTERFACE\gui_api.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../Utilities/TRACER_EMB/tracer_emb.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\..\..\Utilities\TRACER_EMB\tracer_emb.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../Utilities/TRACER_EMB/tracer_emb_hw.c</name>
+      <name>$PROJ_DIR$\..\..\..\..\..\..\Utilities\TRACER_EMB\tracer_emb_hw.c</name>
     </file>
   </group>
 </project>

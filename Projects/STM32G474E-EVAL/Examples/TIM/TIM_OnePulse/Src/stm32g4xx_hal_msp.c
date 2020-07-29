@@ -59,7 +59,7 @@
 /* USER CODE BEGIN 0 */
 
 /* USER CODE END 0 */
-                        
+
 void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
                     /**
   * Initializes the Global MSP.
@@ -75,9 +75,9 @@ void HAL_MspInit(void)
 
   /* System interrupt init*/
 
-  /** Disable the internal Pull-Up in Dead Battery pins of UCPD peripheral 
+  /** Disable the internal Pull-Up in Dead Battery pins of UCPD peripheral
   */
-  LL_PWR_DisableDeadBatteryPD();
+  HAL_PWREx_DisableUCPDDeadBattery();
 
   /* USER CODE BEGIN MspInit 1 */
 
@@ -100,10 +100,10 @@ void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* htim_base)
   /* USER CODE END TIM1_MspInit 0 */
     /* Peripheral clock enable */
     __HAL_RCC_TIM1_CLK_ENABLE();
-  
+
     __HAL_RCC_GPIOA_CLK_ENABLE();
-    /**TIM1 GPIO Configuration    
-    PA9     ------> TIM1_CH2 
+    /**TIM1 GPIO Configuration
+    PA9     ------> TIM1_CH2
     */
     GPIO_InitStruct.Pin = GPIO_PIN_9;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
@@ -127,10 +127,10 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef* htim)
   /* USER CODE BEGIN TIM1_MspPostInit 0 */
 
   /* USER CODE END TIM1_MspPostInit 0 */
-  
+
     __HAL_RCC_GPIOA_CLK_ENABLE();
-    /**TIM1 GPIO Configuration    
-    PA8     ------> TIM1_CH1 
+    /**TIM1 GPIO Configuration
+    PA8     ------> TIM1_CH1
     */
     GPIO_InitStruct.Pin = GPIO_PIN_8;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
@@ -160,10 +160,10 @@ void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef* htim_base)
   /* USER CODE END TIM1_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_TIM1_CLK_DISABLE();
-  
-    /**TIM1 GPIO Configuration    
+
+    /**TIM1 GPIO Configuration
     PA8     ------> TIM1_CH1
-    PA9     ------> TIM1_CH2 
+    PA9     ------> TIM1_CH2
     */
     HAL_GPIO_DeInit(GPIOA, GPIO_PIN_8|GPIO_PIN_9);
 

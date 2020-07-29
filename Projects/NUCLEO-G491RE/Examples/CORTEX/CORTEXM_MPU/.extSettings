@@ -1,0 +1,9 @@
+[ProjectFiles]
+HeaderPath=..\..\..\..\..\..\Drivers\BSP\STM32G4xx_Nucleo
+[Others]
+Define=USE_NUCLEO_64
+HALModule=EXTI;UART
+[Groups]
+Application/User=../Src/stm32_mpu.c;
+Doc=../readme.txt;
+Drivers/BSP/STM32G4xx_Nucleo=../../../../../../Drivers/BSP/STM32G4xx_Nucleo/stm32g4xx_nucleo.c;

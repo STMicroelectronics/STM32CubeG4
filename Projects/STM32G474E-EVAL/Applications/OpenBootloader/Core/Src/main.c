@@ -101,7 +101,7 @@ static void SystemClock_Config(void)
   RCC_ClkInitStruct.APB1CLKDivider      = RCC_HCLK_DIV2;
   RCC_ClkInitStruct.APB2CLKDivider      = RCC_HCLK_DIV1;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_3) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
   {
     NVIC_SystemReset();
   }

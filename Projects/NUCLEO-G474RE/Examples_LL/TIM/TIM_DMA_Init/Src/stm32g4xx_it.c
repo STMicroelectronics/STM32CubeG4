@@ -188,7 +188,7 @@ void SysTick_Handler(void)
   /* USER CODE BEGIN SysTick_IRQn 0 */
 
   /* USER CODE END SysTick_IRQn 0 */
-  
+
   /* USER CODE BEGIN SysTick_IRQn 1 */
 
   /* USER CODE END SysTick_IRQn 1 */
@@ -219,7 +219,7 @@ void DMA1_Channel5_IRQHandler(void)
   }
 
   /* USER CODE END DMA1_Channel5_IRQn 0 */
-  
+
   /* USER CODE BEGIN DMA1_Channel5_IRQn 1 */
 
   /* USER CODE END DMA1_Channel5_IRQn 1 */
@@ -242,7 +242,7 @@ void TIM1_UP_TIM16_IRQHandler(void)
   /* TIM1 update interrupt processing */
   TimerUpdate_Callback();
   /* USER CODE END TIM1_UP_TIM16_IRQn 0 */
-  
+
   /* USER CODE BEGIN TIM1_UP_TIM16_IRQn 1 */
 
   /* USER CODE END TIM1_UP_TIM16_IRQn 1 */

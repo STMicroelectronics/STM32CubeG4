@@ -24,32 +24,7 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#if   defined ( __CC_ARM )
-#define __ASM            __asm                                      /*!< asm keyword for ARM Compiler          */
-#define __INLINE         __inline                                   /*!< inline keyword for ARM Compiler       */
-#define __STATIC_INLINE  static __inline
-#define __PACKEDSTRUCTBEGIN __packed struct
-#define __PACKEDSTRUCTEND
-#elif defined ( __ICCARM__ )
-#define __ASM            __asm                                      /*!< asm keyword for IAR Compiler          */
-#define __INLINE         inline                                     /*!< inline keyword for IAR Compiler. Only available in High optimization mode! */
-#define __STATIC_INLINE  static inline
-#define __PACKEDSTRUCTBEGIN __packed struct
-#define __PACKEDSTRUCTEND
-#elif defined ( __GNUC__ )
-#define __ASM            __asm                                      /*!< asm keyword for GNU Compiler          */
-#ifndef __INLINE
-#define __INLINE         inline                                     /*!< inline keyword for GNU Compiler       */
-#endif  /* !__INLINE */
-#ifndef __STATIC_INLINE
-#define __STATIC_INLINE  static inline
-#endif  /* !__STATIC_INLINE */
-#ifndef __packed
-#define __packed __attribute__((__packed__))
-#endif /* __packed */
-#define __PACKEDSTRUCTBEGIN struct
-#define __PACKEDSTRUCTEND   __packed
-#endif
+#include "cmsis_compiler.h"
 
 #include <stdint.h>
 #include <stddef.h>
@@ -278,7 +253,7 @@ extern "C" {
 /* Defines for STACK version */
 #define LIB_STACK_VER_POS   12u
 #define LIB_STACK_VER_MSK   (0xFFFu << LIB_STACK_VER_POS)
-#define LIB_STACK_VER       (0x290u  << LIB_STACK_VER_POS)
+#define LIB_STACK_VER       (0x302u  << LIB_STACK_VER_POS)
 /* Defines for configuration */
 #define LIB_CONFIG_MSK      0xFFFu
 #define LIB_FULL            0x000u
@@ -678,6 +653,22 @@ extern "C" {
   */
 #endif /* USBPDCORE_SNK_CAPA_EXT */
 
+#if defined(USBPDCORE_VPD)
+/** @defgroup USBPD_FWUPD_MSGTYPE USB-PD Firmware Update Message Request and Responses Defines
+  * @{
+  */
+typedef enum {    
+  VPD_NONE                   = 0u,  /*!< status none, no VPD detection ongoing                      */
+  VPD_UNKNOWN                = 1u,  /*!< status unknow                                              */
+  VPD_NOPD                   = 2u,  /*!< status NOPD support                                        */
+  VPD_FAILED_ENTER_ALTERNATE = 3u,  /*!< status Failed to enter alternate mode                      */
+  VPD_DETECTED               = 4u   /*!< status VPD detected                                        */
+} USBPD_VPD_Status;
+/**
+ *@}
+ */
+#endif /* defined(USBPDCORE_VPD) */
+
 #if defined(USBPDCORE_FWUPD)
 
 /** @defgroup USBPD_FWUPD_MSGTYPE USB-PD Firmware Update Message Request and Responses Defines
@@ -924,8 +915,9 @@ typedef enum
   USBPD_CAD_EVENT_ATTEMC    = 4u  ,         /*!< USBPD CAD event Port Partner detected throug EMC    */
   USBPD_CAD_EVENT_ACCESSORY = 5u  ,         /*!< USBPD CAD event Accessory detected                  */
   USBPD_CAD_EVENT_DEBUG     = 6u  ,         /*!< USBPD CAD event Debug detected                      */
-  /*  USBPD_CAD_EVENT_LEGACY    = 7u  ,*/         /*!< USBPD CAD event legacy cables detected              */
-  USPPD_CAD_EVENT_UNKNOW    = 8u            /*!< USBPD CAD event unknow                              */
+  /*  USBPD_CAD_EVENT_LEGACY    = 7u  ,*/   /*!< USBPD CAD event legacy cables detected              */
+  USPPD_CAD_EVENT_VPD       = 8u,           /*!< USBPD CAD event VPD                                 */
+  USPPD_CAD_EVENT_UNKNOW    = 9u            /*!< USBPD CAD event unknow                              */  
 } USBPD_CAD_EVENT;
 /**
   * @}
@@ -1699,27 +1691,45 @@ typedef enum
   */
 typedef enum
 {
-  USBPD_CORE_DATATYPE_SRC_PDO          = 0x00u,      /*!< Handling of port Source PDO                  */
-  USBPD_CORE_DATATYPE_SNK_PDO          = 0x01u,      /*!< Handling of port Sink PDO                    */
-  USBPD_CORE_DATATYPE_RDO_POSITION     = 0x02u,      /*!< Storage of requested DO position in PDO list */
-  USBPD_CORE_DATATYPE_REQ_VOLTAGE      = 0x03u,      /*!< Storage of requested voltage value */
-  USBPD_CORE_DATATYPE_RCV_SRC_PDO      = 0x04u,      /*!< Storage of Received Source PDO values        */
-  USBPD_CORE_DATATYPE_RCV_SNK_PDO      = 0x05u,      /*!< Storage of Received Sink PDO values          */
-  USBPD_CORE_DATATYPE_RCV_REQ_PDO      = 0x06u,      /*!< Storage of Received Sink Request PDO value   */
-  USBPD_CORE_DATATYPE_REQUEST_DO       = 0x07u,      /*!< Storage of DO to be used in request message (from Sink to Source) */
-  USBPD_CORE_EXTENDED_CAPA             = 0x08u,      /*!< Extended capability                          */
-  USBPD_CORE_INFO_STATUS               = 0x09u,      /*!< Information status                           */
-  USBPD_CORE_PPS_STATUS                = 0x0Au,      /*!< PPS Status data                              */
-  USBPD_CORE_ALERT                           ,       /*!< Alert                                        */
-  USBPD_CORE_GET_MANUFACTURER_INFO           ,       /*!< Get Manufacturer Info                        */
-  USBPD_CORE_MANUFACTURER_INFO               ,       /*!< Manufacturer Info                            */
-  USBPD_CORE_GET_BATTERY_STATUS              ,       /*!< Get Battery Status                           */
-  USBPD_CORE_BATTERY_STATUS                  ,       /*!< Battery Status                               */
-  USBPD_CORE_GET_BATTERY_CAPABILITY          ,       /*!< Get Battery Capability                       */
-  USBPD_CORE_BATTERY_CAPABILITY              ,       /*!< Battery Capability                           */
-  USBPD_CORE_UNSTRUCTURED_VDM                ,       /*!< Unstructured VDM messag                      */
+  USBPD_CORE_DATATYPE_SRC_PDO          = 0x00u,      /*!< Handling of port Source PDO
+                                                          (SRC or DRP configuration used only in USBPD_PE_GetDataInfo) */
+  USBPD_CORE_DATATYPE_SNK_PDO          = 0x01u,      /*!< Handling of port Sink PDO, requested by get sink capa
+                                                          (SNK or DRP configuration used only in USBPD_PE_GetDataInfo) */
+  USBPD_CORE_DATATYPE_RDO_POSITION     = 0x02u,      /*!< Reset the PDO position selected by the sink only
+                                                          (used only in USBPD_PE_SetDataInfo)                          */
+  USBPD_CORE_DATATYPE_REQ_VOLTAGE      = 0x03u,      /*!< Get voltage value requested for BIST tests, expect 5V
+                                                          (used only in USBPD_PE_GetDataInfo)                          */
+  USBPD_CORE_DATATYPE_RCV_SRC_PDO      = 0x04u,      /*!< Storage of Received Source PDO values
+                                                          (used only in USBPD_PE_SetDataInfo)                          */
+  USBPD_CORE_DATATYPE_RCV_SNK_PDO      = 0x05u,      /*!< Storage of Received Sink PDO values
+                                                          (used only in USBPD_PE_SetDataInfo)                          */
+  USBPD_CORE_DATATYPE_RCV_REQ_PDO      = 0x06u,      /*!< Storage of Received Sink Request PDO value
+                                                          (SRC or DRP configuration used in USBPD_PE_SetDataInfo)      */
+  USBPD_CORE_DATATYPE_REQUEST_DO       = 0x07u,      /*!< Not used - keep for legacy reason                                 */
+  USBPD_CORE_EXTENDED_CAPA             = 0x08u,      /*!< Source Extended capability message content
+                                                          (used in USBPD_PE_GetDataInfo and USBPD_PE_SetDataInfo) */
+  USBPD_CORE_INFO_STATUS               = 0x09u,      /*!< Information status message content
+                                                          (used in USBPD_PE_GetDataInfo and USBPD_PE_SetDataInfo) */
+  USBPD_CORE_PPS_STATUS                = 0x0Au,      /*!< PPS Status message content
+                                                          (used in USBPD_PE_GetDataInfo and USBPD_PE_SetDataInfo) */
+  USBPD_CORE_ALERT                           ,       /*!< Storing of received Alert message content
+                                                          (used only in USBPD_PE_SetDataInfo)                          */
+  USBPD_CORE_GET_MANUFACTURER_INFO           ,       /*!< Storing of received Get Manufacturer info message content
+                                                          (used only in USBPD_PE_SetDataInfo)                          */
+  USBPD_CORE_MANUFACTURER_INFO               ,       /*!< Retrieve of Manufacturer info message content
+                                                          (used only in USBPD_PE_GetDataInfo)                          */
+  USBPD_CORE_GET_BATTERY_STATUS              ,       /*!< Storing of received Get Battery status message content
+                                                          (used only in USBPD_PE_SetDataInfo)                          */
+  USBPD_CORE_BATTERY_STATUS                  ,       /*!< Retrieve of Battery status message content
+                                                          (used only in USBPD_PE_GetDataInfo)                          */
+  USBPD_CORE_GET_BATTERY_CAPABILITY          ,       /*!< Storing of received Get Battery capability message content
+                                                          (used only in USBPD_PE_SetDataInfo)                          */
+  USBPD_CORE_BATTERY_CAPABILITY              ,       /*!< Retrieve of Battery capability message content
+                                                          (used only in USBPD_PE_GetDataInfo)                          */
+  USBPD_CORE_UNSTRUCTURED_VDM                ,       /*!< Not used - keep for legacy reason                                 */
 #if defined(USBPDCORE_SNK_CAPA_EXT)
-  USBPD_CORE_SNK_EXTENDED_CAPA               ,       /*!< Sink Extended capability                   */
+  USBPD_CORE_SNK_EXTENDED_CAPA               ,       /*!< Storing and retrieve of Sink Extended capability message content
+                                                          (used in USBPD_PE_GetDataInfo and USBPD_PE_SetDataInfo) */
 #endif /* USBPDCORE_SNK_CAPA_EXT */
 } USBPD_CORE_DataInfoType_TypeDef;
 /**
@@ -2525,7 +2535,7 @@ typedef struct USBPD_SKEDB_TypeDef
   * @brief  USBPD Source Status Extended Message Structure definition
   *
   */
-typedef __PACKEDSTRUCTBEGIN
+typedef __PACKED_STRUCT
 {
   uint8_t InternalTemp;          /*!< Source or Sink internal temperature in degrees centigrade         */
   uint8_t PresentInput;          /*!< Present Input                                                     */
@@ -2533,48 +2543,48 @@ typedef __PACKEDSTRUCTBEGIN
   uint8_t EventFlags;            /*!< Event Flags                                                       */
   uint8_t TemperatureStatus;     /*!< Temperature                                                       */
   uint8_t PowerStatus;           /*!< Power Status based on combination of @ref USBPD_SDB_POWER_STATUS  */
-} __PACKEDSTRUCTEND USBPD_SDB_TypeDef;
+} USBPD_SDB_TypeDef;
 
 /**
   * @brief  USBPD Get Battery Capabilities Data Block Extended Message Structure definition
   *
   */
-typedef __PACKEDSTRUCTBEGIN
+typedef __PACKED_STRUCT
 {
   uint8_t BatteryCapRef;     /*!< Number of the Battery indexed from zero    */
-} __PACKEDSTRUCTEND USBPD_GBCDB_TypeDef;
+} USBPD_GBCDB_TypeDef;
 
 /**
   * @brief  USBPD Get Battery Status Data Block Extended Message Structure definition
   *
   */
-typedef __PACKEDSTRUCTBEGIN
+typedef __PACKED_STRUCT
 {
   uint8_t BatteryStatusRef;     /*!< Number of the Battery indexed from zero  */
-} __PACKEDSTRUCTEND USBPD_GBSDB_TypeDef;
+} USBPD_GBSDB_TypeDef;
 
 /**
   * @brief  USBPD  Battery Capability Data Block Extended Message Structure definition
   *
   */
-typedef __PACKEDSTRUCTBEGIN
+typedef __PACKED_STRUCT
 {
   uint16_t VID;                       /*!< Vendor ID (assigned by the USB-IF)         */
   uint16_t PID;                       /*!< Product ID (assigned by the manufacturer)  */
   uint16_t BatteryDesignCapa;         /*!< Battery Design Capacity                    */
   uint16_t BatteryLastFullChargeCapa; /*!< Battery last full charge capacity        */
   uint8_t  BatteryType;               /*!< Battery Type                               */
-} __PACKEDSTRUCTEND USBPD_BCDB_TypeDef;
+} USBPD_BCDB_TypeDef;
 
 /**
   * @brief  USBPD Get Manufacturer Info Info Data Block Extended Message Structure definition
   *
   */
-typedef __PACKEDSTRUCTBEGIN
+typedef __PACKED_STRUCT
 {
   uint8_t ManufacturerInfoTarget;     /*!< Manufacturer Info Target based on @ref USBPD_MANUFINFO_TARGET                      */
   uint8_t ManufacturerInfoRef;        /*!< Manufacturer Info Ref between Min_Data=0 and Max_Data=7 (@ref USBPD_MANUFINFO_REF) */
-} __PACKEDSTRUCTEND USBPD_GMIDB_TypeDef;
+} USBPD_GMIDB_TypeDef;
 
 /**
   * @brief  USBPD Manufacturer Info Data Block Extended Message Structure definition
@@ -2592,7 +2602,7 @@ typedef struct
   * @brief  USBPD Firmware Update GET_FW_ID Response Payload Structure definition
   *
   */
-typedef __PACKEDSTRUCTBEGIN
+typedef __PACKED_STRUCT
 {
   USBPD_FWUPD_Status_TypeDef   Status;  /*!< Status Information during Firmware Update      */
   uint16_t  VID;         /*!< USB-IF assigned Vendor ID                                     */
@@ -2608,94 +2618,94 @@ typedef __PACKEDSTRUCTBEGIN
   uint8_t   Flags2;      /*!< Flags2                                                        */
   uint8_t   Flags3;      /*!< Flags3                                                        */
   uint8_t   Flags4;      /*!< Flags4                                                        */
-} __PACKEDSTRUCTEND USBPD_FWUPD_GetFwIDRspPayload_TypeDef;
+} USBPD_FWUPD_GetFwIDRspPayload_TypeDef;
 
 /**
   * @brief  USBPD Firmware Update PDFU_INITIATE Request Payload Structure definition
   *
   */
-typedef __PACKEDSTRUCTBEGIN
+typedef __PACKED_STRUCT
 {
   uint16_t  FWVersion1;  /*!< Most significant component of the firmware version            */
   uint16_t  FWVersion2;  /*!< Second-most significant component of the firmware version     */
   uint16_t  FWVersion3;  /*!< Third-most significant component of the firmware version      */
   uint16_t  FWVersion4;  /*!< Least significant component of the firmware version           */
-} __PACKEDSTRUCTEND USBPD_FWUPD_PdfuInitReqPayload_TypeDef;
+} USBPD_FWUPD_PdfuInitReqPayload_TypeDef;
 
 /**
   * @brief  USBPD Firmware Update PDFU_INITIATE Response Payload Structure definition
   *
   */
-typedef __PACKEDSTRUCTBEGIN
+typedef __PACKED_STRUCT
 {
   USBPD_FWUPD_Status_TypeDef   Status;  /*!< Status Information during Firmware Update      */
   uint8_t   WaitTime;         /*!< Wait time                                                */
   uint8_t   MaxImageSize[3u];  /*!< Max image size                                           */
-} __PACKEDSTRUCTEND USBPD_FWUPD_PdfuInitRspPayload_TypeDef;
+} USBPD_FWUPD_PdfuInitRspPayload_TypeDef;
 
 /**
   * @brief  USBPD Firmware Update PDFU_DATA Response Payload Structure definition
   *
   */
-typedef __PACKEDSTRUCTBEGIN
+typedef __PACKED_STRUCT
 {
   USBPD_FWUPD_Status_TypeDef   Status;  /*!< Status Information during Firmware Update      */
   uint8_t   WaitTime;         /*!< Wait time                                                */
   uint8_t   NumDataNR;        /*!< Number of PDFU_DATA_NR Requests                          */
   uint16_t  DataBlockNum;     /*!< Data Block Number of the next PDFU_DATA or PDFU_DATA_NR  */
-} __PACKEDSTRUCTEND USBPD_FWUPD_PdfuDataRspPayload_TypeDef;
+} USBPD_FWUPD_PdfuDataRspPayload_TypeDef;
 
 /**
   * @brief  USBPD Firmware Update PDFU_VALIDATE Response Payload Structure definition
   *
   */
-typedef __PACKEDSTRUCTBEGIN
+typedef __PACKED_STRUCT
 {
   USBPD_FWUPD_Status_TypeDef   Status;  /*!< Status Information during Firmware Update      */
   uint8_t   WaitTime;         /*!< Wait time                                                */
   uint8_t   Flags;            /*!< Flags                                                    */
-} __PACKEDSTRUCTEND USBPD_FWUPD_PdfuValidateRspPayload_TypeDef;
+} USBPD_FWUPD_PdfuValidateRspPayload_TypeDef;
 
 /**
   * @brief  USBPD Firmware Update PDFU_DATA_PAUSE Response Payload Structure definition
   *
   */
-typedef __PACKEDSTRUCTBEGIN
+typedef __PACKED_STRUCT
 {
   USBPD_FWUPD_Status_TypeDef   Status;  /*!< Status Information during Firmware Update      */
-} __PACKEDSTRUCTEND USBPD_FWUPD_PdfuDataPauseRspPayload_TypeDef;
+} USBPD_FWUPD_PdfuDataPauseRspPayload_TypeDef;
 
 /**
   * @brief  USBPD Firmware Update VENDOR_SPECIFIC Request Payload Structure definition
   *
   */
-typedef __PACKEDSTRUCTBEGIN
+typedef __PACKED_STRUCT
 {
   uint16_t  VID;                /*!< USB-IF assigned Vendor ID                              */
   uint8_t   VendorDefined[256]; /*!< Vendor defined                                         */
-} __PACKEDSTRUCTEND USBPD_FWUPD_VendorSpecificReqPayload_TypeDef;
+} USBPD_FWUPD_VendorSpecificReqPayload_TypeDef;
 
 /**
   * @brief  USBPD Firmware Update VENDOR_SPECIFIC Response Payload Structure definition
   *
   */
-typedef __PACKEDSTRUCTBEGIN
+typedef __PACKED_STRUCT
 {
   USBPD_FWUPD_Status_TypeDef   Status;  /*!< Status Information during Firmware Update      */
   uint16_t  VID;                /*!< USB-IF assigned Vendor ID                              */
   uint8_t   VendorDefined[255]; /*!< Vendor defined                                         */
-} __PACKEDSTRUCTEND USBPD_FWUPD_VendorSpecificRspPayload_TypeDef;
+} USBPD_FWUPD_VendorSpecificRspPayload_TypeDef;
 
 /**
   * @brief  USBPD Firmware Update Request Data Block Extended Message Structure definition
   *
   */
-typedef __PACKEDSTRUCTBEGIN
+typedef __PACKED_STRUCT
 {
   uint8_t   ProtocolVersion;  /*!< Protocol Version (@ref USBPD_FWUPD_PROT_VER)             */
   uint8_t   MessageType;      /*!< Firmware Update Message type (@ref USBPD_FWUPD_MSGTYPE)  */
   uint8_t   Payload[258];     /*!< Payload                                         */
-} __PACKEDSTRUCTEND USBPD_FRQDB_TypeDef;
+} USBPD_FRQDB_TypeDef;
 
 #endif /* USBPDCORE_FWUPD */
 
@@ -2784,7 +2794,11 @@ typedef struct
   USBPD_SpecRev_TypeDef PE_SpecRevision     : 2u; /*!< Spec revision value based on @ref USBPD_SpecRev_TypeDef                         */
   USBPD_PortPowerRole_TypeDef PE_DefaultRole: 1u; /*!< Default port role  based on @ref USBPD_PortPowerRole_TypeDef                    */
   uint32_t PE_RoleSwap                      : 1u; /*!< If enabled, allows the port to have DRP behavior                                */
+#if defined(USBPDCORE_VPD)
+  uint32_t VPDSupport                       : 1u; /*!< support of the CTVPD device                                                     */
+#else
   uint32_t _empty1                          : 1u; /*!< Reserved bit                                                                    */
+#endif /* defined(USBPDCORE_VPD)*/
   uint32_t PE_VDMSupport                    : 1u; /*!< Support VDM: If not enabled any VDM message received is replied "not supported" */
   uint32_t PE_PingSupport                   : 1u; /*!< support Ping (only for PD3.0): If enabled allows DPM to send ping message       */
   uint32_t PE_CapscounterSupport            : 1u; /*!< If enabled after an amount of message source capabilities not replied, the stack stop the message send.*/
@@ -2813,7 +2827,6 @@ typedef struct
   */
 typedef struct
 {
-
   USBPD_SpecRev_TypeDef               PE_SpecRevision : 2u;  /*!< PE Specification revision                                */
   USBPD_PortPowerRole_TypeDef         PE_PowerRole    : 1u;  /*!< PE Power role                                            */
   USBPD_PortDataRole_TypeDef          PE_DataRole     : 1u;  /*!< PE Data role                                             */
@@ -2826,20 +2839,27 @@ typedef struct
   CCxPin_TypeDef                      VconnCCIs       : 2u;  /*!< VConn  CC line based on @ref CCxPin_TypeDef              */
   uint32_t                            VconnStatus     : 1u;  /*!< VConnStatus USBP_TRUE = vconn on USBPD_FALSE = vconn off */
   CAD_RP_Source_Current_Adv_Typedef   RpResistor      : 2u;  /*!< RpResistor presented                                     */
+#if defined(USBPDCORE_VPD)
+  uint32_t                            VPDflag         : 1u;  /*!< VPD detection flag                                       */
+  uint32_t                            CAD_VPDStatus   : 2u;  /*!< CAD VPD status used between CAD and PE                   */
+  uint32_t                            PE_VPDStatus    : 2u;  /*!< CAD VPD status used between CAD and PE                   */
+#else
+  uint32_t                            Reserved1       : 5u;  /*!< Reserved bits                                            */
+#endif /* defined(USBPDCORE_VPD) */
 #if defined(USBPD_REV30_SUPPORT) && defined(USBPDCORE_UNCHUNCKED_MODE)
   uint32_t                            PE_UnchunkSupport: 1u; /*!< Unchunked support                                        */
 #if defined(USBPDCORE_VCONN_SUPPORT)
   USBPD_SpecRev_TypeDef               CBL_SpecRevision: 2u;  /*!< Cable Specification revision                             */
-  uint32_t                            Reserved        : 11u; /*!< Reserved bits                                            */
+  uint32_t                            Reserved        : 6u;  /*!< Reserved bits                                            */
 #else
-  uint32_t                            Reserved        : 13u; /*!< Reserved bits                                            */
+  uint32_t                            Reserved        : 8u;  /*!< Reserved bits                                            */
 #endif /* USBPDCORE_VCONN_SUPPORT */
 #else
 #if defined(USBPDCORE_VCONN_SUPPORT)
   USBPD_SpecRev_TypeDef               CBL_SpecRevision: 2u;  /*!< Cable Specification revision                             */
-  uint32_t                            Reserved        : 12u; /*!< Reserved bits                                            */
+  uint32_t                            Reserved        : 7u;  /*!< Reserved bits                                            */
 #else
-  uint32_t                            Reserved        : 14u; /*!< Reserved bits                                            */
+  uint32_t                            Reserved        : 9u;  /*!< Reserved bits                                            */
 #endif /* USBPDCORE_VCONN_SUPPORT */
 #endif /* USBPD_REV30_SUPPORT && USBPDCORE_UNCHUNCKED_MODE */
 } USBPD_ParamsTypeDef;

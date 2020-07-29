@@ -20,7 +20,6 @@
   ******************************************************************************
   */
 /* USER CODE END Header */
-
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
@@ -113,11 +112,9 @@ int main(void)
 
   /* USER CODE END 1 */
 
-
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  
 
   LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_SYSCFG);
   LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_PWR);
@@ -126,9 +123,9 @@ int main(void)
 
   /* System interrupt init*/
 
-  /** Disable the internal Pull-Up in Dead Battery pins of UCPD peripheral 
+  /** Disable the internal Pull-Up in Dead Battery pins of UCPD peripheral
   */
-  LL_PWR_DisableDeadBatteryPD();
+  LL_PWR_DisableUCPDDeadBattery();
 
   /* USER CODE BEGIN Init */
 
@@ -174,43 +171,42 @@ int main(void)
   */
 void SystemClock_Config(void)
 {
-  LL_FLASH_SetLatency(LL_FLASH_LATENCY_8);
+  LL_FLASH_SetLatency(LL_FLASH_LATENCY_4);
+  while(LL_FLASH_GetLatency() != LL_FLASH_LATENCY_4)
+  {
+  }
   LL_PWR_EnableRange1BoostMode();
   LL_RCC_HSI_Enable();
-
    /* Wait till HSI is ready */
   while(LL_RCC_HSI_IsReady() != 1)
   {
-    
   }
+
   LL_RCC_HSI_SetCalibTrimming(64);
   LL_RCC_LSI_Enable();
-
    /* Wait till LSI is ready */
   while(LL_RCC_LSI_IsReady() != 1)
   {
-    
   }
+
   LL_PWR_EnableBkUpAccess();
   LL_RCC_ForceBackupDomainReset();
   LL_RCC_ReleaseBackupDomainReset();
   LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSI, LL_RCC_PLLM_DIV_4, 85, LL_RCC_PLLR_DIV_2);
   LL_RCC_PLL_EnableDomain_SYS();
   LL_RCC_PLL_Enable();
-
    /* Wait till PLL is ready */
   while(LL_RCC_PLL_IsReady() != 1)
   {
-    
   }
+
   LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_PLL);
   LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_2);
-
    /* Wait till System clock is ready */
   while(LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL)
   {
-  
   }
+
   /* Insure 1µs transition state at intermediate medium speed clock based on DWT */
   CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
   DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
@@ -219,8 +215,10 @@ void SystemClock_Config(void)
   /* Set AHB prescaler*/
   LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
   LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
-  LL_RCC_SetAPB2Prescaler(LL_RCC_APB1_DIV_1);
+  LL_RCC_SetAPB2Prescaler(LL_RCC_APB2_DIV_1);
+
   LL_Init1msTick(170000000);
+
   LL_SetSystemCoreClock(170000000);
   LL_RCC_SetRTCClockSource(LL_RCC_RTC_CLKSOURCE_LSI);
   LL_RCC_EnableRTC();
@@ -253,10 +251,16 @@ static void MX_RTC_Init(void)
   /* USER CODE BEGIN RTC_Init 1 */
 
   /* USER CODE END RTC_Init 1 */
+  /** Initialize RTC and set the Time and Date
+  */
   RTC_InitStruct.HourFormat = LL_RTC_HOURFORMAT_24HOUR;
   RTC_InitStruct.AsynchPrescaler = RTC_ASYNCH_PREDIV;
   RTC_InitStruct.SynchPrescaler = RTC_SYNCH_PREDIV;
   LL_RTC_Init(RTC, &RTC_InitStruct);
+  /** Initialize RTC and set the Time and Date
+  */
+  if(LL_RTC_BKP_GetRegister(RTC,LL_RTC_BKP_DR0) != 0x32F2){
+
   RTC_TimeStruct.Hours = 0x0;
   RTC_TimeStruct.Minutes = 0x0;
   RTC_TimeStruct.Seconds = 0x0;
@@ -268,16 +272,15 @@ static void MX_RTC_Init(void)
   RTC_DateStruct.Year = 0x19;
 
   LL_RTC_DATE_Init(RTC, LL_RTC_FORMAT_BCD, &RTC_DateStruct);
-  RTC_TimeStruct.Hours = 0x0;
-  RTC_TimeStruct.Minutes = 0x0;
-  RTC_TimeStruct.Seconds = 0x0;
-
-  RTC_DateStruct.Day = 0x1;
-  RTC_DateStruct.Year = 0x19;
-
-  /** Enable the WakeUp 
+    LL_RTC_BKP_SetRegister(RTC,LL_RTC_BKP_DR0,0x32F2);
+  }
+  /** Initialize RTC and set the Time and Date
   */
+  /** Enable the WakeUp
+  */
+  LL_RTC_EnableIT_WUT(RTC);
   LL_RTC_WAKEUP_SetClock(RTC, LL_RTC_WAKEUPCLOCK_CKSPRE);
+  LL_RTC_WAKEUP_SetAutoReload(RTC, 0);
   /* USER CODE BEGIN RTC_Init 2 */
   LL_USART_ClearFlag_TC(USART1);
 
@@ -304,11 +307,11 @@ static void MX_USART1_UART_Init(void)
 
   /* Peripheral clock enable */
   LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_USART1);
-  
+
   LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOA);
-  /**USART1 GPIO Configuration  
+  /**USART1 GPIO Configuration
   PA9   ------> USART1_TX
-  PA10   ------> USART1_RX 
+  PA10   ------> USART1_RX
   */
   GPIO_InitStruct.Pin = LL_GPIO_PIN_9;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_ALTERNATE;
@@ -345,8 +348,8 @@ static void MX_USART1_UART_Init(void)
   LL_USART_SetTXFIFOThreshold(USART1, LL_USART_FIFOTHRESHOLD_1_8);
   LL_USART_SetRXFIFOThreshold(USART1, LL_USART_FIFOTHRESHOLD_1_8);
   LL_USART_DisableFIFO(USART1);
-  LL_USART_EnableOverrunDetect(USART1);
-  LL_USART_EnableDMADeactOnRxErr(USART1);
+  LL_USART_DisableOverrunDetect(USART1);
+  LL_USART_DisableDMADeactOnRxErr(USART1);
   LL_USART_ConfigAsyncMode(USART1);
 
   /* USER CODE BEGIN WKUPType USART1 */

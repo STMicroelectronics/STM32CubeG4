@@ -390,12 +390,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>Drivers/CMSIS/Lib</GroupName>
+          <GroupName>Drivers/CMSIS/DSP/Lib</GroupName>
           <Files>
             <File>
               <FileName>arm_cortexM4l_math.lib</FileName>
               <FileType>4</FileType>
-              <FilePath>..\..\..\..\..\..\Drivers\CMSIS\Lib\ARM\arm_cortexM4l_math.lib</FilePath>
+              <FilePath>..\..\..\..\..\..\Drivers\CMSIS\DSP\Lib\ARM\arm_cortexM4l_math.lib</FilePath>
             </File>
           </Files>
         </Group>

@@ -75,9 +75,9 @@ void HAL_MspInit(void)
 
   /* System interrupt init*/
 
-  /** Disable the internal Pull-Up in Dead Battery pins of UCPD peripheral 
+  /** Disable the internal Pull-Up in Dead Battery pins of UCPD peripheral
   */
-  LL_PWR_DisableDeadBatteryPD();
+  HAL_PWREx_DisableUCPDDeadBattery();
 
   /* USER CODE BEGIN MspInit 1 */
 
@@ -100,10 +100,10 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* hadc)
   /* USER CODE END ADC1_MspInit 0 */
     /* Peripheral clock enable */
     __HAL_RCC_ADC12_CLK_ENABLE();
-  
+
     __HAL_RCC_GPIOA_CLK_ENABLE();
-    /**ADC1 GPIO Configuration    
-    PA2     ------> ADC1_IN3 
+    /**ADC1 GPIO Configuration
+    PA2     ------> ADC1_IN3
     */
     GPIO_InitStruct.Pin = GPIO_PIN_2;
     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
@@ -150,9 +150,9 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* hadc)
   /* USER CODE END ADC1_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_ADC12_CLK_DISABLE();
-  
-    /**ADC1 GPIO Configuration    
-    PA2     ------> ADC1_IN3 
+
+    /**ADC1 GPIO Configuration
+    PA2     ------> ADC1_IN3
     */
     HAL_GPIO_DeInit(GPIOA, GPIO_PIN_2);
 
@@ -180,7 +180,7 @@ void HAL_DAC_MspInit(DAC_HandleTypeDef* hdac)
   /* USER CODE END DAC3_MspInit 0 */
     /* Peripheral clock enable */
     __HAL_RCC_DAC3_CLK_ENABLE();
-  
+
     /* DAC3 DMA Init */
     /* DAC3_CH1 Init */
     hdma_dac3_ch1.Instance = DMA1_Channel4;
@@ -245,10 +245,10 @@ void HAL_OPAMP_MspInit(OPAMP_HandleTypeDef* hopamp)
   /* USER CODE BEGIN OPAMP1_MspInit 0 */
 
   /* USER CODE END OPAMP1_MspInit 0 */
-  
+
     __HAL_RCC_GPIOA_CLK_ENABLE();
-    /**OPAMP1 GPIO Configuration    
-    PA2     ------> OPAMP1_VOUT 
+    /**OPAMP1 GPIO Configuration
+    PA2     ------> OPAMP1_VOUT
     */
     GPIO_InitStruct.Pin = GPIO_PIN_2;
     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
@@ -275,9 +275,9 @@ void HAL_OPAMP_MspDeInit(OPAMP_HandleTypeDef* hopamp)
   /* USER CODE BEGIN OPAMP1_MspDeInit 0 */
 
   /* USER CODE END OPAMP1_MspDeInit 0 */
-  
-    /**OPAMP1 GPIO Configuration    
-    PA2     ------> OPAMP1_VOUT 
+
+    /**OPAMP1 GPIO Configuration
+    PA2     ------> OPAMP1_VOUT
     */
     HAL_GPIO_DeInit(GPIOA, GPIO_PIN_2);
 

@@ -53,7 +53,7 @@ the configuration of the needed I2C resources according to the used hardware (CL
 GPIO and NVIC). You may update this function to change I2C configuration.
 
 The I2C communication is then initiated.
-The project is splitted in two parts the Master Board and the Slave Board
+The project is split in two parts the Master Board and the Slave Board
  - Master Board
    The HAL_I2C_Master_Sequential_Transmit_IT() and the HAL_I2C_Master_Sequential_Receive_IT() functions 
    allow respectively the transmission and the reception of a predefined data buffer
@@ -106,7 +106,7 @@ or buffers compared error. (communication is stopped if any, using infinite loop
 
 @par Keywords
 
-Connectivity, I2C, Communication, Trasmission, Reception, SCL, SDA, Interrupt
+Connectivity, I2C, Communication, Transmission, Reception, SCL, SDA, Interrupt
 
 @par Directory contents 
 

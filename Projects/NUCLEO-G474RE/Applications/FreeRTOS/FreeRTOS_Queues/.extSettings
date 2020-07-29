@@ -1,5 +1,5 @@
 [ProjectFiles]
-HeaderPath=..\..\..\..\..\..\Drivers\STM32G4xx_HAL_Driver\Inc;..\..\..\..\..\..\Drivers\STM32G4xx_HAL_Driver\Inc\Legacy;..\..\..\..\..\..\Drivers\CMSIS\Include;..\..\..\..\..\..\Drivers\CMSIS\Device\ST\STM32G4xx\Include;..\..\..\..\..\..\Drivers\BSP\STM32G4xx_Nucleo
+HeaderPath=..\..\..\..\..\..\Drivers\BSP\STM32G4xx_Nucleo
 [Others]
 Define=USE_NUCLEO_64
 HALModule=TIM;EXTI;UART

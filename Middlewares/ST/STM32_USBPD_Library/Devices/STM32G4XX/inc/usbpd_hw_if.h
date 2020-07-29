@@ -72,41 +72,39 @@ typedef struct
 {
   /**
   * @brief  The message transfer has been completed
-  * @param  PortNum The current port number
+  * @param  PortNum Port number
+  * @param  Status (0 means OK)
   * @retval None
   */
-  void (*USBPD_HW_IF_TxCompleted)(uint8_t PortNum);
+  void (*USBPD_HW_IF_TxCompleted)(uint8_t PortNum, uint32_t Status);
+
   /**
   * @brief  Bist data sent callback from PHY_HW_IF
-  * @param  PortNum Index of current used port
+  * @param  PortNum Port number
   * @param  bistmode: Bist mode
   * @retval None
   */
   void (*USBPD_HW_IF_BistCompleted)(uint8_t PortNum, USBPD_BISTMsg_TypeDef bistmode);
-  /**
-  * @brief  A new message is incoming, need to reset the status.
-  * @param  PortNum The current port number
-  * @retval The status of the decoding process
-  */
-  USBPD_PHY_RX_Status_TypeDef(*USBPD_HW_IF_RX_Reset)(uint8_t PortNum);
 
   /**
   * @brief  The reception phase of an hard reset is completed notify it.
-  * @param  PortNum The current port number
+  * @param  PortNum Port number
+  * @param  SOPType SOP Message Type based on @ref USBPD_SOPType_TypeDef
   * @retval None
   */
-  void (*USBPD_HW_IF_RX_ResetIndication)(uint8_t PortNum);
+  void (*USBPD_HW_IF_RX_ResetIndication)(uint8_t PortNum, USBPD_SOPType_TypeDef Type);
 
   /**
   * @brief  The reception phase of the current message is completed and notify it.
-  * @param  PortNum The current port number
+  * @param  PortNum Port number
+  * @param  MsgType Message Type
   * @retval None
   */
-  void (*USBPD_HW_IF_RX_Completed)(uint8_t PortNum, uint32_t MsgType, uint16_t RxPaySize);
+  void (*USBPD_HW_IF_RX_Completed)(uint8_t PortNum, uint32_t MsgType);
 
   /**
   * @brief  The emission of HRST has been completed.
-  * @param  PortNum The current port number
+  * @param  PortNum Port number
   * @retval None
   */
   void (*USBPD_HW_IF_TX_HardResetCompleted)(uint8_t PortNum, USBPD_SOPType_TypeDef Type);

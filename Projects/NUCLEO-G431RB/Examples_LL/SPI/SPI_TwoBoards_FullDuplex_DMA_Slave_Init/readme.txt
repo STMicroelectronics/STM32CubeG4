@@ -46,7 +46,7 @@ The communication is done with 2 boards through SPI.
 This example shows how to configure GPIO and SPI peripherals
 to use a Full-Duplex communication using DMA Transfer mode through the STM32G4xx SPI LL API.
 
-This example is splitted in two projects, Master board and Slave board:
+This example is split in two projects, Master board and Slave board:
 
 - Master Board
   SPI1 Peripheral is configured in Master mode.

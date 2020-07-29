@@ -424,15 +424,15 @@ static void Math_DisplayTitle(char * Title)
   uint32_t XSize;
 
   /* Clear screen */
-  GUI_Clear(GUI_COLOR_WHITE);
+  UTIL_LCD_Clear(UTIL_LCD_COLOR_WHITE);
 
   /* Display Title */
-  GUI_SetBackColor(GUI_COLOR_ST_PINK);
-  GUI_SetTextColor(GUI_COLOR_ST_PINK);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_ST_PINK);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_PINK);
   BSP_LCD_GetXSize(LCD_INSTANCE, &XSize);
-  GUI_FillRect(0, LINE(0), XSize, Font24.Height, GUI_COLOR_ST_PINK);
-  GUI_SetTextColor(GUI_COLOR_WHITE);
-  GUI_DisplayStringAt(0, LINE(0), (uint8_t *)Title, CENTER_MODE);
+  UTIL_LCD_FillRect(0, LINE(0), XSize, Font24.Height, UTIL_LCD_COLOR_ST_PINK);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_DisplayStringAt(0, LINE(0), (uint8_t *)Title, CENTER_MODE);
 }
 
 /**
@@ -454,17 +454,17 @@ static void Math_DisplayWindow(void)
   window_XSize = (XSize / 2) + 6;
   window_YSize = (YSize / 2) + 10;
 
-  /* Set box initial coordonate */
+  /* Set box initial coordinate */
   x = 0;
   y = (YSize / 4) - 5;
 
   /* Display Window border */
-  GUI_SetTextColor(GUI_COLOR_ST_BLUE);
-  GUI_FillRect(x, y, window_XSize, window_YSize, GUI_COLOR_ST_BLUE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_BLUE);
+  UTIL_LCD_FillRect(x, y, window_XSize, window_YSize, UTIL_LCD_COLOR_ST_BLUE);
 
   /* Clear box */
-  GUI_SetTextColor(GUI_COLOR_WHITE);
-  GUI_FillRect(x + 3, y + 3, window_XSize - 6, window_YSize - 6, GUI_COLOR_WHITE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_FillRect(x + 3, y + 3, window_XSize - 6, window_YSize - 6, UTIL_LCD_COLOR_WHITE);
 }
 
 /**
@@ -486,13 +486,13 @@ static void Math_ClearWindow(void)
   window_XSize = (XSize / 2) + 6;
   window_YSize = (YSize / 2) + 10;
 
-  /* Set box initial coordonate */
+  /* Set box initial coordinate */
   x = 0;
   y = (YSize / 4) - 5;
 
   /* Clear box */
-  GUI_SetTextColor(GUI_COLOR_WHITE);
-  GUI_FillRect(x + 3, y + 3, window_XSize - 6, window_YSize - 6, GUI_COLOR_WHITE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_FillRect(x + 3, y + 3, window_XSize - 6, window_YSize - 6, UTIL_LCD_COLOR_WHITE);
 }
 
 /**
@@ -505,13 +505,13 @@ static void Math_DisplayBottomMessage(char * msg)
   uint32_t XSize;
 
   BSP_LCD_GetXSize(LCD_INSTANCE, &XSize);
-  GUI_SetFont(&Font12);
-  GUI_SetBackColor(GUI_COLOR_ST_BLUE);
-  GUI_SetTextColor(GUI_COLOR_ST_BLUE);
-  GUI_FillRect(0, LINE(19), XSize, Font20.Height, GUI_COLOR_ST_BLUE);
-  GUI_SetTextColor(GUI_COLOR_WHITE);
-  GUI_DisplayStringAt(0, LINE(19), (uint8_t *)msg, CENTER_MODE);
-  GUI_SetFont(&Font24);
+  UTIL_LCD_SetFont(&Font12);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_ST_BLUE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_BLUE);
+  UTIL_LCD_FillRect(0, LINE(19), XSize, Font20.Height, UTIL_LCD_COLOR_ST_BLUE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_DisplayStringAt(0, LINE(19), (uint8_t *)msg, CENTER_MODE);
+  UTIL_LCD_SetFont(&Font24);
 }
 
 /**
@@ -523,26 +523,26 @@ static void Cordic_DisplayList(uint8_t Select)
 {
   uint8_t i;
 
-  GUI_SetFont(&Font12);
-  GUI_DrawRect(170 - 3, 40 - 3 , 6 + CORDIC_MAX_FUNCTION_NAME_LENGHT*Font12.Width, 6 + CORDIC_MAX_FUNCTIONS*Font12.Height, GUI_COLOR_ST_GREEN_DARK);
+  UTIL_LCD_SetFont(&Font12);
+  UTIL_LCD_DrawRect(170 - 3, 40 - 3 , 6 + CORDIC_MAX_FUNCTION_NAME_LENGHT*Font12.Width, 6 + CORDIC_MAX_FUNCTIONS*Font12.Height, UTIL_LCD_COLOR_ST_GREEN_DARK);
 
   for (i = 0; i < CORDIC_MAX_FUNCTIONS; i++)
   {
     if (i == (Select - 1))
     {
-      GUI_SetBackColor(GUI_COLOR_ST_PINK);
-      GUI_SetTextColor(GUI_COLOR_WHITE);
+      UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_ST_PINK);
+      UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
     }
     else
     {
-      GUI_SetBackColor(GUI_COLOR_WHITE);
-      GUI_SetTextColor(GUI_COLOR_ST_BLUE);
+      UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
+      UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_BLUE);
     }
 
-    GUI_DisplayStringAt(170, 40 + Font12.Height*i, (uint8_t *)CordicFunctionList[i], LEFT_MODE);
+    UTIL_LCD_DisplayStringAt(170, 40 + Font12.Height*i, (uint8_t *)CordicFunctionList[i], LEFT_MODE);
   }
 
-  GUI_SetFont(&Font24);
+  UTIL_LCD_SetFont(&Font24);
 }
 
 /**
@@ -554,26 +554,26 @@ static void Fmac_DisplayList(uint8_t Select)
 {
   uint8_t i;
 
-  GUI_SetFont(&Font16);
-  GUI_DrawRect(170 - 3, 40 -3 , 6 + FMAC_MAX_FUNCTION_NAME_LENGHT*Font16.Width, 6 + FMAC_MAX_FUNCTIONS*Font16.Height, GUI_COLOR_ST_GREEN_DARK);
+  UTIL_LCD_SetFont(&Font16);
+  UTIL_LCD_DrawRect(170 - 3, 40 -3 , 6 + FMAC_MAX_FUNCTION_NAME_LENGHT*Font16.Width, 6 + FMAC_MAX_FUNCTIONS*Font16.Height, UTIL_LCD_COLOR_ST_GREEN_DARK);
 
   for (i = 0; i < FMAC_MAX_FUNCTIONS; i++)
   {
     if (i == (Select - 1))
     {
-      GUI_SetBackColor(GUI_COLOR_ST_PINK);
-      GUI_SetTextColor(GUI_COLOR_WHITE);
+      UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_ST_PINK);
+      UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
     }
     else
     {
-      GUI_SetBackColor(GUI_COLOR_WHITE);
-      GUI_SetTextColor(GUI_COLOR_ST_BLUE);
+      UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
+      UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_BLUE);
     }
 
-    GUI_DisplayStringAt(170, 40 + Font16.Height*i, (uint8_t *)FmacFunctionList[i], LEFT_MODE);
+    UTIL_LCD_DisplayStringAt(170, 40 + Font16.Height*i, (uint8_t *)FmacFunctionList[i], LEFT_MODE);
   }
 
-  GUI_SetFont(&Font24);
+  UTIL_LCD_SetFont(&Font24);
 }
 
 /**
@@ -710,14 +710,14 @@ static void Cordic_DisplayFunction(uint8_t Select)
   Math_ClearWindow();
 
   /* Display computed Signal */
-  Math_DisplaySignal32b(OutputBuffer, CORDIC_BLOCKSIZE, GUI_COLOR_ST_PINK);
+  Math_DisplaySignal32b(OutputBuffer, CORDIC_BLOCKSIZE, UTIL_LCD_COLOR_ST_PINK);
 
   /* Display second computed Signal if any */
   switch (Select)
   {
   case 1 : /* SIN + COS (Polling) */
   case 2 : /* SIN + COS (DMA) */
-    Math_DisplaySignal32b(OutputBuffer2, CORDIC_BLOCKSIZE, GUI_COLOR_ST_PURPLE);
+    Math_DisplaySignal32b(OutputBuffer2, CORDIC_BLOCKSIZE, UTIL_LCD_COLOR_ST_PURPLE);
   break;
   case 3 : /* SQRT (Polling) */
     break;
@@ -921,8 +921,8 @@ static void Fmac_DisplayFunction(uint8_t Select)
   Math_ClearWindow();
 
   /* Display graphic, discarding first 40 samples (due to filter settling) */
-  Math_DisplaySignal16b((int16_t*)SIN_1_21KHZ + 40, 100, GUI_COLOR_ST_GRAY_LIGHT);
-  Math_DisplaySignal16b(OutputBuffer + 40, 100, GUI_COLOR_ST_PINK);
+  Math_DisplaySignal16b((int16_t*)SIN_1_21KHZ + 40, 100, UTIL_LCD_COLOR_ST_GRAY_LIGHT);
+  Math_DisplaySignal16b(OutputBuffer + 40, 100, UTIL_LCD_COLOR_ST_PINK);
 
   switch (Select)
   {
@@ -1009,7 +1009,7 @@ static void Math_DisplaySignal32b(int32_t *Buffer, uint32_t BufferSize, uint32_t
     y2 = (YSize / 2) - (((int64_t)Buffer[index] * window_YSize) / 0xFFFFFFFFU); /* '-' because inverse coordinates */
 
     /* Draw line until (x2,y2) */
-    GUI_DrawLine(x1, y1, x2, y2, Color);
+    UTIL_LCD_DrawLine(x1, y1, x2, y2, Color);
     x1 = x2;
     y1 = y2;
   }
@@ -1046,7 +1046,7 @@ static void Math_DisplaySignal16b(int16_t *Buffer, uint32_t BufferSize, uint32_t
     y2 = (YSize / 2) - (Buffer[index] * window_YSize / 0xFFFF); /* '-' because inverse coordinates */
 
     /* Draw line until (x2,y2) */
-    GUI_DrawLine(x1, y1, x2, y2, Color);
+    UTIL_LCD_DrawLine(x1, y1, x2, y2, Color);
     x1 = x2;
     y1 = y2;
   }
@@ -1065,44 +1065,44 @@ static void Cordic_DisplayInfo(char * SWLibName, uint32_t PeriphTime, uint32_t S
   uint8_t StringToDisplay[100];
   uint8_t line = 6;
 
-  GUI_SetFont(&Font16);
-  GUI_SetBackColor(GUI_COLOR_WHITE);
-  GUI_SetTextColor(GUI_COLOR_ST_BLUE);
-  GUI_DisplayStringAt(170, LINE(line++), (uint8_t*)"Time to compl.", LEFT_MODE);
-  GUI_SetTextColor(GUI_COLOR_ST_PINK);
+  UTIL_LCD_SetFont(&Font16);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_BLUE);
+  UTIL_LCD_DisplayStringAt(170, LINE(line++), (uint8_t*)"Time to compl.", LEFT_MODE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_PINK);
   sprintf((char*)StringToDisplay,"%ld cycles ", PeriphTime);
-  GUI_DisplayStringAt(170, LINE(line++), (uint8_t *)StringToDisplay, LEFT_MODE);
+  UTIL_LCD_DisplayStringAt(170, LINE(line++), (uint8_t *)StringToDisplay, LEFT_MODE);
 
   if ((DisplayStyle & MATH_DISPLAY_CPULOAD) != 0)
   {
-    GUI_DisplayStringAt(170, LINE(line++), (uint8_t *)"0% cpu load", LEFT_MODE);
+    UTIL_LCD_DisplayStringAt(170, LINE(line++), (uint8_t *)"0% cpu load", LEFT_MODE);
   }
   else
   {
-    GUI_DisplayStringAt(170, LINE(line++), (uint8_t *)"             ", LEFT_MODE);
+    UTIL_LCD_DisplayStringAt(170, LINE(line++), (uint8_t *)"             ", LEFT_MODE);
   }
 
   line++;
-  GUI_SetTextColor(GUI_COLOR_ST_BLUE);
-  GUI_DisplayStringAt(170, LINE(line++), (uint8_t *)SWLibName, LEFT_MODE);
-  GUI_SetTextColor(GUI_COLOR_ST_PINK);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_BLUE);
+  UTIL_LCD_DisplayStringAt(170, LINE(line++), (uint8_t *)SWLibName, LEFT_MODE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_PINK);
 
   sprintf((char*)StringToDisplay,"%ld cycles ", SWLibTime);
-  GUI_DisplayStringAt(170, LINE(line++), (uint8_t *)StringToDisplay, LEFT_MODE);
+  UTIL_LCD_DisplayStringAt(170, LINE(line++), (uint8_t *)StringToDisplay, LEFT_MODE);
 
   if ((DisplayStyle & MATH_DISPLAY_CPULOAD) != 0)
   {
-    GUI_DisplayStringAt(170, LINE(line++), (uint8_t *)"100% cpu load", LEFT_MODE);
+    UTIL_LCD_DisplayStringAt(170, LINE(line++), (uint8_t *)"100% cpu load", LEFT_MODE);
   }
   else
   {
-    GUI_DisplayStringAt(170, LINE(line++), (uint8_t *)"             ", LEFT_MODE);
+    UTIL_LCD_DisplayStringAt(170, LINE(line++), (uint8_t *)"             ", LEFT_MODE);
   }
 
   line = 12;
-  GUI_SetTextColor(GUI_COLOR_ST_BLUE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_BLUE);
   sprintf((char*)StringToDisplay,"%d samples ", CORDIC_BLOCKSIZE);
-  GUI_DisplayStringAt(20, LINE(line++), (uint8_t *)StringToDisplay, LEFT_MODE);
+  UTIL_LCD_DisplayStringAt(20, LINE(line++), (uint8_t *)StringToDisplay, LEFT_MODE);
 }
 
 /**
@@ -1116,25 +1116,25 @@ static void Fmac_DisplayInfo(char * SWLibName, uint32_t SWLibCpuLoad)
   uint8_t StringToDisplay[100];
   uint8_t line = 6;
 
-  GUI_SetFont(&Font16);
-  GUI_SetBackColor(GUI_COLOR_WHITE);
+  UTIL_LCD_SetFont(&Font16);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
 
-  GUI_SetTextColor(GUI_COLOR_ST_BLUE);
-  GUI_DisplayStringAt(170, LINE(line++), (uint8_t *)"FMAC (DMA)", LEFT_MODE);
-  GUI_SetTextColor(GUI_COLOR_ST_PINK);
-  GUI_DisplayStringAt(170, LINE(line++), (uint8_t *)"0% cpu load ", LEFT_MODE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_BLUE);
+  UTIL_LCD_DisplayStringAt(170, LINE(line++), (uint8_t *)"FMAC (DMA)", LEFT_MODE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_PINK);
+  UTIL_LCD_DisplayStringAt(170, LINE(line++), (uint8_t *)"0% cpu load ", LEFT_MODE);
 
   line++;
-  GUI_SetTextColor(GUI_COLOR_ST_BLUE);
-  GUI_DisplayStringAt(170, LINE(line++), (uint8_t *)SWLibName, LEFT_MODE);
-  GUI_SetTextColor(GUI_COLOR_ST_PINK);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_BLUE);
+  UTIL_LCD_DisplayStringAt(170, LINE(line++), (uint8_t *)SWLibName, LEFT_MODE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_PINK);
   sprintf((char*)StringToDisplay,"%ld%% cpu load   ", SWLibCpuLoad);
-  GUI_DisplayStringAt(170, LINE(line++), (uint8_t *)StringToDisplay, LEFT_MODE);
+  UTIL_LCD_DisplayStringAt(170, LINE(line++), (uint8_t *)StringToDisplay, LEFT_MODE);
 
   line = 12;
-  GUI_SetTextColor(GUI_COLOR_ST_BLUE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_BLUE);
   sprintf((char*)StringToDisplay,"%ldKHz sampling", (uint32_t)FMAC_FREQ_SAMPLING_KHZ);
-  GUI_DisplayStringAt(2, LINE(line++), (uint8_t *)StringToDisplay, LEFT_MODE);
+  UTIL_LCD_DisplayStringAt(2, LINE(line++), (uint8_t *)StringToDisplay, LEFT_MODE);
 }
 
 /**

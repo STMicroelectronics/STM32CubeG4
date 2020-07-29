@@ -42,7 +42,7 @@ In case of errors, LED2 is slowly blinking (1 sec period).
 
 @par Keywords
 
-Connectivity, USART, Asynchroneous mode, RS-232, baud rate, Reception, Transmission, HyperTerminal, Low-power mode, Stop mode.
+Connectivity, USART, Asynchronous mode, RS-232, baud rate, Reception, Transmission, HyperTerminal, Low-power mode, Stop mode.
 
 @par Directory contents 
 

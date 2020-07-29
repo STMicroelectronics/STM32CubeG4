@@ -583,7 +583,7 @@ void WaitForUserButtonPress(void)
 void SystemClock_Config(void)
 {
   /* Flash Latency configuration */
-  LL_FLASH_SetLatency(LL_FLASH_LATENCY_8);
+  LL_FLASH_SetLatency(LL_FLASH_LATENCY_4);
 
   /* Enable boost mode to be able to reach 170MHz */
   LL_PWR_EnableRange1BoostMode();

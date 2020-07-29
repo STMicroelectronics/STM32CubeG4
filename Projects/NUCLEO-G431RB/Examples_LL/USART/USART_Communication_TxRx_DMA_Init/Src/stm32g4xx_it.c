@@ -188,7 +188,7 @@ void SysTick_Handler(void)
   /* USER CODE BEGIN SysTick_IRQn 0 */
 
   /* USER CODE END SysTick_IRQn 0 */
-  
+
   /* USER CODE BEGIN SysTick_IRQn 1 */
 
   /* USER CODE END SysTick_IRQn 1 */
@@ -220,7 +220,7 @@ void DMA1_Channel5_IRQHandler(void)
     USART_TransferError_Callback();
   }
   /* USER CODE END DMA1_Channel5_IRQn 0 */
-  
+
   /* USER CODE BEGIN DMA1_Channel5_IRQn 1 */
 
   /* USER CODE END DMA1_Channel5_IRQn 1 */
@@ -246,7 +246,7 @@ void DMA1_Channel6_IRQHandler(void)
   }
 
   /* USER CODE END DMA1_Channel6_IRQn 0 */
-  
+
   /* USER CODE BEGIN DMA1_Channel6_IRQn 1 */
 
   /* USER CODE END DMA1_Channel6_IRQn 1 */

@@ -25,7 +25,6 @@
   ******************************************************************************
   */
 /* USER CODE END Header */
-
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
@@ -107,7 +106,6 @@ int main(void)
      */
   /* USER CODE END 1 */
 
-
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
@@ -127,8 +125,8 @@ int main(void)
 
   /*##-1- Initialize the LCD #################################################*/
   BSP_LCD_Init(0, LCD_ORIENTATION_LANDSCAPE);
-  GUI_SetFuncDriver(&LCD_Driver); /* SetFunc before setting device */
-  GUI_SetDevice(0);            /* SetDevice after funcDriver is set */
+  UTIL_LCD_SetFuncDriver(&LCD_Driver); /* SetFunc before setting device */
+  UTIL_LCD_SetDevice(0);            /* SetDevice after funcDriver is set */
 
   /* USER CODE END SysInit */
 
@@ -169,8 +167,8 @@ int main(void)
   if (TSENSOR_Init(TSENSOR_ADDR, &TSENSOR_InitStructure) != TSENSOR_OK)
   {
     /* Initialization Error */
-    GUI_SetTextColor(GUI_COLOR_RED);
-    GUI_DisplayStringAt(0, 115, (uint8_t*)"Initialization problem", CENTER_MODE); 
+    UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_RED);
+    UTIL_LCD_DisplayStringAt(0, 115, (uint8_t*)"Initialization problem", CENTER_MODE); 
     Error_Handler();
   }
 
@@ -190,9 +188,9 @@ int main(void)
       temperaturevalue = TSENSOR_ReadTemp(TSENSOR_ADDR);
 
       /* Clear previous warning message */
-      GUI_SetTextColor(GUI_COLOR_WHITE);    
-      GUI_DisplayStringAt(0, 160, (uint8_t *)"                       ", CENTER_MODE);
-      GUI_DisplayStringAt(0, 175, (uint8_t *)"                       ", CENTER_MODE);
+      UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);    
+      UTIL_LCD_DisplayStringAt(0, 160, (uint8_t *)"                       ", CENTER_MODE);
+      UTIL_LCD_DisplayStringAt(0, 175, (uint8_t *)"                       ", CENTER_MODE);
 
       TSENSOR_Display_Temperature(temperaturevalue);
       
@@ -219,17 +217,17 @@ int main(void)
       /* Display warning message depends on Limit value                       */
       if ((TSENSOR_ReadStatus(addressalert) & TSENSOR_TEMP_EXCEED_HIGH_LIMIT) == TSENSOR_TEMP_EXCEED_HIGH_LIMIT)
       {
-        GUI_SetTextColor(GUI_COLOR_RED);
+        UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_RED);
         /* Display warning message Temperature high limit exceeded            */
-        GUI_DisplayStringAt(0, 160, (uint8_t *)"Temperature Limit High", CENTER_MODE);
-        GUI_DisplayStringAt(0, 175, (uint8_t *)"has been exceeded", CENTER_MODE);
+        UTIL_LCD_DisplayStringAt(0, 160, (uint8_t *)"Temperature Limit High", CENTER_MODE);
+        UTIL_LCD_DisplayStringAt(0, 175, (uint8_t *)"has been exceeded", CENTER_MODE);
       }
       else
       {
-        GUI_SetTextColor(GUI_COLOR_ST_BLUE);
+        UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_BLUE);
         /* Display warning message Temperature is at or blow low limit        */
-        GUI_DisplayStringAt(0, 160, (uint8_t *)" Temperature is at or ", CENTER_MODE);
-        GUI_DisplayStringAt(0, 175, (uint8_t *)"below the Low Limit", CENTER_MODE);
+        UTIL_LCD_DisplayStringAt(0, 160, (uint8_t *)" Temperature is at or ", CENTER_MODE);
+        UTIL_LCD_DisplayStringAt(0, 175, (uint8_t *)"below the Low Limit", CENTER_MODE);
       }
       alertoccurs = 0;
     }
@@ -256,7 +254,8 @@ void SystemClock_Config(void)
   /** Configure the main internal regulator output voltage
   */
   HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1);
-  /** Initializes the CPU, AHB and APB busses clocks
+  /** Initializes the RCC Oscillators according to the specified parameters
+  * in the RCC_OscInitTypeDef structure.
   */
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
@@ -272,7 +271,7 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
-  /** Initializes the CPU, AHB and APB busses clocks
+  /** Initializes the CPU, AHB and APB buses clocks
   */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
@@ -281,11 +280,11 @@ void SystemClock_Config(void)
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_7) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_4) != HAL_OK)
   {
     Error_Handler();
   }
-  /** Initializes the peripherals clocks 
+  /** Initializes the peripherals clocks
   */
   PeriphClkInit.I2c3ClockSelection = RCC_I2C3CLKSOURCE_PCLK1;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
@@ -326,7 +325,7 @@ static void MX_I2C3_SMBUS_Init(void)
   {
     Error_Handler();
   }
-  /** configuration Alert Mode 
+  /** configuration Alert Mode
   */
   if (HAL_SMBUS_EnableAlert_IT(&hsmbus3) != HAL_OK)
   {
@@ -363,36 +362,36 @@ static void Display_ExampleDescription(void)
   uint32_t y_size;
   
   /* Clear the LCD */ 
-  GUI_SetBackColor(GUI_COLOR_WHITE); 
-  GUI_Clear(GUI_COLOR_WHITE);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE); 
+  UTIL_LCD_Clear(UTIL_LCD_COLOR_WHITE);
   BSP_LCD_DisplayOn(0);
   
   /* Set GUI font */
-  GUI_SetFont(&GUI_DEFAULT_FONT);
+  UTIL_LCD_SetFont(&UTIL_LCD_DEFAULT_FONT);
 
   /* Set the LCD Text Color */
-  GUI_SetTextColor(GUI_COLOR_ST_BLUE_DARK);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_BLUE_DARK);
 
   /* Display LCD messages */
-  GUI_DisplayStringAt(0, 10, (uint8_t *)"STM32G474QETx", CENTER_MODE);
-  GUI_DisplayStringAt(0, 35, (uint8_t *)"Example", CENTER_MODE);
+  UTIL_LCD_DisplayStringAt(0, 10, (uint8_t *)"STM32G474QETx", CENTER_MODE);
+  UTIL_LCD_DisplayStringAt(0, 35, (uint8_t *)"Example", CENTER_MODE);
   
   BSP_LCD_GetXSize(0, &x_size);
   BSP_LCD_GetYSize(0, &y_size);
   
   /* Draw Bitmap */
-  GUI_DrawBitmap((x_size - 80)/2, 65, (uint8_t *)stlogo);
+  UTIL_LCD_DrawBitmap((x_size - 80)/2, 65, (uint8_t *)stlogo);
   
-  GUI_SetFont(&Font12);
-  GUI_DisplayStringAt(0, y_size- 20, (uint8_t *)"Copyright (c) STMicroelectronics 2019", CENTER_MODE);
+  UTIL_LCD_SetFont(&Font12);
+  UTIL_LCD_DisplayStringAt(0, y_size- 20, (uint8_t *)"Copyright (c) STMicroelectronics 2019", CENTER_MODE);
   
-  GUI_SetFont(&Font16);
-  GUI_FillRect(0, y_size/2 + 15, x_size, 60, GUI_COLOR_ST_BLUE_DARK);
-  GUI_SetTextColor(GUI_COLOR_WHITE);
-  GUI_SetBackColor(GUI_COLOR_ST_BLUE_DARK); 
-  GUI_DisplayStringAt(0, y_size/2 + 15, (uint8_t *)"Press User push-button", CENTER_MODE);
-  GUI_DisplayStringAt(0, y_size/2 + 30, (uint8_t *)"to start :", CENTER_MODE);
-  GUI_DisplayStringAt(0, y_size/2 + 45, (uint8_t *)" TEMPERATURE SENSOR Example", CENTER_MODE);
+  UTIL_LCD_SetFont(&Font16);
+  UTIL_LCD_FillRect(0, y_size/2 + 15, x_size, 60, UTIL_LCD_COLOR_ST_BLUE_DARK);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_ST_BLUE_DARK); 
+  UTIL_LCD_DisplayStringAt(0, y_size/2 + 15, (uint8_t *)"Press User push-button", CENTER_MODE);
+  UTIL_LCD_DisplayStringAt(0, y_size/2 + 30, (uint8_t *)"to start :", CENTER_MODE);
+  UTIL_LCD_DisplayStringAt(0, y_size/2 + 45, (uint8_t *)" TEMPERATURE SENSOR Example", CENTER_MODE);
 }
 
 /**
@@ -406,29 +405,29 @@ static void TSENSOR_SetHint(void)
   uint32_t y_size;
   
   /* Clear the LCD */ 
-  GUI_Clear(GUI_COLOR_WHITE);
+  UTIL_LCD_Clear(UTIL_LCD_COLOR_WHITE);
   
   BSP_LCD_GetXSize(0, &x_size);
   BSP_LCD_GetYSize(0, &y_size);
   
   /* Set LCD Demo description */
-  GUI_FillRect(0, 0, x_size, 80, GUI_COLOR_ST_BLUE_DARK);
-  GUI_SetTextColor(GUI_COLOR_WHITE);
-  GUI_SetBackColor(GUI_COLOR_ST_BLUE_DARK);
-  GUI_SetFont(&Font24);
-  GUI_DisplayStringAt(0, 0, (uint8_t*)"TEMPERATURE SENSOR", CENTER_MODE);
-  GUI_SetFont(&Font12);
-  GUI_DisplayStringAt(0, 30, (uint8_t*)"This example shows how to", CENTER_MODE);
-  GUI_DisplayStringAt(0, 45, (uint8_t*)"read a Temperature", CENTER_MODE); 
-  GUI_DisplayStringAt(0, 60, (uint8_t*)"and manage temperature limit alert", CENTER_MODE);
+  UTIL_LCD_FillRect(0, 0, x_size, 80, UTIL_LCD_COLOR_ST_BLUE_DARK);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_ST_BLUE_DARK);
+  UTIL_LCD_SetFont(&Font24);
+  UTIL_LCD_DisplayStringAt(0, 0, (uint8_t*)"TEMPERATURE SENSOR", CENTER_MODE);
+  UTIL_LCD_SetFont(&Font12);
+  UTIL_LCD_DisplayStringAt(0, 30, (uint8_t*)"This example shows how to", CENTER_MODE);
+  UTIL_LCD_DisplayStringAt(0, 45, (uint8_t*)"read a Temperature", CENTER_MODE); 
+  UTIL_LCD_DisplayStringAt(0, 60, (uint8_t*)"and manage temperature limit alert", CENTER_MODE);
 
-  GUI_DrawRect(10, 90, x_size - 20, y_size - 100, GUI_COLOR_ST_BLUE_DARK);
-  GUI_DrawRect(11, 91, x_size - 22, y_size - 102, GUI_COLOR_ST_BLUE_DARK);
+  UTIL_LCD_DrawRect(10, 90, x_size - 20, y_size - 100, UTIL_LCD_COLOR_ST_BLUE_DARK);
+  UTIL_LCD_DrawRect(11, 91, x_size - 22, y_size - 102, UTIL_LCD_COLOR_ST_BLUE_DARK);
 
   /* Prepare LCD to display */
-  GUI_SetBackColor(GUI_COLOR_WHITE);
-  GUI_FillRect(12, 92, x_size - 24, y_size - 104, GUI_COLOR_WHITE);
-  GUI_SetTextColor(GUI_COLOR_BLACK);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_FillRect(12, 92, x_size - 24, y_size - 104, UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_BLACK);
 }
 
   /**
@@ -443,12 +442,12 @@ static void TSENSOR_Display_Temperature(uint16_t Temperature)
   uint16_t temperaturevaluecelsius = 0;
   uint32_t tempcelsius = 0;
 
-  GUI_SetTextColor(GUI_COLOR_BLACK);
-  GUI_SetFont(&Font12);
-  GUI_DisplayStringAt(0, 115, (uint8_t*)"Measured Temperature : ", CENTER_MODE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_BLACK);
+  UTIL_LCD_SetFont(&Font12);
+  UTIL_LCD_DisplayStringAt(0, 115, (uint8_t*)"Measured Temperature : ", CENTER_MODE);
 
   /* Change Font size to display Temperature Value */
-  GUI_SetFont(&Font16);
+  UTIL_LCD_SetFont(&Font16);
 
   /* Verify the sign of the temperature */
   if (temperaturevalue <= 2048)
@@ -458,7 +457,7 @@ static void TSENSOR_Display_Temperature(uint16_t Temperature)
     /* Initialize the temperature sensor value*/
     temperaturevaluecelsius = temperaturevalue;
     /* Set Text color to Green */
-    GUI_SetTextColor(GUI_COLOR_ST_GREEN_DARK);
+    UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_GREEN_DARK);
   }
   else
   {
@@ -467,7 +466,7 @@ static void TSENSOR_Display_Temperature(uint16_t Temperature)
     /* Remove temperature value sign */
     temperaturevaluecelsius = 0x1000 - temperaturevalue;
     /* Set Text color to Blue */
-    GUI_SetTextColor(GUI_COLOR_ST_BLUE_DARK);
+    UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_BLUE_DARK);
   }
 
   tempcelsius = 0;
@@ -501,7 +500,7 @@ static void TSENSOR_Display_Temperature(uint16_t Temperature)
   tempcelsiusdisplay[3] = ((temperaturevaluecelsius % 100) % 10) + 0x30;
 
   /* Display Temperature value on LCD */
-  GUI_DisplayStringAt(0, 145, tempcelsiusdisplay, CENTER_MODE); 
+  UTIL_LCD_DisplayStringAt(0, 145, tempcelsiusdisplay, CENTER_MODE); 
 }
 
 /**
@@ -538,14 +537,14 @@ void Error_Handler(void)
   BSP_LCD_GetXSize(0, &x_size);
   BSP_LCD_GetYSize(0, &y_size);
   
-  GUI_SetBackColor(GUI_COLOR_WHITE);
-  GUI_FillRect(12, 92, x_size - 24, y_size- 104, GUI_COLOR_WHITE);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_FillRect(12, 92, x_size - 24, y_size- 104, UTIL_LCD_COLOR_WHITE);
 
   /* Display Communication error message */
-  GUI_SetTextColor(GUI_COLOR_RED);
-  GUI_DisplayStringAt(0, 115, (uint8_t*)"An error occurs during", CENTER_MODE); 
-  GUI_DisplayStringAt(0, 130, (uint8_t*)"communication with", CENTER_MODE);
-  GUI_DisplayStringAt(0, 145, (uint8_t*)"the temperature sensor", CENTER_MODE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_RED);
+  UTIL_LCD_DisplayStringAt(0, 115, (uint8_t*)"An error occurs during", CENTER_MODE); 
+  UTIL_LCD_DisplayStringAt(0, 130, (uint8_t*)"communication with", CENTER_MODE);
+  UTIL_LCD_DisplayStringAt(0, 145, (uint8_t*)"the temperature sensor", CENTER_MODE);
 
   /* Turn LED3 on */
   BSP_LED_On(LED3);

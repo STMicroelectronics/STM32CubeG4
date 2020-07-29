@@ -120,7 +120,7 @@ static KMODULE_RETURN AppMainExec(void)
   inter_x = ((x - (column_nb * ICON_WIDTH)) / (column_nb + 1)) ;
 
   /* compute space between incons on x axis */
-  inter_y = ((y - GUI_GetFont()->Height) - (line_nb * ICON_HEIGHT)) / (line_nb + 1);
+  inter_y = ((y - UTIL_LCD_GetFont()->Height) - (line_nb * ICON_HEIGHT)) / (line_nb + 1);
 
   /* fill menu item icon position */
   indexcol = 0;
@@ -128,7 +128,7 @@ static KMODULE_RETURN AppMainExec(void)
   for(index = 0; index < iconnb; index++)
   {
     MainMenuItems[index].x = (inter_x + (indexcol * (inter_x + ICON_WIDTH)));
-    MainMenuItems[index].y = (inter_y + (GUI_GetFont()->Height) + (indexlin * (inter_y + ICON_HEIGHT)));
+    MainMenuItems[index].y = (inter_y + (UTIL_LCD_GetFont()->Height) + (indexlin * (inter_y + ICON_HEIGHT)));
 
     /* increment colomn index */
     indexcol++;
@@ -144,7 +144,7 @@ static KMODULE_RETURN AppMainExec(void)
 }
 
 /**
-  * @brief  check the main application ressources
+  * @brief  check the main application resources
   * @param  None.
   * @note   None.
   * @retval KMODULE_RETURN status.
@@ -174,19 +174,19 @@ static KMODULE_RETURN AppMainExecCheckRessource(void)
 static void AppMain_About(void)
 {
   exit_func = 0;
-  GUI_SetFont(&Font20);
-  GUI_Clear(GUI_COLOR_ST_PINK);
-  GUI_SetTextColor(GUI_COLOR_WHITE);
+  UTIL_LCD_SetFont(&Font20);
+  UTIL_LCD_Clear(UTIL_LCD_COLOR_ST_PINK);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
 
-  GUI_DisplayStringAt(0,2*Font20.Height, (uint8_t *)EVAL_BOARD, CENTER_MODE);
-  GUI_DisplayStringAt(0,3*Font20.Height, (uint8_t *)"Demonstration", CENTER_MODE);
+  UTIL_LCD_DisplayStringAt(0,2*Font20.Height, (uint8_t *)EVAL_BOARD, CENTER_MODE);
+  UTIL_LCD_DisplayStringAt(0,3*Font20.Height, (uint8_t *)"Demonstration", CENTER_MODE);
 
-  GUI_DisplayStringAt(0,5*Font20.Height, (uint8_t *)DEMO_VERSION, CENTER_MODE);
-  GUI_DisplayStringAt(0,6*Font20.Height, (uint8_t *)DEMO_DATE, CENTER_MODE);
+  UTIL_LCD_DisplayStringAt(0,5*Font20.Height, (uint8_t *)DEMO_VERSION, CENTER_MODE);
+  UTIL_LCD_DisplayStringAt(0,6*Font20.Height, (uint8_t *)DEMO_DATE, CENTER_MODE);
 
-  GUI_DisplayStringAt(0,8*Font20.Height, (uint8_t *)DEMO_INFO1, CENTER_MODE);
-  GUI_DisplayStringAt(0,9*Font20.Height, (uint8_t *)DEMO_INFO2, CENTER_MODE);
-  GUI_DisplayStringAt(0,10*Font20.Height, (uint8_t *)DEMO_INFO3, CENTER_MODE);
+  UTIL_LCD_DisplayStringAt(0,8*Font20.Height, (uint8_t *)DEMO_INFO1, CENTER_MODE);
+  UTIL_LCD_DisplayStringAt(0,9*Font20.Height, (uint8_t *)DEMO_INFO2, CENTER_MODE);
+  UTIL_LCD_DisplayStringAt(0,10*Font20.Height, (uint8_t *)DEMO_INFO3, CENTER_MODE);
   while(exit_func==0);
 }
 

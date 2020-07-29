@@ -17,7 +17,6 @@
   ******************************************************************************
   */
 /* USER CODE END Header */
-
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "cmsis_os.h"
@@ -55,7 +54,6 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_DMA_Init(void);
 void MX_UCPD1_Init(void);
-void MX_USBPD_Init(void);
 static void MX_ADC1_Init(void);
 void MX_USART1_UART_Init(void);
 void StartDefaultTask(void const * argument);
@@ -78,7 +76,6 @@ int main(void)
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */
-  
 
   /* MCU Configuration--------------------------------------------------------*/
 
@@ -103,6 +100,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
+
   /* USBPD initialisation ---------------------------------*/
   MX_USBPD_Init();
 
@@ -133,9 +131,8 @@ int main(void)
 
   /* Start scheduler */
   osKernelStart();
- 
-  /* We should never get here as control is now taken by the scheduler */
 
+  /* We should never get here as control is now taken by the scheduler */
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
@@ -145,7 +142,6 @@ int main(void)
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
-
 }
 
 /**
@@ -154,40 +150,35 @@ int main(void)
   */
 void SystemClock_Config(void)
 {
-  LL_FLASH_SetLatency(LL_FLASH_LATENCY_7);
-
-   if(LL_FLASH_GetLatency() != LL_FLASH_LATENCY_7)
+  LL_FLASH_SetLatency(LL_FLASH_LATENCY_4);
+  while(LL_FLASH_GetLatency() != LL_FLASH_LATENCY_4)
   {
-    Error_Handler();  
   }
   LL_PWR_SetRegulVoltageScaling(LL_PWR_REGU_VOLTAGE_SCALE1);
   LL_RCC_HSI_Enable();
-
    /* Wait till HSI is ready */
   while(LL_RCC_HSI_IsReady() != 1)
   {
-    
   }
+
   LL_RCC_HSI_SetCalibTrimming(64);
   LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSI, LL_RCC_PLLM_DIV_4, 75, LL_RCC_PLLR_DIV_2);
   LL_RCC_PLL_ConfigDomain_ADC(LL_RCC_PLLSOURCE_HSI, LL_RCC_PLLM_DIV_4, 75, LL_RCC_PLLP_DIV_5);
   LL_RCC_PLL_EnableDomain_SYS();
   LL_RCC_PLL_EnableDomain_ADC();
   LL_RCC_PLL_Enable();
-
    /* Wait till PLL is ready */
   while(LL_RCC_PLL_IsReady() != 1)
   {
-    
   }
+
   LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_PLL);
   LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_2);
-
    /* Wait till System clock is ready */
   while(LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL)
   {
-  
   }
+
   /* Insure 1µs transition state at intermediate medium speed clock based on DWT */
   CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
   DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
@@ -196,14 +187,14 @@ void SystemClock_Config(void)
   /* Set AHB prescaler*/
   LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
   LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
-  LL_RCC_SetAPB2Prescaler(LL_RCC_APB1_DIV_1);
+  LL_RCC_SetAPB2Prescaler(LL_RCC_APB2_DIV_1);
   LL_SetSystemCoreClock(150000000);
 
    /* Update the time base */
   if (HAL_InitTick (TICK_INT_PRIORITY) != HAL_OK)
   {
-    Error_Handler();  
-  };
+    Error_Handler();
+  }
   LL_RCC_SetUSARTClockSource(LL_RCC_USART1_CLKSOURCE_PCLK2);
   LL_RCC_SetADCClockSource(LL_RCC_ADC12_CLKSOURCE_PLL);
 }
@@ -227,7 +218,7 @@ static void MX_ADC1_Init(void)
   /* USER CODE BEGIN ADC1_Init 1 */
 
   /* USER CODE END ADC1_Init 1 */
-  /** Common config 
+  /** Common config
   */
   hadc1.Instance = ADC1;
   hadc1.Init.ClockPrescaler = ADC_CLOCK_ASYNC_DIV4;
@@ -249,14 +240,14 @@ static void MX_ADC1_Init(void)
   {
     Error_Handler();
   }
-  /** Configure the ADC multi-mode 
+  /** Configure the ADC multi-mode
   */
   multimode.Mode = ADC_MODE_INDEPENDENT;
   if (HAL_ADCEx_MultiModeConfigChannel(&hadc1, &multimode) != HAL_OK)
   {
     Error_Handler();
   }
-  /** Configure Analog WatchDog 1 
+  /** Configure Analog WatchDog 1
   */
   AnalogWDGConfig.WatchdogNumber = ADC_ANALOGWATCHDOG_1;
   AnalogWDGConfig.WatchdogMode = ADC_ANALOGWATCHDOG_ALL_REG;
@@ -264,12 +255,11 @@ static void MX_ADC1_Init(void)
   AnalogWDGConfig.HighThreshold = 700;
   AnalogWDGConfig.LowThreshold = 600;
   AnalogWDGConfig.FilteringConfig = ADC_AWD_FILTERING_NONE;
-
   if (HAL_ADC_AnalogWDGConfig(&hadc1, &AnalogWDGConfig) != HAL_OK)
   {
     Error_Handler();
   }
-  /** Configure Regular Channel 
+  /** Configure Regular Channel
   */
   sConfig.Channel = ADC_CHANNEL_6;
   sConfig.Rank = ADC_REGULAR_RANK_1;
@@ -304,11 +294,11 @@ void MX_UCPD1_Init(void)
 
   /* Peripheral clock enable */
   LL_APB1_GRP2_EnableClock(LL_APB1_GRP2_PERIPH_UCPD1);
-  
+
   LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOB);
-  /**UCPD1 GPIO Configuration  
+  /**UCPD1 GPIO Configuration
   PB4   ------> UCPD1_CC2
-  PB6   ------> UCPD1_CC1 
+  PB6   ------> UCPD1_CC1
   */
   GPIO_InitStruct.Pin = LL_GPIO_PIN_4;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_ANALOG;
@@ -321,7 +311,7 @@ void MX_UCPD1_Init(void)
   LL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /* UCPD1 DMA Init */
-  
+
   /* UCPD1_RX Init */
   LL_DMA_SetPeriphRequest(DMA1, LL_DMA_CHANNEL_3, LL_DMAMUX_REQ_UCPD1_RX);
 
@@ -387,11 +377,11 @@ void MX_USART1_UART_Init(void)
 
   /* Peripheral clock enable */
   LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_USART1);
-  
+
   LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOA);
-  /**USART1 GPIO Configuration  
+  /**USART1 GPIO Configuration
   PA9   ------> USART1_TX
-  PA10   ------> USART1_RX 
+  PA10   ------> USART1_RX
   */
   GPIO_InitStruct.Pin = LL_GPIO_PIN_9;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_ALTERNATE;
@@ -410,7 +400,7 @@ void MX_USART1_UART_Init(void)
   LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /* USART1 DMA Init */
-  
+
   /* USART1_TX Init */
   LL_DMA_SetPeriphRequest(DMA1, LL_DMA_CHANNEL_6, LL_DMAMUX_REQ_USART1_TX);
 
@@ -465,10 +455,10 @@ void MX_USART1_UART_Init(void)
 
 }
 
-/** 
+/**
   * Enable DMA controller clock
   */
-static void MX_DMA_Init(void) 
+static void MX_DMA_Init(void)
 {
 
   /* Init with LL driver */
@@ -546,7 +536,7 @@ void StartDefaultTask(void const * argument)
   {
     osDelay(1);
   }
-  /* USER CODE END 5 */ 
+  /* USER CODE END 5 */
 }
 
 /**
@@ -570,7 +560,7 @@ void Error_Handler(void)
   * @retval None
   */
 void assert_failed(uint8_t *file, uint32_t line)
-{ 
+{
   /* USER CODE BEGIN 6 */
   /* User can add his own implementation to report the file name and line number,
      tex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */

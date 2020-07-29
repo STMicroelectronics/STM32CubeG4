@@ -38,7 +38,7 @@ extern "C" {
 /* Exported define -----------------------------------------------------------*/
 #ifdef _RTOS
 #if defined(USBPD_TCPM_MODULE_ENABLED)
-#define TCPM_ALARMBOX_MESSAGES_MAX      (2U * USBPD_PORT_COUNT)
+#define TCPM_ALARMBOX_MESSAGES_MAX      (3U * USBPD_PORT_COUNT)
 #endif /* USBPD_TCPM_MODULE_ENABLED */
 #endif /* _RTOS */
 /* USER CODE BEGIN define */

@@ -75,7 +75,7 @@ int32_t SD_demo (void)
 #if (SD_CARD_PRESENCE_VALIDATION_MODE == SD_CARD_PRESENCE_INTERRUPT_MODE)
   BSP_SD_DetectITConfig(0);
 #endif
-  GUI_SetBackColor(GUI_COLOR_LIGHTBLUE);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_LIGHTBLUE);
 
   if (SD_state != BSP_ERROR_NONE)
   {
@@ -83,14 +83,14 @@ int32_t SD_demo (void)
     if(SD_state == SD_NOT_PRESENT)
     {
       printf ("\r\nSD shall be inserted before running test");
-      GUI_SetTextColor(GUI_COLOR_RED);
-      GUI_DisplayStringAt(20, 200, (uint8_t *)"Insert SD card", LEFT_MODE);
+      UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_RED);
+      UTIL_LCD_DisplayStringAt(20, 200, (uint8_t *)"Insert SD card", LEFT_MODE);
     }
     else
     {
       printf ("\r\nSD Initialization : FAIL.");
-      GUI_SetTextColor(GUI_COLOR_RED);
-      GUI_DisplayStringAt(20, 120, (uint8_t *)"SD card init failed", LEFT_MODE);
+      UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_RED);
+      UTIL_LCD_DisplayStringAt(20, 120, (uint8_t *)"SD card init failed", LEFT_MODE);
     }
     printf ("\r\nSD Test Aborted.");
     result --;
@@ -98,8 +98,8 @@ int32_t SD_demo (void)
   else
   {
     printf ("\r\nSD Initialization : OK.");
-    GUI_SetTextColor(GUI_COLOR_GREEN);
-    GUI_DisplayStringAt(20, 120, (uint8_t *)"SD card init OK    ", LEFT_MODE);
+    UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_GREEN);
+    UTIL_LCD_DisplayStringAt(20, 120, (uint8_t *)"SD card init OK    ", LEFT_MODE);
     prev_status = SD_PRESENT;
 
       /* Fill the buffer to write */
@@ -115,15 +115,15 @@ int32_t SD_demo (void)
       if (SD_state != BSP_ERROR_NONE)
       {
         printf ("\r\nSD WRITE : FAILED.");
-        GUI_SetTextColor(GUI_COLOR_RED);
-        GUI_DisplayStringAt(20, 140, (uint8_t *)"SD card write failed", LEFT_MODE);
+        UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_RED);
+        UTIL_LCD_DisplayStringAt(20, 140, (uint8_t *)"SD card write failed", LEFT_MODE);
         result --;
       }
       else
       {
         printf ("\r\nSD WRITE : OK.");
-        GUI_SetTextColor(GUI_COLOR_GREEN);
-        GUI_DisplayStringAt(20, 140, (uint8_t *)"SD card write OK    ", LEFT_MODE);
+        UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_GREEN);
+        UTIL_LCD_DisplayStringAt(20, 140, (uint8_t *)"SD card write OK    ", LEFT_MODE);
 
         SD_state = BSP_SD_ReadBlocks(0, aRxBuffer, BLOCK_START_ADDR, NUM_OF_BLOCKS);
         HAL_Delay(500);
@@ -136,15 +136,15 @@ int32_t SD_demo (void)
         if (SD_state != BSP_ERROR_NONE)
         {
           printf ("\r\nSD READ : FAILED.");
-          GUI_SetTextColor(GUI_COLOR_RED);
-          GUI_DisplayStringAt(20, 160, (uint8_t *)"SD card read failed", LEFT_MODE);
+          UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_RED);
+          UTIL_LCD_DisplayStringAt(20, 160, (uint8_t *)"SD card read failed", LEFT_MODE);
           result --;
         }
         else
         {
           printf ("\r\nSD READ : OK.");
-          GUI_SetTextColor(GUI_COLOR_GREEN);
-          GUI_DisplayStringAt(20, 160, (uint8_t *)"SD card read OK     ", LEFT_MODE);
+          UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_GREEN);
+          UTIL_LCD_DisplayStringAt(20, 160, (uint8_t *)"SD card read OK     ", LEFT_MODE);
           if (Buffercmp(aTxBuffer, aRxBuffer, BUFFER_WORDS_SIZE) > 0)
           {
             printf ("\r\nSD COMPARE : FAILED.");
@@ -160,15 +160,15 @@ int32_t SD_demo (void)
           if (SD_state != BSP_ERROR_NONE)
           {
             printf ("\r\nSD ERASE : FAILED.");
-            GUI_SetTextColor(GUI_COLOR_RED);
-            GUI_DisplayStringAt(20, 180, (uint8_t *)"SD card erase failed", LEFT_MODE);
+            UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_RED);
+            UTIL_LCD_DisplayStringAt(20, 180, (uint8_t *)"SD card erase failed", LEFT_MODE);
             result --;
           }
           else
           {
             printf ("\r\nSD ERASE : OK.");
-            GUI_SetTextColor(GUI_COLOR_GREEN);
-            GUI_DisplayStringAt(20, 180, (uint8_t *)"SD card erase OK    ", LEFT_MODE);
+            UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_GREEN);
+            UTIL_LCD_DisplayStringAt(20, 180, (uint8_t *)"SD card erase OK    ", LEFT_MODE);
           }
         }
       }
@@ -176,8 +176,8 @@ int32_t SD_demo (void)
 
   printf ("\r\nSD Test done.");
   printf ("\r\nSD can be removed.\n");
-  GUI_SetTextColor(GUI_COLOR_BLACK);
-  GUI_DisplayStringAt(20, 200, (uint8_t *)"SD card test Done     ", LEFT_MODE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_BLACK);
+  UTIL_LCD_DisplayStringAt(20, 200, (uint8_t *)"SD card test Done     ", LEFT_MODE);
 
   while (1)
   {
@@ -192,16 +192,16 @@ int32_t SD_demo (void)
         {
           BSP_SD_Init(0);
           printf ("\r\nSD Not Connected");
-          GUI_SetTextColor(GUI_COLOR_BLACK);
-          GUI_DisplayStringAt(20, 200, (uint8_t *)"SD card not connected", LEFT_MODE);
+          UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_BLACK);
+          UTIL_LCD_DisplayStringAt(20, 200, (uint8_t *)"SD card not connected", LEFT_MODE);
           prev_status = SD_NOT_PRESENT;
         }
       }
       else if (prev_status != SD_PRESENT)
       {
         printf ("\r\nSD Connected");
-        GUI_SetTextColor(GUI_COLOR_BLACK);
-        GUI_DisplayStringAt(20, 200, (uint8_t *)"SD card connected   ", LEFT_MODE);
+        UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_BLACK);
+        UTIL_LCD_DisplayStringAt(20, 200, (uint8_t *)"SD card connected   ", LEFT_MODE);
         prev_status = SD_PRESENT;
       }
 #if (SD_CARD_PRESENCE_VALIDATION_MODE == SD_CARD_PRESENCE_INTERRUPT_MODE)
@@ -234,22 +234,22 @@ static void SD_SetHint(void)
   printf("TEST OF SD card\n");
 
   /* Clear the LCD */
-  GUI_Clear(GUI_COLOR_WHITE);
+  UTIL_LCD_Clear(UTIL_LCD_COLOR_WHITE);
 
   /* Set LCD Demo description */
-  BSP_LCD_FillRect(0, 0, 0, x_size, 80, GUI_COLOR_BLUE );
-  GUI_SetTextColor(GUI_COLOR_WHITE);
-  GUI_SetBackColor(GUI_COLOR_BLUE);
-  GUI_SetFont(&Font24);
-  GUI_DisplayStringAt(0, 0, (uint8_t *)"SD", CENTER_MODE);
-  GUI_SetFont(&Font12);
-  GUI_DisplayStringAt(0, 30, (uint8_t *)"This example shows how to write", CENTER_MODE);
-  GUI_DisplayStringAt(0, 45, (uint8_t *)"and read data on the microSD and also", CENTER_MODE);
-  GUI_DisplayStringAt(0, 60, (uint8_t *)"how to detect the presence of the card", CENTER_MODE);
+  BSP_LCD_FillRect(0, 0, 0, x_size, 80, UTIL_LCD_COLOR_BLUE );
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_BLUE);
+  UTIL_LCD_SetFont(&Font24);
+  UTIL_LCD_DisplayStringAt(0, 0, (uint8_t *)"SD", CENTER_MODE);
+  UTIL_LCD_SetFont(&Font12);
+  UTIL_LCD_DisplayStringAt(0, 30, (uint8_t *)"This example shows how to write", CENTER_MODE);
+  UTIL_LCD_DisplayStringAt(0, 45, (uint8_t *)"and read data on the microSD and also", CENTER_MODE);
+  UTIL_LCD_DisplayStringAt(0, 60, (uint8_t *)"how to detect the presence of the card", CENTER_MODE);
 
    /* Set the LCD Text Color */
-  GUI_DrawRect(10, 90, x_size - 20, y_size- 100, GUI_COLOR_BLUE);
-  GUI_DrawRect(11, 91, x_size - 22, y_size- 102, GUI_COLOR_BLUE);
+  UTIL_LCD_DrawRect(10, 90, x_size - 20, y_size- 100, UTIL_LCD_COLOR_BLUE);
+  UTIL_LCD_DrawRect(11, 91, x_size - 22, y_size- 102, UTIL_LCD_COLOR_BLUE);
 }
 
 /**

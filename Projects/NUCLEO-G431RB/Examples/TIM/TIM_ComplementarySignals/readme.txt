@@ -70,7 +70,7 @@ In case of error , LED2 is turned ON .
 
 @par Keywords
 
-Timer, PWM, Complemntary signal, Duty Cycle, Waveform, Oscilloscope, Output, Signal
+Timer, PWM, Complementary signal, Duty Cycle, Waveform, Oscilloscope, Output, Signal
 
 @par Directory contents
 

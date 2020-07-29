@@ -226,6 +226,7 @@ int32_t BSP_USBPD_PWR_VBUSIsOn(uint32_t Instance, uint8_t *pState);
 int32_t BSP_USBPD_PWR_VCONNIsOn(uint32_t Instance,
                                 uint32_t CCPinId, uint8_t *pState);
 
+int32_t BSP_USBPD_PWR_VCCSetState(uint32_t Instance, uint32_t State);
 /**
   * @}
   */

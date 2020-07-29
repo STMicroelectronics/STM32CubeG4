@@ -72,9 +72,9 @@ void HAL_MspInit(void)
 
   /* System interrupt init*/
 
-  /** Disable the internal Pull-Up in Dead Battery pins of UCPD peripheral 
+  /** Disable the internal Pull-Up in Dead Battery pins of UCPD peripheral
   */
-  LL_PWR_DisableDeadBatteryPD();
+  HAL_PWREx_DisableUCPDDeadBattery();
 
   /* USER CODE BEGIN MspInit 1 */
 
@@ -139,11 +139,11 @@ void HAL_OPAMP_MspInit(OPAMP_HandleTypeDef* hopamp)
   /* USER CODE BEGIN OPAMP4_MspInit 0 */
 
   /* USER CODE END OPAMP4_MspInit 0 */
-  
+
     __HAL_RCC_GPIOB_CLK_ENABLE();
-    /**OPAMP4 GPIO Configuration    
+    /**OPAMP4 GPIO Configuration
     PB12     ------> OPAMP4_VOUT
-    PB13     ------> OPAMP4_VINP_SEC 
+    PB13     ------> OPAMP4_VINP_SEC
     */
     GPIO_InitStruct.Pin = GPIO_PIN_12|GPIO_PIN_13;
     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
@@ -170,10 +170,10 @@ void HAL_OPAMP_MspDeInit(OPAMP_HandleTypeDef* hopamp)
   /* USER CODE BEGIN OPAMP4_MspDeInit 0 */
 
   /* USER CODE END OPAMP4_MspDeInit 0 */
-  
-    /**OPAMP4 GPIO Configuration    
+
+    /**OPAMP4 GPIO Configuration
     PB12     ------> OPAMP4_VOUT
-    PB13     ------> OPAMP4_VINP_SEC 
+    PB13     ------> OPAMP4_VINP_SEC
     */
     HAL_GPIO_DeInit(GPIOB, GPIO_PIN_12|GPIO_PIN_13);
 

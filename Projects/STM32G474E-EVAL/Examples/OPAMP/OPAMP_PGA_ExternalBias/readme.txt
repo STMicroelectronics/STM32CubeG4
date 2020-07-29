@@ -25,7 +25,7 @@ positive or negative gain, and bias.
 
 @par Theory
 
-Wether the gain is negative or positive depends on the way the signals are connected
+Whether the gain is negative or positive depends on the way the signals are connected
 to the OPAMP inverting & non inverting inputs.
 
 Considering Gp and Gm as the positive and negative gains, the OPAMP behavior is described by:

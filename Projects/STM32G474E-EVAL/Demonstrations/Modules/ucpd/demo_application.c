@@ -34,7 +34,7 @@
 #if defined(_TRACE)
 #include "usbpd_trace.h"
 #endif
-#include "basic_gui.h"
+#include "stm32_lcd.h"
 #include "stm32g474e_eval.h"
 #include "stm32g474e_eval_lcd.h"
 #include "stm32g474e_eval_io.h"
@@ -116,7 +116,7 @@
 #define MAX_LINE_COMMAND  4u
 #define MAX_LINE_EXTCAPA  5u
 
-/* DEMO Error messages max size 
+/* DEMO Error messages max size
 */
 #define DEMO_ERROR_MAX_MSG_SIZE  25U
 
@@ -255,16 +255,16 @@ static void string_completion(uint8_t *Str, uint8_t SizeMax);
   */
 DEMO_ErrorCode DEMO_InitBSP(void)
 {
-  GUI_SetFont(&Font12);
- 
-  /* Clear the LCD */ 
-  GUI_SetBackColor(GUI_COLOR_WHITE);
-  GUI_Clear(GUI_COLOR_WHITE);
-  
+  UTIL_LCD_SetFont(&Font12);
+
+  /* Clear the LCD */
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_Clear(UTIL_LCD_COLOR_WHITE);
+
   BSP_LCD_DrawBitmap(DEMO_MAIN_LCD, 0, 0, (uint8_t *)header_data_logo);
   Display_Selected_port();
   Display_border();
-  
+
   /* Initialize Joystick */
   BSP_JOY_Init(JOY1, JOY_MODE_EXTI, JOY_ALL);
 
@@ -370,9 +370,9 @@ static void Display_power(void)
   {
     counter = 0;
 
-    GUI_SetFont(&Font12);
-    GUI_SetTextColor(GUI_COLOR_ST_PINK);
-    GUI_SetBackColor(GUI_COLOR_WHITE);
+    UTIL_LCD_SetFont(&Font12);
+    UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_PINK);
+    UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
 
     /* Port 0 */
     if(DPM_Ports[USBPD_PORT_0].DPM_IsConnected)
@@ -389,11 +389,11 @@ static void Display_power(void)
         sprintf(pstr,"%2ld.%02ldV %1ld.%02ldA",(vsense / 1000), (vsense % 1000)/10, (isense/1000), (isense % 1000)/10);
       }
 
-      GUI_DisplayStringAt(64, Font12.Height * 4, (uint8_t*)pstr,LEFT_MODE);
+      UTIL_LCD_DisplayStringAt(64, Font12.Height * 4, (uint8_t*)pstr,LEFT_MODE);
     }
     else
     {
-      GUI_DisplayStringAt(64, Font12.Height * 4, (uint8_t*)"                ",LEFT_MODE);
+      UTIL_LCD_DisplayStringAt(64, Font12.Height * 4, (uint8_t*)"                ",LEFT_MODE);
     }
   }
 }
@@ -407,9 +407,9 @@ static void Display_contract_port(uint8_t PortNum)
 {
   uint32_t pos;
 
-  GUI_SetFont(&Font16);
-  GUI_SetBackColor(GUI_COLOR_WHITE);
-  GUI_SetTextColor(GUI_COLOR_ST_BLUE_DARK);
+  UTIL_LCD_SetFont(&Font16);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_BLUE_DARK);
 
   pos = (PortNum == 0)? 54:181;
   pos = pos +  Font16.Width;
@@ -419,27 +419,27 @@ static void Display_contract_port(uint8_t PortNum)
   {
     if (USBPD_SPECIFICATION_REV3 == DPM_Params[PortNum].PE_SpecRevision)
     {
-      GUI_DisplayStringAt(pos, 10+ Font16.Height, (uint8_t*)"PD3", LEFT_MODE);
+      UTIL_LCD_DisplayStringAt(pos, 10+ Font16.Height, (uint8_t*)"PD3", LEFT_MODE);
     }
     else
     {
-      GUI_DisplayStringAt(pos, 10+Font16.Height, (uint8_t*)"PD2", LEFT_MODE);
+      UTIL_LCD_DisplayStringAt(pos, 10+Font16.Height, (uint8_t*)"PD2", LEFT_MODE);
     }
 
     /* UFP/DFP */
     if (USBPD_PORTDATAROLE_UFP == DPM_Params[PortNum].PE_DataRole)
     {
-      GUI_DisplayStringAt(pos + 38, 10+ Font16.Height, (uint8_t*)"UFP", LEFT_MODE);
+      UTIL_LCD_DisplayStringAt(pos + 38, 10+ Font16.Height, (uint8_t*)"UFP", LEFT_MODE);
     }
     else
     {
-      GUI_DisplayStringAt(pos + 38, 10 + Font16.Height, (uint8_t*)"DFP", LEFT_MODE);
+      UTIL_LCD_DisplayStringAt(pos + 38, 10 + Font16.Height, (uint8_t*)"DFP", LEFT_MODE);
     }
-  
+
   }
   else
   {
-    GUI_DisplayStringAt(pos, 10+Font16.Height, (uint8_t*)"          ", LEFT_MODE);
+    UTIL_LCD_DisplayStringAt(pos, 10+Font16.Height, (uint8_t*)"          ", LEFT_MODE);
   }
 }
 
@@ -452,18 +452,18 @@ static void Display_contract_port(uint8_t PortNum)
 void DEMO_Display_Error(uint8_t PortNum, uint8_t ErrorType)
 {
   uint8_t *pmsg;
-  
+
   Display_clear_info();
 
-  GUI_SetFont(&Font16);
-  GUI_SetBackColor(GUI_COLOR_RED);
-  GUI_SetTextColor(GUI_COLOR_ST_BLUE_LIGHT);
+  UTIL_LCD_SetFont(&Font16);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_RED);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_BLUE_LIGHT);
 
   /* Display error info */
   if (ErrorType < DEMO_ERROR_TYPE_MAXNBITEMS)
   {
     pmsg = (uint8_t *) g_tab_error_strings[ErrorType];
-    GUI_DisplayStringAt(0, 1 + 6 * Font16.Height, pmsg, CENTER_MODE);
+    UTIL_LCD_DisplayStringAt(0, 1 + 6 * Font16.Height, pmsg, CENTER_MODE);
   }
 }
 
@@ -477,9 +477,9 @@ static void Display_cc_port(uint8_t PortNum, CCxPin_TypeDef cc)
 {
   uint32_t pos;
 
-  GUI_SetFont(&Font16);
-  GUI_SetBackColor(GUI_COLOR_WHITE);
-  GUI_SetTextColor(GUI_COLOR_ST_BLUE_DARK);
+  UTIL_LCD_SetFont(&Font16);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_BLUE_DARK);
 
   pos = (PortNum == 0)? 54+30:181+30;
   pos = pos +  5*Font16.Width;
@@ -487,13 +487,13 @@ static void Display_cc_port(uint8_t PortNum, CCxPin_TypeDef cc)
   switch(cc)
   {
   case CCNONE :
-    GUI_DisplayStringAt(pos, 10+ Font16.Height, (uint8_t*)"    ", LEFT_MODE);
+    UTIL_LCD_DisplayStringAt(pos, 10+ Font16.Height, (uint8_t*)"    ", LEFT_MODE);
     break;
   case CC1 :
-    GUI_DisplayStringAt(pos, 10+ Font16.Height, (uint8_t*)"CC1", LEFT_MODE);
+    UTIL_LCD_DisplayStringAt(pos, 10+ Font16.Height, (uint8_t*)"CC1", LEFT_MODE);
     break;
   case CC2 :
-    GUI_DisplayStringAt(pos, 10+ Font16.Height, (uint8_t*)"CC2", LEFT_MODE);
+    UTIL_LCD_DisplayStringAt(pos, 10+ Font16.Height, (uint8_t*)"CC2", LEFT_MODE);
     break;
   }
 }
@@ -504,12 +504,12 @@ static void Display_cc_port(uint8_t PortNum, CCxPin_TypeDef cc)
   */
 static void Display_border(void)
 {
-  GUI_SetBackColor(GUI_COLOR_CYAN);
-  GUI_SetTextColor(GUI_COLOR_ST_BLUE_DARK);
-  
-  GUI_DrawLine(0, 5 * Font12.Height, 320, 5 * Font12.Height, GUI_COLOR_ST_BLUE_DARK);
-  GUI_DrawLine(0, 16 * Font12.Height -1, 320, 16 * Font12.Height - 1, GUI_COLOR_ST_BLUE_DARK);
-  GUI_DrawLine(160, 16 * Font12.Height - 1, 160, 240, GUI_COLOR_ST_BLUE_DARK);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_CYAN);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_BLUE_DARK);
+
+  UTIL_LCD_DrawLine(0, 5 * Font12.Height, 320, 5 * Font12.Height, UTIL_LCD_COLOR_ST_BLUE_DARK);
+  UTIL_LCD_DrawLine(0, 16 * Font12.Height -1, 320, 16 * Font12.Height - 1, UTIL_LCD_COLOR_ST_BLUE_DARK);
+  UTIL_LCD_DrawLine(160, 16 * Font12.Height - 1, 160, 240, UTIL_LCD_COLOR_ST_BLUE_DARK);
 }
 
 /**
@@ -518,12 +518,12 @@ static void Display_border(void)
   */
 static void Display_clear_info(void)
 {
-  GUI_SetBackColor(GUI_COLOR_WHITE);
-  GUI_SetTextColor(GUI_COLOR_WHITE);
-  GUI_SetFont(&Font12);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_SetFont(&Font12);
 
-  /* Fill a blank rectangle to clear the display information panel */ 
-  GUI_FillRect(0, LINE(6), 320, 9*Font12.Height, GUI_COLOR_WHITE);
+  /* Fill a blank rectangle to clear the display information panel */
+  UTIL_LCD_FillRect(0, LINE(6), 320, 9*Font12.Height, UTIL_LCD_COLOR_WHITE);
 }
 
 /**
@@ -532,32 +532,32 @@ static void Display_clear_info(void)
   */
 static void Display_build_info(void)
 {
-  GUI_SetBackColor(GUI_COLOR_WHITE);
-  GUI_SetTextColor(GUI_COLOR_ST_BLUE_DARK);
-  GUI_SetFont(&Font16);
-   
-  GUI_DisplayStringAt(0, 1 + (5 * Font16.Height), (uint8_t*)"USBPD Demo for", CENTER_MODE);
-  GUI_DisplayStringAt(0, 1 + (6 * Font16.Height), (uint8_t*)"STM32G474E-EVAL", CENTER_MODE);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_BLUE_DARK);
+  UTIL_LCD_SetFont(&Font16);
+
+  UTIL_LCD_DisplayStringAt(0, 1 + (5 * Font16.Height), (uint8_t*)"USBPD Demo for", CENTER_MODE);
+  UTIL_LCD_DisplayStringAt(0, 1 + (6 * Font16.Height), (uint8_t*)"STM32G474E-EVAL", CENTER_MODE);
 #if defined(_GUI_INTERFACE) && defined(_TRACE)
-  GUI_DisplayStringAt(0, 1 + (8 * Font16.Height), (uint8_t*)"GUI TRACE", CENTER_MODE);
+  UTIL_LCD_DisplayStringAt(0, 1 + (8 * Font16.Height), (uint8_t*)"GUI TRACE", CENTER_MODE);
 #elif defined(_GUI_INTERFACE) && !defined(_TRACE)
-  GUI_DisplayStringAt(0, 1 + (8 * Font16.Height), (uint8_t*)"GUI", CENTER_MODE);
+  UTIL_LCD_DisplayStringAt(0, 1 + (8 * Font16.Height), (uint8_t*)"GUI", CENTER_MODE);
 #elif !defined(_GUI_INTERFACE) && defined(_TRACE)
-  GUI_DisplayStringAt(0, 1 + (8 * Font16.Height), (uint8_t*)"TRACE", CENTER_MODE);
+  UTIL_LCD_DisplayStringAt(0, 1 + (8 * Font16.Height), (uint8_t*)"TRACE", CENTER_MODE);
 #else /* TRACE */
-  //GUI_DisplayStringAt(0, 1 + (8 * Font16.Height), (uint8_t*)"GUI", CENTER_MODE);
+  //UTIL_LCD_DisplayStringAt(0, 1 + (8 * Font16.Height), (uint8_t*)"GUI", CENTER_MODE);
 #endif
 #ifdef _VDM
-  GUI_DisplayStringAt(0, 1 + (9 * Font16.Height), (uint8_t*)"VDM", CENTER_MODE);
+  UTIL_LCD_DisplayStringAt(0, 1 + (9 * Font16.Height), (uint8_t*)"VDM", CENTER_MODE);
 #endif
 
   char tab[27] = {0};
   sprintf(tab,"FW:%6x-STACK:%8x", USBPD_FW_VERSION, _LIB_ID);
-  GUI_DisplayStringAt(0, 1 + (10 * Font16.Height), (uint8_t*)tab, CENTER_MODE);
+  UTIL_LCD_DisplayStringAt(0, 1 + (10 * Font16.Height), (uint8_t*)tab, CENTER_MODE);
 }
 
 /**
-  * @brief  Menu selection managment
+  * @brief  Menu selection management
   * @param  PortNum     The handle of the port
   * @param  IndexMax    MAX index
   * @param  LineMax     MAX line
@@ -689,28 +689,28 @@ static void Display_cableinfo_menu(uint8_t PortNum)
                         "<50ns", "<60ns", "<70ns", ">70ns"
                         "1000 ", "2000 "};
 
-  GUI_SetBackColor(GUI_COLOR_WHITE);
-  GUI_SetTextColor(GUI_COLOR_ST_BLUE_DARK);
-  GUI_SetFont(&Font16);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_BLUE_DARK);
+  UTIL_LCD_SetFont(&Font16);
 
   /* Display menu sink capa */
-  GUI_DisplayStringAt(0, 1 + 6 * Font12.Height, (uint8_t*)"Cable information :", LEFT_MODE);
+  UTIL_LCD_DisplayStringAt(0, 1 + 6 * Font12.Height, (uint8_t*)"Cable information :", LEFT_MODE);
 
   if(pIdentity.CableVDO_Presence == 0)
   {
-    sprintf((char *)str, "no information availble");
-    GUI_DisplayStringAt(0, 1 + 8 * Font12.Height + Font16.Height , str, LEFT_MODE);
+    sprintf((char *)str, "no information available");
+    UTIL_LCD_DisplayStringAt(0, 1 + 8 * Font12.Height + Font16.Height , str, LEFT_MODE);
   }
   else
   {
     sprintf((char *)str, "USBSS: %s  VBUS cap:%s", ss[pIdentity.CableVDO.b.USB_SS_Support],vbusc[pIdentity.CableVDO.b.VBUS_CurrentHandCap]);
-    GUI_DisplayStringAt(0, 1 + 7 * Font12.Height + Font16.Height , str, LEFT_MODE);
+    UTIL_LCD_DisplayStringAt(0, 1 + 7 * Font12.Height + Font16.Height , str, LEFT_MODE);
     sprintf((char *)str, "Max V: %s  TType:%s", MaxVoltage[pIdentity.CableVDO.b.CableMaxVoltage], Term[pIdentity.CableVDO.b.CableTermType]);
-    GUI_DisplayStringAt(0, 1 + 8 * Font12.Height + Font16.Height , str, LEFT_MODE);
+    UTIL_LCD_DisplayStringAt(0, 1 + 8 * Font12.Height + Font16.Height , str, LEFT_MODE);
     sprintf((char *)str, "Laten; %s CableType:0x%x", Latency[pIdentity.CableVDO.b.CableLatency],pIdentity.CableVDO.b.CableToType);
-    GUI_DisplayStringAt(0, 1 + 9 * Font12.Height + Font16.Height , str, LEFT_MODE);
+    UTIL_LCD_DisplayStringAt(0, 1 + 9 * Font12.Height + Font16.Height , str, LEFT_MODE);
     sprintf((char *)str, "VDO:0x%x FW:0x%x  HW:0x%x", pIdentity.CableVDO.b.VDO_Version,pIdentity.CableVDO.b.CableFWVersion,pIdentity.CableVDO.b.CableHWVersion );
-    GUI_DisplayStringAt(0, 1 + 10 * Font12.Height + Font16.Height , str, LEFT_MODE);
+    UTIL_LCD_DisplayStringAt(0, 1 + 10 * Font12.Height + Font16.Height , str, LEFT_MODE);
   }
 }
 
@@ -723,14 +723,14 @@ static void Display_sinkcapa_menu(uint8_t PortNum)
 {
   uint8_t str[32];
 
-  GUI_SetBackColor(GUI_COLOR_WHITE);
-  GUI_SetTextColor(GUI_COLOR_ST_BLUE_DARK);
-  GUI_SetFont(&Font16);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_BLUE_DARK);
+  UTIL_LCD_SetFont(&Font16);
 
   /* Display menu sink capa */
-  GUI_DisplayStringAt(0, 1 + 6 * Font12.Height, (uint8_t *)"Sink capa :", LEFT_MODE);
+  UTIL_LCD_DisplayStringAt(0, 1 + 6 * Font12.Height, (uint8_t *)"Sink capa :", LEFT_MODE);
 
-  GUI_SetFont(&Font12);
+  UTIL_LCD_SetFont(&Font12);
   sprintf((char *)str, "FRS  DRD  USB  EPW  HCPA  DRP ");
 #if defined(USBPD_REV30_SUPPORT)
   if( DPM_Ports[PortNum].DPM_ListOfRcvSNKPDO[PortNum] & USBPD_PDO_SNK_FIXED_FRS_SUPPORT_Msk)           str[3] = '*';
@@ -740,7 +740,7 @@ static void Display_sinkcapa_menu(uint8_t PortNum)
   if( DPM_Ports[PortNum].DPM_ListOfRcvSNKPDO[PortNum] & USBPD_PDO_SNK_FIXED_EXT_POWER_Msk)             str[18] = '*';
   if( DPM_Ports[PortNum].DPM_ListOfRcvSNKPDO[PortNum] & USBPD_PDO_SNK_FIXED_HIGHERCAPAB_Msk)           str[24] = '*';
   if( DPM_Ports[PortNum].DPM_ListOfRcvSNKPDO[PortNum] & USBPD_PDO_SNK_FIXED_DRP_SUPPORT_Msk)           str[29] = '*';
-  GUI_DisplayStringAt(0, 1 + 6 * Font12.Height + Font16.Height , str, LEFT_MODE);
+  UTIL_LCD_DisplayStringAt(0, 1 + 6 * Font12.Height + Font16.Height , str, LEFT_MODE);
 
   Display_sinkcapa_menu_nav(PortNum, 0);
 }
@@ -757,9 +757,9 @@ static void Display_sinkcapa_menu_nav(uint8_t PortNum, int8_t Nav)
   uint8_t _max = DPM_Ports[portSel].DPM_NumberOfRcvSNKPDO;
   uint8_t _start, _end;
 
-  GUI_SetBackColor(GUI_COLOR_WHITE);
-  GUI_SetTextColor(GUI_COLOR_ST_BLUE_DARK);
-  GUI_SetFont(&Font16);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_BLUE_DARK);
+  UTIL_LCD_SetFont(&Font16);
 
   Menu_manage_selection(PortNum, _max, MAX_LINE_PDO, &_start, &_end, Nav);
 
@@ -807,16 +807,16 @@ static void Display_sinkcapa_menu_nav(uint8_t PortNum, int8_t Nav)
 
     if((index - _start) == g_tab_menu_pos[PortNum])
     {
-      GUI_SetBackColor(GUI_COLOR_ST_PINK);
-      GUI_SetTextColor(GUI_COLOR_WHITE);
+      UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_ST_PINK);
+      UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
     }
     string_completion(_str, sizeof(_str));
-    GUI_DisplayStringAt(0, 1 + 8 * Font12.Height  + (index + 1 - _start) * Font16.Height,  (uint8_t*)_str, CENTER_MODE);
+    UTIL_LCD_DisplayStringAt(0, 1 + 8 * Font12.Height  + (index + 1 - _start) * Font16.Height,  (uint8_t*)_str, CENTER_MODE);
 
     if((index - _start) == g_tab_menu_pos[PortNum])
     {
-      GUI_SetBackColor(GUI_COLOR_WHITE);
-      GUI_SetTextColor(GUI_COLOR_ST_BLUE_DARK);
+      UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
+      UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_BLUE_DARK);
     }
   }
 }
@@ -830,15 +830,15 @@ static void Display_sourcecapa_menu(uint8_t PortNum)
 {
   uint8_t str[32];
 
-  GUI_SetBackColor(GUI_COLOR_WHITE);
-  GUI_SetTextColor(GUI_COLOR_ST_BLUE_DARK);
-  GUI_SetFont(&Font16);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_BLUE_DARK);
+  UTIL_LCD_SetFont(&Font16);
 
   /* Display menu source capa */
   sprintf((char *)str, "Source capa : %ld",DPM_Ports[PortNum].DPM_NumberOfRcvSRCPDO);
-  GUI_DisplayStringAt(0, 1 + 6 * Font12.Height, str, LEFT_MODE);
+  UTIL_LCD_DisplayStringAt(0, 1 + 6 * Font12.Height, str, LEFT_MODE);
 
-  GUI_SetFont(&Font12);
+  UTIL_LCD_SetFont(&Font12);
   sprintf((char *)str, "UNCK  DRD  USB  EPW  SUSP  DRP ");
 #if defined(USBPD_REV30_SUPPORT)
   if( DPM_Ports[PortNum].DPM_ListOfRcvSRCPDO[0] & USBPD_PDO_SRC_FIXED_UNCHUNK_SUPPORT_Msk)       str[4] = '*';
@@ -848,7 +848,7 @@ static void Display_sourcecapa_menu(uint8_t PortNum)
   if( DPM_Ports[PortNum].DPM_ListOfRcvSRCPDO[0] & USBPD_PDO_SRC_FIXED_EXT_POWER_Msk)             str[19] = '*';
   if( DPM_Ports[PortNum].DPM_ListOfRcvSRCPDO[0] & USBPD_PDO_SRC_FIXED_USBSUSPEND_Msk)            str[25] = '*';
   if( DPM_Ports[PortNum].DPM_ListOfRcvSRCPDO[0] & USBPD_PDO_SRC_FIXED_DRP_SUPPORT_Msk)           str[30] = '*';
-  GUI_DisplayStringAt(0, 1 + 6 * Font12.Height + Font16.Height , str, LEFT_MODE);
+  UTIL_LCD_DisplayStringAt(0, 1 + 6 * Font12.Height + Font16.Height , str, LEFT_MODE);
 
   Display_sourcecapa_menu_nav(PortNum, 0);
 }
@@ -865,9 +865,9 @@ static void Display_sourcecapa_menu_nav(uint8_t PortNum, int8_t Nav)
   uint8_t _max = DPM_Ports[portSel].DPM_NumberOfRcvSRCPDO;
   uint8_t _start, _end;
 
-  GUI_SetBackColor(GUI_COLOR_WHITE);
-  GUI_SetTextColor(GUI_COLOR_ST_BLUE_DARK);
-  GUI_SetFont(&Font16);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_BLUE_DARK);
+  UTIL_LCD_SetFont(&Font16);
 
   Menu_manage_selection(PortNum, _max, MAX_LINE_PDO, &_start, &_end, Nav);
 
@@ -916,16 +916,16 @@ static void Display_sourcecapa_menu_nav(uint8_t PortNum, int8_t Nav)
 
     if((index - _start) == g_tab_menu_pos[PortNum])
     {
-      GUI_SetBackColor(GUI_COLOR_ST_PINK);
-      GUI_SetTextColor(GUI_COLOR_WHITE);
+      UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_ST_PINK);
+      UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
     }
 
-    GUI_DisplayStringAt(Font12.Width * 2, 1 + 8 * Font12.Height  + (index + 1 - _start) * Font16.Height,  (uint8_t*)_str, LEFT_MODE);
+    UTIL_LCD_DisplayStringAt(Font12.Width * 2, 1 + 8 * Font12.Height  + (index + 1 - _start) * Font16.Height,  (uint8_t*)_str, LEFT_MODE);
 
     if((index - _start) == g_tab_menu_pos[PortNum])
     {
-      GUI_SetBackColor(GUI_COLOR_WHITE);
-      GUI_SetTextColor(GUI_COLOR_ST_BLUE_DARK);
+      UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
+      UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_BLUE_DARK);
     }
   }
 }
@@ -1020,13 +1020,13 @@ static void Display_extcapa_menu(uint8_t PortNum)
 {
   uint8_t str[30];
 
-  GUI_SetBackColor(GUI_COLOR_WHITE);
-  GUI_SetTextColor(GUI_COLOR_ST_BLUE_DARK);
-  GUI_SetFont(&Font16);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_BLUE_DARK);
+  UTIL_LCD_SetFont(&Font16);
 
   /* Display menu source capa */
   sprintf((char *)str, "Extended capa : ");
-  GUI_DisplayStringAt(0, 1 + 6 * Font12.Height, str, LEFT_MODE);
+  UTIL_LCD_DisplayStringAt(0, 1 + 6 * Font12.Height, str, LEFT_MODE);
 
   Display_extcapa_menu_nav(PortNum, 0);
 }
@@ -1073,9 +1073,9 @@ static void Display_extcapa_menu_nav(uint8_t PortNum, int8_t Orientation)
     }
   }
 
-  GUI_SetBackColor(GUI_COLOR_WHITE);
-  GUI_SetTextColor(GUI_COLOR_ST_BLUE_DARK);
-  GUI_SetFont(&Font16);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_BLUE_DARK);
+  UTIL_LCD_SetFont(&Font16);
 
   Menu_manage_selection(PortNum, _max, MAX_LINE_EXTCAPA, &_start, &_end, Orientation);
 
@@ -1083,16 +1083,16 @@ static void Display_extcapa_menu_nav(uint8_t PortNum, int8_t Orientation)
   {
     if((index - _start) == g_tab_menu_pos[PortNum])
     {
-      GUI_SetBackColor(GUI_COLOR_ST_PINK);
-      GUI_SetTextColor(GUI_COLOR_WHITE);
+      UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_ST_PINK);
+      UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
     }
 
-    GUI_DisplayStringAt(0, 1 + 6 * Font12.Height  + (index + 1 - _start) * Font16.Height,  (uint8_t*)_str[index], CENTER_MODE);
+    UTIL_LCD_DisplayStringAt(0, 1 + 6 * Font12.Height  + (index + 1 - _start) * Font16.Height,  (uint8_t*)_str[index], CENTER_MODE);
 
     if((index - _start) == g_tab_menu_pos[PortNum])
     {
-      GUI_SetBackColor(GUI_COLOR_WHITE);
-      GUI_SetTextColor(GUI_COLOR_ST_BLUE_DARK);
+      UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
+      UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_BLUE_DARK);
     }
   }
 #endif /* _SRC_CAPA_EXT */
@@ -1107,13 +1107,13 @@ static void Display_sinkextcapa_menu(uint8_t PortNum)
 {
   uint8_t str[30];
 
-  GUI_SetBackColor(GUI_COLOR_WHITE);
-  GUI_SetTextColor(GUI_COLOR_ST_BLUE_DARK);
-  GUI_SetFont(&Font16);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_BLUE_DARK);
+  UTIL_LCD_SetFont(&Font16);
 
   /* Display menu source capa */
   sprintf((char *)str, "Sink Extended capa : ");
-  GUI_DisplayStringAt(0, 1 + 6 * Font12.Height, str, LEFT_MODE);
+  UTIL_LCD_DisplayStringAt(0, 1 + 6 * Font12.Height, str, LEFT_MODE);
 
   Display_sinkextcapa_menu_nav(PortNum, 0);
 }
@@ -1158,9 +1158,9 @@ static void Display_sinkextcapa_menu_nav(uint8_t PortNum, int8_t Orientation)
     }
   }
 
-  GUI_SetBackColor(GUI_COLOR_WHITE);
-  GUI_SetTextColor(GUI_COLOR_ST_BLUE_DARK);
-  GUI_SetFont(&Font16);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_BLUE_DARK);
+  UTIL_LCD_SetFont(&Font16);
 
   Menu_manage_selection(PortNum, _max, MAX_LINE_EXTCAPA, &_start, &_end, Orientation);
 
@@ -1168,16 +1168,16 @@ static void Display_sinkextcapa_menu_nav(uint8_t PortNum, int8_t Orientation)
   {
     if((index - _start) == g_tab_menu_pos[PortNum])
     {
-      GUI_SetBackColor(GUI_COLOR_ST_PINK);
-      GUI_SetTextColor(GUI_COLOR_WHITE);
+      UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_ST_PINK);
+      UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
     }
 
-    GUI_DisplayStringAt(0, 1 + 6 * Font12.Height  + (index + 1 - _start) * Font16.Height,  (uint8_t*)_str[index], CENTER_MODE);
+    UTIL_LCD_DisplayStringAt(0, 1 + 6 * Font12.Height  + (index + 1 - _start) * Font16.Height,  (uint8_t*)_str[index], CENTER_MODE);
 
     if((index - _start) == g_tab_menu_pos[PortNum])
     {
-      GUI_SetBackColor(GUI_COLOR_WHITE);
-      GUI_SetTextColor(GUI_COLOR_ST_BLUE_DARK);
+      UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
+      UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_BLUE_DARK);
     }
   }
 }
@@ -1200,9 +1200,9 @@ static void Display_command_menu(uint8_t PortNum)
   uint8_t _countcommand = 0;
 
   /* Menu command display */
-  GUI_SetBackColor(GUI_COLOR_WHITE);
-  GUI_SetTextColor(GUI_COLOR_ST_BLUE_DARK);
-  GUI_SetFont(&Font16);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_BLUE_DARK);
+  UTIL_LCD_SetFont(&Font16);
 
   if(USBPD_PORTPOWERROLE_SRC == DPM_Params[PortNum].PE_PowerRole) { _config = COMMANDROLE_SRC; }
   else { _config = COMMANDROLE_SNK; }
@@ -1221,7 +1221,7 @@ static void Display_command_menu(uint8_t PortNum)
   }
 
   /* Display menu command */
-  GUI_DisplayStringAt(0, 1 + 6 * Font12.Height, (uint8_t *)"Commands :       ", LEFT_MODE);
+  UTIL_LCD_DisplayStringAt(0, 1 + 6 * Font12.Height, (uint8_t *)"Commands :       ", LEFT_MODE);
 
   Display_command_menu_nav(PortNum, 0);
 }
@@ -1249,25 +1249,25 @@ void Display_command_menu_nav(uint8_t PortNum, int8_t Nav)
 
   Menu_manage_selection(PortNum, _max, MAX_LINE_COMMAND, &_start, &_end, Nav);
 
-  GUI_SetBackColor(GUI_COLOR_WHITE);
-  GUI_SetTextColor(GUI_COLOR_ST_BLUE_DARK);
-  GUI_SetFont(&Font16);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_BLUE_DARK);
+  UTIL_LCD_SetFont(&Font16);
 
 
   for(int8_t index=_start; index < _end; index++)
   {
     if((index - _start) == g_tab_menu_pos[PortNum])
     {
-      GUI_SetBackColor(GUI_COLOR_ST_PINK);
-      GUI_SetTextColor(GUI_COLOR_WHITE);
+      UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_ST_PINK);
+      UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
     }
 
-    GUI_DisplayStringAt(0, 1 + 7 * Font12.Height  + (index + 1 - _start) * Font16.Height,  (uint8_t*)g_tab_command_PORT[PortNum][index].commandstr, CENTER_MODE);
+    UTIL_LCD_DisplayStringAt(0, 1 + 7 * Font12.Height  + (index + 1 - _start) * Font16.Height,  (uint8_t*)g_tab_command_PORT[PortNum][index].commandstr, CENTER_MODE);
 
     if((index - _start) == g_tab_menu_pos[PortNum])
     {
-      GUI_SetBackColor(GUI_COLOR_WHITE);
-      GUI_SetTextColor(GUI_COLOR_ST_BLUE_DARK);
+      UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
+      UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_BLUE_DARK);
     }
   }
 }
@@ -1467,9 +1467,9 @@ static void Display_debug_port(uint8_t PortNum, uint8_t *msg)
     return;
   }
 
-  GUI_SetFont(&Font12);
-  GUI_SetBackColor(GUI_COLOR_WHITE);
-  GUI_SetTextColor(GUI_COLOR_ST_PURPLE);
+  UTIL_LCD_SetFont(&Font12);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_PURPLE);
 
   pos = (PortNum == 0)? 0:160;
   pos = pos + 5;
@@ -1485,12 +1485,12 @@ static void Display_debug_port(uint8_t PortNum, uint8_t *msg)
 
   for(uint8_t index = 0; index < 4; index++)
   {
-    GUI_DisplayStringAt(pos, (index + 16) * Font12.Height, TxtMessage[PortNum][index], LEFT_MODE);
+    UTIL_LCD_DisplayStringAt(pos, (index + 16) * Font12.Height, TxtMessage[PortNum][index], LEFT_MODE);
   }
 }
 
 /**
-  * @brief  main demo function to manage all the appplication event and to update MMI
+  * @brief  main demo function to manage all the application event and to update MMI
   * @retval None
   */
 static void Display_Selected_port(void)
@@ -1498,45 +1498,45 @@ static void Display_Selected_port(void)
 #if (USBPD_PORT_COUNT > 1)
   char pstr[20]={0};
 #endif /* USBPD_PORT_COUNT > 1 */
-  GUI_SetFont(&Font16);
+  UTIL_LCD_SetFont(&Font16);
 
   if (portSel == 0)
   {
-    GUI_SetBackColor(GUI_COLOR_ST_PINK);
-    GUI_SetTextColor(GUI_COLOR_WHITE);
+    UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_ST_PINK);
+    UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
   }
   else
   {
-    GUI_SetBackColor(GUI_COLOR_WHITE);
-    GUI_SetTextColor(GUI_COLOR_ST_BLUE_DARK);
+    UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
+    UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_BLUE_DARK);
   }
 
   /* Port 0 */
   if(DPM_Ports[0].DPM_IsConnected)
   {
     if (USBPD_PORTPOWERROLE_SRC == DPM_Params[0].PE_PowerRole)
-      GUI_DisplayStringAt(54 + Font16.Width , 10, (uint8_t*)"P1:SRC", LEFT_MODE);
+      UTIL_LCD_DisplayStringAt(54 + Font16.Width , 10, (uint8_t*)"P1:SRC", LEFT_MODE);
     else
-      GUI_DisplayStringAt(54 + Font16.Width , 10, (uint8_t*)"P1:SNK", LEFT_MODE);
+      UTIL_LCD_DisplayStringAt(54 + Font16.Width , 10, (uint8_t*)"P1:SNK", LEFT_MODE);
   }
   else
   {
     if(USBPD_TRUE == DPM_Settings[0].CAD_RoleToggle)
     {
-      GUI_DisplayStringAt(54 + Font16.Width, 10, (uint8_t*)"P1:DRP", LEFT_MODE);
+      UTIL_LCD_DisplayStringAt(54 + Font16.Width, 10, (uint8_t*)"P1:DRP", LEFT_MODE);
     }
     else
     {
       if (USBPD_PORTPOWERROLE_SRC == DPM_Settings[0].PE_DefaultRole)
-        GUI_DisplayStringAt(54 + Font16.Width , 10, (uint8_t*)"P1:SRC", LEFT_MODE);
+        UTIL_LCD_DisplayStringAt(54 + Font16.Width , 10, (uint8_t*)"P1:SRC", LEFT_MODE);
       else
-        GUI_DisplayStringAt(54 + Font16.Width , 10, (uint8_t*)"P1:SNK", LEFT_MODE);
+        UTIL_LCD_DisplayStringAt(54 + Font16.Width , 10, (uint8_t*)"P1:SNK", LEFT_MODE);
     }
   }
 }
 
 /**
-  * @brief  main demo function to manage all the appplication event and to update MMI
+  * @brief  main demo function to manage all the application event and to update MMI
   * @param  Event Event value
   * @retval None
   */
@@ -1600,7 +1600,7 @@ static void DEMO_Manage_event(uint32_t Event)
            break;
        case USBPD_CAD_EVENT_DETACHED :
 
-         /* Reset cable information : vconn availble only for port 0 */
+         /* Reset cable information : vconn available only for port 0 */
          if (_portnum == 0 )
          {
            pIdentity.CableVDO_Presence = 0;

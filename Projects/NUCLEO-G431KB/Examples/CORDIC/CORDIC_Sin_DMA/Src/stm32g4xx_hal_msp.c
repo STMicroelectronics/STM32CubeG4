@@ -75,9 +75,9 @@ void HAL_MspInit(void)
 
   /* System interrupt init*/
 
-  /** Disable the internal Pull-Up in Dead Battery pins of UCPD peripheral 
+  /** Disable the internal Pull-Up in Dead Battery pins of UCPD peripheral
   */
-  LL_PWR_DisableDeadBatteryPD();
+  HAL_PWREx_DisableUCPDDeadBattery();
 
   /* USER CODE BEGIN MspInit 1 */
 
@@ -99,7 +99,7 @@ void HAL_CORDIC_MspInit(CORDIC_HandleTypeDef* hcordic)
   /* USER CODE END CORDIC_MspInit 0 */
     /* Peripheral clock enable */
     __HAL_RCC_CORDIC_CLK_ENABLE();
-  
+
     /* CORDIC DMA Init */
     /* CORDIC_WRITE Init */
     hdma_cordic_write.Instance = DMA1_Channel1;

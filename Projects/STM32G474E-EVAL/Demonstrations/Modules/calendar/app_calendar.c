@@ -227,8 +227,8 @@ KMODULE_RETURN _CalendarConfig(void)
     }
   }
 
-  CharHeight = (((sFONT *)GUI_GetFont())->Height);
-  CharWidth = (((sFONT *)GUI_GetFont())->Width);
+  CharHeight = (((sFONT *)UTIL_LCD_GetFont())->Height);
+  CharWidth = (((sFONT *)UTIL_LCD_GetFont())->Width);
 
   return KMODULE_OK;
 }
@@ -299,7 +299,7 @@ static void Calendar_TimeDisplay(RTC_TimeTypeDef *time)
   char showtime[14] = {0};
 
   sprintf((char*)showtime,"     %02X:%02X:%02X",time->Hours, time->Minutes, time->Seconds);
-  GUI_DisplayStringAtLine(TIME_LINE_NB, (uint8_t *) showtime);
+  UTIL_LCD_DisplayStringAtLine(TIME_LINE_NB, (uint8_t *) showtime);
 }
 
 
@@ -409,18 +409,18 @@ static void Calendar_TimeShow(void)
 static void Calendar_DateSet(void)
 {
   /* Get back font specifications */
-  GUI_SetFont(&Font20);
-  CharHeight = (((sFONT *)GUI_GetFont())->Height);
-  CharWidth = (((sFONT *)GUI_GetFont())->Width);
+  UTIL_LCD_SetFont(&Font20);
+  CharHeight = (((sFONT *)UTIL_LCD_GetFont())->Height);
+  CharWidth = (((sFONT *)UTIL_LCD_GetFont())->Width);
 
   /* Clear the LCD */
-  GUI_Clear(GUI_COLOR_WHITE);
+  UTIL_LCD_Clear(UTIL_LCD_COLOR_WHITE);
 
   Calendar_DatePreAdjust();
 
-  GUI_SetFont(&Font24);
-  CharHeight = (((sFONT *)GUI_GetFont())->Height);
-  CharWidth = (((sFONT *)GUI_GetFont())->Width);
+  UTIL_LCD_SetFont(&Font24);
+  CharHeight = (((sFONT *)UTIL_LCD_GetFont())->Height);
+  CharWidth = (((sFONT *)UTIL_LCD_GetFont())->Width);
 
 }
 
@@ -455,51 +455,51 @@ static void Calendar_DateDisplay(uint8_t Year, uint8_t Month, uint8_t Day)
     monthlength = MonLen[Month - 1];
   }
 
-  GUI_SetTextColor(GUI_COLOR_WHITE);
-  GUI_DrawRect(daycolumn, dayline, CharWidth*2, CharHeight-2, GUI_COLOR_WHITE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_DrawRect(daycolumn, dayline, CharWidth*2, CharHeight-2, UTIL_LCD_COLOR_WHITE);
 
   /* Set the Back Color */
-  GUI_SetBackColor(GUI_COLOR_ST_PINK);
-  GUI_SetTextColor(GUI_COLOR_ST_PINK);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_ST_PINK);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_PINK);
   BSP_LCD_GetXSize(LCD_INSTANCE, &pXSize);
-  GUI_FillRect(0, 0, pXSize, Font20.Height,GUI_COLOR_ST_PINK);
-  GUI_FillRect(0, LINE(1), pXSize, Font20.Height, GUI_COLOR_ST_PINK);
+  UTIL_LCD_FillRect(0, 0, pXSize, Font20.Height,UTIL_LCD_COLOR_ST_PINK);
+  UTIL_LCD_FillRect(0, LINE(1), pXSize, Font20.Height, UTIL_LCD_COLOR_ST_PINK);
   /* Set the Text Color */
-  GUI_SetTextColor(GUI_COLOR_WHITE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
 
   sprintf((char*)linedisplay,"    %s  20%02d     ", MonthNames[Month - 1], Year);
-  GUI_DisplayStringAtLine(0, (uint8_t*)linedisplay);
+  UTIL_LCD_DisplayStringAtLine(0, (uint8_t*)linedisplay);
 
   /* Determines the week number, day of the week of the selected date */
   Calendar_WeekDayNum(Year, Month, Day);
   DateNb = dn;
 
   sprintf((char*)linedisplay," WEEK: %02ld   DAY: %03ld    ", wn, dc);
-  GUI_DisplayStringAtLine(1, (uint8_t*)linedisplay);
+  UTIL_LCD_DisplayStringAtLine(1, (uint8_t*)linedisplay);
 
   /* Set the Back Color */
-  GUI_SetBackColor(GUI_COLOR_ST_GREEN_LIGHT);
-  GUI_SetTextColor(GUI_COLOR_ST_GREEN_LIGHT);
-  GUI_FillRect(0, LINE(2), pXSize, Font20.Height, GUI_COLOR_ST_GREEN_LIGHT);
-  GUI_SetTextColor(GUI_COLOR_WHITE);
-  GUI_DisplayStringAtLine(2, (uint8_t*) " Mo Tu We Th Fr Sa Su   ");
-  GUI_SetBackColor(GUI_COLOR_WHITE);
-  GUI_SetTextColor(GUI_COLOR_ST_BLUE);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_ST_GREEN_LIGHT);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_GREEN_LIGHT);
+  UTIL_LCD_FillRect(0, LINE(2), pXSize, Font20.Height, UTIL_LCD_COLOR_ST_GREEN_LIGHT);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_DisplayStringAtLine(2, (uint8_t*) " Mo Tu We Th Fr Sa Su   ");
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_BLUE);
 
   /* Determines the week number, day of the week of the selected date */
   Calendar_WeekDayNum(Year, Month, 1);
 
   /* Clear first & last calendar lines */
-  GUI_ClearStringLine(3);
-  GUI_ClearStringLine(7);
-  GUI_ClearStringLine(8);
+  UTIL_LCD_ClearStringLine(3);
+  UTIL_LCD_ClearStringLine(7);
+  UTIL_LCD_ClearStringLine(8);
 
   mline = LINE(3);
   mcolumn = ((CharWidth * 3) * dn);
   for (month = 1; month < monthlength; month++)
   {
     /* display first space */
-    GUI_DisplayChar(mcolumn, mline, ' ');
+    UTIL_LCD_DisplayChar(mcolumn, mline, ' ');
     mcolumn += CharWidth;
 
     if (month == Day)
@@ -510,15 +510,15 @@ static void Calendar_DateDisplay(uint8_t Year, uint8_t Month, uint8_t Day)
 
     if (month / 10)
     {
-      GUI_DisplayChar(mcolumn, mline, ((month / 10) + 0x30));
+      UTIL_LCD_DisplayChar(mcolumn, mline, ((month / 10) + 0x30));
     }
     else
     {
-      GUI_DisplayChar(mcolumn, mline, ' ');
+      UTIL_LCD_DisplayChar(mcolumn, mline, ' ');
     }
     mcolumn += CharWidth;
 
-    GUI_DisplayChar(mcolumn, mline, ((month % 10) + 0x30));
+    UTIL_LCD_DisplayChar(mcolumn, mline, ((month % 10) + 0x30));
     mcolumn += CharWidth;
 
     if (mcolumn >= ((7 * 3) * CharWidth))
@@ -528,8 +528,8 @@ static void Calendar_DateDisplay(uint8_t Year, uint8_t Month, uint8_t Day)
     }
   }
 
-  GUI_SetTextColor(GUI_COLOR_ST_GREEN_LIGHT);
-  GUI_DrawRect(daycolumn, dayline, CharWidth*2, CharHeight-2, GUI_COLOR_ST_GREEN_LIGHT);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_GREEN_LIGHT);
+  UTIL_LCD_DrawRect(daycolumn, dayline, CharWidth*2, CharHeight-2, UTIL_LCD_COLOR_ST_GREEN_LIGHT);
 }
 
 
@@ -584,7 +584,7 @@ static void Calendar_DateShow(void)
     HAL_RTC_GetDate(&RtcHandle, &date, RTC_FORMAT_BCD);
 
     sprintf((char*)showdate," %s %02X.%02X.20%02X",DayNames[date.WeekDay - 1], date.Date, date.Month, date.Year);
-    GUI_DisplayStringAtLine(DATE_LINE_NB, (uint8_t *) showdate);
+    UTIL_LCD_DisplayStringAtLine(DATE_LINE_NB, (uint8_t *) showdate);
 
   }
 }
@@ -605,7 +605,7 @@ static void Calendar_TimeRegulate(RTC_TimeTypeDef *TimeInput, RTC_TimeTypeDef *T
   uint8_t digit = 0;
   char display[3];
 
-  charwidth = GUI_GetFont()->Width;
+  charwidth = UTIL_LCD_GetFont()->Width;
   rowarray[0] = 5 * charwidth;
   rowarray[1] = 8 * charwidth;
   rowarray[2] = 11 * charwidth;
@@ -623,10 +623,10 @@ static void Calendar_TimeRegulate(RTC_TimeTypeDef *TimeInput, RTC_TimeTypeDef *T
   display[2] = (0x00);
 
   /* Set the Text Color */
-  GUI_SetTextColor(GUI_COLOR_ST_PINK);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_PINK);
 
   /* Display new value */
-  GUI_DisplayStringAt(rowarray[index], LINE(TIME_LINE_NB), (uint8_t *)display, LEFT_MODE);
+  UTIL_LCD_DisplayStringAt(rowarray[index], LINE(TIME_LINE_NB), (uint8_t *)display, LEFT_MODE);
 
   UserEvent = JOY_NONE;
   /* Endless loop */
@@ -667,7 +667,7 @@ static void Calendar_TimeRegulate(RTC_TimeTypeDef *TimeInput, RTC_TimeTypeDef *T
       display[1] = ((digit % 10) + 0x30);
 
       /* Display new value */
-      GUI_DisplayStringAt(rowarray[index], LINE(TIME_LINE_NB), (uint8_t *)display, LEFT_MODE);
+      UTIL_LCD_DisplayStringAt(rowarray[index], LINE(TIME_LINE_NB), (uint8_t *)display, LEFT_MODE);
 
       /* Store digit into local variable */
       timearray[index] = digit;
@@ -678,10 +678,10 @@ static void Calendar_TimeRegulate(RTC_TimeTypeDef *TimeInput, RTC_TimeTypeDef *T
     if((UserEvent == JOY_RIGHT) || (UserEvent == JOY_LEFT))
     {
       /* Set the Text Color */
-      GUI_SetTextColor(GUI_COLOR_ST_BLUE);
+      UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_BLUE);
 
       /* Display new value */
-      GUI_DisplayStringAt(rowarray[index], LINE(TIME_LINE_NB), (uint8_t *)display, LEFT_MODE);
+      UTIL_LCD_DisplayStringAt(rowarray[index], LINE(TIME_LINE_NB), (uint8_t *)display, LEFT_MODE);
 
       /* Handle index following selection */
       if(UserEvent == JOY_RIGHT)
@@ -701,7 +701,7 @@ static void Calendar_TimeRegulate(RTC_TimeTypeDef *TimeInput, RTC_TimeTypeDef *T
         }
       }
       /* Set the Text Color */
-      GUI_SetTextColor(GUI_COLOR_ST_PINK);
+      UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_PINK);
 
       /* Display current digit in Red */
       digit = timearray[index];
@@ -709,7 +709,7 @@ static void Calendar_TimeRegulate(RTC_TimeTypeDef *TimeInput, RTC_TimeTypeDef *T
       display[1] = ((digit % 10) + 0x30);
 
       /* Display new value */
-      GUI_DisplayStringAt(rowarray[index], LINE(TIME_LINE_NB), (uint8_t *)display, LEFT_MODE);
+      UTIL_LCD_DisplayStringAt(rowarray[index], LINE(TIME_LINE_NB), (uint8_t *)display, LEFT_MODE);
 
       UserEvent = JOY_NONE;
     }
@@ -741,31 +741,31 @@ static void Calendar_DateRegulate(RTC_DateTypeDef *DateInput, RTC_DateTypeDef *D
   Calendar_DateDisplay(year, month, day);
 
   /* Regulate year */
-  GUI_SetTextColor(GUI_COLOR_ST_PINK);
-  GUI_DisplayStringAtLine(9, (uint8_t*) "UP/DOWN: Select Year");
-  GUI_DisplayStringAtLine(10, (uint8_t*) "SEL: to set  ");
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_PINK);
+  UTIL_LCD_DisplayStringAtLine(9, (uint8_t*) "UP/DOWN: Select Year");
+  UTIL_LCD_DisplayStringAtLine(10, (uint8_t*) "SEL: to set  ");
   Calendar_RegulateYear(&year, &month, &day);
 
   /* Regulate the month */
-  GUI_SetTextColor(GUI_COLOR_ST_PINK);
-  GUI_ClearStringLine(9);
-  GUI_ClearStringLine(10);
-  GUI_DisplayStringAtLine(9, (uint8_t*) "UP/DOWN: Select Month ");
-  GUI_DisplayStringAtLine(10, (uint8_t*) "SEL: to set  ");
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_PINK);
+  UTIL_LCD_ClearStringLine(9);
+  UTIL_LCD_ClearStringLine(10);
+  UTIL_LCD_DisplayStringAtLine(9, (uint8_t*) "UP/DOWN: Select Month ");
+  UTIL_LCD_DisplayStringAtLine(10, (uint8_t*) "SEL: to set  ");
   Calendar_RegulateMonth(&year, &month, &day);
 
   /* Regulate day */
-  GUI_SetTextColor(GUI_COLOR_ST_PINK);
-  GUI_ClearStringLine(9);
-  GUI_ClearStringLine(10);
-  GUI_DisplayStringAtLine(9, (uint8_t*) "UP/DOWN/LEFT/RIGHT:");
-  GUI_DisplayStringAtLine(10, (uint8_t*) "Select Day ");
-  GUI_DisplayStringAtLine(11, (uint8_t*) "SEL: to set  ");
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_PINK);
+  UTIL_LCD_ClearStringLine(9);
+  UTIL_LCD_ClearStringLine(10);
+  UTIL_LCD_DisplayStringAtLine(9, (uint8_t*) "UP/DOWN/LEFT/RIGHT:");
+  UTIL_LCD_DisplayStringAtLine(10, (uint8_t*) "Select Day ");
+  UTIL_LCD_DisplayStringAtLine(11, (uint8_t*) "SEL: to set  ");
   Calendar_RegulateDay(&year, &month, &day);
 
-  GUI_ClearStringLine(9);
-  GUI_ClearStringLine(10);
-  GUI_ClearStringLine(11);
+  UTIL_LCD_ClearStringLine(9);
+  UTIL_LCD_ClearStringLine(10);
+  UTIL_LCD_ClearStringLine(11);
 
   DateOutput->Year = RTC_ByteToBcd2(year);
   DateOutput->Month = RTC_ByteToBcd2(month);
@@ -1039,7 +1039,7 @@ static void Calendar_AlarmDisable(void)
   HAL_RTC_DeactivateAlarm(&RtcHandle, RTC_ALARM_A);
 
   /* Display information */
-  GUI_DisplayStringAtLine(TIME_LINE_NB, (uint8_t *)"Alarm is disabled");
+  UTIL_LCD_DisplayStringAtLine(TIME_LINE_NB, (uint8_t *)"Alarm is disabled");
   HAL_Delay(500);
 }
 
@@ -1100,9 +1100,9 @@ void HAL_RTC_AlarmAEventCallback(RTC_HandleTypeDef *hrtc)
 static void Calendar_ClearMenuLines(void)
 {
   /* Clear menu lines */
-  GUI_ClearStringLine(1);
-  GUI_ClearStringLine(2);
-  GUI_ClearStringLine(3);
+  UTIL_LCD_ClearStringLine(1);
+  UTIL_LCD_ClearStringLine(2);
+  UTIL_LCD_ClearStringLine(3);
 }
 
 

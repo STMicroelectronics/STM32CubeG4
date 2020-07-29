@@ -231,7 +231,7 @@ void LPUART1_IRQHandler(void)
     /* Clear TC flag */
     LL_USART_ClearFlag_TC(LPUART1);
     /* Call function in charge of handling end of transmission of sent character
-       and prepare next charcater transmission */
+       and prepare next character transmission */
     UART_CharTransmitComplete_Callback();
   }
 

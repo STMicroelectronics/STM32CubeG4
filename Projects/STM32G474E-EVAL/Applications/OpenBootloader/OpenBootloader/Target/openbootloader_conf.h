@@ -48,10 +48,10 @@
 #define OTP_END_ADDRESS                   (OTP_START_ADDRESS + 1024)  /* OTP end address (1024 bytes) */
 
 #define ICP1_START_ADDRESS                 0x1FFF0000                  /* System memory registers address */
-#define ICP1_END_ADDRESS                   (ICP1_START_ADDRESS + (28 * 1024))          /* System memory regiters end address */
+#define ICP1_END_ADDRESS                   (ICP1_START_ADDRESS + (28 * 1024))          /* System memory registers end address */
 
 #define ICP2_START_ADDRESS                 0x1FFF8000                  /* System memory registers address */
-#define ICP2_END_ADDRESS                   (ICP2_START_ADDRESS + (28 * 1024))          /* System memory regiters end address */
+#define ICP2_END_ADDRESS                   (ICP2_START_ADDRESS + (28 * 1024))          /* System memory registers end address */
 
 #define OPENBL_RAM_SIZE                   0x00003000U               /* RAM used by the Open Bootloader */
 

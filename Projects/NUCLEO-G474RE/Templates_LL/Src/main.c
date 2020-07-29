@@ -85,7 +85,7 @@ void SystemClock_Config(void)
   LL_APB1_GRP1_DisableClock(LL_APB1_GRP1_PERIPH_PWR);
 
   /* Set Flash Latency */
-  LL_FLASH_SetLatency(LL_FLASH_LATENCY_8);
+  LL_FLASH_SetLatency(LL_FLASH_LATENCY_4);
 
   /* HSI already enabled at reset */
 

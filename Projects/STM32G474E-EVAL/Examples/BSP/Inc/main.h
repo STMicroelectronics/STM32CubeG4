@@ -38,7 +38,7 @@
 #include "stm32g474e_eval_sram.h"
 #include "stm32g474e_eval_env_sensor.h"
 
-#include "Basic_GUI/basic_gui.h"
+#include "LCD/stm32_lcd.h"
 
 /* Exported variables --------------------------------------------------------*/
 extern SRAM_HandleTypeDef           hSramHandle;

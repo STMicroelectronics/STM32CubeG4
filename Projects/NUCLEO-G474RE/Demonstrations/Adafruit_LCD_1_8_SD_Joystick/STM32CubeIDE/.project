@@ -162,9 +162,9 @@
 			<locationURI>$%7BPARENT-5-PROJECT_LOC%7D/Drivers/BSP/STM32G4xx_Nucleo/stm32g4xx_nucleo.c</locationURI>
 		</link>
 		<link>
-			<name>Drivers/Utilities/Basic_GUI/basic_gui.c</name>
+			<name>Drivers/Utilities/LCD/stm32_lcd.c</name>
 			<type>1</type>
-			<locationURI>$%7BPARENT-5-PROJECT_LOC%7D/Utilities/Basic_GUI/basic_gui.c</locationURI>
+			<locationURI>$%7BPARENT-5-PROJECT_LOC%7D/Utilities/LCD/stm32_lcd.c</locationURI>
 		</link>
 		<link>
 			<name>Drivers/BSP/Components/ST7735/st7735.c</name>

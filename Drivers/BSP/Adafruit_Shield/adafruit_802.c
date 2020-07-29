@@ -69,6 +69,10 @@ static void JOY1_MspDeInit(ADC_HandleTypeDef *hadc);
   */
 int32_t ADAFRUIT_802_JOY_Init(JOY_TypeDef JOY, JOYMode_TypeDef JoyMode, JOYPin_TypeDef JoyPins)
 {
+  /* Prevent unused argument(s) compilation warning */
+  UNUSED(JoyPins);
+  UNUSED(JoyMode);
+
   int32_t ret = BSP_ERROR_NONE;
 
   if(JOY >= JOYn)
@@ -131,6 +135,9 @@ int32_t ADAFRUIT_802_JOY_Init(JOY_TypeDef JOY, JOYMode_TypeDef JoyMode, JOYPin_T
   */
 int32_t ADAFRUIT_802_JOY_DeInit(JOY_TypeDef JOY, JOYPin_TypeDef JoyPins)
 {
+  /* Prevent unused argument(s) compilation warning */
+  UNUSED(JoyPins);
+
   int32_t  ret = BSP_ERROR_NONE;
 
   /* ADC configuration */
@@ -168,9 +175,9 @@ int32_t ADAFRUIT_802_JOY_DeInit(JOY_TypeDef JOY, JOYPin_TypeDef JoyPins)
   */
 int32_t ADAFRUIT_802_JOY_GetState(JOY_TypeDef JOY)
 {
-  int32_t ret = BSP_ERROR_PERIPH_FAILURE;
+  int32_t ret;
   uint32_t  keyconvertedvalue;
-  
+
   if(JOY >= JOYn)
   {
     ret = BSP_ERROR_WRONG_PARAM;
@@ -182,16 +189,16 @@ int32_t ADAFRUIT_802_JOY_GetState(JOY_TypeDef JOY)
   else if(HAL_ADC_PollForConversion(&hJoyHandle, ADAFRUIT_802_ADCx_POLL_TIMEOUT) != HAL_OK)
   {
     ret = BSP_ERROR_PERIPH_FAILURE;
-  }/* Check if the continuous conversion of regular channel is finished */  
-  else if((HAL_ADC_GetState(&hJoyHandle) & HAL_ADC_STATE_EOC_REG) != HAL_ADC_STATE_EOC_REG)
+  }/* Check if the continuous conversion of regular channel is finished */
+  else if((HAL_ADC_GetState(&hJoyHandle) & HAL_ADC_STATE_REG_EOC) != HAL_ADC_STATE_REG_EOC)
   {
     ret = BSP_ERROR_BUSY;
   }
-  else 
+  else
   {
     /* Get the converted value of regular channel */
     keyconvertedvalue = HAL_ADC_GetValue(&hJoyHandle);
-    
+
     if((keyconvertedvalue > 2010U) && (keyconvertedvalue < 2500U))
     {
       ret = (int32_t)JOY_UP;
@@ -217,7 +224,7 @@ int32_t ADAFRUIT_802_JOY_GetState(JOY_TypeDef JOY)
       ret = (int32_t)JOY_NONE;
     }
   }
-  
+
   /* Return the code of the Joystick key pressed */
   return ret;
 }
@@ -246,11 +253,20 @@ __weak HAL_StatusTypeDef MX_ADAFRUIT_802_ADC_Init(ADC_HandleTypeDef *hadc)
   hadc->Init.ContinuousConvMode    = DISABLE;
   hadc->Init.NbrOfConversion       = 1;
   hadc->Init.DiscontinuousConvMode = DISABLE;
+#if defined(ADC_CFGR_DISCNUM)
   hadc->Init.NbrOfDiscConversion   = 0;
+#endif
   hadc->Init.ExternalTrigConv      = ADC_SOFTWARE_START;
   hadc->Init.ExternalTrigConvEdge  = ADC_EXTERNALTRIGCONVEDGE_NONE;
 #if defined(ADC_CR2_DMA)
   hadc->Init.DMAContinuousRequests = DISABLE;
+#endif
+#if defined(ADC_SMPR_SMP1) && defined(ADC_SMPR_SMP2)
+  hadc->Init.SamplingTimeCommon1 = ADC_SAMPLETIME_39CYCLES_5;
+  hadc->Init.SamplingTimeCommon2 = ADC_SAMPLETIME_39CYCLES_5;
+#endif
+#if defined(ADC_CFGR2_LFTRIG)
+  hadc->Init.TriggerFrequencyMode = ADC_TRIGGER_FREQ_HIGH;
 #endif
 
   if (HAL_ADC_Init(hadc) != HAL_OK)
@@ -264,7 +280,9 @@ __weak HAL_StatusTypeDef MX_ADAFRUIT_802_ADC_Init(ADC_HandleTypeDef *hadc)
     sConfig.Channel      = ADAFRUIT_802_ADCx_CHANNEL;
     sConfig.Rank         = ADAFRUIT_802_ADCx_RANK;
     sConfig.SamplingTime = ADAFRUIT_802_ADCx_SAMPLETIME;
+#if defined(ADC_OFR1_OFFSET1)
     sConfig.Offset       = 0;
+#endif
 #if defined(ADC_SINGLE_ENDED)
     sConfig.SingleDiff   = ADC_SINGLE_ENDED;
 #endif

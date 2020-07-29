@@ -32,7 +32,7 @@
 /** @addtogroup BSP
   * @{
   */
-#define CONF_QSPI_ODS             MT25QL512ABB_EVCR_ODS_30   /* MT25QL512ABB Output Driver Strenght         */
+#define CONF_QSPI_ODS             MT25QL512ABB_EVCR_ODS_30   /* MT25QL512ABB Output Driver Strength         */
 
 
 #ifdef __cplusplus

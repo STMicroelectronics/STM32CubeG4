@@ -174,9 +174,10 @@ USBPD_StatusTypeDef  USBPD_TCPM_set_polarity(uint32_t PortNum, uint32_t Polarity
 
 /**
   * @brief  Set power and data role et PD message header
-  * @param  PortNum   Number of the port
-  * @param  PowerRole Power role
-  * @param  DataRole  Data role
+  * @param  PortNum        Number of the port
+  * @param  PowerRole      Power role
+  * @param  DataRole       Data role
+  * @param  Specification  PD Specification version
   * @retval USBPD status
   */
 USBPD_StatusTypeDef  USBPD_TCPM_set_msg_header(uint32_t PortNum, USBPD_PortPowerRole_TypeDef PowerRole, USBPD_PortDataRole_TypeDef DataRole, USBPD_SpecRev_TypeDef Specification);

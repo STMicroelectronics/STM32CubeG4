@@ -2,7 +2,7 @@
   ******************************************************************************
   * @file    BSP/Src/idd.c
   * @author  MCD Application Team
-  * @brief   This example discribe how to configure the IDD current measurment 
+  * @brief   This example describe how to configure the IDD current measurement 
   *          in the STM32G474E EVAL driver
   ******************************************************************************
   * @attention

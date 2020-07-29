@@ -93,7 +93,7 @@ typedef union
     USBPD_MODE_DP_CONFIG_SELECT   SelectConfiguration  : 2;    /*!< Selection configuration */
     uint32_t   Signaling                : 4;    /*!< Signaling for transport of DP protocol */
     uint32_t   Reserved1                : 2;    /*!< Reserved                               */
-    uint32_t   UFP_U_Pin                : 8;    /*!< Configure UFP_U pin Assignement        */
+    uint32_t   UFP_U_Pin                : 8;    /*!< Configure UFP_U pin Assignment        */
     uint32_t   Reserved2                : 16;   /*!< Reserved                               */
   }d;
 }USBPD_DPConfig_TypeDef;

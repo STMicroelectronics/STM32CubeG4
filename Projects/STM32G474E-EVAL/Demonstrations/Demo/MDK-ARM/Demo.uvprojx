@@ -16,7 +16,7 @@
         <TargetCommonOption>
           <Device>STM32G474QETx</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32G4xx_DFP.1.1.2</PackID>
+          <PackID>Keil.STM32G4xx_DFP.1.1.0</PackID>
           <PackURL>http://www.keil.com/pack</PackURL>
           <Cpu>IROM(0x08000000-0x807F7FF) IRAM(0x20000000-0x2001FFFF) IRAM(0x10000000-0x10007FFF) CLOCK(8000000) FPU2 CPUTYPE("Cortex-M4")</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>STM32G474xx,USE_HAL_DRIVER,USE_FULL_LL_DRIVER,USE_STM32G474E_EVAL,USE_IOEXPANDER,MB1397,_SNK,_DRP,_RTOS,USBPDCORE_LIB_PD3_FULL,USBPD_PORT_COUNT=1,__DEBUG_CAD,_TRACE,_PPS=USBPD_FALSE,_SRC_CAPA_EXT=USBPD_FALSE,_ALERT=USBPD_TRUE,_BATTERY=USBPD_FALSE,_STATUS=USBPD_TRUE,_MANU_INFO=USBPD_TRUE,_VDM,_GUI_INTERFACE,ARM_MATH_CM4</Define>
               <Undefine></Undefine>
-              <IncludePath>../Inc;../../Config;../../Common/Inc;../../Core/Inc;../../Demo/Modules/lowpower;../../../../../Drivers/CMSIS/Device/ST/STM32G4xx/Include;../../../../../Drivers/CMSIS/Include;../../../../../Drivers/CMSIS/DSP/Include;../../../../../Drivers/STM32G4xx_HAL_Driver/Inc;../../../../../Drivers/BSP/STM32G474E-EVAL;../../../../../Drivers/BSP/Components;../../../../../Drivers/BSP/Components/Common;../../../../../Middlewares/Third_Party/FatFs/src;../../../../../Middlewares/Third_Party/FatFs/src/drivers;../../../../../Middlewares/Third_Party/FatFs/src/drivers;../../../../../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;../../../../../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS;../../../../../Middlewares/Third_Party/FreeRTOS/Source/include;../../../../../Middlewares/ST/STM32_USBPD_Library/Core/inc;../../../../../Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4xx/inc;../../Modules/audio;../../Modules/lowpower;../../Modules/filebrowser;../../Modules/calendar;../../Modules/imagebrowser;../../Modules/main_app;../../Modules/thermometer;../../Modules/whiteled;../../Modules/math;../../Modules/ucpd;../../../../../Utilities/Basic_GUI;../../../../../Utilities/TRACER_EMB;../../../../../Utilities/GUI_INTERFACE</IncludePath>
+              <IncludePath>../Inc;../../Config;../../Common/Inc;../../Core/Inc;../../Demo/Modules/lowpower;../../../../../Drivers/CMSIS/Device/ST/STM32G4xx/Include;../../../../../Drivers/CMSIS/Include;../../../../../Drivers/CMSIS/DSP/Include;../../../../../Drivers/STM32G4xx_HAL_Driver/Inc;../../../../../Drivers/BSP/STM32G474E-EVAL;../../../../../Drivers/BSP/Components;../../../../../Drivers/BSP/Components/Common;../../../../../Middlewares/Third_Party/FatFs/src;../../../../../Middlewares/Third_Party/FatFs/src/drivers;../../../../../Middlewares/Third_Party/FatFs/src/drivers;../../../../../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;../../../../../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS;../../../../../Middlewares/Third_Party/FreeRTOS/Source/include;../../../../../Middlewares/ST/STM32_USBPD_Library/Core/inc;../../../../../Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4xx/inc;../../Modules/audio;../../Modules/lowpower;../../Modules/filebrowser;../../Modules/calendar;../../Modules/imagebrowser;../../Modules/main_app;../../Modules/thermometer;../../Modules/whiteled;../../Modules/math;../../Modules/ucpd;../../../../../Utilities/LCD;../../../../../Utilities/TRACER_EMB;../../../../../Utilities/GUI_INTERFACE</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -895,12 +895,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>Drivers/CMSIS/Lib/IAR</GroupName>
+          <GroupName>Drivers/CMSIS/DSP/Lib/IAR</GroupName>
           <Files>
             <File>
               <FileName>arm_cortexM4l_math.lib</FileName>
               <FileType>4</FileType>
-              <FilePath>../../../../../Drivers/CMSIS/Lib/ARM/arm_cortexM4l_math.lib</FilePath>
+              <FilePath>../../../../../Drivers/CMSIS/DSP/Lib/ARM/arm_cortexM4l_math.lib</FilePath>
             </File>
           </Files>
         </Group>
@@ -953,9 +953,9 @@
               <FilePath>../../../../../Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c</FilePath>
             </File>
             <File>
-              <FileName>USBPDCORE_PD3_FULL_CM4_wc16.a</FileName>
+              <FileName>USBPDCORE_PD3_FULL_CM4_Keil.lib</FileName>
               <FileType>4</FileType>
-              <FilePath>..\..\..\..\..\Middlewares\ST\STM32_USBPD_Library\Core\lib\USBPDCORE_PD3_FULL_CM4_wc16.a</FilePath>
+              <FilePath>..\..\..\..\..\Middlewares\ST\STM32_USBPD_Library\Core\lib\USBPDCORE_PD3_FULL_CM4_Keil.lib</FilePath>
             </File>
           </Files>
         </Group>
@@ -1045,12 +1045,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>Utilities/Basic_GUI</GroupName>
+          <GroupName>Utilities/LCD</GroupName>
           <Files>
             <File>
-              <FileName>basic_gui.c</FileName>
+              <FileName>stm32_lcd.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../Utilities/Basic_GUI/basic_gui.c</FilePath>
+              <FilePath>../../../../../Utilities/LCD/stm32_lcd.c</FilePath>
             </File>
           </Files>
         </Group>

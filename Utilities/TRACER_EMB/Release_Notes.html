@@ -38,7 +38,7 @@
 <div class="col-sm-12 col-lg-8">
 <h1 id="update-history">Update History</h1>
 <div class="collapse">
-<input type="checkbox" id="collapse-section3" checked aria-hidden="true"> <label for="collapse-section3" aria-hidden="true">V1.2.0 / 17-June-2019</label>
+<input type="checkbox" id="collapse-section4" checked aria-hidden="true"> <label for="collapse-section4" aria-hidden="true">V1.3.0 / 26-March-2020</label>
 <div>
 <h2 id="main-changes">Main Changes</h2>
 <h3 id="maintenance-release">Maintenance release</h3>
@@ -52,28 +52,71 @@
 </thead>
 <tbody>
 <tr class="odd">
+<td>Improve Usart IRQ Handler execution time in tracer_emb_hw.c</td>
+</tr>
+<tr class="even">
+<td>Remove commented code sections</td>
+</tr>
+<tr class="odd">
+<td>Update the hardware layer to handle GPDMA</td>
+</tr>
+<tr class="even">
+<td>Ticket 77333 - DMA usage in tracer_emb_hw needs to be under switch</td>
+</tr>
+<tr class="odd">
+<td>Add 2 macros TRACER_EMB_ENABLECHANNEL and TRACER_EMB_DISABLECHANNEL to be compliant with STM32H7</td>
+</tr>
+</tbody>
+</table>
+<h2 id="known-limitations">Known limitations</h2>
+<h2 id="development-toolchains-and-compilers">Development Toolchains and Compilers</h2>
+<ul>
+<li>IAR Embedded Workbench for ARM (EWARM) toolchain V8.32.3</li>
+<li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.27</li>
+<li>STM32CubeIDE v1.2.0</li>
+</ul>
+<h2 id="supported-devices-and-boards">Supported Devices and boards</h2>
+<h2 id="backward-compatibility">Backward compatibility</h2>
+<h2 id="dependencies">Dependencies</h2>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section3" aria-hidden="true"> <label for="collapse-section3" aria-hidden="true">V1.2.0 / 17-June-2019</label>
+<div>
+<h2 id="main-changes-1">Main Changes</h2>
+<h3 id="maintenance-release-1">Maintenance release</h3>
+<h2 id="contents-1">Contents</h2>
+<table>
+<caption>Fixed bugs list</caption>
+<thead>
+<tr class="header">
+<th>Headline</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
 <td>Ticket 66638 - [FOSS-Audit] SLA0044 headers in Utilities files</td>
 </tr>
 </tbody>
 </table>
-<h2 id="known-limitations">known limitations</h2>
-<h2 id="development-toolchains-and-compilers">Development Toolchains and Compilers</h2>
+<h2 id="known-limitations-1">known limitations</h2>
+<h2 id="development-toolchains-and-compilers-1">Development Toolchains and Compilers</h2>
 <ul>
 <li>IAR Embedded Workbench for ARM (EWARM) toolchain V8.20.2</li>
 <li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.25</li>
 <li>System Workbench STM32 (SW4STM32) toolchain V2.7.2</li>
 </ul>
-<h2 id="supported-devices-and-boards">Supported Devices and boards</h2>
-<h2 id="backward-compatibility">backward compatibility</h2>
-<h2 id="dependencies">Dependencies</h2>
+<h2 id="supported-devices-and-boards-1">Supported Devices and boards</h2>
+<h2 id="backward-compatibility-1">backward compatibility</h2>
+<h2 id="dependencies-1">Dependencies</h2>
 </div>
 </div>
 <div class="collapse">
 <input type="checkbox" id="collapse-section2" aria-hidden="true"> <label for="collapse-section2" aria-hidden="true">V1.1.0 / 10-April-2019</label>
 <div>
-<h2 id="main-changes-1">Main Changes</h2>
-<h3 id="maintenance-release-1">Maintenance release</h3>
-<h2 id="contents-1">Contents</h2>
+<h2 id="main-changes-2">Main Changes</h2>
+<h3 id="maintenance-release-2">Maintenance release</h3>
+<h2 id="contents-2">Contents</h2>
 <table>
 <caption>Fixed bugs list</caption>
 <thead>
@@ -111,25 +154,25 @@
 </tr>
 </tbody>
 </table>
-<h2 id="known-limitations-1">known limitations</h2>
-<h2 id="development-toolchains-and-compilers-1">Development Toolchains and Compilers</h2>
+<h2 id="known-limitations-2">known limitations</h2>
+<h2 id="development-toolchains-and-compilers-2">Development Toolchains and Compilers</h2>
 <ul>
 <li>IAR Embedded Workbench for ARM (EWARM) toolchain V8.20.2</li>
 <li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.25</li>
 <li>System Workbench STM32 (SW4STM32) toolchain V2.7.2</li>
 </ul>
-<h2 id="supported-devices-and-boards-1">Supported Devices and boards</h2>
-<h2 id="backward-compatibility-1">backward compatibility</h2>
-<h2 id="dependencies-1">Dependencies</h2>
+<h2 id="supported-devices-and-boards-2">Supported Devices and boards</h2>
+<h2 id="backward-compatibility-2">backward compatibility</h2>
+<h2 id="dependencies-2">Dependencies</h2>
 </div>
 </div>
 <div class="collapse">
 <input type="checkbox" id="collapse-section1" aria-hidden="true"> <label for="collapse-section1" aria-hidden="true">V1.0.0 / 18-Dec.-2018</label>
 <div>
-<h2 id="main-changes-2">Main Changes</h2>
-<h3 id="maintenance-release-2">Maintenance release</h3>
+<h2 id="main-changes-3">Main Changes</h2>
+<h3 id="maintenance-release-3">Maintenance release</h3>
 <p>Maintenance release</p>
-<h2 id="contents-2">Contents</h2>
+<h2 id="contents-3">Contents</h2>
 <table>
 <caption>Fixed bugs list</caption>
 <thead>
@@ -143,16 +186,16 @@
 </tr>
 </tbody>
 </table>
-<h2 id="known-limitations-2">known limitations</h2>
-<h2 id="development-toolchains-and-compilers-2">Development Toolchains and Compilers</h2>
+<h2 id="known-limitations-3">known limitations</h2>
+<h2 id="development-toolchains-and-compilers-3">Development Toolchains and Compilers</h2>
 <ul>
 <li>IAR Embedded Workbench for ARM (EWARM) toolchain V8.20.2</li>
 <li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.25</li>
 <li>System Workbench STM32 (SW4STM32) toolchain V2.7.2</li>
 </ul>
-<h2 id="supported-devices-and-boards-2">Supported Devices and boards</h2>
-<h2 id="backward-compatibility-2">backward compatibility</h2>
-<h2 id="dependencies-2">Dependencies</h2>
+<h2 id="supported-devices-and-boards-3">Supported Devices and boards</h2>
+<h2 id="backward-compatibility-3">backward compatibility</h2>
+<h2 id="dependencies-3">Dependencies</h2>
 </div>
 </div>
 </div>

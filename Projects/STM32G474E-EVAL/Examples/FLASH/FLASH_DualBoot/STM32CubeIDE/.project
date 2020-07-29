@@ -202,9 +202,9 @@
 			<locationURI>$%7BPARENT-6-PROJECT_LOC%7D/Drivers/BSP/STM32G474E-EVAL/stm32g474e_eval_lcd.c</locationURI>
 		</link>
 		<link>
-			<name>Drivers/Utilities/Basic_GUI/basic_gui.c</name>
+			<name>Drivers/Utilities/LCD/stm32_lcd.c</name>
 			<type>1</type>
-			<locationURI>$%7BPARENT-6-PROJECT_LOC%7D/Utilities/Basic_GUI/basic_gui.c</locationURI>
+			<locationURI>$%7BPARENT-6-PROJECT_LOC%7D/Utilities/LCD/stm32_lcd.c</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>

@@ -813,7 +813,7 @@
         </option>
         <option>
           <name>IlinkAdditionalLibs</name>
-          <state>$PROJ_DIR$/../../../../../../Drivers/CMSIS/Lib/IAR/iar_cortexM4l_math.a</state>
+          <state>$PROJ_DIR$/../../../../../../Drivers/CMSIS/DSP/Lib/IAR/iar_cortexM4l_math.a</state>
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>

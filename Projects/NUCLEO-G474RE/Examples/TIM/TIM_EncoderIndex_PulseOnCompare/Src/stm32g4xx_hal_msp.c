@@ -58,7 +58,7 @@
 /* USER CODE BEGIN 0 */
 
 /* USER CODE END 0 */
-                        
+
 void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
                                         /**
   * Initializes the Global MSP.
@@ -74,9 +74,9 @@ void HAL_MspInit(void)
 
   /* System interrupt init*/
 
-  /** Disable the internal Pull-Up in Dead Battery pins of UCPD peripheral 
+  /** Disable the internal Pull-Up in Dead Battery pins of UCPD peripheral
   */
-  LL_PWR_DisableDeadBatteryPD();
+  HAL_PWREx_DisableUCPDDeadBattery();
 
   /* USER CODE BEGIN MspInit 1 */
 
@@ -113,13 +113,13 @@ void HAL_TIM_OC_MspInit(TIM_HandleTypeDef* htim_oc)
   /* USER CODE END TIM3_MspInit 0 */
     /* Peripheral clock enable */
     __HAL_RCC_TIM3_CLK_ENABLE();
-  
+
     __HAL_RCC_GPIOA_CLK_ENABLE();
     __HAL_RCC_GPIOD_CLK_ENABLE();
-    /**TIM3 GPIO Configuration    
+    /**TIM3 GPIO Configuration
     PA4     ------> TIM3_CH2
     PA6     ------> TIM3_CH1
-    PD2     ------> TIM3_ETR 
+    PD2     ------> TIM3_ETR
     */
     GPIO_InitStruct.Pin = GPIO_PIN_4|GPIO_PIN_6;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
@@ -151,9 +151,9 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef* htim)
 
   /* USER CODE END TIM1_MspPostInit 0 */
     __HAL_RCC_GPIOC_CLK_ENABLE();
-    /**TIM1 GPIO Configuration    
+    /**TIM1 GPIO Configuration
     PC0     ------> TIM1_CH1
-    PC1     ------> TIM1_CH2 
+    PC1     ------> TIM1_CH2
     */
     GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
@@ -171,10 +171,10 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef* htim)
   /* USER CODE BEGIN TIM3_MspPostInit 0 */
 
   /* USER CODE END TIM3_MspPostInit 0 */
-  
+
     __HAL_RCC_GPIOB_CLK_ENABLE();
-    /**TIM3 GPIO Configuration    
-    PB0     ------> TIM3_CH3 
+    /**TIM3 GPIO Configuration
+    PB0     ------> TIM3_CH3
     */
     GPIO_InitStruct.Pin = GPIO_PIN_0;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
@@ -218,12 +218,12 @@ void HAL_TIM_OC_MspDeInit(TIM_HandleTypeDef* htim_oc)
   /* USER CODE END TIM3_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_TIM3_CLK_DISABLE();
-  
-    /**TIM3 GPIO Configuration    
+
+    /**TIM3 GPIO Configuration
     PA4     ------> TIM3_CH2
     PA6     ------> TIM3_CH1
     PB0     ------> TIM3_CH3
-    PD2     ------> TIM3_ETR 
+    PD2     ------> TIM3_ETR
     */
     HAL_GPIO_DeInit(GPIOA, GPIO_PIN_4|GPIO_PIN_6);
 

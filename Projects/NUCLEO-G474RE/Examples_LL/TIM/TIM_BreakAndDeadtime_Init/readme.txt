@@ -55,7 +55,7 @@ The TIM1 waveforms can be displayed using an oscilloscope.
 
 @par Keywords
 
-Timer, TIM, PWM, Signal, Duty cycle, Dead-time, Break-time, Break polarity, Oscilloscope.
+Timer, TIM, PWM, Signal, Duty cycle, Dead time, Break-time, Break polarity, Oscilloscope.
 
 @par Directory contents
 

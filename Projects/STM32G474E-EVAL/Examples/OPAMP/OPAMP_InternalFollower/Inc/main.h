@@ -28,7 +28,6 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32g4xx_hal.h"
-#include "stm32g4xx_ll_pwr.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -61,7 +60,7 @@ void Error_Handler(void);
 /* USER CODE BEGIN Private defines */
 #define WAVEFORM_RAMP_12BITS_5SAMPLES  ((uint32_t)   5)    /* Size of waveform Waveform_Ramp_12bits_5samples[] */
 #define ADCCONVERTEDVALUES_BUFFER_SIZE ((uint32_t)  30)    /* Size of array aADCxConvertedValues[] */
-#define ADC_MEASUREMENT_TOLERANCE_LSB  ((uint32_t) 140)    /* ADC measurement tolerance of uncertainty (unit: LSB). Note: higher than theorical tolerance beacause board routing and connectors are not designed for optimal ADC performance. */
+#define ADC_MEASUREMENT_TOLERANCE_LSB  ((uint32_t) 140)    /* ADC measurement tolerance of uncertainty (unit: LSB). Note: higher than theorical tolerance because board routing and connectors are not designed for optimal ADC performance. */
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

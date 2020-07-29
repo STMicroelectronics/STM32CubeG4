@@ -73,8 +73,7 @@ on STM32Cube with FatFs".
 
 @par Keywords
 
-RAMDisk, SDRAM, FatFS, FAT, File system, Mount, Format.
-
+FatFS, RAMDisk, SDRAM, FAT, File system, Mount, Format.
 
 @par Directory contents
  

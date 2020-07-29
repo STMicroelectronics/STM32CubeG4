@@ -16,7 +16,7 @@
         <TargetCommonOption>
           <Device>STM32G474QETx</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32G4xx_DFP.1.1.2</PackID>
+          <PackID>Keil.STM32G4xx_DFP.1.1.0</PackID>
           <PackURL>http://www.keil.com/pack</PackURL>
           <Cpu>IRAM(0x20000000-0x2001FFFF) IROM(0x8000000-0x807FFFF)  CLOCK(8000000) FPU2 CPUTYPE("Cortex-M4")</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>USE_FULL_LL_DRIVER,USBPD_PORT_COUNT=1,USBPDCORE_LIB_PD3_FULL,_RTOS,_SNK,_TRACE,USE_HAL_DRIVER,STM32G474xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Inc; ../../../../../../Drivers/STM32G4xx_HAL_Driver/Inc; ../../../../../../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy; ../../../../../../Utilities/TRACER_EMB; ../../../../../../Middlewares/Third_Party/FreeRTOS/Source/include; ../../../../../../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS; ../../../../../../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F; ../../../../../../Middlewares/ST/STM32_USBPD_Library/Core/inc; ../../../../../../Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/inc; ../../../../../../Drivers/CMSIS/Device/ST/STM32G4xx/Include; ../../../../../../Drivers/CMSIS/Include</IncludePath>
+              <IncludePath>../Inc;  ../../../../../../Drivers/STM32G4xx_HAL_Driver/Inc;  ../../../../../../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy;  ../../../../../../Utilities/TRACER_EMB;  ../../../../../../Middlewares/Third_Party/FreeRTOS/Source/include;  ../../../../../../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS;  ../../../../../../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;  ../../../../../../Middlewares/ST/STM32_USBPD_Library/Core/inc;  ../../../../../../Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/inc;  ../../../../../../Drivers/CMSIS/Device/ST/STM32G4xx/Include;  ../../../../../../Drivers/CMSIS/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -556,11 +556,6 @@
               <FileName>stm32g4xx_hal_tim_ex.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim_ex.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32g4xx_ll_pwr.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_pwr.c</FilePath>
             </File>
             <File>
               <FileName>stm32g4xx_ll_usart.c</FileName>

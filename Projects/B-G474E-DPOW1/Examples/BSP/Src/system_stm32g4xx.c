@@ -81,7 +81,7 @@
 #if defined( USE_FPGA_BOARD)
 #define HSE_VALUE    ((uint32_t)48000000) /*!< Value of the External oscillator in Hz */
 #else
-#define HSE_VALUE    ((uint32_t)8000000) /*!< Value of the External oscillator in Hz */
+#define HSE_VALUE    ((uint32_t)24000000) /*!< Value of the External oscillator in Hz */
 #endif /* USE_FPGA_BOARD */
 #endif /* HSE_VALUE */
 
@@ -203,7 +203,7 @@ void SystemInit(void)
   *              in voltage and temperature.
   *
   *         (***) HSE_VALUE is a constant defined in stm32g4xx_hal.h file (default value
-  *              8 MHz), user has to ensure that HSE_VALUE is same as the real
+  *              24 MHz), user has to ensure that HSE_VALUE is same as the real
   *              frequency of the crystal used. Otherwise, this function may
   *              have wrong result.
   *

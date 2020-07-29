@@ -7,44 +7,17 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics International N.V. 
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
-  * Redistribution and use in source and binary forms, with or without 
-  * modification, are permitted, provided that the following conditions are met:
-  *
-  * 1. Redistribution of source code must retain the above copyright notice, 
-  *    this list of conditions and the following disclaimer.
-  * 2. Redistributions in binary form must reproduce the above copyright notice,
-  *    this list of conditions and the following disclaimer in the documentation
-  *    and/or other materials provided with the distribution.
-  * 3. Neither the name of STMicroelectronics nor the names of other 
-  *    contributors to this software may be used to endorse or promote products 
-  *    derived from this software without specific written permission.
-  * 4. This software, including modifications and/or derivative works of this 
-  *    software, must execute solely and exclusively on microcontroller or
-  *    microprocessor devices manufactured by or for STMicroelectronics.
-  * 5. Redistribution and use of this software other than as permitted under 
-  *    this license is void and will automatically terminate your rights under 
-  *    this license. 
-  *
-  * THIS SOFTWARE IS PROVIDED BY STMICROELECTRONICS AND CONTRIBUTORS "AS IS" 
-  * AND ANY EXPRESS, IMPLIED OR STATUTORY WARRANTIES, INCLUDING, BUT NOT 
-  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A 
-  * PARTICULAR PURPOSE AND NON-INFRINGEMENT OF THIRD PARTY INTELLECTUAL PROPERTY
-  * RIGHTS ARE DISCLAIMED TO THE FULLEST EXTENT PERMITTED BY LAW. IN NO EVENT 
-  * SHALL STMICROELECTRONICS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-  * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-  * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, 
-  * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
-  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING 
-  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
-  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
   *
   ******************************************************************************
   */
 /* USER CODE END Header */
-
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "cmsis_os.h"
@@ -56,7 +29,7 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-typedef struct 
+typedef struct
 { /* Mail object structure */
   uint32_t var1; /* var1 is a uint32_t */
   uint32_t var2; /* var2 is a uint32_t */
@@ -122,7 +95,6 @@ int main(void)
      */
   /* USER CODE END 1 */
 
-
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
@@ -145,12 +117,12 @@ int main(void)
   /* USER CODE BEGIN 2 */
   /* Create the mail queue used by the two tasks to pass the struct Amail_TypeDef */
   osMailQDef(mail, MAIL_SIZE, Amail_TypeDef); /* Define mail queue */
-  
+
   mailId = osMailCreate(osMailQ(mail), NULL); /* create mail queue */
   /* USER CODE END 2 */
 
   /* USER CODE BEGIN RTOS_MUTEX */
- 
+
   /* USER CODE END RTOS_MUTEX */
 
   /* USER CODE BEGIN RTOS_SEMAPHORES */
@@ -180,9 +152,8 @@ int main(void)
 
   /* Start scheduler */
   osKernelStart();
-  
-  /* We should never get here as control is now taken by the scheduler */
 
+  /* We should never get here as control is now taken by the scheduler */
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
@@ -206,11 +177,12 @@ void SystemClock_Config(void)
   /** Configure the main internal regulator output voltage
   */
   HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1_BOOST);
-  /** Initializes the CPU, AHB and APB busses clocks
+  /** Initializes the RCC Oscillators according to the specified parameters
+  * in the RCC_OscInitTypeDef structure.
   */
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
-  RCC_OscInitStruct.HSICalibrationValue = 64;
+  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
   RCC_OscInitStruct.PLL.PLLM = RCC_PLLM_DIV4;
@@ -222,7 +194,7 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
-  /** Initializes the CPU, AHB and APB busses clocks
+  /** Initializes the CPU, AHB and APB buses clocks
   */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
@@ -231,7 +203,7 @@ void SystemClock_Config(void)
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_8) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_4) != HAL_OK)
   {
     Error_Handler();
   }
@@ -244,28 +216,27 @@ void SystemClock_Config(void)
 /* USER CODE BEGIN Header_MailQueueProducer */
 /**
   * @brief  Function implementing the MailQueueProduc thread.
-  * @param  argument: Not used 
+  * @param  argument: Not used
   * @retval None
   */
 /* USER CODE END Header_MailQueueProducer */
 void MailQueueProducer(void const * argument)
 {
-
   /* USER CODE BEGIN 5 */
   Amail_TypeDef *pTMail;
-  
+
   for(;;)
-  {		
+  {
 
     pTMail = osMailAlloc(mailId, osWaitForever); /* Allocate memory */
     pTMail->var1 = ProducerValue1; /* Set the mail content */
     pTMail->var2 = ProducerValue2;
     pTMail->var3 = ProducerValue3;
-    
-    if(osMailPut(mailId, pTMail) != osOK) /* Send Mail */  
-    {      
+
+    if(osMailPut(mailId, pTMail) != osOK) /* Send Mail */
+    {
       ++ProducerErrors;
-      
+
       /* Toggle LED3 to indicate error */
       BSP_LED_Toggle(LED3);
     }
@@ -276,14 +247,14 @@ void MailQueueProducer(void const * argument)
       ++ProducerValue1;
       ProducerValue2 += 2;
       ProducerValue3 += 3;
-      
+
       /* Toggle LED1 to indicate a correct number received  */
       BSP_LED_Toggle(LED1);
 
       osDelay(250);
     }
   }
-  /* USER CODE END 5 */ 
+  /* USER CODE END 5 */
 }
 
 /* USER CODE BEGIN Header_MailQueueConsumer */
@@ -298,39 +269,39 @@ void MailQueueConsumer(void const * argument)
   /* USER CODE BEGIN MailQueueConsumer */
   osEvent event;
   Amail_TypeDef *pRMail;
-  
+
   for(;;)
   {
     /* Get the message from the queue */
     event = osMailGet(mailId, osWaitForever); /* wait for mail */
-    
+
     if(event.status == osEventMail)
     {
       pRMail = event.value.p;
-      
+
       if((pRMail->var1 != ConsumerValue1) || (pRMail->var2 != ConsumerValue2) || (pRMail->var3 != ConsumerValue3))
       {
         /* Catch-up. */
         ConsumerValue1 = pRMail->var1;
         ConsumerValue2 = pRMail->var2;
         ConsumerValue3 = pRMail->var3;
-        
+
         ++ConsumerErrors;
-        
+
         /* Toggle LED3 to indicate error */
         BSP_LED_Toggle(LED3);
       }
       else
-      {  
+      {
         /* Calculate values we expect to remove from the mail queue next time
         round. */
         ++ConsumerValue1;
         ConsumerValue2 += 2;
-        ConsumerValue3 += 3;        
+        ConsumerValue3 += 3;
       }
 
-      osMailFree(mailId, pRMail); /* free memory allocated for mail */       
-    }		
+      osMailFree(mailId, pRMail); /* free memory allocated for mail */
+    }
   }
   /* USER CODE END MailQueueConsumer */
 }
@@ -364,7 +335,7 @@ void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
- 
+
   /* USER CODE END Error_Handler_Debug */
 }
 

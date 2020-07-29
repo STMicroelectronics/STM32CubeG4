@@ -75,9 +75,9 @@ void HAL_MspInit(void)
 
   /* System interrupt init*/
 
-  /** Disable the internal Pull-Up in Dead Battery pins of UCPD peripheral 
+  /** Disable the internal Pull-Up in Dead Battery pins of UCPD peripheral
   */
-  LL_PWR_DisableDeadBatteryPD();
+  HAL_PWREx_DisableUCPDDeadBattery();
 
   /* USER CODE BEGIN MspInit 1 */
 
@@ -99,7 +99,7 @@ void HAL_DAC_MspInit(DAC_HandleTypeDef* hdac)
   /* USER CODE END DAC3_MspInit 0 */
     /* Peripheral clock enable */
     __HAL_RCC_DAC3_CLK_ENABLE();
-  
+
     /* DAC3 DMA Init */
     /* DAC3_CH2 Init */
     hdma_dac3_ch2.Instance = DMA1_Channel1;
@@ -129,7 +129,7 @@ void HAL_DAC_MspInit(DAC_HandleTypeDef* hdac)
   /* USER CODE END DAC4_MspInit 0 */
     /* Peripheral clock enable */
     __HAL_RCC_DAC4_CLK_ENABLE();
-  
+
     /* DAC4 DMA Init */
     /* DAC4_CH2 Init */
     hdma_dac4_ch2.Instance = DMA2_Channel1;
@@ -208,10 +208,10 @@ void HAL_OPAMP_MspInit(OPAMP_HandleTypeDef* hopamp)
   /* USER CODE BEGIN OPAMP3_MspInit 0 */
 
   /* USER CODE END OPAMP3_MspInit 0 */
-  
+
     __HAL_RCC_GPIOB_CLK_ENABLE();
-    /**OPAMP3 GPIO Configuration    
-    PB1     ------> OPAMP3_VOUT 
+    /**OPAMP3 GPIO Configuration
+    PB1     ------> OPAMP3_VOUT
     */
     GPIO_InitStruct.Pin = GPIO_PIN_1;
     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
@@ -227,10 +227,10 @@ void HAL_OPAMP_MspInit(OPAMP_HandleTypeDef* hopamp)
   /* USER CODE BEGIN OPAMP5_MspInit 0 */
 
   /* USER CODE END OPAMP5_MspInit 0 */
-  
+
     __HAL_RCC_GPIOA_CLK_ENABLE();
-    /**OPAMP5 GPIO Configuration    
-    PA8     ------> OPAMP5_VOUT 
+    /**OPAMP5 GPIO Configuration
+    PA8     ------> OPAMP5_VOUT
     */
     GPIO_InitStruct.Pin = GPIO_PIN_8;
     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
@@ -257,9 +257,9 @@ void HAL_OPAMP_MspDeInit(OPAMP_HandleTypeDef* hopamp)
   /* USER CODE BEGIN OPAMP3_MspDeInit 0 */
 
   /* USER CODE END OPAMP3_MspDeInit 0 */
-  
-    /**OPAMP3 GPIO Configuration    
-    PB1     ------> OPAMP3_VOUT 
+
+    /**OPAMP3 GPIO Configuration
+    PB1     ------> OPAMP3_VOUT
     */
     HAL_GPIO_DeInit(GPIOB, GPIO_PIN_1);
 
@@ -272,9 +272,9 @@ void HAL_OPAMP_MspDeInit(OPAMP_HandleTypeDef* hopamp)
   /* USER CODE BEGIN OPAMP5_MspDeInit 0 */
 
   /* USER CODE END OPAMP5_MspDeInit 0 */
-  
-    /**OPAMP5 GPIO Configuration    
-    PA8     ------> OPAMP5_VOUT 
+
+    /**OPAMP5 GPIO Configuration
+    PA8     ------> OPAMP5_VOUT
     */
     HAL_GPIO_DeInit(GPIOA, GPIO_PIN_8);
 

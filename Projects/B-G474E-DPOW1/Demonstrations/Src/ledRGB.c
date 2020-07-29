@@ -1318,7 +1318,7 @@ static void HRTIM_Config(void)
     Error_Handler();
   }
 
-  /* Compare unit 3 is used to blank COMP event at the begining of the period */
+  /* Compare unit 3 is used to blank COMP event at the beginning of the period */
   /* This is to avoid being reset by spurious glitch */
 
   HRTIM_TimerEventFilteringCfg.Filter = HRTIM_TIMEEVFLT_BLANKINGCMP3;
@@ -1437,7 +1437,7 @@ static void HRTIM_Config(void)
     Error_Handler();
   }
 
-  /* Compare unit 3 is used to blank COMP event at the begining of the period */
+  /* Compare unit 3 is used to blank COMP event at the beginning of the period */
   /* This is to avoid being reset by spurious glitch */
   HRTIM_CompareStructure.CompareValue       = 0x500;
   if(HAL_HRTIM_WaveformCompareConfig(&HrtimHandle, HRTIM_TIMERINDEX_TIMER_E,
@@ -1518,7 +1518,7 @@ static void HRTIM_Config(void)
     Error_Handler();
   }
 
-  /* Compare unit 3 is used to blank COMP event at the begining of the period */
+  /* Compare unit 3 is used to blank COMP event at the beginning of the period */
   /* This is to avoid being reset by spurious glitch */
   HRTIM_CompareStructure.CompareValue       = 0x500;
   if(HAL_HRTIM_WaveformCompareConfig(&HrtimHandle, HRTIM_TIMERINDEX_TIMER_A,

@@ -394,7 +394,7 @@
                     <state>$PROJ_DIR$\..\..\Modules\whiteled</state>
                     <state>$PROJ_DIR$\..\..\Modules\math</state>
                     <state>$PROJ_DIR$\..\..\Modules\ucpd</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\Utilities\Basic_GUI</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\Utilities\LCD</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Utilities\TRACER_EMB</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Utilities\GUI_INTERFACE</state>
                 </option>
@@ -860,7 +860,7 @@
                 </option>
                 <option>
                     <name>IlinkAdditionalLibs</name>
-                    <state>$PROJ_DIR$/../../../../../Drivers/CMSIS/Lib/IAR/iar_cortexM4l_math.a</state>
+                    <state>$PROJ_DIR$/../../../../../Drivers/CMSIS/DSP/Lib/IAR/iar_cortexM4l_math.a</state>
                 </option>
                 <option>
                     <name>IlinkOverrideProgramEntryLabel</name>
@@ -1501,9 +1501,9 @@
     <group>
         <name>Utilities</name>
         <group>
-            <name>Basic_GUI</name>
+            <name>LCD</name>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\Utilities\Basic_GUI\basic_gui.c</name>
+                <name>$PROJ_DIR$\..\..\..\..\..\Utilities\LCD\stm32_lcd.c</name>
             </file>
         </group>
         <group>

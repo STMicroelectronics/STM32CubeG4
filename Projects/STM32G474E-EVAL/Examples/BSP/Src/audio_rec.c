@@ -91,24 +91,24 @@ int32_t AudioRec_demo (void)
   /* Initialize Audio Recorder */
   if (BSP_AUDIO_IN_Init(0, &AudioInInit) == BSP_ERROR_NONE)
   {
-    GUI_SetBackColor(GUI_COLOR_WHITE);
-    GUI_SetTextColor(GUI_COLOR_GREEN);
-    GUI_DisplayStringAt(0, y_size - 95, (uint8_t *)"  AUDIO RECORD INIT OK  ", CENTER_MODE);
+    UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
+    UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_GREEN);
+    UTIL_LCD_DisplayStringAt(0, y_size - 95, (uint8_t *)"  AUDIO RECORD INIT OK  ", CENTER_MODE);
   }
   else
   {
-    GUI_SetBackColor(GUI_COLOR_WHITE);
-    GUI_SetTextColor(GUI_COLOR_RED);
-    GUI_DisplayStringAt(0, y_size - 95, (uint8_t *)"  AUDIO RECORD INIT FAIL", CENTER_MODE);
-    GUI_DisplayStringAt(0, y_size - 80, (uint8_t *)" Try to reset board ", CENTER_MODE);
+    UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
+    UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_RED);
+    UTIL_LCD_DisplayStringAt(0, y_size - 95, (uint8_t *)"  AUDIO RECORD INIT FAIL", CENTER_MODE);
+    UTIL_LCD_DisplayStringAt(0, y_size - 80, (uint8_t *)" Try to reset board ", CENTER_MODE);
   }
 
   AudioBufferOffset = BUFFER_OFFSET_NONE;
 
   /* Display the state on the screen */
-  GUI_SetBackColor(GUI_COLOR_WHITE);
-  GUI_SetTextColor(GUI_COLOR_BLUE);
-  GUI_DisplayStringAt(0, y_size - 80, (uint8_t *)"       RECORDING...     ", CENTER_MODE);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_BLUE);
+  UTIL_LCD_DisplayStringAt(0, y_size - 80, (uint8_t *)"       RECORDING...     ", CENTER_MODE);
 
   BSP_AUDIO_IN_GetVolume(0, &InputVolume);
   BSP_AUDIO_IN_GetDevice(0, &InputDevice);
@@ -169,9 +169,9 @@ int32_t AudioRec_demo (void)
   BSP_AUDIO_IN_Stop(0);
   BSP_AUDIO_IN_DeInit(0);
 
-  GUI_SetBackColor(GUI_COLOR_WHITE);
-  GUI_SetTextColor(GUI_COLOR_BLUE);
-  GUI_DisplayStringAt(0, y_size - 65, (uint8_t *)"RECORDING DONE, START PLAYBACK...", CENTER_MODE);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_BLUE);
+  UTIL_LCD_DisplayStringAt(0, y_size - 65, (uint8_t *)"RECORDING DONE, START PLAYBACK...", CENTER_MODE);
 
   /* -----------Start Playback -------------- */
   /* Initialize audio IN at REC_FREQ*/
@@ -179,7 +179,7 @@ int32_t AudioRec_demo (void)
 
   /* Play the recorded buffer*/
   AUDIO_Start(AUDIO_REC_START_ADDR, AUDIO_BLOCK_SIZE * AUDIO_NB_BLOCKS * 2);
-  GUI_DisplayStringAt(0, y_size - 40, (uint8_t *)"PLAYBACK DONE", CENTER_MODE);
+  UTIL_LCD_DisplayStringAt(0, y_size - 40, (uint8_t *)"PLAYBACK DONE", CENTER_MODE);
 
   while (1)
   {
@@ -209,9 +209,9 @@ int32_t AudioRecAnalog_demo (void)
   BSP_LCD_GetYSize(0, &y_size);
 
   AudioRec_SetHint();
-  GUI_SetFont(&Font24);
-  GUI_DisplayStringAt(0, 0, (uint8_t *)"AUDIO RECORD ANALOG", CENTER_MODE);
-  GUI_SetFont(&Font12);
+  UTIL_LCD_SetFont(&Font24);
+  UTIL_LCD_DisplayStringAt(0, 0, (uint8_t *)"AUDIO RECORD ANALOG", CENTER_MODE);
+  UTIL_LCD_SetFont(&Font12);
 
   AudioOutInit.Device = AUDIO_OUT_DEVICE_HEADPHONE;
   AudioOutInit.ChannelsNbr = 2;
@@ -228,24 +228,24 @@ int32_t AudioRecAnalog_demo (void)
   /* Initialize Audio Recorder */
   if (BSP_AUDIO_IN_Init(0, &AnalogInInit) == BSP_ERROR_NONE)
   {
-    GUI_SetBackColor(GUI_COLOR_WHITE);
-    GUI_SetTextColor(GUI_COLOR_GREEN);
-    GUI_DisplayStringAt(0, y_size - 95, (uint8_t *)"  AUDIO RECORD INIT OK  ", CENTER_MODE);
+    UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
+    UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_GREEN);
+    UTIL_LCD_DisplayStringAt(0, y_size - 95, (uint8_t *)"  AUDIO RECORD INIT OK  ", CENTER_MODE);
   }
   else
   {
-    GUI_SetBackColor(GUI_COLOR_WHITE);
-    GUI_SetTextColor(GUI_COLOR_RED);
-    GUI_DisplayStringAt(0, y_size - 95, (uint8_t *)"  AUDIO RECORD INIT FAIL", CENTER_MODE);
-    GUI_DisplayStringAt(0, y_size - 80, (uint8_t *)" Try to reset board ", CENTER_MODE);
+    UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
+    UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_RED);
+    UTIL_LCD_DisplayStringAt(0, y_size - 95, (uint8_t *)"  AUDIO RECORD INIT FAIL", CENTER_MODE);
+    UTIL_LCD_DisplayStringAt(0, y_size - 80, (uint8_t *)" Try to reset board ", CENTER_MODE);
   }
 
   AudioBufferOffset = BUFFER_OFFSET_NONE;
 
   /* Display the state on the screen */
-  GUI_SetBackColor(GUI_COLOR_WHITE);
-  GUI_SetTextColor(GUI_COLOR_BLUE);
-  GUI_DisplayStringAt(0, y_size - 80, (uint8_t *)"       RECORDING...     ", CENTER_MODE);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_BLUE);
+  UTIL_LCD_DisplayStringAt(0, y_size - 80, (uint8_t *)"       RECORDING...     ", CENTER_MODE);
 
 
   /* Start Recording */
@@ -292,9 +292,9 @@ int32_t AudioRecAnalog_demo (void)
   BSP_AUDIO_IN_Stop(0);
   BSP_AUDIO_IN_DeInit(0);
 
-  GUI_SetBackColor(GUI_COLOR_WHITE);
-  GUI_SetTextColor(GUI_COLOR_BLUE);
-  GUI_DisplayStringAt(0, y_size - 65, (uint8_t *)"RECORDING DONE, START PLAYBACK...", CENTER_MODE);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_BLUE);
+  UTIL_LCD_DisplayStringAt(0, y_size - 65, (uint8_t *)"RECORDING DONE, START PLAYBACK...", CENTER_MODE);
 
   /* -----------Start Playback -------------- */
   /* Initialize audio IN at REC_FREQ*/
@@ -302,7 +302,7 @@ int32_t AudioRecAnalog_demo (void)
 
   /* Play the recorded buffer*/
   AUDIO_Start(AUDIO_REC_START_ADDR, AUDIO_BLOCK_SIZE * AUDIO_NB_BLOCKS * 2);
-  GUI_DisplayStringAt(0, y_size - 40, (uint8_t *)"PLAYBACK DONE", CENTER_MODE);
+  UTIL_LCD_DisplayStringAt(0, y_size - 40, (uint8_t *)"PLAYBACK DONE", CENTER_MODE);
 
   while (1)
   {
@@ -332,20 +332,20 @@ static void AudioRec_SetHint(void)
   BSP_LCD_GetYSize(0, &y_size);
 
   /* Clear the LCD */
-  GUI_Clear(GUI_COLOR_WHITE);
+  UTIL_LCD_Clear(UTIL_LCD_COLOR_WHITE);
 
   /* Set Audio Demo description */
   BSP_LCD_FillRect(0, 0, 0, x_size, 90, LCD_COLOR_RGB565_BLUE);
-  GUI_SetTextColor(GUI_COLOR_WHITE);
-  GUI_SetBackColor(GUI_COLOR_BLUE);
-  GUI_SetFont(&Font24);
-  GUI_DisplayStringAt(0, 0, (uint8_t *)"AUDIO RECORD EXAMPLE", CENTER_MODE);
-  GUI_SetFont(&Font12);
-  GUI_DisplayStringAt(0, 30, (uint8_t *)"Press User button for next menu", CENTER_MODE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_BLUE);
+  UTIL_LCD_SetFont(&Font24);
+  UTIL_LCD_DisplayStringAt(0, 0, (uint8_t *)"AUDIO RECORD EXAMPLE", CENTER_MODE);
+  UTIL_LCD_SetFont(&Font12);
+  UTIL_LCD_DisplayStringAt(0, 30, (uint8_t *)"Press User button for next menu", CENTER_MODE);
 
   /* Set the LCD Text Color */
-  GUI_DrawRect(10, 100, x_size - 20, y_size - 110, GUI_COLOR_BLUE);
-  GUI_DrawRect(11, 101, x_size - 22, y_size - 112, GUI_COLOR_BLUE);
+  UTIL_LCD_DrawRect(10, 100, x_size - 20, y_size - 110, UTIL_LCD_COLOR_BLUE);
+  UTIL_LCD_DrawRect(11, 101, x_size - 22, y_size - 112, UTIL_LCD_COLOR_BLUE);
 
 }
 
@@ -366,8 +366,8 @@ void BSP_AUDIO_IN_Error_CallBack(uint32_t Instance)
   /* This function is called when an Interrupt due to transfer error on or peripheral
      error occurs. */
   /* Display message on the LCD screen */
-  GUI_SetBackColor(GUI_COLOR_RED);
-  GUI_DisplayStringAt(0, LINE(14), (uint8_t *)"       DMA  ERROR     ", CENTER_MODE);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_RED);
+  UTIL_LCD_DisplayStringAt(0, LINE(14), (uint8_t *)"       DMA  ERROR     ", CENTER_MODE);
 
   /* Stop the program with an infinite loop */
   while (BSP_PB_GetState(BUTTON_USER) != RESET)

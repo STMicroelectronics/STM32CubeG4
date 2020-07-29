@@ -87,40 +87,12 @@ typedef enum{
 USBPD_StatusTypeDef USBPD_PWR_IF_Init(void);
 
 /**
-  * @brief  Sets the required power profile
-  * @param  PortNum Port number
-  * @retval USBPD status
-  */
-USBPD_StatusTypeDef USBPD_PWR_IF_SetProfile(uint8_t PortNum);
-
-/**
   * @brief  Checks if the power on a specified port is ready
   * @param  PortNum Port number
   * @param  Vsafe   Vsafe status based on @ref USBPD_VSAFE_StatusTypeDef
   * @retval USBPD status
   */
 USBPD_StatusTypeDef USBPD_PWR_IF_SupplyReady(uint8_t PortNum, USBPD_VSAFE_StatusTypeDef Vsafe);
-
-/**
-  * @brief  Enable VBUS power on a specified port
-  * @param  PortNum Port number
-  * @retval USBPD status
-  */
-USBPD_StatusTypeDef USBPD_PWR_IF_VBUSEnable(uint8_t PortNum);
-
-/**
-  * @brief  Disable VBUS power on a specified port
-  * @param  PortNum Port number
-  * @retval USBPD status
-  */
-USBPD_StatusTypeDef USBPD_PWR_IF_VBUSDisable(uint8_t PortNum);
-
-/**
-  * @brief  Checks if the power on a specified port is enabled
-  * @param  PortNum Port number
-  * @retval ENABLE or DISABLE
-  */
-USBPD_FunctionalState USBPD_PWR_IF_VBUSIsEnabled(uint8_t PortNum);
 
 /**
   * @brief  Reads the voltage and the current on a specified port

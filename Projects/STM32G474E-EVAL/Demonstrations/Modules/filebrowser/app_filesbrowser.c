@@ -117,11 +117,11 @@ void FilesBrowserDemo(void)
     {
     case FILESBROWSER_INIT :
       /* Help information */
-      GUI_SetFont(&Font12);
-      GUI_SetBackColor(GUI_COLOR_WHITE);
-      GUI_SetTextColor(GUI_COLOR_ST_GREEN_DARK);
-      GUI_DisplayStringAt(0, 239 - Font24.Height - Font12.Height, (uint8_t *)"folder: sel enter/left go back", CENTER_MODE);
-      GUI_SetFont(&Font24);
+      UTIL_LCD_SetFont(&Font12);
+      UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
+      UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_GREEN_DARK);
+      UTIL_LCD_DisplayStringAt(0, 239 - Font24.Height - Font12.Height, (uint8_t *)"folder: sel enter/left go back", CENTER_MODE);
+      UTIL_LCD_SetFont(&Font24);
       /* Lecture du folder source */
       strcpy((char *)stringline[0], "USER");
       strcpy((char *)foldername, "USER");
@@ -309,33 +309,33 @@ static void FilesBrowserDisplayFiles(uint8_t sel)
   FILINFO fileinfo;
 
   /* Display information */
-  GUI_SetBackColor(GUI_COLOR_ST_PINK);
-  GUI_SetTextColor(GUI_COLOR_ST_PINK);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_ST_PINK);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_PINK);
   BSP_LCD_GetXSize(LCD_INSTANCE, &pXSize);
-  GUI_FillRect(0, 0, pXSize, Font24.Height, GUI_COLOR_ST_PINK);
-  GUI_SetTextColor(GUI_COLOR_WHITE);
-  GUI_DisplayStringAtLine(0, stringline[0]);
+  UTIL_LCD_FillRect(0, 0, pXSize, Font24.Height, UTIL_LCD_COLOR_ST_PINK);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_DisplayStringAtLine(0, stringline[0]);
 
   /* Draw the folder area */
-  GUI_SetTextColor(GUI_COLOR_ST_GREEN_DARK);
-  GUI_DrawRect(20, 45, 140, 129, GUI_COLOR_ST_GREEN_DARK);
-  GUI_SetFont(&Font16);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_GREEN_DARK);
+  UTIL_LCD_DrawRect(20, 45, 140, 129, UTIL_LCD_COLOR_ST_GREEN_DARK);
+  UTIL_LCD_SetFont(&Font16);
 
   for (index = 1; index < MAX_LINE; index++)
   {
     if(index == sel)
     {
-      GUI_SetBackColor(GUI_COLOR_ST_PINK);
-      GUI_SetTextColor(GUI_COLOR_WHITE);
+      UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_ST_PINK);
+      UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
     }
     else
     {
-      GUI_SetBackColor(GUI_COLOR_WHITE);
-      GUI_SetTextColor(GUI_COLOR_ST_BLUE);
+      UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
+      UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_BLUE);
     }
     if(stringline[index][0] == '\0')
     {
-      GUI_DisplayStringAt(21, 30 + Font16.Height*index, (uint8_t *)"            ", LEFT_MODE);
+      UTIL_LCD_DisplayStringAt(21, 30 + Font16.Height*index, (uint8_t *)"            ", LEFT_MODE);
     }
     else
     {
@@ -349,12 +349,12 @@ static void FilesBrowserDisplayFiles(uint8_t sel)
         strncpy((char*)strtmp,(char const*)stringline[index],11);
         strtmp[11] = '*';
         strtmp[12] = '\0';
-        GUI_DisplayStringAt(21, 30 + Font16.Height*index, strtmp, LEFT_MODE);
+        UTIL_LCD_DisplayStringAt(21, 30 + Font16.Height*index, strtmp, LEFT_MODE);
       }
       else
       {
         /* write the file name */
-        GUI_DisplayStringAt(21, 30 + Font16.Height*index, stringline[index], LEFT_MODE);
+        UTIL_LCD_DisplayStringAt(21, 30 + Font16.Height*index, stringline[index], LEFT_MODE);
       }
     }
   }
@@ -364,36 +364,36 @@ static void FilesBrowserDisplayFiles(uint8_t sel)
     /* Display information about the selected file */
     sprintf((char *)buff,"%s\\%s",stringline[0],stringline[sel]);
     kStorage_GetFileInfo(buff, &fileinfo);
-    GUI_SetBackColor(GUI_COLOR_WHITE);
-    GUI_SetTextColor(GUI_COLOR_ST_PINK);
+    UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
+    UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_PINK);
 
     if((fileinfo.fattrib & AM_DIR) == AM_DIR)
     {
       index = 1;
-      GUI_DisplayStringAt(170, 46, (uint8_t *)"folder info ", LEFT_MODE);
+      UTIL_LCD_DisplayStringAt(170, 46, (uint8_t *)"folder info ", LEFT_MODE);
     }
     else
     {
       index = 0;
-      GUI_DisplayStringAt(170, 46, (uint8_t *)"file info   ", LEFT_MODE);
+      UTIL_LCD_DisplayStringAt(170, 46, (uint8_t *)"file info   ", LEFT_MODE);
     }
 
-    GUI_DisplayStringAt(170, 46+Font16.Height, (uint8_t *)"name:", LEFT_MODE);
-    GUI_SetTextColor(GUI_COLOR_ST_BLUE);
-    GUI_DisplayStringAt(186, 46+Font16.Height*2, stringline[sel],LEFT_MODE);
+    UTIL_LCD_DisplayStringAt(170, 46+Font16.Height, (uint8_t *)"name:", LEFT_MODE);
+    UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_BLUE);
+    UTIL_LCD_DisplayStringAt(186, 46+Font16.Height*2, stringline[sel],LEFT_MODE);
     if((fileinfo.fattrib & AM_DIR) == AM_DIR)
     {
-      GUI_DisplayStringAt(170, 46+Font16.Height*3, (uint8_t *)"         ", LEFT_MODE);
-      GUI_DisplayStringAt(186, 46+Font16.Height*4, (uint8_t *)"           ", LEFT_MODE);
-      GUI_DisplayStringAt(170, 46+Font16.Height*5, (uint8_t *)"           ", LEFT_MODE);
-      GUI_DisplayStringAt(186, 46+Font16.Height*6, (uint8_t *)"      ", LEFT_MODE);    }
+      UTIL_LCD_DisplayStringAt(170, 46+Font16.Height*3, (uint8_t *)"         ", LEFT_MODE);
+      UTIL_LCD_DisplayStringAt(186, 46+Font16.Height*4, (uint8_t *)"           ", LEFT_MODE);
+      UTIL_LCD_DisplayStringAt(170, 46+Font16.Height*5, (uint8_t *)"           ", LEFT_MODE);
+      UTIL_LCD_DisplayStringAt(186, 46+Font16.Height*6, (uint8_t *)"      ", LEFT_MODE);    }
     else
     {
-      GUI_SetTextColor(GUI_COLOR_ST_PINK);
-      GUI_DisplayStringAt(170, 46+Font16.Height*3, (uint8_t *)"fsize   :", LEFT_MODE);
-      GUI_SetTextColor(GUI_COLOR_ST_BLUE);
+      UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_PINK);
+      UTIL_LCD_DisplayStringAt(170, 46+Font16.Height*3, (uint8_t *)"fsize   :", LEFT_MODE);
+      UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_BLUE);
 
-      /* Convert and Dispaly file size in Bytes, Kilo or Mega Bytes */
+      /* Convert and Display file size in Bytes, Kilo or Mega Bytes */
       if( fileinfo.fsize < 1024)
       {
         sprintf((char *)buff,"%d Bytes   ", (unsigned int)fileinfo.fsize);
@@ -406,28 +406,28 @@ static void FilesBrowserDisplayFiles(uint8_t sel)
       {
         sprintf((char *)buff,"%d MB     ", (unsigned int)fileinfo.fsize/1048576);
       }
-      GUI_DisplayStringAt(186, 46+Font16.Height*4, buff, LEFT_MODE);
-      GUI_SetTextColor(GUI_COLOR_ST_PINK);
-      GUI_DisplayStringAt(170, 46+Font16.Height*5, (uint8_t *)"fattrib :", LEFT_MODE);
-      GUI_SetTextColor(GUI_COLOR_ST_BLUE);
+      UTIL_LCD_DisplayStringAt(186, 46+Font16.Height*4, buff, LEFT_MODE);
+      UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_PINK);
+      UTIL_LCD_DisplayStringAt(170, 46+Font16.Height*5, (uint8_t *)"fattrib :", LEFT_MODE);
+      UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_BLUE);
       sprintf((char *)buff,"0x%.2x", fileinfo.fattrib);
-      GUI_DisplayStringAt(186, 46+Font16.Height*6, buff, LEFT_MODE);
+      UTIL_LCD_DisplayStringAt(186, 46+Font16.Height*6, buff, LEFT_MODE);
     }
   }
   else
   {
     /* Erase information area */
-    GUI_SetTextColor(GUI_COLOR_ST_PINK);
-    GUI_DisplayStringAt(170, 46, (uint8_t *)"folder empty", LEFT_MODE);
-    GUI_SetTextColor(GUI_COLOR_WHITE);
-    GUI_DisplayStringAt(170, 46+Font16.Height, (uint8_t *)"     ", LEFT_MODE);
-    GUI_DisplayStringAt(186, 46+Font16.Height*2,(uint8_t *)"            ",LEFT_MODE);
-    GUI_DisplayStringAt(170, 46+Font16.Height*3, (uint8_t *)"         ", LEFT_MODE);
-    GUI_DisplayStringAt(186, 46+Font16.Height*4, (uint8_t *)"           ", LEFT_MODE);
-    GUI_DisplayStringAt(170, 46+Font16.Height*5, (uint8_t *)"           ", LEFT_MODE);
-    GUI_DisplayStringAt(186, 46+Font16.Height*6, (uint8_t *)"      ", LEFT_MODE);
+    UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_PINK);
+    UTIL_LCD_DisplayStringAt(170, 46, (uint8_t *)"folder empty", LEFT_MODE);
+    UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
+    UTIL_LCD_DisplayStringAt(170, 46+Font16.Height, (uint8_t *)"     ", LEFT_MODE);
+    UTIL_LCD_DisplayStringAt(186, 46+Font16.Height*2,(uint8_t *)"            ",LEFT_MODE);
+    UTIL_LCD_DisplayStringAt(170, 46+Font16.Height*3, (uint8_t *)"         ", LEFT_MODE);
+    UTIL_LCD_DisplayStringAt(186, 46+Font16.Height*4, (uint8_t *)"           ", LEFT_MODE);
+    UTIL_LCD_DisplayStringAt(170, 46+Font16.Height*5, (uint8_t *)"           ", LEFT_MODE);
+    UTIL_LCD_DisplayStringAt(186, 46+Font16.Height*6, (uint8_t *)"      ", LEFT_MODE);
   }
-  GUI_SetFont(&Font24);
+  UTIL_LCD_SetFont(&Font24);
 }
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

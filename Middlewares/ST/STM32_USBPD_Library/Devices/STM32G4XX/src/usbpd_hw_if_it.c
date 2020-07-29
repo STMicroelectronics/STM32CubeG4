@@ -53,19 +53,20 @@ void PORTx_IRQHandler(uint8_t PortNum)
       /* the message has been discarded */
       LL_UCPD_ClearFlag_TxMSGDISC(hucpd);
       CLEAR_BIT(Ports[PortNum].hdmatx->CCR, DMA_CCR_EN);
+      Ports[PortNum].cbs.USBPD_HW_IF_TxCompleted(PortNum, 1);
       return;
     }
 
     if (UCPD_SR_TXMSGSENT == (_interrupt & UCPD_SR_TXMSGSENT))
     {
       /* Message has been fully transfered */
-      Ports[PortNum].cbs.USBPD_HW_IF_TxCompleted(PortNum);
+      Ports[PortNum].cbs.USBPD_HW_IF_TxCompleted(PortNum, 0);
       CLEAR_BIT(Ports[PortNum].hdmatx->CCR, DMA_CCR_EN);
       LL_UCPD_ClearFlag_TxMSGSENT(hucpd);
 
-#if defined(_LOW_POWER)       
+#if defined(_LOW_POWER)
       LPM_SetStopMode((LPM_Id_t)(LPM_PE_0 + PortNum), LPM_Enable);
-#endif      
+#endif
       return;
     }
 
@@ -73,6 +74,7 @@ void PORTx_IRQHandler(uint8_t PortNum)
     {
       LL_UCPD_ClearFlag_TxMSGABT(hucpd);
       CLEAR_BIT(Ports[PortNum].hdmatx->CCR, DMA_CCR_EN);
+      Ports[PortNum].cbs.USBPD_HW_IF_TxCompleted(PortNum, 2);
       return;
     }
 
@@ -115,7 +117,7 @@ void PORTx_IRQHandler(uint8_t PortNum)
     /* check RXHRSTDET */
     if (UCPD_SR_RXHRSTDET == (_interrupt & UCPD_SR_RXHRSTDET))
     {
-      Ports[PortNum].cbs.USBPD_HW_IF_RX_ResetIndication(PortNum);
+      Ports[PortNum].cbs.USBPD_HW_IF_RX_ResetIndication(PortNum, USBPD_SOPTYPE_HARD_RESET);
       LL_UCPD_ClearFlag_RxHRST(hucpd);
       return;
     }
@@ -134,20 +136,19 @@ void PORTx_IRQHandler(uint8_t PortNum)
     {
       /* for DMA mode add a control to check if the number of data recived is corresponding with the number of
          data receive by USBPD */
-      uint16_t _datasize = (uint16_t)hucpd->RX_PAYSZ;
       LL_UCPD_ClearFlag_RxMsgEnd(hucpd);
 
       /* disable DMA */
       CLEAR_BIT(Ports[PortNum].hdmarx->CCR, DMA_CCR_EN);
 
-#if defined(_LOW_POWER)       
+#if defined(_LOW_POWER)
       LPM_SetStopMode((LPM_Id_t)(LPM_PE_0 + PortNum), LPM_Enable);
 #endif
-      
+
       if (((_interrupt & UCPD_SR_RXERR) == 0u) && (ovrflag == 0u))
       {
         /* Rx message has been recieved without error */
-        Ports[PortNum].cbs.USBPD_HW_IF_RX_Completed(PortNum, hucpd->RX_ORDSET & UCPD_RX_ORDSET_RXORDSET, _datasize);
+        Ports[PortNum].cbs.USBPD_HW_IF_RX_Completed(PortNum, hucpd->RX_ORDSET & UCPD_RX_ORDSET_RXORDSET);
       }
       ovrflag = 0;
 

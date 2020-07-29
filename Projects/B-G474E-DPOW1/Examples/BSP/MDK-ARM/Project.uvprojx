@@ -579,9 +579,9 @@
           <GroupName>Drivers/Utilities</GroupName>
           <Files>
             <File>
-              <FileName>basic_gui.c</FileName>
+              <FileName>stm32_lcd.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../Utilities/Basic_GUI/basic_gui.c</FilePath>
+              <FilePath>../../../../../Utilities/LCD/stm32_lcd.c</FilePath>
             </File>
           </Files>
         </Group>

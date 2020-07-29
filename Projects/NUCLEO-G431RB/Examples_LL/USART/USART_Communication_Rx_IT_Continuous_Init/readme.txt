@@ -1,5 +1,5 @@
 /**
-  @page USART_Communication_Rx_IT_Continuous_Init USART Receiver example (IT Mode, Continous reception)
+  @page USART_Communication_Rx_IT_Continuous_Init USART Receiver example (IT Mode, Continuous reception)
   
   @verbatim
   ******************************************************************************
@@ -42,7 +42,7 @@ In case of errors, LED2 is blinking.
 
 @par Keywords
 
-Connectivity, USART, Asynchroneous mode, RS-232, Baud rate, Interrupt, HyperTerminal, Reception.
+Connectivity, USART, Asynchronous mode, RS-232, Baud rate, Interrupt, HyperTerminal, Reception.
 
 @par Directory contents 
 

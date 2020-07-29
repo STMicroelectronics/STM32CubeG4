@@ -25,7 +25,7 @@
 #if  defined(_TRACE)
 #include "usbpd_core.h"
 #include "usbpd_trace.h"
-#endif /* _TRACE */
+#endif
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/

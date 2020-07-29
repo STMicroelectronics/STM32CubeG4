@@ -60,12 +60,9 @@
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
-/* USER CODE BEGIN EV */
-/* RTC handler declared in "main.c" file */
 extern RTC_HandleTypeDef hrtc;
-/* TIM handler declared in "main.c" file */
 extern TIM_HandleTypeDef htim16;
-
+/* USER CODE BEGIN EV */
 
 /* USER CODE END EV */
 

@@ -54,7 +54,7 @@
 #define MAX_SVID_USER   1
 
 /*
- * DP Pin assignement
+ * DP Pin assignment
  */
 #define  DP_PIN_ASSIGNMENT_NONE 0x00            /*!< De-select pin assignment.  */
 #define  DP_PIN_ASSIGNMENT_A    0x01            /*!< Select Pin Assignment A    */

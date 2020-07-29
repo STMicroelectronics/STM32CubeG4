@@ -20,7 +20,7 @@
 /* USER CODE END Header */
 
 /* Includes ------------------------------------------------------------------*/
- 
+
 #include "usb_device.h"
 #include "usbd_core.h"
 #include "usbd_desc.h"
@@ -103,7 +103,7 @@ void MX_USB_Device_Init(void)
   /* Enable USB Device clock */
   USBD_Clock_Config();
   /* USER CODE END USB_Device_Init_PreTreatment */
-  
+
   /* Init Device Library, add supported class and start the library. */
   if (USBD_Init(&hUsbDeviceFS, &DFU_Desc, DEVICE_FS) != USBD_OK) {
     Error_Handler();

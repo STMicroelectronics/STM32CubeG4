@@ -75,9 +75,9 @@ void HAL_MspInit(void)
 
   /* System interrupt init*/
 
-  /** Disable the internal Pull-Up in Dead Battery pins of UCPD peripheral 
+  /** Disable the internal Pull-Up in Dead Battery pins of UCPD peripheral
   */
-  LL_PWR_DisableDeadBatteryPD();
+  HAL_PWREx_DisableUCPDDeadBattery();
 
   /* USER CODE BEGIN MspInit 1 */
 
@@ -118,7 +118,7 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef* hi2c)
 
     /* Peripheral clock enable */
     __HAL_RCC_I2C1_CLK_ENABLE();
-  
+
     /* I2C1 DMA Init */
     /* I2C1_TX Init */
     hdma_i2c1_tx.Instance = DMA1_Channel1;
@@ -186,7 +186,9 @@ void HAL_I2C_MspDeInit(I2C_HandleTypeDef* hi2c)
     PB8-BOOT0     ------> I2C1_SCL
     PB9     ------> I2C1_SDA
     */
-    HAL_GPIO_DeInit(GPIOB, GPIO_PIN_8|GPIO_PIN_9);
+    HAL_GPIO_DeInit(GPIOB, GPIO_PIN_8);
+
+    HAL_GPIO_DeInit(GPIOB, GPIO_PIN_9);
 
     /* I2C1 DMA DeInit */
     HAL_DMA_DeInit(hi2c->hdmatx);

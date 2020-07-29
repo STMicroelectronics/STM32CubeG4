@@ -131,7 +131,7 @@
 /** @addtogroup STM32G474E-EVAL_LCD_Exported_Variables
   * @{
   */
-extern const GUI_Drv_t LCD_Driver;
+extern const LCD_UTILS_Drv_t LCD_Driver;
 /**
   * @}
   */

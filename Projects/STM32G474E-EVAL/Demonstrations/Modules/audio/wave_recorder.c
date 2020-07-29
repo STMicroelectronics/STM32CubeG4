@@ -551,8 +551,8 @@ static void DisplayRecordHeaderScreen(void)
 
   kWidgetsProgressBar_t progress_bar =
   {
-    .textColor       = GUI_COLOR_ST_PINK,
-    .backgroungColor = GUI_COLOR_WHITE,
+    .textColor       = UTIL_LCD_COLOR_ST_PINK,
+    .backgroungColor = UTIL_LCD_COLOR_WHITE,
     .xpos            = 10,
     .ypos            = 150,
     .width           = pXSize - 20,
@@ -560,14 +560,14 @@ static void DisplayRecordHeaderScreen(void)
   };
 
   /* Black screen */
-  GUI_Clear(GUI_COLOR_WHITE);
+  UTIL_LCD_Clear(UTIL_LCD_COLOR_WHITE);
 
   /* Display Title */
-  GUI_SetBackColor(GUI_COLOR_ST_PINK);
-  GUI_SetTextColor(GUI_COLOR_ST_PINK);
-  GUI_FillRect(0, LINE(0), pXSize, Font24.Height, GUI_COLOR_ST_PINK);
-  GUI_SetTextColor(GUI_COLOR_WHITE);
-  GUI_DisplayStringAt(0, 0, (uint8_t *)"Wave Recorder", CENTER_MODE);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_ST_PINK);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_PINK);
+  UTIL_LCD_FillRect(0, LINE(0), pXSize, Font24.Height, UTIL_LCD_COLOR_ST_PINK);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_DisplayStringAt(0, 0, (uint8_t *)"Wave Recorder", CENTER_MODE);
 
   /* Display Record on going Icon */
   kStorage_OpenFileDrawBMP(35, 46, (uint8_t *)"STFILES/RECC2.bmp");
@@ -575,13 +575,13 @@ static void DisplayRecordHeaderScreen(void)
   RecordStateUpdate("'SEL' TO RECORD");
 
   /* Display record info */
-  GUI_SetFont(&Font16);
-  GUI_SetBackColor(GUI_COLOR_WHITE);
-  GUI_SetTextColor(GUI_COLOR_ST_BLUE);
-  GUI_DisplayStringAt(150, 46,                     MSG_FILE_NAME,        LEFT_MODE);
-  GUI_DisplayStringAt(150, 46 + Font16.Height,     MSG_SAMPLE_RATE,      LEFT_MODE);
-  GUI_DisplayStringAt(150, 46 + 2 * Font16.Height, MSG_NOF_CHANNELS,     LEFT_MODE);
-  GUI_DisplayStringAt(150, 46 + 3 * Font16.Height, MSG_BITS_PER_SAMPLES, LEFT_MODE);
+  UTIL_LCD_SetFont(&Font16);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_BLUE);
+  UTIL_LCD_DisplayStringAt(150, 46,                     MSG_FILE_NAME,        LEFT_MODE);
+  UTIL_LCD_DisplayStringAt(150, 46 + Font16.Height,     MSG_SAMPLE_RATE,      LEFT_MODE);
+  UTIL_LCD_DisplayStringAt(150, 46 + 2 * Font16.Height, MSG_NOF_CHANNELS,     LEFT_MODE);
+  UTIL_LCD_DisplayStringAt(150, 46 + 3 * Font16.Height, MSG_BITS_PER_SAMPLES, LEFT_MODE);
 
   /* Display playback progress bar */
   hProgressBar = kWidgets_ProgressBarCreate(&progress_bar, MAX_DATA_CHUNCK_SIZE);
@@ -597,14 +597,14 @@ static void DisplayBottomMessage(char * msg)
 {
   uint32_t pXSize;
 
-  GUI_SetFont(&Font12);
-  GUI_SetBackColor(GUI_COLOR_ST_BLUE);
-  GUI_SetTextColor(GUI_COLOR_ST_BLUE);
+  UTIL_LCD_SetFont(&Font12);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_ST_BLUE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_BLUE);
   BSP_LCD_GetXSize(LCD_INSTANCE, &pXSize);
-  GUI_FillRect(0, LINE(19), pXSize, Font20.Height,GUI_COLOR_ST_BLUE);
-  GUI_SetTextColor(GUI_COLOR_WHITE);
-  GUI_DisplayStringAt(0, LINE(19), (uint8_t *)msg, CENTER_MODE);
-  GUI_SetFont(&Font24);
+  UTIL_LCD_FillRect(0, LINE(19), pXSize, Font20.Height,UTIL_LCD_COLOR_ST_BLUE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_DisplayStringAt(0, LINE(19), (uint8_t *)msg, CENTER_MODE);
+  UTIL_LCD_SetFont(&Font24);
 }
 
 /**
@@ -614,10 +614,10 @@ static void DisplayBottomMessage(char * msg)
   */
 static void RecordStateUpdate(char * RecordState)
 {
-  GUI_SetFont(&Font24);
-  GUI_SetBackColor(GUI_COLOR_WHITE);
-  GUI_SetTextColor(GUI_COLOR_ST_PINK);
-  GUI_DisplayStringAt(0, 120, (uint8_t *)RecordState, CENTER_MODE);
+  UTIL_LCD_SetFont(&Font24);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_PINK);
+  UTIL_LCD_DisplayStringAt(0, 120, (uint8_t *)RecordState, CENTER_MODE);
 }
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

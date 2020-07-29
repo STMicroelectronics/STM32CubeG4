@@ -73,9 +73,9 @@ void HAL_MspInit(void)
 
   /* System interrupt init*/
 
-  /** Disable the internal Pull-Up in Dead Battery pins of UCPD peripheral 
+  /** Disable the internal Pull-Up in Dead Battery pins of UCPD peripheral
   */
-  LL_PWR_DisableDeadBatteryPD();
+  HAL_PWREx_DisableUCPDDeadBattery();
 
   /* USER CODE BEGIN MspInit 1 */
 
@@ -98,11 +98,11 @@ void HAL_LPTIM_MspInit(LPTIM_HandleTypeDef* hlptim)
   /* USER CODE END LPTIM1_MspInit 0 */
     /* Peripheral clock enable */
     __HAL_RCC_LPTIM1_CLK_ENABLE();
-  
+
     __HAL_RCC_GPIOB_CLK_ENABLE();
-    /**LPTIM1 GPIO Configuration    
+    /**LPTIM1 GPIO Configuration
     PB2     ------> LPTIM1_OUT
-    PB5     ------> LPTIM1_IN1 
+    PB5     ------> LPTIM1_IN1
     */
     GPIO_InitStruct.Pin = GPIO_PIN_2;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
@@ -140,10 +140,10 @@ void HAL_LPTIM_MspDeInit(LPTIM_HandleTypeDef* hlptim)
   /* USER CODE END LPTIM1_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_LPTIM1_CLK_DISABLE();
-  
-    /**LPTIM1 GPIO Configuration    
+
+    /**LPTIM1 GPIO Configuration
     PB2     ------> LPTIM1_OUT
-    PB5     ------> LPTIM1_IN1 
+    PB5     ------> LPTIM1_IN1
     */
     HAL_GPIO_DeInit(GPIOB, GPIO_PIN_2|GPIO_PIN_5);
 

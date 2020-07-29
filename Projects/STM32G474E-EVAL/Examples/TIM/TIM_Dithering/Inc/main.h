@@ -29,7 +29,6 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32g4xx_hal.h"
-#include "stm32g4xx_ll_pwr.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -66,7 +65,7 @@ void Error_Handler(void);
 /* Compute the prescaler value to have TIM3 counter clock equal to 1500000 Hz */
 #define PRESCALER_VALUE     (uint32_t)((SystemCoreClock / 1500000) - 1)
 
-#define DELAY 50 /* 50 miliseconds */
+#define DELAY 50 /* 50 milliseconds */
 
 /* USER CODE END Private defines */
 

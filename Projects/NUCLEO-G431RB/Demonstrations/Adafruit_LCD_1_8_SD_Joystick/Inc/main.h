@@ -26,7 +26,7 @@
 #include "adafruit_802.h"
 #include "adafruit_802_sd.h"
 #include "adafruit_802_lcd.h"
-#include "basic_gui.h"
+#include "stm32_lcd.h"
 #include <stdio.h>
 #include <stdlib.h>
 

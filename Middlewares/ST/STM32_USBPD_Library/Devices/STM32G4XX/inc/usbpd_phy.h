@@ -84,9 +84,10 @@ typedef struct
   /**
     * @brief  Reports to the PRL that a tx operation has been completed.
     * @param  PortNum:    The handle of the port
+    * @param  Status:  0 if no error else error
     * @retval None
     */
-  void (*USBPD_PHY_TxCompleted)(uint8_t PortNum);
+  void (*USBPD_PHY_TxCompleted)(uint8_t PortNum, uint32_t Status);
 
 } USBPD_PHY_Callbacks;
 
@@ -106,6 +107,7 @@ typedef struct
 USBPD_StatusTypeDef USBPD_PHY_Init(uint8_t PortNum, const USBPD_PHY_Callbacks *cbs, uint8_t *pRxBuffer, USBPD_PortPowerRole_TypeDef role, uint32_t SupportedSOP);
 void                USBPD_PHY_Reset(uint8_t PortNum);
 uint16_t            USBPD_PHY_GetRetryTimerValue(uint8_t PortNum);
+uint16_t            USBPD_PHY_GetMinGOODCRCTimerValue(uint8_t PortNum);
 
 USBPD_StatusTypeDef USBPD_PHY_ResetRequest(uint8_t PortNum, USBPD_SOPType_TypeDef Type);
 USBPD_StatusTypeDef USBPD_PHY_SendMessage(uint8_t PortNum, USBPD_SOPType_TypeDef Type, uint8_t *pBuffer, uint16_t Size);

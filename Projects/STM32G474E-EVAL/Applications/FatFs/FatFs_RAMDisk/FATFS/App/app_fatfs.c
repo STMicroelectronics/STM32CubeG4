@@ -64,13 +64,13 @@ static int32_t FS_FileOperations(void);
 /**
   * @brief  FatFs initialization
   * @param  None
-  * @retval Initialization result 
+  * @retval Initialization result
   */
-int32_t MX_FATFS_Init(void) 
+int32_t MX_FATFS_Init(void)
 {
   /*## FatFS: Link the disk I/O driver(s)  ###########################*/
-   
-if (FATFS_LinkDriver(&SRAMDISK_Driver, SRAMDISKPath) != 0) 
+
+if (FATFS_LinkDriver(&SRAMDISK_Driver, SRAMDISKPath) != 0)
   /* USER CODE BEGIN FATFS_Init */
   {
     return APP_ERROR;
@@ -86,7 +86,7 @@ if (FATFS_LinkDriver(&SRAMDISK_Driver, SRAMDISKPath) != 0)
 /**
   * @brief  FatFs application main process
   * @param  None
-  * @retval Process result 
+  * @retval Process result
   */
 int32_t MX_FATFS_Process(void)
 {
@@ -117,7 +117,7 @@ int32_t MX_FATFS_Process(void)
   }
   return process_res;
   /* USER CODE END FATFS_Process */
-}  
+}
 
 /**
   * @brief  Gets Time from RTC (generated when FS_NORTC==0; see ff.c)
@@ -128,7 +128,7 @@ DWORD get_fattime(void)
 {
   /* USER CODE BEGIN get_fattime */
   return 0;
-  /* USER CODE END get_fattime */  
+  /* USER CODE END get_fattime */
 }
 
 /* Private user code ---------------------------------------------------------*/

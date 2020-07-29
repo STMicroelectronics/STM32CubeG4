@@ -61,7 +61,7 @@ Timer, Low Power, Pulse Counter, Stop mode, Interrupt.
   - This example has been tested with NUCLEO-G431RB RevC board and can be
     easily tailored to any other supported device and development board.
     
-  - Connect a square waveform generator to PB.05 (D4 - pin 5 in CN9 connector).
+  - Connect a square waveform generator to PB5 (pin 29 in CN10 connector).
     If the frequency of the signal is 1 kHz, LED2 toggles every second.
 
 @par How to use it ? 

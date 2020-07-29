@@ -44,7 +44,7 @@ In case of errors, LED2 is blinking Slowly (1s).
 
 @par Keywords
 
-Connectivity, USART, Synchroneous mode, RS-232, Baud rate, Interrupt, SPI, Reception, Transmission, Full duplex.
+Connectivity, USART, Synchronous mode, RS-232, Baud rate, Interrupt, SPI, Reception, Transmission, Full duplex.
 
 @par Directory contents 
 

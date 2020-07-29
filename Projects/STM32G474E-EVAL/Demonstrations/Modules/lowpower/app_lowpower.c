@@ -196,9 +196,9 @@ void LowPowerUserAction(uint8_t sel)
   */
 void LowPowerStandbyWakeupPin(void)
 {
-  kWindow_Popup("STANDBY WAKEUP", GUI_COLOR_WHITE, GUI_COLOR_ST_BLUE,\
+  kWindow_Popup("STANDBY WAKEUP", UTIL_LCD_COLOR_WHITE, UTIL_LCD_COLOR_ST_BLUE,\
                 "JOY sel will\nstart\nstandby mode\n",                  \
-                GUI_COLOR_ST_BLUE, GUI_COLOR_WHITE);
+                UTIL_LCD_COLOR_ST_BLUE, UTIL_LCD_COLOR_WHITE);
 
   /* Wait for key press */
   HAL_Delay(100);
@@ -208,9 +208,9 @@ void LowPowerStandbyWakeupPin(void)
     user_action = 0;
   };
 
-  kWindow_Popup("STANDBY WAKEUP", GUI_COLOR_WHITE, GUI_COLOR_ST_BLUE,\
+  kWindow_Popup("STANDBY WAKEUP", UTIL_LCD_COLOR_WHITE, UTIL_LCD_COLOR_ST_BLUE,\
                 "\n\npress USER button\nto exit\nand reset\n",                  \
-                GUI_COLOR_ST_BLUE, GUI_COLOR_WHITE);
+                UTIL_LCD_COLOR_ST_BLUE, UTIL_LCD_COLOR_WHITE);
 
   /* USER push-button will be used to wakeup the system from Standby mode */
   BSP_PB_Init(BUTTON_USER, BUTTON_MODE_EXTI);
@@ -238,16 +238,16 @@ void LowPowerStandbyWakeupPin(void)
   */
 void LowPowerStandbyRTCAlarm(void)
 {
-  kWindow_Popup("STANDBY Alarm", GUI_COLOR_WHITE, GUI_COLOR_ST_BLUE,\
+  kWindow_Popup("STANDBY Alarm", UTIL_LCD_COLOR_WHITE, UTIL_LCD_COLOR_ST_BLUE,\
                 "\nset delay time\n",                            \
-                GUI_COLOR_ST_BLUE, GUI_COLOR_WHITE );
+                UTIL_LCD_COLOR_ST_BLUE, UTIL_LCD_COLOR_WHITE );
 
   /* Set the alarm */
   LowPowerHandleAlarm();
 
-  kWindow_Popup("STANDBY Alarm", GUI_COLOR_WHITE, GUI_COLOR_ST_BLUE,\
+  kWindow_Popup("STANDBY Alarm", UTIL_LCD_COLOR_WHITE, UTIL_LCD_COLOR_ST_BLUE,\
                 "\nstandby mode\nstarted\nwait alarm\nto exit\nand reset\n",                            \
-                GUI_COLOR_ST_BLUE, GUI_COLOR_WHITE );
+                UTIL_LCD_COLOR_ST_BLUE, UTIL_LCD_COLOR_WHITE );
 
   /* Optimize GPIO consumption (analog) for standby mode */
   GPIOoptimStandby(WAKEUP_RTC);
@@ -270,9 +270,9 @@ void LowPowerStandbyRTCAlarm(void)
   */
 void LowPowerSleepEXTI(void)
 {
-  kWindow_Popup("SLEEP EXTI", GUI_COLOR_WHITE, GUI_COLOR_ST_BLUE,\
+  kWindow_Popup("SLEEP EXTI", UTIL_LCD_COLOR_WHITE, UTIL_LCD_COLOR_ST_BLUE,\
                 "\n\nPress JOY sel to\nstart\nsleep mode\n",   \
-                GUI_COLOR_ST_BLUE, GUI_COLOR_WHITE );
+                UTIL_LCD_COLOR_ST_BLUE, UTIL_LCD_COLOR_WHITE );
 
   /* Wait for key press */
   HAL_Delay(100);
@@ -282,9 +282,9 @@ void LowPowerSleepEXTI(void)
     user_action = 0;
   };
 
-  kWindow_Popup("SLEEP EXTI", GUI_COLOR_WHITE, GUI_COLOR_ST_BLUE,     \
+  kWindow_Popup("SLEEP EXTI", UTIL_LCD_COLOR_WHITE, UTIL_LCD_COLOR_ST_BLUE,     \
                 "\n\nsleep mode\nstarted\npress USER button\nto exit\n",\
-                 GUI_COLOR_ST_BLUE, GUI_COLOR_WHITE );
+                 UTIL_LCD_COLOR_ST_BLUE, UTIL_LCD_COLOR_WHITE );
 
   /* USER push-button will be used to wakeup the system from SLEEP mode */
   BSP_PB_Init(BUTTON_USER, BUTTON_MODE_EXTI);
@@ -339,16 +339,16 @@ void LowPowerSleepEXTI(void)
   */
 void LowPowerSleepRTCAlarm(void)
 {
-  kWindow_Popup("SLEEP Alarm", GUI_COLOR_WHITE, GUI_COLOR_ST_BLUE,\
+  kWindow_Popup("SLEEP Alarm", UTIL_LCD_COLOR_WHITE, UTIL_LCD_COLOR_ST_BLUE,\
                 "\nset delay time\n",                          \
-                GUI_COLOR_ST_BLUE, GUI_COLOR_WHITE );
+                UTIL_LCD_COLOR_ST_BLUE, UTIL_LCD_COLOR_WHITE );
 
   /* set the alarm */
   LowPowerHandleAlarm();
 
-  kWindow_Popup("SLEEP Alarm", GUI_COLOR_WHITE, GUI_COLOR_ST_BLUE,  \
+  kWindow_Popup("SLEEP Alarm", UTIL_LCD_COLOR_WHITE, UTIL_LCD_COLOR_ST_BLUE,  \
                 "\n\nsleep mode\nstarted\nwait alarm\nto exit\n",\
-                GUI_COLOR_ST_BLUE, GUI_COLOR_WHITE );
+                UTIL_LCD_COLOR_ST_BLUE, UTIL_LCD_COLOR_WHITE );
 
   /* De Init Joystick */
   BSP_JOY_DeInit(JOY1, JOY_ALL);
@@ -403,9 +403,9 @@ void LowPowerSleepRTCAlarm(void)
   */
 void LowPowerStopEXTI(void)
 {
-  kWindow_Popup("STOP EXTI", GUI_COLOR_WHITE, GUI_COLOR_ST_BLUE,\
+  kWindow_Popup("STOP EXTI", UTIL_LCD_COLOR_WHITE, UTIL_LCD_COLOR_ST_BLUE,\
                 "\n\nPress JOY sel to\nstart\nstop mode\n",   \
-                GUI_COLOR_ST_BLUE, GUI_COLOR_WHITE );
+                UTIL_LCD_COLOR_ST_BLUE, UTIL_LCD_COLOR_WHITE );
 
   /* Wait for keypress */
   HAL_Delay(100);
@@ -415,9 +415,9 @@ void LowPowerStopEXTI(void)
     user_action = 0;
   };
 
-  kWindow_Popup("STOP EXTI", GUI_COLOR_WHITE, GUI_COLOR_ST_BLUE,     \
+  kWindow_Popup("STOP EXTI", UTIL_LCD_COLOR_WHITE, UTIL_LCD_COLOR_ST_BLUE,     \
                 "\n\nstop mode\nstarted\npress USER button\nto exit\n",\
-                 GUI_COLOR_ST_BLUE, GUI_COLOR_WHITE );
+                 UTIL_LCD_COLOR_ST_BLUE, UTIL_LCD_COLOR_WHITE );
 
   /* USER push-button will be used to wakeup the system from STOP mode */
   BSP_PB_Init(BUTTON_USER, BUTTON_MODE_EXTI);
@@ -464,16 +464,16 @@ void LowPowerStopEXTI(void)
   */
 void LowPowerStopRTCAlarm(void)
 {
-  kWindow_Popup("STOP Alarm", GUI_COLOR_WHITE, GUI_COLOR_ST_BLUE,\
+  kWindow_Popup("STOP Alarm", UTIL_LCD_COLOR_WHITE, UTIL_LCD_COLOR_ST_BLUE,\
                 "\nset delay time\n",                          \
-                GUI_COLOR_ST_BLUE, GUI_COLOR_WHITE );
+                UTIL_LCD_COLOR_ST_BLUE, UTIL_LCD_COLOR_WHITE );
 
   /* set the alarm */
   LowPowerHandleAlarm();
 
-  kWindow_Popup("STOP Alarm", GUI_COLOR_WHITE, GUI_COLOR_ST_BLUE,  \
+  kWindow_Popup("STOP Alarm", UTIL_LCD_COLOR_WHITE, UTIL_LCD_COLOR_ST_BLUE,  \
                 "\n\nstop mode\nstarted\nwait alarm\nto exit\n",\
-                GUI_COLOR_ST_BLUE, GUI_COLOR_WHITE );
+                UTIL_LCD_COLOR_ST_BLUE, UTIL_LCD_COLOR_WHITE );
 
   /* De Init Joystick */
   BSP_JOY_DeInit(JOY1, JOY_ALL);
@@ -537,17 +537,17 @@ static void LowPowerHandleAlarm(void)
   uint32_t pXSize;
 
   /* get current font */
-  font = GUI_GetFont();
+  font = UTIL_LCD_GetFont();
   BSP_LCD_GetXSize(LCD_INSTANCE, &pXSize);
   statpos = (pXSize >> 1) - (4 * font->Width);
 
   /* Get the alarm time from user */
   do
   {
-    GUI_SetTextColor(GUI_COLOR_ST_BLUE);
+    UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_BLUE);
     sprintf((char *)temp, "%.2d:%.2d:%.2d", time.Hours, time.Minutes, time.Seconds);
-    GUI_DisplayStringAt(statpos, 5 * font->Height, temp, LEFT_MODE);
-    GUI_SetTextColor(GUI_COLOR_ST_PINK);
+    UTIL_LCD_DisplayStringAt(statpos, 5 * font->Height, temp, LEFT_MODE);
+    UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_PINK);
 
     switch(index)
     {
@@ -564,7 +564,7 @@ static void LowPowerHandleAlarm(void)
       sprintf((char *)temp, "%.2d", time.Seconds);
       break;
     }
-    GUI_DisplayStringAt(position, 5 * font->Height, temp, LEFT_MODE);
+    UTIL_LCD_DisplayStringAt(position, 5 * font->Height, temp, LEFT_MODE);
 
     user_event = JOY_NONE;
     user_action = 0;
@@ -671,8 +671,8 @@ void LowPowerExitDisplay(uint32_t Mode)
     strcat(msg, "STOP\n");
   }
 
-  kWindow_Popup("Low Power", GUI_COLOR_WHITE, GUI_COLOR_ST_BLUE,\
-                msg, GUI_COLOR_ST_BLUE, GUI_COLOR_WHITE );
+  kWindow_Popup("Low Power", UTIL_LCD_COLOR_WHITE, UTIL_LCD_COLOR_ST_BLUE,\
+                msg, UTIL_LCD_COLOR_ST_BLUE, UTIL_LCD_COLOR_WHITE );
 
   HAL_Delay(500);
 }

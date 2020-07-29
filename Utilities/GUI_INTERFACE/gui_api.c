@@ -43,6 +43,10 @@
 #endif
 #if defined(_RTOS)
 #include "cmsis_os.h"
+#else
+#if defined(USE_STM32_UTILITY_OS)
+#include "utilities_conf.h"
+#endif /*USE_STM32_UTILITY_OS */
 #endif /*_RTOS*/
 #include "string.h"
 
@@ -534,6 +538,7 @@ const uint8_t* (*pCB_HWBoardVersion)(void)  = NULL;
 const uint8_t* (*pCB_HWPDType)(void)        = NULL;
 uint16_t (*pCB_GetVoltage)(uint8_t)         = NULL;
 int16_t  (*pCB_GetCurrent)(uint8_t)         = NULL;
+USBPD_StatusTypeDef (*pCB_FreeText)(uint8_t, uint8_t*, uint16_t) = NULL;
 
 GUI_HandleTypeDef GUI_SaveInformation[USBPD_PORT_COUNT];
 
@@ -569,6 +574,9 @@ static void      UpdateSNKPowerPort0(void);
 static void      UpdateSNKPowerPort1(void);
 #endif /* USBPD_PORT_COUNT==2 */
 #endif /* _SNK) || _DRP */
+#if defined(USE_STM32_UTILITY_OS)
+void                  GUI_Execute(void);
+#endif /* USE_STM32_UTILITY_OS */
 
 /**
   * @}
@@ -641,13 +649,16 @@ USBPD_FunctionalState GUI_Init(const uint8_t* (*CB_HWBoardVersion)(void), const 
   }
   /* Enable IRQ which has been disabled by FreeRTOS services */
   __enable_irq();
-#else
+#else /* RTOS */
   GUI_Start();
+#if defined(USE_STM32_UTILITY_OS)
+  UTIL_SEQ_RegTask(TASK_GUI, 0, GUI_Execute);
+  UTIL_SEQ_SetTask(TASK_GUI, 0);
+#endif /*USE_STM32_UTILITY_OS */
 #endif /* _RTOS */
 
   return _status;
 }
-
 
 void GUI_Start(void)
 {
@@ -793,6 +804,12 @@ void GUI_TimerCounter(void)
     {
       GUI_TimerMeasReport[USBPD_PORT_0]--;
     }
+#if !defined(_RTOS)&&defined(USE_STM32_UTILITY_OS)
+    else
+    {
+      UTIL_SEQ_SetTask(TASK_GUI, 0);
+    }
+#endif /* !_RTOS && USE_STM32_UTILITY_OS */
   }
 #if USBPD_PORT_COUNT==2
   if (1 == GUI_USER_Params[USBPD_PORT_1].u.d.MeasReportActivation)
@@ -801,6 +818,12 @@ void GUI_TimerCounter(void)
     {
       GUI_TimerMeasReport[USBPD_PORT_1]--;
     }
+#if !defined(_RTOS)&&defined(USE_STM32_UTILITY_OS)
+    else
+    {
+      UTIL_SEQ_SetTask(TASK_GUI, 0);
+    }
+#endif /* !_RTOS && USE_STM32_UTILITY_OS */
   }
 #endif /* USBPD_PORT_COUNT == 2 */
 }
@@ -828,6 +851,10 @@ void GUI_CALLBACK_RX(uint8_t Character, uint8_t Error)
 #endif /* osCMSIS < 0x20000U */
 #else
     GUI_Flag = GUI_USER_EVENT_GUI;
+#if defined(USE_STM32_UTILITY_OS)
+    GUI_RXProcess(GUI_Flag);
+    GUI_Flag = GUI_USER_EVENT_NONE;
+#endif /* USE_STM32_UTILITY_OS */
 #endif /* _RTOS */
   }
 }
@@ -881,7 +908,6 @@ uint32_t GUI_RXProcess(uint32_t Event)
       GUI_FormatAndSendNotification(((Event & GUI_PE_PORT_NUM_Msk) >> GUI_PE_PORT_NUM_Pos), GUI_NOTIF_PE_EVENT, type_event);
     }
   }
-
   return 0;
 }
 
@@ -1446,6 +1472,7 @@ USBPD_GUI_State GUI_SendNotification(uint8_t PortNum, uint8_t **pMsgToSend, uint
       gui_state = GUI_STATE_RUNNING;
 
     }
+  
   }
 
   return gui_state;
@@ -1477,9 +1504,12 @@ void GUI_PostNotificationMessage(uint8_t PortNum, uint16_t EventVal)
 #else
     (void)osMessageQueuePut(GUIMsgBox, &event, 0U, 0U);
 #endif /* osCMSIS < 0x20000U */
-    
 #else
     GUI_Flag = event;
+#if defined(USE_STM32_UTILITY_OS)
+    GUI_RXProcess(GUI_Flag);
+    GUI_Flag = GUI_USER_EVENT_NONE;
+#endif /* USE_STM32_UTILITY_OS */
 #endif /* _RTOS */
   }
 }
@@ -1654,6 +1684,15 @@ void GUI_SaveInfo(uint8_t PortNum, uint8_t DataId, uint8_t *Ptr, uint32_t Size)
   }
 }
 
+/**
+  * @brief  Register callback function to be used with Free Text feature
+  * @param  CB_FreeText Callback function to register (port number, payload and size)
+  * @retval None
+  */
+void GUI_RegisterCallback_FreeText(USBPD_StatusTypeDef (*CB_FreeText)(uint8_t, uint8_t*, uint16_t))
+{
+  pCB_FreeText = CB_FreeText;
+}
 
 /**
   * @}
@@ -1988,6 +2027,8 @@ static void Request_MessageReq(uint8_t PortNum, uint8_t* instruction, uint8_t *p
     break;
   case GUI_MSG_VDM_UNSTRUCTURED :
     break;
+#endif /* _VDM || _VCONN_SUPPORT */
+#if defined(_VDM)
   case GUI_MSG_DISPLAY_PORT_STATUS :
     {
       uint32_t dp_status;
@@ -2052,8 +2093,6 @@ static void Request_MessageReq(uint8_t PortNum, uint8_t* instruction, uint8_t *p
     break;
   case GUI_MSG_DISPLAY_PORT_ATTENTION :
     break;
-#endif /* _VDM || _VCONN_SUPPORT */
-#if defined(_VDM)
   case GUI_MSG_VDM_ATTENTION :
     {
       uint16_t svid = 0;
@@ -3175,8 +3214,15 @@ static void Send_DpmRegisterWriteCnf(uint8_t PortNum, uint8_t *pEncodedMsg, uint
   */
 static USBPD_StatusTypeDef Manage_FreeText(uint8_t PortNum, uint8_t *pPayload, uint16_t Size)
 {
-  USBPD_TRACE_Add(USBPD_TRACE_DEBUG, PortNum, 0, pPayload, Size);
-  return USBPD_OK;
+  USBPD_StatusTypeDef _status = USBPD_FAIL;
+
+  if (NULL != pCB_FreeText)
+  {
+    pCB_FreeText(PortNum, pPayload, Size);
+    _status = USBPD_OK;
+  }
+
+  return _status;
 }
 
 /**

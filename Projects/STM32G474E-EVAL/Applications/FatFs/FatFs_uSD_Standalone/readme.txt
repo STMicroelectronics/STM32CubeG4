@@ -67,10 +67,6 @@ STM32G474E-EVAL Rev B's LED can be used to monitor the application status:
   - LED3 is ON when any error occurs.
   - LED3 toggle when SD card is unplugged.
 
-@par Keywords
-
-SD Card, FatFs, File system, FAT Volume, Format, Mount, Read, Write,
-
 @note Care must be taken when using HAL_Delay(), this function provides accurate delay (in milliseconds)
       based on variable incremented in SysTick ISR. This implies that if HAL_Delay() is called from
       a peripheral ISR process, then the SysTick interrupt must have higher priority (numerically lower)
@@ -79,6 +75,10 @@ SD Card, FatFs, File system, FAT Volume, Format, Mount, Read, Write,
 
 @note The application needs to ensure that the SysTick time base is always set to 1 millisecond
       to have correct HAL operation.
+
+@par Keywords
+
+FatFs, SDMMC, SD Card, File system, FAT Volume, Format, Mount, Read, Write,
 
 @par Directory contents
 

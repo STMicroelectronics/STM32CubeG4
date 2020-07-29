@@ -90,7 +90,7 @@ KMODULE_RETURN _ThermometerConfig(void)
 KMODULE_RETURN _ThermometerDemoExec(void)
 {
   /* Prepare the main MMI */
-  GUI_Clear(GUI_COLOR_WHITE);
+  UTIL_LCD_Clear(UTIL_LCD_COLOR_WHITE);
   kMenu_Execute(ThermometerMenu);
 
   /* Execute the app */
@@ -115,7 +115,7 @@ void ThermometerDemo(void)
     if ( BSP_ENV_SENSOR_GetValue(0, ENV_TEMPERATURE, &TempValueNew) != BSP_ERROR_NONE)
           return;
 
-    /* Display first Temperature Informations */
+    /* Display first Temperature Information*/
     ThermometerUserInformation(TempValueNew);
 
     /* Init Old Temp value at first start */
@@ -135,7 +135,7 @@ void ThermometerDemo(void)
         /* ReInit Old Temp value */
         TempValueOld = TempValueNew;
 
-        /* Display Temperature Informations */
+        /* Display Temperature Information*/
         ThermometerUserInformation(TempValueNew);
       }
     }
@@ -152,13 +152,13 @@ void ThermometerUserHeader(void)
   kStorage_OpenFileDrawPixel(28, 6, (uint8_t *)"STFILES/ICON15.bmp");
 
   /* Set default font */
-  GUI_SetFont(&Font20);
+  UTIL_LCD_SetFont(&Font20);
 
   /* Set the Back Color */
-  GUI_SetBackColor(GUI_COLOR_WHITE);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
 
   /* Set the Text Color */
-  GUI_SetTextColor(GUI_COLOR_ST_PINK);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_PINK);
 }
 
 
@@ -181,8 +181,8 @@ void ThermometerUserInformation(float temperature)
 
   sprintf((char*)LCDStrCelsius,    "%5.1f C", TempCelsiusDisplay);
   sprintf((char*)LCDStrFahrenheit, "%5.1f F", TempFahrenheitDisplay);
-  GUI_DisplayStringAt(72,LINE(4), (uint8_t*)LCDStrCelsius, LEFT_MODE);
-  GUI_DisplayStringAt(72,LINE(5), (uint8_t*)LCDStrFahrenheit, LEFT_MODE);
+  UTIL_LCD_DisplayStringAt(72,LINE(4), (uint8_t*)LCDStrCelsius, LEFT_MODE);
+  UTIL_LCD_DisplayStringAt(72,LINE(5), (uint8_t*)LCDStrFahrenheit, LEFT_MODE);
 
   ThermometerDisplay = (uint16_t)TempFahrenheitDisplay;
 
@@ -190,11 +190,11 @@ void ThermometerUserInformation(float temperature)
   if((ThermometerDisplay> 57)&&(ThermometerDisplay < 86))
   {
     /* Set the LCD White Color */
-    GUI_SetTextColor(GUI_COLOR_WHITE);
-    GUI_FillRect(26, 40,  9, 141-((ThermometerDisplay-57)*5), GUI_COLOR_WHITE);
+    UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
+    UTIL_LCD_FillRect(26, 40,  9, 141-((ThermometerDisplay-57)*5), UTIL_LCD_COLOR_WHITE);
 
-    GUI_SetTextColor(GUI_COLOR_ST_PINK);
-    GUI_FillRect(26, 181-((ThermometerDisplay-57)*5), 9 ,((ThermometerDisplay-57)*5),GUI_COLOR_ST_PINK );
+    UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_PINK);
+    UTIL_LCD_FillRect(26, 181-((ThermometerDisplay-57)*5), 9 ,((ThermometerDisplay-57)*5),UTIL_LCD_COLOR_ST_PINK );
   }
 }
 

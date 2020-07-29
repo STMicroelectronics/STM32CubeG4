@@ -466,7 +466,7 @@ typedef struct
   /**
     * @brief  Callback used by the stack to inform DPM that an extended message has been received.
     * @param  PortNum port number value
-    * @param  MsgId extended message id @USBPD_ExtendedMsg_TypeDef
+    * @param  MsgId extended message id @ref USBPD_ExtendedMsg_TypeDef
     * @param  ptrData pointer on the data
     * @param  DataSize size of the data
     * @retval None
@@ -652,6 +652,15 @@ uint32_t            USBPD_PE_StateMachine_SNK(uint8_t PortNum);
 uint32_t            USBPD_PE_StateMachine_DRP(uint8_t PortNum);
 #endif /* USBPDCORE_DRP */
 
+#if defined(USBPDCORE_VPD) && defined(USBPDCORE_SNK)
+/**
+  * @brief  Policy Engine SNK state machine supporting VPD
+  * @param  PortNum Index of current used port
+  * @retval Timing in ms
+  */
+uint32_t USBPD_PE_StateMachine_SNKwVPD(uint8_t PortNum);
+#endif /* USBPDCORE_DRP */
+
 /**
   * @brief  Function called by DPM to set the cable status connected or disconnected.
   * @param  PortNum     Index of current used port
@@ -704,7 +713,7 @@ void                USBPD_PE_InitVDM_Callback(uint8_t PortNum, USBPD_VDM_Callbac
 /**
   * @brief  This generic function to send a control message
   * @param  PortNum   Index of current used port
-  * @param  CtrlMsg   Control message id @USBPD_ControlMsg_TypeDef
+  * @param  CtrlMsg   Control message id @ref USBPD_ControlMsg_TypeDef
   * @param  SOPType   SOP Type based on @ref USBPD_SOPType_TypeDef
   * @retval status    @ref USBPD_OK, @ref USBPD_BUSY, @ref USBPD_ERROR or @ref USBPD_FAIL
   */
@@ -751,12 +760,12 @@ USBPD_StatusTypeDef USBPD_PE_Send_Request(uint8_t PortNum, uint32_t Rdo, USBPD_C
 #if defined(USBPDCORE_BATTERY) || defined(USBPDCORE_MANU_INFO) || defined(USBPDCORE_SECURITY_MSG) || defined(USBPDCORE_FWUPD)
 /**
   * @brief  This function send an extended message
-  * @Note   The managment of chunk or unchunked message is manage inside the
+  * @note   The managment of chunk or unchunked message is manage inside the
   * @param  PortNum      Port number value
   * @param  SOPType      Message type based on @ref USBPD_SOPType_TypeDef
   * @param  MessageType  Extended Msg type @ref USBPD_ExtendedMsg_TypeDef
   * @param  Ptrdata      Data pointer to PRL layer
-  * @param  DataSize     Size of the data (<= @ref USBPD_MAX_EXTENDED_MSGLEN)
+  * @param  DataSize     Size of the data (<= 260)
   * @retval status       @ref USBPD_OK, @ref USBPD_BUSY, @ref USBPD_ERROR or @ref USBPD_FAIL
   */
 USBPD_StatusTypeDef USBPD_PE_SendExtendedMessage(uint8_t PortNum, USBPD_SOPType_TypeDef SOPType, USBPD_ExtendedMsg_TypeDef MessageType, uint8_t *Ptrdata, uint16_t DataSize);

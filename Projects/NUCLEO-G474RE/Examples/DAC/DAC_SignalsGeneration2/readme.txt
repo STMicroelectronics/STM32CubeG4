@@ -80,7 +80,7 @@ Analog, DAC, Signals generation, DMA, Sawtooth, Sine, Waveform
 
   - NUCLEO-G474RE RevC Set-up :
       - Use User push-button connected to PC.13.
-      - 
+      - Use analog output PA4 (pin 32 connector CN7) 
 
 @par How to use it ? 
 

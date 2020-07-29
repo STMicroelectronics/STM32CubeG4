@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32G431xx,USE_STM32G4XX_NUCLEO</Define>
               <Undefine></Undefine>
-              <IncludePath>../Inc;../../../../../Drivers/CMSIS/Device/ST/STM32G4xx/Include;../../../../../Drivers/STM32G4xx_HAL_Driver/Inc;../../../../../Drivers/BSP/STM32G4xx_Nucleo;../../../../../Drivers/BSP/Adafruit_Shield;../../../../../Drivers/BSP/Components/Common;../../../../../Utilities/Log;../../../../../Utilities/Fonts;../../../../../Utilities/CPU;../../../../../Utilities/Basic_GUI;../../../../../Drivers/CMSIS/Include</IncludePath>
+              <IncludePath>../Inc;../../../../../Drivers/CMSIS/Device/ST/STM32G4xx/Include;../../../../../Drivers/STM32G4xx_HAL_Driver/Inc;../../../../../Drivers/BSP/STM32G4xx_Nucleo;../../../../../Drivers/BSP/Adafruit_Shield;../../../../../Drivers/BSP/Components/Common;../../../../../Utilities/Log;../../../../../Utilities/Fonts;../../../../../Utilities/CPU;../../../../../Utilities/LCD;../../../../../Drivers/CMSIS/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -520,12 +520,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>Drivers/Utilities/Basic_GUI</GroupName>
+          <GroupName>Drivers/Utilities/LCD</GroupName>
           <Files>
             <File>
-              <FileName>basic_gui.c</FileName>
+              <FileName>stm32_lcd.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../Utilities/Basic_GUI/basic_gui.c</FilePath>
+              <FilePath>../../../../../Utilities/LCD/stm32_lcd.c</FilePath>
             </File>
           </Files>
         </Group>

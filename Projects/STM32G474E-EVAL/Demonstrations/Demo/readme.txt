@@ -44,7 +44,7 @@ Then the SystemClock_Config() function is used to configure the system clock
 
   - This demonstration runs on STM32G474E-EVAL board (MB1397 revB)
 
-  - A microSD card must contain all the ressources files
+  - A microSD card must contain all the resources files
     available under the FW package Binary/SD_card folder.
 
 

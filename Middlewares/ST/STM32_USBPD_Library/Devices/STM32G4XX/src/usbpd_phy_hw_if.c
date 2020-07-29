@@ -24,7 +24,9 @@
 #include "usbpd_hw.h"
 #include "usbpd_core.h"
 #include "usbpd_hw_if.h"
+#if !defined(USBPDCORE_LIB_NO_PD)
 #include "usbpd_timersserver.h"
+#endif /* !USBPDCORE_LIB_NO_PD */
 #if defined(_LOW_POWER)
 #include "usbpd_lowpower.h"
 #endif
@@ -105,7 +107,7 @@ USBPD_StatusTypeDef USBPD_HW_IF_SendBuffer(uint8_t PortNum, USBPD_SOPType_TypeDe
     {
 #if defined(_LOW_POWER)
       LPM_SetStopMode((LPM_Id_t)(LPM_PE_0 + PortNum), LPM_Disable);
-#endif  
+#endif
       WRITE_REG(Ports[PortNum].hdmatx->CMAR, (uint32_t)pBuffer);
       WRITE_REG(Ports[PortNum].hdmatx->CNDTR, Size);
       Ports[PortNum].hdmatx->CCR |= DMA_CCR_EN;
@@ -176,7 +178,7 @@ void USBPDM1_AssertRd(uint8_t PortNum)
 
   HAL_Delay(1);
 
-#ifndef _LOW_POWER  
+#ifndef _LOW_POWER
   LL_UCPD_TypeCDetectionCC2Enable(Ports[PortNum].husbpd);
   LL_UCPD_TypeCDetectionCC1Enable(Ports[PortNum].husbpd);
 #endif
@@ -221,12 +223,12 @@ void USBPD_HW_IF_DisableRX(uint8_t PortNum)
 
 void HW_SignalAttachement(uint8_t PortNum, CCxPin_TypeDef cc)
 {
-#if !defined(USBPDCORE_LIB_NO_PD)  
+#if !defined(USBPDCORE_LIB_NO_PD)
   uint32_t _temp;
-    
+
   /* Init timer to detect the reception of goodCRC */
   USBPD_TIM_Init();
- 
+
   /* Prepare ucpd to handle PD message
             RX message start listen
             TX prepare the DMA to be transfer ready
@@ -250,10 +252,14 @@ void HW_SignalAttachement(uint8_t PortNum, CCxPin_TypeDef cc)
                         UCPD_IMR_TXUNDIE     | UCPD_IMR_RXORDDETIE  | UCPD_IMR_RXHRSTDETIE | UCPD_IMR_RXOVRIE    | UCPD_IMR_RXMSGENDIE
 
   MODIFY_REG(Ports[PortNum].husbpd->IMR, INTERRUPT_MASK, INTERRUPT_MASK);
+#endif /* !USBPDCORE_LIB_NO_PD */
 
+#if !defined(USBPDCORE_LIB_NO_PD)||defined(USBPD_TYPE_STATE_MACHINE)
   /* Handle CC enable */
   Ports[PortNum].CCx = cc;
+#endif /* !USBPDCORE_LIB_NO_PD || USBPD_TYPE_STATE_MACHINE */
 
+#if !defined(USBPDCORE_LIB_NO_PD)
   /* Set CC pin for PD message */
   LL_UCPD_SetCCPin(Ports[PortNum].husbpd, (Ports[PortNum].CCx == CC1) ? LL_UCPD_CCPIN_CC1 : LL_UCPD_CCPIN_CC2);
 
@@ -269,7 +275,7 @@ void HW_SignalAttachement(uint8_t PortNum, CCxPin_TypeDef cc)
   /* Initialize Vconn managment */
   (void)BSP_USBPD_PWR_VCONNInit(PortNum, (Ports[PortNum].CCx == CC1) ? 1u : 2u);
 #endif /* _VCONN_SUPPORT */
-  
+
   /* Disable the Resistor on Vconn PIN */
   (Ports[PortNum].CCx == CC1) ? LL_UCPD_SetccEnable(Ports[PortNum].husbpd, LL_UCPD_CCENABLE_CC1) : LL_UCPD_SetccEnable(Ports[PortNum].husbpd, LL_UCPD_CCENABLE_CC2);
 
@@ -277,20 +283,19 @@ void HW_SignalAttachement(uint8_t PortNum, CCxPin_TypeDef cc)
   LL_UCPD_SetRxMode(Ports[PortNum].husbpd, LL_UCPD_RXMODE_NORMAL);
   LL_UCPD_RxDMAEnable(Ports[PortNum].husbpd);
   LL_UCPD_TxDMAEnable(Ports[PortNum].husbpd);
-  LL_UCPD_RxEnable(Ports[PortNum].husbpd);
 #endif /* !USBPDCORE_LIB_NO_PD */
 }
 
 
 void HW_SignalDetachment(uint8_t PortNum)
 {
-#if !defined(USBPDCORE_LIB_NO_PD)  
+#if !defined(USBPDCORE_LIB_NO_PD)
   /* stop DMA RX/TX */
   LL_UCPD_RxDMADisable(Ports[PortNum].husbpd);
   LL_UCPD_TxDMADisable(Ports[PortNum].husbpd);
   LL_UCPD_RxDisable(Ports[PortNum].husbpd);
 
-#ifndef _LOW_POWER  
+#ifndef _LOW_POWER
   /* Enable only detection interrupt */
   WRITE_REG(Ports[PortNum].husbpd->IMR, UCPD_IMR_TYPECEVT1IE | UCPD_IMR_TYPECEVT2IE);
 #endif
@@ -300,16 +305,20 @@ void HW_SignalDetachment(uint8_t PortNum)
 
   LL_UCPD_SetccEnable(Ports[PortNum].husbpd, LL_UCPD_CCENABLE_CC1CC2);
 
-  if (USBPD_PORTPOWERROLE_SNK == Ports[PortNum].params->PE_PowerRole) 
-  {  
+  if (USBPD_PORTPOWERROLE_SNK == Ports[PortNum].params->PE_PowerRole)
+  {
 #if defined(_VCONN_SUPPORT)
     /* DeInitialize Vconn managment */
   (void)BSP_USBPD_PWR_VCONNDeInit(PortNum, (Ports[PortNum].CCx == CC1) ? 1u : 2u);
-#endif  
+#endif
     /* DeInitialise VBUS power */
   (void)BSP_USBPD_PWR_VBUSDeInit(PortNum);
   }
+#endif /* !USBPDCORE_LIB_NO_PD */
+#if !defined(USBPDCORE_LIB_NO_PD)||defined(USBPD_TYPE_STATE_MACHINE)
   Ports[PortNum].CCx = CCNONE;
+#endif /* !USBPDCORE_LIB_NO_PD || USBPD_TYPE_STATE_MACHINE */
+#if !defined(USBPDCORE_LIB_NO_PD)
   /* DeInit timer to detect the reception of goodCRC */
   USBPD_TIM_DeInit();
 #endif /* !USBPDCORE_LIB_NO_PD */

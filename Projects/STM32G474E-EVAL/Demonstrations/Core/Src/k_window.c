@@ -20,7 +20,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32g474e_eval.h"
 #include "stm32g474e_eval_lcd.h"
-#include "basic_gui.h"
+#include "stm32_lcd.h"
 #include "k_window.h"
 #include "utils.h"
 
@@ -50,22 +50,22 @@ void kWindow_Popup(char *title, uint32_t title_tc, uint32_t title_bc ,char *Msg,
   uint16_t index,subindex;
 
   /* Clear the LCD Screen */
-  GUI_Clear(title_bc);
-  GUI_SetBackColor(title_bc);
-  GUI_SetTextColor(title_tc);
+  UTIL_LCD_Clear(title_bc);
+  UTIL_LCD_SetBackColor(title_bc);
+  UTIL_LCD_SetTextColor(title_tc);
 
   /* Set the Back Color */
-  GUI_SetFont(&LCD_DEFAULT_FONT);
-  GUI_SetTextColor(title_tc);
-  GUI_DisplayStringAt(0, 0, (uint8_t *)title, CENTER_MODE);
+  UTIL_LCD_SetFont(&LCD_DEFAULT_FONT);
+  UTIL_LCD_SetTextColor(title_tc);
+  UTIL_LCD_DisplayStringAt(0, 0, (uint8_t *)title, CENTER_MODE);
 
   /* Prepare the msg area */
-  GUI_SetBackColor(msg_bc);
-  GUI_SetTextColor(msg_bc);
+  UTIL_LCD_SetBackColor(msg_bc);
+  UTIL_LCD_SetTextColor(msg_bc);
   BSP_LCD_GetXSize(LCD_INSTANCE, &pXSize);
   BSP_LCD_GetYSize(LCD_INSTANCE, &pYSize);
-  GUI_FillRect(0, LCD_DEFAULT_FONT.Height, pXSize, pYSize - LCD_DEFAULT_FONT.Height, msg_bc);
-  GUI_SetTextColor(msg_tc);
+  UTIL_LCD_FillRect(0, LCD_DEFAULT_FONT.Height, pXSize, pYSize - LCD_DEFAULT_FONT.Height, msg_bc);
+  UTIL_LCD_SetTextColor(msg_tc);
 
   lineindex = subindex = index = 0;
   do
@@ -74,7 +74,7 @@ void kWindow_Popup(char *title, uint32_t title_tc, uint32_t title_bc ,char *Msg,
     if((Msg[index] == '\n') || (Msg[subindex] == '\0'))
     {
       substring[subindex] = '\0';
-      GUI_DisplayStringAt(0, (2+lineindex) * LCD_DEFAULT_FONT.Height, substring, CENTER_MODE);
+      UTIL_LCD_DisplayStringAt(0, (2+lineindex) * LCD_DEFAULT_FONT.Height, substring, CENTER_MODE);
       lineindex++;
       subindex = 0;
     }
@@ -99,7 +99,7 @@ void kWindow_Popup(char *title, uint32_t title_tc, uint32_t title_bc ,char *Msg,
   */
 void kWindow_Error(char *msg)
 {
-  kWindow_Popup("Error popup", GUI_COLOR_BLACK, GUI_COLOR_RED,msg, GUI_COLOR_BLACK, GUI_COLOR_RED);
+  kWindow_Popup("Error popup", UTIL_LCD_COLOR_BLACK, UTIL_LCD_COLOR_RED,msg, UTIL_LCD_COLOR_BLACK, UTIL_LCD_COLOR_RED);
 }
 
 

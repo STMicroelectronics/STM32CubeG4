@@ -184,7 +184,7 @@ void SysTick_Handler(void)
   /* USER CODE BEGIN SysTick_IRQn 0 */
 
   /* USER CODE END SysTick_IRQn 0 */
-  
+
   /* USER CODE BEGIN SysTick_IRQn 1 */
 
   /* USER CODE END SysTick_IRQn 1 */
@@ -205,7 +205,7 @@ void HRTIM1_TIMD_IRQHandler(void)
   /* USER CODE BEGIN HRTIM1_TIMD_IRQn 0 */
   uint32_t __IO CurrentDuty;
   /* USER CODE END HRTIM1_TIMD_IRQn 0 */
-  
+
   /* USER CODE BEGIN HRTIM1_TIMD_IRQn 1 */
   LL_HRTIM_ClearFlag_REP(HRTIM1, LL_HRTIM_TIMER_D);
 

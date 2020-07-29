@@ -72,9 +72,9 @@ void HAL_MspInit(void)
 
   /* System interrupt init*/
 
-  /** Disable the internal Pull-Up in Dead Battery pins of UCPD peripheral 
+  /** Disable the internal Pull-Up in Dead Battery pins of UCPD peripheral
   */
-  LL_PWR_DisableDeadBatteryPD();
+  HAL_PWREx_DisableUCPDDeadBattery();
 
   /* USER CODE BEGIN MspInit 1 */
 
@@ -95,12 +95,12 @@ void HAL_SMBUS_MspInit(SMBUS_HandleTypeDef* hsmbus)
   /* USER CODE BEGIN I2C3_MspInit 0 */
 
   /* USER CODE END I2C3_MspInit 0 */
-  
+
     __HAL_RCC_GPIOG_CLK_ENABLE();
-    /**I2C3 GPIO Configuration    
+    /**I2C3 GPIO Configuration
     PG6     ------> I2C3_SMBA
     PG7     ------> I2C3_SCL
-    PG8     ------> I2C3_SDA 
+    PG8     ------> I2C3_SDA
     */
     GPIO_InitStruct.Pin = GPIO_PIN_6|GPIO_PIN_7|GPIO_PIN_8;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_OD;
@@ -138,13 +138,17 @@ void HAL_SMBUS_MspDeInit(SMBUS_HandleTypeDef* hsmbus)
   /* USER CODE END I2C3_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_I2C3_CLK_DISABLE();
-  
-    /**I2C3 GPIO Configuration    
+
+    /**I2C3 GPIO Configuration
     PG6     ------> I2C3_SMBA
     PG7     ------> I2C3_SCL
-    PG8     ------> I2C3_SDA 
+    PG8     ------> I2C3_SDA
     */
-    HAL_GPIO_DeInit(GPIOG, GPIO_PIN_6|GPIO_PIN_7|GPIO_PIN_8);
+    HAL_GPIO_DeInit(GPIOG, GPIO_PIN_6);
+
+    HAL_GPIO_DeInit(GPIOG, GPIO_PIN_7);
+
+    HAL_GPIO_DeInit(GPIOG, GPIO_PIN_8);
 
     /* I2C3 interrupt DeInit */
     HAL_NVIC_DisableIRQ(I2C3_EV_IRQn);

@@ -72,9 +72,9 @@ void HAL_MspInit(void)
 
   /* System interrupt init*/
 
-  /** Disable the internal Pull-Up in Dead Battery pins of UCPD peripheral 
+  /** Disable the internal Pull-Up in Dead Battery pins of UCPD peripheral
   */
-  LL_PWR_DisableDeadBatteryPD();
+  HAL_PWREx_DisableUCPDDeadBattery();
 
   /* USER CODE BEGIN MspInit 1 */
 
@@ -95,12 +95,12 @@ void HAL_COMP_MspInit(COMP_HandleTypeDef* hcomp)
   /* USER CODE BEGIN COMP1_MspInit 0 */
 
   /* USER CODE END COMP1_MspInit 0 */
-  
+
     __HAL_RCC_GPIOF_CLK_ENABLE();
     __HAL_RCC_GPIOB_CLK_ENABLE();
-    /**COMP1 GPIO Configuration    
+    /**COMP1 GPIO Configuration
     PF4     ------> COMP1_OUT
-    PB1     ------> COMP1_INP 
+    PB1     ------> COMP1_INP
     */
     GPIO_InitStruct.Pin = GPIO_PIN_4;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
@@ -134,10 +134,10 @@ void HAL_COMP_MspDeInit(COMP_HandleTypeDef* hcomp)
   /* USER CODE BEGIN COMP1_MspDeInit 0 */
 
   /* USER CODE END COMP1_MspDeInit 0 */
-  
-    /**COMP1 GPIO Configuration    
+
+    /**COMP1 GPIO Configuration
     PF4     ------> COMP1_OUT
-    PB1     ------> COMP1_INP 
+    PB1     ------> COMP1_INP
     */
     HAL_GPIO_DeInit(GPIOF, GPIO_PIN_4);
 
@@ -166,10 +166,10 @@ void HAL_DAC_MspInit(DAC_HandleTypeDef* hdac)
   /* USER CODE END DAC1_MspInit 0 */
     /* Peripheral clock enable */
     __HAL_RCC_DAC1_CLK_ENABLE();
-  
+
     __HAL_RCC_GPIOA_CLK_ENABLE();
-    /**DAC1 GPIO Configuration    
-    PA4     ------> DAC1_OUT1 
+    /**DAC1 GPIO Configuration
+    PA4     ------> DAC1_OUT1
     */
     GPIO_InitStruct.Pin = GPIO_PIN_4;
     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
@@ -198,9 +198,9 @@ void HAL_DAC_MspDeInit(DAC_HandleTypeDef* hdac)
   /* USER CODE END DAC1_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_DAC1_CLK_DISABLE();
-  
-    /**DAC1 GPIO Configuration    
-    PA4     ------> DAC1_OUT1 
+
+    /**DAC1 GPIO Configuration
+    PA4     ------> DAC1_OUT1
     */
     HAL_GPIO_DeInit(GPIOA, GPIO_PIN_4);
 

@@ -99,6 +99,10 @@ To run this application, the user can use one of the following configuration:
 For more details about the STM32Cube USB Device library, please refer to UM1734
 "STM32Cube USB Device library".
 
+@par Keywords
+
+Connectivity, USB_Device, USB, CDC, Virtual COM Port
+
 @par Directory contents
 
   - USB_Device/CDC_Standalone/Core/Src/main.c                   Main program

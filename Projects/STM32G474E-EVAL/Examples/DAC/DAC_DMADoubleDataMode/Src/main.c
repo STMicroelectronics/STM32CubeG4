@@ -22,7 +22,6 @@
   ******************************************************************************
   */
 /* USER CODE END Header */
-
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
@@ -107,7 +106,6 @@ int main(void)
 {
   /* USER CODE BEGIN 1 */
   /* USER CODE END 1 */
-
 
   /* MCU Configuration--------------------------------------------------------*/
 
@@ -314,7 +312,8 @@ void SystemClock_Config(void)
   /** Configure the main internal regulator output voltage
   */
   HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1);
-  /** Initializes the CPU, AHB and APB busses clocks
+  /** Initializes the RCC Oscillators according to the specified parameters
+  * in the RCC_OscInitTypeDef structure.
   */
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
@@ -330,7 +329,7 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
-  /** Initializes the CPU, AHB and APB busses clocks
+  /** Initializes the CPU, AHB and APB buses clocks
   */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
@@ -339,7 +338,7 @@ void SystemClock_Config(void)
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_7) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_4) != HAL_OK)
   {
     Error_Handler();
   }
@@ -362,14 +361,14 @@ static void MX_DAC3_Init(void)
   /* USER CODE BEGIN DAC3_Init 1 */
 
   /* USER CODE END DAC3_Init 1 */
-  /** DAC Initialization 
+  /** DAC Initialization
   */
   hdac3.Instance = DAC3;
   if (HAL_DAC_Init(&hdac3) != HAL_OK)
   {
     Error_Handler();
   }
-  /** DAC channel OUT2 config 
+  /** DAC channel OUT2 config
   */
   sConfig.DAC_HighFrequency = DAC_HIGH_FREQUENCY_INTERFACE_MODE_AUTOMATIC;
   sConfig.DAC_DMADoubleDataMode = DISABLE;
@@ -378,7 +377,7 @@ static void MX_DAC3_Init(void)
   sConfig.DAC_Trigger = DAC_TRIGGER_T2_TRGO;
   sConfig.DAC_Trigger2 = DAC_TRIGGER_NONE;
   sConfig.DAC_OutputBuffer = DAC_OUTPUTBUFFER_DISABLE;
-  sConfig.DAC_ConnectOnChipPeripheral = DAC_CHIPCONNECT_ENABLE;
+  sConfig.DAC_ConnectOnChipPeripheral = DAC_CHIPCONNECT_INTERNAL;
   sConfig.DAC_UserTrimming = DAC_TRIMMING_FACTORY;
   if (HAL_DAC_ConfigChannel(&hdac3, &sConfig, DAC_CHANNEL_2) != HAL_OK)
   {
@@ -407,14 +406,14 @@ static void MX_DAC4_Init(void)
   /* USER CODE BEGIN DAC4_Init 1 */
 
   /* USER CODE END DAC4_Init 1 */
-  /** DAC Initialization 
+  /** DAC Initialization
   */
   hdac4.Instance = DAC4;
   if (HAL_DAC_Init(&hdac4) != HAL_OK)
   {
     Error_Handler();
   }
-  /** DAC channel OUT2 config 
+  /** DAC channel OUT2 config
   */
   sConfig.DAC_HighFrequency = DAC_HIGH_FREQUENCY_INTERFACE_MODE_AUTOMATIC;
   sConfig.DAC_DMADoubleDataMode = DISABLE;
@@ -423,7 +422,7 @@ static void MX_DAC4_Init(void)
   sConfig.DAC_Trigger = DAC_TRIGGER_T2_TRGO;
   sConfig.DAC_Trigger2 = DAC_TRIGGER_NONE;
   sConfig.DAC_OutputBuffer = DAC_OUTPUTBUFFER_DISABLE;
-  sConfig.DAC_ConnectOnChipPeripheral = DAC_CHIPCONNECT_ENABLE;
+  sConfig.DAC_ConnectOnChipPeripheral = DAC_CHIPCONNECT_INTERNAL;
   sConfig.DAC_UserTrimming = DAC_TRIMMING_FACTORY;
   if (HAL_DAC_ConfigChannel(&hdac4, &sConfig, DAC_CHANNEL_2) != HAL_OK)
   {

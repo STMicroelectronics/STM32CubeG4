@@ -51,7 +51,7 @@ To observe that when INP is above INM, OUT is high. Otherwise, OUT is low.
 
 @par Keywords
 
-comparator, Inverte Input, voltage compare
+comparator, Inverter Input, voltage compare
 
 @par Directory contents 
 

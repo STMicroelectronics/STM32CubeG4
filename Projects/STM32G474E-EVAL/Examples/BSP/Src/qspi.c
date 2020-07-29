@@ -129,7 +129,7 @@ static uint8_t RMABuffercmp(uint8_t* pBuffer1, uint8_t* pBuffer2, uint32_t Buffe
 int32_t QSPI_demo(void)
 {
   QSPI_SetHint();
-  GUI_SetFont(&FONT);
+  UTIL_LCD_SetFont(&FONT);
   Xpos = Xpos_START;
   Ypos = Ypos_START;
 
@@ -185,15 +185,15 @@ static void QSPI_Indirect_Mode(void)
 
         if(BSP_QSPI_Init(0, &Flash) != BSP_ERROR_NONE)
         {
-          GUI_DisplayStringAt(Xpos, Ypos, (uint8_t*)"Init: FAILED.", LEFT_MODE);
+          UTIL_LCD_DisplayStringAt(Xpos, Ypos, (uint8_t*)"Init: FAILED.", LEFT_MODE);
         }
         else if(BSP_QSPI_GetStatus(0) != BSP_ERROR_NONE)
         {
-          GUI_DisplayStringAt(Xpos, Ypos, (uint8_t*)"Get Status: FAILED.", LEFT_MODE);
+          UTIL_LCD_DisplayStringAt(Xpos, Ypos, (uint8_t*)"Get Status: FAILED.", LEFT_MODE);
         }
         else if(BSP_QSPI_ReadID(0, flash_id) != BSP_ERROR_NONE)
         {
-          GUI_DisplayStringAt(Xpos, Ypos, (uint8_t*)"Read ID: FAILED.", LEFT_MODE);
+          UTIL_LCD_DisplayStringAt(Xpos, Ypos, (uint8_t*)"Read ID: FAILED.", LEFT_MODE);
         }
         else
         {
@@ -201,7 +201,7 @@ static void QSPI_Indirect_Mode(void)
           {
             if((flash_id[0] != 0x20) || (flash_id[1] != 0xBA) || (flash_id[2] != 0x20))
             {
-              GUI_DisplayStringAt(Xpos, Ypos, (uint8_t*)"Read ID: FAILED.", LEFT_MODE);
+              UTIL_LCD_DisplayStringAt(Xpos, Ypos, (uint8_t*)"Read ID: FAILED.", LEFT_MODE);
             }
           }
           else
@@ -209,7 +209,7 @@ static void QSPI_Indirect_Mode(void)
             if((flash_id[0] != 0x20) || (flash_id[1] != 0x20) || (flash_id[2] != 0xBA) ||
                (flash_id[3] != 0xBA) || (flash_id[4] != 0x20) || (flash_id[5] != 0x20))
             {
-              GUI_DisplayStringAt(Xpos, Ypos, (uint8_t*)"Read ID: FAILED.", LEFT_MODE);
+              UTIL_LCD_DisplayStringAt(Xpos, Ypos, (uint8_t*)"Read ID: FAILED.", LEFT_MODE);
             }
           }
         }
@@ -218,7 +218,7 @@ static void QSPI_Indirect_Mode(void)
         {
           if(BSP_QSPI_EraseBlock(0, i*BLOCK_SIZE, MT25QL512ABB_ERASE_64K) != BSP_ERROR_NONE)
           {
-            GUI_DisplayStringAt(Xpos, Ypos, (uint8_t*)"Erase: FAILED.", LEFT_MODE);
+            UTIL_LCD_DisplayStringAt(Xpos, Ypos, (uint8_t*)"Erase: FAILED.", LEFT_MODE);
           }
           while(BSP_QSPI_GetStatus(0) == BSP_ERROR_BUSY);
         }
@@ -229,12 +229,12 @@ static void QSPI_Indirect_Mode(void)
         {
           if(BSP_QSPI_Write(0, qspi_aTxBuffer, i*BUFFER_SIZE, BUFFER_SIZE) != BSP_ERROR_NONE)
           {
-            GUI_DisplayStringAt(Xpos, Ypos, (uint8_t*)"Write: FAILED.", LEFT_MODE);
+            UTIL_LCD_DisplayStringAt(Xpos, Ypos, (uint8_t*)"Write: FAILED.", LEFT_MODE);
           }
 
           if(BSP_QSPI_Read(0, qspi_aRxBuffer, i*BUFFER_SIZE, BUFFER_SIZE) != BSP_ERROR_NONE)
           {
-            GUI_DisplayStringAt(Xpos, Ypos, (uint8_t*)"Read: FAILED.", LEFT_MODE);
+            UTIL_LCD_DisplayStringAt(Xpos, Ypos, (uint8_t*)"Read: FAILED.", LEFT_MODE);
           }
 
           if(RMABuffercmp(qspi_aRxBuffer, qspi_aTxBuffer, (uint32_t)BUFFER_SIZE, &Offset) != 0)
@@ -244,27 +244,27 @@ static void QSPI_Indirect_Mode(void)
         }
       }
 
-      GUI_SetTextColor(GUI_COLOR_BLACK);
-      GUI_DisplayStringAt(Xpos, Ypos, (uint8_t*)"Indirect", LEFT_MODE);
-      GUI_DisplayStringAt(Xpos+(10*CHAR_WIDE), Ypos, (uint8_t*)TransferRateText[k], LEFT_MODE);
-      GUI_DisplayStringAt(Xpos+(14*CHAR_WIDE), Ypos, (uint8_t*)DualFlashModeText[l], LEFT_MODE);
-      GUI_DisplayStringAt(Xpos+(26*CHAR_WIDE), Ypos, (uint8_t*)":", LEFT_MODE);
+      UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_BLACK);
+      UTIL_LCD_DisplayStringAt(Xpos, Ypos, (uint8_t*)"Indirect", LEFT_MODE);
+      UTIL_LCD_DisplayStringAt(Xpos+(10*CHAR_WIDE), Ypos, (uint8_t*)TransferRateText[k], LEFT_MODE);
+      UTIL_LCD_DisplayStringAt(Xpos+(14*CHAR_WIDE), Ypos, (uint8_t*)DualFlashModeText[l], LEFT_MODE);
+      UTIL_LCD_DisplayStringAt(Xpos+(26*CHAR_WIDE), Ypos, (uint8_t*)":", LEFT_MODE);
       if(error_code == 0)
       {
-        GUI_SetTextColor(GUI_COLOR_GREEN);
-        GUI_DisplayStringAt(Xpos+(28*CHAR_WIDE), Ypos, (uint8_t*)"OK", LEFT_MODE);
+        UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_GREEN);
+        UTIL_LCD_DisplayStringAt(Xpos+(28*CHAR_WIDE), Ypos, (uint8_t*)"OK", LEFT_MODE);
       }
       else
       {
-        GUI_SetTextColor(GUI_COLOR_RED);
-        GUI_DisplayStringAt(Xpos+(28*CHAR_WIDE), Ypos, (uint8_t*)"FAILED", LEFT_MODE);
+        UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_RED);
+        UTIL_LCD_DisplayStringAt(Xpos+(28*CHAR_WIDE), Ypos, (uint8_t*)"FAILED", LEFT_MODE);
         error_code = 0;
       }
       NEXT_LINE
     }
   }
 
-  GUI_SetTextColor(GUI_COLOR_BLACK);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_BLACK);
 }
 
 static void QSPI_MemoryMapped_Mode(void)
@@ -296,18 +296,18 @@ static void QSPI_MemoryMapped_Mode(void)
 
         if(BSP_QSPI_Init(0, &Flash) != BSP_ERROR_NONE)
         {
-          GUI_DisplayStringAt(Xpos, Ypos, (uint8_t*)"Init: FAILED.", LEFT_MODE);
+          UTIL_LCD_DisplayStringAt(Xpos, Ypos, (uint8_t*)"Init: FAILED.", LEFT_MODE);
         }
         else if(BSP_QSPI_GetStatus(0) != BSP_ERROR_NONE)
         {
-          GUI_DisplayStringAt(Xpos, Ypos, (uint8_t*)"Get Status: FAILED.", LEFT_MODE);
+          UTIL_LCD_DisplayStringAt(Xpos, Ypos, (uint8_t*)"Get Status: FAILED.", LEFT_MODE);
         }
 
         for(i = 0; i < NB_BLOCK; i++)
         {
           if(BSP_QSPI_EraseBlock(0, i*BLOCK_SIZE, MT25QL512ABB_ERASE_64K) != BSP_ERROR_NONE)
           {
-            GUI_DisplayStringAt(Xpos, Ypos, (uint8_t*)"Erase:  FAILED.", LEFT_MODE);
+            UTIL_LCD_DisplayStringAt(Xpos, Ypos, (uint8_t*)"Erase:  FAILED.", LEFT_MODE);
           }
           while(BSP_QSPI_GetStatus(0) == BSP_ERROR_BUSY);
         }
@@ -316,13 +316,13 @@ static void QSPI_MemoryMapped_Mode(void)
         {
           if(BSP_QSPI_Write(0, qspi_aTxBuffer, i*BUFFER_SIZE, BUFFER_SIZE) != BSP_ERROR_NONE)
           {
-            GUI_DisplayStringAt(Xpos, Ypos, (uint8_t*)"Write: FAILED.", LEFT_MODE);
+            UTIL_LCD_DisplayStringAt(Xpos, Ypos, (uint8_t*)"Write: FAILED.", LEFT_MODE);
           }
         }
 
         if(BSP_QSPI_EnableMemoryMappedMode(0) != BSP_ERROR_NONE)
         {
-          GUI_DisplayStringAt(Xpos, Ypos, (uint8_t*)"MemoryMap enable: FAILED.", LEFT_MODE);
+          UTIL_LCD_DisplayStringAt(Xpos, Ypos, (uint8_t*)"MemoryMap enable: FAILED.", LEFT_MODE);
         }
 
         QSPI_MMP_pointer = (uint32_t*)(QPI_MMP_ADDRESS);
@@ -344,31 +344,31 @@ static void QSPI_MemoryMapped_Mode(void)
         }
         if(BSP_QSPI_DisableMemoryMappedMode(0) != BSP_ERROR_NONE)
         {
-          GUI_DisplayStringAt(Xpos, Ypos, (uint8_t*)"MemoryMap disable: FAILED.", LEFT_MODE);
+          UTIL_LCD_DisplayStringAt(Xpos, Ypos, (uint8_t*)"MemoryMap disable: FAILED.", LEFT_MODE);
         }
       }
 
-      GUI_SetTextColor(GUI_COLOR_BLACK);
-      GUI_DisplayStringAt(Xpos, Ypos, (uint8_t*)"MemoryMap", LEFT_MODE);
-      GUI_DisplayStringAt(Xpos+(10*CHAR_WIDE), Ypos, (uint8_t*)TransferRateText[k], LEFT_MODE);
-      GUI_DisplayStringAt(Xpos+(14*CHAR_WIDE), Ypos, (uint8_t*)DualFlashModeText[l], LEFT_MODE);
-      GUI_DisplayStringAt(Xpos+(26*CHAR_WIDE), Ypos, (uint8_t*)":", LEFT_MODE);
+      UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_BLACK);
+      UTIL_LCD_DisplayStringAt(Xpos, Ypos, (uint8_t*)"MemoryMap", LEFT_MODE);
+      UTIL_LCD_DisplayStringAt(Xpos+(10*CHAR_WIDE), Ypos, (uint8_t*)TransferRateText[k], LEFT_MODE);
+      UTIL_LCD_DisplayStringAt(Xpos+(14*CHAR_WIDE), Ypos, (uint8_t*)DualFlashModeText[l], LEFT_MODE);
+      UTIL_LCD_DisplayStringAt(Xpos+(26*CHAR_WIDE), Ypos, (uint8_t*)":", LEFT_MODE);
       if(error_code == 0)
       {
-        GUI_SetTextColor(GUI_COLOR_GREEN);
-        GUI_DisplayStringAt(Xpos+(28*CHAR_WIDE), Ypos, (uint8_t*)"OK", LEFT_MODE);
+        UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_GREEN);
+        UTIL_LCD_DisplayStringAt(Xpos+(28*CHAR_WIDE), Ypos, (uint8_t*)"OK", LEFT_MODE);
       }
       else
       {
-        GUI_SetTextColor(GUI_COLOR_RED);
-        GUI_DisplayStringAt(Xpos+(28*CHAR_WIDE), Ypos, (uint8_t*)"FAILED", LEFT_MODE);
+        UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_RED);
+        UTIL_LCD_DisplayStringAt(Xpos+(28*CHAR_WIDE), Ypos, (uint8_t*)"FAILED", LEFT_MODE);
         error_code = 0;
       }
       NEXT_LINE
     }
   }
 
-  GUI_SetTextColor(GUI_COLOR_BLACK);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_BLACK);
 }
 
 static void QSPI_FlashId(void)
@@ -391,7 +391,7 @@ static void QSPI_FlashId(void)
   /* By default FLASH_ID_1 is selected */
   if(BSP_QSPI_Init(0, &Flash) != BSP_ERROR_NONE)
   {
-    GUI_DisplayStringAt(Xpos, Ypos, (uint8_t*)"Init: FAILED.", LEFT_MODE);
+    UTIL_LCD_DisplayStringAt(Xpos, Ypos, (uint8_t*)"Init: FAILED.", LEFT_MODE);
   }
 
   /* Loop over Flash Id *******************************************************/
@@ -399,11 +399,11 @@ static void QSPI_FlashId(void)
   {
     if(BSP_QSPI_SelectFlashID(0, FlashId[j]) != BSP_ERROR_NONE)
     {
-      GUI_DisplayStringAt(Xpos, Ypos, (uint8_t*)"SelectFlashID: FAILED.", LEFT_MODE);
+      UTIL_LCD_DisplayStringAt(Xpos, Ypos, (uint8_t*)"SelectFlashID: FAILED.", LEFT_MODE);
     }
     else if(BSP_QSPI_GetStatus(0) != BSP_ERROR_NONE)
     {
-      GUI_DisplayStringAt(Xpos, Ypos, (uint8_t*)"Get Status: FAILED.", LEFT_MODE);
+      UTIL_LCD_DisplayStringAt(Xpos, Ypos, (uint8_t*)"Get Status: FAILED.", LEFT_MODE);
     }
 
     for(i = 0; i < NB_BLOCK; i++)
@@ -411,7 +411,7 @@ static void QSPI_FlashId(void)
       /* Erase blocks *********************************************************/
       if(BSP_QSPI_EraseBlock(0, i*BLOCK_SIZE, MT25QL512ABB_ERASE_64K) != BSP_ERROR_NONE)
       {
-        GUI_DisplayStringAt(Xpos, Ypos, (uint8_t*)"Erase: FAILED.", LEFT_MODE);
+        UTIL_LCD_DisplayStringAt(Xpos, Ypos, (uint8_t*)"Erase: FAILED.", LEFT_MODE);
       }
       while(BSP_QSPI_GetStatus(0) == BSP_ERROR_BUSY);
     }
@@ -421,7 +421,7 @@ static void QSPI_FlashId(void)
       /* Read blocks **********************************************************/
       if(BSP_QSPI_Read(0, qspi_aRxBuffer, i*BUFFER_SIZE, BUFFER_SIZE) != BSP_ERROR_NONE)
       {
-        GUI_DisplayStringAt(Xpos, Ypos, (uint8_t*)"Read: FAILED.", LEFT_MODE);
+        UTIL_LCD_DisplayStringAt(Xpos, Ypos, (uint8_t*)"Read: FAILED.", LEFT_MODE);
       }
 
       /* Check blocks empty ***************************************************/
@@ -440,13 +440,13 @@ static void QSPI_FlashId(void)
     /* Write blocks ***********************************************************/
     if(BSP_QSPI_Write(0, qspi_aTxBuffer, i*BUFFER_SIZE, BUFFER_SIZE) != BSP_ERROR_NONE)
     {
-      GUI_DisplayStringAt(Xpos, Ypos, (uint8_t*)"Write: FAILED.", LEFT_MODE);
+      UTIL_LCD_DisplayStringAt(Xpos, Ypos, (uint8_t*)"Write: FAILED.", LEFT_MODE);
     }
 
     /* Read blocks ************************************************************/
     if(BSP_QSPI_Read(0, qspi_aRxBuffer, i*BUFFER_SIZE, BUFFER_SIZE) != BSP_ERROR_NONE)
     {
-      GUI_DisplayStringAt(Xpos, Ypos, (uint8_t*)"Read: FAILED.", LEFT_MODE);
+      UTIL_LCD_DisplayStringAt(Xpos, Ypos, (uint8_t*)"Read: FAILED.", LEFT_MODE);
     }
 
     /* Check blocks written ***************************************************/
@@ -456,18 +456,18 @@ static void QSPI_FlashId(void)
     }
   }
 
-  GUI_SetTextColor(GUI_COLOR_BLACK);
-  GUI_DisplayStringAt(Xpos, Ypos, (uint8_t*)"Flash ID 1", LEFT_MODE);
-  GUI_DisplayStringAt(Xpos+(26*CHAR_WIDE), Ypos, (uint8_t*)":", LEFT_MODE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_BLACK);
+  UTIL_LCD_DisplayStringAt(Xpos, Ypos, (uint8_t*)"Flash ID 1", LEFT_MODE);
+  UTIL_LCD_DisplayStringAt(Xpos+(26*CHAR_WIDE), Ypos, (uint8_t*)":", LEFT_MODE);
   if(error_code == 0)
   {
-    GUI_SetTextColor(GUI_COLOR_GREEN);
-    GUI_DisplayStringAt(Xpos+(28*CHAR_WIDE), Ypos, (uint8_t*)"OK", LEFT_MODE);
+    UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_GREEN);
+    UTIL_LCD_DisplayStringAt(Xpos+(28*CHAR_WIDE), Ypos, (uint8_t*)"OK", LEFT_MODE);
   }
   else
   {
-    GUI_SetTextColor(GUI_COLOR_RED);
-    GUI_DisplayStringAt(Xpos+(28*CHAR_WIDE), Ypos, (uint8_t*)"FAILED", LEFT_MODE);
+    UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_RED);
+    UTIL_LCD_DisplayStringAt(Xpos+(28*CHAR_WIDE), Ypos, (uint8_t*)"FAILED", LEFT_MODE);
     error_code = 0;
   }
   NEXT_LINE
@@ -480,7 +480,7 @@ static void QSPI_FlashId(void)
     /* Read blocks ************************************************************/
     if(BSP_QSPI_Read(0, qspi_aRxBuffer, i*BUFFER_SIZE, BUFFER_SIZE) != BSP_ERROR_NONE)
     {
-      GUI_DisplayStringAt(Xpos, Ypos, (uint8_t*)"Read: FAILED.", LEFT_MODE);
+      UTIL_LCD_DisplayStringAt(Xpos, Ypos, (uint8_t*)"Read: FAILED.", LEFT_MODE);
     }
 
     /* Check blocks empty *****************************************************/
@@ -490,18 +490,18 @@ static void QSPI_FlashId(void)
     }
   }
 
-  GUI_SetTextColor(GUI_COLOR_BLACK);
-  GUI_DisplayStringAt(Xpos, Ypos, (uint8_t*)"Flash ID 2", LEFT_MODE);
-  GUI_DisplayStringAt(Xpos+(26*CHAR_WIDE), Ypos, (uint8_t*)":", LEFT_MODE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_BLACK);
+  UTIL_LCD_DisplayStringAt(Xpos, Ypos, (uint8_t*)"Flash ID 2", LEFT_MODE);
+  UTIL_LCD_DisplayStringAt(Xpos+(26*CHAR_WIDE), Ypos, (uint8_t*)":", LEFT_MODE);
   if(error_code == 0)
   {
-    GUI_SetTextColor(GUI_COLOR_GREEN);
-    GUI_DisplayStringAt(Xpos+(28*CHAR_WIDE), Ypos, (uint8_t*)"OK", LEFT_MODE);
+    UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_GREEN);
+    UTIL_LCD_DisplayStringAt(Xpos+(28*CHAR_WIDE), Ypos, (uint8_t*)"OK", LEFT_MODE);
   }
   else
   {
-    GUI_SetTextColor(GUI_COLOR_RED);
-    GUI_DisplayStringAt(Xpos+(28*CHAR_WIDE), Ypos, (uint8_t*)"FAILED", LEFT_MODE);
+    UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_RED);
+    UTIL_LCD_DisplayStringAt(Xpos+(28*CHAR_WIDE), Ypos, (uint8_t*)"FAILED", LEFT_MODE);
     error_code = 0;
   }
   NEXT_LINE
@@ -520,19 +520,19 @@ static void QSPI_SetHint(void)
   BSP_LCD_GetYSize(0, &y_size);
 
   /* Clear the LCD */
-  GUI_Clear(GUI_COLOR_WHITE);
+  UTIL_LCD_Clear(UTIL_LCD_COLOR_WHITE);
 
   /* Set LCD Demo description */
-  GUI_FillRect(0, 0, x_size, 60, GUI_COLOR_BLUE);
-  GUI_SetTextColor(GUI_COLOR_WHITE);
-  GUI_SetBackColor(GUI_COLOR_BLUE);
-  GUI_SetFont(&Font24);
-  GUI_DisplayStringAt(0, 0, (uint8_t*)"QSPI", CENTER_MODE);
-  GUI_SetFont(&Font12);
-  GUI_DisplayStringAt(0, 30, (uint8_t*)"This example tests the modes", CENTER_MODE);
-  GUI_DisplayStringAt(0, 45, (uint8_t*)"of read/write access on QSPI memory", CENTER_MODE);
-  GUI_SetTextColor(GUI_COLOR_BLACK);
-  GUI_SetBackColor(GUI_COLOR_WHITE);
+  UTIL_LCD_FillRect(0, 0, x_size, 60, UTIL_LCD_COLOR_BLUE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_BLUE);
+  UTIL_LCD_SetFont(&Font24);
+  UTIL_LCD_DisplayStringAt(0, 0, (uint8_t*)"QSPI", CENTER_MODE);
+  UTIL_LCD_SetFont(&Font12);
+  UTIL_LCD_DisplayStringAt(0, 30, (uint8_t*)"This example tests the modes", CENTER_MODE);
+  UTIL_LCD_DisplayStringAt(0, 45, (uint8_t*)"of read/write access on QSPI memory", CENTER_MODE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_BLACK);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
 }
 
 /**

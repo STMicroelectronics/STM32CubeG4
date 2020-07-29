@@ -514,7 +514,7 @@
   </Group>
 
   <Group>
-    <GroupName>Drivers/Utilities/Basic_GUI</GroupName>
+    <GroupName>Drivers/Utilities/LCD</GroupName>
     <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
@@ -526,8 +526,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>../../../../../Utilities/Basic_GUI/basic_gui.c</PathWithFileName>
-      <FilenameWithoutPath>basic_gui.c</FilenameWithoutPath>
+      <PathWithFileName>../../../../../Utilities/LCD/stm32_lcd.c</PathWithFileName>
+      <FilenameWithoutPath>stm32_lcd.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

@@ -188,7 +188,7 @@ void SysTick_Handler(void)
   /* USER CODE BEGIN SysTick_IRQn 0 */
 
   /* USER CODE END SysTick_IRQn 0 */
-  
+
   /* USER CODE BEGIN SysTick_IRQn 1 */
 
   /* USER CODE END SysTick_IRQn 1 */
@@ -217,7 +217,7 @@ void COMP1_2_3_IRQHandler(void)
     ComparatorTrigger_Callback();
   }
   /* USER CODE END COMP1_2_3_IRQn 0 */
-  
+
   /* USER CODE BEGIN COMP1_2_3_IRQn 1 */
 
   /* USER CODE END COMP1_2_3_IRQn 1 */

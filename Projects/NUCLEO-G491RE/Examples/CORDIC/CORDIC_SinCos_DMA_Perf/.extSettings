@@ -1,0 +1,9 @@
+[ProjectFiles]
+HeaderPath=..\..\..\..\..\..\Drivers\CMSIS\DSP\Include;..\..\..\..\..\..\Drivers\BSP\STM32G4xx_Nucleo
+[Others]
+Define=USE_NUCLEO_64;ARM_MATH_CM4
+HALModule=EXTI;UART
+LinkAdditionalLibs=../../../../../../Drivers/CMSIS/DSP/Lib/IAR/iar_cortexM4l_math.a
+[Groups]
+Doc=../readme.txt;
+Drivers/BSP/STM32G4xx_Nucleo=../../../../../../Drivers/BSP/STM32G4xx_Nucleo/stm32g4xx_nucleo.c;

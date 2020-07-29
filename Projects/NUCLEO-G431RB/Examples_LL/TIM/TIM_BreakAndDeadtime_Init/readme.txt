@@ -22,9 +22,9 @@
 
 Configuration of the TIM peripheral to
  generate three center-aligned PWM and complementary PWM signals,
- insert a defined deadtime value,
+ insert a defined dead time value,
  use the break feature,
- and lock the break and dead-time configuration.
+ and lock the break and dead time configuration.
 This example is based on the STM32G4xx TIM LL API. The peripheral initialization
 uses LL initialization function to demonstrate LL Init.
 
@@ -55,7 +55,7 @@ The TIM1 waveforms can be displayed using an oscilloscope.
 
 @par Keywords
 
-Timer, TIM, PWM, Signal, Duty cycle, Dead-time, Break-time, Break polarity, Oscilloscope.
+Timer, TIM, PWM, Signal, Duty cycle, Dead time, Break-time, Break polarity, Oscilloscope.
 
 @par Directory contents
 

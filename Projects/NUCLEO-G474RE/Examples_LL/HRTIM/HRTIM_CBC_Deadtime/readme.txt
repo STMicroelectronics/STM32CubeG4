@@ -20,7 +20,7 @@
 
 @par Example Description 
   This example describes how to implement a cycle-by-cycle (CBC) current control 
-  with complementary signals and deadtime insertion.
+  with complementary signals and dead time insertion.
   An overcurrent condition will turn-off the two complementary outputs, without 
   re-arming the complementary output.
   Refer to the  HRTIM Cookbook for further details.
@@ -33,14 +33,14 @@
   Green LED: blinks during normal operation on Nucleo board, not active on Discovery board.
   Green LED: ON when the ERROR handler is entered
 
-  The PWM frequency and deadtime duration can be 
+  The PWM frequency and dead time duration can be 
   entered respectively in kHz and in ns, using the following User Constants:
   - TIMER_PWM_FREQ
   - DEADTIME_IN_NS
 
 @par Keywords
 
-HRTIM, Timers, PWM, Waveforms, Frequency, Cycle by cycle, CBC, External event, Deadtime.
+HRTIM, Timers, PWM, Waveforms, Frequency, Cycle by cycle, CBC, External event, Dead time.
 
 
 @par Directory contents 

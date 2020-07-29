@@ -51,7 +51,16 @@
   */
 typedef struct
 {
-  const USBPD_PHY_Callbacks  *cbs;
+  /**
+   * @brief  Reports that a message has been received on a specified port.
+   * @note   Received data are stored inside PortNum->pRxBuffPtr
+   *         function called in the interrupt context
+   * @param  PortNum The handle of the port
+   * @param  Type    The type of the message received @ref USBPD_SOPType_TypeDef
+   * @retval None
+   */
+  void (*USBPD_PHY_MessageReceived)(uint8_t PortNum, USBPD_SOPType_TypeDef Type);
+
   uint32_t  SupportedSOP;        /*!<bit field SOP"Debug SOP'Debug SOP" SOP' SOP */
 } PHY_HandleTypeDef;
 
@@ -81,12 +90,9 @@ static PHY_HandleTypeDef PHY_Ports[USBPD_PORT_COUNT];
   * @{
   */
 USBPD_StatusTypeDef         PHY_PortInit(uint8_t PortNum, const USBPD_PHY_Callbacks *cbs, uint8_t *pRxBuffer, uint32_t SupportedSOP);
-void                        PHY_BistCompleted(uint8_t PortNum, USBPD_BISTMsg_TypeDef bistmode);
-void                        PHY_TxCompleted(uint8_t portnum);
 void                        PHY_ResetCompleted(uint8_t PortNum, USBPD_SOPType_TypeDef Type);
-USBPD_PHY_RX_Status_TypeDef PHY_Rx_Reset(uint8_t PortNum);
 void                        PHY_Rx_HardReset(uint8_t PortNum);
-void                        PHY_Rx_Completed(uint8_t PortNum, uint32_t MsgType, uint16_t RxPaySize);
+void                        PHY_Rx_Completed(uint8_t PortNum, uint32_t MsgType);
 
 /**
   * @}
@@ -111,19 +117,18 @@ USBPD_StatusTypeDef USBPD_PHY_Init(uint8_t PortNum, const USBPD_PHY_Callbacks *p
   (void)PowerRole;
 
   /* set all callbacks */
-  Ports[PortNum].cbs.USBPD_HW_IF_TxCompleted            = PHY_TxCompleted;
-  Ports[PortNum].cbs.USBPD_HW_IF_BistCompleted          = PHY_BistCompleted;
-  Ports[PortNum].cbs.USBPD_HW_IF_RX_Reset               = PHY_Rx_Reset;
-  Ports[PortNum].cbs.USBPD_HW_IF_RX_ResetIndication     = PHY_Rx_HardReset;
+  Ports[PortNum].cbs.USBPD_HW_IF_TxCompleted            = pCallbacks->USBPD_PHY_TxCompleted;
+  Ports[PortNum].cbs.USBPD_HW_IF_BistCompleted          = pCallbacks->USBPD_PHY_BistCompleted;
+  Ports[PortNum].cbs.USBPD_HW_IF_RX_ResetIndication     = pCallbacks->USBPD_PHY_ResetIndication;
   Ports[PortNum].cbs.USBPD_HW_IF_RX_Completed           = PHY_Rx_Completed;
-  Ports[PortNum].cbs.USBPD_HW_IF_TX_HardResetCompleted  = PHY_ResetCompleted;
+  Ports[PortNum].cbs.USBPD_HW_IF_TX_HardResetCompleted  = pCallbacks->USBPD_PHY_ResetCompleted;
 
   /* Initialize the hardware for the port */
   Ports[PortNum].ptr_RxBuff = pRxBuffer;
 
   /* Initialize port related functionalities inside this layer */
   PHY_Ports[PortNum].SupportedSOP = SupportedSOP;
-  PHY_Ports[PortNum].cbs = pCallbacks;
+  PHY_Ports[PortNum].USBPD_PHY_MessageReceived = pCallbacks->USBPD_PHY_MessageReceived;
 
   return USBPD_OK;
 }
@@ -138,6 +143,17 @@ uint16_t USBPD_PHY_GetRetryTimerValue(uint8_t PortNum)
 {
   (void)PortNum;
   return 905u;
+}
+
+/**
+  * @brief  this function return the min time to wait before sending a goodCRC to ack a message (in us).
+  * @note   time used to guarantee the min time of 26us between two PD message.
+  * @param  PortNum    Number of the port.
+  * @retval value in us.
+  */
+uint16_t USBPD_PHY_GetMinGOODCRCTimerValue(uint8_t PortNum)
+{
+  return 30u;
 }
 
 /**
@@ -288,93 +304,19 @@ void USBPD_PHY_DisableRX(uint8_t PortNum)
   * @{
   */
 
-
-/**
-  * @brief  Reset completed notification.
-  * @param  PortNum   Number of the port
-  * @param  Type  PD Type
-  * @retval None
-  */
-void PHY_ResetCompleted(uint8_t PortNum, USBPD_SOPType_TypeDef Type)
-{
-  /* perform a PHY layer reset */
-  USBPD_PHY_Reset(PortNum);
-
-  /* notify to upper level (PRL) */
-  if (PHY_Ports[PortNum].cbs->USBPD_PHY_ResetCompleted != NULL)
-  {
-    PHY_Ports[PortNum].cbs->USBPD_PHY_ResetCompleted(PortNum, Type);
-  }
-}
-
-/**
- * @brief  Callback to notify the bist is completed
- * @param  PortNum   Number of the port.
- * @param  bistmode  Modality of the bist.
- * @retval none.
- */
-void PHY_BistCompleted(uint8_t PortNum, USBPD_BISTMsg_TypeDef bistmode)
-{
-  if (NULL != PHY_Ports[PortNum].cbs->USBPD_PHY_BistCompleted)
-  {
-    PHY_Ports[PortNum].cbs->USBPD_PHY_BistCompleted(PortNum, bistmode);
-  }
-}
-
-/**
- * @brief  Callback to notify the a transmission is completed
- * @param  PortNum  Number of the port.
- * @retval none.
- */
-void PHY_TxCompleted(uint8_t PortNum)
-{
-  if (NULL != PHY_Ports[PortNum].cbs->USBPD_PHY_TxCompleted)
-  {
-    PHY_Ports[PortNum].cbs->USBPD_PHY_TxCompleted(PortNum);
-  }
-}
-
-/**
- * @brief  Callback to notify the start of reception
- * @param  PortNum  Number of the port.
- * @retval Status of current reception.
- */
-USBPD_PHY_RX_Status_TypeDef PHY_Rx_Reset(uint8_t PortNum)
-{
-  (void)PortNum;
-  return USBPD_PHY_RX_STATUS_OK;
-}
-
-/**
- * @brief  Callback to notify the start of reception
- * @param  PortNum  Number of the port.
- * @retval Status of current reception.
- */
-void PHY_Rx_HardReset(uint8_t PortNum)
-{
-  /* nothing to do the message will be discarded and the port partner retry the send */
-  if (NULL != PHY_Ports[PortNum].cbs->USBPD_PHY_ResetIndication)
-  {
-    PHY_Ports[PortNum].cbs->USBPD_PHY_ResetIndication(PortNum, USBPD_SOPTYPE_HARD_RESET);
-  }
-}
-
 /**
   * @brief  Callback to notify the end of the current reception
   * @param  PortNum   Number of the port.
   * @param  MsgType   SOP Message Type
-  * @param  RxPaySize Payload RX size
   * @retval None.
   */
-void PHY_Rx_Completed(uint8_t PortNum, uint32_t MsgType, uint16_t RxPaySize)
+void PHY_Rx_Completed(uint8_t PortNum, uint32_t MsgType)
 {
-  USBPD_SOPType_TypeDef _msgtype;
-  uint8_t _callphy = 1u;
-  (void)RxPaySize;
-
   const USBPD_SOPType_TypeDef tab_sop_value[] = { USBPD_SOPTYPE_SOP,              USBPD_SOPTYPE_SOP1, USBPD_SOPTYPE_SOP2,
                                                   USBPD_SOPTYPE_SOP1_DEBUG, USBPD_SOPTYPE_SOP2_DEBUG, USBPD_SOPTYPE_CABLE_RESET
                                                 };
+  USBPD_SOPType_TypeDef _msgtype;
+
   _msgtype = tab_sop_value[MsgType];
 
   /* check if the message must be forwarded to usbpd stack */
@@ -384,11 +326,7 @@ void PHY_Rx_Completed(uint8_t PortNum, uint32_t MsgType, uint16_t RxPaySize)
       if (0x1Eu == (PHY_Ports[PortNum].SupportedSOP & 0x1Eu))
       {
         /* nothing to do the message will be discarded and the port partner retry the send */
-        if (PHY_Ports[PortNum].cbs->USBPD_PHY_ResetIndication != NULL)
-        {
-          PHY_Ports[PortNum].cbs->USBPD_PHY_ResetIndication(PortNum, USBPD_SOPTYPE_CABLE_RESET);
-        }
-        _callphy = 0u;
+        Ports[PortNum].cbs.USBPD_HW_IF_RX_ResetIndication(PortNum, USBPD_SOPTYPE_CABLE_RESET);
       }
       break;
     case USBPD_SOPTYPE_SOP :
@@ -396,19 +334,13 @@ void PHY_Rx_Completed(uint8_t PortNum, uint32_t MsgType, uint16_t RxPaySize)
     case USBPD_SOPTYPE_SOP2 :
     case USBPD_SOPTYPE_SOP1_DEBUG :
     case USBPD_SOPTYPE_SOP2_DEBUG :
-      if ((uint8_t)(0x1u << _msgtype) != (PHY_Ports[PortNum].SupportedSOP & (uint8_t)(0x1u << _msgtype)))
+      if (!((uint8_t)(0x1u << _msgtype) != (PHY_Ports[PortNum].SupportedSOP & (uint8_t)(0x1u << _msgtype))))
       {
-        _callphy = 0u;
+         PHY_Ports[PortNum].USBPD_PHY_MessageReceived(PortNum, _msgtype);
       }
       break;
     default :
-      _callphy = 0u;
       break;
-  }
-
-  if ((1u == _callphy) && (PHY_Ports[PortNum].cbs->USBPD_PHY_MessageReceived != NULL))
-  {
-    PHY_Ports[PortNum].cbs->USBPD_PHY_MessageReceived(PortNum, _msgtype);
   }
 }
 

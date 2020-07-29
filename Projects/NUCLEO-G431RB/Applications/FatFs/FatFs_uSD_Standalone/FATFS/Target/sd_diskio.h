@@ -18,7 +18,7 @@
   ******************************************************************************
   */
 /* USER CODE END Header */
-  
+
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __SD_DISKIO_H
 #define __SD_DISKIO_H
@@ -29,7 +29,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "adafruit_802_sd.h"
-#include "adafruit_802_conf.h"    
+#include "adafruit_802_conf.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */

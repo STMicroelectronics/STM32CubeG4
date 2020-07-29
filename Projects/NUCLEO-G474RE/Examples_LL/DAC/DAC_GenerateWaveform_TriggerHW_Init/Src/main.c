@@ -4,7 +4,7 @@
   * @file    Examples_LL/DAC/DAC_GenerateWaveform_TriggerHW_Init/Src/main.c
   * @author  MCD Application Team
   * @brief   This example describes how to use the DAC peripheral to generate
-  *          a voltage waveform from digital data stream transfered by DMA.
+  *          a voltage waveform from digital data stream transferred by DMA.
   *          This example is based on the STM32G4xx DAC LL API;
   *          Peripheral initialization done using LL initialization function.
   ******************************************************************************
@@ -21,7 +21,6 @@
   ******************************************************************************
   */
 /* USER CODE END Header */
-
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
@@ -175,11 +174,9 @@ int main(void)
 
   /* USER CODE END 1 */
 
-
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  
 
   LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_SYSCFG);
   LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_PWR);
@@ -188,9 +185,9 @@ int main(void)
 
   /* System interrupt init*/
 
-  /** Disable the internal Pull-Up in Dead Battery pins of UCPD peripheral 
+  /** Disable the internal Pull-Up in Dead Battery pins of UCPD peripheral
   */
-  LL_PWR_DisableDeadBatteryPD();
+  LL_PWR_DisableUCPDDeadBattery();
 
   /* USER CODE BEGIN Init */
 
@@ -287,38 +284,33 @@ int main(void)
   */
 void SystemClock_Config(void)
 {
-  LL_FLASH_SetLatency(LL_FLASH_LATENCY_7);
-
-   if(LL_FLASH_GetLatency() != LL_FLASH_LATENCY_7)
+  LL_FLASH_SetLatency(LL_FLASH_LATENCY_4);
+  while(LL_FLASH_GetLatency() != LL_FLASH_LATENCY_4)
   {
-    Error_Handler();  
   }
   LL_PWR_SetRegulVoltageScaling(LL_PWR_REGU_VOLTAGE_SCALE1);
   LL_RCC_HSI_Enable();
-
    /* Wait till HSI is ready */
   while(LL_RCC_HSI_IsReady() != 1)
   {
-    
   }
+
   LL_RCC_HSI_SetCalibTrimming(64);
   LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSI, LL_RCC_PLLM_DIV_4, 75, LL_RCC_PLLR_DIV_2);
   LL_RCC_PLL_EnableDomain_SYS();
   LL_RCC_PLL_Enable();
-
    /* Wait till PLL is ready */
   while(LL_RCC_PLL_IsReady() != 1)
   {
-    
   }
+
   LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_PLL);
   LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_2);
-
    /* Wait till System clock is ready */
   while(LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL)
   {
-  
   }
+
   /* Insure 1µs transition state at intermediate medium speed clock based on DWT */
   CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
   DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
@@ -327,7 +319,7 @@ void SystemClock_Config(void)
   /* Set AHB prescaler*/
   LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
   LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
-  LL_RCC_SetAPB2Prescaler(LL_RCC_APB1_DIV_1);
+  LL_RCC_SetAPB2Prescaler(LL_RCC_APB2_DIV_1);
 
   LL_Init1msTick(150000000);
 
@@ -352,10 +344,10 @@ static void MX_DAC1_Init(void)
 
   /* Peripheral clock enable */
   LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_DAC1);
-  
+
   LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOA);
-  /**DAC1 GPIO Configuration  
-  PA4   ------> DAC1_OUT1 
+  /**DAC1 GPIO Configuration
+  PA4   ------> DAC1_OUT1
   */
   GPIO_InitStruct.Pin = LL_GPIO_PIN_4;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_ANALOG;
@@ -363,7 +355,7 @@ static void MX_DAC1_Init(void)
   LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /* DAC1 DMA Init */
-  
+
   /* DAC1_CH1 Init */
   LL_DMA_SetPeriphRequest(DMA1, LL_DMA_CHANNEL_3, LL_DMAMUX_REQ_DAC1_CH1);
 
@@ -388,7 +380,7 @@ static void MX_DAC1_Init(void)
   /* USER CODE BEGIN DAC1_Init 1 */
 
   /* USER CODE END DAC1_Init 1 */
-  /** DAC channel OUT1 config 
+  /** DAC channel OUT1 config
   */
   LL_DAC_SetSignedFormat(DAC1, LL_DAC_CHANNEL_1, LL_DAC_SIGNED_FORMAT_DISABLE);
   DAC_InitStruct.TriggerSource = LL_DAC_TRIG_EXT_TIM6_TRGO;

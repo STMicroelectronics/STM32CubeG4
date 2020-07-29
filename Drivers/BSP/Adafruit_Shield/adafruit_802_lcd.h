@@ -45,7 +45,7 @@
 /** @defgroup ADAFRUIT_802_LCD_Exported_Variables LCD Exported Variables
   * @{
   */
-extern const GUI_Drv_t LCD_Driver;
+extern const LCD_UTILS_Drv_t LCD_Driver;
 /**
   * @}
   */
@@ -74,6 +74,15 @@ typedef struct
   uint32_t PixelFormat;
   uint32_t IsMspCallbacksValid;
 } ADAFRUIT_802_LCD_Ctx_t;
+
+/**
+  * @}
+  */
+
+/** @addtogroup ADAFRUIT_802_LCD_Exported_Variables
+  * @{
+  */
+extern ADAFRUIT_802_LCD_Ctx_t      Lcd_Ctx[LCD_INSTANCES_NBR];
 
 /**
   * @}

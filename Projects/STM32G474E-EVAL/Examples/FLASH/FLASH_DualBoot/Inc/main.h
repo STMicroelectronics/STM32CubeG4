@@ -29,13 +29,12 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32g4xx_hal.h"
-#include "stm32g4xx_ll_pwr.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "stm32g474e_eval.h"
 #include "stm32g474e_eval_lcd.h"
-#include "basic_gui.h"
+#include "stm32_lcd.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/

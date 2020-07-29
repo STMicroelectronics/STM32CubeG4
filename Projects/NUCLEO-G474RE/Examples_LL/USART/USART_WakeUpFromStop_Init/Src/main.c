@@ -21,7 +21,6 @@
   ******************************************************************************
   */
 /* USER CODE END Header */
-
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
@@ -50,7 +49,7 @@
 /* USER CODE BEGIN PV */
 
 /**
-  * @brief Variables used for charcater reception from PC Com port
+  * @brief Variables used for character reception from PC Com port
   */
 __IO uint8_t      ubFinalCharReceived = 0;
 __IO uint32_t     ubReceivedChar;
@@ -94,11 +93,9 @@ int main(void)
 
   /* USER CODE END 1 */
 
-
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  
 
   LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_SYSCFG);
   LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_PWR);
@@ -107,9 +104,9 @@ int main(void)
 
   /* System interrupt init*/
 
-  /** Disable the internal Pull-Up in Dead Battery pins of UCPD peripheral 
+  /** Disable the internal Pull-Up in Dead Battery pins of UCPD peripheral
   */
-  LL_PWR_DisableDeadBatteryPD();
+  LL_PWR_DisableUCPDDeadBattery();
 
   /* USER CODE BEGIN Init */
 
@@ -173,31 +170,27 @@ int main(void)
 void SystemClock_Config(void)
 {
   LL_FLASH_SetLatency(LL_FLASH_LATENCY_0);
-
-  if(LL_FLASH_GetLatency() != LL_FLASH_LATENCY_0)
+  while(LL_FLASH_GetLatency() != LL_FLASH_LATENCY_0)
   {
-    Error_Handler();  
   }
   LL_PWR_SetRegulVoltageScaling(LL_PWR_REGU_VOLTAGE_SCALE1);
   LL_RCC_HSI_Enable();
-
    /* Wait till HSI is ready */
   while(LL_RCC_HSI_IsReady() != 1)
   {
-    
   }
+
   LL_RCC_HSI_SetCalibTrimming(64);
   LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_HSI);
-
    /* Wait till System clock is ready */
   while(LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_HSI)
   {
-  
   }
+
   /* Set AHB prescaler*/
   LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
   LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
-  LL_RCC_SetAPB2Prescaler(LL_RCC_APB1_DIV_1);
+  LL_RCC_SetAPB2Prescaler(LL_RCC_APB2_DIV_1);
 
   LL_Init1msTick(16000000);
 
@@ -223,11 +216,11 @@ static void MX_USART1_UART_Init(void)
 
   /* Peripheral clock enable */
   LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_USART1);
-  
+
   LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOA);
-  /**USART1 GPIO Configuration  
+  /**USART1 GPIO Configuration
   PA9   ------> USART1_TX
-  PA10   ------> USART1_RX 
+  PA10   ------> USART1_RX
   */
   GPIO_InitStruct.Pin = LL_GPIO_PIN_9;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_ALTERNATE;

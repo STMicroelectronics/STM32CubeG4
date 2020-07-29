@@ -622,7 +622,7 @@
   </Group>
 
   <Group>
-    <GroupName>Drivers/CMSIS/Lib</GroupName>
+    <GroupName>Drivers/CMSIS/DSP/Lib</GroupName>
     <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
@@ -634,7 +634,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\..\..\..\Drivers\CMSIS\Lib\ARM\arm_cortexM4l_math.lib</PathWithFileName>
+      <PathWithFileName>..\..\..\..\..\..\Drivers\CMSIS\DSP\Lib\ARM\arm_cortexM4l_math.lib</PathWithFileName>
       <FilenameWithoutPath>arm_cortexM4l_math.lib</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>

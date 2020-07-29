@@ -40,7 +40,7 @@ In case of errors, LED2 is blinking (1sec period).
 
 @par Keywords
 
-Connectivity, USART, Asynchroneous mode, RS-232, Baud rate, DMA, HyperTerminal, Transmission.
+Connectivity, USART, Asynchronous mode, RS-232, Baud rate, DMA, HyperTerminal, Transmission.
 
 @par Directory contents 
 

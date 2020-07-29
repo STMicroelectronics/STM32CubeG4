@@ -23,7 +23,8 @@
 #define _GUI_API_H
 
 /* Includes ------------------------------------------------------------------*/
-#include "usbpd_pdo_defs.h"
+#include "main.h"
+#include "usbpd_def.h"
 
 /** @addtogroup STM32_USBPD_LIBRARY
   * @{
@@ -101,19 +102,6 @@ typedef enum
 #define  GUI_NOTIF_PE_EVENT                             (1 << 13)
 #define  GUI_NOTIF_TIMESTAMP                            (1 << 14)
 #define  GUI_NOTIF_POWER_EVENT                          (1 << 15)
-
-#if !defined(PORT0_NB_SINKAPDO)
-#define PORT0_NB_SINKAPDO               0U
-#endif /* !PORT0_NB_SINKAPDO */
-#if !defined(PORT1_NB_SINKAPDO)
-#define PORT1_NB_SINKAPDO               0U
-#endif /* !PORT1_NB_SINKAPDO */
-#if !defined(PORT0_NB_SOURCEAPDO)
-#define PORT0_NB_SOURCEAPDO             0U
-#endif /* !PORT0_NB_SOURCEAPDO */
-#if !defined(PORT1_NB_SOURCEAPDO)
-#define PORT1_NB_SOURCEAPDO             0U
-#endif /* !PORT1_NB_SOURCEAPDO */
 
 /**
   * @}
@@ -248,7 +236,10 @@ USBPD_GUI_State       GUI_SendNotification(uint8_t PortNum, uint8_t **pMsgToSend
 void                  GUI_PostNotificationMessage(uint8_t PortNum, uint16_t EventVal);
 void                  GUI_SaveInfo(uint8_t PortNum, uint8_t DataId, uint8_t *Ptr, uint32_t Size);
 USBPD_FunctionalState GUI_IsRunning(void);
+#if !defined(USE_STM32_UTILITY_OS)
 void                  GUI_Execute(void);
+#endif /* !USE_STM32_UTILITY_OS */
+void                  GUI_RegisterCallback_FreeText(USBPD_StatusTypeDef (*CB_FreeText)(uint8_t, uint8_t*, uint16_t));
 /**
   * @}
   */

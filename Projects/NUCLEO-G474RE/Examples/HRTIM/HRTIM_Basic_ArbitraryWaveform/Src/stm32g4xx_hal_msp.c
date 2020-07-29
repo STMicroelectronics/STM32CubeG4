@@ -58,7 +58,7 @@
 /* USER CODE BEGIN 0 */
 
 /* USER CODE END 0 */
-                        
+
 void HAL_HRTIM_MspPostInit(HRTIM_HandleTypeDef *hhrtim);
                     /**
   * Initializes the Global MSP.
@@ -74,9 +74,9 @@ void HAL_MspInit(void)
 
   /* System interrupt init*/
 
-  /** Disable the internal Pull-Up in Dead Battery pins of UCPD peripheral 
+  /** Disable the internal Pull-Up in Dead Battery pins of UCPD peripheral
   */
-  LL_PWR_DisableDeadBatteryPD();
+  HAL_PWREx_DisableUCPDDeadBattery();
 
   /* USER CODE BEGIN MspInit 1 */
 
@@ -113,11 +113,11 @@ void HAL_HRTIM_MspPostInit(HRTIM_HandleTypeDef* hhrtim)
   /* USER CODE BEGIN HRTIM1_MspPostInit 0 */
 
   /* USER CODE END HRTIM1_MspPostInit 0 */
-  
+
     __HAL_RCC_GPIOB_CLK_ENABLE();
-    /**HRTIM1 GPIO Configuration    
+    /**HRTIM1 GPIO Configuration
     PB14     ------> HRTIM1_CHD1
-    PB15     ------> HRTIM1_CHD2 
+    PB15     ------> HRTIM1_CHD2
     */
     GPIO_InitStruct.Pin = GPIO_PIN_14|GPIO_PIN_15;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;

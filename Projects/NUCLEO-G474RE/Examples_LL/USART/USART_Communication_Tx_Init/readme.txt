@@ -43,7 +43,7 @@ Program is written so that, any new press on User push-button will lead to new t
 
 @par Keywords
 
-Connectivity, USART, Asynchroneous mode, RS-232, Baud rate, Polling, HyperTerminal, Transmission.
+Connectivity, USART, Asynchronous mode, RS-232, Baud rate, Polling, HyperTerminal, Transmission.
 
 @par Directory contents 
 

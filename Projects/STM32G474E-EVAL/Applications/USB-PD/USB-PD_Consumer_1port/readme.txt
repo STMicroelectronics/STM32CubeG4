@@ -46,7 +46,7 @@ on STM32Cube with RTOS".
 
 @par Keywords
 
-USCPD, Type C, USBPD, FreeRTOS
+USB_PD_Lib, UCPD, Type C, USBPD, FreeRTOS
 
 @par Directory contents
     - USB-PD/USB-PD_Consumer_1port/Src/main.c                       Main program file
@@ -55,28 +55,26 @@ USCPD, Type C, USBPD, FreeRTOS
     - USB-PD/USB-PD_Consumer_1port/Src/stm32g4xx_it.c               Interrupt handlers file
     - USB-PD/USB-PD_Consumer_1port/Src/system_stm32g4xx.c           STM32G4xx system clock configuration file
     - USB-PD/USB-PD_Consumer_1port/Src/usbpd.c                      Ucpd init file
-    - USB-PD/USB-PD_Consumer_1port/Src/usbpd_dpm_core.c             device policy manager core file
-    - USB-PD/USB-PD_Consumer_1port/Src/usbpd_dpm_users.c            device policy manager users file
-    - USB-PD/USB-PD_Consumer_1port/Src/usbpd_pwr_if.c               power if managment file
-    - USB-PD/USB-PD_Consumer_1port/Src/usbpd_pwr_user.c             power managment file
-    - USB-PD/USB-PD_Consumer_1port/Src/usbpd_vdm_users.c            user vendor define message managment file
+    - USB-PD/USB-PD_Consumer_1port/Src/usbpd_dpm_core.c             Device policy manager core file
+    - USB-PD/USB-PD_Consumer_1port/Src/usbpd_dpm_user.c             Device policy manager users file
+    - USB-PD/USB-PD_Consumer_1port/Src/usbpd_pwr_if.c               Power if management file
+    - USB-PD/USB-PD_Consumer_1port/Src/usbpd_pwr_user.c             Power management file
+    - USB-PD/USB-PD_Consumer_1port/Src/usbpd_vdm_user.c             User vendor define message management file
     - USB-PD/USB-PD_Consumer_1port/Inc/FreeRTOSConfig.h             FreeRTOS Configuration file
     - USB-PD/USB-PD_Consumer_1port/Inc/main.h                       Main program header file
     - USB-PD/USB-PD_Consumer_1port/Inc/stm32_assert.h               assert program header file
     - USB-PD/USB-PD_Consumer_1port/Inc/stm32g4xx_hal_conf.h         HAL Library Configuration file
     - USB-PD/USB-PD_Consumer_1port/Inc/stm32g4xx_it.h               Interrupt handlers header file
-    - USB-PD/USB-PD_Consumer_1port/Inc/main.h                       Main program header file
-    - USB-PD/USB-PD_Consumer_1port/Inc/main.h                       Main program header file
-    - USB-PD/USB-PD_Consumer_1port/Inc/tracer_emb_conf.h            setting file for UCPD tracer
+    - USB-PD/USB-PD_Consumer_1port/Inc/tracer_emb_conf.h            Configuration file for UCPD tracer
     - USB-PD/USB-PD_Consumer_1port/Src/usbpd.h                      header of Ucpd init file
     - USB-PD/USB-PD_Consumer_1port/Src/usbpd_devices_conf.h         UCPD device configuration file
     - USB-PD/USB-PD_Consumer_1port/Src/usbpd_dpm_conf.h             UCPD stack configuration file
-    - USB-PD/USB-PD_Consumer_1port/Src/usbpd_dpm_core.h             device policy manger core header file
-    - USB-PD/USB-PD_Consumer_1port/Src/usbpd_dpm_users.h            device policy manager users header file
-    - USB-PD/USB-PD_Consumer_1port/Src/usbpd_pwr_if.h               power if managment header file
-    - USB-PD/USB-PD_Consumer_1port/Src/usbpd_pdo_defs.h             pdo definition header file
-    - USB-PD/USB-PD_Consumer_1port/Src/usbpd_pwr_user.h             power managment header file
-    - USB-PD/USB-PD_Consumer_1port/Src/usbpd_vdm_users.h            vendor define message managment header file
+    - USB-PD/USB-PD_Consumer_1port/Src/usbpd_dpm_core.h             Device policy manager core header file
+    - USB-PD/USB-PD_Consumer_1port/Src/usbpd_dpm_user.h             Device policy manager users header file
+    - USB-PD/USB-PD_Consumer_1port/Src/usbpd_pwr_if.h               Power if management header file
+    - USB-PD/USB-PD_Consumer_1port/Src/usbpd_pdo_defs.h             PDO definition header file
+    - USB-PD/USB-PD_Consumer_1port/Src/usbpd_pwr_user.h             Power management header file
+    - USB-PD/USB-PD_Consumer_1port/Src/usbpd_vdm_user.h             Vendor define message management header file
 
 
 @par Hardware and Software environment

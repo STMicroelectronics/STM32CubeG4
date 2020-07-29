@@ -188,7 +188,7 @@ void SysTick_Handler(void)
   /* USER CODE BEGIN SysTick_IRQn 0 */
 
   /* USER CODE END SysTick_IRQn 0 */
-  
+
   /* USER CODE BEGIN SysTick_IRQn 1 */
 
   /* USER CODE END SysTick_IRQn 1 */
@@ -217,7 +217,7 @@ void DMA1_Channel3_IRQHandler(void)
     DacDmaTransferError_Callback();
   }
   /* USER CODE END DMA1_Channel3_IRQn 0 */
-  
+
   /* USER CODE BEGIN DMA1_Channel3_IRQn 1 */
 
   /* USER CODE END DMA1_Channel3_IRQn 1 */
@@ -262,7 +262,7 @@ void TIM6_DAC_IRQHandler(void)
     DacUnderrunError_Callback();
   }
   /* USER CODE END TIM6_DAC_IRQn 0 */
-  
+
   /* USER CODE BEGIN TIM6_DAC_IRQn 1 */
 
   /* USER CODE END TIM6_DAC_IRQn 1 */

@@ -29,7 +29,6 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32g4xx_hal.h"
-#include "stm32g4xx_ll_pwr.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -43,7 +42,7 @@ extern "C" {
 
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
-/*## Define Timer periode and pulse #######################################*/
+/*## Define Timer period and pulse #######################################*/
 /* ---------------------------------------------------------------------------
    TIM1 Configuration: Output Compare Toggle Mode:
 

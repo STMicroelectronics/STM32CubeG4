@@ -95,19 +95,18 @@
 /**
   * @}
   */
-  
+
 /** @defgroup USBD_DESC_Private_FunctionPrototypes USBD_DESC_Private_FunctionPrototypes
   * @brief Private functions declaration.
   * @{
   */
-  
+
 static void Get_SerialNum(void);
 static void IntToUnicode(uint32_t value, uint8_t * pbuf, uint8_t len);
-  
+
 /**
   * @}
-  */  
-  
+  */
 
 /** @defgroup USBD_DESC_Private_FunctionPrototypes USBD_DESC_Private_FunctionPrototypes
   * @brief Private functions declaration.
@@ -133,12 +132,12 @@ uint8_t * USBD_MSC_InterfaceStrDescriptor(USBD_SpeedTypeDef speed, uint16_t *len
 
 USBD_DescriptorsTypeDef MSC_Desc =
 {
-  USBD_MSC_DeviceDescriptor, 
-  USBD_MSC_LangIDStrDescriptor, 
-  USBD_MSC_ManufacturerStrDescriptor, 
-  USBD_MSC_ProductStrDescriptor, 
-  USBD_MSC_SerialStrDescriptor, 
-  USBD_MSC_ConfigStrDescriptor, 
+  USBD_MSC_DeviceDescriptor,
+  USBD_MSC_LangIDStrDescriptor,
+  USBD_MSC_ManufacturerStrDescriptor,
+  USBD_MSC_ProductStrDescriptor,
+  USBD_MSC_SerialStrDescriptor,
+  USBD_MSC_ConfigStrDescriptor,
   USBD_MSC_InterfaceStrDescriptor
 };
 
@@ -199,7 +198,7 @@ __ALIGN_BEGIN uint8_t USBD_LangIDDesc[USB_LEN_LANGID_STR_DESC] __ALIGN_END =
 __ALIGN_BEGIN uint8_t USBD_StrDesc[USBD_MAX_STR_DESC_SIZ] __ALIGN_END;
 
 #if defined ( __ICCARM__ ) /*!< IAR Compiler */
-  #pragma data_alignment=4   
+  #pragma data_alignment=4
 #endif
 __ALIGN_BEGIN uint8_t USBD_StringSerial[USB_SIZ_STRING_SERIAL] __ALIGN_END = {
   USB_SIZ_STRING_SERIAL,
@@ -287,9 +286,9 @@ uint8_t * USBD_MSC_SerialStrDescriptor(USBD_SpeedTypeDef speed, uint16_t *length
   /* Update the serial number string descriptor with the data from the unique
    * ID */
   Get_SerialNum();
-  
+
   /* USER CODE BEGIN USBD_MSC_SerialStrDescriptor */
-  
+
   /* USER CODE END USBD_MSC_SerialStrDescriptor */
 
   return (uint8_t *) USBD_StringSerial;
@@ -334,8 +333,8 @@ uint8_t * USBD_MSC_InterfaceStrDescriptor(USBD_SpeedTypeDef speed, uint16_t *len
 }
 
 /**
-  * @brief  Create the serial number string descriptor 
-  * @param  None 
+  * @brief  Create the serial number string descriptor
+  * @param  None
   * @retval None
   */
 static void Get_SerialNum(void)
@@ -356,9 +355,9 @@ static void Get_SerialNum(void)
 }
 
 /**
-  * @brief  Convert Hex 32Bits value into char 
+  * @brief  Convert Hex 32Bits value into char
   * @param  value: value to convert
-  * @param  pbuf: pointer to the buffer 
+  * @param  pbuf: pointer to the buffer
   * @param  len: buffer length
   * @retval None
   */

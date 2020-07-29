@@ -64,15 +64,6 @@ extern sFONT Font8;
   * @}
   */
 
-/** @defgroup FONTS_Exported_Macros Exported Macros
-  * @{
-  */
-#define LINE(x) ((x) * (((sFONT *)GUI_GetFont())->Height))
-/**
-  * @}
-  */
-
-
 #ifdef __cplusplus
 }
 #endif

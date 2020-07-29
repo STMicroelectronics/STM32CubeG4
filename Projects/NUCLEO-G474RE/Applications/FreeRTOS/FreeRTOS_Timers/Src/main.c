@@ -7,18 +7,17 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics. 
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the 
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
   *
   ******************************************************************************
   */
 /* USER CODE END Header */
-
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "cmsis_os.h"
@@ -83,7 +82,6 @@ int main(void)
      */
   /* USER CODE END 1 */
 
-
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
@@ -124,7 +122,7 @@ int main(void)
   /* USER CODE END RTOS_TIMERS */
 
   /* USER CODE BEGIN RTOS_QUEUES */
-  
+
   /* USER CODE END RTOS_QUEUES */
 
   /* Create the thread(s) */
@@ -138,9 +136,8 @@ int main(void)
 
   /* Start scheduler */
   osKernelStart();
-  
-  /* We should never get here as control is now taken by the scheduler */
 
+  /* We should never get here as control is now taken by the scheduler */
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
@@ -164,7 +161,8 @@ void SystemClock_Config(void)
   /** Configure the main internal regulator output voltage
   */
   HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1_BOOST);
-  /** Initializes the CPU, AHB and APB busses clocks
+  /** Initializes the RCC Oscillators according to the specified parameters
+  * in the RCC_OscInitTypeDef structure.
   */
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
@@ -180,7 +178,7 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
-  /** Initializes the CPU, AHB and APB busses clocks
+  /** Initializes the CPU, AHB and APB buses clocks
   */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
@@ -189,7 +187,7 @@ void SystemClock_Config(void)
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_8) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_4) != HAL_OK)
   {
     Error_Handler();
   }
@@ -202,13 +200,12 @@ void SystemClock_Config(void)
 /* USER CODE BEGIN Header_ToggleLEDsThread */
 /**
   * @brief  Function implementing the LEDThread thread.
-  * @param  argument: Not used 
+  * @param  argument: Not used
   * @retval None
   */
 /* USER CODE END Header_ToggleLEDsThread */
 void ToggleLEDsThread(void const * argument)
 {
-
   /* USER CODE BEGIN 5 */
   (void) argument;
   uint32_t count = 0;
@@ -226,7 +223,7 @@ void ToggleLEDsThread(void const * argument)
       osDelay(400);
       BSP_LED_Toggle(LED2);
     }
-	
+
     /* Turn off LED2 */
     BSP_LED_Off(LED2);
     /* Start LEDTimer */
@@ -234,7 +231,7 @@ void ToggleLEDsThread(void const * argument)
     /* Suspend Thread : current thread */
     osThreadSuspend(NULL);
   }
-  /* USER CODE END 5 */ 
+  /* USER CODE END 5 */
 }
 
 /* osTimerCallback function */
@@ -242,7 +239,7 @@ void osTimerCallback(void const * argument)
 {
   /* USER CODE BEGIN osTimerCallback */
   (void) argument;
-  
+
   TimeCounter ++;
   /* Toggle LED2*/
   BSP_LED_Toggle(LED2);

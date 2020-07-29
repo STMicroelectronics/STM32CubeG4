@@ -93,7 +93,7 @@ Device's end address is the end address of the flash memory and it is dependent 
 
 @par Keywords
 
-Middleware, USB Device, DFU, Firmware upgrade
+Connectivity, USB_Device, USB, DFU, Firmware upgrade
 
 @par Directory contents
 
@@ -127,7 +127,7 @@ Middleware, USB Device, DFU, Firmware upgrade
       For Windows 8.1 and later : Update STM32 DFU device driver manually from Windows Device Manager.
       The install of required device driver is available under:
       "Program Files\STMicroelectronics\Software\DfuSe v3.0.5\Bin\Driver\Win8.1" directory.
-    - Connect the STM32G474E-EVAL Rev B board CN22 to the PC through "TYPE-C" to "Standard A" cable.
+    -Connect the STM32G474E-EVAL Rev B board CN22 to the PC through "TYPE-C" to "Standard A" cable.
 
 
 @par How to use it ?

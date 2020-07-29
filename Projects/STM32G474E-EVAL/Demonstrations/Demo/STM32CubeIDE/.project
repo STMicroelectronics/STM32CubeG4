@@ -287,9 +287,9 @@
 			<locationURI>$%7BPARENT-5-PROJECT_LOC%7D/Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_utils.c</locationURI>
 		</link>
 		<link>
-			<name>Utilities/Basic_GUI/basic_gui.c</name>
+			<name>Utilities/LCD/stm32_lcd.c</name>
 			<type>1</type>
-			<locationURI>$%7BPARENT-5-PROJECT_LOC%7D/Utilities/Basic_GUI/basic_gui.c</locationURI>
+			<locationURI>$%7BPARENT-5-PROJECT_LOC%7D/Utilities/LCD/stm32_lcd.c</locationURI>
 		</link>
 		<link>
 			<name>Utilities/GUI_INTERFACE/bsp_gui.c</name>

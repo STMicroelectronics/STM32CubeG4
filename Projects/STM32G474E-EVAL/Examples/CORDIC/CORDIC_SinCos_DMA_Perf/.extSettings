@@ -3,7 +3,7 @@ HeaderPath=..\..\..\..\..\..\Drivers\CMSIS\DSP\Include;..\..\..\..\..\..\Drivers
 [Others]
 Define=ARM_MATH_CM4
 HALModule=I2C;EXTI;SPI
-LinkAdditionalLibs=../../../../../../Drivers/CMSIS/Lib/IAR/iar_cortexM4l_math.a
+LinkAdditionalLibs=../../../../../../Drivers/CMSIS/DSP/Lib/IAR/iar_cortexM4l_math.a
 [Groups]
 Doc=../readme.txt;
 Drivers/BSP/Components=../../../../../../Drivers/BSP/Components/mfxstm32l152/mfxstm32l152_reg.c;../../../../../../Drivers/BSP/Components/mfxstm32l152/mfxstm32l152.c;

@@ -220,20 +220,20 @@ static void Display_DemoDescription(void)
   uint32_t x_size;
   uint32_t y_size;
 
-  GUI_SetFuncDriver(&LCD_Driver); /* SetFunc before setting device */
-  GUI_SetDevice(0);            /* SetDevice after funcDriver is set */
+  UTIL_LCD_SetFuncDriver(&LCD_Driver); /* SetFunc before setting device */
+  UTIL_LCD_SetDevice(0);            /* SetDevice after funcDriver is set */
 
   BSP_LCD_Clear(0, LCD_COLOR_RGB565_CYAN);
   BSP_LCD_DisplayOn(0);
 
-  GUI_SetFont(&Font20);
+  UTIL_LCD_SetFont(&Font20);
   /* Set the LCD Text Color */
-  GUI_SetBackColor(GUI_COLOR_LIGHTBLUE);
-  GUI_SetTextColor(GUI_COLOR_DARKBLUE);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_LIGHTBLUE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_DARKBLUE);
 
   /* Display LCD messages */
-  GUI_DisplayStringAt( 0, 10, (uint8_t *)"STM32G474E BSP", CENTER_MODE);
-  GUI_DisplayStringAt( 0, 35, (uint8_t *)"Drivers examples", CENTER_MODE);
+  UTIL_LCD_DisplayStringAt( 0, 10, (uint8_t *)"STM32G474E BSP", CENTER_MODE);
+  UTIL_LCD_DisplayStringAt( 0, 35, (uint8_t *)"Drivers examples", CENTER_MODE);
 
   BSP_LCD_GetXSize(0, &x_size);
   BSP_LCD_GetYSize(0, &y_size);
@@ -241,16 +241,16 @@ static void Display_DemoDescription(void)
   /* Draw Bitmap */
   BSP_LCD_DrawBitmap(0, (x_size - 80)/2, 65, (uint8_t *)stlogo);
 
-  GUI_SetFont(&Font12);
-  GUI_DisplayStringAt( 0, y_size - 20, (uint8_t *)"Copyright (c) STMicroelectronics 2019", CENTER_MODE);
+  UTIL_LCD_SetFont(&Font12);
+  UTIL_LCD_DisplayStringAt( 0, y_size - 20, (uint8_t *)"Copyright (c) STMicroelectronics 2019", CENTER_MODE);
 
-  GUI_SetFont(&Font16);
+  UTIL_LCD_SetFont(&Font16);
   BSP_LCD_FillRect(0, 0, y_size/2 + 15, x_size, 60, LCD_COLOR_RGB565_BLUE);
-  GUI_SetTextColor( GUI_COLOR_WHITE);
-  GUI_SetBackColor( GUI_COLOR_BLUE);
-  GUI_DisplayStringAt( 0, y_size / 2 + 30, (uint8_t *)"Press User button to start :", CENTER_MODE);
+  UTIL_LCD_SetTextColor( UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_SetBackColor( UTIL_LCD_COLOR_BLUE);
+  UTIL_LCD_DisplayStringAt( 0, y_size / 2 + 30, (uint8_t *)"Press User button to start :", CENTER_MODE);
   sprintf(desc,"%s example", BSP_examples[DemoIndex].DemoName);
-  GUI_DisplayStringAt( 0, y_size/2 + 45, (uint8_t *)desc, CENTER_MODE);
+  UTIL_LCD_DisplayStringAt( 0, y_size/2 + 45, (uint8_t *)desc, CENTER_MODE);
 }
 
 /**

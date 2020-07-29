@@ -1,45 +1,21 @@
 /**
   @page FreeRTOS_Queues FreeRTOS Queues example
- 
+
   @verbatim
   ******************************************************************************
   * @file    FreeRTOS/FreeRTOS_Queues/readme.txt
   * @author  MCD Application Team
   * @brief   Description of the FreeRTOS Queues example.
   ******************************************************************************
+  * @attention
   *
-  * Copyright (c) 2019 STMicroelectronics International N.V. All rights reserved.
+  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
+  * All rights reserved.</center></h2>
   *
-  * Redistribution and use in source and binary forms, with or without 
-  * modification, are permitted, provided that the following conditions are met:
-  *
-  * 1. Redistribution of source code must retain the above copyright notice, 
-  *    this list of conditions and the following disclaimer.
-  * 2. Redistributions in binary form must reproduce the above copyright notice,
-  *    this list of conditions and the following disclaimer in the documentation
-  *    and/or other materials provided with the distribution.
-  * 3. Neither the name of STMicroelectronics nor the names of other 
-  *    contributors to this software may be used to endorse or promote products 
-  *    derived from this software without specific written permission.
-  * 4. This software, including modifications and/or derivative works of this 
-  *    software, must execute solely and exclusively on microcontroller or
-  *    microprocessor devices manufactured by or for STMicroelectronics.
-  * 5. Redistribution and use of this software other than as permitted under 
-  *    this license is void and will automatically terminate your rights under 
-  *    this license. 
-  *
-  * THIS SOFTWARE IS PROVIDED BY STMICROELECTRONICS AND CONTRIBUTORS "AS IS" 
-  * AND ANY EXPRESS, IMPLIED OR STATUTORY WARRANTIES, INCLUDING, BUT NOT 
-  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A 
-  * PARTICULAR PURPOSE AND NON-INFRINGEMENT OF THIRD PARTY INTELLECTUAL PROPERTY
-  * RIGHTS ARE DISCLAIMED TO THE FULLEST EXTENT PERMITTED BY LAW. IN NO EVENT 
-  * SHALL STMICROELECTRONICS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-  * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-  * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, 
-  * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
-  * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING 
-  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
-  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
   *
   ******************************************************************************
   @endverbatim
@@ -48,13 +24,13 @@
 
 How to use message queues with CMSIS RTOS API.
 
-This application creates two threads that send and receive an incrementing number 
+This application creates two threads that send and receive an incrementing number
 to/from a queue, as following:
-One thread acts as a producer and the other as the consumer. The consumer 
-is a higher priority than the producer and is set to block on queue reads. 
+One thread acts as a producer and the other as the consumer. The consumer
+is a higher priority than the producer and is set to block on queue reads.
 The queue only has space for one item, as soon as the producer posts a
 message on the queue (every 1 second) the consumer will unblock, preempt
-the producer, and remove the item.  
+the producer, and remove the item.
 
 Add the following variables to LiveWatch, these variables must remain equals all the time:
  - ProducerValue
@@ -72,14 +48,14 @@ NUCLEO-G431RB RevC's LEDs can be used to monitor the application status:
       the peripheral interrupt. Otherwise the caller ISR process will be blocked.
       To change the HAL time base interrupt priority you have to use HAL_NVIC_SetPriority()
       function.
- 
+
 @note The application needs to ensure that the HAL time base is always set to 1 millisecond
       to have correct HAL operation.
 
-@note The FreeRTOS heap size configTOTAL_HEAP_SIZE defined in FreeRTOSConfig.h is set accordingly to the 
+@note The FreeRTOS heap size configTOTAL_HEAP_SIZE defined in FreeRTOSConfig.h is set accordingly to the
       OS resources memory requirements of the application with +10% margin and rounded to the upper Kbyte boundary.
 
-For more details about FreeRTOS implementation on STM32Cube, please refer to UM1722 "Developing Applications 
+For more details about FreeRTOS implementation on STM32Cube, please refer to UM1722 "Developing Applications
 on STM32Cube with RTOS".
 
 @par Keywords
@@ -88,10 +64,10 @@ RTOS, FreeRTOS, Thread, Message, Queues
 
 @par Directory contents
     - FreeRTOS/FreeRTOS_Queues/Src/main.c                       Main program
-	- FreeRTOS/FreeRTOS_Queues/Src/app_FreeRTOS.c               Code for freertos applications
+    - FreeRTOS/FreeRTOS_Queues/Src/app_FreeRTOS.c               Code for freertos applications
     - FreeRTOS/FreeRTOS_Queues/Src/stm32g4xx_hal_timebase_tim.c HAL timebase file
     - FreeRTOS/FreeRTOS_Queues/Src/stm32g4xx_it.c               Interrupt handlers
-	- FreeRTOS/FreeRTOS_Queues/Src/stm32g4xx_hal_msp.c          MSP Initialization file
+    - FreeRTOS/FreeRTOS_Queues/Src/stm32g4xx_hal_msp.c          MSP Initialization file
     - FreeRTOS/FreeRTOS_Queues/Src/system_stm32g4xx.c           STM32G4xx system clock configuration file
     - FreeRTOS/FreeRTOS_Queues/Inc/main.h                       Main program header file
     - FreeRTOS/FreeRTOS_Queues/Inc/stm32g4xx_hal_conf.h         HAL Library Configuration file
@@ -101,17 +77,17 @@ RTOS, FreeRTOS, Thread, Message, Queues
 @par Hardware and Software environment
 
   - This application runs on STM32G431RBTx devices.
-    
+
   - This application has been tested with NUCLEO-G431RB RevC board and can be
     easily tailored to any other supported device and development board.
-    
+
 
 @par How to use it ?
 
 In order to make the program work, you must do the following:
- - Open your preferred toolchain 
+ - Open your preferred toolchain
  - Rebuild all files and load your image into target memory
  - Run the example
-  
+
  * <h3><center>&copy; COPYRIGHT STMicroelectronics</center></h3>
  */

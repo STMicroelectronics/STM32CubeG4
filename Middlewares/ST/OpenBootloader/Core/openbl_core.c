@@ -209,6 +209,48 @@ void OPENBL_CommandProcess(void)
         }
         break;
 
+      case CMD_NS_WRITE_MEMORY:
+        if (p_Interface->p_Cmd->NsWriteMemory != NULL)
+        {
+          p_Interface->p_Cmd->NsWriteMemory();
+        }
+        break;
+
+      case CMD_NS_ERASE_MEMORY:
+        if (p_Interface->p_Cmd->NsEraseMemory != NULL)
+        {
+          p_Interface->p_Cmd->NsEraseMemory();
+        }
+        break;
+
+      case CMD_NS_WRITE_PROTECT:
+        if (p_Interface->p_Cmd->NsWriteProtect != NULL)
+        {
+          p_Interface->p_Cmd->NsWriteProtect();
+        }
+        break;
+
+      case CMD_NS_WRITE_UNPROTECT:
+        if (p_Interface->p_Cmd->NsWriteUnprotect != NULL)
+        {
+          p_Interface->p_Cmd->NsWriteUnprotect();
+        }
+        break;
+
+      case CMD_NS_READ_PROTECT:
+        if (p_Interface->p_Cmd->NsReadoutProtect != NULL)
+        {
+          p_Interface->p_Cmd->NsReadoutProtect();
+        }
+        break;
+
+      case CMD_NS_READ_UNPROTECT:
+        if (p_Interface->p_Cmd->NsReadoutUnprotect != NULL)
+        {
+          p_Interface->p_Cmd->NsReadoutUnprotect();
+        }
+        break;
+
       /* Unknown command opcode */
       default:
         if (p_Interface->p_Ops->SendByte != NULL)

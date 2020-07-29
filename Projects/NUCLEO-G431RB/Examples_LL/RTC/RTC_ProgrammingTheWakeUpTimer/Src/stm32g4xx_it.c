@@ -188,7 +188,7 @@ void SysTick_Handler(void)
   /* USER CODE BEGIN SysTick_IRQn 0 */
 
   /* USER CODE END SysTick_IRQn 0 */
-  
+
   /* USER CODE BEGIN SysTick_IRQn 1 */
 
   /* USER CODE END SysTick_IRQn 1 */
@@ -247,7 +247,7 @@ void USART1_IRQHandler(void)
     LL_USART_ClearFlag_TC(USART1);
 
     /* Call function in charge of handling end of transmission of sent character
-       and prepare next charcater transmission */
+       and prepare next character transmission */
     USART_CharTransmitComplete_Callback();
   }
   else

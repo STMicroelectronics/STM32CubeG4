@@ -80,7 +80,7 @@ Analog, DAC, Signals generation, DMA, Sawtooth, Sine, Waveform
 
   - STM32G474E-EVAL Rev B Set-up :
       - Use User push-button connected to PC.13.
-      - 
+      - Use analog output PA4 (pin 41 connector CN6) 
 
 @par How to use it ? 
 

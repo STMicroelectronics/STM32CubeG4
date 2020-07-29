@@ -48,7 +48,7 @@ void MX_USBPD_Init(void)
   USBPD_HW_IF_GlobalHwInit();
 
   /* Initialize the Device Policy Manager */
-  if(USBPD_OK != USBPD_DPM_InitCore())
+  if (USBPD_OK != USBPD_DPM_InitCore())
   {
     while(1);
   }
@@ -65,7 +65,7 @@ void MX_USBPD_Init(void)
   /* USER CODE BEGIN 3 */
   /* USER CODE END 3 */
 
-  if(USBPD_OK != USBPD_DPM_InitOS())
+  if (USBPD_OK != USBPD_DPM_InitOS())
   {
     while(1);
   }
@@ -100,7 +100,7 @@ static const uint8_t* GetPDTypeName(void)
 /**
   * @}
   */
- 
+
 /**
   * @}
   */

@@ -135,7 +135,7 @@ void MPU_AccessPermConfig(void)
 
   /* Uncomment the following line to write to PrivilegedReadOnlyArray. This will
      generate error */
-    PrivilegedReadOnlyArray[0] = 'e';
+  /* PrivilegedReadOnlyArray[0] = 'e'; */
 }
 
 /**

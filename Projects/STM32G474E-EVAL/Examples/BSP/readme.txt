@@ -99,7 +99,7 @@ Once the message "Press User button to start :
 
 @par Keywords
 
-Display, LCD, SD card, SRAM, QSPI, LED, Push Button, JOYstick, audio
+Display, LCD, SD card, SRAM, QSPI, LED, Push Button, Joystick, audio
 
 
 @par Directory contents

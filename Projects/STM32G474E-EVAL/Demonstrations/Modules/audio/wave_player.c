@@ -119,7 +119,7 @@ void WavePlayer_Demo(void)
       nof_titles = WavePlayer_InitializePlayList();
       if (nof_titles == 0)
       {
-        kWindow_Popup("PLAY LIST EMPTY", GUI_COLOR_WHITE, GUI_COLOR_ST_BLUE , "Push JoyStick\nto exit.\n", GUI_COLOR_ST_BLUE, GUI_COLOR_WHITE);
+        kWindow_Popup("PLAY LIST EMPTY", UTIL_LCD_COLOR_WHITE, UTIL_LCD_COLOR_ST_BLUE , "Push JoyStick\nto exit.\n", UTIL_LCD_COLOR_ST_BLUE, UTIL_LCD_COLOR_WHITE);
         UserEvent  = JOY_NONE;
         UserEntry = 0;
         while(UserEvent == JOY_NONE);
@@ -559,24 +559,24 @@ static void WavePlayer_DisplayTitleSelectionScreen(void)
   uint32_t pXSize;
 
   /* Black screen */
-  GUI_Clear(GUI_COLOR_WHITE);
+  UTIL_LCD_Clear(UTIL_LCD_COLOR_WHITE);
 
   /* Display Title */
-  GUI_SetBackColor(GUI_COLOR_ST_PINK);
-  GUI_SetTextColor(GUI_COLOR_ST_PINK);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_ST_PINK);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_PINK);
   BSP_LCD_GetXSize(LCD_INSTANCE, &pXSize);
-  GUI_FillRect(0, LINE(0), pXSize, Font24.Height, GUI_COLOR_ST_PINK);
-  GUI_SetTextColor(GUI_COLOR_WHITE);
-  GUI_DisplayStringAt(0, LINE(0), (uint8_t *)"Wave Player", CENTER_MODE);
+  UTIL_LCD_FillRect(0, LINE(0), pXSize, Font24.Height, UTIL_LCD_COLOR_ST_PINK);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_DisplayStringAt(0, LINE(0), (uint8_t *)"Wave Player", CENTER_MODE);
 
   /* Display playback Icon */
   kStorage_OpenFileDrawBMP(35, 46, (uint8_t *)"STFILES/Music2.bmp");
 
   /* Display playlist list box */
-  GUI_SetTextColor(GUI_COLOR_ST_BLUE);
-  GUI_FillRect(x, y, width, height, GUI_COLOR_ST_BLUE);
-  GUI_SetTextColor(GUI_COLOR_WHITE);
-  GUI_FillRect(x + 3, y + 3, width - 6, height - 6, GUI_COLOR_WHITE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_BLUE);
+  UTIL_LCD_FillRect(x, y, width, height, UTIL_LCD_COLOR_ST_BLUE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_FillRect(x + 3, y + 3, width - 6, height - 6, UTIL_LCD_COLOR_WHITE);
 }
 
 /**
@@ -589,25 +589,25 @@ static void WavePlayer_DisplayPlayList(uint8_t Select, uint8_t NbTitles)
 {
   uint8_t i;
 
-  GUI_SetFont(&Font16);
+  UTIL_LCD_SetFont(&Font16);
 
   for (i = 0; i < NbTitles; i++)
   {
     if (i == Select - 1)
     {
-      GUI_SetBackColor(GUI_COLOR_ST_PINK);
-      GUI_SetTextColor(GUI_COLOR_WHITE);
+      UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_ST_PINK);
+      UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
     }
     else
     {
-      GUI_SetBackColor(GUI_COLOR_WHITE);
-      GUI_SetTextColor(GUI_COLOR_ST_BLUE);
+      UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
+      UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_BLUE);
     }
 
-    GUI_DisplayStringAt(145, 40 + Font16.Height*i, (uint8_t *)PlayList[i], LEFT_MODE);
+    UTIL_LCD_DisplayStringAt(145, 40 + Font16.Height*i, (uint8_t *)PlayList[i], LEFT_MODE);
   }
 
-  GUI_SetFont(&Font24);
+  UTIL_LCD_SetFont(&Font24);
 }
 
 /**
@@ -624,8 +624,8 @@ static void WavePlayer_DisplayPlaybackScreen(uint8_t Select)
   BSP_LCD_GetXSize(LCD_INSTANCE, &pXSize);
   kWidgetsProgressBar_t progress_bar =
   {
-    .textColor       = GUI_COLOR_ST_PINK,
-    .backgroungColor = GUI_COLOR_WHITE,
+    .textColor       = UTIL_LCD_COLOR_ST_PINK,
+    .backgroungColor = UTIL_LCD_COLOR_WHITE,
     .xpos            = 10,
     .ypos            = 150,
     .width           = pXSize - 20,
@@ -633,24 +633,24 @@ static void WavePlayer_DisplayPlaybackScreen(uint8_t Select)
   };
 
   /* Black screen */
-  GUI_Clear(GUI_COLOR_WHITE);
+  UTIL_LCD_Clear(UTIL_LCD_COLOR_WHITE);
 
   /* Display Title */
-  GUI_SetBackColor(GUI_COLOR_ST_PINK);
-  GUI_SetTextColor(GUI_COLOR_ST_PINK);
-  GUI_FillRect(0, LINE(0), pXSize, Font24.Height, GUI_COLOR_ST_PINK);
-  GUI_SetTextColor(GUI_COLOR_WHITE);
-  GUI_DisplayStringAt(0, 0, (uint8_t *)"Wave Player", CENTER_MODE);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_ST_PINK);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_PINK);
+  UTIL_LCD_FillRect(0, LINE(0), pXSize, Font24.Height, UTIL_LCD_COLOR_ST_PINK);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_DisplayStringAt(0, 0, (uint8_t *)"Wave Player", CENTER_MODE);
 
   /* Display playback Icon */
   kStorage_OpenFileDrawBMP(35, 46, (uint8_t *)"STFILES/Music2.bmp");
 
-  GUI_SetFont(&Font16);
-  GUI_SetBackColor(GUI_COLOR_WHITE);
-  GUI_SetTextColor(GUI_COLOR_ST_BLUE);
-  GUI_DisplayStringAt(35, 46, (uint8_t *)PlayList[Select-1], CENTER_MODE);
+  UTIL_LCD_SetFont(&Font16);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_BLUE);
+  UTIL_LCD_DisplayStringAt(35, 46, (uint8_t *)PlayList[Select-1], CENTER_MODE);
 
-  /* Retreive file size */
+  /* Retrieve file size */
   sprintf(file_name, "USER/%s", PlayList[Select-1]);
 
   if (f_stat (file_name, &fno) != FR_OK)
@@ -672,13 +672,13 @@ static void WavePlayer_DisplayBottomMessage(char * msg)
   uint32_t pXSize;
 
   BSP_LCD_GetXSize(LCD_INSTANCE, &pXSize);
-  GUI_SetFont(&Font12);
-  GUI_SetBackColor(GUI_COLOR_ST_BLUE);
-  GUI_SetTextColor(GUI_COLOR_ST_BLUE);
-  GUI_FillRect(0, LINE(19), pXSize, Font20.Height, GUI_COLOR_ST_BLUE);
-  GUI_SetTextColor(GUI_COLOR_WHITE);
-  GUI_DisplayStringAt(0, LINE(19), (uint8_t *)msg, CENTER_MODE);
-  GUI_SetFont(&Font24);
+  UTIL_LCD_SetFont(&Font12);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_ST_BLUE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_BLUE);
+  UTIL_LCD_FillRect(0, LINE(19), pXSize, Font20.Height, UTIL_LCD_COLOR_ST_BLUE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_DisplayStringAt(0, LINE(19), (uint8_t *)msg, CENTER_MODE);
+  UTIL_LCD_SetFont(&Font24);
 }
 
 /**
@@ -771,10 +771,10 @@ void BSP_AUDIO_OUT_HalfTransfer_CallBack(uint32_t Interface)
   */
 static void PlaybackStateUpdate(char * PlaybackState)
 {
-  GUI_SetFont(&Font24);
-  GUI_SetBackColor(GUI_COLOR_WHITE);
-  GUI_SetTextColor(GUI_COLOR_ST_PINK);
-  GUI_DisplayStringAt(0, 120, (uint8_t *)PlaybackState, CENTER_MODE);
+  UTIL_LCD_SetFont(&Font24);
+  UTIL_LCD_SetBackColor(UTIL_LCD_COLOR_WHITE);
+  UTIL_LCD_SetTextColor(UTIL_LCD_COLOR_ST_PINK);
+  UTIL_LCD_DisplayStringAt(0, 120, (uint8_t *)PlaybackState, CENTER_MODE);
 }
 
 

@@ -631,7 +631,7 @@ static void ADC1_Init(void)
   */
   /* ADC clock configured to use asynchronous clock */
   hadc1.Instance = ADC1;
-  hadc1.Init.ClockPrescaler = ADC_CLOCK_ASYNC_DIV1;
+  hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV4;;
   hadc1.Init.Resolution = ADC_RESOLUTION_12B;
   /* left aligned data equivalent to 8dB gain */
   hadc1.Init.DataAlign = ADC_DATAALIGN_LEFT;

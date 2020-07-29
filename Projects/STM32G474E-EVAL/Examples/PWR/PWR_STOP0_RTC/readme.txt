@@ -37,14 +37,15 @@ More than half a minute is chosen to ensure current convergence to its lowest op
 
 After wake-up from STOP 0 mode, program execution is resumed.
 
-LED1 is used to monitor the system state as follows:
+Two leds LED1 and LED2 are used to monitor the system state as following:
+ - LED2 ON: configuration failed (system will go to an infinite loop)
  - LED1 toggling: system in RUN mode
  - LED1 off : system in STOP 0 mode
 
 These steps are repeated in an infinite loop.
  
-@note To measure the current consumption in STOP 0 mode, remove JP6 jumper 
-      and connect an amperemeter to JP6 to measure IDD current.     
+@note To measure the current consumption in STOP 0 mode, remove JP13 jumper 
+      and connect an amperemeter to JP13 to measure IDD current.     
 
 @note This example can not be used in DEBUG mode due to the fact 
       that the Cortex-M4 core is no longer clocked during low power mode 
@@ -83,7 +84,7 @@ Power, PWR, Stop 1 mode, Interrupt, EXTI, Wakeup, Low Power, RTC, External reset
     and development board.
 
   - STM32G474E-EVAL Rev B Set-up
-    - LED1 connected to PG.09 pin
+    - Use LED1 and LED2 connected respectively to PG.09 and MFX6 pins
 
 
 @par How to use it ? 
@@ -91,8 +92,6 @@ Power, PWR, Stop 1 mode, Interrupt, EXTI, Wakeup, Low Power, RTC, External reset
 In order to make the program work, you must do the following :
  - Open your preferred toolchain 
  - Rebuild all files and load your image into target memory
- - Once the image is loaded, power off the NUCLEO board in unplugging
-   the power cable then power on the board again 
  - Run the example
 
 
