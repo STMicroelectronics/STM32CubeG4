@@ -85,8 +85,8 @@ typedef struct
 
 #if defined(STTS751_MANUFACTURER)
 #define STTS751_ID           STTS751_MANUFACTURER
-#elif defined(STTS751_MANUFACTURER_ID)
-#define STTS751_ID           STTS751_MANUFACTURER_ID
+#elif defined(STTS751_ID_MAN)
+#define STTS751_ID           STTS751_ID_MAN
 #else
 #error "STTS751_ID not defined"
 #endif

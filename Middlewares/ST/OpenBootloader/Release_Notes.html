@@ -5,53 +5,89 @@
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>Release Notes for Open Bootloader Middleware</title>
-  <style>
-    code{white-space: pre-wrap;}
-    span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
-    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
   </style>
-  <link rel="stylesheet" href="_htmresc/mini-st.css" />
+  <link rel="stylesheet" href="_htmresc/mini-st_2020.css" />
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
+  <link rel="icon" type="image/x-icon" href="_htmresc/favicon.png" />
 </head>
 <body>
 <div class="row">
 <div class="col-sm-12 col-lg-4">
-<div class="card fluid">
-<div class="sectione dark">
 <center>
-<h1 id="release-notes-for-open-bootloader-middleware"><small>Release Notes for</small> <strong>Open Bootloader Middleware</strong></h1>
+<h1 id="release-notes-for-open-bootloader-middleware">Release Notes for Open Bootloader Middleware</h1>
 <p>Copyright © 2020 STMicroelectronics<br />
 </p>
-<a href="https://www.st.com" class="logo"><img src="_htmresc/st_logo.png" alt="ST logo" /></a>
+<a href="https://www.st.com" class="logo"><img src="_htmresc/st_logo_2020.png" alt="ST logo" /></a>
 </center>
-</div>
-</div>
 <h1 id="license">License</h1>
-<p>Licensed under ST license SLA0044. You may not use this package except in compliance with the License. You may obtain a copy of the License at:</p>
-<p><a href="http://www.st.com/SLA0044">license URL</a></p>
+<p>This software component is licensed by ST under SLA0044, the “License”; You may not use this component except in compliance with the License. You may obtain a copy of the License at:</p>
+<p><a href="http://www.st.com/software_license_agreement_liberty_v2">license URL</a></p>
 <h1 id="purpose">Purpose</h1>
 <p>The <strong>Open Bootloader</strong> package provides an example of an IAP Bootloader that supports all ST Standard Bootloader commands.</p>
 <p>The Open Bootloader protocols commands were developed in a manner to be compatible with the Standard Bootloader protocols commands that is programmed by default in the system memory of STM32 devices.</p>
 <p>The Open Bootloader is also compatible with STM32CubeProgrammer tool.</p>
-<p>In the current release, the Open Bootloader supports USART, FDCAN and I2C protocols.</p>
-<p>Here is the list of references to application notes:</p>
+<p>In the current release, the Open Bootloader supports USART, FDCAN, I2C, USB protocols.</p>
+<p>Here is the list of references to the user documents:</p>
 <ul>
 <li><a href="https://www.st.com/resource/en/application_note/CD00264342.pdf">AN3155</a> : USART protocol used in the STM32 bootloader</li>
 <li><a href="https://www.st.com/resource/en/application_note/dm00660346.pdf">AN5405</a> : FDCAN protocol used in the STM32 bootloader</li>
 <li><a href="https://www.st.com/resource/en/application_note/DM00072315.pdf">AN4221</a> : I2C protocol used in the STM32 bootloader</li>
+<li><a href="https://www.st.com/resource/en/application_note/cd00264379.pdf">AN3156</a> : USB DFU protocol used in the STM32 bootloader</li>
 </ul>
 </div>
-<section id="update-history" class="col-sm-12 col-lg-8">
-<h1>Update History</h1>
+<div class="col-sm-12 col-lg-8">
+<h1 id="update-history">Update history</h1>
 <div class="collapse">
-<input type="checkbox" id="collapse-section2" checked aria-hidden="true"> <label for="collapse-section2" aria-hidden="true"><strong>V2.0.0 / 12-May-2020</strong></label>
+<input type="checkbox" id="collapse-section3" checked aria-hidden="true"> <label for="collapse-section3" aria-hidden="true"><strong>V3.0.0 / 23-October-2020</strong></label>
 <div>
-<h2 id="main-changes">Main Changes</h2>
+<h2 id="main-changes">Main changes</h2>
+<h3 id="third-release">Third release</h3>
+<p>This is the third official release of Open Bootloader Middleware that adds support for USB DFU protocol</p>
+<p>The Open Bootloader USB commands are compatible with the Standard Bootloader USB commands except get command, read unprotect, mass erase, go commands</p>
+<ul>
+<li>List of implemented commands on USB protocol:
+<ul>
+<li>Read memory</li>
+<li>Write memory</li>
+<li>Set Address Pointer</li>
+<li>Erase FLASH</li>
+</ul></li>
+</ul>
+<h2 id="known-limitations">Known limitations</h2>
+<ul>
+<li>List of missing commands on USART, FDCAN, I2C and USB protocols:
+<ul>
+<li>Special read command</li>
+<li>Special write command</li>
+</ul></li>
+<li>List of missing commands on USB protocol:
+<ul>
+<li>Get command</li>
+<li>Read unprotect</li>
+<li>Mass erase</li>
+</ul></li>
+</ul>
+<h2 id="backward-compatibility">Backward compatibility</h2>
+<ul>
+<li>Compatible with previous release.</li>
+</ul>
+<h2 id="dependencies">Dependencies</h2>
+<ul>
+<li>None.</li>
+</ul>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section2" aria-hidden="true"> <label for="collapse-section2" aria-hidden="true"><strong>V2.0.0 / 12-May-2020</strong></label>
+<div>
+<h2 id="main-changes-1">Main Changes</h2>
 <h3 id="second-release">Second release</h3>
 <p>This is the second official release of Open Bootloader Middleware that adds support for I2C protocol.</p>
 <p>The Open Bootloader I2C commands are compatible with the Standard Bootloader I2C commands</p>
@@ -77,7 +113,7 @@
 <li>Non stretch write unprotect</li>
 </ul></li>
 </ul>
-<h2 id="known-limitations">Known Limitations</h2>
+<h2 id="known-limitations-1">Known Limitations</h2>
 <ul>
 <li>List of missing commands on USART, FDCAN and I2C protocols:
 <ul>
@@ -85,11 +121,11 @@
 <li>Special write command</li>
 </ul></li>
 </ul>
-<h2 id="backward-compatibility">Backward Compatibility</h2>
+<h2 id="backward-compatibility-1">Backward Compatibility</h2>
 <ul>
 <li>Compatible with previous release.</li>
 </ul>
-<h2 id="dependencies">Dependencies</h2>
+<h2 id="dependencies-1">Dependencies</h2>
 <ul>
 <li>None.</li>
 </ul>
@@ -98,7 +134,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section1" aria-hidden="true"> <label for="collapse-section1" aria-hidden="true"><strong>V1.0.0 / 01-August-2019</strong></label>
 <div>
-<h2 id="main-changes-1">Main Changes</h2>
+<h2 id="main-changes-2">Main Changes</h2>
 <h3 id="first-release">First release</h3>
 <p>This is the first official release of Open Bootloader Middleware that supports USART and FDCAN protocols.</p>
 <p>The Open Bootloader USART and FDCAN commands are compatible with the Standard Bootloader commands.</p>
@@ -118,7 +154,7 @@
 <li>Write unprotect</li>
 </ul></li>
 </ul>
-<h2 id="known-limitations-1">Known Limitations</h2>
+<h2 id="known-limitations-2">Known Limitations</h2>
 <ul>
 <li>List of missing commands on USART and FDCAN protocols:
 <ul>
@@ -126,21 +162,26 @@
 <li>Special write command</li>
 </ul></li>
 </ul>
-<h2 id="backward-compatibility-1">Backward Compatibility</h2>
+<h2 id="backward-compatibility-2">Backward Compatibility</h2>
 <ul>
 <li>None.</li>
 </ul>
-<h2 id="dependencies-1">Dependencies</h2>
+<h2 id="dependencies-2">Dependencies</h2>
 <ul>
 <li>None.</li>
 </ul>
 </div>
 </div>
-</section>
+</div>
 </div>
 <footer class="sticky">
-<p>For complete documentation on STM32 Microcontrollers, visit: <a href="http://www.st.com/STM32">www.st.com/STM32</a></p>
-This release note uses up to date web standards and, for this reason, should not be opened with Internet Explorer but preferably with popular browsers such as Google Chrome, Mozilla Firefox, Opera or Microsoft Edge.
+<div class="columns">
+<div class="column" style="width:95%;">
+<p>For complete documentation on <strong>STM32 Microcontrollers</strong> , visit: <a href="http://www.st.com/STM32">www.st.com/STM32</a></p>
+</div><div class="column" style="width:5%;">
+<p><abbr title="Based on template cx566953 version 2.0">Info</abbr></p>
+</div>
+</div>
 </footer>
 </body>
 </html>

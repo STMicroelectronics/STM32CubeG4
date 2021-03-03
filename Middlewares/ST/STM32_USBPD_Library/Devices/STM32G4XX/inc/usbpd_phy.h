@@ -89,6 +89,13 @@ typedef struct
     */
   void (*USBPD_PHY_TxCompleted)(uint8_t PortNum, uint32_t Status);
 
+  /**
+    * @brief  Reports to the PRL that an FRS has been detected.
+    * @param  PortNum:    The handle of the port
+    * @retval None
+    */
+  void (*USBPD_PHY_FastRoleSwapReception)(uint8_t PortNum);
+
 } USBPD_PHY_Callbacks;
 
 /**

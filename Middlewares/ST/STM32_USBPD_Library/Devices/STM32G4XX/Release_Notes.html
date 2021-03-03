@@ -5,32 +5,27 @@
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>Release Notes for STM32 USB-C Power Delivery G4 Device Driver</title>
-  <style>
-    code{white-space: pre-wrap;}
-    span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
-    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
   </style>
   <link rel="stylesheet" href="_htmresc/mini-st.css" />
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
+  <link rel="icon" type="image/x-icon" href="_htmresc/favicon.png" />
 </head>
 <body>
 <div class="row">
 <div class="col-sm-12 col-lg-4">
-<div class="card fluid">
-<div class="sectione dark">
 <center>
-<h1 id="release-notes-for-stm32-usb-c-power-delivery-g4-device-driver"><small>Release Notes for</small> STM32 USB-C Power Delivery G4 Device Driver</h1>
+<h1 id="release-notes-for-stm32-usb-c-power-delivery-g4-device-driver">Release Notes for STM32 USB-C Power Delivery G4 Device Driver</h1>
 <p>Copyright © 2019 STMicroelectronics<br />
 </p>
-<a href="https://www.st.com" class="logo"><img src="_htmresc/st_logo.png" alt="ST logo" /></a>
+<a href="https://www.st.com" class="logo"><img src="_htmresc/st_logo_2020.png" alt="ST logo" /></a>
 </center>
-</div>
-</div>
 <h1 id="license">License</h1>
 <p>This software component is licensed by ST under Ultimate Liberty license SLA0044, the "License"; You may not use this component except in compliance with the License. You may obtain a copy of the License at:</p>
 <p><a href="http://www.st.com/SLA0044">http://www.st.com/SLA0044</a></p>
@@ -41,15 +36,109 @@
 <li><p>Physical layer : message handling SOP, SOP’, SOP’’, HARDRESET, …</p></li>
 <li><p>Timer server to handle GOODCRC, PRL repetition timing</p></li>
 </ul>
-<p>The USB-PD library is developed following the Universal Serial Bus Power Delivery Specification Revision 3.0, V1.2 (June 06, 2018) and Universal Serial Bus type-C Cable and Connector Specification, Revision 1.3 (July 14, 2017).</p>
+<p>The USB-PD library is developed following the Universal Serial Bus Power Delivery Specification Revision 3.0, V2.0 (August 29, 2019) and Universal Serial Bus type-C Cable and Connector Specification, Revision 2.0 (August, 2019).</p>
 </div>
-<section id="update-history" class="col-sm-12 col-lg-8">
-<h1>Update History</h1>
+<div class="col-sm-12 col-lg-8">
+<h1 id="update-history">Update History</h1>
 <div class="collapse">
-<input type="checkbox" id="collapse-section11" checked aria-hidden="true"> <label for="collapse-section11" aria-hidden="true">V4.0.1 / 6-June-2020</label>
+<input type="checkbox" id="collapse-section10" checked aria-hidden="true"> <label for="collapse-section10" aria-hidden="true">v5.0.0 / 26-Nov-2020</label>
 <div>
 <h2 id="main-changes">Main Changes</h2>
 <h3 id="maintenance-release">Maintenance release</h3>
+<h2 id="contents">Contents</h2>
+<p><strong>Fixed bugs list</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Headline</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Ticket 96061 - Tests TD4.3.x failed on Lecroy with NO_PD Sink version</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">[FRS] confirm the FRS event by checking if an Rp resistor is still present</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ticket 96223 Avoid double definition with LE16 &amp; LE32 macros used in usbh.def</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Codespell corrections</td>
+</tr>
+</tbody>
+</table>
+<h2 id="known-limitations">Known Limitations</h2>
+<p>Outstanding bugs list : None</p>
+<p>Requirements not met or planned in a forthcoming release : None</p>
+<h2 id="development-toolchains-and-compilers">Development Toolchains and Compilers</h2>
+<ul>
+<li>IAR Embedded Workbench for ARM (EWARM) toolchain V8.32.3</li>
+<li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.27</li>
+<li>STM32CubeIDE V1.4.0</li>
+</ul>
+<h2 id="supported-devices-and-boards">Supported Devices and boards</h2>
+<p>All STM32G4xx devices embedding USBPD IP</p>
+<h2 id="backward-compatibility">Backward compatibility</h2>
+<p>No compatibility break with previous version</p>
+<h2 id="dependencies">Dependencies</h2>
+<p>This software release is compatible with USB-C Power Delivery Core Stack Library v3.3.0</p>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section9" aria-hidden="true"> <label for="collapse-section9" aria-hidden="true">v4.1.0 / 17-Sep-2020</label>
+<div>
+<h2 id="main-changes-1">Main Changes</h2>
+<h3 id="maintenance-release-1">Maintenance release</h3>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Headline</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Integration of the FRS feature on G4, L5, U5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ticket 84586 - Provide external API in CAD to allow application to know which RP present in Sink</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Add USBPDM1_VCC_FEATURE_ENABLED switch from all the series</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Remove condition for CAD_StateMachine prototype</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Correct misspelled words</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ticket 92910 -Need to increase delay before reading CC values after VCC activation of TCPP01</td>
+</tr>
+</tbody>
+</table>
+<h2 id="known-limitations-1">Known Limitations</h2>
+<p>Outstanding bugs list : None</p>
+<p>Requirements not met or planned in a forthcoming release : None</p>
+<h2 id="development-toolchains-and-compilers-1">Development Toolchains and Compilers</h2>
+<ul>
+<li>IAR Embedded Workbench for ARM (EWARM) toolchain V8.32.3</li>
+<li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.27</li>
+<li>STM32CubeIDE V1.2.0</li>
+</ul>
+<h2 id="supported-devices-and-boards-1">Supported Devices and boards</h2>
+<p>All STM32G4xx devices embedding USBPD IP</p>
+<h2 id="backward-compatibility-1">Backward compatibility</h2>
+<p>No compatibility break with previous version</p>
+<h2 id="dependencies-1">Dependencies</h2>
+<p>This software release is compatible with USB-C Power Delivery Core Stack Library v3.2.0</p>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section11" aria-hidden="true"> <label for="collapse-section11" aria-hidden="true">V4.0.1 / 6-June-2020</label>
+<div>
+<h2 id="main-changes-2">Main Changes</h2>
+<h3 id="maintenance-release-2">Maintenance release</h3>
 <table>
 <thead>
 <tr class="header">
@@ -65,27 +154,27 @@
 </tr>
 </tbody>
 </table>
-<h2 id="known-limitations">Known Limitations</h2>
+<h2 id="known-limitations-2">Known Limitations</h2>
 <p>Outstanding bugs list : None</p>
 <p>Requirements not met or planned in a forthcoming release : None</p>
-<h2 id="development-toolchains-and-compilers">Development Toolchains and Compilers</h2>
+<h2 id="development-toolchains-and-compilers-2">Development Toolchains and Compilers</h2>
 <ul>
 <li>IAR Embedded Workbench for ARM (EWARM) toolchain V8.32.3</li>
 <li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.27</li>
 <li>STM32CubeIDE V1.2.0</li>
 </ul>
-<h2 id="supported-devices-and-boards">Supported Devices and boards</h2>
+<h2 id="supported-devices-and-boards-2">Supported Devices and boards</h2>
 <p>All STM32G4xx devices embedding USBPD IP</p>
-<h2 id="backward-compatibility">Backward compatibility</h2>
-<h2 id="dependencies">Dependencies</h2>
+<h2 id="backward-compatibility-2">Backward compatibility</h2>
+<h2 id="dependencies-2">Dependencies</h2>
 <p>This software release is compatible with USB-C Power Delivery Core Stack Library v3.0.0</p>
 </div>
 </div>
 <div class="collapse">
 <input type="checkbox" id="collapse-section10" aria-hidden="true"> <label for="collapse-section10" aria-hidden="true">V4.0.0 / 26-Mar-2020</label>
 <div>
-<h2 id="main-changes-1">Main Changes</h2>
-<h3 id="maintenance-release-1">Maintenance release</h3>
+<h2 id="main-changes-3">Main Changes</h2>
+<h3 id="maintenance-release-3">Maintenance release</h3>
 <table>
 <thead>
 <tr class="header">
@@ -110,28 +199,28 @@
 </tr>
 </tbody>
 </table>
-<h2 id="known-limitations-1">Known Limitations</h2>
+<h2 id="known-limitations-3">Known Limitations</h2>
 <p>Outstanding bugs list : None</p>
 <p>Requirements not met or planned in a forthcoming release : None</p>
-<h2 id="development-toolchains-and-compilers-1">Development Toolchains and Compilers</h2>
+<h2 id="development-toolchains-and-compilers-3">Development Toolchains and Compilers</h2>
 <ul>
 <li>IAR Embedded Workbench for ARM (EWARM) toolchain V8.32.3</li>
 <li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.27</li>
 <li>STM32CubeIDE V1.2.0</li>
 </ul>
-<h2 id="supported-devices-and-boards-1">Supported Devices and boards</h2>
+<h2 id="supported-devices-and-boards-3">Supported Devices and boards</h2>
 <p>All STM32G4xx devices embedding USBPD IP</p>
-<h2 id="backward-compatibility-1">Backward compatibility</h2>
+<h2 id="backward-compatibility-3">Backward compatibility</h2>
 <p>Implementation of CR Ticket 81963 and Ticket 81964 leads to some interface changes between USBPD Core and USBPD Device driver modules. In order to use thise version of USBPD Device driver module, please ensure version of USBPD Core module is v3.0.0 or higher.</p>
-<h2 id="dependencies-1">Dependencies</h2>
+<h2 id="dependencies-3">Dependencies</h2>
 <p>This software release is compatible with USB-C Power Delivery Core Stack Library v3.0.0</p>
 </div>
 </div>
 <div class="collapse">
-<input type="checkbox" id="collapse-section8" aria-hidden="true"> <label for="collapse-section8" aria-hidden="true">v3.1.0 / 04-Feb-2020</label>
+<input type="checkbox" id="collapse-section8"  aria-hidden="true"> <label for="collapse-section8" aria-hidden="true">v3.1.0 / 04-Feb-2020</label>
 <div>
-<h2 id="main-changes-2">Main Changes</h2>
-<h3 id="maintenance-release-2">Maintenance release</h3>
+<h2 id="main-changes-4">Main Changes</h2>
+<h3 id="maintenance-release-4">Maintenance release</h3>
 <table>
 <thead>
 <tr class="header">
@@ -156,28 +245,28 @@
 </tr>
 </tbody>
 </table>
-<h2 id="known-limitations-2">Known Limitations</h2>
+<h2 id="known-limitations-4">Known Limitations</h2>
 <p>Outstanding bugs list : None</p>
 <p>Requirements not met or planned in a forthcoming release : None</p>
-<h2 id="development-toolchains-and-compilers-2">Development Toolchains and Compilers</h2>
+<h2 id="development-toolchains-and-compilers-4">Development Toolchains and Compilers</h2>
 <ul>
 <li>IAR Embedded Workbench for ARM (EWARM) toolchain V8.32.3</li>
 <li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.27</li>
 <li>STM32CubeIDE v1.2.0</li>
 </ul>
-<h2 id="supported-devices-and-boards-2">Supported Devices and boards</h2>
+<h2 id="supported-devices-and-boards-4">Supported Devices and boards</h2>
 <p>All STM32G4xx devices embedding USBPD IP</p>
-<h2 id="backward-compatibility-2">Backward compatibility</h2>
+<h2 id="backward-compatibility-4">Backward compatibility</h2>
 <p>No compatibility break with previous version</p>
-<h2 id="dependencies-2">Dependencies</h2>
+<h2 id="dependencies-4">Dependencies</h2>
 <p>This software release is compatible with USB-C Power Delivery Core Stack Library v2.9.0</p>
 </div>
 </div>
 <div class="collapse">
 <input type="checkbox" id="collapse-section7"  aria-hidden="true"> <label for="collapse-section7" aria-hidden="true">V3.0.0 / 20-Dec-2019</label>
 <div>
-<h2 id="main-changes-3">Main Changes</h2>
-<h3 id="maintenance-release-3">Maintenance release</h3>
+<h2 id="main-changes-5">Main Changes</h2>
+<h3 id="maintenance-release-5">Maintenance release</h3>
 <table>
 <thead>
 <tr class="header">
@@ -208,29 +297,29 @@
 </tr>
 </tbody>
 </table>
-<h2 id="known-limitations-3">Known Limitations</h2>
+<h2 id="known-limitations-5">Known Limitations</h2>
 <p>Outstanding bugs list :</p>
 <p>Identified issue on LeCroy test 4.10.2 regarding remaining VBUS voltage when externally powered. TC 4.10.2 OK requires either a Resistor value change on G4 EVAL board (MB1397) or an update in BSP drivers =&gt; Ticket 76048 - [EVAL-G4] UCPD VBUS value when 5V external supply connected</p>
 <p>Requirements not met or planned in a forthcoming release : None</p>
-<h2 id="development-toolchains-and-compilers-3">Development Toolchains and Compilers</h2>
+<h2 id="development-toolchains-and-compilers-5">Development Toolchains and Compilers</h2>
 <ul>
 <li>IAR Embedded Workbench for ARM (EWARM) toolchain V8.32.3</li>
 <li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.26</li>
 <li>STM32CubeIDE v1.2.0</li>
 </ul>
-<h2 id="supported-devices-and-boards-3">Supported Devices and boards</h2>
+<h2 id="supported-devices-and-boards-5">Supported Devices and boards</h2>
 <p>All STM32G4xx devices embedding USBPD IP</p>
-<h2 id="backward-compatibility-3">Backward compatibility</h2>
+<h2 id="backward-compatibility-5">Backward compatibility</h2>
 <p>Application needs to provide new interface to manage introduction of dynamic voltage (USBPD_PWR_IF_GetVBUSStatus function).</p>
-<h2 id="dependencies-3">Dependencies</h2>
+<h2 id="dependencies-5">Dependencies</h2>
 <p>This software release is compatible with USB-C Power Delivery Core Stack Library v2.9.0</p>
 </div>
 </div>
 <div class="collapse">
 <input type="checkbox" id="collapse-section6" aria-hidden="true"> <label for="collapse-section6" aria-hidden="true">V2.8.0 / 06-May-2019</label>
 <div>
-<h2 id="main-changes-4">Main Changes</h2>
-<h3 id="maintenance-release-4">Maintenance release</h3>
+<h2 id="main-changes-6">Main Changes</h2>
+<h3 id="maintenance-release-6">Maintenance release</h3>
 <table>
 <thead>
 <tr class="header">
@@ -255,28 +344,28 @@
 </tr>
 </tbody>
 </table>
-<h2 id="known-limitations-4">Known Limitations</h2>
+<h2 id="known-limitations-6">Known Limitations</h2>
 <p>Outstanding bugs list : None</p>
 <p>Requirements not met or planned in a forthcoming release : None</p>
-<h2 id="development-toolchains-and-compilers-4">Development Toolchains and Compilers</h2>
+<h2 id="development-toolchains-and-compilers-6">Development Toolchains and Compilers</h2>
 <ul>
 <li>IAR Embedded Workbench for ARM (EWARM) toolchain V8.20.2</li>
 <li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.25</li>
 <li>System Workbench STM32 (SW4STM32) toolchain V2.7.2</li>
 </ul>
-<h2 id="supported-devices-and-boards-4">Supported Devices and boards</h2>
+<h2 id="supported-devices-and-boards-6">Supported Devices and boards</h2>
 <p>All STM32G4xx devices embedding USBPD IP</p>
-<h2 id="backward-compatibility-4">Backward compatibility</h2>
+<h2 id="backward-compatibility-6">Backward compatibility</h2>
 <p>No compatibility break with previous version</p>
-<h2 id="dependencies-4">Dependencies</h2>
+<h2 id="dependencies-6">Dependencies</h2>
 <p>This software release is compatible with USB-C Power Delivery Core Stack Library v2.6.0</p>
 </div>
 </div>
 <div class="collapse">
 <input type="checkbox" id="collapse-section5" aria-hidden="true"> <label for="collapse-section5" aria-hidden="true">V2.7.0 / 25-Mar-2019</label>
 <div>
-<h2 id="main-changes-5">Main Changes</h2>
-<h3 id="maintenance-release-5">Maintenance release</h3>
+<h2 id="main-changes-7">Main Changes</h2>
+<h3 id="maintenance-release-7">Maintenance release</h3>
 <table>
 <thead>
 <tr class="header">
@@ -298,77 +387,6 @@
 </tr>
 </tbody>
 </table>
-<h2 id="known-limitations-5">Known Limitations</h2>
-<p>Outstanding bugs list : None</p>
-<p>Requirements not met or planned in a forthcoming release : None</p>
-<h2 id="development-toolchains-and-compilers-5">Development Toolchains and Compilers</h2>
-<ul>
-<li>IAR Embedded Workbench for ARM (EWARM) toolchain V8.20.2</li>
-<li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.25</li>
-<li>System Workbench STM32 (SW4STM32) toolchain V2.7.2</li>
-</ul>
-<h2 id="supported-devices-and-boards-5">Supported Devices and boards</h2>
-<p>All STM32G4xx devices embedding USBPD IP</p>
-<h2 id="backward-compatibility-5">Backward compatibility</h2>
-<p>No compatibility break with previous version</p>
-<h2 id="dependencies-5">Dependencies</h2>
-<p>NA</p>
-</div>
-</div>
-<div class="collapse">
-<input type="checkbox" id="collapse-section4" aria-hidden="true"> <label for="collapse-section4" aria-hidden="true">V2.6.0 / 23-Jan-2019</label>
-<div>
-<h2 id="main-changes-6">Main Changes</h2>
-<h3 id="maintenance-release-6">Maintenance release</h3>
-<table>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Headline</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Editorial modifications (Astyle)</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Update in Discharge handling for MB1397 when VBUS is not supplied</td>
-</tr>
-</tbody>
-</table>
-<h2 id="known-limitations-6">Known Limitations</h2>
-<p>Outstanding bugs list : None</p>
-<p>Requirements not met or planned in a forthcoming release : None</p>
-<h2 id="development-toolchains-and-compilers-6">Development Toolchains and Compilers</h2>
-<ul>
-<li>IAR Embedded Workbench for ARM (EWARM) toolchain V8.20.2</li>
-<li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.25</li>
-<li>System Workbench STM32 (SW4STM32) toolchain V2.7.2</li>
-</ul>
-<h2 id="supported-devices-and-boards-6">Supported Devices and boards</h2>
-<p>All STM32G4xx devices embedding USBPD IP</p>
-<h2 id="backward-compatibility-6">Backward compatibility</h2>
-<p>No compatibility break with previous version</p>
-<h2 id="dependencies-6">Dependencies</h2>
-<p>NA</p>
-</div>
-</div>
-<div class="collapse">
-<input type="checkbox" id="collapse-section3" aria-hidden="true"> <label for="collapse-section3" aria-hidden="true">V2.5.0 / 10-Dec-2018</label>
-<div>
-<h2 id="main-changes-7">Main Changes</h2>
-<h3 id="maintenance-release-7">Maintenance release</h3>
-<table>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Headline</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Editorial correction (renaming toogle by toggle)</td>
-</tr>
-</tbody>
-</table>
 <h2 id="known-limitations-7">Known Limitations</h2>
 <p>Outstanding bugs list : None</p>
 <p>Requirements not met or planned in a forthcoming release : None</p>
@@ -387,9 +405,80 @@
 </div>
 </div>
 <div class="collapse">
-<input type="checkbox" id="collapse-section2" aria-hidden="true"> <label for="collapse-section2" aria-hidden="true">V2.4.0 / 15-Nov-2018</label>
+<input type="checkbox" id="collapse-section4" aria-hidden="true"> <label for="collapse-section4" aria-hidden="true">V2.6.0 / 23-Jan-2019</label>
 <div>
 <h2 id="main-changes-8">Main Changes</h2>
+<h3 id="maintenance-release-8">Maintenance release</h3>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Headline</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Editorial modifications (Astyle)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Update in Discharge handling for MB1397 when VBUS is not supplied</td>
+</tr>
+</tbody>
+</table>
+<h2 id="known-limitations-8">Known Limitations</h2>
+<p>Outstanding bugs list : None</p>
+<p>Requirements not met or planned in a forthcoming release : None</p>
+<h2 id="development-toolchains-and-compilers-8">Development Toolchains and Compilers</h2>
+<ul>
+<li>IAR Embedded Workbench for ARM (EWARM) toolchain V8.20.2</li>
+<li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.25</li>
+<li>System Workbench STM32 (SW4STM32) toolchain V2.7.2</li>
+</ul>
+<h2 id="supported-devices-and-boards-8">Supported Devices and boards</h2>
+<p>All STM32G4xx devices embedding USBPD IP</p>
+<h2 id="backward-compatibility-8">Backward compatibility</h2>
+<p>No compatibility break with previous version</p>
+<h2 id="dependencies-8">Dependencies</h2>
+<p>NA</p>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section3" aria-hidden="true"> <label for="collapse-section3" aria-hidden="true">V2.5.0 / 10-Dec-2018</label>
+<div>
+<h2 id="main-changes-9">Main Changes</h2>
+<h3 id="maintenance-release-9">Maintenance release</h3>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Headline</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Editorial correction (renaming toogle by toggle)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="known-limitations-9">Known Limitations</h2>
+<p>Outstanding bugs list : None</p>
+<p>Requirements not met or planned in a forthcoming release : None</p>
+<h2 id="development-toolchains-and-compilers-9">Development Toolchains and Compilers</h2>
+<ul>
+<li>IAR Embedded Workbench for ARM (EWARM) toolchain V8.20.2</li>
+<li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.25</li>
+<li>System Workbench STM32 (SW4STM32) toolchain V2.7.2</li>
+</ul>
+<h2 id="supported-devices-and-boards-9">Supported Devices and boards</h2>
+<p>All STM32G4xx devices embedding USBPD IP</p>
+<h2 id="backward-compatibility-9">Backward compatibility</h2>
+<p>No compatibility break with previous version</p>
+<h2 id="dependencies-9">Dependencies</h2>
+<p>NA</p>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section2" aria-hidden="true"> <label for="collapse-section2" aria-hidden="true">V2.4.0 / 15-Nov-2018</label>
+<div>
+<h2 id="main-changes-10">Main Changes</h2>
 <h3 id="initial-release">Initial release</h3>
 <table>
 <thead>
@@ -412,24 +501,24 @@
 </tr>
 </tbody>
 </table>
-<h2 id="known-limitations-8">Known Limitations</h2>
+<h2 id="known-limitations-10">Known Limitations</h2>
 <p>Outstanding bugs list : None</p>
 <p>Requirements not met or planned in a forthcoming release : None</p>
-<h2 id="development-toolchains-and-compilers-8">Development Toolchains and Compilers</h2>
+<h2 id="development-toolchains-and-compilers-10">Development Toolchains and Compilers</h2>
 <ul>
 <li>IAR Embedded Workbench for ARM (EWARM) toolchain V8.20.2</li>
 <li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.25</li>
 <li>System Workbench STM32 (SW4STM32) toolchain V2.7.2</li>
 </ul>
-<h2 id="supported-devices-and-boards-8">Supported Devices and boards</h2>
+<h2 id="supported-devices-and-boards-10">Supported Devices and boards</h2>
 <p>All STM32G4xx devices embedding USBPD IP</p>
-<h2 id="backward-compatibility-8">Backward compatibility</h2>
+<h2 id="backward-compatibility-10">Backward compatibility</h2>
 <p>No compatibility break with previous version</p>
-<h2 id="dependencies-8">Dependencies</h2>
+<h2 id="dependencies-10">Dependencies</h2>
 <p>NA</p>
 </div>
 </div>
-</section>
+</div>
 </div>
 <footer class="sticky">
 <p>For complete documentation on <strong>STM32 32-bit Arm Cortex MCUs</strong>, visit: <a href="http://www.st.com/STM32">http://www.st.com/STM32</a></p>

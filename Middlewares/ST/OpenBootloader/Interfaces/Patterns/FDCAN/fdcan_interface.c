@@ -6,23 +6,21 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
-  * This software component is licensed by ST under Image license SLA0044,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                       www.st.com/SLA0044
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
   *
   ******************************************************************************
   */
 
 /* Includes ------------------------------------------------------------------*/
 #include "platform.h"
-
 #include "openbl_core.h"
 #include "openbl_fdcan_cmd.h"
-
 #include "fdcan_interface.h"
 #include "iwdg_interface.h"
 #include "interfaces_conf.h"
@@ -36,9 +34,10 @@ FDCAN_FilterTypeDef sFilterConfig;
 FDCAN_TxHeaderTypeDef TxHeader;
 FDCAN_RxHeaderTypeDef RxHeader;
 
-extern uint8_t RxData[1156];
-
 /* Exported variables --------------------------------------------------------*/
+uint8_t TxData[FDCAN_RAM_BUFFER_SIZE];
+uint8_t RxData[FDCAN_RAM_BUFFER_SIZE];
+
 /* Private function prototypes -----------------------------------------------*/
 static void OPENBL_FDCAN_Init(void);
 
@@ -115,6 +114,12 @@ static void OPENBL_FDCAN_Init(void)
  */
 void OPENBL_FDCAN_Configuration(void)
 {
+  /* Enable all resources clocks --------------------------------------------*/
+  /* Enable used GPIOx clocks */
+  __HAL_RCC_GPIOD_CLK_ENABLE();
+  /* Enable FDCAN clock */
+  __HAL_RCC_FDCAN_CLK_ENABLE();
+
   OPENBL_FDCAN_Init();
 }
 
@@ -218,9 +223,11 @@ void OPENBL_FDCAN_SendByte(uint8_t Byte)
   {}
 
   HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan, &TxHeader, &Byte);
+
   /* Wait that the data is completely sent (sent FIFO empty) */
   while (((&hfdcan)->Instance->IR & FDCAN_IR_TFE) != FDCAN_IR_TFE)
   {}
+
   /* Clear the complete flag */
   (&hfdcan)->Instance->IR &= FDCAN_IR_TFE;
 }
@@ -239,9 +246,11 @@ void OPENBL_FDCAN_SendBytes(uint8_t *Buffer, uint32_t BufferSize)
   {}
 
   HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan, &TxHeader, Buffer);
+
   /* Wait that the data is completely sent (sent FIFO empty) */
   while (((&hfdcan)->Instance->IR & FDCAN_IR_TFE) != FDCAN_IR_TFE)
   {}
+
   /* Clear the complete flag */
   (&hfdcan)->Instance->IR &= FDCAN_IR_TFE;
 }

@@ -6,23 +6,21 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
-  * This software component is licensed by ST under Image license SLA0044,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                       www.st.com/SLA0044
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
   *
   ******************************************************************************
   */
 
 /* Includes ------------------------------------------------------------------*/
 #include "platform.h"
-
 #include "openbl_core.h"
 #include "openbl_usart_cmd.h"
-
 #include "usart_interface.h"
 #include "iwdg_interface.h"
 #include "interfaces_conf.h"
@@ -75,22 +73,14 @@ void OPENBL_USART_Configuration(void)
 {
   GPIO_InitTypeDef GPIO_InitStruct;
 
-  /* Enable all ressources clocks --------------------------------------------*/
+  /* Enable all resources clocks ---------------------------------------------*/
   /* Enable used GPIOx clocks */
   __HAL_RCC_GPIOA_CLK_ENABLE();
 
   /* Enable USART clock */
   __HAL_RCC_USART1_CLK_ENABLE();
 
-  /* USART1 pins configuration -----------------------------------------------*/
-  /*
-           +-------------+
-           |   USART1    |
-     +-----+-------------+
-     | TX  |     PA9     |
-     +-----+-------------+
-     | RX  |     PA10    |
-     +-----+-------------+ */
+  /* USARTx pins configuration -----------------------------------------------*/
 
   GPIO_InitStruct.Pin       = USARTx_TX_PIN;
   GPIO_InitStruct.Mode      = GPIO_MODE_AF_PP;
@@ -113,10 +103,10 @@ uint8_t OPENBL_USART_ProtocolDetection(void)
 {
   uint8_t detected;
 
-  /* Check if the USART1 is addressed */
-  if (((USART1->ISR & LL_USART_ISR_ABRF) != 0) && ((USART1->ISR & LL_USART_ISR_ABRE) == 0))
+  /* Check if the USARTx is addressed */
+  if (((USARTx->ISR & LL_USART_ISR_ABRF) != 0) && ((USARTx->ISR & LL_USART_ISR_ABRE) == 0))
   {
-    /* Read byte in order to flush the 0x7F syncronization byte */
+    /* Read byte in order to flush the 0x7F synchronization byte */
     OPENBL_USART_ReadByte();
 
     /* Aknowledge the host */

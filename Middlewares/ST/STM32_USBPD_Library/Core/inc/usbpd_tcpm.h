@@ -29,7 +29,6 @@ extern "C" {
 #if defined(USBPDCORE_TCPM_SUPPORT)
 
 #include "string.h"
-#include "usbpd_cad.h"
 #include "usbpd_def.h"
 #include "tcpc.h"
 
@@ -96,6 +95,13 @@ typedef struct
     */
   void (*USBPD_TCPM_MessageReceivedTC)(uint8_t PortNum, uint32_t status);
 
+  /**
+    * @brief  Reports to the PRL that an FRS has been detected.
+    * @param  PortNum:    The handle of the port
+    * @retval None
+    */
+  void (*USBPD_PHY_FastRoleSwapReception)(uint8_t PortNum);
+
 } USBPD_PHY_Callbacks;
 
 /**
@@ -131,7 +137,8 @@ typedef struct
   * @param  SupportedSOP  Supported SOP
   * @retval HAL status
   */
-USBPD_StatusTypeDef  USBPD_PHY_Init(uint8_t PortNum, const USBPD_PHY_Callbacks *pCallbacks, uint8_t *pRxBuffer, USBPD_PortPowerRole_TypeDef PowerRole, uint32_t SupportedSOP);
+USBPD_StatusTypeDef  USBPD_PHY_Init(uint8_t PortNum, const USBPD_PHY_Callbacks *pCallbacks, uint8_t *pRxBuffer,
+                                    USBPD_PortPowerRole_TypeDef PowerRole, uint32_t SupportedSOP);
 
 /**
   * @brief  Reset the PHY of a specified port.
@@ -180,7 +187,8 @@ USBPD_StatusTypeDef  USBPD_TCPM_set_polarity(uint32_t PortNum, uint32_t Polarity
   * @param  Specification  PD Specification version
   * @retval USBPD status
   */
-USBPD_StatusTypeDef  USBPD_TCPM_set_msg_header(uint32_t PortNum, USBPD_PortPowerRole_TypeDef PowerRole, USBPD_PortDataRole_TypeDef DataRole, USBPD_SpecRev_TypeDef Specification);
+USBPD_StatusTypeDef  USBPD_TCPM_set_msg_header(uint32_t PortNum, USBPD_PortPowerRole_TypeDef PowerRole,
+                                               USBPD_PortDataRole_TypeDef DataRole, USBPD_SpecRev_TypeDef Specification);
 
 /**
   * @brief  Enable or disable PD reception
@@ -191,7 +199,8 @@ USBPD_StatusTypeDef  USBPD_TCPM_set_msg_header(uint32_t PortNum, USBPD_PortPower
   * @param  HardReset     Hard reset status based on @ref TCPC_hard_reset
   * @retval USBPD status
   */
-USBPD_StatusTypeDef  USBPD_TCPM_set_rx_state(uint32_t PortNum, TCPC_CC_Pull_TypeDef Pull, USBPD_FunctionalState State, uint32_t SupportedSOP, TCPC_hard_reset HardReset);
+USBPD_StatusTypeDef  USBPD_TCPM_set_rx_state(uint32_t PortNum, TCPC_CC_Pull_TypeDef Pull, USBPD_FunctionalState State,
+                                             uint32_t SupportedSOP, TCPC_hard_reset HardReset);
 
 /**
   * @brief  Retrieve the PD message
@@ -210,7 +219,8 @@ USBPD_StatusTypeDef  USBPD_TCPM_get_message(uint32_t PortNum, uint8_t *Payload, 
   * @param  RetryNumber Number of retry
   * @retval USBPD status
   */
-USBPD_StatusTypeDef  USBPD_TCPM_transmit(uint32_t PortNum, USBPD_SOPType_TypeDef Type, const uint8_t *pData, uint32_t RetryNumber);
+USBPD_StatusTypeDef  USBPD_TCPM_transmit(uint32_t PortNum, USBPD_SOPType_TypeDef Type, const uint8_t *pData,
+                                         uint32_t RetryNumber);
 
 /**
   * @brief  Send bist pattern.
@@ -236,54 +246,46 @@ USBPD_StatusTypeDef  USBPD_PHY_ResetRequest(uint8_t PortNum, USBPD_SOPType_TypeD
 USBPD_StatusTypeDef  USBPD_TCPM_Send_BIST_Pattern(uint8_t PortNum, USBPD_FunctionalState State);
 
 /**
- * @brief  function to set the SinkTxNg
- * @param  PortNum  Number of the port.
- * @retval none.
+  * @brief  function to set the SinkTxNg
+  * @param  PortNum  Number of the port.
+  * @retval none.
   */
 void                 USBPD_PHY_SetResistor_SinkTxNG(uint8_t PortNum);
 
 /**
- * @brief  function to set the SinkTxOK
- * @param  PortNum  Number of the port.
- * @retval none.
+  * @brief  function to set the SinkTxOK
+  * @param  PortNum  Number of the port.
+  * @retval none.
   */
 void                 USBPD_PHY_SetResistor_SinkTxOK(uint8_t PortNum);
 
 /**
- * @brief  function to check if SinkTxOK
- * @param  PortNum  Number of the port.
- * @retval USBPD status based on @ref USBPD_StatusTypeDef
+  * @brief  function to check if SinkTxOK
+  * @param  PortNum  Number of the port.
+  * @retval USBPD_TRUE or USBPD_FALSE
   */
-USBPD_StatusTypeDef  USBPD_PHY_IsResistor_SinkTxOk(uint8_t PortNum);
+uint8_t               USBPD_PHY_IsResistor_SinkTxOk(uint8_t PortNum);
 
 /**
- * @brief  Trigger in Fast role swap signalling
- * @param  PortNum  Number of the port.
- * @retval None
+  * @brief  Trigger in Fast role swap signalling
+  * @param  PortNum  Number of the port.
+  * @retval None
   */
-void                 USBPD_PHY_FastRoleSwapSignalling(uint8_t PortNum);
+void                  USBPD_PHY_FastRoleSwapSignalling(uint8_t PortNum);
 
 /**
   * @brief  Enable RX
   * @param  PortNum    Number of the port.
   * @retval None
   */
-void USBPD_PHY_EnableRX(uint8_t PortNum);
+void                  USBPD_PHY_EnableRX(uint8_t PortNum);
 
 /**
   * @brief  Disable RX
   * @param  PortNum    Number of the port.
   * @retval None
   */
-void USBPD_PHY_DisableRX(uint8_t PortNum);
-
-/**
-  * @brief  Activation or not of CAD detection
-  * @param  PortNum    Number of the port.
-  * @param  State      Activation or deactivation of CAD detection
-  * @retval None
-  */
-void USBPD_TCPM_CADDetection(uint8_t PortNum, USBPD_FunctionalState State);
+void                  USBPD_PHY_DisableRX(uint8_t PortNum);
 
 /**
   * @}

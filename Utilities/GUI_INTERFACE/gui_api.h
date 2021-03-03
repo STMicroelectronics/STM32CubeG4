@@ -86,22 +86,22 @@ typedef enum
 /** @defgroup USBPD_CORE_GUI_TYPE_NOTIFICATION USBPD CORE TRACE  TYPE NOTIFICATION
   * @{
   */
-#define  GUI_NOTIF_NUMBEROFRCVSNKPDO                    (1 << 0)
-#define  GUI_NOTIF_RDOPOSITION                          (1 << 1)
-#define  GUI_NOTIF_LISTOFRCVSRCPDO                      (1 << 2)
-#define  GUI_NOTIF_NUMBEROFRCVSRCPDO                    (1 << 3)
-#define  GUI_NOTIF_LISTOFRCVSNKPDO                      (1 << 4)
-#define  GUI_NOTIF_ISCONNECTED                          (1 << 5)
-#define  GUI_NOTIF_DATAROLE                             (1 << 6)
-#define  GUI_NOTIF_POWERROLE                            (1 << 7)
-#define  GUI_NOTIF_CCDEFAULTCURRENTADVERTISED           (1 << 8)
-#define  GUI_NOTIF_VCONNON                              (1 << 9)
-#define  GUI_NOTIF_VCONNSWAPED                          (1 << 10)
-#define  GUI_NOTIF_MEASUREREPORTING                     (1 << 11)
-#define  GUI_NOTIF_CC                                   (1 << 12)
-#define  GUI_NOTIF_PE_EVENT                             (1 << 13)
-#define  GUI_NOTIF_TIMESTAMP                            (1 << 14)
-#define  GUI_NOTIF_POWER_EVENT                          (1 << 15)
+#define  GUI_NOTIF_NUMBEROFRCVSNKPDO                    (1UL << 0)
+#define  GUI_NOTIF_RDOPOSITION                          (1UL << 1)
+#define  GUI_NOTIF_LISTOFRCVSRCPDO                      (1UL << 2)
+#define  GUI_NOTIF_NUMBEROFRCVSRCPDO                    (1UL << 3)
+#define  GUI_NOTIF_LISTOFRCVSNKPDO                      (1UL << 4)
+#define  GUI_NOTIF_ISCONNECTED                          (1UL << 5)
+#define  GUI_NOTIF_DATAROLE                             (1UL << 6)
+#define  GUI_NOTIF_POWERROLE                            (1UL << 7)
+#define  GUI_NOTIF_CCDEFAULTCURRENTADVERTISED           (1UL << 8)
+#define  GUI_NOTIF_VCONNON                              (1UL << 9)
+#define  GUI_NOTIF_VCONNSWAPED                          (1UL << 10)
+#define  GUI_NOTIF_MEASUREREPORTING                     (1UL << 11)
+#define  GUI_NOTIF_CC                                   (1UL << 12)
+#define  GUI_NOTIF_PE_EVENT                             (1UL << 13)
+#define  GUI_NOTIF_TIMESTAMP                            (1UL << 14)
+#define  GUI_NOTIF_POWER_EVENT                          (1UL << 15)
 
 /**
   * @}
@@ -121,13 +121,15 @@ typedef struct
   uint16_t VBUS_Level               :16;  /*!< VBUS Level */
   uint16_t IBUS_Level               :16;  /*!< IBUS Level */
   /* Measurement Reporting */
-  union {
+  union
+  {
     uint8_t MeasurementReporting;
-    struct {
+    struct
+    {
       uint8_t MeasReportValue       :7;   /*!< Enable Measure reporting every tr x 40 ms  */
       uint8_t MeasReportActivation  :1;   /*!< Enable or Disable Measure reporting        */
-    }d;
-  }u;
+    } d;
+  } u;
   uint8_t Reserved                  :8;   /*!< Reserved bits */
 } GUI_USER_ParamsTypeDef;
 
@@ -213,7 +215,7 @@ typedef struct
   */
 extern GUI_USER_ParamsTypeDef GUI_USER_Params[USBPD_PORT_COUNT];
 #if !defined(_RTOS)
-extern volatile uint32_t      GUI_Flag;
+extern __IO uint32_t      GUI_Flag;
 #endif /* !_RTOS */
 
 /**
@@ -225,21 +227,23 @@ extern volatile uint32_t      GUI_Flag;
   * @{
   */
 
-USBPD_FunctionalState GUI_Init(const uint8_t* (*CB_HWBoardVersion)(void), const uint8_t* (*CB_HWPDType)(void), uint16_t (*CB_GetVoltage)(uint8_t), int16_t (*CB_GetCurrent)(uint8_t));
+USBPD_FunctionalState GUI_Init(const uint8_t *(*CB_HWBoardVersion)(void), const uint8_t *(*CB_HWPDType)(void),
+                               uint16_t (*CB_GetVoltage)(uint8_t), int16_t (*CB_GetCurrent)(uint8_t));
 void                  GUI_Start(void);
 void                  GUI_TimerCounter(void);
 uint32_t              GUI_RXProcess(uint32_t Event);
 uint32_t              GUI_FormatAndSendNotification(uint32_t PortNum, uint32_t TypeNotification, uint32_t Value);
 uint32_t              GUI_GetMessage(uint8_t Character, uint8_t Error);
 USBPD_GUI_State       GUI_SendAnswer(uint8_t **pMsgToSend, uint8_t *pSizeMsg);
-USBPD_GUI_State       GUI_SendNotification(uint8_t PortNum, uint8_t **pMsgToSend, uint8_t *pSizeMsg, uint32_t TypeNotifcation, uint32_t Value);
+USBPD_GUI_State       GUI_SendNotification(uint8_t PortNum, uint8_t **pMsgToSend, uint8_t *pSizeMsg,
+                                           uint32_t TypeNotifcation, uint32_t Value);
 void                  GUI_PostNotificationMessage(uint8_t PortNum, uint16_t EventVal);
 void                  GUI_SaveInfo(uint8_t PortNum, uint8_t DataId, uint8_t *Ptr, uint32_t Size);
 USBPD_FunctionalState GUI_IsRunning(void);
 #if !defined(USE_STM32_UTILITY_OS)
 void                  GUI_Execute(void);
 #endif /* !USE_STM32_UTILITY_OS */
-void                  GUI_RegisterCallback_FreeText(USBPD_StatusTypeDef (*CB_FreeText)(uint8_t, uint8_t*, uint16_t));
+void                  GUI_RegisterCallback_FreeText(USBPD_StatusTypeDef(*CB_FreeText)(uint8_t, uint8_t *, uint16_t));
 /**
   * @}
   */

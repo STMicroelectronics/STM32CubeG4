@@ -6,22 +6,20 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
-  * This software component is licensed by ST under Image license SLA0044,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                       www.st.com/SLA0044
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
   *
   ******************************************************************************
   */
 
 /* Includes ------------------------------------------------------------------*/
 #include "platform.h"
-
 #include "openbl_mem.h"
-
 #include "app_openbootloader.h"
 #include "common_interface.h"
 #include "optionbytes_interface.h"
@@ -32,11 +30,11 @@
 /* Private variables ---------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
 /* Exported variables --------------------------------------------------------*/
-OPENBL_MemoryTypeDef OB1_Descriptor =
+OPENBL_MemoryTypeDef OB_Descriptor =
 {
-  OB1_START_ADDRESS,
-  OB1_END_ADDRESS,
-  (48),
+  OB_START_ADDRESS,
+  OB_END_ADDRESS,
+  (128),
   OB_AREA,
   OPENBL_OB_Read,
   OPENBL_OB_Write,
@@ -47,20 +45,6 @@ OPENBL_MemoryTypeDef OB1_Descriptor =
   NULL
 };
 
-OPENBL_MemoryTypeDef OB2_Descriptor =
-{
-  OB2_START_ADDRESS,
-  OB2_END_ADDRESS,
-  (48),
-  OB_AREA,
-  OPENBL_OB_Read,
-  OPENBL_OB_Write,
-  NULL,
-  NULL,
-  NULL,
-  NULL,
-  NULL
-};
 
 /* Exported functions --------------------------------------------------------*/
 
@@ -71,9 +55,30 @@ OPENBL_MemoryTypeDef OB2_Descriptor =
   */
 uint8_t OPENBL_OB_Read(uint32_t Address)
 {
-  return (*(uint8_t *) (Address));
+  return (*(uint8_t *)(Address));
 }
 
+/**
+  * @brief  Write Flash OB keys to unlock the option bytes settings
+  * @param  None
+  * @retval None
+  */
+void BL_FLASH_WriteOptKeys(void)
+{
+  if (READ_BIT(FLASH->CR, FLASH_CR_LOCK) != RESET)
+  {
+    /* Authorize the FLASH Registers access */
+    WRITE_REG(FLASH->KEYR, FLASH_KEY1);
+    WRITE_REG(FLASH->KEYR, FLASH_KEY2);
+  }
+
+  if (READ_BIT(FLASH->CR, FLASH_CR_OPTLOCK) != RESET)
+  {
+    /* Authorizes the Option Byte register programming */
+    WRITE_REG(FLASH->OPTKEYR, FLASH_OPTKEY1);
+    WRITE_REG(FLASH->OPTKEYR, FLASH_OPTKEY2);
+  }
+}
 /**
   * @brief  This function is used to write data in Option bytes.
   * @param  Address The address where that data will be written.
@@ -88,81 +93,93 @@ void OPENBL_OB_Write(uint32_t Address, uint8_t *Data, uint32_t DataLength)
   HAL_FLASH_OB_Unlock();
 
   /* Clear error programming flags */
-  __HAL_FLASH_CLEAR_FLAG(FLASH_FLAG_ALL_ERRORS);
+  __HAL_FLASH_CLEAR_FLAG(FLASH_SR_ERRORS);
 
   /* Write RDP Level */
-  if (DataLength >= 1)
-  {
-    WRITE_REG(FLASH->OPTR, *(Data));
-  }
+  WRITE_REG(FLASH->OPTR, *(Data));
 
-  /* Write USER OPT */
+  /* Write OPTR */
   if (DataLength >= 4)
   {
     WRITE_REG(FLASH->OPTR, (*(Data) | (*(Data + 1) << 8) | (*(Data + 2) << 16) | (*(Data + 3) << 24)));
   }
 
-  /* Write PCROPA */
+  /* Write PCROP1ASR */
   if (DataLength >= 10)
   {
-    WRITE_REG(FLASH->PCROP1SR, (*(Data + 8) | (*(Data + 9) << 8)));
-    WRITE_REG(FLASH->PCROP1ER, (*(Data + 16) | (*(Data + 17) << 8)));
+    WRITE_REG(FLASH->PCROP1ASR, (*(Data + 8) | (*(Data + 9) << 8)));
   }
 
-  /*Write PCROP_RDP */
+  /* Write PCROP1AER */
   if (DataLength >= 20)
   {
-    WRITE_REG(FLASH->PCROP1SR, (*(Data + 8) | (*(Data + 9) << 8)));
-    WRITE_REG(FLASH->PCROP1ER, (*(Data + 16) | (*(Data + 17) << 8) | (*(Data + 18) << 16) | (*(Data + 19) << 24)));
+    WRITE_REG(FLASH->PCROP1AER, (*(Data + 16) | (*(Data + 17) << 8) | (*(Data + 19) << 24)));
   }
 
-  /* Write protection of bank 1 area WRPA 1 area */
-  if (DataLength >= 25)
+  /* Write WRP1AR */
+  if (DataLength >= 28)
   {
-    FLASH->WRP1AR = ((*(Data + 26) << FLASH_WRP1AR_WRP1A_END_Pos) | *(Data + 24));
+    WRITE_REG(FLASH->WRP1AR, (*(Data + 24) | (*(Data + 25) << 8) | (*(Data + 26) << 16) | (*(Data + 27) << 24)));
   }
 
-  /* Write protection of bank 1 area WRPA 2 area */
-  if (DataLength >= 33)
+  /* Write WRP1BR */
+  if (DataLength >= 36)
   {
-    FLASH->WRP1BR = ((*(Data + 34) << FLASH_WRP1BR_WRP1B_END_Pos) | *(Data + 32));
+    WRITE_REG(FLASH->WRP1BR, (*(Data + 32) | (*(Data + 33) << 8) | (*(Data + 34) << 16) | (*(Data + 35) << 24)));
   }
 
-  /* Write STICKY area */
-  if (DataLength >= 41)
+  /* Write PCROP1BSR */
+  if (DataLength >= 42)
   {
-    WRITE_REG(FLASH->SEC1R, *(Data + 40));
+    WRITE_REG(FLASH->PCROP1BSR, (*(Data + 40) | (*(Data + 41) << 8)));
   }
 
-  /* Write BOOT_EP */
-  if (DataLength >= 43)
+  /* Write PCROP1BER */
+  if (DataLength >= 50)
   {
-    WRITE_REG(FLASH->SEC1R, *(Data + 42));
+    WRITE_REG(FLASH->PCROP1BER, (*(Data + 48) | (*(Data + 49) << 8)));
   }
 
-  /* Write PCROP of bank 2 */
+  /* Write PCROP2ASR */
   if (DataLength >= 58)
   {
-    WRITE_REG(FLASH->PCROP2SR, (*(Data + 56) | (*(Data + 57) << 8)));
-    WRITE_REG(FLASH->PCROP2ER, (*(Data + 64) | (*(Data + 65) << 8)));
+    WRITE_REG(FLASH->PCROP2ASR, (*(Data + 56) | (*(Data + 57) << 8)));
   }
 
-  /* Write protection of bank 2 area WRPB 1 area */
-  if (DataLength >= 73)
+  /* Write PCROP2AER */
+  if (DataLength >= 66)
   {
-    FLASH->WRP2AR = ((*(Data + 74) << FLASH_WRP2AR_WRP2A_END_Pos) | *(Data + 72));
+    WRITE_REG(FLASH->PCROP2AER, (*(Data + 64) | (*(Data + 65) << 8)));
   }
 
-  /* Write protection of bank 2 area WRPB 2 area */
-  if (DataLength >= 81)
+  /* Write WRP2AR */
+  if (DataLength >= 76)
   {
-    FLASH->WRP2BR = ((*(Data + 82) << FLASH_WRP2BR_WRP2B_END_Pos) | *(Data + 80));
+    WRITE_REG(FLASH->WRP2AR, (*(Data + 72) | (*(Data + 73) << 8) | (*(Data + 74) << 16) | (*(Data + 75) << 24)));
   }
 
-  /* Write STICKY area */
-  if (DataLength >= 89)
+  /* Write WRP2BR */
+  if (DataLength >= 84)
   {
-    WRITE_REG(FLASH->SEC2R, *(Data + 88));
+    WRITE_REG(FLASH->WRP2BR, (*(Data + 80) | (*(Data + 81) << 8) | (*(Data + 82) << 16) | (*(Data + 83) << 24)));
+  }
+
+  /* Write PCROP2BSR */
+  if (DataLength >= 90)
+  {
+    WRITE_REG(FLASH->PCROP2BSR, (*(Data + 88) | (*(Data + 89) << 8)));
+  }
+
+  /* Write PCROP2BER */
+  if (DataLength >= 98)
+  {
+    WRITE_REG(FLASH->PCROP2BER, (*(Data + 96) | (*(Data + 97) << 8)));
+  }
+
+  /* Write SECR */
+  if (DataLength >= 116)
+  {
+    WRITE_REG(FLASH->SECR, (*(Data + 112) | (*(Data + 113) << 8) | (*(Data + 114) << 16) | (*(Data + 115) << 24)));
   }
 
   SET_BIT(FLASH->CR, FLASH_CR_OPTSTRT);

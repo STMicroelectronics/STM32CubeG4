@@ -55,7 +55,7 @@ extern "C" {
       Definitions for TRACE Hw information
 -------------------------------------------------------------------------------*/
 
-#define TRACER_EMB_IS_INSTANCE_LPUART_TYPE           0UL /* set to 0UL as USART is used */
+#define TRACER_EMB_IS_INSTANCE_LPUART_TYPE           0UL /* set to 0UL if USART is used */
 
 #define TRACER_EMB_USART_INSTANCE                    USART1
 
@@ -88,7 +88,7 @@ extern "C" {
 #define TRACER_EMB_TX_DMA_IRQ                        DMA1_Channel6_IRQn
 #define TRACER_EMB_TX_DMA_IRQHANDLER                 DMA1_Channel6_IRQHandler
 #define TRACER_EMB_TX_DMA_ACTIVE_FLAG                LL_DMA_IsActiveFlag_TC6
-#define TRACER_EMB_TX_DMA_CLEAR_FLAG                 LL_DMA_ClearFlag_GI6
+#define TRACER_EMB_TX_DMA_CLEAR_FLAG                 LL_DMA_ClearFlag_TC6
 
 #ifdef __cplusplus
 }

@@ -48,8 +48,8 @@ typedef int32_t (*HX8347D_Init_Func)     (void);
 typedef int32_t (*HX8347D_DeInit_Func)   (void);
 typedef int32_t (*HX8347D_GetTick_Func)  (void);
 typedef int32_t (*HX8347D_Delay_Func)    (uint32_t);
-typedef int32_t (*HX8347D_WriteReg_Func)(uint16_t, uint8_t*, uint16_t);
-typedef int32_t (*HX8347D_ReadReg_Func) (uint16_t, uint8_t*, uint16_t);
+typedef int32_t (*HX8347D_WriteReg_Func)(uint16_t, uint8_t*, uint32_t);
+typedef int32_t (*HX8347D_ReadReg_Func) (uint16_t, uint8_t*, uint32_t);
 
 typedef struct
 {

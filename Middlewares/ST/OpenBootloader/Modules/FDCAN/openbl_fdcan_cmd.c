@@ -6,13 +6,13 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
-  * This software component is licensed by ST under Image license SLA0044,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                       www.st.com/SLA0044
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
   *
   ******************************************************************************
   */
@@ -50,8 +50,6 @@ static void OPENBL_FDCAN_WriteUnprotect(void);
 static uint8_t OPENBL_FDCAN_GetAddress(uint32_t *Address);
 
 /* Exported variables --------------------------------------------------------*/
-uint8_t TxData[FDCAN_RAM_BUFFER_SIZE];
-uint8_t RxData[FDCAN_RAM_BUFFER_SIZE];
 
 OPENBL_CommandsTypeDef OPENBL_FDCAN_Commands =
 {
@@ -65,7 +63,13 @@ OPENBL_CommandsTypeDef OPENBL_FDCAN_Commands =
   OPENBL_FDCAN_ReadoutUnprotect,
   OPENBL_FDCAN_EraseMemory,
   OPENBL_FDCAN_WriteProtect,
-  OPENBL_FDCAN_WriteUnprotect
+  OPENBL_FDCAN_WriteUnprotect,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL
 };
 
 /* Exported functions---------------------------------------------------------*/
@@ -328,6 +332,8 @@ static void OPENBL_FDCAN_Go(void)
   }
   else
   {
+    OPENBL_FDCAN_SendByte(ACK_BYTE);
+
     if (OPENBL_FDCAN_GetAddress(&address) == NACK_BYTE)
     {
       OPENBL_FDCAN_SendByte(NACK_BYTE);
@@ -385,10 +391,13 @@ static void OPENBL_FDCAN_ReadoutUnprotect(void)
 {
   OPENBL_FDCAN_SendByte(ACK_BYTE);
 
+  /* Once the option bytes modification start bit is set in FLASH CR register,
+     all the RAM is erased, this causes the erase of the Open Bootloader RAM.
+     This is why the last ACK is sent before the call of OPENBL_MEM_SetReadOutProtection */
+  OPENBL_FDCAN_SendByte(ACK_BYTE);
+
   /* Disable the read protection */
   OPENBL_MEM_SetReadOutProtection(DISABLE);
-
-  OPENBL_FDCAN_SendByte(ACK_BYTE);
 
   /* Launch Option Bytes reload and reset system */
   OPENBL_MEM_OptionBytesLaunch();
@@ -401,6 +410,9 @@ static void OPENBL_FDCAN_ReadoutUnprotect(void)
 static void OPENBL_FDCAN_EraseMemory(void)
 {
   uint16_t data;
+  uint16_t counter;
+  uint16_t i;
+  uint8_t tempdata;
   uint8_t status = ACK_BYTE;
   ErrorStatus error_value;
 
@@ -453,10 +465,22 @@ static void OPENBL_FDCAN_EraseMemory(void)
     {
       OPENBL_FDCAN_SendByte(ACK_BYTE);
 
-      /* Recieve the list of pages to be erased (each page num is on two bytes)
+      /* Receive the list of pages to be erased (each page num is on two bytes)
        * The order of data received is LSB first
        */
       OPENBL_FDCAN_ReadBytes(&RxData[2], 64U);
+
+      i = 2;
+
+      for (counter = data; counter != (uint16_t)0; counter--)
+      {
+        /* Receive the MSB byte */
+        tempdata = RxData[i];
+        i++;
+        RxData[i - (uint16_t)1] = RxData[i];
+        RxData[i] = tempdata;
+        i++;
+      }
 
       error_value = OPENBL_MEM_Erase(FLASH_START_ADDRESS, RxData, FDCAN_RAM_BUFFER_SIZE);
 

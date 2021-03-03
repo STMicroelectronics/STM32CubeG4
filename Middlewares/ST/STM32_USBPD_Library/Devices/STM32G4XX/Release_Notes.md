@@ -1,22 +1,19 @@
 ---
 pagetitle: Release Notes for STM32 USB-C Power Delivery G4 Device Driver
 lang: en
+header-includes: <link rel="icon" type="image/x-icon" href="_htmresc/favicon.png" />
 ---
 
 ::: {.row}
 ::: {.col-sm-12 .col-lg-4}
 
-::: {.card .fluid}
 
-::: {.sectione .dark}
 <center>
-# <small>Release Notes for</small> STM32 USB-C Power Delivery G4 Device Driver
+# Release Notes for STM32 USB-C Power Delivery G4 Device Driver
 Copyright &copy; 2019 STMicroelectronics\
-    
-[![ST logo](_htmresc/st_logo.png)](https://www.st.com){.logo}
+
+[![ST logo](_htmresc/st_logo_2020.png)](https://www.st.com){.logo}
 </center>
-:::
-:::
 
 # License
 
@@ -36,15 +33,109 @@ The USB-PD device driver provides a set of functions to manage the physical laye
 
 - Timer server to handle GOODCRC, PRL repetition timing
 
-The USB-PD library is developed following the Universal Serial Bus Power Delivery Specification Revision 3.0, V1.2 (June 06, 2018) and Universal Serial Bus type-C Cable 
-and Connector Specification, Revision 1.3 (July 14, 2017).
+The USB-PD library is developed following the Universal Serial Bus Power Delivery Specification Revision 3.0, V2.0 (August 29, 2019) and Universal Serial Bus type-C Cable 
+and Connector Specification, Revision 2.0 (August, 2019).
 :::
 
 ::: {.col-sm-12 .col-lg-8}
 # Update History
 
 ::: {.collapse}
-<input type="checkbox" id="collapse-section11" checked aria-hidden="true">
+<input type="checkbox" id="collapse-section10" checked aria-hidden="true">
+<label for="collapse-section10" aria-hidden="true">v5.0.0 / 26-Nov-2020</label>
+<div>
+
+## Main Changes
+
+### Maintenance release
+
+## Contents
+**Fixed bugs list**
+
+  Headline
+  ----------------------------------------------------------
+  Ticket 96061 - Tests TD4.3.x failed on Lecroy with NO_PD Sink version
+  [FRS] confirm the FRS event by checking if an Rp resistor is still present
+  Ticket 96223 Avoid double definition with LE16 & LE32 macros used in usbh.def
+  Codespell corrections
+  
+
+## Known Limitations
+
+  Outstanding bugs list : None
+
+  Requirements not met or planned in a forthcoming release : None
+
+## Development Toolchains and Compilers
+
+
+- IAR Embedded Workbench for ARM (EWARM) toolchain V8.32.3
+- RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.27
+- STM32CubeIDE V1.4.0 
+
+## Supported Devices and boards
+
+  All STM32G4xx devices embedding USBPD IP
+
+## Backward compatibility
+
+  No compatibility break with previous version
+
+## Dependencies
+
+ This software release is compatible with USB-C Power Delivery Core Stack Library v3.3.0
+
+</div>
+:::
+
+::: {.collapse}
+<input type="checkbox" id="collapse-section9" aria-hidden="true">
+<label for="collapse-section9" aria-hidden="true">v4.1.0 / 17-Sep-2020</label>
+<div>
+
+## Main Changes
+
+### Maintenance release
+
+  Headline
+  ----------------------------------------------------------
+  Integration of the FRS feature on G4, L5, U5
+  Ticket 84586 - Provide external API in CAD to allow application to know which RP present in Sink
+  Add USBPDM1_VCC_FEATURE_ENABLED switch from all the series
+  Remove condition for CAD_StateMachine prototype
+  Correct misspelled words
+  Ticket 92910 -Need to increase delay before reading CC values after VCC activation of TCPP01
+
+## Known Limitations
+
+  Outstanding bugs list : None
+
+  Requirements not met or planned in a forthcoming release : None
+
+## Development Toolchains and Compilers
+
+
+- IAR Embedded Workbench for ARM (EWARM) toolchain V8.32.3
+- RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.27
+- STM32CubeIDE V1.2.0 
+
+## Supported Devices and boards
+
+  All STM32G4xx devices embedding USBPD IP
+
+## Backward compatibility
+
+  No compatibility break with previous version
+
+## Dependencies
+
+ This software release is compatible with USB-C Power Delivery Core Stack Library v3.2.0
+
+</div>
+:::
+
+::: {.collapse}
+<input type="checkbox" id="collapse-section11" aria-hidden="true">
 <label for="collapse-section11" aria-hidden="true">V4.0.1 / 6-June-2020</label>
 <div>
 
@@ -129,7 +220,7 @@ and Connector Specification, Revision 1.3 (July 14, 2017).
 :::
 
 ::: {.collapse}
-<input type="checkbox" id="collapse-section8" aria-hidden="true">
+<input type="checkbox" id="collapse-section8"  aria-hidden="true">
 <label for="collapse-section8" aria-hidden="true">v3.1.0 / 04-Feb-2020</label>
 <div>
 

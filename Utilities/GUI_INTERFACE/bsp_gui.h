@@ -28,7 +28,8 @@
 #include "string.h"
 
 /* Private typedef -----------------------------------------------------------*/
-typedef enum {
+typedef enum
+{
   GUI_OK,
   GUI_ERASE_ERROR,
   GUI_WRITE_ERROR,

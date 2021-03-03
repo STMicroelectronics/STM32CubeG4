@@ -43,7 +43,7 @@
   * @param  uint16_t len: number of consecutive register to read
   *
   */
-int32_t hx8347d_read_reg(hx8347d_ctx_t *ctx, uint16_t reg, uint8_t* data, uint16_t length)
+int32_t hx8347d_read_reg(hx8347d_ctx_t *ctx, uint16_t reg, uint8_t* data, uint32_t length)
 {
   return ctx->ReadReg(ctx->handle, reg, data, length);
 }
@@ -56,7 +56,7 @@ int32_t hx8347d_read_reg(hx8347d_ctx_t *ctx, uint16_t reg, uint8_t* data, uint16
   * @param  uint8_t* data: pointer to data to write in register reg
   *
 */
-int32_t hx8347d_write_reg(hx8347d_ctx_t *ctx, uint16_t reg, uint8_t *data, uint16_t length)
+int32_t hx8347d_write_reg(hx8347d_ctx_t *ctx, uint16_t reg, uint8_t *data, uint32_t length)
 {
   return ctx->WriteReg(ctx->handle, reg, data, length);
 }

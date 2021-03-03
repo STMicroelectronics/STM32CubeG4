@@ -6,13 +6,13 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
-  * This software component is licensed by ST under Image license SLA0044,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                       www.st.com/SLA0044
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
   *
   ******************************************************************************
   */
@@ -31,13 +31,13 @@ typedef struct
   uint32_t EndAddress;
   uint32_t Size;
   uint32_t Type;
-  uint8_t (*Read)             (uint32_t Address);
-  void  (*Write)              (uint32_t Address, uint8_t *Data, uint32_t DataLength);
-  void  (*SetReadoutProtect)  (uint32_t State);
-  ErrorStatus  (*SetWriteProtect) (FunctionalState State, uint8_t *Buffer, uint32_t Length);
-  void  (*JumpToAddress)      (uint32_t Address);
-  ErrorStatus  (*MassErase)   (uint8_t *p_Data, uint32_t DataLength);
-  ErrorStatus  (*Erase)       (uint8_t *p_Data, uint32_t DataLength);
+  uint8_t (*Read)(uint32_t Address);
+  void (*Write)(uint32_t Address, uint8_t *Data, uint32_t DataLength);
+  void (*SetReadoutProtect)(uint32_t State);
+  ErrorStatus(*SetWriteProtect)(FunctionalState State, uint8_t *Buffer, uint32_t Length);
+  void (*JumpToAddress)(uint32_t Address);
+  ErrorStatus(*MassErase)(uint8_t *p_Data, uint32_t DataLength);
+  ErrorStatus(*Erase)(uint8_t *p_Data, uint32_t DataLength);
 } OPENBL_MemoryTypeDef;
 
 /* Exported constants --------------------------------------------------------*/

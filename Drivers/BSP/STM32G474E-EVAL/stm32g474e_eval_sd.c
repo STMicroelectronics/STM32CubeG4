@@ -553,7 +553,7 @@ int32_t BSP_SD_WriteBlocks(uint32_t Instance, uint32_t* pData, uint32_t BlockAdd
   int32_t ret;
   uint8_t *pByte;
   uint32_t block_addr;
-//  uint32_t pByte;
+  uint32_t block_nbr = BlockNbr;
 
   if(Instance >= SD_INSTANCES_NBR)
   {
@@ -572,8 +572,8 @@ int32_t BSP_SD_WriteBlocks(uint32_t Instance, uint32_t* pData, uint32_t BlockAdd
        /* loop on next block : Set next write address */
        pByte += SD_BLOCKSIZE;
        block_addr += SD_BLOCKSIZE;
-       BlockNbr--;
-    } while ((BlockNbr != 0U) && (ret == BSP_ERROR_NONE));
+       block_nbr--;
+    } while ((block_nbr != 0U) && (ret == BSP_ERROR_NONE));
   }
   /* Returns the response */
   return ret;
@@ -593,6 +593,7 @@ int32_t BSP_SD_ReadBlocks(uint32_t Instance, uint32_t* pData, uint32_t BlockAddr
   int32_t ret;
   uint8_t *pByte;
   uint32_t block_addr;
+  uint32_t block_nbr = BlockNbr;
 
   if(Instance >= SD_INSTANCES_NBR)
   {
@@ -610,8 +611,8 @@ int32_t BSP_SD_ReadBlocks(uint32_t Instance, uint32_t* pData, uint32_t BlockAddr
        /* loop on next block : Set next read address */
        pByte += SD_BLOCKSIZE;
        block_addr += SD_BLOCKSIZE;
-       BlockNbr--;
-     } while ((BlockNbr != 0U) && (ret == BSP_ERROR_NONE));
+       block_nbr--;
+     } while ((block_nbr != 0U) && (ret == BSP_ERROR_NONE));
 
   }
   /* Returns the response */
@@ -1157,23 +1158,23 @@ static int32_t SD_GetCSDRegister(SD_CardSpecificData_t* Csd)
 
       if(CardType == SD_CARD_SDSC)
       {
-        Csd->version.v1.Reserved1 = ((CSD_Tab[6] & 0x0CU) >> 2U);
+        Csd->version.v1.Reserved1 = (((uint32_t)CSD_Tab[6] & 0x0CU) >> 2U);
 
-        Csd->version.v1.DeviceSize =  ((CSD_Tab[6] & 0x03U) << 10U)
-                                    |  (CSD_Tab[7] << 2U)
-                                    | ((CSD_Tab[8] & 0xC0U) >> 6U);
-        Csd->version.v1.MaxRdCurrentVDDMin = (CSD_Tab[8] & 0x38U) >> 3U;
-        Csd->version.v1.MaxRdCurrentVDDMax = (CSD_Tab[8] & 0x07U);
-        Csd->version.v1.MaxWrCurrentVDDMin = (CSD_Tab[9] & 0xE0U) >> 5U;
-        Csd->version.v1.MaxWrCurrentVDDMax = (CSD_Tab[9] & 0x1CU) >> 2U;
-        Csd->version.v1.DeviceSizeMul = ((CSD_Tab[9] & 0x03U) << 1U)
-                                       |((CSD_Tab[10] & 0x80U) >> 7U);
+        Csd->version.v1.DeviceSize =  (((uint32_t)CSD_Tab[6] & 0x03U) << 10U)
+                                    |  ((uint32_t)CSD_Tab[7] << 2U)
+                                    | (((uint32_t)CSD_Tab[8] & 0xC0U) >> 6U);
+        Csd->version.v1.MaxRdCurrentVDDMin = ((uint32_t)CSD_Tab[8] & 0x38U) >> 3U;
+        Csd->version.v1.MaxRdCurrentVDDMax = ((uint32_t)CSD_Tab[8] & 0x07U);
+        Csd->version.v1.MaxWrCurrentVDDMin = ((uint32_t)CSD_Tab[9] & 0xE0U) >> 5U;
+        Csd->version.v1.MaxWrCurrentVDDMax = ((uint32_t)CSD_Tab[9] & 0x1CU) >> 2U;
+        Csd->version.v1.DeviceSizeMul = (((uint32_t)CSD_Tab[9] & 0x03U) << 1U)
+                                       |(((uint32_t)CSD_Tab[10] & 0x80U) >> 7U);
       }
       else 
       {
-        Csd->version.v2.Reserved1 = ((CSD_Tab[6] & 0x0FU) << 2U) | ((CSD_Tab[7] & 0xC0U) >> 6U);
-        Csd->version.v2.DeviceSize= ((CSD_Tab[7] & 0x3FU) << 16U) | (CSD_Tab[8] << 8U) | CSD_Tab[9];
-        Csd->version.v2.Reserved2 = ((CSD_Tab[10] & 0x80U) >> 8U);
+        Csd->version.v2.Reserved1 = (((uint32_t)CSD_Tab[6] & 0x0FU) << 2U) | (((uint32_t)CSD_Tab[7] & 0xC0U) >> 6U);
+        Csd->version.v2.DeviceSize= (((uint32_t)CSD_Tab[7] & 0x3FU) << 16U) | ((uint32_t)CSD_Tab[8] << 8U) | CSD_Tab[9];
+        Csd->version.v2.Reserved2 = (((uint32_t)CSD_Tab[10] & 0x80U) >> 8U);
       }
 
       Csd->EraseSingleBlockEnable = (CSD_Tab[10] & 0x40U) >> 6U;
@@ -1245,19 +1246,19 @@ static int32_t SD_GetCIDRegister(SD_CardIdData_t* Cid)
       Cid->ManufacturerID = CID_Tab[0];
 
       /* Byte 1 */
-      Cid->OEM_AppliID = CID_Tab[1] << 8U;
+      Cid->OEM_AppliID = (uint16_t)CID_Tab[1] << 8U;
 
       /* Byte 2 */
       Cid->OEM_AppliID |= CID_Tab[2];
 
       /* Byte 3 */
-      Cid->ProdName1 = CID_Tab[3] << 24U;
+      Cid->ProdName1 = (uint32_t)CID_Tab[3] << 24U;
 
       /* Byte 4 */
-      Cid->ProdName1 |= CID_Tab[4] << 16U;
+      Cid->ProdName1 |= (uint32_t)CID_Tab[4] << 16U;
 
       /* Byte 5 */
-      Cid->ProdName1 |= CID_Tab[5] << 8U;
+      Cid->ProdName1 |= (uint32_t)CID_Tab[5] << 8U;
 
       /* Byte 6 */
       Cid->ProdName1 |= CID_Tab[6];
@@ -1269,20 +1270,20 @@ static int32_t SD_GetCIDRegister(SD_CardIdData_t* Cid)
       Cid->ProdRev = CID_Tab[8];
 
       /* Byte 9 */
-      Cid->ProdSN = CID_Tab[9] << 24U;
+      Cid->ProdSN = (uint32_t)CID_Tab[9] << 24U;
 
       /* Byte 10 */
-      Cid->ProdSN |= CID_Tab[10] << 16U;
+      Cid->ProdSN |= (uint32_t)CID_Tab[10] << 16U;
 
       /* Byte 11 */
-      Cid->ProdSN |= CID_Tab[11] << 8U;
+      Cid->ProdSN |= (uint32_t)CID_Tab[11] << 8U;
 
       /* Byte 12 */
       Cid->ProdSN |= CID_Tab[12];
 
       /* Byte 13 */
       Cid->Reserved1 |= (CID_Tab[13] & 0xF0U) >> 4U;
-      Cid->ManufactDate = (CID_Tab[13] & 0x0FU) << 8U;
+      Cid->ManufactDate = ((uint16_t)CID_Tab[13] & 0x0FU) << 8U;
 
       /* Byte 14 */
       Cid->ManufactDate |= CID_Tab[14];

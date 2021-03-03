@@ -37,7 +37,6 @@ extern "C" {
 #include "stm32g4xx_ll_utils.h"
 #include "stm32g4xx_ll_pwr.h"
 #include "stm32g4xx_ll_dma.h"
-#include "stm32g4xx.h"
 #include "stm32g4xx_ll_gpio.h"
 
 #if defined(USE_FULL_ASSERT)

@@ -11,7 +11,7 @@
       span.underline{text-decoration: underline;}
       div.column{display: inline-block; vertical-align: top; width: 50%;}
   </style>
-  <link rel="stylesheet" href="../_htmresc/mini-st.css" />
+  <link rel="stylesheet" href="_htmresc/mini-st.css" />
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
@@ -52,10 +52,394 @@
 <div class="col-sm-12 col-lg-8">
 <h1 id="update-history">Update History</h1>
 <div class="collapse">
-<input type="checkbox" id="collapse-section4" checked aria-hidden="true"> <label for="collapse-section4" aria-hidden="true">V1.2.0 / 14-February-2020</label>
+<input type="checkbox" id="collapse-section5" aria-hidden="true"> <label for="collapse-section5" aria-hidden="true">V1.4.0 / 28-January-2021</label>
 <div>
 <h2 id="main-changes">Main Changes</h2>
 <h3 id="maintenance-release">Maintenance release</h3>
+<p>Maintenance release of STM32CubeG4 (STM32Cube for STM32G4 Series) Firmware projects supporting STM32G431xx/31xx/71xx/73xx/74xx/91xx devices.</p>
+<table>
+<caption>Additional features</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Headline</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">- General updates to fix known defects and enhancements implementation.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">- General updates to be compliant with CubeMx <strong>6.2.0</strong> version.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">- Support of new ARM compiler Keil V6 (AC5-like warnings mode).</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">- Added Uart example showing use of HAL UART enhanced reception services (ReceptionToIdle) API for G474RE-Nucleo and G431RB-Nucleo boards</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">- Updated examples and applications to avoid clearing DMA using global flag GIFx.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">- Updated RAM size in the flash and SRAM files .icf for all stm32G4 categories.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">- USBPD Applications: general corrections for conformance testing</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">- Provided external API in CAD to allow application to know which RP present in Sink.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">- Increased delay before reading CC values after VCC activation of TCPP01.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">- Updated to fix RP resistor which shall be reset to the default value during the HardReset AMS.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">- Updated FTL files to allow adding more user code.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">- NUCLEO-G491RE:</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">- Fix known limitations :</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">- OpenBootloader application for NUCLEO-G491RE CubeIDE project is not provided.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">For the complete list of changes, please refer to the release notes of each firmware component</td>
+</tr>
+</tbody>
+</table>
+<h2 id="contents">Contents</h2>
+<h3 id="projects">Projects</h3>
+<table>
+<caption>Projects :</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Board</th>
+<th style="text-align: left;">Project category</th>
+<th style="text-align: left;">Version</th>
+<th style="text-align: left;">License</th>
+<th style="text-align: left;">Path</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">NUCLEO-G431KB</td>
+<td style="text-align: left;">Demonstrations</td>
+<td style="text-align: left;">v1.4.0</td>
+<td style="text-align: left;"><a href="http://www.st.com/SLA0044">SLA0044</a></td>
+<td style="text-align: left;">Projects/NUCLEO-G431KB/Demonstrations</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NUCLEO-G431KB</td>
+<td style="text-align: left;">Applications</td>
+<td style="text-align: left;">v1.4.0</td>
+<td style="text-align: left;"><a href="http://www.st.com/SLA0044">SLA0044</a></td>
+<td style="text-align: left;">Projects/NUCLEO-G431KB/Applications</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NUCLEO-G431KB</td>
+<td style="text-align: left;">HAL Examples</td>
+<td style="text-align: left;">v1.4.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;">Projects/NUCLEO-G431KB/Examples</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NUCLEO-G431KB</td>
+<td style="text-align: left;">HAL Templates</td>
+<td style="text-align: left;">v1.4.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;">Projects/NUCLEO-G431KB/Templates</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NUCLEO-G431KB</td>
+<td style="text-align: left;">LL Templates</td>
+<td style="text-align: left;">v1.4.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;">Projects/NUCLEO-G431KB/Templates_LL</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NUCLEO-G431RB</td>
+<td style="text-align: left;">Applications</td>
+<td style="text-align: left;">v1.4.0</td>
+<td style="text-align: left;"><a href="http://www.st.com/SLA0044">SLA0044</a></td>
+<td style="text-align: left;">Projects/NUCLEO-G431RB/Applications</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NUCLEO-G431RB</td>
+<td style="text-align: left;">Demonstrations</td>
+<td style="text-align: left;">v1.4.0</td>
+<td style="text-align: left;"><a href="http://www.st.com/SLA0044">SLA0044</a></td>
+<td style="text-align: left;">Projects/NUCLEO-G431RB/Demonstrations</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NUCLEO-G431RB</td>
+<td style="text-align: left;">HAL Examples</td>
+<td style="text-align: left;">v1.4.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;">Projects/NUCLEO-G431RB/Examples</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NUCLEO-G431RB</td>
+<td style="text-align: left;">LL Examples</td>
+<td style="text-align: left;">v1.4.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;">Projects/NUCLEO-G431RB/Examples_LL</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NUCLEO-G431RB</td>
+<td style="text-align: left;">MIX HAL/LL Examples</td>
+<td style="text-align: left;">v1.4.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;">Projects/NUCLEO-G431RB/Examples_MIX</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NUCLEO-G431RB</td>
+<td style="text-align: left;">HAL Templates</td>
+<td style="text-align: left;">v1.4.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;">Projects/NUCLEO-G431RB/Templates</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NUCLEO-G431RB</td>
+<td style="text-align: left;">LL Templates</td>
+<td style="text-align: left;">v1.4.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;">Projects/NUCLEO-G431RB/Templates_LL</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NUCLEO-G474RE</td>
+<td style="text-align: left;">Applications</td>
+<td style="text-align: left;">v1.4.0</td>
+<td style="text-align: left;"><a href="http://www.st.com/SLA0044">SLA0044</a></td>
+<td style="text-align: left;">Projects/NUCLEO-G474RE/Applications</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NUCLEO-G474RE</td>
+<td style="text-align: left;">Demonstrations</td>
+<td style="text-align: left;">v1.4.0</td>
+<td style="text-align: left;"><a href="http://www.st.com/SLA0044">SLA0044</a></td>
+<td style="text-align: left;">Projects/NUCLEO-G474RE/Demonstrations</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NUCLEO-G474RE</td>
+<td style="text-align: left;">HAL Examples</td>
+<td style="text-align: left;">v1.4.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;">Projects/NUCLEO-G474RE/Examples</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NUCLEO-G474RE</td>
+<td style="text-align: left;">LL Examples</td>
+<td style="text-align: left;">v1.4.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;">Projects/NUCLEO-G474RE/Examples_LL</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NUCLEO-G474RE</td>
+<td style="text-align: left;">MIX HAL/LL Examples</td>
+<td style="text-align: left;">v1.4.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;">Projects/NUCLEO-G474RE/Examples_MIX</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NUCLEO-G474RE</td>
+<td style="text-align: left;">HAL Templates</td>
+<td style="text-align: left;">v1.4.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;">Projects/NUCLEO-G474RE/Templates</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NUCLEO-G474RE</td>
+<td style="text-align: left;">LL Templates</td>
+<td style="text-align: left;">v1.4.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;">Projects/NUCLEO-G474RE/Templates_LL</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32G474E-EVAL</td>
+<td style="text-align: left;">Applications</td>
+<td style="text-align: left;">v1.4.0</td>
+<td style="text-align: left;"><a href="http://www.st.com/SLA0044">SLA0044</a></td>
+<td style="text-align: left;">Projects/STM32G474E-EVAL/Applications</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STM32G474E-EVAL</td>
+<td style="text-align: left;">Demonstrations</td>
+<td style="text-align: left;">v1.4.0</td>
+<td style="text-align: left;"><a href="http://www.st.com/SLA0044">SLA0044</a></td>
+<td style="text-align: left;">Projects/STM32G474E-EVAL/Demonstrations</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32G474E-EVAL</td>
+<td style="text-align: left;">HAL Examples</td>
+<td style="text-align: left;">v1.4.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;">Projects/STM32G474E-EVAL/Examples</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STM32G474E-EVAL</td>
+<td style="text-align: left;">HAL Templates</td>
+<td style="text-align: left;">v1.4.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;">Projects/STM32G474E-EVAL/Templates</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32G474E-EVAL</td>
+<td style="text-align: left;">LL Templates</td>
+<td style="text-align: left;">v1.4.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;">Projects/STM32G474E-EVAL/Templates_LL</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">B-G474E-DPOW1</td>
+<td style="text-align: left;">Applications</td>
+<td style="text-align: left;">v1.3.0</td>
+<td style="text-align: left;"><a href="http://www.st.com/SLA0044">SLA0044</a></td>
+<td style="text-align: left;">Projects/B-G474E-DPOW1/Applications</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">B-G474E-DPOW1</td>
+<td style="text-align: left;">Demonstrations</td>
+<td style="text-align: left;">v1.3.0</td>
+<td style="text-align: left;"><a href="http://www.st.com/SLA0044">SLA0044</a></td>
+<td style="text-align: left;">Projects/B-G474E-DPOW1/Demonstrations</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">B-G474E-DPOW1</td>
+<td style="text-align: left;">HAL Examples</td>
+<td style="text-align: left;">v1.3.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;">Projects/B-G474E-DPOW1/Examples</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">B-G474E-DPOW1</td>
+<td style="text-align: left;">MIX HAL/LL Examples</td>
+<td style="text-align: left;">v1.3.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;">Projects/B-G474E-DPOW1/Examples_MIX</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">B-G474E-DPOW1</td>
+<td style="text-align: left;">HAL Templates</td>
+<td style="text-align: left;">v1.3.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;">Projects/B-G474E-DPOW1/Templates</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">B-G474E-DPOW1</td>
+<td style="text-align: left;">LL Templates</td>
+<td style="text-align: left;">v1.3.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;">Projects/B-G474E-DPOW1/Templates_LL</td>
+</tr>
+</tbody>
+</table>
+<p><br />
+</p>
+<h2 id="known-limitations">Known Limitations</h2>
+<h2 id="development-toolchains-and-compilers">Development Toolchains and Compilers</h2>
+<table>
+<caption>Development Toolchains :</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: center;">Version</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">IAR Embedded Workbench for ARM (EWARM)toolchain</td>
+<td style="text-align: center;"><strong>V8.50.4</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">RealView Microcontroller DevelopmentKit (MDK-ARM) toolchain</td>
+<td style="text-align: center;"><strong>V5.31</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">System Workbench for STM32 (SW4STM32)toolchain</td>
+<td style="text-align: center;"><strong>V1.6.0</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="supported-devices-and-boards">Supported Devices and boards</h2>
+<table>
+<caption>Supported Devices :</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">STM32G431xx, STM32G441xx</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32G471xx</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STM32G473xx, STM32G483xx</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32G474xx, STM32G484xx</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STM32G491xx, STM32G4A1xx</td>
+</tr>
+</tbody>
+</table>
+<table>
+<caption>Supported Boards :</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">NUCLEO-G431KB Nucleo32 kit</td>
+<td style="text-align: left;">MB1430 A-01</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NUCLEO-G431RB Nucleo kit</td>
+<td style="text-align: left;">MB1367 C-01</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NUCLEO-G474RE Nucleo kit</td>
+<td style="text-align: left;">MB1367 C-01</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32G474E-EVAL Evaluation Board</td>
+<td style="text-align: left;">MB1397 B-01</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">B-G474E-DPOW1 Discovery Kit</td>
+<td style="text-align: left;">MB1428 B-01</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NUCLEO-G491RE Nucleo kit</td>
+<td style="text-align: left;">MB1367-G491RE C-04</td>
+</tr>
+</tbody>
+</table>
+<h2 id="backward-compatibility">Backward Compatibility</h2>
+<p>None</p>
+<h2 id="other-compatibilities">Other compatibilities</h2>
+<p>This software release is compatible with:</p>
+<ul>
+<li>STM32CubeMX V6.2.0</li>
+</ul>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section4"  aria-hidden="true"> <label for="collapse-section4" aria-hidden="true">V1.2.0 / 14-February-2020</label>
+<div>
+<h2 id="main-changes-1">Main Changes</h2>
+<h3 id="maintenance-release-1">Maintenance release</h3>
 <p>Maintenance release of STM32CubeG4 (STM32Cube for STM32G4 Series) Firmware projects supporting STM32G431xx/31xx/71xx/73xx/74xx devices.</p>
 <table>
 <caption>Additional features</caption>
@@ -97,344 +481,6 @@
 </tr>
 </tbody>
 </table>
-<h2 id="contents">Contents</h2>
-<h3 id="projects">Projects</h3>
-<table>
-<caption>Projects :</caption>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Board</th>
-<th style="text-align: left;">Project category</th>
-<th style="text-align: left;">Version</th>
-<th style="text-align: left;">License</th>
-<th style="text-align: left;">Path</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">NUCLEO-G431KB</td>
-<td style="text-align: left;">Demonstrations</td>
-<td style="text-align: left;">v1.2.0</td>
-<td style="text-align: left;"><a href="http://www.st.com/SLA0044">SLA0044</a></td>
-<td style="text-align: left;">Projects/NUCLEO-G431KB/Demonstrations</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">NUCLEO-G431KB</td>
-<td style="text-align: left;">Applications</td>
-<td style="text-align: left;">v1.2.0</td>
-<td style="text-align: left;"><a href="http://www.st.com/SLA0044">SLA0044</a></td>
-<td style="text-align: left;">Projects/NUCLEO-G431KB/Applications</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">NUCLEO-G431KB</td>
-<td style="text-align: left;">HAL Examples</td>
-<td style="text-align: left;">v1.2.0</td>
-<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
-<td style="text-align: left;">Projects/NUCLEO-G431KB/Examples</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">NUCLEO-G431KB</td>
-<td style="text-align: left;">HAL Templates</td>
-<td style="text-align: left;">v1.2.0</td>
-<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
-<td style="text-align: left;">Projects/NUCLEO-G431KB/Templates</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">NUCLEO-G431KB</td>
-<td style="text-align: left;">LL Templates</td>
-<td style="text-align: left;">v1.2.0</td>
-<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
-<td style="text-align: left;">Projects/NUCLEO-G431KB/Templates_LL</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">NUCLEO-G431RB</td>
-<td style="text-align: left;">Applications</td>
-<td style="text-align: left;">v1.2.0</td>
-<td style="text-align: left;"><a href="http://www.st.com/SLA0044">SLA0044</a></td>
-<td style="text-align: left;">Projects/NUCLEO-G431RB/Applications</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">NUCLEO-G431RB</td>
-<td style="text-align: left;">Demonstrations</td>
-<td style="text-align: left;">v1.2.0</td>
-<td style="text-align: left;"><a href="http://www.st.com/SLA0044">SLA0044</a></td>
-<td style="text-align: left;">Projects/NUCLEO-G431RB/Demonstrations</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">NUCLEO-G431RB</td>
-<td style="text-align: left;">HAL Examples</td>
-<td style="text-align: left;">v1.2.0</td>
-<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
-<td style="text-align: left;">Projects/NUCLEO-G431RB/Examples</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">NUCLEO-G431RB</td>
-<td style="text-align: left;">LL Examples</td>
-<td style="text-align: left;">v1.2.0</td>
-<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
-<td style="text-align: left;">Projects/NUCLEO-G431RB/Examples_LL</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">NUCLEO-G431RB</td>
-<td style="text-align: left;">MIX HAL/LL Examples</td>
-<td style="text-align: left;">v1.2.0</td>
-<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
-<td style="text-align: left;">Projects/NUCLEO-G431RB/Examples_MIX</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">NUCLEO-G431RB</td>
-<td style="text-align: left;">HAL Templates</td>
-<td style="text-align: left;">v1.2.0</td>
-<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
-<td style="text-align: left;">Projects/NUCLEO-G431RB/Templates</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">NUCLEO-G431RB</td>
-<td style="text-align: left;">LL Templates</td>
-<td style="text-align: left;">v1.2.0</td>
-<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
-<td style="text-align: left;">Projects/NUCLEO-G431RB/Templates_LL</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">NUCLEO-G474RE</td>
-<td style="text-align: left;">Applications</td>
-<td style="text-align: left;">v1.2.0</td>
-<td style="text-align: left;"><a href="http://www.st.com/SLA0044">SLA0044</a></td>
-<td style="text-align: left;">Projects/NUCLEO-G474RE/Applications</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">NUCLEO-G474RE</td>
-<td style="text-align: left;">Demonstrations</td>
-<td style="text-align: left;">v1.2.0</td>
-<td style="text-align: left;"><a href="http://www.st.com/SLA0044">SLA0044</a></td>
-<td style="text-align: left;">Projects/NUCLEO-G474RE/Demonstrations</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">NUCLEO-G474RE</td>
-<td style="text-align: left;">HAL Examples</td>
-<td style="text-align: left;">v1.2.0</td>
-<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
-<td style="text-align: left;">Projects/NUCLEO-G474RE/Examples</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">NUCLEO-G474RE</td>
-<td style="text-align: left;">LL Examples</td>
-<td style="text-align: left;">v1.2.0</td>
-<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
-<td style="text-align: left;">Projects/NUCLEO-G474RE/Examples_LL</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">NUCLEO-G474RE</td>
-<td style="text-align: left;">MIX HAL/LL Examples</td>
-<td style="text-align: left;">v1.2.0</td>
-<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
-<td style="text-align: left;">Projects/NUCLEO-G474RE/Examples_MIX</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">NUCLEO-G474RE</td>
-<td style="text-align: left;">HAL Templates</td>
-<td style="text-align: left;">v1.2.0</td>
-<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
-<td style="text-align: left;">Projects/NUCLEO-G474RE/Templates</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">NUCLEO-G474RE</td>
-<td style="text-align: left;">LL Templates</td>
-<td style="text-align: left;">v1.2.0</td>
-<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
-<td style="text-align: left;">Projects/NUCLEO-G474RE/Templates_LL</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">STM32G474E-EVAL</td>
-<td style="text-align: left;">Applications</td>
-<td style="text-align: left;">v1.2.0</td>
-<td style="text-align: left;"><a href="http://www.st.com/SLA0044">SLA0044</a></td>
-<td style="text-align: left;">Projects/STM32G474E-EVAL/Applications</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">STM32G474E-EVAL</td>
-<td style="text-align: left;">Demonstrations</td>
-<td style="text-align: left;">v1.2.0</td>
-<td style="text-align: left;"><a href="http://www.st.com/SLA0044">SLA0044</a></td>
-<td style="text-align: left;">Projects/STM32G474E-EVAL/Demonstrations</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">STM32G474E-EVAL</td>
-<td style="text-align: left;">HAL Examples</td>
-<td style="text-align: left;">v1.2.0</td>
-<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
-<td style="text-align: left;">Projects/STM32G474E-EVAL/Examples</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">STM32G474E-EVAL</td>
-<td style="text-align: left;">HAL Templates</td>
-<td style="text-align: left;">v1.2.0</td>
-<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
-<td style="text-align: left;">Projects/STM32G474E-EVAL/Templates</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">STM32G474E-EVAL</td>
-<td style="text-align: left;">LL Templates</td>
-<td style="text-align: left;">v1.2.0</td>
-<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
-<td style="text-align: left;">Projects/STM32G474E-EVAL/Templates_LL</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">B-G474E-DPOW1</td>
-<td style="text-align: left;">Applications</td>
-<td style="text-align: left;">v1.1.0</td>
-<td style="text-align: left;"><a href="http://www.st.com/SLA0044">SLA0044</a></td>
-<td style="text-align: left;">Projects/B-G474E-DPOW1/Applications</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">B-G474E-DPOW1</td>
-<td style="text-align: left;">Demonstrations</td>
-<td style="text-align: left;">v1.1.0</td>
-<td style="text-align: left;"><a href="http://www.st.com/SLA0044">SLA0044</a></td>
-<td style="text-align: left;">Projects/B-G474E-DPOW1/Demonstrations</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">B-G474E-DPOW1</td>
-<td style="text-align: left;">HAL Examples</td>
-<td style="text-align: left;">v1.1.0</td>
-<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
-<td style="text-align: left;">Projects/B-G474E-DPOW1/Examples</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">B-G474E-DPOW1</td>
-<td style="text-align: left;">MIX HAL/LL Examples</td>
-<td style="text-align: left;">v1.1.0</td>
-<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
-<td style="text-align: left;">Projects/B-G474E-DPOW1/Examples_MIX</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">B-G474E-DPOW1</td>
-<td style="text-align: left;">HAL Templates</td>
-<td style="text-align: left;">v1.1.0</td>
-<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
-<td style="text-align: left;">Projects/B-G474E-DPOW1/Templates</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">B-G474E-DPOW1</td>
-<td style="text-align: left;">LL Templates</td>
-<td style="text-align: left;">v1.1.0</td>
-<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
-<td style="text-align: left;">Projects/B-G474E-DPOW1/Templates_LL</td>
-</tr>
-</tbody>
-</table>
-<p><br />
-</p>
-<h2 id="known-limitations">Known Limitations</h2>
-<h2 id="development-toolchains-and-compilers">Development Toolchains and Compilers</h2>
-<table>
-<caption>Development Toolchains :</caption>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Name</th>
-<th style="text-align: center;">Version</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">IAR Embedded Workbench for ARM (EWARM)toolchain</td>
-<td style="text-align: center;">V8.32.3</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">RealView Microcontroller DevelopmentKit (MDK-ARM) toolchain</td>
-<td style="text-align: center;">V5.27.1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">System Workbench for STM32 (SW4STM32)toolchain</td>
-<td style="text-align: center;">V2.9</td>
-</tr>
-</tbody>
-</table>
-<h2 id="supported-devices-and-boards">Supported Devices and boards</h2>
-<table>
-<caption>Supported Devices :</caption>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Name</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">STM32G431xx, STM32G441xx</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">STM32G471xx</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">STM32G473xx, STM32G483xx</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">STM32G474xx, STM32G484xx</td>
-</tr>
-</tbody>
-</table>
-<table>
-<caption>Supported Boards :</caption>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Name</th>
-<th style="text-align: left;">Reference</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">NUCLEO-G431KB Nucleo32 kit</td>
-<td style="text-align: left;">MB1430 A-01</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">NUCLEO-G431RB Nucleo kit</td>
-<td style="text-align: left;">MB1367 C-01</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">NUCLEO-G474RE Nucleo kit</td>
-<td style="text-align: left;">MB1367 C-01</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">STM32G474E-EVAL Evaluation Board</td>
-<td style="text-align: left;">MB1397 B-01</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">B-G474E-DPOW1 Discovery Kit</td>
-<td style="text-align: left;">MB1428 B-01</td>
-</tr>
-</tbody>
-</table>
-<h2 id="backward-compatibility">Backward Compatibility</h2>
-<p>None</p>
-<h2 id="other-compatibilities">Other compatibilities</h2>
-<p>This software release is compatible with:</p>
-<ul>
-<li>STM32CubeMX V5.6.0</li>
-</ul>
-</div>
-</div>
-<div class="collapse">
-<input type="checkbox" id="collapse-section3" checked aria-hidden="true"> <label for="collapse-section3" aria-hidden="true">V1.1.0 / 28-June-2019</label>
-<div>
-<h2 id="main-changes-1">Main Changes</h2>
-<h3 id="maintenance-release-1">Maintenance release</h3>
-<p>Maintenance release of STM32CubeG4 (STM32Cube for STM32G4 Series) Firmware projects supporting STM32G431xx/31xx/71xx/73xx/74xx devices and introducing Discovery Kit B-G474E-DPOW1.</p>
-<table>
-<caption>Additional features</caption>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Headline</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Update FatFS applications and demonstrations to align with new FatFs middleware version and BSP board driver</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Update UCPD applications and demonstrations to align with new UCPD middleware and new Utilities version</td>
-</tr>
-</tbody>
-</table>
 <h2 id="contents-1">Contents</h2>
 <h3 id="projects-1">Projects</h3>
 <table>
@@ -452,210 +498,210 @@
 <tr class="odd">
 <td style="text-align: left;">NUCLEO-G431KB</td>
 <td style="text-align: left;">Demonstrations</td>
-<td style="text-align: left;">v1.1.0</td>
+<td style="text-align: left;">v1.2.0</td>
 <td style="text-align: left;"><a href="http://www.st.com/SLA0044">SLA0044</a></td>
 <td style="text-align: left;">Projects/NUCLEO-G431KB/Demonstrations</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">NUCLEO-G431KB</td>
 <td style="text-align: left;">Applications</td>
-<td style="text-align: left;">v1.1.0</td>
+<td style="text-align: left;">v1.2.0</td>
 <td style="text-align: left;"><a href="http://www.st.com/SLA0044">SLA0044</a></td>
 <td style="text-align: left;">Projects/NUCLEO-G431KB/Applications</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">NUCLEO-G431KB</td>
 <td style="text-align: left;">HAL Examples</td>
-<td style="text-align: left;">v1.1.0</td>
+<td style="text-align: left;">v1.2.0</td>
 <td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
 <td style="text-align: left;">Projects/NUCLEO-G431KB/Examples</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">NUCLEO-G431KB</td>
 <td style="text-align: left;">HAL Templates</td>
-<td style="text-align: left;">v1.1.0</td>
+<td style="text-align: left;">v1.2.0</td>
 <td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
 <td style="text-align: left;">Projects/NUCLEO-G431KB/Templates</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">NUCLEO-G431KB</td>
 <td style="text-align: left;">LL Templates</td>
-<td style="text-align: left;">v1.1.0</td>
+<td style="text-align: left;">v1.2.0</td>
 <td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
 <td style="text-align: left;">Projects/NUCLEO-G431KB/Templates_LL</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">NUCLEO-G431RB</td>
 <td style="text-align: left;">Applications</td>
-<td style="text-align: left;">v1.1.0</td>
+<td style="text-align: left;">v1.2.0</td>
 <td style="text-align: left;"><a href="http://www.st.com/SLA0044">SLA0044</a></td>
 <td style="text-align: left;">Projects/NUCLEO-G431RB/Applications</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">NUCLEO-G431RB</td>
 <td style="text-align: left;">Demonstrations</td>
-<td style="text-align: left;">v1.1.0</td>
+<td style="text-align: left;">v1.2.0</td>
 <td style="text-align: left;"><a href="http://www.st.com/SLA0044">SLA0044</a></td>
 <td style="text-align: left;">Projects/NUCLEO-G431RB/Demonstrations</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">NUCLEO-G431RB</td>
 <td style="text-align: left;">HAL Examples</td>
-<td style="text-align: left;">v1.1.0</td>
+<td style="text-align: left;">v1.2.0</td>
 <td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
 <td style="text-align: left;">Projects/NUCLEO-G431RB/Examples</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">NUCLEO-G431RB</td>
 <td style="text-align: left;">LL Examples</td>
-<td style="text-align: left;">v1.1.0</td>
+<td style="text-align: left;">v1.2.0</td>
 <td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
 <td style="text-align: left;">Projects/NUCLEO-G431RB/Examples_LL</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">NUCLEO-G431RB</td>
 <td style="text-align: left;">MIX HAL/LL Examples</td>
-<td style="text-align: left;">v1.1.0</td>
+<td style="text-align: left;">v1.2.0</td>
 <td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
 <td style="text-align: left;">Projects/NUCLEO-G431RB/Examples_MIX</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">NUCLEO-G431RB</td>
 <td style="text-align: left;">HAL Templates</td>
-<td style="text-align: left;">v1.1.0</td>
+<td style="text-align: left;">v1.2.0</td>
 <td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
 <td style="text-align: left;">Projects/NUCLEO-G431RB/Templates</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">NUCLEO-G431RB</td>
 <td style="text-align: left;">LL Templates</td>
-<td style="text-align: left;">v1.1.0</td>
+<td style="text-align: left;">v1.2.0</td>
 <td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
 <td style="text-align: left;">Projects/NUCLEO-G431RB/Templates_LL</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">NUCLEO-G474RE</td>
 <td style="text-align: left;">Applications</td>
-<td style="text-align: left;">v1.1.0</td>
+<td style="text-align: left;">v1.2.0</td>
 <td style="text-align: left;"><a href="http://www.st.com/SLA0044">SLA0044</a></td>
 <td style="text-align: left;">Projects/NUCLEO-G474RE/Applications</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">NUCLEO-G474RE</td>
 <td style="text-align: left;">Demonstrations</td>
-<td style="text-align: left;">v1.1.0</td>
+<td style="text-align: left;">v1.2.0</td>
 <td style="text-align: left;"><a href="http://www.st.com/SLA0044">SLA0044</a></td>
 <td style="text-align: left;">Projects/NUCLEO-G474RE/Demonstrations</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">NUCLEO-G474RE</td>
 <td style="text-align: left;">HAL Examples</td>
-<td style="text-align: left;">v1.1.0</td>
+<td style="text-align: left;">v1.2.0</td>
 <td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
 <td style="text-align: left;">Projects/NUCLEO-G474RE/Examples</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">NUCLEO-G474RE</td>
 <td style="text-align: left;">LL Examples</td>
-<td style="text-align: left;">v1.1.0</td>
+<td style="text-align: left;">v1.2.0</td>
 <td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
 <td style="text-align: left;">Projects/NUCLEO-G474RE/Examples_LL</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">NUCLEO-G474RE</td>
 <td style="text-align: left;">MIX HAL/LL Examples</td>
-<td style="text-align: left;">v1.1.0</td>
+<td style="text-align: left;">v1.2.0</td>
 <td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
 <td style="text-align: left;">Projects/NUCLEO-G474RE/Examples_MIX</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">NUCLEO-G474RE</td>
 <td style="text-align: left;">HAL Templates</td>
-<td style="text-align: left;">v1.1.0</td>
+<td style="text-align: left;">v1.2.0</td>
 <td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
 <td style="text-align: left;">Projects/NUCLEO-G474RE/Templates</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">NUCLEO-G474RE</td>
 <td style="text-align: left;">LL Templates</td>
-<td style="text-align: left;">v1.1.0</td>
+<td style="text-align: left;">v1.2.0</td>
 <td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
 <td style="text-align: left;">Projects/NUCLEO-G474RE/Templates_LL</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">STM32G474E-EVAL</td>
 <td style="text-align: left;">Applications</td>
-<td style="text-align: left;">v1.1.0</td>
+<td style="text-align: left;">v1.2.0</td>
 <td style="text-align: left;"><a href="http://www.st.com/SLA0044">SLA0044</a></td>
 <td style="text-align: left;">Projects/STM32G474E-EVAL/Applications</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">STM32G474E-EVAL</td>
 <td style="text-align: left;">Demonstrations</td>
-<td style="text-align: left;">v1.1.0</td>
+<td style="text-align: left;">v1.2.0</td>
 <td style="text-align: left;"><a href="http://www.st.com/SLA0044">SLA0044</a></td>
 <td style="text-align: left;">Projects/STM32G474E-EVAL/Demonstrations</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">STM32G474E-EVAL</td>
 <td style="text-align: left;">HAL Examples</td>
-<td style="text-align: left;">v1.1.0</td>
+<td style="text-align: left;">v1.2.0</td>
 <td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
 <td style="text-align: left;">Projects/STM32G474E-EVAL/Examples</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">STM32G474E-EVAL</td>
 <td style="text-align: left;">HAL Templates</td>
-<td style="text-align: left;">v1.1.0</td>
+<td style="text-align: left;">v1.2.0</td>
 <td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
 <td style="text-align: left;">Projects/STM32G474E-EVAL/Templates</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">STM32G474E-EVAL</td>
 <td style="text-align: left;">LL Templates</td>
-<td style="text-align: left;">v1.1.0</td>
+<td style="text-align: left;">v1.2.0</td>
 <td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
 <td style="text-align: left;">Projects/STM32G474E-EVAL/Templates_LL</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">B-G474E-DPOW1</td>
 <td style="text-align: left;">Applications</td>
-<td style="text-align: left;">v1.0.0</td>
+<td style="text-align: left;">v1.1.0</td>
 <td style="text-align: left;"><a href="http://www.st.com/SLA0044">SLA0044</a></td>
 <td style="text-align: left;">Projects/B-G474E-DPOW1/Applications</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">B-G474E-DPOW1</td>
 <td style="text-align: left;">Demonstrations</td>
-<td style="text-align: left;">v1.0.0</td>
+<td style="text-align: left;">v1.1.0</td>
 <td style="text-align: left;"><a href="http://www.st.com/SLA0044">SLA0044</a></td>
 <td style="text-align: left;">Projects/B-G474E-DPOW1/Demonstrations</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">B-G474E-DPOW1</td>
 <td style="text-align: left;">HAL Examples</td>
-<td style="text-align: left;">v1.0.0</td>
+<td style="text-align: left;">v1.1.0</td>
 <td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
 <td style="text-align: left;">Projects/B-G474E-DPOW1/Examples</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">B-G474E-DPOW1</td>
 <td style="text-align: left;">MIX HAL/LL Examples</td>
-<td style="text-align: left;">v1.0.0</td>
+<td style="text-align: left;">v1.1.0</td>
 <td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
 <td style="text-align: left;">Projects/B-G474E-DPOW1/Examples_MIX</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">B-G474E-DPOW1</td>
 <td style="text-align: left;">HAL Templates</td>
-<td style="text-align: left;">v1.0.0</td>
+<td style="text-align: left;">v1.1.0</td>
 <td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
 <td style="text-align: left;">Projects/B-G474E-DPOW1/Templates</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">B-G474E-DPOW1</td>
 <td style="text-align: left;">LL Templates</td>
-<td style="text-align: left;">v1.0.0</td>
+<td style="text-align: left;">v1.1.0</td>
 <td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
 <td style="text-align: left;">Projects/B-G474E-DPOW1/Templates_LL</td>
 </tr>
@@ -676,15 +722,15 @@
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">IAR Embedded Workbench for ARM (EWARM)toolchain</td>
-<td style="text-align: center;">V8.20.2</td>
+<td style="text-align: center;">V8.32.3</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">RealView Microcontroller DevelopmentKit (MDK-ARM) toolchain</td>
-<td style="text-align: center;">V5.25</td>
+<td style="text-align: center;">V5.27.1</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">System Workbench for STM32 (SW4STM32)toolchain</td>
-<td style="text-align: center;">V2.4</td>
+<td style="text-align: center;">V2.9</td>
 </tr>
 </tbody>
 </table>
@@ -747,6 +793,344 @@
 <h2 id="other-compatibilities-1">Other compatibilities</h2>
 <p>This software release is compatible with:</p>
 <ul>
+<li>STM32CubeMX V5.6.0</li>
+</ul>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section3" aria-hidden="true"> <label for="collapse-section3" aria-hidden="true">V1.1.0 / 28-June-2019</label>
+<div>
+<h2 id="main-changes-2">Main Changes</h2>
+<h3 id="maintenance-release-2">Maintenance release</h3>
+<p>Maintenance release of STM32CubeG4 (STM32Cube for STM32G4 Series) Firmware projects supporting STM32G431xx/31xx/71xx/73xx/74xx devices and introducing Discovery Kit B-G474E-DPOW1.</p>
+<table>
+<caption>Additional features</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Headline</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Update FatFS applications and demonstrations to align with new FatFs middleware version and BSP board driver</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Update UCPD applications and demonstrations to align with new UCPD middleware and new Utilities version</td>
+</tr>
+</tbody>
+</table>
+<h2 id="contents-2">Contents</h2>
+<h3 id="projects-2">Projects</h3>
+<table>
+<caption>Projects :</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Board</th>
+<th style="text-align: left;">Project category</th>
+<th style="text-align: left;">Version</th>
+<th style="text-align: left;">License</th>
+<th style="text-align: left;">Path</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">NUCLEO-G431KB</td>
+<td style="text-align: left;">Demonstrations</td>
+<td style="text-align: left;">v1.1.0</td>
+<td style="text-align: left;"><a href="http://www.st.com/SLA0044">SLA0044</a></td>
+<td style="text-align: left;">Projects/NUCLEO-G431KB/Demonstrations</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NUCLEO-G431KB</td>
+<td style="text-align: left;">Applications</td>
+<td style="text-align: left;">v1.1.0</td>
+<td style="text-align: left;"><a href="http://www.st.com/SLA0044">SLA0044</a></td>
+<td style="text-align: left;">Projects/NUCLEO-G431KB/Applications</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NUCLEO-G431KB</td>
+<td style="text-align: left;">HAL Examples</td>
+<td style="text-align: left;">v1.1.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;">Projects/NUCLEO-G431KB/Examples</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NUCLEO-G431KB</td>
+<td style="text-align: left;">HAL Templates</td>
+<td style="text-align: left;">v1.1.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;">Projects/NUCLEO-G431KB/Templates</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NUCLEO-G431KB</td>
+<td style="text-align: left;">LL Templates</td>
+<td style="text-align: left;">v1.1.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;">Projects/NUCLEO-G431KB/Templates_LL</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NUCLEO-G431RB</td>
+<td style="text-align: left;">Applications</td>
+<td style="text-align: left;">v1.1.0</td>
+<td style="text-align: left;"><a href="http://www.st.com/SLA0044">SLA0044</a></td>
+<td style="text-align: left;">Projects/NUCLEO-G431RB/Applications</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NUCLEO-G431RB</td>
+<td style="text-align: left;">Demonstrations</td>
+<td style="text-align: left;">v1.1.0</td>
+<td style="text-align: left;"><a href="http://www.st.com/SLA0044">SLA0044</a></td>
+<td style="text-align: left;">Projects/NUCLEO-G431RB/Demonstrations</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NUCLEO-G431RB</td>
+<td style="text-align: left;">HAL Examples</td>
+<td style="text-align: left;">v1.1.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;">Projects/NUCLEO-G431RB/Examples</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NUCLEO-G431RB</td>
+<td style="text-align: left;">LL Examples</td>
+<td style="text-align: left;">v1.1.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;">Projects/NUCLEO-G431RB/Examples_LL</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NUCLEO-G431RB</td>
+<td style="text-align: left;">MIX HAL/LL Examples</td>
+<td style="text-align: left;">v1.1.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;">Projects/NUCLEO-G431RB/Examples_MIX</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NUCLEO-G431RB</td>
+<td style="text-align: left;">HAL Templates</td>
+<td style="text-align: left;">v1.1.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;">Projects/NUCLEO-G431RB/Templates</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NUCLEO-G431RB</td>
+<td style="text-align: left;">LL Templates</td>
+<td style="text-align: left;">v1.1.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;">Projects/NUCLEO-G431RB/Templates_LL</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NUCLEO-G474RE</td>
+<td style="text-align: left;">Applications</td>
+<td style="text-align: left;">v1.1.0</td>
+<td style="text-align: left;"><a href="http://www.st.com/SLA0044">SLA0044</a></td>
+<td style="text-align: left;">Projects/NUCLEO-G474RE/Applications</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NUCLEO-G474RE</td>
+<td style="text-align: left;">Demonstrations</td>
+<td style="text-align: left;">v1.1.0</td>
+<td style="text-align: left;"><a href="http://www.st.com/SLA0044">SLA0044</a></td>
+<td style="text-align: left;">Projects/NUCLEO-G474RE/Demonstrations</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NUCLEO-G474RE</td>
+<td style="text-align: left;">HAL Examples</td>
+<td style="text-align: left;">v1.1.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;">Projects/NUCLEO-G474RE/Examples</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NUCLEO-G474RE</td>
+<td style="text-align: left;">LL Examples</td>
+<td style="text-align: left;">v1.1.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;">Projects/NUCLEO-G474RE/Examples_LL</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NUCLEO-G474RE</td>
+<td style="text-align: left;">MIX HAL/LL Examples</td>
+<td style="text-align: left;">v1.1.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;">Projects/NUCLEO-G474RE/Examples_MIX</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NUCLEO-G474RE</td>
+<td style="text-align: left;">HAL Templates</td>
+<td style="text-align: left;">v1.1.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;">Projects/NUCLEO-G474RE/Templates</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NUCLEO-G474RE</td>
+<td style="text-align: left;">LL Templates</td>
+<td style="text-align: left;">v1.1.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;">Projects/NUCLEO-G474RE/Templates_LL</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32G474E-EVAL</td>
+<td style="text-align: left;">Applications</td>
+<td style="text-align: left;">v1.1.0</td>
+<td style="text-align: left;"><a href="http://www.st.com/SLA0044">SLA0044</a></td>
+<td style="text-align: left;">Projects/STM32G474E-EVAL/Applications</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STM32G474E-EVAL</td>
+<td style="text-align: left;">Demonstrations</td>
+<td style="text-align: left;">v1.1.0</td>
+<td style="text-align: left;"><a href="http://www.st.com/SLA0044">SLA0044</a></td>
+<td style="text-align: left;">Projects/STM32G474E-EVAL/Demonstrations</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32G474E-EVAL</td>
+<td style="text-align: left;">HAL Examples</td>
+<td style="text-align: left;">v1.1.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;">Projects/STM32G474E-EVAL/Examples</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STM32G474E-EVAL</td>
+<td style="text-align: left;">HAL Templates</td>
+<td style="text-align: left;">v1.1.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;">Projects/STM32G474E-EVAL/Templates</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32G474E-EVAL</td>
+<td style="text-align: left;">LL Templates</td>
+<td style="text-align: left;">v1.1.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;">Projects/STM32G474E-EVAL/Templates_LL</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">B-G474E-DPOW1</td>
+<td style="text-align: left;">Applications</td>
+<td style="text-align: left;">v1.0.0</td>
+<td style="text-align: left;"><a href="http://www.st.com/SLA0044">SLA0044</a></td>
+<td style="text-align: left;">Projects/B-G474E-DPOW1/Applications</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">B-G474E-DPOW1</td>
+<td style="text-align: left;">Demonstrations</td>
+<td style="text-align: left;">v1.0.0</td>
+<td style="text-align: left;"><a href="http://www.st.com/SLA0044">SLA0044</a></td>
+<td style="text-align: left;">Projects/B-G474E-DPOW1/Demonstrations</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">B-G474E-DPOW1</td>
+<td style="text-align: left;">HAL Examples</td>
+<td style="text-align: left;">v1.0.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;">Projects/B-G474E-DPOW1/Examples</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">B-G474E-DPOW1</td>
+<td style="text-align: left;">MIX HAL/LL Examples</td>
+<td style="text-align: left;">v1.0.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;">Projects/B-G474E-DPOW1/Examples_MIX</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">B-G474E-DPOW1</td>
+<td style="text-align: left;">HAL Templates</td>
+<td style="text-align: left;">v1.0.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;">Projects/B-G474E-DPOW1/Templates</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">B-G474E-DPOW1</td>
+<td style="text-align: left;">LL Templates</td>
+<td style="text-align: left;">v1.0.0</td>
+<td style="text-align: left;"><a href="https://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause</a></td>
+<td style="text-align: left;">Projects/B-G474E-DPOW1/Templates_LL</td>
+</tr>
+</tbody>
+</table>
+<p><br />
+</p>
+<h2 id="known-limitations-2">Known Limitations</h2>
+<h2 id="development-toolchains-and-compilers-2">Development Toolchains and Compilers</h2>
+<table>
+<caption>Development Toolchains :</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: center;">Version</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">IAR Embedded Workbench for ARM (EWARM)toolchain</td>
+<td style="text-align: center;">V8.20.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">RealView Microcontroller DevelopmentKit (MDK-ARM) toolchain</td>
+<td style="text-align: center;">V5.25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">System Workbench for STM32 (SW4STM32)toolchain</td>
+<td style="text-align: center;">V2.4</td>
+</tr>
+</tbody>
+</table>
+<h2 id="supported-devices-and-boards-2">Supported Devices and boards</h2>
+<table>
+<caption>Supported Devices :</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">STM32G431xx, STM32G441xx</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32G471xx</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STM32G473xx, STM32G483xx</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32G474xx, STM32G484xx</td>
+</tr>
+</tbody>
+</table>
+<table>
+<caption>Supported Boards :</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">NUCLEO-G431KB Nucleo32 kit</td>
+<td style="text-align: left;">MB1430 A-01</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NUCLEO-G431RB Nucleo kit</td>
+<td style="text-align: left;">MB1367 C-01</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NUCLEO-G474RE Nucleo kit</td>
+<td style="text-align: left;">MB1367 C-01</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32G474E-EVAL Evaluation Board</td>
+<td style="text-align: left;">MB1397 B-01</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">B-G474E-DPOW1 Discovery Kit</td>
+<td style="text-align: left;">MB1428 B-01</td>
+</tr>
+</tbody>
+</table>
+<h2 id="backward-compatibility-2">Backward Compatibility</h2>
+<p>None</p>
+<h2 id="other-compatibilities-2">Other compatibilities</h2>
+<p>This software release is compatible with:</p>
+<ul>
 <li>STM32CubeMX V5.3.0</li>
 </ul>
 </div>
@@ -754,7 +1138,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section2" aria-hidden="true"> <label for="collapse-section2" aria-hidden="true">V1.0.1 / 29-May-2019</label>
 <div>
-<h2 id="main-changes-2">Main Changes</h2>
+<h2 id="main-changes-3">Main Changes</h2>
 <h3 id="patch-release">Patch Release</h3>
 <p>HRTIM/BasicPWM project released in V1.0.0 is now split in 4 different projects on NUCLEO-G474RE (using HAL and Low-layer interfaces):</p>
 <ul>
@@ -763,8 +1147,8 @@
 <li><p>HRTIM/HRTIM_Basic_PWMMaster</p></li>
 <li><p>HRTIM_Basic_SinglePWM</p></li>
 </ul>
-<h2 id="contents-2">Contents</h2>
-<h3 id="projects-2">Projects</h3>
+<h2 id="contents-3">Contents</h2>
+<h3 id="projects-3">Projects</h3>
 <table>
 <caption>Projects :</caption>
 <thead>
@@ -798,11 +1182,11 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section1" aria-hidden="true"> <label for="collapse-section1" aria-hidden="true">V1.0.0 / 12-April-2019</label>
 <div>
-<h2 id="main-changes-3">Main Changes</h2>
+<h2 id="main-changes-4">Main Changes</h2>
 <h3 id="first-release">First release</h3>
 <p>First Official release of STM32CubeG4 (STM32Cube for STM32G4 Series) Firmware projects supporting STM32G431xx/31xx/71xx/73xx/74xx devices and introducing NUCLEO-G431KB, NUCLEO-G431RB, NUCLEO-G474RE and STM32G474E-EVAL boards.</p>
-<h2 id="contents-3">Contents</h2>
-<h3 id="projects-3">Projects</h3>
+<h2 id="contents-4">Contents</h2>
+<h3 id="projects-4">Projects</h3>
 <table>
 <caption>Projects :</caption>
 <thead>
@@ -987,12 +1371,12 @@
 </table>
 <p><br />
 </p>
-<h2 id="known-limitations-2">Known Limitations</h2>
+<h2 id="known-limitations-3">Known Limitations</h2>
 <ul>
 <li>STM32G474E-EVAL : Project Template in HAL is not yet ported on Keil and SW4STM32 toolchains</li>
 <li>USB Device : Warning in compilation of Keil and SW4STM32 Toolchains ("__ALIGN_END" is redefined in the usbd_def.h)</li>
 </ul>
-<h2 id="development-toolchains-and-compilers-2">Development Toolchains and Compilers</h2>
+<h2 id="development-toolchains-and-compilers-3">Development Toolchains and Compilers</h2>
 <table>
 <caption>Development Toolchains :</caption>
 <thead>
@@ -1016,7 +1400,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="supported-devices-and-boards-2">Supported Devices and boards</h2>
+<h2 id="supported-devices-and-boards-3">Supported Devices and boards</h2>
 <table>
 <thead>
 <tr class="header">
@@ -1051,9 +1435,9 @@
 </tr>
 </tbody>
 </table>
-<h2 id="backward-compatibility-2">Backward Compatibility</h2>
+<h2 id="backward-compatibility-3">Backward Compatibility</h2>
 <p>None</p>
-<h2 id="other-compatibilities-2">Other compatibilities</h2>
+<h2 id="other-compatibilities-3">Other compatibilities</h2>
 <p>This software release is compatible with:</p>
 <ul>
 <li>STM32CubeMX V5.2.0</li>

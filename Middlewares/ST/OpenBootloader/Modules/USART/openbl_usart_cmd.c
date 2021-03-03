@@ -6,13 +6,13 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
-  * This software component is licensed by ST under Image license SLA0044,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                       www.st.com/SLA0044
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
   *
   ******************************************************************************
   */
@@ -67,7 +67,13 @@ OPENBL_CommandsTypeDef OPENBL_USART_Commands =
   OPENBL_USART_ReadoutUnprotect,
   OPENBL_USART_EraseMemory,
   OPENBL_USART_WriteProtect,
-  OPENBL_USART_WriteUnprotect
+  OPENBL_USART_WriteUnprotect,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL,
+  NULL
 };
 
 /* Exported functions---------------------------------------------------------*/
@@ -277,22 +283,23 @@ static void OPENBL_USART_WriteMemory(void)
       if (OPENBL_USART_ReadByte() != tmpXOR)
       {
         OPENBL_USART_SendByte(NACK_BYTE);
-        return;
       }
-
-      /* Write data to memory */
-      OPENBL_MEM_Write(address, (uint8_t *)USART_RAM_Buf, codesize);
-
-      /* Send last Acknowledge synchronization byte */
-      OPENBL_USART_SendByte(ACK_BYTE);
-
-      /* Check if the received address is an option byte address */
-      mem_area = OPENBL_MEM_GetAddressArea(address);
-
-      if (mem_area == OB_AREA)
+      else
       {
-        /* Launch Option Bytes reload */
-        OPENBL_MEM_OptionBytesLaunch();
+        /* Write data to memory */
+        OPENBL_MEM_Write(address, (uint8_t *)USART_RAM_Buf, codesize);
+
+        /* Send last Acknowledge synchronization byte */
+        OPENBL_USART_SendByte(ACK_BYTE);
+
+        /* Check if the received address is an option byte address */
+        mem_area = OPENBL_MEM_GetAddressArea(address);
+
+        if (mem_area == OB_AREA)
+        {
+          /* Launch Option Bytes reload */
+          OPENBL_MEM_OptionBytesLaunch();
+        }
       }
     }
   }
@@ -374,10 +381,13 @@ static void OPENBL_USART_ReadoutUnprotect(void)
 {
   OPENBL_USART_SendByte(ACK_BYTE);
 
+  /* Once the option bytes modification start bit is set in FLASH CR register,
+     all the RAM is erased, this causes the erase of the Open Bootloader RAM.
+     This is why the last ACK is sent before the call of OPENBL_MEM_SetReadOutProtection */
+  OPENBL_USART_SendByte(ACK_BYTE);
+
   /* Disable the read protection */
   OPENBL_MEM_SetReadOutProtection(DISABLE);
-
-  OPENBL_USART_SendByte(ACK_BYTE);
 
   /* Launch Option Bytes reload and reset system */
   OPENBL_MEM_OptionBytesLaunch();

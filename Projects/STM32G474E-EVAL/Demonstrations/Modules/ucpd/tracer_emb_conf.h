@@ -84,7 +84,7 @@ extern "C" {
 #define TRACER_EMB_TX_DMA_IRQ                        DMA1_Channel6_IRQn
 #define TRACER_EMB_TX_DMA_IRQHANDLER                 DMA1_Channel6_IRQHandler
 #define TRACER_EMB_TX_DMA_ACTIVE_FLAG                LL_DMA_IsActiveFlag_TC6
-#define TRACER_EMB_TX_DMA_CLEAR_FLAG                 LL_DMA_ClearFlag_GI6
+#define TRACER_EMB_TX_DMA_CLEAR_FLAG                 LL_DMA_ClearFlag_TC6
 
 #ifdef __cplusplus
 }

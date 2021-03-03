@@ -612,8 +612,7 @@ int32_t BSP_USBPD_PWR_VCONNIsOn(uint32_t Instance,
 
 /**
   * @brief  Set the VBUS disconnection voltage threshold.
-  * @note   Callback funtion registered through BSP_USBPD_PWR_RegisterVBUSDetectCallback
-  *         function call is invoked when VBUS falls below programmed threshold.
+  * @note   Callback funtion invoked when VBUS falls below programmed threshold.
   * @note   By default VBUS disconnection threshold is set to 3.3V
   * @param  Instance Type-C port identifier
   *         This parameter can be take one of the following values:

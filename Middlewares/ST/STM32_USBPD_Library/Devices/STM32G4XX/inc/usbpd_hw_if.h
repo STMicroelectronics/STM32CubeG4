@@ -109,6 +109,13 @@ typedef struct
   */
   void (*USBPD_HW_IF_TX_HardResetCompleted)(uint8_t PortNum, USBPD_SOPType_TypeDef Type);
 
+  /**
+  * @brief  FRS reception.
+  * @param  PortNum Port number
+  * @retval None
+  */
+  void (*USBPD_HW_IF_TX_FRSReception)(uint8_t PortNum);
+
 } USBPD_HW_IF_Callbacks;
 
 /** @defgroup USBPD_PORT_HandleTypeDef USB PD handle Structure definition for USBPD_PHY_HW_IF
@@ -286,7 +293,7 @@ void USBPD_HW_IF_Send_BIST_Pattern(uint8_t PortNum);
 void HW_SignalDetachment(uint8_t PortNum);
 
 /**
-  * @brief  Sends an Attachement signal.
+  * @brief  Sends an Attachment signal.
   * @param  PortNum The port handle.
   * @param  cc the PD pin.
   * @retval none

@@ -731,7 +731,7 @@ int32_t  BSP_LCD_WritePixel(uint32_t Instance, uint32_t Xpos, uint32_t Ypos, uin
   * @param  Length length of data be read from the LCD GRAM
   * @retval BSP status
   */
-int32_t BSP_LCD_WriteReg(uint16_t Reg, uint8_t *pData, uint16_t Length)
+int32_t BSP_LCD_WriteReg(uint16_t Reg, uint8_t *pData, uint32_t Length)
 {
   int32_t ret = BSP_ERROR_NONE;
 
@@ -765,7 +765,7 @@ int32_t BSP_LCD_WriteReg(uint16_t Reg, uint8_t *pData, uint16_t Length)
   * @param  Length length of data to write to LCD GRAM
   * @retval Error status
   */
-int32_t BSP_LCD_SendData(uint8_t *pData, uint16_t Length)
+int32_t BSP_LCD_SendData(uint8_t *pData, uint32_t Length)
 {
   int32_t ret = BSP_ERROR_NONE;
   uint8_t pdata = START_BYTE_WRITE;
@@ -799,7 +799,7 @@ int32_t BSP_LCD_SendData(uint8_t *pData, uint16_t Length)
   * @param  Length length of data be read from the LCD GRAM
   * @retval BSP status
   */
-int32_t BSP_LCD_ReadReg(uint16_t Reg, uint8_t *pData, uint16_t Length)
+int32_t BSP_LCD_ReadReg(uint16_t Reg, uint8_t *pData, uint32_t Length)
 {
   int32_t ret = BSP_ERROR_NONE;
   uint16_t readvalue;

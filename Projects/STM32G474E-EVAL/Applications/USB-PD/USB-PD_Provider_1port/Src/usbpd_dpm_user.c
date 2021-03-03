@@ -21,20 +21,24 @@
 
 #define USBPD_DPM_USER_C
 /* Includes ------------------------------------------------------------------*/
+#include "main.h"
 #include "usbpd_core.h"
+#include "usbpd_dpm_user.h"
 #include "usbpd_pdo_defs.h"
 #include "usbpd_dpm_core.h"
 #include "usbpd_dpm_conf.h"
-#include "usbpd_dpm_user.h"
 #include "usbpd_vdm_user.h"
-#if defined(_TRACE)
-#include "usbpd_trace.h"
-#include "stdio.h"
-#endif /* _TRACE */
 #include "usbpd_pwr_if.h"
 #include "usbpd_pwr_user.h"
-#include "string.h"
 #include "cmsis_os.h"
+#if defined(_TRACE)
+#include "usbpd_trace.h"
+#include "string.h"
+#include "stdio.h"
+#endif /* _TRACE */
+/* USER CODE BEGIN Includes */
+
+/* USER CODE END Includes */
 
 /** @addtogroup STM32_USBPD_APPLICATION
   * @{
@@ -111,6 +115,7 @@ void                USBPD_DPM_UserExecute(void *argument);
 GUI_NOTIFICATION_POST         DPM_GUI_PostNotificationMessage   = NULL;
 GUI_NOTIFICATION_FORMAT_SEND  DPM_GUI_FormatAndSendNotification = NULL;
 GUI_SAVE_INFO                 DPM_GUI_SaveInfo                  = NULL;
+
 /* USER CODE BEGIN Private_Variables */
 
 USBPD_HandleTypeDef DPM_Ports[USBPD_PORT_COUNT];
@@ -171,15 +176,13 @@ void USBPD_DPM_SetNotification_GUI(GUI_NOTIFICATION_FORMAT_SEND PtrFormatSend, G
 }
 
 /**
-  * @brief  User delay implementation which is OS dependant
+  * @brief  User delay implementation which is OS dependent
   * @param  Time time in ms
   * @retval None
   */
 void USBPD_DPM_WaitForTime(uint32_t Time)
 {
-/* USER CODE BEGIN USBPD_DPM_WaitForTime */
   osDelay(Time);
-/* USER CODE END USBPD_DPM_WaitForTime */
 }
 
 /**
@@ -210,11 +213,12 @@ void USBPD_DPM_UserCableDetection(uint8_t PortNum, USBPD_CAD_EVENT State)
   {
   case USBPD_CAD_EVENT_ATTEMC:
   case USBPD_CAD_EVENT_ATTACHED:
-   /* Format and send a notification to GUI if enabled */
+    /* Format and send a notification to GUI if enabled */
     if (NULL != DPM_GUI_FormatAndSendNotification)
     {
-      DPM_GUI_FormatAndSendNotification(PortNum, DPM_GUI_NOTIF_ISCONNECTED | DPM_GUI_NOTIF_POWER_EVENT, 0);
+      DPM_GUI_FormatAndSendNotification(PortNum, DPM_GUI_NOTIF_ISCONNECTED, 0);
     }
+    break;
   default :
     /* Format and send a notification to GUI if enabled */
     if (NULL != DPM_GUI_FormatAndSendNotification)
@@ -454,9 +458,26 @@ void USBPD_DPM_ExtendedMessageReceived(uint8_t PortNum, USBPD_ExtendedMsg_TypeDe
 }
 
 /**
-  * @brief  DPM callback used to know user choice about Data Role Swap.
+  * @brief  DPM callback to allow PE to enter ERROR_RECOVERY state.
   * @param  PortNum Port number
-  * @retval USBPD_REJECT, UBPD_ACCEPT
+  * @retval None
+  */
+void USBPD_DPM_EnterErrorRecovery(uint8_t PortNum)
+{
+/* USER CODE BEGIN USBPD_DPM_EnterErrorRecovery */
+  /* Inform CAD to enter recovery mode */
+  USBPD_CAD_EnterErrorRecovery(PortNum);
+/* USER CODE END USBPD_DPM_EnterErrorRecovery */
+}
+
+/**
+  * @brief  Callback used to ask application the reply status for a DataRoleSwap request
+  * @note   if the callback is not set (ie NULL) the stack will automatically reject the request
+  * @param  PortNum Port number
+  * @retval Returned values are:
+            @ref USBPD_ACCEPT if DRS can be accepted
+            @ref USBPD_REJECT if DRS is not accepted in one data role (DFP or UFP) or in PD2.0 config
+            @ref USBPD_NOTSUPPORTED if DRS is not supported at all by the application (in both data roles) - P3.0 only
   */
 USBPD_StatusTypeDef USBPD_DPM_EvaluateDataRoleSwap(uint8_t PortNum)
 {
@@ -808,7 +829,7 @@ USBPD_StatusTypeDef USBPD_DPM_RequestGetSinkCapabilityExt(uint8_t PortNum)
 }
 
 /**
-  * @brief  Request the PE to get a manufacturer infor
+  * @brief  Request the PE to get a manufacturer info
   * @param  PortNum The current port number
   * @param  SOPType SOP Type
   * @param  pManuInfoData Pointer on manufacturer info based on @ref USBPD_GMIDB_TypeDef
@@ -920,9 +941,6 @@ USBPD_StatusTypeDef USBPD_DPM_RequestGetBatteryStatus(uint8_t PortNum, uint8_t *
 USBPD_StatusTypeDef USBPD_DPM_RequestSecurityRequest(uint8_t PortNum)
 {
   USBPD_StatusTypeDef _status = USBPD_ERROR;
-/* USER CODE BEGIN USBPD_DPM_RequestSecurityRequest */
-
-/* USER CODE END USBPD_DPM_RequestSecurityRequest */
   DPM_USER_ERROR_TRACE(PortNum, _status, "SECURITY_REQUEST not accepted by the stack");
   return _status;
 }

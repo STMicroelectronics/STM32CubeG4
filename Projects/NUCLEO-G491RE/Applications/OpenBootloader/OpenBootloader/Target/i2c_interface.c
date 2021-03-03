@@ -221,8 +221,12 @@ void OPENBL_I2C_WaitAddress(void)
   */
 #if defined (__CC_ARM)
 void OPENBL_I2C_WaitNack(void)
-#else 
-__ramfunc void OPENBL_I2C_WaitNack(void)
+#elif defined (__GNUC__)
+void OPENBL_I2C_WaitNack(void)
+#elif defined (__ICCARM__)
+void OPENBL_I2C_WaitNack(void)
+#else
+__attribute__ ((section (".ramfunc"))) void OPENBL_I2C_WaitNack(void)
 #endif /* (__CC_ARM) */
 {
   uint32_t timeout = 0U;
@@ -253,8 +257,12 @@ __ramfunc void OPENBL_I2C_WaitNack(void)
   */
 #if defined (__CC_ARM)
 void OPENBL_I2C_WaitStop(void)
-#else 
-__ramfunc void OPENBL_I2C_WaitStop(void)
+#elif defined (__GNUC__)
+void OPENBL_I2C_WaitStop(void)
+#elif defined (__ICCARM__)
+void OPENBL_I2C_WaitStop(void)
+#else
+__attribute__ ((section (".ramfunc"))) void OPENBL_I2C_WaitStop(void)
 #endif /* (__CC_ARM) */
 {
   uint32_t timeout = 0U;
@@ -305,8 +313,12 @@ void OPENBL_I2C_SendAcknowledgeByte(uint8_t Byte)
   */
 #if defined (__CC_ARM)
 void OPENBL_I2C_SendBusyByte(void)
-#else 
-__ramfunc void OPENBL_I2C_SendBusyByte(void)
+#elif defined (__GNUC__)
+void OPENBL_I2C_SendBusyByte(void)
+#elif defined (__ICCARM__)
+void OPENBL_I2C_SendBusyByte(void)
+#else
+__attribute__ ((section (".ramfunc"))) void OPENBL_I2C_SendBusyByte(void)
 #endif /* (__CC_ARM) */
 {
   uint32_t timeout = 0;

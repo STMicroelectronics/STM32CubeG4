@@ -36,6 +36,9 @@
   */
 
 /* Exported typedef ----------------------------------------------------------*/
+/* USER CODE BEGIN typedef */
+
+/* USER CODE END typedef */
 
 /* Exported define -----------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
@@ -44,6 +47,8 @@
 /* Exported functions --------------------------------------------------------*/
 USBPD_StatusTypeDef USBPD_VDM_UserInit(uint8_t PortNum);
 void                USBPD_VDM_UserReset(uint8_t PortNum);
+/* USER CODE BEGIN Exported functions */
+/* USER CODE END Exported functions */
 
 /**
   * @}

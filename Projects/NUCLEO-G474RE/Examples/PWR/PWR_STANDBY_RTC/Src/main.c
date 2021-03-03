@@ -98,57 +98,15 @@ int main(void)
   /* USER CODE BEGIN SysInit */
   /* Configure LED2 */
   BSP_LED_Init(LED2);
+
+  /* Insert 5 seconds delay */
+  HAL_Delay(5000);
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
   MX_RTC_Init();
   /* USER CODE BEGIN 2 */
 
-  /* Configure the system Power */
-  SystemPower_Config();
-  /* Check and handle if the system was resumed from StandBy mode */ 
-  if(__HAL_PWR_GET_FLAG(PWR_FLAG_SB) != RESET)
-  {
-    /* Clear Standby flag */
-    __HAL_PWR_CLEAR_FLAG(PWR_FLAG_SB); 
-  }
-  
-  /* Insert 5 seconds delay */
-  HAL_Delay(5000);
-  
-  /* The Following Wakeup sequence is highly recommended prior to each Standby mode entry
-    mainly  when using more than one wakeup source this is to not miss any wakeup event.
-    - Disable all used wakeup sources,
-    - Clear all related wakeup flags, 
-    - Re-enable all used wakeup sources,
-    - Enter the Standby mode.
-  */
-  /* Disable all used wakeup sources*/
-  HAL_RTCEx_DeactivateWakeUpTimer(&hrtc);
-  
-  /* Clear all related wakeup flags */
-  __HAL_PWR_CLEAR_FLAG(PWR_FLAG_WU);
-  
-  /* Re-enable wakeup source */
-  /* ## Setting the Wake up time ############################################*/
-  /* RTC Wakeup Interrupt Generation: 
-    the wake-up counter is set to its maximum value to yield the longuest
-    stand-by time to let the current reach its lowest operating point.
-    The maximum value is 0xFFFF, corresponding to about 33 sec. when 
-    RTC_WAKEUPCLOCK_RTCCLK_DIV = RTCCLK_Div16 = 16
-
-    Wakeup Time Base = (RTC_WAKEUPCLOCK_RTCCLK_DIV /(LSI))
-    Wakeup Time = Wakeup Time Base * WakeUpCounter 
-      = (RTC_WAKEUPCLOCK_RTCCLK_DIV /(LSI)) * WakeUpCounter
-      ==> WakeUpCounter = Wakeup Time / Wakeup Time Base
-  
-    To configure the wake up timer to 33s the WakeUpCounter is set to 0xFFFF:
-    Wakeup Time Base = 16 /(~32 kHz RC) = ~0.5 ms
-    Wakeup Time = 0.5 ms  * WakeUpCounter
-    Therefore, with wake-up counter =  0xFFFF  = 65,535 
-       Wakeup Time =  0.5 ms *  65,535 = ~ 33 sec. */
-  HAL_RTCEx_SetWakeUpTimer_IT(&hrtc, 0xFFFF, RTC_WAKEUPCLOCK_RTCCLK_DIV16);
-  
   /* Enter the Standby mode */
   HAL_PWR_EnterSTANDBYMode();
   
@@ -236,6 +194,49 @@ static void MX_RTC_Init(void)
 
   /* USER CODE BEGIN RTC_Init 1 */
 
+  /* Configure the system Power */
+  SystemPower_Config();
+
+  /* Check and handle if the system was resumed from StandBy mode */ 
+  if(__HAL_PWR_GET_FLAG(PWR_FLAG_SB) != RESET)
+  {
+    /* Clear Standby flag */
+    __HAL_PWR_CLEAR_FLAG(PWR_FLAG_SB);
+    /* The Following Wakeup sequence is highly recommended prior to each Standby mode entry
+    mainly  when using more than one wakeup source this is to not miss any wakeup event.
+    - Disable all used wakeup sources,
+    - Clear all related wakeup flags, 
+    - Re-enable all used wakeup sources,
+    - Enter the Standby mode.
+    */
+    /* Disable all used wakeup sources*/
+    HAL_RTCEx_DeactivateWakeUpTimer(&hrtc);
+
+    /* Clear all related wakeup flags */
+    __HAL_PWR_CLEAR_FLAG(PWR_FLAG_WU);
+
+    /* Re-enable wakeup source */
+    /* ## Setting the Wake up time ############################################*/
+    /* RTC Wakeup Interrupt Generation: 
+    the wake-up counter is set to its maximum value to yield the longuest
+    stand-by time to let the current reach its lowest operating point.
+    The maximum value is 0xFFFF, corresponding to about 33 sec. when 
+    RTC_WAKEUPCLOCK_RTCCLK_DIV = RTCCLK_Div16 = 16
+
+    Wakeup Time Base = (RTC_WAKEUPCLOCK_RTCCLK_DIV /(LSI))
+    Wakeup Time = Wakeup Time Base * WakeUpCounter 
+    = (RTC_WAKEUPCLOCK_RTCCLK_DIV /(LSI)) * WakeUpCounter
+    ==> WakeUpCounter = Wakeup Time / Wakeup Time Base
+
+    To configure the wake up timer to 33s the WakeUpCounter is set to 0xFFFF:
+    Wakeup Time Base = 16 /(~32 kHz RC) = ~0.5 ms
+    Wakeup Time = 0.5 ms  * WakeUpCounter
+    Therefore, with wake-up counter =  0xFFFF  = 65,535 
+    Wakeup Time =  0.5 ms *  65,535 = ~ 33 sec. */
+    HAL_RTCEx_SetWakeUpTimer_IT(&hrtc, 0xFFFF, RTC_WAKEUPCLOCK_RTCCLK_DIV16);
+  }
+  else
+  {
   /* USER CODE END RTC_Init 1 */
   /** Initialize RTC Only
   */
@@ -252,8 +253,14 @@ static void MX_RTC_Init(void)
   {
     Error_Handler();
   }
+  /** Enable the WakeUp
+  */
+  if (HAL_RTCEx_SetWakeUpTimer_IT(&hrtc, 0xFFFF, RTC_WAKEUPCLOCK_RTCCLK_DIV16) != HAL_OK)
+  {
+    Error_Handler();
+  }
   /* USER CODE BEGIN RTC_Init 2 */
-
+  }
   /* USER CODE END RTC_Init 2 */
 
 }

@@ -365,21 +365,18 @@ static USBPD_StatusTypeDef USBPD_VDM_DiscoverIdentity(uint8_t PortNum, USBPD_Dis
   }
   else
   {
-#endif /* USBPD_REV30_SUPPORT */
     IDHeaderVDO[PortNum].b20.VID                    = DPM_VDM_Settings[PortNum].VDM_USB_VID_SOP;
     IDHeaderVDO[PortNum].b20.ModalOperation         = DPM_VDM_Settings[PortNum].VDM_ModalOperation;
     IDHeaderVDO[PortNum].b20.USBHostCapability      = DPM_VDM_Settings[PortNum].VDM_USBHostSupport;
     IDHeaderVDO[PortNum].b20.USBDevCapability       = DPM_VDM_Settings[PortNum].VDM_USBDeviceSupport;
-#if defined(USBPD_REV30_SUPPORT)
-    if ((PRODUCT_TYPE_PSD == DPM_VDM_Settings[PortNum].VDM_ProductTypeUFPorCP)
-     || (PRODUCT_TYPE_VPD == DPM_VDM_Settings[PortNum].VDM_ProductTypeUFPorCP))
+    if (PRODUCT_TYPE_PSD == DPM_VDM_Settings[PortNum].VDM_ProductTypeUFPorCP)
     {
       IDHeaderVDO[PortNum].b20.ProductTypeUFPorCP   = PRODUCT_TYPE_UNDEFINED;
     }
     else
 #endif /* USBPD_REV30_SUPPORT */
     {
-    IDHeaderVDO[PortNum].b20.ProductTypeUFPorCP     = DPM_VDM_Settings[PortNum].VDM_ProductTypeUFPorCP;
+      IDHeaderVDO[PortNum].b20.ProductTypeUFPorCP     = DPM_VDM_Settings[PortNum].VDM_ProductTypeUFPorCP;
     }
 #if defined(USBPD_REV30_SUPPORT)
   }
@@ -1274,7 +1271,7 @@ static USBPD_StatusTypeDef USBPD_VDM_ReceiveUVDM(uint8_t PortNum, USBPD_UVDMHead
 /* USER CODE BEGIN Private_functions */
 #ifdef _SNK_DP
 /**
-  * @brief  Initialize HPD Alert pin 
+  * @brief  Initialize HPD Alert pin
   * @param  PortNum    current port number
   * @retval USBPD status
   */
@@ -1318,7 +1315,7 @@ static USBPD_StatusTypeDef HPD_Init(uint8_t PortNum)
   return USBPD_OK;
 }
 
-static void USBPD_VDM_UserCallback(MUX_TypeCMuxIdTypeDef TypeCMuxId, 
+static void USBPD_VDM_UserCallback(MUX_TypeCMuxIdTypeDef TypeCMuxId,
                             MUX_HPDStateTypeDef   HPDState)
 {
   if (HPD_STATE_HIGH == HPDState)

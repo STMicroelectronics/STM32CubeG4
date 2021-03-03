@@ -1,13 +1,14 @@
 /*
  ******************************************************************************
  * @file    stts751_reg.h
- * @author  MCD Application Team
+ * @author  Sensors Software Solution Team
  * @brief   This file contains all the functions prototypes for the
  *          stts751_reg.c driver.
  ******************************************************************************
  * @attention
  *
- * <h2><center>&copy; COPYRIGHT(c) 2018 STMicroelectronics</center></h2>
+ * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
+ * All rights reserved.</center></h2>
  *
  * This software component is licensed by ST under BSD 3-Clause license,
  * the "License"; You may not use this file except in compliance with the
@@ -18,8 +19,8 @@
  */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef STTS751_REG_H
-#define STTS751_REG_H
+#ifndef STTS751_REGS_H
+#define STTS751_REGS_H
 
 #ifdef __cplusplus
   extern "C" {
@@ -27,269 +28,270 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include <stdint.h>
+#include <math.h>
 
-/** @addtogroup BSP
+/** @addtogroup STTS751
   * @{
+  *
   */
 
-/** @addtogroup Component
+/** @defgroup STMicroelectronics sensors common types
   * @{
+  *
   */
-
-/** @addtogroup stts751
- * @{
- */
 
 #ifndef MEMS_SHARED_TYPES
 #define MEMS_SHARED_TYPES
 
-/** @defgroup ST_MEMS_common_types
-  * @{
-  */
-
-typedef union{
-	int16_t i16bit[3];
-	uint8_t u8bit[6];
-} axis3bit16_t;
-
-typedef union{
-	int16_t i16bit;
-	uint8_t u8bit[2];
-} axis1bit16_t;
-
-typedef union{
-	int32_t i32bit[3];
-	uint8_t u8bit[12];
-} axis3bit32_t;
-
-typedef union{
-	int32_t i32bit;
-	uint8_t u8bit[4];
-} axis1bit32_t;
-
-typedef struct {
-   uint8_t bit0       : 1;
-   uint8_t bit1       : 1;
-   uint8_t bit2       : 1;
-   uint8_t bit3       : 1;
-   uint8_t bit4       : 1;
-   uint8_t bit5       : 1;
-   uint8_t bit6       : 1;
-   uint8_t bit7       : 1;
+typedef struct{
+  uint8_t bit0       : 1;
+  uint8_t bit1       : 1;
+  uint8_t bit2       : 1;
+  uint8_t bit3       : 1;
+  uint8_t bit4       : 1;
+  uint8_t bit5       : 1;
+  uint8_t bit6       : 1;
+  uint8_t bit7       : 1;
 } bitwise_t;
 
-#define PROPERTY_DISABLE                (0)
-#define PROPERTY_ENABLE                 (1)
+#define PROPERTY_DISABLE                (0U)
+#define PROPERTY_ENABLE                 (1U)
 
-#endif /* MEMS_SHARED_TYPES*/
-
-/**
-  * @}
-  */
-
-/** @defgroup stts751_interface
+/** @addtogroup  Interfaces_Functions
+  * @brief       This section provide a set of functions used to read and
+  *              write a generic register of the device.
+  *              MANDATORY: return 0 -> no Error.
   * @{
+  *
   */
 
-typedef int32_t (*stts751_write_ptr)(void *, uint8_t, uint8_t*, uint16_t);
-typedef int32_t (*stts751_read_ptr) (void *, uint8_t, uint8_t*, uint16_t);
+typedef int32_t (*stmdev_write_ptr)(void *, uint8_t, uint8_t*, uint16_t);
+typedef int32_t (*stmdev_read_ptr) (void *, uint8_t, uint8_t*, uint16_t);
 
 typedef struct {
   /** Component mandatory fields **/
-  stts751_write_ptr  write_reg;
-  stts751_read_ptr   read_reg;
+  stmdev_write_ptr  write_reg;
+  stmdev_read_ptr   read_reg;
   /** Customizable optional pointer **/
   void *handle;
-} stts751_ctx_t;
+} stmdev_ctx_t;
 
 /**
   * @}
+  *
   */
 
+#endif /* MEMS_SHARED_TYPES */
 
-/** @defgroup stts751_Infos
+#ifndef MEMS_UCF_SHARED_TYPES
+#define MEMS_UCF_SHARED_TYPES
+
+/** @defgroup    Generic address-data structure definition
+  * @brief       This structure is useful to load a predefined configuration
+  *              of a sensor.
+	*              You can create a sensor configuration by your own or using 
+	*              Unico / Unicleo tools available on STMicroelectronics
+	*              web site.
+  *
   * @{
-  */
-#define USE_ENV_SENSOR_CONV_MODE            STTS751_CONTINUOUS_MODE
-#define USE_ENV_SENSOR_CONV_RESOLUTION      STTS751_CONV_12BITS
-#define USE_ENV_SENSOR_CONV_RATE            STTS751_ONE_PER_SECOND
-#define USE_ENV_SENSOR_ALERT                STTS751_ALERT_ENABLE
-#define USE_ENV_SENSOR_LIMIT_HIGH           85.00
-#define USE_ENV_SENSOR_LIMIT_LOW            00.00
-#define USE_ENV_SENSOR_THERM_LIMIT          85
-#define USE_ENV_SENSOR_THERM_HYSTERESIS     10
-
-/** I2C Device Address 8 bit format: if SA0=0 -> 0xB9 if SA0=1 -> 0xBB **/
-#define STTS751_I2C_ADD_H   0xBB
-#define STTS751_I2C_ADD_L   0xB9
-
-#define STTS751_OK                0
-#define STTS751_ERROR            -1
-
-#define STTS751_I2C_BUS          0U
-#define STTS751_TIMEOUT          100U
-
-#define STTS751_TEMP             1U
-/******************************************************************************/
-/*************************** START REGISTER MAPPING  **************************/
-/******************************************************************************/
-/***************************** Read Access Only *******************************/
-#define STTS751_TEMP_VALUE_HIGH_BYTE            0x00U  /*!< Temperature value high byte Register */
-#define STTS751_TEMP_VALUE_LOW_BYTE             0x02U  /*!< Temperature value low byte Register */
-
-#define STTS751_PRODUCT_ID                      0xFDU  /*!< Product Identifier Register */
-#define STTS751_MANUFACTURER_ID                 0xFEU  /*!< Manufacturer Identifier Register */
-#define STTS751_REVISION_ID                     0xFFU  /*!< Revision Number Identifier Register */
-
-   /***************************** Write Access Only ******************************/
-#define STTS751_ONE_SHOT                        0x0FU  /*!< Single Conversion Request Register */
-
-
-/***************************** Read/Write Access ******************************/
-#define STTS751_STATUS                          0x01U  /*!< Configuration Register */
-#define STTS751_CONFIGURATION                   0x03U  /*!< Configuration Register */
-#define STTS751_CONVERSION_RATE                 0x04U  /*!< Conversion Rate Register */
-#define STTS751_TEMP_HIGH_LIMIT_HIGH_BYTE       0x05U  /*!< High Temperature Limit high byte Register */
-#define STTS751_TEMP_HIGH_LIMIT_LOW_BYTE        0x06U  /*!< High Temperature Limit low byte Register */
-#define STTS751_TEMP_LOW_LIMIT_HIGH_BYTE        0x07U  /*!< Low Temperature Limit high byte Register */
-#define STTS751_TEMP_LOW_LIMIT_LOW_BYTE         0x08U  /*!< Low Temperature Limit low byte Register */
-
-
-#define STTS751_THERM_LIMIT                     0x20U  /*!< THERM Limit Register */
-#define STTS751_THERM_HYSTERISIS                0x21U  /*!< THERM Hysteris Register */
-#define STTS751_SMBUS_TIMEOUT                   0x22U  /*!< SMBUS Timeout Enabling Register */
-
-/******************************************************************************/
-/**************************** END REGISTER MAPPING  ***************************/
-/******************************************************************************/
-/** @defgroup EVENT_Pin_selection STTS751 EVENT Pin selection
-  * @{
-  */
-#define STTS751_ALERT_ENABLE                    0x00U
-#define STTS751_ALERT_DISABLE                   0x80U
-/**
-  * @}
+  *
   */
 
-/** @defgroup Conversion_Mode_Selection
-  * @{
-  */
-#define STTS751_CONTINUOUS_MODE                 0x00U
-#define STTS751_ONE_SHOT_MODE                   0x40U
-/**
-  * @}
-  */
-
-/** @defgroup Conversion_Bits_Resolution_Selection STTS751 Conversion Bits Resolution Selection
-  * @{
-  */
-#define STTS751_CONV_9BITS                      0x08U
-#define STTS751_CONV_10BITS                     0x00U
-#define STTS751_CONV_11BITS                     0x04U
-#define STTS751_CONV_12BITS                     0x0CU
-/**
-  * @}
-  */
-
-/** @defgroup Conversion_Rate_Per_Second_Selection STTS751 Conversion Rate Per Second Selection
-  * @{
-  */
-#define STTS751_ONE_SIXTEENTH_PER_SECOND        0x00U /* 0.0625 conversion/Second     */
-#define STTS751_ONE_EIGHTH_PER_SECOND           0x01U /* 0.125 conversion/Second      */
-#define STTS751_ONE_QUATER_PER_SECOND           0x02U /* 0.25 conversion/Second       */
-#define STTS751_HALF_PER_SECOND                 0x03U /* 0.5 conversion/Second        */
-#define STTS751_ONE_PER_SECOND                  0x04U /* 1 conversion/Second          */
-#define STTS751_TWO_PER_SECOND                  0x05U /* 2 conversions/Second         */
-#define STTS751_FOUR_PER_SECOND                 0x05U /* 4 conversions/Second         */
-#define STTS751_HEIGH_PER_SECOND                0x07U /* 8 conversions/Second         */
-#define STTS751_SIXTEEN_PER_SECOND              0x08U /* 16 conversions/Second        */
-#define STTS751_THIRTY_TWO_PER_SECOND           0x09U /* 32 conversions/Second        */
-/**
-  * @}
-  */
-
-/** @defgroup Device_Identification STTS751 Device Identification
-  * @{
-  */
-
-#define STTS751_MANUFACTURER            0x53U
+typedef struct {
+  uint8_t address;
+  uint8_t data;
+} ucf_line_t;
 
 /**
   * @}
+  *
   */
 
-/** @defgroup Status STTS751 Status
-  * @{
-  */
-#define STTS751_STATUS_READY           0x80U
-#define STTS751_STATUS_REACHED         0x01U
-#define STTS751_STATUS_NOT_REACHED     0x00U
+#endif /* MEMS_UCF_SHARED_TYPES */
+
 /**
   * @}
+  *
   */
-static const uint8_t SHIFT_CONV_RESOLUTION[] =
-{
-  4U,   /* 0:  STTS751_CONV_10BITS (default)  */
-  8U,   /* 1:  STTS751_CONV_11BITS  */
-  2U,   /* 2:  STTS751_CONV_9BITS   */
-  16U,  /* 3:  STTS751_CONV_12BITS  */
-};
 
-static const float SHIFT_CONV_RATE[] =
-{
-   0.0625, /* 0: 0.0625 conversion/Second  */
-   0.125,  /* 1: 0.125  conversion/Second  */
-   0.25,   /* 2: 0.25   conversion/Second  */
-   0.5,    /* 3: 0.5    conversion/Second  */
-   1,      /* 4: 1      conversion/Second  */
-   2,      /* 5: 2      conversions/Second */
-   4,      /* 6: 4      conversions/Second */
-   8,      /* 7: 8      conversions/Second */
-   16,     /* 8: 16     conversions/Second */
-   32,     /* 9: 32     conversions/Second */
-};
+/** @defgroup STTS751_Infos
+  * @{
+  *
+  */
 
-typedef struct{
-  uint8_t      Temperature_msb;
-  uint8_t      Status;
-  uint8_t      Temperature_lsb;
-  uint8_t      Config;
-  uint8_t      Conversion_rate;
-  uint8_t      Temp_high_limit_msb;
-  uint8_t      Temp_high_limit_lsb;
-  uint8_t      Temp_low_limit_msb;
-  uint8_t      Temp_low_limit_lsb;
-  uint8_t      OneShot;
-  uint8_t      Therm_limit;
-  uint8_t      Therm_hysteresis;
+/** I2C Device Address 8 bit format **/
+#define STTS751_0xxxx_ADD_7K5  0x91U
+#define STTS751_0xxxx_ADD_12K  0x93U
+#define STTS751_0xxxx_ADD_20K  0x71U
+#define STTS751_0xxxx_ADD_33K  0x73U
+
+#define STTS751_1xxxx_ADD_7K5  0x95U
+#define STTS751_1xxxx_ADD_12K  0x97U
+#define STTS751_1xxxx_ADD_20K  0x75U
+#define STTS751_1xxxx_ADD_33K  0x77U
+
+/** Device Identification **/
+/* Product ID */
+#define STTS751_ID_0xxxx       0x00U
+#define STTS751_ID_1xxxx       0x01U
+/* Manufacturer ID */
+#define STTS751_ID_MAN         0x53U
+/* Revision number */
+#define STTS751_REV            0x01U
+
+/**
+  * @}
+  *
+  */
+
+#define STTS751_TEMPERATURE_HIGH            0x00U
+#define STTS751_STATUS                      0x01U
+typedef struct {
+  uint8_t thrm                       : 1;
+  uint8_t not_used_01                : 4;
+  uint8_t t_low                      : 1;
+  uint8_t t_high                     : 1;
+  uint8_t busy                       : 1;
+} stts751_status_t;
+
+#define STTS751_TEMPERATURE_LOW             0x02U
+#define STTS751_CONFIGURATION               0x03U
+typedef struct {
+  uint8_t not_used_01                : 2;
+  uint8_t tres                       : 2;
+  uint8_t not_used_02                : 2;
+  uint8_t stop                       : 1;
+  uint8_t mask1                      : 1;
+} stts751_configuration_t;
+
+#define STTS751_CONVERSION_RATE             0x04U
+typedef struct {
+  uint8_t conv                       : 4;
+  uint8_t not_used_01                : 4;
+} stts751_conversion_rate_t;
+
+#define STTS751_TEMPERATURE_HIGH_LIMIT_HIGH 0x05U
+#define STTS751_TEMPERATURE_HIGH_LIMIT_LOW  0x06U
+#define STTS751_TEMPERATURE_LOW_LIMIT_HIGH  0x07U
+#define STTS751_TEMPERATURE_LOW_LIMIT_LOW   0x08U
+#define STTS751_ONE_SHOT                    0x0FU
+#define STTS751_THERM_LIMIT                 0x20U
+#define STTS751_THERM_HYSTERESIS            0x21U
+#define STTS751_SMBUS_TIMEOUT               0x22U
+typedef struct {
+  uint8_t not_used_01                : 7;
+  uint8_t timeout                    : 1;
+} stts751_smbus_timeout_t;
+
+#define STTS751_PRODUCT_ID                  0xFDU
+#define STTS751_MANUFACTURER_ID             0xFEU
+#define STTS751_REVISION_ID                 0xFFU
+
+/**
+  * @defgroup STTS751_Register_Union
+  * @brief    This union group all the registers that has a bitfield
+  *           description.
+  *           This union is useful but not need by the driver.
+  *
+  *           REMOVING this union you are compliant with:
+  *           MISRA-C 2012 [Rule 19.2] -> " Union are not allowed "
+  *
+  * @{
+  *
+  */
+typedef union{
+  stts751_status_t                       status;
+  stts751_configuration_t                configuration;
+  stts751_conversion_rate_t              conversion_rate;
+  stts751_smbus_timeout_t                smbus_timeout;
+  bitwise_t                              bitwise;
+  uint8_t                                byte;
 } stts751_reg_t;
 
-/** @addtogroup STTS751_Exported_Functions
- * @{
- */
-int32_t stts751_read_reg(stts751_ctx_t *ctx, uint8_t reg, uint8_t* data,
-                         uint16_t len);
-int32_t stts751_write_reg(stts751_ctx_t *ctx, uint8_t reg, uint8_t* data,
-                          uint16_t len);
 /**
   * @}
+  *
+  */
+
+int32_t stts751_read_reg(stmdev_ctx_t *ctx, uint8_t reg, uint8_t* data,
+                          uint16_t len);
+int32_t stts751_write_reg(stmdev_ctx_t *ctx, uint8_t reg, uint8_t* data,
+                           uint16_t len);
+
+extern float stts751_from_lsb_to_celsius(int16_t lsb);
+extern int16_t stts751_from_celsius_to_lsb(float celsius);
+
+typedef enum {
+  STTS751_TEMP_ODR_OFF        = 0x80,
+  STTS751_TEMP_ODR_ONE_SHOT   = 0x90,
+  STTS751_TEMP_ODR_62mHz5     = 0x00,
+  STTS751_TEMP_ODR_125mHz     = 0x01,
+  STTS751_TEMP_ODR_250mHz     = 0x02,
+  STTS751_TEMP_ODR_500mHz     = 0x03,
+  STTS751_TEMP_ODR_1Hz        = 0x04,
+  STTS751_TEMP_ODR_2Hz        = 0x05,
+  STTS751_TEMP_ODR_4Hz        = 0x06,
+  STTS751_TEMP_ODR_8Hz        = 0x07,
+  STTS751_TEMP_ODR_16Hz       = 0x08, /* 9, 10, or 11-bit resolutions only */
+  STTS751_TEMP_ODR_32Hz       = 0x09, /* 9 or 10-bit resolutions only */
+} stts751_odr_t;
+int32_t stts751_temp_data_rate_set(stmdev_ctx_t *ctx, stts751_odr_t val);
+int32_t stts751_temp_data_rate_get(stmdev_ctx_t *ctx, stts751_odr_t *val);
+
+typedef enum {
+  STTS751_9bit      = 2,
+  STTS751_10bit     = 0,
+  STTS751_11bit     = 1,
+  STTS751_12bit     = 3,
+} stts751_tres_t;
+int32_t stts751_resolution_set(stmdev_ctx_t *ctx, stts751_tres_t val);
+int32_t stts751_resolution_get(stmdev_ctx_t *ctx, stts751_tres_t *val);
+
+int32_t stts751_status_reg_get(stmdev_ctx_t *ctx, stts751_status_t *val);
+
+int32_t stts751_flag_busy_get(stmdev_ctx_t *ctx, uint8_t *val);
+
+int32_t stts751_temperature_raw_get(stmdev_ctx_t *ctx, int16_t *buff);
+
+int32_t stts751_pin_event_route_set(stmdev_ctx_t *ctx, uint8_t val);
+int32_t stts751_pin_event_route_get(stmdev_ctx_t *ctx, uint8_t *val);
+
+
+int32_t stts751_high_temperature_threshold_set(stmdev_ctx_t *ctx,
+                                               int16_t buff);
+int32_t stts751_high_temperature_threshold_get(stmdev_ctx_t *ctx,
+                                               int16_t *buff);
+
+int32_t stts751_low_temperature_threshold_set(stmdev_ctx_t *ctx,
+                                              int16_t buff);
+int32_t stts751_low_temperature_threshold_get(stmdev_ctx_t *ctx,
+                                              int16_t *buff);
+
+int32_t stts751_ota_thermal_limit_set(stmdev_ctx_t *ctx, int8_t val);
+int32_t stts751_ota_thermal_limit_get(stmdev_ctx_t *ctx, int8_t *val);
+
+int32_t stts751_ota_thermal_hyst_set(stmdev_ctx_t *ctx, int8_t val);
+int32_t stts751_ota_thermal_hyst_get(stmdev_ctx_t *ctx, int8_t *val);
+
+int32_t stts751_smbus_timeout_set(stmdev_ctx_t *ctx, uint8_t val);
+int32_t stts751_smbus_timeout_get(stmdev_ctx_t *ctx, uint8_t *val);
+
+typedef struct {
+  uint8_t product_id;
+  uint8_t manufacturer_id;
+  uint8_t revision_id;
+} stts751_id_t;
+int32_t stts751_device_id_get(stmdev_ctx_t *ctx, stts751_id_t *buff);
+
+/**
+  * @}
+  *
   */
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /*STTS751_REG_H */
-/**
-  * @}
-  */
-
-/**
-  * @}
-  */
-
-/**
-  * @}
-  */
+#endif /*STTS751_REGS_H */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

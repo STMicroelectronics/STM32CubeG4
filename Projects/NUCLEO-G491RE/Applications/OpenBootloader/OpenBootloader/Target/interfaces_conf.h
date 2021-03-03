@@ -40,7 +40,7 @@
 #define I2Cx_SDA_PIN                      GPIO_PIN_8
 #define I2Cx_SDA_PIN_PORT                 GPIOA
 
-#define I2C_ADDRESS                       0x000000BEU
+#define I2C_ADDRESS                       (0x0000005FU << 0x01U)
 #define OPENBL_I2C_TIMEOUT                0x011A91F8U
 #define I2C_TIMING                        0x00800000U
 

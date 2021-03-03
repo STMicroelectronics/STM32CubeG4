@@ -196,9 +196,9 @@ int32_t  BSP_LCD_SetPixel(uint32_t Instance, uint32_t Xpos, uint32_t Ypos, uint3
 int32_t  BSP_LCD_GetPixel(uint32_t Instance, uint32_t Xpos, uint32_t Ypos, uint32_t *Color);
 
 /* LCD specific APIs */
-int32_t BSP_LCD_WriteReg(uint16_t Reg, uint8_t *pData, uint16_t Length);
-int32_t BSP_LCD_ReadReg(uint16_t Reg, uint8_t *pData, uint16_t Length);
-int32_t BSP_LCD_SendData(uint8_t *pData, uint16_t Length);
+int32_t BSP_LCD_WriteReg(uint16_t Reg, uint8_t *pData, uint32_t Length);
+int32_t BSP_LCD_ReadReg(uint16_t Reg, uint8_t *pData, uint32_t Length);
+int32_t BSP_LCD_SendData(uint8_t *pData, uint32_t Length);
 
 /**
   * @}

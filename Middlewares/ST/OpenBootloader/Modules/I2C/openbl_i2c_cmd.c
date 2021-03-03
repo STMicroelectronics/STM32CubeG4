@@ -9,10 +9,10 @@
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
-  * This software component is licensed by ST under Image license SLA0044,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                       www.st.com/SLA0044
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
   *
   ******************************************************************************
   */
@@ -707,7 +707,7 @@ static void OPENBL_I2C_WriteUnprotect(void)
 }
 
 /**
- * @brief  This function is used to write in to device memory in non strech mode.
+ * @brief  This function is used to write in to device memory in non stretch mode.
  * @note   In this mode, when the write memory operation is executed the device
  *         send busy bytes to the host
  * @retval None.
@@ -795,7 +795,7 @@ static void OPENBL_I2C_NonStretchWriteMemory(void)
 }
 
 /**
- * @brief  This function is used to erase a memory in non strech mode.
+ * @brief  This function is used to erase a memory in non stretch mode.
  * @note   In this mode, when the erase memory operation is executed the device
  *         send busy bytes to the host
  * @retval None.
@@ -953,7 +953,7 @@ static void OPENBL_I2C_NonStretchEraseMemory(void)
 }
 
 /**
- * @brief  This function is used to enable write protect in non strech mode.
+ * @brief  This function is used to enable write protect in non stretch mode.
  * @note   In this mode, when enabling the write protection the device
  *         send busy bytes to the host
  * @retval None.
@@ -1045,7 +1045,7 @@ static void OPENBL_I2C_NonStretchWriteProtect(void)
 }
 
 /**
- * @brief  This function is used to disable write protect in non strech mode.
+ * @brief  This function is used to disable write protect in non stretch mode.
  * @note   In this mode, when disabling the write protection the device
  *         send busy bytes to the host
  * @retval None.
@@ -1079,7 +1079,7 @@ static void OPENBL_I2C_NonStretchWriteUnprotect(void)
 }
 
 /**
- * @brief  This function is used to enable readout protection in non strech mode.
+ * @brief  This function is used to enable readout protection in non stretch mode.
  * @note   In this mode, when enabling the readout protection the device
  *         send busy bytes to the host
  * @retval None.
@@ -1109,7 +1109,7 @@ static void OPENBL_I2C_NonStretchReadoutProtect(void)
 }
 
 /**
- * @brief  This function is used to disable readout protection in non strech mode.
+ * @brief  This function is used to disable readout protection in non stretch mode.
  * @note   In this mode, when disabling the readout protection the device
  *         send busy bytes to the host.
  *         going from RDP level 1 to RDP level 0 erase all the flash,
@@ -1178,4 +1178,5 @@ static uint8_t OPENBL_I2C_GetAddress(uint32_t *pAddress)
 
   return status;
 }
+
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

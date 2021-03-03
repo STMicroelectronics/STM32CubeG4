@@ -49,6 +49,9 @@ typedef struct
   USBPD_ProductType_TypeDef VDM_ProductTypeDFP : 3; /*!< Product type DFP of the UUT based on @ref USBPD_ProductType_TypeDef */
   uint32_t Reserved3                        : 7; /*!< Reserved bits */
 } USBPD_VDM_SettingsTypeDef;
+/* USER CODE BEGIN typedef */
+
+/* USER CODE END typedef */
 
 /* Exported define -----------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
@@ -57,6 +60,8 @@ typedef struct
 /* Exported functions --------------------------------------------------------*/
 USBPD_StatusTypeDef USBPD_VDM_UserInit(uint8_t PortNum);
 void                USBPD_VDM_UserReset(uint8_t PortNum);
+/* USER CODE BEGIN Exported functions */
+/* USER CODE END Exported functions */
 
 /**
   * @}

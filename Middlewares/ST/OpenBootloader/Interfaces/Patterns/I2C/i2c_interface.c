@@ -9,21 +9,19 @@
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
-  * This software component is licensed by ST under Image license SLA0044,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                       www.st.com/SLA0044
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
   *
   ******************************************************************************
   */
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32g4xx.h"
-#include "stm32g4xx_ll_i2c.h"
-
+#include "stm32g0xx.h"
+#include "stm32g0xx_ll_i2c.h"
 #include "openbl_core.h"
 #include "openbl_i2c_cmd.h"
-
 #include "i2c_interface.h"
 #include "iwdg_interface.h"
 #include "interfaces_conf.h"
@@ -67,34 +65,23 @@ void OPENBL_I2C_Configuration(void)
 
   /* Enable all resources clocks --------------------------------------------*/
   /* Enable used GPIOx clocks */
-  __HAL_RCC_GPIOA_CLK_ENABLE();
-  __HAL_RCC_GPIOC_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /* Enable I2C clock */
-  __HAL_RCC_I2C2_CLK_ENABLE();
-
-  /* I2C pins configuration -----------------------------------------------*/
-  /*
-           +-------------+
-           |     I2C     |
-     +-----+-------------+
-     | SDA |     PA8     |
-     +-----+-------------+
-     | SCL |     PC4     |
-     +-----+-------------+ */
+  __HAL_RCC_I2C1_CLK_ENABLE();
 
   GPIO_InitStruct.Pin       = I2Cx_SCL_PIN;
   GPIO_InitStruct.Mode      = GPIO_MODE_AF_OD;
   GPIO_InitStruct.Pull      = GPIO_PULLUP;
   GPIO_InitStruct.Speed     = GPIO_SPEED_FREQ_HIGH;
-  GPIO_InitStruct.Alternate = GPIO_AF4_I2C2;
+  GPIO_InitStruct.Alternate = I2Cx_ALTERNATE;
   HAL_GPIO_Init(I2Cx_SCL_PIN_PORT, &GPIO_InitStruct);
 
   GPIO_InitStruct.Pin       = I2Cx_SDA_PIN;
   GPIO_InitStruct.Mode      = GPIO_MODE_AF_OD;
   GPIO_InitStruct.Pull      = GPIO_PULLUP;
   GPIO_InitStruct.Speed     = GPIO_SPEED_FREQ_HIGH;
-  GPIO_InitStruct.Alternate = GPIO_AF4_I2C2;
+  GPIO_InitStruct.Alternate = I2Cx_ALTERNATE;
   HAL_GPIO_Init(I2Cx_SDA_PIN_PORT, &GPIO_InitStruct);
 
   OPENBL_I2C_Init();
@@ -108,8 +95,8 @@ uint8_t OPENBL_I2C_ProtocolDetection(void)
 {
   uint8_t detected;
 
-  /* Check if the I2C2 is addressed */
-  if ((I2C2->ISR & I2C_ISR_ADDR) != 0)
+  /* Check if the I2Cx is addressed */
+  if ((I2Cx->ISR & I2C_ISR_ADDR) != 0)
   {
     detected = 1U;
   }
@@ -227,7 +214,7 @@ __ramfunc void OPENBL_I2C_WaitNack(void)
 {
   uint32_t timeout = 0U;
 
-  /* While the i2C NACK is not detected, the IWDG is refreshed, 
+  /* While the i2C NACK is not detected, the IWDG is refreshed,
   if the timeout is reached a system reset occurs */
   while ((I2Cx->ISR & I2C_ISR_NACKF) == 0)
   {
@@ -237,9 +224,8 @@ __ramfunc void OPENBL_I2C_WaitNack(void)
     if ((timeout++) >= OPENBL_I2C_TIMEOUT)
     {
       /* System Reset */
-      SCB->AIRCR  = (uint32_t)((0x5FAUL << SCB_AIRCR_VECTKEY_Pos)  |
-                               (SCB->AIRCR & SCB_AIRCR_PRIGROUP_Msk) |
-                               SCB_AIRCR_SYSRESETREQ_Msk);
+      SCB->AIRCR  = ((0x5FAUL << SCB_AIRCR_VECTKEY_Pos) |
+                     SCB_AIRCR_SYSRESETREQ_Msk);
     }
   }
 
@@ -259,9 +245,9 @@ __ramfunc void OPENBL_I2C_WaitStop(void)
 {
   uint32_t timeout = 0U;
 
-  /* While the i2C stop is not detected, refresh the IWDG, 
+  /* While the i2C stop is not detected, refresh the IWDG,
   if the timeout is reached a system reset occurs */
-  while ((I2C2->ISR & I2C_ISR_STOPF) == 0)
+  while ((I2Cx->ISR & I2C_ISR_STOPF) == 0)
   {
     /* Refresh IWDG: reload counter */
     IWDG->KR = IWDG_KEY_RELOAD;
@@ -269,9 +255,8 @@ __ramfunc void OPENBL_I2C_WaitStop(void)
     if ((timeout++) >= OPENBL_I2C_TIMEOUT)
     {
       /* System Reset */
-      SCB->AIRCR  = (uint32_t)((0x5FAUL << SCB_AIRCR_VECTKEY_Pos)  |
-                               (SCB->AIRCR & SCB_AIRCR_PRIGROUP_Msk) |
-                               SCB_AIRCR_SYSRESETREQ_Msk);
+      SCB->AIRCR  = ((0x5FAUL << SCB_AIRCR_VECTKEY_Pos) |
+                     SCB_AIRCR_SYSRESETREQ_Msk);
     }
   }
 
@@ -300,6 +285,7 @@ void OPENBL_I2C_SendAcknowledgeByte(uint8_t Byte)
 
 /**
   * @brief  This function is used to send busy byte through I2C pipe.
+  * @param
   * @retval None.
   */
 #if defined (__CC_ARM)
@@ -325,9 +311,8 @@ __ramfunc void OPENBL_I2C_SendBusyByte(void)
       if ((timeout++) >= OPENBL_I2C_TIMEOUT)
       {
         /* System Reset */
-        SCB->AIRCR  = (uint32_t)((0x5FAUL << SCB_AIRCR_VECTKEY_Pos)  |
-                                 (SCB->AIRCR & SCB_AIRCR_PRIGROUP_Msk) |
-                                 SCB_AIRCR_SYSRESETREQ_Msk);
+        SCB->AIRCR  = ((0x5FAUL << SCB_AIRCR_VECTKEY_Pos) |
+                       SCB_AIRCR_SYSRESETREQ_Msk);
       }
     }
 
@@ -341,4 +326,5 @@ __ramfunc void OPENBL_I2C_SendBusyByte(void)
   /* Wait until STOP byte is detected*/
   OPENBL_I2C_WaitStop();
 }
+
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

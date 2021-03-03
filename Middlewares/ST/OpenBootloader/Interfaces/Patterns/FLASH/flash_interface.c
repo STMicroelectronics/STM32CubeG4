@@ -6,30 +6,32 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
-  * This software component is licensed by ST under Image license SLA0044,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                       www.st.com/SLA0044
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
   *
   ******************************************************************************
   */
 
 /* Includes ------------------------------------------------------------------*/
 #include "platform.h"
-
 #include "openbl_mem.h"
-
 #include "app_openbootloader.h"
 #include "common_interface.h"
 #include "flash_interface.h"
 
 /* Private typedef -----------------------------------------------------------*/
+Send_BusyByte_Func *BusyByteCallback = 0;
+
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
+uint32_t Flash_BusyState = FLASH_BUSY_STATE_DISABLED;
+
 /* Private function prototypes -----------------------------------------------*/
 static void OPENBL_FLASH_ProgramDoubleWord(uint32_t Address, uint64_t Data);
 static ErrorStatus OPENBL_FLASH_EnableWriteProtection(uint8_t *ListOfPages, uint32_t Length);
@@ -190,38 +192,24 @@ void OPENBL_FLASH_SetReadOutProtectionLevel(uint32_t Level)
     /* Unlock the FLASH registers & Option Bytes registers access */
     OPENBL_FLASH_OB_Unlock();
 
-    /* Clear error programming flags */
-    __HAL_FLASH_CLEAR_FLAG(FLASH_FLAG_ALL_ERRORS);
-
     /* Change the RDP level */
     HAL_FLASHEx_OBProgram(&flash_ob);
 
     /* Reset PCROP registers if RDP level 0 is set */
     if (Level == OB_RDP_LEVEL0)
     {
-      flash_ob.OptionType      = OPTIONBYTE_PCROP;
-      flash_ob.PCROPConfig     = FLASH_BANK_1;
-      flash_ob.PCROPStartAddr  = 0x08007FFFU;
-      flash_ob.PCROPEndAddr    = 0x08000000U;
-
+      flash_ob.OptionType = OPTIONBYTE_PCROP;
+      flash_ob.PCROPConfig = FLASH_BANK_1;
+      flash_ob.PCROP1AStartAddr = 0x08007FFFU;
+      flash_ob.PCROP1AEndAddr = 0x08000000U;
       /* Change PCROP1 registers */
       HAL_FLASHEx_OBProgram(&flash_ob);
-
-      flash_ob.PCROPStartAddr  = 0x08047FFFU;
-      flash_ob.PCROPEndAddr    = 0x08040000U;
       flash_ob.PCROPConfig = FLASH_BANK_2;
-
+      flash_ob.PCROP2AStartAddr = 0x08047FFFU;
+      flash_ob.PCROP2AEndAddr = 0x08040000U;
       /* Change PCROP2 registers */
       HAL_FLASHEx_OBProgram(&flash_ob);
     }
-    else
-    {
-      /* Nothing to do */
-    }
-  }
-  else
-  {
-    /* Nothing to do */
   }
 }
 
@@ -274,10 +262,7 @@ ErrorStatus OPENBL_FLASH_MassErase(uint8_t *p_Data, uint32_t DataLength)
   /* Unlock the flash memory for erase operation */
   OPENBL_FLASH_Unlock();
 
-  /* Clear error programming flags */
-  __HAL_FLASH_CLEAR_FLAG(FLASH_FLAG_ALL_ERRORS);
-
-  erase_init_struct.TypeErase = FLASH_TYPEERASE_MASSERASE;
+  erase_init_struct.TypeErase = FLASH_TYPEERASE_MASS;
 
   if (DataLength >= 2)
   {
@@ -348,7 +333,7 @@ ErrorStatus OPENBL_FLASH_Erase(uint8_t *p_Data, uint32_t DataLength)
   OPENBL_FLASH_Unlock();
 
   /* Clear error programming flags */
-  __HAL_FLASH_CLEAR_FLAG(FLASH_FLAG_ALL_ERRORS);
+  __HAL_FLASH_CLEAR_FLAG(FLASH_SR_ERRORS);
 
   pages_number  = (uint32_t)(*(uint16_t *)(p_Data));
   p_Data       += 2;
@@ -393,21 +378,44 @@ ErrorStatus OPENBL_FLASH_Erase(uint8_t *p_Data, uint32_t DataLength)
     p_Data += 2;
   }
 
-  /* Lock the Flash to disable the flash control register access */
-  OPENBL_FLASH_Lock();
-
   if (errors > 0)
   {
     status = ERROR;
   }
   else
   {
+    /* Lock the Flash to disable the flash control register access */
+    OPENBL_FLASH_Lock();
     status = SUCCESS;
   }
 
   return status;
 }
 
+
+/**
+ * @brief  This function is used to Set Flash busy state variable to activate busy state sending
+ *         during flash operations
+ * @retval None.
+*/
+void OPENBL_Enable_BusyState_Sending(Send_BusyByte_Func *pCallback)
+{
+  /* Enable Flash busy state sending */
+  Flash_BusyState = FLASH_BUSY_STATE_ENABLED;
+
+  /* Update Wait Callback pointer */
+  BusyByteCallback = pCallback;
+}
+
+/**
+ * @brief  This function is used to disable the send of busy state in I2C non stretch mode.
+ * @retval None.
+*/
+void OPENBL_Disable_BusyState_Sending(void)
+{
+  /* Disable Flash busy state sending */
+  Flash_BusyState = FLASH_BUSY_STATE_DISABLED;
+}
 /* Private functions ---------------------------------------------------------*/
 
 /**
@@ -418,9 +426,6 @@ ErrorStatus OPENBL_FLASH_Erase(uint8_t *p_Data, uint32_t DataLength)
   */
 static void OPENBL_FLASH_ProgramDoubleWord(uint32_t Address, uint64_t Data)
 {
-  /* Clear all FLASH errors flags before starting write operation */
-  __HAL_FLASH_CLEAR_FLAG(FLASH_FLAG_ALL_ERRORS);
-
   HAL_FLASH_Program(FLASH_TYPEPROGRAM_DOUBLEWORD, Address, Data);
 }
 
@@ -442,9 +447,6 @@ static ErrorStatus OPENBL_FLASH_EnableWriteProtection(uint8_t *ListOfPages, uint
   /* Unlock the FLASH registers & Option Bytes registers access */
   OPENBL_FLASH_OB_Unlock();
 
-  /* Clear error programming flags */
-  __HAL_FLASH_CLEAR_FLAG(FLASH_FLAG_ALL_ERRORS);
-
   flash_ob.OptionType = OPTIONBYTE_WRP;
 
   /* Write protection of bank 1 area WRPA 1 area */
@@ -453,7 +455,7 @@ static ErrorStatus OPENBL_FLASH_EnableWriteProtection(uint8_t *ListOfPages, uint
     wrp_start_offset = *(ListOfPages);
     wrp_end_offset   = *(ListOfPages + 1);
 
-    flash_ob.WRPArea        = OB_WRPAREA_BANK1_AREAA;
+    flash_ob.WRPArea        = OB_WRPAREA_ZONE_A;
     flash_ob.WRPStartOffset = wrp_start_offset;
     flash_ob.WRPEndOffset   = wrp_end_offset;
 
@@ -466,7 +468,7 @@ static ErrorStatus OPENBL_FLASH_EnableWriteProtection(uint8_t *ListOfPages, uint
     wrp_start_offset = *(ListOfPages + 2);
     wrp_end_offset   = *(ListOfPages + 3);
 
-    flash_ob.WRPArea        = OB_WRPAREA_BANK1_AREAB;
+    flash_ob.WRPArea        = OB_WRPAREA_ZONE_B;
     flash_ob.WRPStartOffset = wrp_start_offset;
     flash_ob.WRPEndOffset   = wrp_end_offset;
 
@@ -479,7 +481,7 @@ static ErrorStatus OPENBL_FLASH_EnableWriteProtection(uint8_t *ListOfPages, uint
     wrp_start_offset = *(ListOfPages + 4);
     wrp_end_offset   = *(ListOfPages + 5);
 
-    flash_ob.WRPArea        = OB_WRPAREA_BANK2_AREAA;
+    flash_ob.WRPArea        = OB_WRPAREA_ZONE2_A;
     flash_ob.WRPStartOffset = wrp_start_offset;
     flash_ob.WRPEndOffset   = wrp_end_offset;
 
@@ -492,7 +494,7 @@ static ErrorStatus OPENBL_FLASH_EnableWriteProtection(uint8_t *ListOfPages, uint
     wrp_start_offset = *(ListOfPages + 6);
     wrp_end_offset   = *(ListOfPages + 7);
 
-    flash_ob.WRPArea        = OB_WRPAREA_BANK2_AREAB;
+    flash_ob.WRPArea        = OB_WRPAREA_ZONE2_B;
     flash_ob.WRPStartOffset = wrp_start_offset;
     flash_ob.WRPEndOffset   = wrp_end_offset;
 
@@ -518,34 +520,31 @@ static ErrorStatus OPENBL_FLASH_DisableWriteProtection(void)
   /* Unlock the FLASH registers & Option Bytes registers access */
   OPENBL_FLASH_OB_Unlock();
 
-  /* Clear error programming flags */
-  __HAL_FLASH_CLEAR_FLAG(FLASH_FLAG_ALL_ERRORS);
-
   flash_ob.OptionType = OPTIONBYTE_WRP;
 
   /* Disable write protection of bank 1 area WRPA 1 area */
-  flash_ob.WRPArea        = OB_WRPAREA_BANK1_AREAA;
+  flash_ob.WRPArea        = OB_WRPAREA_ZONE_A;
   flash_ob.WRPStartOffset = wrp_start_offset;
   flash_ob.WRPEndOffset   = wrp_end_offset;
 
   HAL_FLASHEx_OBProgram(&flash_ob);
 
   /* Disable write protection of bank 1 area WRPA 2 area */
-  flash_ob.WRPArea        = OB_WRPAREA_BANK1_AREAB;
+  flash_ob.WRPArea        = OB_WRPAREA_ZONE_B;
   flash_ob.WRPStartOffset = wrp_start_offset;
   flash_ob.WRPEndOffset   = wrp_end_offset;
 
   HAL_FLASHEx_OBProgram(&flash_ob);
 
   /* Disable write protection of bank 2 area WRPB 1 area */
-  flash_ob.WRPArea        = OB_WRPAREA_BANK2_AREAA;
+  flash_ob.WRPArea        = OB_WRPAREA_ZONE2_A;
   flash_ob.WRPStartOffset = wrp_start_offset;
   flash_ob.WRPEndOffset   = wrp_end_offset;
 
   HAL_FLASHEx_OBProgram(&flash_ob);
 
   /* Disable write protection of bank 2 area WRPB 2 area */
-  flash_ob.WRPArea        = OB_WRPAREA_BANK2_AREAB;
+  flash_ob.WRPArea        = OB_WRPAREA_ZONE2_B;
   flash_ob.WRPStartOffset = wrp_start_offset;
   flash_ob.WRPEndOffset   = wrp_end_offset;
 

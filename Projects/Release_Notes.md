@@ -58,7 +58,141 @@ The exhaustive list of projects is provided in this table:
 # Update History
 
 ::: {.collapse}
-<input type="checkbox" id="collapse-section4" checked aria-hidden="true">
+<input type="checkbox" id="collapse-section5" aria-hidden="true">
+<label for="collapse-section5" aria-hidden="true">V1.4.0 / 28-January-2021</label>
+<div>
+
+## Main Changes
+
+### Maintenance release
+
+Maintenance release of STM32CubeG4 (STM32Cube for STM32G4 Series) Firmware projects supporting STM32G431xx/31xx/71xx/73xx/74xx/91xx devices.
+
+ Headline
+ ----------------------------------------------------------
+  - General updates to fix known defects and enhancements implementation.
+  - General updates to be compliant with CubeMx **6.2.0** version.
+  - Support of new ARM compiler Keil V6 (AC5-like warnings mode).
+  - Added Uart example showing use of HAL UART enhanced reception services (ReceptionToIdle) API for G474RE-Nucleo and G431RB-Nucleo boards
+  - Updated examples and applications to avoid clearing DMA using global flag GIFx.
+  - Updated RAM size in the flash and SRAM files .icf for all stm32G4 categories.
+  - USBPD Applications: general corrections for conformance testing
+    - Provided external API in CAD to allow application to know which RP present in Sink.
+	- Increased delay before reading CC values after VCC activation of TCPP01.
+	- Updated to fix RP resistor which shall be reset to the default value during the HardReset AMS.
+	- Updated FTL files to allow adding more user code.
+  - NUCLEO-G491RE:
+    - Fix known limitations :
+      - OpenBootloader application for NUCLEO-G491RE CubeIDE project is not provided.
+- For the complete list of changes, please refer to the release notes of each firmware component
+
+  : Additional features
+
+
+## Contents
+
+### Projects
+ 
+  Board                     Project category          Version     License                                                          Path
+  ------------------------- -----------------------   ----------- ------------------------------------------------------------     --------------------------------------------------------------------------------------------------------------------
+  NUCLEO-G431KB             Demonstrations             v1.4.0     [SLA0044](http://www.st.com/SLA0044)                             Projects/NUCLEO-G431KB/Demonstrations
+  NUCLEO-G431KB             Applications               v1.4.0     [SLA0044](http://www.st.com/SLA0044)                             Projects/NUCLEO-G431KB/Applications
+  NUCLEO-G431KB             HAL Examples               v1.4.0     [BSD 3-Clause](https://opensource.org/licenses/BSD-3-Clause)     Projects/NUCLEO-G431KB/Examples
+  NUCLEO-G431KB             HAL Templates              v1.4.0     [BSD 3-Clause](https://opensource.org/licenses/BSD-3-Clause)     Projects/NUCLEO-G431KB/Templates
+  NUCLEO-G431KB             LL Templates               v1.4.0     [BSD 3-Clause](https://opensource.org/licenses/BSD-3-Clause)     Projects/NUCLEO-G431KB/Templates_LL
+  NUCLEO-G431RB             Applications               v1.4.0     [SLA0044](http://www.st.com/SLA0044)                             Projects/NUCLEO-G431RB/Applications
+  NUCLEO-G431RB             Demonstrations             v1.4.0     [SLA0044](http://www.st.com/SLA0044)                             Projects/NUCLEO-G431RB/Demonstrations
+  NUCLEO-G431RB             HAL Examples               v1.4.0     [BSD 3-Clause](https://opensource.org/licenses/BSD-3-Clause)     Projects/NUCLEO-G431RB/Examples
+  NUCLEO-G431RB             LL Examples                v1.4.0     [BSD 3-Clause](https://opensource.org/licenses/BSD-3-Clause)     Projects/NUCLEO-G431RB/Examples_LL
+  NUCLEO-G431RB             MIX HAL/LL Examples        v1.4.0     [BSD 3-Clause](https://opensource.org/licenses/BSD-3-Clause)     Projects/NUCLEO-G431RB/Examples_MIX
+  NUCLEO-G431RB             HAL Templates              v1.4.0     [BSD 3-Clause](https://opensource.org/licenses/BSD-3-Clause)     Projects/NUCLEO-G431RB/Templates
+  NUCLEO-G431RB             LL Templates               v1.4.0     [BSD 3-Clause](https://opensource.org/licenses/BSD-3-Clause)     Projects/NUCLEO-G431RB/Templates_LL
+  NUCLEO-G474RE             Applications               v1.4.0     [SLA0044](http://www.st.com/SLA0044)                             Projects/NUCLEO-G474RE/Applications
+  NUCLEO-G474RE             Demonstrations             v1.4.0     [SLA0044](http://www.st.com/SLA0044)                             Projects/NUCLEO-G474RE/Demonstrations
+  NUCLEO-G474RE             HAL Examples               v1.4.0     [BSD 3-Clause](https://opensource.org/licenses/BSD-3-Clause)     Projects/NUCLEO-G474RE/Examples
+  NUCLEO-G474RE             LL Examples                v1.4.0     [BSD 3-Clause](https://opensource.org/licenses/BSD-3-Clause)     Projects/NUCLEO-G474RE/Examples_LL
+  NUCLEO-G474RE             MIX HAL/LL Examples        v1.4.0     [BSD 3-Clause](https://opensource.org/licenses/BSD-3-Clause)     Projects/NUCLEO-G474RE/Examples_MIX
+  NUCLEO-G474RE             HAL Templates              v1.4.0     [BSD 3-Clause](https://opensource.org/licenses/BSD-3-Clause)     Projects/NUCLEO-G474RE/Templates
+  NUCLEO-G474RE             LL Templates               v1.4.0     [BSD 3-Clause](https://opensource.org/licenses/BSD-3-Clause)     Projects/NUCLEO-G474RE/Templates_LL
+  STM32G474E-EVAL           Applications               v1.4.0     [SLA0044](http://www.st.com/SLA0044)                             Projects/STM32G474E-EVAL/Applications
+  STM32G474E-EVAL           Demonstrations             v1.4.0     [SLA0044](http://www.st.com/SLA0044)                             Projects/STM32G474E-EVAL/Demonstrations
+  STM32G474E-EVAL           HAL Examples               v1.4.0     [BSD 3-Clause](https://opensource.org/licenses/BSD-3-Clause)     Projects/STM32G474E-EVAL/Examples
+  STM32G474E-EVAL           HAL Templates              v1.4.0     [BSD 3-Clause](https://opensource.org/licenses/BSD-3-Clause)     Projects/STM32G474E-EVAL/Templates
+  STM32G474E-EVAL           LL Templates               v1.4.0     [BSD 3-Clause](https://opensource.org/licenses/BSD-3-Clause)     Projects/STM32G474E-EVAL/Templates_LL
+  B-G474E-DPOW1             Applications               v1.3.0     [SLA0044](http://www.st.com/SLA0044)                             Projects/B-G474E-DPOW1/Applications
+  B-G474E-DPOW1             Demonstrations             v1.3.0     [SLA0044](http://www.st.com/SLA0044)                             Projects/B-G474E-DPOW1/Demonstrations
+  B-G474E-DPOW1             HAL Examples               v1.3.0     [BSD 3-Clause](https://opensource.org/licenses/BSD-3-Clause)     Projects/B-G474E-DPOW1/Examples
+  B-G474E-DPOW1             MIX HAL/LL Examples        v1.3.0     [BSD 3-Clause](https://opensource.org/licenses/BSD-3-Clause)     Projects/B-G474E-DPOW1/Examples_MIX
+  B-G474E-DPOW1             HAL Templates              v1.3.0     [BSD 3-Clause](https://opensource.org/licenses/BSD-3-Clause)     Projects/B-G474E-DPOW1/Templates
+  B-G474E-DPOW1             LL Templates               v1.3.0     [BSD 3-Clause](https://opensource.org/licenses/BSD-3-Clause)     Projects/B-G474E-DPOW1/Templates_LL  
+    
+  : Projects  :  
+  
+
+\
+
+
+## Known Limitations
+
+
+## Development Toolchains and Compilers
+
+
+  Name                                                                 Version                                             
+  ------------------------------------------------------------------- -------------------------------------------------    
+  IAR Embedded Workbench for ARM (EWARM)toolchain                      **V8.50.4**                                             
+  RealView Microcontroller DevelopmentKit (MDK-ARM) toolchain          **V5.31**                                             
+  System Workbench for STM32 (SW4STM32)toolchain                       **V1.6.0**                                              
+
+  : Development Toolchains :
+
+## Supported Devices and boards
+
+  Name                                                     
+  -------------------------------------------------------- 
+  STM32G431xx, STM32G441xx
+  STM32G471xx
+  STM32G473xx, STM32G483xx
+  STM32G474xx, STM32G484xx
+  STM32G491xx, STM32G4A1xx
+
+  : Supported Devices :
+
+
+  Name                                                     Reference
+  -------------------------------------------------------- -----------------------------------------------------------
+  NUCLEO-G431KB Nucleo32 kit                               MB1430 A-01
+  NUCLEO-G431RB Nucleo kit                                 MB1367 C-01
+  NUCLEO-G474RE Nucleo kit                                 MB1367 C-01
+  STM32G474E-EVAL Evaluation Board                         MB1397 B-01
+  B-G474E-DPOW1 Discovery Kit                              MB1428 B-01
+  NUCLEO-G491RE Nucleo kit                                 MB1367-G491RE C-04
+
+
+  : Supported Boards :
+  
+## Backward Compatibility
+
+None
+
+## Other compatibilities
+
+This software release is compatible with:
+
+   - STM32CubeMX V6.2.0
+</div>
+:::
+
+
+
+
+
+
+
+
+
+::: {.collapse}
+<input type="checkbox" id="collapse-section4"  aria-hidden="true">
 <label for="collapse-section4" aria-hidden="true">V1.2.0 / 14-February-2020</label>
 <div>
 
@@ -177,7 +311,7 @@ This software release is compatible with:
 :::
 
 ::: {.collapse}
-<input type="checkbox" id="collapse-section3" checked aria-hidden="true">
+<input type="checkbox" id="collapse-section3" aria-hidden="true">
 <label for="collapse-section3" aria-hidden="true">V1.1.0 / 28-June-2019</label>
 <div>
 

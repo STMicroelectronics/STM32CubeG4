@@ -9,21 +9,19 @@
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
-  * This software component is licensed by ST under Image license SLA0044,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                       www.st.com/SLA0044
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
   *
   ******************************************************************************
   */
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32g4xx.h"
-#include "stm32g4xx_ll_i2c.h"
-
+#include "stm32g0xx.h"
+#include "stm32g0xx_ll_i2c.h"
 #include "openbl_core.h"
 #include "openbl_i2c_cmd.h"
-
 #include "i2c_interface.h"
 #include "iwdg_interface.h"
 #include "interfaces_conf.h"
@@ -59,8 +57,7 @@ void OPENBL_I2C_Configuration(void)
  */
 uint8_t OPENBL_I2C_ProtocolDetection(void)
 {
-  uint8_t detected = 0;
-
+  uint8_t detected;
   return detected;
 }
 
@@ -71,7 +68,6 @@ uint8_t OPENBL_I2C_ProtocolDetection(void)
 uint8_t OPENBL_I2C_GetCommandOpcode(void)
 {
   uint8_t command_opc = 0x0U;
-
   return command_opc;
 }
 
@@ -81,6 +77,7 @@ uint8_t OPENBL_I2C_GetCommandOpcode(void)
   */
 uint8_t OPENBL_I2C_ReadByte(void)
 {
+  return LL_I2C_ReceiveData8(I2Cx);
 }
 
 /**
@@ -106,7 +103,7 @@ void OPENBL_I2C_WaitAddress(void)
   */
 #if defined (__CC_ARM)
 void OPENBL_I2C_WaitNack(void)
-#else 
+#else
 __ramfunc void OPENBL_I2C_WaitNack(void)
 #endif /* (__CC_ARM) */
 {
@@ -134,6 +131,7 @@ void OPENBL_I2C_SendAcknowledgeByte(uint8_t Byte)
 
 /**
   * @brief  This function is used to send busy byte through I2C pipe.
+  * @param
   * @retval None.
   */
 #if defined (__CC_ARM)
@@ -143,4 +141,5 @@ __ramfunc void OPENBL_I2C_SendBusyByte(void)
 #endif /* (__CC_ARM) */
 {
 }
+
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

@@ -46,11 +46,20 @@
   */
 
 /* enumeration of the different power status available for VBUS */
-typedef enum{
+typedef enum
+{
   USBPD_PWR_BELOWVSAFE0V,
   USBPD_PWR_VSAFE5V,
   USBPD_PWR_SNKDETACH
 } USBPD_VBUSPOWER_STATUS;
+
+/* Enumeration of the different errors detected by power IF */
+typedef enum{
+  USBPD_PWR_IF_OTHER        = 0U,
+  USBPD_PWR_IF_NMI          = 2U,
+  USBPD_PWR_IF_HARD_FAULT   = 3U,
+  USBPD_PWR_IF_OVER_CURRENT = 4U,
+} USBPD_PWR_IF_ERROR;
 
 /* Macros used to convert values into PDO representation */
 #define PWR_V_20MV(_V_)        ((uint16_t)(( (_V_) * 1000) / 20))   /* From Volt to 20mV multiples      */
@@ -74,11 +83,13 @@ typedef enum{
   */
 
 /* Exported variables --------------------------------------------------------*/
+/* USER CODE BEGIN variables */
+
+/* USER CODE END variables */
 /* Exported functions --------------------------------------------------------*/
 /** @defgroup STM32_USBPD_APPLICATION_POWER_IF_Exported_Functions USBPD PWR IF Exported Functions
   * @{
   */
-
 /**
   * @brief  Initialize structures and variables related to power board profiles
   *         used by Sink and Source, for all available ports.
@@ -144,7 +155,14 @@ void USBPD_PWR_IF_GetPortPDOs(uint8_t PortNum, USBPD_CORE_DataInfoType_TypeDef D
 USBPD_StatusTypeDef USBPD_PWR_IF_SearchRequestedPDO(uint8_t PortNum, uint32_t RdoPosition, uint32_t *Pdo);
 
 /**
-  * @brief  the function is called in case of critical issue is detected to switch in safety mode.
+  * @brief  Function called in case of critical issue is detected to switch in safety mode.
+  * @param  ErrorType Type of error detected by monitoring (based on @ref USBPD_PWR_IF_ERROR)
+  * @retval None
+  */
+void USBPD_PWR_IF_AlarmType(USBPD_PWR_IF_ERROR ErrorType);
+
+/**
+  * @brief  Function called in case of critical issue is detected to switch in safety mode.
   * @retval None
   */
 void USBPD_PWR_IF_Alarm(void);
@@ -171,6 +189,9 @@ void USBPD_PWR_IF_UpdateVbusThreshold(uint8_t PortNum);
   */
 void USBPD_PWR_IF_ResetVbusThreshold(uint8_t PortNum);
 
+/* USER CODE BEGIN Exported Functions */
+
+/* USER CODE END Exported Functions */
 /**
   * @}
   */

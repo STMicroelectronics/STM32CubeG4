@@ -30,12 +30,10 @@
 /* USER CODE END 1 */
 
 /* Private variables ---------------------------------------------------------*/
-const uint8_t HWBoardVersionName[] = "STM32G474E-EVAL";
-const uint8_t PDTypeName[] = "MB1397B";
+#define BSP_BOARD_NAME  "STM32G474E-EVAL";
+#define BSP_BOARD_ID    "MB1397B";
 
 /* Private functions ---------------------------------------------------------*/
-static const uint8_t*          GetHWBoardVersionName(void);
-static const uint8_t*          GetPDTypeName(void);
 
 /* USER CODE BEGIN 2 */
 /* USER CODE END 2 */
@@ -54,7 +52,7 @@ void MX_USBPD_Init(void)
   }
 
   /* Initialize GUI before retrieving PDO from RAM */
-  GUI_Init(GetHWBoardVersionName, GetPDTypeName, HW_IF_PWR_GetVoltage, HW_IF_PWR_GetCurrent);
+  GUI_Init(BSP_GetBoardName, BSP_GetBoardID, HW_IF_PWR_GetVoltage, HW_IF_PWR_GetCurrent);
 
   /* Initialise the DPM application */
   if (USBPD_OK != USBPD_DPM_UserInit())
@@ -77,21 +75,21 @@ void MX_USBPD_Init(void)
 
 }
 /**
-  * @brief  This method returns HW board version name
-  * @retval HW Board version name
+  * @brief  This method returns the board name
+  * @retval pointer to the board name string
   */
-static const uint8_t* GetHWBoardVersionName(void)
+__weak const uint8_t* BSP_GetBoardName(void)
 {
-  return HWBoardVersionName;
+  return (const uint8_t*)BSP_BOARD_NAME;
 }
 
 /**
-  * @brief  This method returns HW PD Type name
-  * @retval HW Board version name
+  * @brief  This method returns the board ID
+  * @retval pointer to the board ID string
   */
-static const uint8_t* GetPDTypeName(void)
+__weak const uint8_t* BSP_GetBoardID(void)
 {
-  return PDTypeName;
+  return (const uint8_t*)BSP_BOARD_ID;
 }
 
 /* USER CODE BEGIN 4 */

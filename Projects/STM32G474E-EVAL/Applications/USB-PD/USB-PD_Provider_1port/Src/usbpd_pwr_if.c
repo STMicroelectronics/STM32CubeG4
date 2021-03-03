@@ -24,7 +24,6 @@
 /* Includes ------------------------------------------------------------------*/
 #include "usbpd_pwr_if.h"
 #include "usbpd_hw_if.h"
-#include "usbpd_pwr_if.h"
 #include "usbpd_dpm_core.h"
 #include "usbpd_dpm_conf.h"
 #include "usbpd_pdo_defs.h"
@@ -166,7 +165,7 @@ USBPD_StatusTypeDef USBPD_PWR_IF_VBUSEnable(uint8_t PortNum)
 }
 
 /**
-  * @brief  Disbale VBUS/VCONN the power on a specified port
+  * @brief  Disable VBUS/VCONN the power on a specified port
   * @param  PortNum Port number
   * @retval USBPD status
   */
@@ -269,6 +268,18 @@ USBPD_StatusTypeDef USBPD_PWR_IF_SearchRequestedPDO(uint8_t PortNum, uint32_t Rd
 }
 
 /**
+  * @brief  Function called in case of critical issue is detected to switch in safety mode.
+  * @param  ErrorType Type of error detected by monitoring (based on @ref USBPD_PWR_IF_ERROR)
+  * @retval None
+  */
+void USBPD_PWR_IF_AlarmType(USBPD_PWR_IF_ERROR ErrorType)
+{
+/* USER CODE BEGIN USBPD_PWR_IF_AlarmType */
+
+/* USER CODE END USBPD_PWR_IF_AlarmType */
+}
+
+/**
   * @brief  the function is called in case of critical issue is detected to switch in safety mode.
   * @retval None
   */
@@ -331,6 +342,19 @@ void USBPD_PWR_IF_ResetVbusThreshold(uint8_t PortNum)
 /* USER CODE END USBPD_PWR_IF_ResetVbusThreshold */
 }
 
+/* USER CODE BEGIN USBPD_USER_EXPORTED_FUNCTIONS_Definition */
+
+/* USER CODE END USBPD_USER_EXPORTED_FUNCTIONS_Definition */
+/**
+  * @}
+  */
+
+/** @addtogroup STM32_USBPD_APPLICATION_POWER_IF_Private_Functions
+  * @{
+  */
+/* USER CODE BEGIN USBPD_USER_PRIVATE_FUNCTIONS_Definition */
+
+/* USER CODE END USBPD_USER_PRIVATE_FUNCTIONS_Definition */
 /**
   * @}
   */

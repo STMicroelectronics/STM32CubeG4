@@ -2,7 +2,7 @@
   ******************************************************************************
   * @file    trace_emb.h
   * @author  MCD Application Team
-  * @brief   This file contains the headers of usbpd_cad.h for Cable Attach-Detach
+  * @brief   This file contains the headers of tracer_emb.h for Cable Attach-Detach
   *          controls.
   ******************************************************************************
   * @attention
@@ -25,18 +25,12 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
+#ifndef _STDINT
 #include "stdint.h"
+#endif /* _STDINT */
 #include "tracer_emb_conf.h"
 
-/** @addtogroup STM32_USBPD_LIBRARY
-  * @{
-  */
-
-/** @addtogroup USBPD_CORE
-  * @{
-  */
-
-/** @addtogroup USBPD_CORE_TRACE
+/** @addtogroup TRACER_EMB
   * @{
   */
 
@@ -52,7 +46,7 @@ extern "C" {
 /* Exported variables --------------------------------------------------------*/
 /* Exported functions --------------------------------------------------------*/
 
-/** @defgroup USBPD_CORE_TRACER_EMB_Exported_Functions USBPD CORE TRACE Exported Functions
+/** @defgroup TRACER_EMB_Exported_Functions TRACE Exported Functions
   * @{
   */
 /**
@@ -94,6 +88,8 @@ void TRACER_EMB_Lock(void);
 void TRACER_EMB_UnLock(void);
 
 
+void TRACER_EMB_SendData(void);
+
 /**
   * @brief  allocate space inside the buffer to push data
   * @param  data size
@@ -102,17 +98,19 @@ void TRACER_EMB_UnLock(void);
 int32_t TRACER_EMB_AllocateBufer(uint32_t Size);
 
 /**
-  * @brief  Main Trace TX process to push data on the media.
-  * @retval Timing
+  * @brief  enable the overflow detection
+  * @param  Data pointer on the overflow string
+  * @param  Size of the overflow string
+  * @retval 0 if success other value indicate an error.
   */
-uint32_t TRACER_EMB_TX_Process(void);
+int32_t TRACER_EMB_EnableOverFlow(const uint8_t *Data, uint8_t Size);
 
 
 void TRACER_EMB_CALLBACK_TX(void);
 
 #if TRACER_EMB_DMA_MODE == 1UL
 void TRACER_EMB_IRQHandlerDMA(void);
-#endif
+#endif  /* TRACER_EMB_DMA_MODE == 1 */
 
 void TRACER_EMB_IRQHandlerUSART(void);
 
@@ -139,24 +137,6 @@ void TRACER_EMB_LowPowerSendData(void);
 void TRACER_EMB_LowPowerSendDataComplete(void);
 
 /**
-  * @brief  function to wakeup TX process when sending a message.
-  * @retval Timing
-  */
-void TRACER_EMB_WakeUpProcess(void);
-
-/**
-  * @}
-  */
-
-/**
-  * @}
-  */
-
-/**
-  * @}
-  */
-
-/**
   * @}
   */
 
@@ -164,6 +144,6 @@ void TRACER_EMB_WakeUpProcess(void);
 }
 #endif
 
-#endif /* __USBPD_CAD_H_ */
+#endif /* __TRACER_EMB_H_ */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

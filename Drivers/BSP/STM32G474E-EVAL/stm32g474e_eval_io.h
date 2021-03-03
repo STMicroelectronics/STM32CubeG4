@@ -53,6 +53,7 @@
 typedef struct
 {
   uint32_t                    IsInitialized;     /*   IO_IsInitialized    */
+  uint32_t                    IsITEnabled;       /*   IO_it_enabled       */
   uint32_t                    Functions;         /*   Selected functions  */
 }IOEXPANDER_Ctx_t;
 
@@ -80,6 +81,12 @@ typedef struct
 #define IOEXPANDER_IO_MODE        1U
 #define IOEXPANDER_IDD_MODE       2U
 #define IOEXPANDER_TS_MODE        4U /* Not used */
+
+/**
+  * @brief IOExpander IT
+  */
+#define IO_IT_ENABLE              1U
+#define IO_IT_DISABLE             0U
 
 /**
   * @brief IOExpander instances number
@@ -197,6 +204,7 @@ int32_t BSP_IO_TogglePin(uint32_t Instance, uint32_t Pin);
 int32_t BSP_IOEXPANDER_Init(uint32_t Instance, uint32_t Functions);
 int32_t BSP_IOEXPANDER_DeInit(uint32_t Instance);
 void    BSP_IOEXPANDER_ITConfig(void);
+void    BSP_IOEXPANDER_ITDeConfig(void);
 /**
   * @}
   */

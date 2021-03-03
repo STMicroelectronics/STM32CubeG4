@@ -6,13 +6,13 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
-  * This software component is licensed by ST under Image license SLA0044,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                       www.st.com/SLA0044
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
   *
   ******************************************************************************
   */
@@ -96,7 +96,7 @@ uint32_t OPENBL_MEM_GetAddressArea(uint32_t Address)
 }
 
 /**
-  * @brief  This function returns the index of the memory that matches the address given in paramter.
+  * @brief  This function returns the index of the memory that matches the address given in parameter.
   * @param  Address This address is used determinate the index of the memory pointed by this address.
   * @return The index of the memory that corresponds to the address
   */

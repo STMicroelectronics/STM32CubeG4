@@ -81,7 +81,7 @@ USBPD_SettingsTypeDef       DPM_Settings[USBPD_PORT_COUNT] =
     .PE_PD3_Support.d =                           /*!< PD3 SUPPORT FEATURE                                              */
     {
       .PE_UnchunkSupport                = USBPD_FALSE,  /* support Unchunked mode (valid only spec revision 3.0)   */
-      .PE_FastRoleSwapSupport           = USBPD_FALSE,   /* support fast role swap only spec revsion 3.0            */
+      .PE_FastRoleSwapSupport           = USBPD_FALSE,   /* support fast role swap only spec revision 3.0            */
       .Is_GetPPSStatus_Supported        = USBPD_FALSE,  /*!< PPS message NOT supported by PE stack */
       .Is_SrcCapaExt_Supported          = USBPD_FALSE,  /*!< Source_Capabilities_Extended message supported or not by DPM */
       .Is_Alert_Supported               = USBPD_FALSE,   /*!< Alert message supported or not by DPM */

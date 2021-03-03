@@ -432,7 +432,6 @@ static void MX_HRTIM1_Init(void)
     Error_Handler();
   }
   pCompareCfg.CompareValue = (BUCK_PWM_PERIOD - ((BUCK_PWM_PERIOD/3)/2));
-  pCompareCfg.AutoDelayedTimeout = 0x0000;
 
   if (HAL_HRTIM_WaveformCompareConfig(&hhrtim1, HRTIM_TIMERINDEX_TIMER_D, HRTIM_COMPAREUNIT_4, &pCompareCfg) != HAL_OK)
   {

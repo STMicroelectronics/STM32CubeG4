@@ -23,11 +23,11 @@
 #include "stm32g4xx_it.h"
 #include "FreeRTOS.h"
 #include "task.h"
+#include "usbpd.h"
+#include "tracer_emb.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#if defined(_TRACE)
-#include "tracer_emb.h"
-#endif /* _TRACE */
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -161,8 +161,7 @@ void DebugMon_Handler(void)
 void SysTick_Handler(void)
 {
   /* USER CODE BEGIN SysTick_IRQn 0 */
-  extern void USBPD_DPM_TimerCounter(void);
-  USBPD_DPM_TimerCounter();
+
   /* USER CODE END SysTick_IRQn 0 */
   HAL_IncTick();
 #if (INCLUDE_xTaskGetSchedulerState == 1 )
@@ -173,6 +172,7 @@ void SysTick_Handler(void)
 #if (INCLUDE_xTaskGetSchedulerState == 1 )
   }
 #endif /* INCLUDE_xTaskGetSchedulerState */
+  USBPD_DPM_TimerCounter();
   /* USER CODE BEGIN SysTick_IRQn 1 */
 
   /* USER CODE END SysTick_IRQn 1 */
@@ -191,11 +191,10 @@ void SysTick_Handler(void)
 void DMA1_Channel6_IRQHandler(void)
 {
   /* USER CODE BEGIN DMA1_Channel6_IRQn 0 */
-#if defined(_TRACE)
-  TRACER_EMB_IRQHandlerDMA();
-#endif /* _TRACE */
+
   /* USER CODE END DMA1_Channel6_IRQn 0 */
 
+  TRACER_EMB_IRQHandlerDMA();
   /* USER CODE BEGIN DMA1_Channel6_IRQn 1 */
 
   /* USER CODE END DMA1_Channel6_IRQn 1 */
@@ -207,11 +206,9 @@ void DMA1_Channel6_IRQHandler(void)
 void USART1_IRQHandler(void)
 {
   /* USER CODE BEGIN USART1_IRQn 0 */
-#if defined(_TRACE)
-  TRACER_EMB_IRQHandlerUSART();
-#endif /* _TRACE */
 
   /* USER CODE END USART1_IRQn 0 */
+  TRACER_EMB_IRQHandlerUSART();
   /* USER CODE BEGIN USART1_IRQn 1 */
 
   /* USER CODE END USART1_IRQn 1 */
@@ -223,9 +220,10 @@ void USART1_IRQHandler(void)
 void UCPD1_IRQHandler(void)
 {
   /* USER CODE BEGIN UCPD1_IRQn 0 */
-  extern void USBPD_PORT0_IRQHandler(void);
-  USBPD_PORT0_IRQHandler();
+
   /* USER CODE END UCPD1_IRQn 0 */
+  USBPD_PORT0_IRQHandler();
+
   /* USER CODE BEGIN UCPD1_IRQn 1 */
 
   /* USER CODE END UCPD1_IRQn 1 */

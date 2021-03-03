@@ -209,7 +209,7 @@ void DMA1_Channel1_IRQHandler(void)
   /* USER CODE BEGIN DMA1_Channel1_IRQn 0 */
   if(LL_DMA_IsActiveFlag_TC1(DMA1) == 1)
   {
-    LL_DMA_ClearFlag_GI1(DMA1);
+    LL_DMA_ClearFlag_TC1(DMA1);
     TransferComplete();
   }
   else if(LL_DMA_IsActiveFlag_TE1(DMA1) == 1)

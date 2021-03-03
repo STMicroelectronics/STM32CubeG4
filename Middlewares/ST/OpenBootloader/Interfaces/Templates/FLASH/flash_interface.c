@@ -6,30 +6,32 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
-  * This software component is licensed by ST under Image license SLA0044,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                       www.st.com/SLA0044
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
   *
   ******************************************************************************
   */
 
 /* Includes ------------------------------------------------------------------*/
 #include "platform.h"
-
 #include "openbl_mem.h"
-
 #include "app_openbootloader.h"
 #include "common_interface.h"
 #include "flash_interface.h"
 
 /* Private typedef -----------------------------------------------------------*/
+Send_BusyByte_Func *BusyByteCallback = 0;
+
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
+uint32_t Flash_BusyState = FLASH_BUSY_STATE_DISABLED;
+
 /* Private function prototypes -----------------------------------------------*/
 static void OPENBL_FLASH_ProgramDoubleWord(uint32_t Address, uint64_t Data);
 static ErrorStatus OPENBL_FLASH_EnableWriteProtection(uint8_t *ListOfPages, uint32_t Length);
@@ -47,7 +49,7 @@ OPENBL_MemoryTypeDef FLASH_Descriptor =
   OPENBL_FLASH_SetReadOutProtectionLevel,
   OPENBL_FLASH_SetWriteProtection,
   OPENBL_FLASH_JumpToAddress,
-  OPENBL_FLASH_MassErase,
+  NULL,
   OPENBL_FLASH_Erase
 };
 
@@ -92,7 +94,7 @@ void OPENBL_FLASH_OB_Launch(void)
   */
 uint8_t OPENBL_FLASH_Read(uint32_t Address)
 {
-  return;
+  return (*(uint8_t *)(Address));
 }
 
 /**
@@ -124,6 +126,7 @@ void OPENBL_FLASH_JumpToAddress(uint32_t Address)
   */
 uint32_t OPENBL_FLASH_GetReadOutProtectionLevel(void)
 {
+  FLASH_OBProgramInitTypeDef flash_ob;
   return flash_ob.RDPLevel;
 }
 
@@ -153,7 +156,6 @@ void OPENBL_FLASH_SetReadOutProtectionLevel(uint32_t Level)
 ErrorStatus OPENBL_FLASH_SetWriteProtection(FunctionalState State, uint8_t *ListOfPages, uint32_t Length)
 {
   ErrorStatus status = SUCCESS;
-
   return status;
 }
 
@@ -167,8 +169,7 @@ ErrorStatus OPENBL_FLASH_SetWriteProtection(FunctionalState State, uint8_t *List
   */
 ErrorStatus OPENBL_FLASH_MassErase(uint8_t *p_Data, uint32_t DataLength)
 {
-  ErrorStatus status   = SUCCESS;
-
+  ErrorStatus status = SUCCESS;
   return status;
 }
 
@@ -182,11 +183,27 @@ ErrorStatus OPENBL_FLASH_MassErase(uint8_t *p_Data, uint32_t DataLength)
   */
 ErrorStatus OPENBL_FLASH_Erase(uint8_t *p_Data, uint32_t DataLength)
 {
-  ErrorStatus status    = SUCCESS;
-
+  ErrorStatus status = SUCCESS;
   return status;
 }
 
+
+/**
+ * @brief  This function is used to Set Flash busy state variable to activate busy state sending
+ *         during flash operations
+ * @retval None.
+*/
+void OPENBL_Enable_BusyState_Sending(Send_BusyByte_Func *pCallback)
+{
+}
+
+/**
+ * @brief  This function is used to disable the send of busy state in I2C non stretch mode.
+ * @retval None.
+*/
+void OPENBL_Disable_BusyState_Sending(void)
+{
+}
 /* Private functions ---------------------------------------------------------*/
 
 /**
@@ -209,8 +226,7 @@ static void OPENBL_FLASH_ProgramDoubleWord(uint32_t Address, uint64_t Data)
   */
 static ErrorStatus OPENBL_FLASH_EnableWriteProtection(uint8_t *ListOfPages, uint32_t Length)
 {
-  ErrorStatus status       = SUCCESS;
-
+  ErrorStatus status = SUCCESS;
   return status;
 }
 
@@ -222,8 +238,7 @@ static ErrorStatus OPENBL_FLASH_EnableWriteProtection(uint8_t *ListOfPages, uint
   */
 static ErrorStatus OPENBL_FLASH_DisableWriteProtection(void)
 {
-  ErrorStatus status       = SUCCESS;
-
+  ErrorStatus status = SUCCESS;
   return status;
 }
 

@@ -644,7 +644,7 @@ int32_t BSP_JOY_DeInit(JOY_TypeDef JOY, JOYPin_TypeDef JoyPins)
        {
           /* Disable the JOY clock */
           HAL_GPIO_DeInit(JOY_PORT[joykey], JOY_PIN[joykey]);
-          JoyPinsMask[JOY] &= ~key_pressed;
+          JoyPinsMask[JOY] &= (~(uint32_t)key_pressed);
        }
      }
   }

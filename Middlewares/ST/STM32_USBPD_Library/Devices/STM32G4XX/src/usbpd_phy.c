@@ -122,7 +122,7 @@ USBPD_StatusTypeDef USBPD_PHY_Init(uint8_t PortNum, const USBPD_PHY_Callbacks *p
   Ports[PortNum].cbs.USBPD_HW_IF_RX_ResetIndication     = pCallbacks->USBPD_PHY_ResetIndication;
   Ports[PortNum].cbs.USBPD_HW_IF_RX_Completed           = PHY_Rx_Completed;
   Ports[PortNum].cbs.USBPD_HW_IF_TX_HardResetCompleted  = pCallbacks->USBPD_PHY_ResetCompleted;
-
+  Ports[PortNum].cbs.USBPD_HW_IF_TX_FRSReception        = pCallbacks->USBPD_PHY_FastRoleSwapReception;
   /* Initialize the hardware for the port */
   Ports[PortNum].ptr_RxBuff = pRxBuffer;
 
@@ -338,6 +338,30 @@ void PHY_Rx_Completed(uint8_t PortNum, uint32_t MsgType)
       {
          PHY_Ports[PortNum].USBPD_PHY_MessageReceived(PortNum, _msgtype);
       }
+#if defined(DEBUG_NOTFWD)
+      else
+      {
+        typedef union
+        {
+          uint16_t d16;
+          struct
+          {
+            uint16_t MessageType            :5;   /*!< Message Header's message Type                      */
+            uint16_t PortDataRole           :1;   /*!< Message Header's Port Data Role                    */
+            uint16_t SpecificationRevision  :2;   /*!< Message Header's Spec Revision                     */
+            uint16_t PortPowerRole_CablePlug:1;   /*!< Message Header's Port Power Role/Cable Plug field  */
+            uint16_t MessageID              :3;   /*!< Message Header's message ID                        */
+            uint16_t NumberOfDataObjects    :3;   /*!< Message Header's Number of data object             */
+            uint16_t Extended               :1;   /*!< Reserved                                           */
+          }
+          b;
+        } USBPD_MsgHeader_TypeDef;
+
+        USBPD_MsgHeader_TypeDef header_rx;
+        header_rx.d16 = USBPD_LE16(Ports[PortNum].ptr_RxBuff);
+        USBPD_TRACE_Add( USBPD_TRACE_PHY_NOTFRWD,PortNum, _msgtype, Ports[PortNum].ptr_RxBuff, 2u + (header_rx.b.NumberOfDataObjects * 4u));
+      }
+#endif
       break;
     default :
       break;

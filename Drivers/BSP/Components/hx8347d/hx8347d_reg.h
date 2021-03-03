@@ -165,8 +165,8 @@
 /** @defgroup HX8347D_REG_Exported_Types HX8347D_REG Exported Types
   * @{
   */
-typedef int32_t (*HX8347D_Write_Func)    (void *, uint16_t, uint8_t*, uint16_t);    /*  this will connect to the LCD_IO_WriteData */
-typedef int32_t (*HX8347D_Read_Func)     (void *, uint16_t, uint8_t*, uint16_t);   /*  this will connect to the LCD_IO_ReadData */
+typedef int32_t (*HX8347D_Write_Func)    (void *, uint16_t, uint8_t*, uint32_t);    /*  this will connect to the LCD_IO_WriteData */
+typedef int32_t (*HX8347D_Read_Func)     (void *, uint16_t, uint8_t*, uint32_t);   /*  this will connect to the LCD_IO_ReadData */
 
 typedef struct
 {
@@ -181,8 +181,8 @@ typedef struct
 /** @defgroup HX8347D_REG_Exported_Functions HX8347D_REG Exported Functions
   * @{
   */
-int32_t hx8347d_write_reg(hx8347d_ctx_t *ctx, uint16_t reg, uint8_t *pdata, uint16_t length);
-int32_t hx8347d_read_reg(hx8347d_ctx_t *ctx, uint16_t reg, uint8_t *pdata, uint16_t length);
+int32_t hx8347d_write_reg(hx8347d_ctx_t *ctx, uint16_t reg, uint8_t *pdata, uint32_t length);
+int32_t hx8347d_read_reg(hx8347d_ctx_t *ctx, uint16_t reg, uint8_t *pdata, uint32_t length);
 
 /**
   * @}

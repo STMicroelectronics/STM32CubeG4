@@ -130,6 +130,7 @@ int32_t BSP_IO_Init(uint32_t Instance, BSP_IO_Init_t *Init)
       /* If IT mode is selected, configures MFX low level interrupt */
       if(Init->Mode >= IO_MODE_IT_RISING_EDGE)
       {
+        IOECtx[Instance].IsITEnabled |= IO_IT_ENABLE;
         BSP_IOEXPANDER_ITConfig();
       }
 
@@ -161,8 +162,14 @@ int32_t BSP_IO_DeInit(uint32_t Instance)
   {
     ret = BSP_ERROR_WRONG_PARAM;
   }
+  else if ((IOECtx[Instance].IsITEnabled & IO_IT_ENABLE ) != IO_IT_ENABLE)
+  {
+    ret = BSP_ERROR_WRONG_PARAM;
+  }
   else
   {
+    IOECtx[Instance].IsITEnabled &= IO_IT_DISABLE;
+    BSP_IOEXPANDER_ITDeConfig();
     IOECtx[Instance].Functions &= ~(IOEXPANDER_IO_MODE);
     ret = BSP_IOEXPANDER_DeInit(Instance);
   }
@@ -430,28 +437,35 @@ int32_t BSP_IOEXPANDER_DeInit(uint32_t Instance)
   */
 void BSP_IOEXPANDER_ITConfig(void)
 {
-  static uint32_t ioexpander_it_enabled = 0U;
   GPIO_InitTypeDef  gpio_init_structure;
 
-  if(ioexpander_it_enabled == 0U)
-  {
-    ioexpander_it_enabled = 1U;
-    /* Enable the GPIO EXTI clock */
-    IOEXPANDER_IRQOUT_GPIO_CLK_ENABLE();
-    __HAL_RCC_SYSCFG_CLK_ENABLE();
+  /* Enable the GPIO EXTI clock */
+  IOEXPANDER_IRQOUT_GPIO_CLK_ENABLE();
+  __HAL_RCC_SYSCFG_CLK_ENABLE();
 
-    gpio_init_structure.Pin   = IOEXPANDER_IRQOUT_GPIO_PIN;
-    gpio_init_structure.Pull  = GPIO_NOPULL;
-    gpio_init_structure.Speed = GPIO_SPEED_FREQ_LOW;
-    gpio_init_structure.Mode  = GPIO_MODE_IT_RISING;
-    HAL_GPIO_Init(IOEXPANDER_IRQOUT_GPIO_PORT, &gpio_init_structure);
+  gpio_init_structure.Pin   = IOEXPANDER_IRQOUT_GPIO_PIN;
+  gpio_init_structure.Pull  = GPIO_NOPULL;
+  gpio_init_structure.Speed = GPIO_SPEED_FREQ_LOW;
+  gpio_init_structure.Mode  = GPIO_MODE_IT_RISING;
+  HAL_GPIO_Init(IOEXPANDER_IRQOUT_GPIO_PORT, &gpio_init_structure);
 
-    /* Enable and set GPIO EXTI Interrupt to the lowest priority */
-    HAL_NVIC_SetPriority((IRQn_Type)(IOEXPANDER_IRQOUT_EXTI_IRQn), BSP_IOEXPANDER_IT_PRIORITY, 0x0F);
-    HAL_NVIC_EnableIRQ((IRQn_Type)(IOEXPANDER_IRQOUT_EXTI_IRQn));
-  }
+  /* Enable and set GPIO EXTI Interrupt to the lowest priority */
+  HAL_NVIC_SetPriority((IRQn_Type)(IOEXPANDER_IRQOUT_EXTI_IRQn), BSP_IOEXPANDER_IT_PRIORITY, 0x0F);
+  HAL_NVIC_EnableIRQ((IRQn_Type)(IOEXPANDER_IRQOUT_EXTI_IRQn));
 }
 
+/**
+  * @brief  DeInitializes IoExpander low level interrupt
+  * @retval BSP status
+  */
+void BSP_IOEXPANDER_ITDeConfig(void)
+{
+  GPIO_InitTypeDef  gpio_init_structure;
+
+  /* IOEXPANDER_IRQOUT GPIO deactivation */
+  gpio_init_structure.Pin  = IOEXPANDER_IRQOUT_GPIO_PIN;
+  HAL_GPIO_DeInit(IOEXPANDER_IRQOUT_GPIO_PORT, gpio_init_structure.Pin);
+}
 /**
   * @}
   */

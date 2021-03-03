@@ -495,7 +495,7 @@ static void ComPort_Config(void)
   ----------------------------------------------------------------------- */
 
   /* Compute the prescaler value to have TIMx counter clock equal to 10000 Hz */
-  uwPrescalerValue = (uint32_t)(SystemCoreClock / 10000) - 1;
+  uwPrescalerValue = (uint32_t)(SystemCoreClock / 10000U) - 1U;
 
   /* Set TIMx instance */
   TimHandle.Instance = TIMx;

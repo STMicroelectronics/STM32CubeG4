@@ -15,20 +15,17 @@
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
+  <link rel="icon" type="image/x-icon" href="_htmresc/favicon.png" />
 </head>
 <body>
 <div class="row">
 <div class="col-sm-12 col-lg-4">
-<div class="card fluid">
-<div class="sectione dark">
 <center>
-<h1 id="release-notes-for-stm32-usb-c-power-delivery-graphical-user-interface-gui_interface"><small>Release Notes for</small> STM32 USB-C Power Delivery Graphical User Interface (GUI_INTERFACE)</h1>
+<h1 id="release-notes-for-stm32-usb-c-power-delivery-graphical-user-interface-gui_interface">Release Notes for STM32 USB-C Power Delivery Graphical User Interface (GUI_INTERFACE)</h1>
 <p>Copyright © 2018 STMicroelectronics<br />
 </p>
-<a href="https://www.st.com" class="logo"><img src="_htmresc/st_logo.png" alt="ST logo" /></a>
+<a href="https://www.st.com" class="logo"><img src="_htmresc/st_logo_2020.png" alt="ST logo" /></a>
 </center>
-</div>
-</div>
 <h1 id="license">License</h1>
 <p>This software component is licensed by ST under BSD 3-Clause license, the “License”; You may not use this component except in compliance with the License. You may obtain a copy of the License at:</p>
 <p><a href="http://www.opensource.org/licenses/BSD-3-Clause">http://www.opensource.org/licenses/BSD-3-Clause</a></p>
@@ -40,13 +37,13 @@
 <div class="col-sm-12 col-lg-8">
 <h1 id="update-history">Update History</h1>
 <div class="collapse">
-<input type="checkbox" id="collapse-section14" checked aria-hidden="true"> <label for="collapse-section14" aria-hidden="true">V1.10.2 / 13-May-2020</label>
+<input type="checkbox" id="collapse-section17" checked aria-hidden="true"> <label for="collapse-section17" aria-hidden="true">V1.13.0 / 26-Oct.-2020</label>
 <div>
 <h2 id="main-changes">Main Changes</h2>
 <h3 id="maintenance-release">Maintenance release</h3>
 <h2 id="contents">Contents</h2>
+<p><strong>Fixed bugs list</strong></p>
 <table>
-<caption>Fixed bugs list</caption>
 <thead>
 <tr class="header">
 <th>Headline</th>
@@ -54,7 +51,19 @@
 </thead>
 <tbody>
 <tr class="odd">
-<td>Add “usbpd_def.h” include in gui_api.h (usbpd_def.h types used in gui_api.h)</td>
+<td>Update size and nb or U32 computation in SaveSettingsInFlash() : USBPD_PORT_COUNT already taken into account at caller level.</td>
+</tr>
+<tr class="even">
+<td>Add STM32U5xx flash management for settings storage</td>
+</tr>
+<tr class="odd">
+<td>Ticket 96222 : Avoid double definition with LE16 &amp; LE32 macros used in usbh.def</td>
+</tr>
+<tr class="even">
+<td>CodeSpell and MCUAStyle corrections</td>
+</tr>
+<tr class="odd">
+<td>MISRA C2012 corrections</td>
 </tr>
 </tbody>
 </table>
@@ -70,18 +79,18 @@
 <h2 id="supported-devices-and-boards">Supported Devices and boards</h2>
 <p>All STM32xx devices implementing a USBPD application able to communicate with CubeMonitor_UCPD</p>
 <h2 id="backward-compatibility">Backward compatibility</h2>
-<p>No compatibility break with previous version</p>
+<p>This version should be used after TRACER_EMB version V1.4.0 due to a remove of the prototype TRACER_EMB_WakeUpProcess</p>
 <h2 id="dependencies">Dependencies</h2>
 </div>
 </div>
 <div class="collapse">
-<input type="checkbox" id="collapse-section13" aria-hidden="true"> <label for="collapse-section13" aria-hidden="true">V1.10.1 / 14-Apr.-2020</label>
+<input type="checkbox" id="collapse-section16" aria-hidden="true"> <label for="collapse-section16" aria-hidden="true">V1.12.0 / 16-Oct.-2020</label>
 <div>
 <h2 id="main-changes-1">Main Changes</h2>
 <h3 id="maintenance-release-1">Maintenance release</h3>
 <h2 id="contents-1">Contents</h2>
+<p><strong>Fixed bugs list</strong></p>
 <table>
-<caption>Fixed bugs list</caption>
 <thead>
 <tr class="header">
 <th>Headline</th>
@@ -89,7 +98,16 @@
 </thead>
 <tbody>
 <tr class="odd">
-<td>User functions for VDM display port should be under switch VDM only</td>
+<td>[Codespell] minor typo corrections</td>
+</tr>
+<tr class="even">
+<td>Ticket 93706 - Errors occurred with GUI_API</td>
+</tr>
+<tr class="odd">
+<td>Ticket 93830 - Not possible to modify parameters Responds_to_discov and Attempts_disco</td>
+</tr>
+<tr class="even">
+<td>Ticket 92751 - Add applications for STM32G0C1E-EV board</td>
 </tr>
 </tbody>
 </table>
@@ -100,23 +118,23 @@
 <ul>
 <li>IAR Embedded Workbench for ARM (EWARM) toolchain V8.32.3</li>
 <li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.26</li>
-<li>System Workbench STM32 (SW4STM32) toolchain V2.7.2</li>
+<li>STM32CubeIDE v1.2.0</li>
 </ul>
 <h2 id="supported-devices-and-boards-1">Supported Devices and boards</h2>
 <p>All STM32xx devices implementing a USBPD application able to communicate with CubeMonitor_UCPD</p>
 <h2 id="backward-compatibility-1">Backward compatibility</h2>
-<p>No compatibility break with previous version</p>
+<p>This version should be used after TRACER_EMB version V1.4.0 due to a remove of the prototype TRACER_EMB_WakeUpProcess</p>
 <h2 id="dependencies-1">Dependencies</h2>
 </div>
 </div>
 <div class="collapse">
-<input type="checkbox" id="collapse-section12" aria-hidden="true"> <label for="collapse-section12" aria-hidden="true">V1.10.0 / 07-Apr.-2020</label>
+<input type="checkbox" id="collapse-section15" aria-hidden="true"> <label for="collapse-section15" aria-hidden="true">V1.11.0 / 12-June-2020</label>
 <div>
 <h2 id="main-changes-2">Main Changes</h2>
 <h3 id="maintenance-release-2">Maintenance release</h3>
 <h2 id="contents-2">Contents</h2>
+<p><strong>Fixed bugs list</strong></p>
 <table>
-<caption>Fixed bugs list</caption>
 <thead>
 <tr class="header">
 <th>Headline</th>
@@ -124,19 +142,25 @@
 </thead>
 <tbody>
 <tr class="odd">
-<td>Move TASK ID from Core/inc/usbpd_task.h yo applications/inc/utilities_conf.h</td>
+<td>Increase stack size linked to issue during tests</td>
 </tr>
 <tr class="even">
-<td>Add switch USE_STM32_UTILITY_OS to integrate SEQUENCER utility - bis</td>
+<td>Ticket 86356 - Correct misspelled words</td>
 </tr>
 <tr class="odd">
-<td>Add switch USE_STM32_UTILITY_OS to integrate SEQUENCER utility</td>
+<td>Ticket 87173 - Add a mechanism to check that GUI FLASH area is not corrupted</td>
 </tr>
 <tr class="even">
-<td>Ticket 81002 - unwanted include file in gui_api.h</td>
+<td>Remove few parameters not used in NO_PD config</td>
 </tr>
 <tr class="odd">
-<td>integration of the new utilities SEQ to handle GUI task in non RTOS mode</td>
+<td>Add “usbpd_def.h” include in gui_api.h (usbpd_def.h types used in gui_api.h)</td>
+</tr>
+<tr class="even">
+<td>GUI_PARAM_NB_TAG value not correct</td>
+</tr>
+<tr class="odd">
+<td>Remove wakeup trace (TRACER_EMB_WakeUpProcess prototype has been removed from TRACER_EMB)</td>
 </tr>
 </tbody>
 </table>
@@ -147,52 +171,22 @@
 <ul>
 <li>IAR Embedded Workbench for ARM (EWARM) toolchain V8.32.3</li>
 <li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.26</li>
-<li>System Workbench STM32 (SW4STM32) toolchain V2.7.2</li>
+<li>STM32CubeIDE v1.2.0</li>
 </ul>
 <h2 id="supported-devices-and-boards-2">Supported Devices and boards</h2>
 <p>All STM32xx devices implementing a USBPD application able to communicate with CubeMonitor_UCPD</p>
 <h2 id="backward-compatibility-2">Backward compatibility</h2>
-<p>No compatibility break with previous version</p>
+<p>This version should be used after TRACER_EMB version V1.4.0 due to a remove of the prototype TRACER_EMB_WakeUpProcess</p>
 <h2 id="dependencies-2">Dependencies</h2>
 </div>
 </div>
 <div class="collapse">
-<input type="checkbox" id="collapse-section12" aria-hidden="true"> <label for="collapse-section12" aria-hidden="true">V1.9.0 / 15-Nov-2019</label>
+<input type="checkbox" id="collapse-section14" aria-hidden="true"> <label for="collapse-section14" aria-hidden="true">V1.10.2 / 13-May-2020</label>
 <div>
 <h2 id="main-changes-3">Main Changes</h2>
 <h3 id="maintenance-release-3">Maintenance release</h3>
 <h2 id="contents-3">Contents</h2>
-<table>
-<caption>Fixed bugs list</caption>
-<thead>
-<tr class="header">
-<th>Headline</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Ticket 74534 - clean code linked to USBPD_CORE_DATATYPE_REQUEST_DO</td>
-</tr>
-<tr class="even">
-<td>Ticket 71492 - PE_Dataswap parameter needs to be duplicated in gui_api</td>
-</tr>
-<tr class="odd">
-<td>Ticket 74120 - Compilation issue in case of GUI_INTERFACE use without FreeRTOS</td>
-</tr>
-<tr class="even">
-<td>Ticket 73678 - Initialize CAD_tDRP &amp; CAD_dcSRC_DRP at GUI initialization</td>
-</tr>
-<tr class="odd">
-<td>Ticket 73064 - SNK_extended_cap must be answered while SNK or DRP</td>
-</tr>
-<tr class="even">
-<td>Remove warning in NRTOS mode</td>
-</tr>
-<tr class="odd">
-<td>Remove dependance with USBPD internal variable</td>
-</tr>
-</tbody>
-</table>
+<p><strong>Fixed bugs list</strong> Headline ——– Add “usbpd_def.h” include in gui_api.h (usbpd_def.h types used in gui_api.h)</p>
 <h2 id="known-limitations-3">Known Limitations</h2>
 <p>Outstanding bugs list : None</p>
 <p>Requirements not met or planned in a forthcoming release : None</p>
@@ -200,7 +194,7 @@
 <ul>
 <li>IAR Embedded Workbench for ARM (EWARM) toolchain V8.32.3</li>
 <li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.26</li>
-<li>System Workbench STM32 (SW4STM32) toolchain V2.7.2</li>
+<li>STM32CubeIDE v1.2.0</li>
 </ul>
 <h2 id="supported-devices-and-boards-3">Supported Devices and boards</h2>
 <p>All STM32xx devices implementing a USBPD application able to communicate with CubeMonitor_UCPD</p>
@@ -210,60 +204,12 @@
 </div>
 </div>
 <div class="collapse">
-<input type="checkbox" id="collapse-section11" aria-hidden="true"> <label for="collapse-section11" aria-hidden="true">V1.8.0 / 06-Sept-2019</label>
+<input type="checkbox" id="collapse-section13" aria-hidden="true"> <label for="collapse-section13" aria-hidden="true">V1.10.1 / 14-Apr.-2020</label>
 <div>
 <h2 id="main-changes-4">Main Changes</h2>
 <h3 id="maintenance-release-4">Maintenance release</h3>
 <h2 id="contents-4">Contents</h2>
-<table>
-<caption>Fixed bugs list</caption>
-<thead>
-<tr class="header">
-<th>Headline</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>[USBPD][GUI] Increase GUI_STACK_SIZE_ADDON_FOR_CMSIS in case of CMSIS OS V2.</td>
-</tr>
-<tr class="even">
-<td>[USBPD][GUI] Ticket 66690 - [FOSS-Audit] SLA0044 headers in Utilities files</td>
-</tr>
-<tr class="odd">
-<td>[USBPD][GUI] Ticket 71488 - project settings (and also behavior) differs vs _Gui_Interface switch activation</td>
-</tr>
-<tr class="even">
-<td>[USBPD][GUI] Remove useless include file + use of Nb ports define for USBPD_NbPDO initialisation</td>
-</tr>
-<tr class="odd">
-<td>[USBPD][GUI] Update in template of usbpd_gui_memmap_template.h</td>
-</tr>
-<tr class="even">
-<td>[USBPD][GUI] Ticket 70835 - PE_Dataswap parameter needs to be duplicated in gui_api</td>
-</tr>
-<tr class="odd">
-<td>[USBPD][GUI] Update in Flash erase function to be able to address F0/G0/G4 and L5 Dual bank flashes</td>
-</tr>
-<tr class="even">
-<td>[USBPD][GUI]rename GUI_NbPDO to USBPD_NbPDO</td>
-</tr>
-<tr class="odd">
-<td>[USBPD][GUI] All the DPM_User_Settings should be initialized to be able to pass MQP tests</td>
-</tr>
-<tr class="even">
-<td>[USBPD][GUI] Set DataRoleSwap as TRUE when GUI is enabled</td>
-</tr>
-<tr class="odd">
-<td>[USBPD][GUI] Move PE_DataSwap &amp; PE_VconnSwap in the USBPD_USER_SettingsTypeDef for integration in cubeMX</td>
-</tr>
-<tr class="even">
-<td>[USBPD][GUI] Ticket 67078 - Use common defines for XID, VID &amp; PID</td>
-</tr>
-<tr class="odd">
-<td>[USBPD][GUI] Ticket 66284 - [CubeMx-UBSPD] Update generated code to make it compatible with CMSIS-RTOS v2</td>
-</tr>
-</tbody>
-</table>
+<p><strong>Fixed bugs list</strong> Headline ——– User functions for VDM display port should be under switch VDM only</p>
 <h2 id="known-limitations-4">Known Limitations</h2>
 <p>Outstanding bugs list : None</p>
 <p>Requirements not met or planned in a forthcoming release : None</p>
@@ -281,40 +227,19 @@
 </div>
 </div>
 <div class="collapse">
-<input type="checkbox" id="collapse-section10" aria-hidden="true"> <label for="collapse-section10" aria-hidden="true">V1.7.0 / 23-May-2019</label>
+<input type="checkbox" id="collapse-section12" aria-hidden="true"> <label for="collapse-section12" aria-hidden="true">V1.10.0 / 07-Apr.-2020</label>
 <div>
 <h2 id="main-changes-5">Main Changes</h2>
 <h3 id="maintenance-release-5">Maintenance release</h3>
 <h2 id="contents-5">Contents</h2>
-<table>
-<caption>Fixed bugs list</caption>
-<thead>
-<tr class="header">
-<th>Headline</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Ticket 62471 - Solve Hard Fault called from usage of UCPD voltage calculation using FPU for UCPD</td>
-</tr>
-<tr class="even">
-<td>Ticket 66412 - Allow communication with CubeMonitor-UCPD from CubeMx generated examples (from CubeMx 5.2.1)</td>
-</tr>
-<tr class="odd">
-<td>Ticket 66638 - SLA0044 headers in files updated to BSD-3-Clause</td>
-</tr>
-<tr class="even">
-<td>Ticket 67146 - Add memory mapping template in GUI utility (template to be used in user code)</td>
-</tr>
-</tbody>
-</table>
+<p><strong>Fixed bugs list</strong> Headline ——– Move TASK ID from Core/inc/usbpd_task.h yo applications/inc/utilities_conf.h Add switch USE_STM32_UTILITY_OS to integrate SEQUENCER utility - bis Add switch USE_STM32_UTILITY_OS to integrate SEQUENCER utility Ticket 81002 - unwanted include file in gui_api.h integration of the new utilities SEQ to handle GUI task in non RTOS mode</p>
 <h2 id="known-limitations-5">Known Limitations</h2>
 <p>Outstanding bugs list : None</p>
 <p>Requirements not met or planned in a forthcoming release : None</p>
 <h2 id="development-toolchains-and-compilers-5">Development Toolchains and Compilers</h2>
 <ul>
-<li>IAR Embedded Workbench for ARM (EWARM) toolchain V8.20.2</li>
-<li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.25</li>
+<li>IAR Embedded Workbench for ARM (EWARM) toolchain V8.32.3</li>
+<li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.26</li>
 <li>System Workbench STM32 (SW4STM32) toolchain V2.7.2</li>
 </ul>
 <h2 id="supported-devices-and-boards-5">Supported Devices and boards</h2>
@@ -325,134 +250,61 @@
 </div>
 </div>
 <div class="collapse">
-<input type="checkbox" id="collapse-section9" aria-hidden="true"> <label for="collapse-section9" aria-hidden="true">V1.6.0 / 10-April-2019</label>
+<input type="checkbox" id="collapse-section12" aria-hidden="true"> <label for="collapse-section12" aria-hidden="true">V1.9.0 / 15-Nov-2019</label>
 <div>
 <h2 id="main-changes-6">Main Changes</h2>
 <h3 id="maintenance-release-6">Maintenance release</h3>
 <h2 id="contents-6">Contents</h2>
-<table>
-<caption>Fixed bugs list</caption>
-<thead>
-<tr class="header">
-<th>Headline</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Update to wakeup the TX send</td>
-</tr>
-<tr class="even">
-<td>Ticket 62412 - Sink request using GUI seems not coherent with registered SNKPDOs (GUI impact)</td>
-</tr>
-<tr class="odd">
-<td>Ticket 62344 - [GUI] Display a warning message in GUI in case of information comes from previous saving done by user</td>
-</tr>
-<tr class="even">
-<td>Remove sModesInfo as no more used</td>
-</tr>
-<tr class="odd">
-<td>Re-enable IT when FreeRTOS is used</td>
-</tr>
-<tr class="even">
-<td>Renable SYSTICK after calling FreeRTOS function</td>
-</tr>
-<tr class="odd">
-<td>Ticket 61311 - [MB1303] integration of GUI interface</td>
-</tr>
-<tr class="even">
-<td>Add Free text outside _VDM switch</td>
-</tr>
-<tr class="odd">
-<td>GUI regression after moving GUI from DPM - use GUIMsgBox instead of DPMMsgBox</td>
-</tr>
-<tr class="even">
-<td>GUIMsgBox used only in case of _RTOS</td>
-</tr>
-<tr class="odd">
-<td>Remove dependencies with GUI in DPM USER code</td>
-</tr>
-<tr class="even">
-<td>Manage Free Text</td>
-</tr>
-<tr class="odd">
-<td>Ticket 60213 - STM32G071B-DISCO_Demonstrations_USBPD_Analyzer_SW4STM32_Compilation Warnings</td>
-</tr>
-<tr class="even">
-<td>Add include for G4</td>
-</tr>
-</tbody>
-</table>
-<h2 id="known-limitations-6">known limitations</h2>
+<p><strong>Fixed bugs list</strong> Headline ——– Ticket 74534 - clean code linked to USBPD_CORE_DATATYPE_REQUEST_DO Ticket 71492 - PE_Dataswap parameter needs to be duplicated in gui_api Ticket 74120 - Compilation issue in case of GUI_INTERFACE use without FreeRTOS Ticket 73678 - Initialize CAD_tDRP &amp; CAD_dcSRC_DRP at GUI initialization Ticket 73064 - SNK_extended_cap must be answered while SNK or DRP Remove warning in NRTOS mode Remove dependence with USBPD internal variable</p>
+<h2 id="known-limitations-6">Known Limitations</h2>
+<p>Outstanding bugs list : None</p>
+<p>Requirements not met or planned in a forthcoming release : None</p>
 <h2 id="development-toolchains-and-compilers-6">Development Toolchains and Compilers</h2>
 <ul>
-<li>IAR Embedded Workbench for ARM (EWARM) toolchain V8.20.2</li>
-<li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.25</li>
+<li>IAR Embedded Workbench for ARM (EWARM) toolchain V8.32.3</li>
+<li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.26</li>
 <li>System Workbench STM32 (SW4STM32) toolchain V2.7.2</li>
 </ul>
 <h2 id="supported-devices-and-boards-6">Supported Devices and boards</h2>
-<h2 id="backward-compatibility-6">backward compatibility</h2>
+<p>All STM32xx devices implementing a USBPD application able to communicate with CubeMonitor_UCPD</p>
+<h2 id="backward-compatibility-6">Backward compatibility</h2>
+<p>No compatibility break with previous version</p>
 <h2 id="dependencies-6">Dependencies</h2>
 </div>
 </div>
 <div class="collapse">
-<input type="checkbox" id="collapse-section8" aria-hidden="true"> <label for="collapse-section8" aria-hidden="true">V1.5.0 / 28-Jan-2019</label>
+<input type="checkbox" id="collapse-section11" aria-hidden="true"> <label for="collapse-section11" aria-hidden="true">V1.8.0 / 06-Sept-2019</label>
 <div>
 <h2 id="main-changes-7">Main Changes</h2>
 <h3 id="maintenance-release-7">Maintenance release</h3>
-<p>Maintenance release</p>
 <h2 id="contents-7">Contents</h2>
-<table>
-<caption>Fixed bugs list</caption>
-<thead>
-<tr class="header">
-<th>Headline</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Ticket 60213 - STM32G071B-DISCO_Demonstrations_USBPD_Analyzer_SW4STM32_Compilation Warnings. Modifications in GUI_INTERFACE module for solving compilation warnings under SW4STM32 (Gcc)</td>
-</tr>
-</tbody>
-</table>
-<h2 id="known-limitations-7">known limitations</h2>
+<p><strong>Fixed bugs list</strong> Headline ——– [USBPD][GUI] Increase GUI_STACK_SIZE_ADDON_FOR_CMSIS in case of CMSIS OS V2. [USBPD][GUI] Ticket 66690 - [FOSS-Audit] SLA0044 headers in Utilities files [USBPD][GUI] Ticket 71488 - project settings (and also behavior) differs vs _Gui_Interface switch activation [USBPD][GUI] Remove useless include file + use of Nb ports define for USBPD_NbPDO initialisation [USBPD][GUI] Update in template of usbpd_gui_memmap_template.h [USBPD][GUI] Ticket 70835 - PE_Dataswap parameter needs to be duplicated in gui_api [USBPD][GUI] Update in Flash erase function to be able to address F0/G0/G4 and L5 Dual bank flashes [USBPD][GUI]rename GUI_NbPDO to USBPD_NbPDO [USBPD][GUI] All the DPM_User_Settings should be initialized to be able to pass MQP tests [USBPD][GUI] Set DataRoleSwap as TRUE when GUI is enabled [USBPD][GUI] Move PE_DataSwap &amp; PE_VconnSwap in the USBPD_USER_SettingsTypeDef for integration in cubeMX [USBPD][GUI] Ticket 67078 - Use common defines for XID, VID &amp; PID [USBPD][GUI] Ticket 66284 - [CubeMx-UBSPD] Update generated code to make it compatible with CMSIS-RTOS v2</p>
+<h2 id="known-limitations-7">Known Limitations</h2>
+<p>Outstanding bugs list : None</p>
+<p>Requirements not met or planned in a forthcoming release : None</p>
 <h2 id="development-toolchains-and-compilers-7">Development Toolchains and Compilers</h2>
 <ul>
-<li>IAR Embedded Workbench for ARM (EWARM) toolchain V8.20.2</li>
-<li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.25</li>
+<li>IAR Embedded Workbench for ARM (EWARM) toolchain V8.32.3</li>
+<li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.26</li>
 <li>System Workbench STM32 (SW4STM32) toolchain V2.7.2</li>
 </ul>
 <h2 id="supported-devices-and-boards-7">Supported Devices and boards</h2>
-<h2 id="backward-compatibility-7">backward compatibility</h2>
+<p>All STM32xx devices implementing a USBPD application able to communicate with CubeMonitor_UCPD</p>
+<h2 id="backward-compatibility-7">Backward compatibility</h2>
+<p>No compatibility break with previous version</p>
 <h2 id="dependencies-7">Dependencies</h2>
 </div>
 </div>
 <div class="collapse">
-<input type="checkbox" id="collapse-section7" aria-hidden="true"> <label for="collapse-section7" aria-hidden="true">V1.4.0 / 19-Dec-2018</label>
+<input type="checkbox" id="collapse-section10" aria-hidden="true"> <label for="collapse-section10" aria-hidden="true">V1.7.0 / 23-May-2019</label>
 <div>
 <h2 id="main-changes-8">Main Changes</h2>
 <h3 id="maintenance-release-8">Maintenance release</h3>
-<p>Maintenance release</p>
 <h2 id="contents-8">Contents</h2>
-<table>
-<caption>Fixed bugs list</caption>
-<thead>
-<tr class="header">
-<th>Headline</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>correction link with renaming toogle toggle</td>
-</tr>
-<tr class="even">
-<td>Ticket 57478 - SKEDB not implemented</td>
-</tr>
-<tr class="odd">
-<td>Remove extern GUI_Flag variable from application</td>
-</tr>
-</tbody>
-</table>
-<h2 id="known-limitations-8">known limitations</h2>
+<p><strong>Fixed bugs list</strong> Headline ——– Ticket 62471 - Solve Hard Fault called from usage of UCPD voltage calculation using FPU for UCPD Ticket 66412 - Allow communication with CubeMonitor-UCPD from CubeMx generated examples (from CubeMx 5.2.1) Ticket 66638 - SLA0044 headers in files updated to BSD-3-Clause Ticket 67146 - Add memory mapping template in GUI utility (template to be used in user code)</p>
+<h2 id="known-limitations-8">Known Limitations</h2>
+<p>Outstanding bugs list : None</p>
+<p>Requirements not met or planned in a forthcoming release : None</p>
 <h2 id="development-toolchains-and-compilers-8">Development Toolchains and Compilers</h2>
 <ul>
 <li>IAR Embedded Workbench for ARM (EWARM) toolchain V8.20.2</li>
@@ -460,36 +312,19 @@
 <li>System Workbench STM32 (SW4STM32) toolchain V2.7.2</li>
 </ul>
 <h2 id="supported-devices-and-boards-8">Supported Devices and boards</h2>
-<h2 id="backward-compatibility-8">backward compatibility</h2>
+<p>All STM32xx devices implementing a USBPD application able to communicate with CubeMonitor_UCPD</p>
+<h2 id="backward-compatibility-8">Backward compatibility</h2>
+<p>No compatibility break with previous version</p>
 <h2 id="dependencies-8">Dependencies</h2>
 </div>
 </div>
 <div class="collapse">
-<input type="checkbox" id="collapse-section6" aria-hidden="true"> <label for="collapse-section6" aria-hidden="true">V1.3.0 / 10-Dec-2018</label>
+<input type="checkbox" id="collapse-section9" aria-hidden="true"> <label for="collapse-section9" aria-hidden="true">V1.6.0 / 10-April-2019</label>
 <div>
 <h2 id="main-changes-9">Main Changes</h2>
 <h3 id="maintenance-release-9">Maintenance release</h3>
-<p>Maintenance release</p>
 <h2 id="contents-9">Contents</h2>
-<table>
-<caption>Fixed bugs list</caption>
-<thead>
-<tr class="header">
-<th>Headline</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>correction link with renaming toogle toggle</td>
-</tr>
-<tr class="even">
-<td>Ticket 57478 - SKEDB not implemented</td>
-</tr>
-<tr class="odd">
-<td>Remove extern GUI_Flag variable from application</td>
-</tr>
-</tbody>
-</table>
+<p><strong>Fixed bugs list</strong> Headline ——– Update to wakeup the TX send Ticket 62412 - Sink request using GUI seems not coherent with registered SNKPDOs (GUI impact) Ticket 62344 - [GUI] Display a warning message in GUI in case of information comes from previous saving done by user Remove sModesInfo as no more used Re-enable IT when FreeRTOS is used Renable SYSTICK after calling FreeRTOS function Ticket 61311 - [MB1303] integration of GUI interface Add Free text outside _VDM switch GUI regression after moving GUI from DPM - use GUIMsgBox instead of DPMMsgBox GUIMsgBox used only in case of _RTOS Remove dependencies with GUI in DPM USER code Manage Free Text Ticket 60213 - STM32G071B-DISCO_Demonstrations_USBPD_Analyzer_SW4STM32_Compilation Warnings Add include for G4</p>
 <h2 id="known-limitations-9">known limitations</h2>
 <h2 id="development-toolchains-and-compilers-9">Development Toolchains and Compilers</h2>
 <ul>
@@ -503,31 +338,13 @@
 </div>
 </div>
 <div class="collapse">
-<input type="checkbox" id="collapse-section5" aria-hidden="true"> <label for="collapse-section5" aria-hidden="true">V1.2.0 / 15-Nov-2018</label>
+<input type="checkbox" id="collapse-section8" aria-hidden="true"> <label for="collapse-section8" aria-hidden="true">V1.5.0 / 28-Jan-2019</label>
 <div>
 <h2 id="main-changes-10">Main Changes</h2>
 <h3 id="maintenance-release-10">Maintenance release</h3>
 <p>Maintenance release</p>
 <h2 id="contents-10">Contents</h2>
-<table>
-<caption>Fixed bugs list</caption>
-<thead>
-<tr class="header">
-<th>Headline</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>rename DPM_User_Params to GUI_User_Params</td>
-</tr>
-<tr class="even">
-<td>add a link with TRACER_EMB</td>
-</tr>
-<tr class="odd">
-<td>solve compilation issue</td>
-</tr>
-</tbody>
-</table>
+<p><strong>Fixed bugs list</strong> Headline ——– Ticket 60213 - STM32G071B-DISCO_Demonstrations_USBPD_Analyzer_SW4STM32_Compilation Warnings. Modifications in GUI_INTERFACE module for solving compilation warnings under SW4STM32 (Gcc)</p>
 <h2 id="known-limitations-10">known limitations</h2>
 <h2 id="development-toolchains-and-compilers-10">Development Toolchains and Compilers</h2>
 <ul>
@@ -541,31 +358,13 @@
 </div>
 </div>
 <div class="collapse">
-<input type="checkbox" id="collapse-section4" aria-hidden="true"> <label for="collapse-section4" aria-hidden="true">V1.1.2 / 25-Sept.-2018</label>
+<input type="checkbox" id="collapse-section7" aria-hidden="true"> <label for="collapse-section7" aria-hidden="true">V1.4.0 / 19-Dec-2018</label>
 <div>
 <h2 id="main-changes-11">Main Changes</h2>
 <h3 id="maintenance-release-11">Maintenance release</h3>
 <p>Maintenance release</p>
 <h2 id="contents-11">Contents</h2>
-<table>
-<caption>Fixed bugs list</caption>
-<thead>
-<tr class="header">
-<th>Headline</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Update License information</td>
-</tr>
-<tr class="even">
-<td>Solve compilation issue when using IAR V8.30.1</td>
-</tr>
-<tr class="odd">
-<td>Add ping feature</td>
-</tr>
-</tbody>
-</table>
+<p><strong>Fixed bugs list</strong> Headline ——– Wrong wording corrections Ticket 57478 - SKEDB not implemented Remove extern GUI_Flag variable from application</p>
 <h2 id="known-limitations-11">known limitations</h2>
 <h2 id="development-toolchains-and-compilers-11">Development Toolchains and Compilers</h2>
 <ul>
@@ -579,25 +378,13 @@
 </div>
 </div>
 <div class="collapse">
-<input type="checkbox" id="collapse-section3" aria-hidden="true"> <label for="collapse-section3" aria-hidden="true">V1.1.1 / 10-Sept.-2018</label>
+<input type="checkbox" id="collapse-section6" aria-hidden="true"> <label for="collapse-section6" aria-hidden="true">V1.3.0 / 10-Dec-2018</label>
 <div>
 <h2 id="main-changes-12">Main Changes</h2>
 <h3 id="maintenance-release-12">Maintenance release</h3>
 <p>Maintenance release</p>
 <h2 id="contents-12">Contents</h2>
-<table>
-<caption>Fixed bugs list</caption>
-<thead>
-<tr class="header">
-<th>Headline</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Remove compilation warning</td>
-</tr>
-</tbody>
-</table>
+<p><strong>Fixed bugs list</strong> Headline ——– Ticket 57478 - SKEDB not implemented Remove extern GUI_Flag variable from application</p>
 <h2 id="known-limitations-12">known limitations</h2>
 <h2 id="development-toolchains-and-compilers-12">Development Toolchains and Compilers</h2>
 <ul>
@@ -611,28 +398,13 @@
 </div>
 </div>
 <div class="collapse">
-<input type="checkbox" id="collapse-section2" aria-hidden="true"> <label for="collapse-section2" aria-hidden="true">V1.1.0 / 06-Sept.-2018</label>
+<input type="checkbox" id="collapse-section5" aria-hidden="true"> <label for="collapse-section5" aria-hidden="true">V1.2.0 / 15-Nov-2018</label>
 <div>
 <h2 id="main-changes-13">Main Changes</h2>
 <h3 id="maintenance-release-13">Maintenance release</h3>
 <p>Maintenance release</p>
 <h2 id="contents-13">Contents</h2>
-<table>
-<caption>Fixed bugs list</caption>
-<thead>
-<tr class="header">
-<th>Headline</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Add cable information managment</td>
-</tr>
-<tr class="even">
-<td>Update around the VDM data (SVID, SVDM modes, … )</td>
-</tr>
-</tbody>
-</table>
+<p><strong>Fixed bugs list</strong> Headline ——– rename DPM_User_Params to GUI_User_Params add a link with TRACER_EMB solve compilation issue</p>
 <h2 id="known-limitations-13">known limitations</h2>
 <h2 id="development-toolchains-and-compilers-13">Development Toolchains and Compilers</h2>
 <ul>
@@ -646,25 +418,13 @@
 </div>
 </div>
 <div class="collapse">
-<input type="checkbox" id="collapse-section2" aria-hidden="true"> <label for="collapse-section2" aria-hidden="true">V1.0.0 / 19-Jun-2018</label>
+<input type="checkbox" id="collapse-section4" aria-hidden="true"> <label for="collapse-section4" aria-hidden="true">V1.1.2 / 25-Sept.-2018</label>
 <div>
 <h2 id="main-changes-14">Main Changes</h2>
 <h3 id="maintenance-release-14">Maintenance release</h3>
 <p>Maintenance release</p>
 <h2 id="contents-14">Contents</h2>
-<table>
-<caption>Fixed bugs list</caption>
-<thead>
-<tr class="header">
-<th>Headline</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>First official version for STM32 USB-PD GUI Interface utility. This utility enables communication between USB-PD device (controlled on STM32 side) and USB-PD PC tool</td>
-</tr>
-</tbody>
-</table>
+<p><strong>Fixed bugs list</strong> Headline ——– Update License information Solve compilation issue when using IAR V8.30.1 Add ping feature</p>
 <h2 id="known-limitations-14">known limitations</h2>
 <h2 id="development-toolchains-and-compilers-14">Development Toolchains and Compilers</h2>
 <ul>
@@ -675,6 +435,66 @@
 <h2 id="supported-devices-and-boards-14">Supported Devices and boards</h2>
 <h2 id="backward-compatibility-14">backward compatibility</h2>
 <h2 id="dependencies-14">Dependencies</h2>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section3" aria-hidden="true"> <label for="collapse-section3" aria-hidden="true">V1.1.1 / 10-Sept.-2018</label>
+<div>
+<h2 id="main-changes-15">Main Changes</h2>
+<h3 id="maintenance-release-15">Maintenance release</h3>
+<p>Maintenance release</p>
+<h2 id="contents-15">Contents</h2>
+<p><strong>Fixed bugs list</strong> Headline ——– Remove compilation warning</p>
+<h2 id="known-limitations-15">known limitations</h2>
+<h2 id="development-toolchains-and-compilers-15">Development Toolchains and Compilers</h2>
+<ul>
+<li>IAR Embedded Workbench for ARM (EWARM) toolchain V8.20.2</li>
+<li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.25</li>
+<li>System Workbench STM32 (SW4STM32) toolchain V2.7.2</li>
+</ul>
+<h2 id="supported-devices-and-boards-15">Supported Devices and boards</h2>
+<h2 id="backward-compatibility-15">backward compatibility</h2>
+<h2 id="dependencies-15">Dependencies</h2>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section2" aria-hidden="true"> <label for="collapse-section2" aria-hidden="true">V1.1.0 / 06-Sept.-2018</label>
+<div>
+<h2 id="main-changes-16">Main Changes</h2>
+<h3 id="maintenance-release-16">Maintenance release</h3>
+<p>Maintenance release</p>
+<h2 id="contents-16">Contents</h2>
+<p><strong>Fixed bugs list</strong> Headline ——– Add cable information management Update around the VDM data (SVID, SVDM modes, … )</p>
+<h2 id="known-limitations-16">known limitations</h2>
+<h2 id="development-toolchains-and-compilers-16">Development Toolchains and Compilers</h2>
+<ul>
+<li>IAR Embedded Workbench for ARM (EWARM) toolchain V8.20.2</li>
+<li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.25</li>
+<li>System Workbench STM32 (SW4STM32) toolchain V2.7.2</li>
+</ul>
+<h2 id="supported-devices-and-boards-16">Supported Devices and boards</h2>
+<h2 id="backward-compatibility-16">backward compatibility</h2>
+<h2 id="dependencies-16">Dependencies</h2>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section2" aria-hidden="true"> <label for="collapse-section2" aria-hidden="true">V1.0.0 / 19-Jun-2018</label>
+<div>
+<h2 id="main-changes-17">Main Changes</h2>
+<h3 id="maintenance-release-17">Maintenance release</h3>
+<p>Maintenance release</p>
+<h2 id="contents-17">Contents</h2>
+<p><strong>Fixed bugs list</strong> Headline ——– First official version for STM32 USB-PD GUI Interface utility. This utility enables communication between USB-PD device (controlled on STM32 side) and USB-PD PC tool</p>
+<h2 id="known-limitations-17">known limitations</h2>
+<h2 id="development-toolchains-and-compilers-17">Development Toolchains and Compilers</h2>
+<ul>
+<li>IAR Embedded Workbench for ARM (EWARM) toolchain V8.20.2</li>
+<li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.25</li>
+<li>System Workbench STM32 (SW4STM32) toolchain V2.7.2</li>
+</ul>
+<h2 id="supported-devices-and-boards-17">Supported Devices and boards</h2>
+<h2 id="backward-compatibility-17">backward compatibility</h2>
+<h2 id="dependencies-17">Dependencies</h2>
 </div>
 </div>
 </div>

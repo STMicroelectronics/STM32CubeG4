@@ -84,6 +84,8 @@ Middleware, OpenBootloader, USART, I2C
     - To use the I2C2 for communication you have to connect:
       - SCL pin of your host adapter to PC4 pin (Arduino connector CN9 pin D1, Morpho connector CN10 pin 35) of the NUCLEO-G491RE board
       - SDA pin of your host adapter to PA8 pin (Arduino connector CN9 pin D7, Morpho connector CN10 pin 23) of the NUCLEO-G491RE board
+    - Set I2C address to 0xBE for the device, set I2C address to 0x5F for the host
+    - The I2C2 own address is set to 0x5F and can be easy customized by updating the defined value "I2C_ADDRESS" in interface_conf.h file
 
   - NUCLEO-G491RE set-up to use USART:
     - To use the USART1 for communication you have to connect:

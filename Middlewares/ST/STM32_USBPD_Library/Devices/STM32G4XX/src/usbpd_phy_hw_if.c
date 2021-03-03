@@ -106,7 +106,7 @@ USBPD_StatusTypeDef USBPD_HW_IF_SendBuffer(uint8_t PortNum, USBPD_SOPType_TypeDe
     if (USBPD_OK == _status)
     {
 #if defined(_LOW_POWER)
-      LPM_SetStopMode((LPM_Id_t)(LPM_PE_0 + PortNum), LPM_Disable);
+      UTIL_LPM_SetOffMode(0 == PortNum?LPM_PE_0:LPM_PE_1, UTIL_LPM_DISABLE);
 #endif
       WRITE_REG(Ports[PortNum].hdmatx->CMAR, (uint32_t)pBuffer);
       WRITE_REG(Ports[PortNum].hdmatx->CNDTR, Size);
@@ -194,6 +194,7 @@ void USBPDM1_EnterErrorRecovery(uint8_t PortNum)
 {
   LL_UCPD_SetSRCRole(Ports[PortNum].husbpd);
   LL_UCPD_SetRpResistor(Ports[PortNum].husbpd, LL_UCPD_RESISTOR_NONE);
+  LL_UCPD_RxDisable(Ports[PortNum].husbpd);
 }
 
 void USBPDM1_Set_CC(uint8_t PortNum, CCxPin_TypeDef cc)
@@ -254,27 +255,28 @@ void HW_SignalAttachement(uint8_t PortNum, CCxPin_TypeDef cc)
   MODIFY_REG(Ports[PortNum].husbpd->IMR, INTERRUPT_MASK, INTERRUPT_MASK);
 #endif /* !USBPDCORE_LIB_NO_PD */
 
-#if !defined(USBPDCORE_LIB_NO_PD)||defined(USBPD_TYPE_STATE_MACHINE)
   /* Handle CC enable */
   Ports[PortNum].CCx = cc;
-#endif /* !USBPDCORE_LIB_NO_PD || USBPD_TYPE_STATE_MACHINE */
 
 #if !defined(USBPDCORE_LIB_NO_PD)
   /* Set CC pin for PD message */
   LL_UCPD_SetCCPin(Ports[PortNum].husbpd, (Ports[PortNum].CCx == CC1) ? LL_UCPD_CCPIN_CC1 : LL_UCPD_CCPIN_CC2);
+
+
+#if defined(_VCONN_SUPPORT)
+  /* Initialize Vconn management */
+  (void)BSP_USBPD_PWR_VCONNInit(PortNum, (Ports[PortNum].CCx == CC1) ? 1u : 2u);
+#endif /* _VCONN_SUPPORT */
 
 #if defined(USBPD_REV30_SUPPORT)
   if (Ports[PortNum].settings->PE_PD3_Support.d.PE_FastRoleSwapSupport == USBPD_TRUE)
   {
     /* Set GPIO to allow the FRSTX handling */
     USBPD_HW_SetFRSSignalling(PortNum, (Ports[PortNum].CCx == CC1) ? 1u : 2u);
+    LL_UCPD_FRSDetectionEnable(Ports[PortNum].husbpd);
+    Ports[PortNum].husbpd->IMR |= UCPD_IMR_FRSEVTIE;
   }
 #endif /* USBPD_REV30_SUPPORT */
-
-#if defined(_VCONN_SUPPORT)
-  /* Initialize Vconn managment */
-  (void)BSP_USBPD_PWR_VCONNInit(PortNum, (Ports[PortNum].CCx == CC1) ? 1u : 2u);
-#endif /* _VCONN_SUPPORT */
 
   /* Disable the Resistor on Vconn PIN */
   (Ports[PortNum].CCx == CC1) ? LL_UCPD_SetccEnable(Ports[PortNum].husbpd, LL_UCPD_CCENABLE_CC1) : LL_UCPD_SetccEnable(Ports[PortNum].husbpd, LL_UCPD_CCENABLE_CC2);
@@ -295,10 +297,10 @@ void HW_SignalDetachment(uint8_t PortNum)
   LL_UCPD_TxDMADisable(Ports[PortNum].husbpd);
   LL_UCPD_RxDisable(Ports[PortNum].husbpd);
 
-#ifndef _LOW_POWER
+#if !defined(_LOW_POWER) && !defined(USBPDM1_VCC_FEATURE_ENABLED)
   /* Enable only detection interrupt */
   WRITE_REG(Ports[PortNum].husbpd->IMR, UCPD_IMR_TYPECEVT1IE | UCPD_IMR_TYPECEVT2IE);
-#endif
+#endif /* !_LOW_POWER && !USBPDM1_VCC_FEATURE_ENABLED */
 
   USBPD_HW_DeInit_DMATxInstance(PortNum);
   USBPD_HW_DeInit_DMARxInstance(PortNum);
@@ -308,16 +310,14 @@ void HW_SignalDetachment(uint8_t PortNum)
   if (USBPD_PORTPOWERROLE_SNK == Ports[PortNum].params->PE_PowerRole)
   {
 #if defined(_VCONN_SUPPORT)
-    /* DeInitialize Vconn managment */
-  (void)BSP_USBPD_PWR_VCONNDeInit(PortNum, (Ports[PortNum].CCx == CC1) ? 1u : 2u);
+    /* DeInitialize Vconn management */
+    (void)BSP_USBPD_PWR_VCONNDeInit(PortNum, (Ports[PortNum].CCx == CC1) ? 1u : 2u);
 #endif
     /* DeInitialise VBUS power */
-  (void)BSP_USBPD_PWR_VBUSDeInit(PortNum);
+    (void)BSP_USBPD_PWR_VBUSDeInit(PortNum);
   }
 #endif /* !USBPDCORE_LIB_NO_PD */
-#if !defined(USBPDCORE_LIB_NO_PD)||defined(USBPD_TYPE_STATE_MACHINE)
   Ports[PortNum].CCx = CCNONE;
-#endif /* !USBPDCORE_LIB_NO_PD || USBPD_TYPE_STATE_MACHINE */
 #if !defined(USBPDCORE_LIB_NO_PD)
   /* DeInit timer to detect the reception of goodCRC */
   USBPD_TIM_DeInit();

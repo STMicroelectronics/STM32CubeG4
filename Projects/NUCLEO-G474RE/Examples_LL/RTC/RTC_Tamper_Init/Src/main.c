@@ -189,8 +189,6 @@ void SystemClock_Config(void)
   }
 
   LL_PWR_EnableBkUpAccess();
-  LL_RCC_ForceBackupDomainReset();
-  LL_RCC_ReleaseBackupDomainReset();
   LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSI, LL_RCC_PLLM_DIV_4, 85, LL_RCC_PLLR_DIV_2);
   LL_RCC_PLL_EnableDomain_SYS();
   LL_RCC_PLL_Enable();
@@ -219,7 +217,12 @@ void SystemClock_Config(void)
   LL_Init1msTick(170000000);
 
   LL_SetSystemCoreClock(170000000);
-  LL_RCC_SetRTCClockSource(LL_RCC_RTC_CLKSOURCE_LSI);
+  if(LL_RCC_GetRTCClockSource() != LL_RCC_RTC_CLKSOURCE_LSI)
+  {
+    LL_RCC_ForceBackupDomainReset();
+    LL_RCC_ReleaseBackupDomainReset();
+    LL_RCC_SetRTCClockSource(LL_RCC_RTC_CLKSOURCE_LSI);
+  }
   LL_RCC_EnableRTC();
 }
 
@@ -262,7 +265,6 @@ static void MX_RTC_Init(void)
   LL_RTC_TAMPER_SetPrecharge(RTC, LL_RTC_TAMPER_DURATION_1RTCCLK);
   LL_RTC_TAMPER_SetSamplingFreq(RTC, LL_RTC_TAMPER_SAMPLFREQDIV_32768);
   LL_RTC_TAMPER_DisableMask(RTC, LL_RTC_TAMPER_MASK_TAMPER1);
-  LL_RTC_EnableTamperOutput(RTC);
   LL_RTC_TAMPER_EnableEraseBKP(RTC, LL_RTC_TAMPER_NOERASE_TAMPER1);
   LL_RTC_TAMPER_EnablePullUp(RTC);
   /* USER CODE BEGIN RTC_Init 2 */

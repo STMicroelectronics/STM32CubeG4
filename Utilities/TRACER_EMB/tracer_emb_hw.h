@@ -33,10 +33,10 @@ void  HW_TRACER_EMB_DeInit(void);
 void  HW_TRACER_EMB_RegisterRxCallback(void (*callbackRX)(uint8_t, uint8_t));
 #if TRACER_EMB_DMA_MODE == 1UL
 void  HW_TRACER_EMB_IRQHandlerDMA(void);
-#endif
+#endif  /* TRACER_EMB_DMA_MODE == 1 */
 void  HW_TRACER_EMB_IRQHandlerUSART(void);
 void  HW_TRACER_EMB_StartRX(void);
-void  HW_TRACER_EMB_SendData(uint8_t *data, uint32_t size);
+void  HW_TRACER_EMB_SendData(const uint8_t *data, uint32_t size);
 uint8_t HW_TRACER_EMB_ReadData(void);
 
 #ifdef __cplusplus

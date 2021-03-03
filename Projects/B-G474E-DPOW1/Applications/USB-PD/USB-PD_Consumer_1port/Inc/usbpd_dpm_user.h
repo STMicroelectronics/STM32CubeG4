@@ -98,8 +98,8 @@ typedef struct
   * @{
   */
 USBPD_StatusTypeDef USBPD_DPM_UserInit(void);
-void                USBPD_DPM_UserCableDetection(uint8_t PortNum, USBPD_CAD_EVENT State);
 void                USBPD_DPM_WaitForTime(uint32_t Time);
+void                USBPD_DPM_UserCableDetection(uint8_t PortNum, USBPD_CAD_EVENT State);
 void                USBPD_DPM_UserTimerCounter(uint8_t PortNum);
 
 /**
@@ -118,6 +118,7 @@ void                USBPD_DPM_SNK_EvaluateCapabilities(uint8_t PortNum, uint32_t
 uint32_t            USBPD_DPM_SNK_EvaluateMatchWithSRCPDO(uint8_t PortNum, uint32_t SrcPDO, uint32_t* PtrRequestedVoltage, uint32_t* PtrRequestedPower);
 USBPD_StatusTypeDef USBPD_DPM_EvaluateVconnSwap(uint8_t PortNum);
 USBPD_StatusTypeDef USBPD_DPM_PE_VconnPwr(uint8_t PortNum, USBPD_FunctionalState State);
+void                USBPD_DPM_EnterErrorRecovery(uint8_t PortNum);
 USBPD_StatusTypeDef USBPD_DPM_EvaluateDataRoleSwap(uint8_t PortNum);
 USBPD_FunctionalState USBPD_DPM_IsPowerReady(uint8_t PortNum, USBPD_VSAFE_StatusTypeDef Vsafe);
 

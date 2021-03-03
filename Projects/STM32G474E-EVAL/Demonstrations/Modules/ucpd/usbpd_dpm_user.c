@@ -372,7 +372,7 @@ void USBPD_DPM_UserExecute(void const *argument)
 
 #if defined(USB_DEVICE) || defined(USB_HOST)
         /* This function is used only in the billboard case to start the AME delay */
-        #warning "to rework" 
+        #warning "to rework"
         DPM_USB_Start(USBPD_PORT_0);
 #endif /* USB_DEVICE || USB_HOST */
 
@@ -452,7 +452,7 @@ void USBPD_DPM_UserCableDetection(uint8_t PortNum, USBPD_CAD_EVENT State)
     }
 #endif /* _SRC || _DRP */
     DPM_Ports[PortNum].DPM_IsConnected = 1;
-    
+
 #if defined(_USB_DEVICE) || defined(_USB_HOST)
     DPM_USB_Start(PortNum);
 #endif
@@ -465,7 +465,7 @@ void USBPD_DPM_UserCableDetection(uint8_t PortNum, USBPD_CAD_EVENT State)
 #if defined(_USB_DEVICE) || defined(_USB_HOST)
     /* STOP must be executed before the DPM_Ports Reset */
     DPM_USB_Stop(PortNum);
-#endif    
+#endif
     /* reset all values received from port partner */
     memset(&DPM_Ports[PortNum], 0, sizeof(DPM_Ports[PortNum]));
 
@@ -755,7 +755,7 @@ void USBPD_DPM_Notification(uint8_t PortNum, USBPD_NotifyEventValue_TypeDef Even
            In this state, VBUS is set to 5V */
       }
       break;
-      
+
 #if defined(_USB_DEVICE) || defined(USB_HOST)
   case USBPD_NOTIFY_DATAROLESWAP_UFP :
   case USBPD_NOTIFY_DATAROLESWAP_DFP :
@@ -1626,7 +1626,6 @@ void USBPD_DPM_ExtendedMessageReceived(uint8_t PortNum, USBPD_ExtendedMsg_TypeDe
 }
 #endif /* USBPD_REV30_SUPPORT */
 
-#ifdef _ERROR_RECOVERY
 /**
   * @brief  DPM callback to allow PE to enter ERROR_RECOVERY state.
   * @param  PortNum Port number
@@ -1642,7 +1641,6 @@ void USBPD_DPM_EnterErrorRecovery(uint8_t PortNum)
   /* Inform CAD to enter recovery mode */
   USBPD_CAD_EnterErrorRecovery(PortNum);
 }
-#endif /* _ERROR_RECOVERY */
 
 /**
   * @brief  DPM callback used to know user choice about Data Role Swap.
@@ -3006,7 +3004,7 @@ void DPM_ManageAlert(void)
   */
 static USBPD_StatusTypeDef DPM_USB_Init(void)
 {
-#if defined (USB_BILLBOARD)   
+#if defined (USB_BILLBOARD)
 #if (USBD_BOS_ENABLED == 1)
   USBD_BB_AlternateModeTypeDef AlternateMode;
 
@@ -3036,7 +3034,7 @@ static USBPD_StatusTypeDef DPM_USB_Init(void)
   {
     return USBPD_ERROR;
   }
-  
+
   if(USBD_OK != USBD_RegisterClass(&hUsbDevice[USBPD_PORT_0], &USBD_BB))
   {
     return USBPD_ERROR;
@@ -3052,7 +3050,7 @@ static USBPD_StatusTypeDef DPM_USB_Init(void)
   /* Add Storage callbacks for MSC Class */
   USBD_MSC_RegisterStorage(&hUsbDevice[USBPD_PORT_0], &USBD_DISK_fops);
 #endif
-  
+
   for(uint8_t index = 0; index < USBPD_PORT_COUNT; index++)
   {
     DPM_Ports[index].DPM_USBState = 0;
@@ -3099,7 +3097,7 @@ void DPM_USB_Stop(uint32_t PortNum)
     DPM_Ports[PortNum].DPM_USBState = 0;
 #endif
   }
-  
+
   if(DPM_Ports[PortNum].DPM_USBState == 2)
   {
     /* Stop the host */

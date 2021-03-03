@@ -47,9 +47,9 @@
 /* USER CODE BEGIN PV */
 /* Variable to store PLL parameters */
 /* Configuration will allow to reach a SYSCLK frequency set to 170MHz:
-   Syst freq = ((HSI_VALUE / PLLM) * PLLN)/ PLLP)
+   Syst freq = ((HSI_VALUE / PLLM) * PLLN)/ PLLR)
                ((16MHz /4) * 85)/ 2)             = 170MHz             */
-LL_UTILS_PLLInitTypeDef sUTILS_PLLInitStruct = {LL_RCC_PLLM_DIV_4, 85, LL_RCC_PLLP_DIV_2};
+LL_UTILS_PLLInitTypeDef sUTILS_PLLInitStruct = {LL_RCC_PLLM_DIV_4, 85, LL_RCC_PLLR_DIV_2};
 
 
 /* Variable to store AHB and APB buses clock configuration */
@@ -99,9 +99,6 @@ int main(void)
   /* USER CODE BEGIN Init */
   /* System started with default clock used after reset */
   /* USER CODE END Init */
-
-  /* Configure the system clock */
-  SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
 

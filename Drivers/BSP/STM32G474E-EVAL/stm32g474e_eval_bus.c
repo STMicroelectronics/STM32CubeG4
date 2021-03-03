@@ -620,7 +620,7 @@ __weak HAL_StatusTypeDef MX_SPI2_Init(SPI_HandleTypeDef* phspi, uint32_t Baudrat
   * @param  Length Length of data in byte
   * @retval BSP status
   */
-int32_t BSP_SPI2_Send(uint8_t *pData, uint16_t Length)
+int32_t BSP_SPI2_Send(uint8_t *pData, uint32_t Length)
 {
   int32_t ret = BSP_ERROR_UNKNOWN_FAILURE;
 
@@ -637,7 +637,7 @@ int32_t BSP_SPI2_Send(uint8_t *pData, uint16_t Length)
   * @param  Length Length of data in byte
   * @retval BSP status
   */
-int32_t  BSP_SPI2_Recv(uint8_t *pData, uint16_t Length)
+int32_t  BSP_SPI2_Recv(uint8_t *pData, uint32_t Length)
 {
   int32_t ret = BSP_ERROR_UNKNOWN_FAILURE;
   uint32_t tx_data = 0xFFFFFFFFU;
@@ -656,7 +656,7 @@ int32_t  BSP_SPI2_Recv(uint8_t *pData, uint16_t Length)
   * @param  Length   Length of data in byte
   * @retval BSP status
   */
-int32_t BSP_SPI2_SendRecv(uint8_t *pTxData, uint8_t *pRxData, uint16_t Length)
+int32_t BSP_SPI2_SendRecv(uint8_t *pTxData, uint8_t *pRxData, uint32_t Length)
 {
   int32_t ret = BSP_ERROR_UNKNOWN_FAILURE;
 

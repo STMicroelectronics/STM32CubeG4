@@ -23,7 +23,7 @@
 
 #if TRACER_EMB_DMA_MODE == 1UL && TRACER_EMB_IT_MODE == 1UL
 #error "tracer emb hw please select DMA or IT mode"
-#endif
+#endif /* TRACER_EMB_DMA_MODE == 1 && TRACER_EMB_IT_MODE == 1 */
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private Defines -----------------------------------------------------------*/
@@ -108,20 +108,42 @@
 
 #define TRACER_EMB_READREG              LL_USART_ReadReg
 
-#endif
+#endif /* TRACER_EMB_IS_INSTANCE_LPUART_TYPE == 1 */
 
 #if defined(USART_ISR_RXNE_RXFNE)
 #define TRACER_EMB_FLAG_RXNE            USART_ISR_RXNE_RXFNE
-#else
+#elif defined(USART_ISR_RXNE)
 #define TRACER_EMB_FLAG_RXNE            USART_ISR_RXNE
+#else
+#define TRACER_EMB_FLAG_RXNE            USART_SR_RXNE
+#endif  /* USART_ISR_RXNE_RXFNE */
+#if defined(USART_CR1_TXEIE_TXFNFIE)
+#define TRACER_EMB_FLAG_TXE             USART_CR1_TXEIE_TXFNFIE
+#elif defined(USART_ISR_TXE)
+#define TRACER_EMB_FLAG_TXE             USART_ISR_TXE
+#else
+#define TRACER_EMB_FLAG_TXE             USART_SR_TXE
+#endif  /* USART_CR1_TXEIE_TXFNFIE */
+#if defined(USART_ISR_PE)
+#define TRACER_EMB_FLAG_PE              USART_ISR_PE
+#define TRACER_EMB_FLAG_FE              USART_ISR_FE
+#define TRACER_EMB_FLAG_ORE             USART_ISR_ORE
+#define TRACER_EMB_FLAG_NE              USART_ISR_NE
+#define TRACER_EMB_FLAG_TC              USART_ISR_TC
+#else
+#define TRACER_EMB_FLAG_PE              USART_SR_PE
+#define TRACER_EMB_FLAG_FE              USART_SR_FE
+#define TRACER_EMB_FLAG_ORE             USART_SR_ORE
+#define TRACER_EMB_FLAG_NE              USART_SR_NE
+#define TRACER_EMB_FLAG_TC              USART_SR_TC
 #endif  /* USART_ISR_RXNE_RXFNE */
 
 /* Private Variables ---------------------------------------------------------*/
 static void (*fptr_rx)(uint8_t, uint8_t) = NULL;
 #if TRACER_EMB_IT_MODE == 1UL
-  uint8_t *txData = NULL;
-  uint32_t txSize = 0;
-#endif
+uint8_t *txData = NULL;
+uint32_t txSize = 0;
+#endif /* TRACER_EMB_IT_MODE == 1 */
 
 /* Private function prototypes -----------------------------------------------*/
 /* Exported functions --------------------------------------------------------*/
@@ -159,7 +181,7 @@ void HW_TRACER_EMB_Init(void)
   TRACER_EMB_SET_CLK_SOURCE_USART();
 
 
-  if(IS_USART_INSTANCE(TRACER_EMB_USART_INSTANCE))
+  if (IS_USART_INSTANCE(TRACER_EMB_USART_INSTANCE))
   {
     /* Configure USART */
 
@@ -180,7 +202,7 @@ void HW_TRACER_EMB_Init(void)
     /*  - OverSampling        : LL_USART_OVERSAMPLING_16        */
 #if defined(USART_PRESC_PRESCALER)
     usart_initstruct.PrescalerValue      = LL_USART_PRESCALER_DIV1;
-#endif
+#endif /* USART_PRESC_PRESCALER */
     usart_initstruct.BaudRate            = TRACER_EMB_BAUDRATE;
     usart_initstruct.DataWidth           = LL_USART_DATAWIDTH_8B;
     usart_initstruct.StopBits            = LL_USART_STOPBITS_1;
@@ -190,16 +212,18 @@ void HW_TRACER_EMB_Init(void)
     usart_initstruct.OverSampling        = LL_USART_OVERSAMPLING_16;
 
     /* Initialize USART instance according to parameters defined in initialization structure */
-    LL_USART_Init(TRACER_EMB_USART_INSTANCE, &usart_initstruct);
+    (void)LL_USART_Init(TRACER_EMB_USART_INSTANCE, &usart_initstruct);
 
     LL_USART_Enable(TRACER_EMB_USART_INSTANCE);
 
+#if defined(USART_ISR_TEACK)
     uint32_t _temp1 = LL_USART_IsActiveFlag_TEACK(TRACER_EMB_USART_INSTANCE);
     /* Polling USART initialisation */
-    while(0u == _temp1)
+    while (_temp1 == 0U)
     {
       _temp1 = LL_USART_IsActiveFlag_TEACK(TRACER_EMB_USART_INSTANCE);
     }
+#endif /* USART_ISR_TEACK */
   }
 #if (TRACER_EMB_IS_INSTANCE_LPUART_TYPE == 1UL)
   else
@@ -222,7 +246,7 @@ void HW_TRACER_EMB_Init(void)
     /*  - OverSampling        : LL_USART_OVERSAMPLING_16        */
 #if defined(USART_PRESC_PRESCALER)
     lpuart_initstruct.PrescalerValue      = LL_USART_PRESCALER_DIV1;
-#endif
+#endif /* USART_PRESC_PRESCALER */
     lpuart_initstruct.BaudRate            = TRACER_EMB_BAUDRATE;
     lpuart_initstruct.DataWidth           = LL_USART_DATAWIDTH_8B;
     lpuart_initstruct.StopBits            = LL_USART_STOPBITS_1;
@@ -237,26 +261,37 @@ void HW_TRACER_EMB_Init(void)
 
     uint32_t _temp1 = LL_LPUART_IsActiveFlag_TEACK(TRACER_EMB_USART_INSTANCE);
     /* Polling USART initialisation */
-    while(0u == _temp1)
+    while (_temp1 == 0U)
     {
       _temp1 = LL_LPUART_IsActiveFlag_TEACK(TRACER_EMB_USART_INSTANCE);
     }
   }
-#endif
+#endif /* TRACER_EMB_IS_INSTANCE_LPUART_TYPE */
 
 #if TRACER_EMB_DMA_MODE == 1UL
   /* Configure TX DMA */
   TRACER_EMB_ENABLE_CLK_DMA();
 
   /* (3) Configure the DMA functional parameters for transmission */
-#if defined(GPDMA)
+#if defined(GPDMA1)
   LL_DMA_ConfigTransfer(TRACER_EMB_DMA_INSTANCE, TRACER_EMB_TX_DMA_CHANNEL,
-                        LL_DMA_SINC_INCREMENTED         |
-                        LL_DMA_DINC_FIXED               |
-                        LL_DMA_SRC_DATAWIDTH_BYTE       |
+                        LL_DMA_SRC_INCREMENT          |
+                        LL_DMA_DEST_FIXED             |
+                        LL_DMA_SRC_DATAWIDTH_BYTE     |
                         LL_DMA_DEST_DATAWIDTH_BYTE);
 
-  LL_DMA_SetHardwareRequest(TRACER_EMB_DMA_INSTANCE, TRACER_EMB_TX_DMA_CHANNEL, TRACER_EMB_TX_DMA_REQUEST);
+  LL_DMA_SetPeriphRequest(TRACER_EMB_DMA_INSTANCE, TRACER_EMB_TX_DMA_CHANNEL, TRACER_EMB_TX_DMA_REQUEST);
+
+#elif defined(DMA_SxCR_CHSEL)
+  LL_DMA_SetChannelSelection(TRACER_EMB_DMA_INSTANCE, TRACER_EMB_TX_DMA_STREAM, TRACER_EMB_TX_DMA_CHANNEL);
+  LL_DMA_ConfigTransfer(TRACER_EMB_DMA_INSTANCE, TRACER_EMB_TX_DMA_STREAM,
+                        LL_DMA_DIRECTION_MEMORY_TO_PERIPH |
+                        LL_DMA_PRIORITY_HIGH              |
+                        LL_DMA_MODE_NORMAL                |
+                        LL_DMA_PERIPH_NOINCREMENT         |
+                        LL_DMA_MEMORY_INCREMENT           |
+                        LL_DMA_PDATAALIGN_BYTE            |
+                        LL_DMA_MDATAALIGN_BYTE);
 #else
   LL_DMA_ConfigTransfer(TRACER_EMB_DMA_INSTANCE, TRACER_EMB_TX_DMA_CHANNEL,
                         LL_DMA_DIRECTION_MEMORY_TO_PERIPH |
@@ -269,23 +304,38 @@ void HW_TRACER_EMB_Init(void)
 
 #if defined(DMAMUX_CxCR_DMAREQ_ID)
   LL_DMA_SetPeriphRequest(TRACER_EMB_DMA_INSTANCE, TRACER_EMB_TX_DMA_CHANNEL, TRACER_EMB_TX_DMA_REQUEST);
-#endif
-#endif /* GPDMA */
+#endif /* DMAMUX_CxCR_DMAREQ_ID */
 
+#endif /* GPDMA1 */
+
+#if defined(DMA_SxCR_CHSEL)
+  LL_DMA_EnableIT_TC(TRACER_EMB_DMA_INSTANCE, TRACER_EMB_TX_DMA_STREAM);
+#else
   LL_DMA_EnableIT_TC(TRACER_EMB_DMA_INSTANCE, TRACER_EMB_TX_DMA_CHANNEL);
-#endif
+#endif /* DMA_SxCR_CHSEL */
+
+#endif /* TRACER_EMB_DMA_MODE == 1*/
 
   /* Configure the interrupt for TX */
 #if TRACER_EMB_DMA_MODE == 1UL
+#ifdef TRACER_EMB_TX_DMA_PRIORITY
+  NVIC_SetPriority(TRACER_EMB_TX_DMA_IRQ, TRACER_EMB_TX_DMA_PRIORITY);
+  NVIC_EnableIRQ(TRACER_EMB_TX_DMA_IRQ);
+#else
   NVIC_SetPriority(TRACER_EMB_TX_DMA_IRQ, 0);
   NVIC_EnableIRQ(TRACER_EMB_TX_DMA_IRQ);
-#endif
-
+#endif /* TRACER_EMB_TX_DMA_PRIORITY */
+#endif /* TRACER_EMB_DMA_MODE == 1 */
+#ifdef TRACER_EMB_TX_IRQ_PRIORITY
+  NVIC_SetPriority(TRACER_EMB_USART_IRQ, TRACER_EMB_TX_IRQ_PRIORITY);
+  NVIC_EnableIRQ(TRACER_EMB_USART_IRQ);
+#else
   NVIC_SetPriority(TRACER_EMB_USART_IRQ, 3);
   NVIC_EnableIRQ(TRACER_EMB_USART_IRQ);
+#endif /* TRACER_EMB_TX_IRQ_PRIORITY */
 
   /* Disable the UART */
-  if(NULL == fptr_rx)
+  if (fptr_rx == NULL)
   {
     TRACER_EMB_DISABLE_CLK_USART();
   }
@@ -338,13 +388,13 @@ void HW_TRACER_EMB_StartRX(void)
   */
 void HW_TRACER_EMB_IRQHandlerDMA(void)
 {
-  if (1UL == TRACER_EMB_TX_DMA_ACTIVE_FLAG(TRACER_EMB_DMA_INSTANCE))
+  if (TRACER_EMB_TX_DMA_ACTIVE_FLAG(TRACER_EMB_DMA_INSTANCE) == 1UL)
   {
     TRACER_EMB_ENABLE_IT_TC(TRACER_EMB_USART_INSTANCE);
     TRACER_EMB_TX_DMA_CLEAR_FLAG(TRACER_EMB_DMA_INSTANCE);
   }
 }
-#endif
+#endif /* TRACER_EMB_DMA_MODE == 1 */
 
 /**
   * @brief  USART/LPUART IRQ Handler
@@ -352,28 +402,33 @@ void HW_TRACER_EMB_IRQHandlerDMA(void)
   */
 void HW_TRACER_EMB_IRQHandlerUSART(void)
 {
-  uint32_t _temp1, _temp2;
+  uint32_t _temp1;
+  uint32_t  _temp2;
   uint32_t _isrflags;
   uint32_t _errorflags;
   uint8_t _error = 0U;
 
   /* Load ISR in local variable */
+#if defined(USART_ISR_TC)
   _isrflags = TRACER_EMB_READREG(TRACER_EMB_USART_INSTANCE, ISR);
+#else
+  _isrflags = TRACER_EMB_READREG(TRACER_EMB_USART_INSTANCE, SR);
+#endif  /* USART_ISR_TC */
 
   /* Ready to read received char if any */
   _temp1 = TRACER_EMB_ISENABLEDIT_RXNE(TRACER_EMB_USART_INSTANCE);
 
   /* If Reception is ongoing */
-  if (1UL == _temp1)
+  if (_temp1 == 1UL)
   {
     /* Reception is active : check if new byte is received */
     __IO uint32_t received_char;
 
-    _errorflags = ((_isrflags) & (USART_ISR_PE | USART_ISR_FE | USART_ISR_NE | USART_ISR_ORE));
+    _errorflags = ((_isrflags) & (TRACER_EMB_FLAG_PE | TRACER_EMB_FLAG_FE | TRACER_EMB_FLAG_NE | TRACER_EMB_FLAG_ORE));
 
     /* Check if RXNE flag is set : new byte is stored in DR */
-    if (  ((TRACER_EMB_FLAG_RXNE) == ((_isrflags) & (TRACER_EMB_FLAG_RXNE)))
-        &&(0UL == _errorflags) )
+    if (((TRACER_EMB_FLAG_RXNE) == ((_isrflags) & (TRACER_EMB_FLAG_RXNE)))
+        && (_errorflags == 0UL))
     {
       /* Read Received character. RXNE flag is cleared by reading of RDR register */
       received_char = TRACER_EMB_RECEIVE_DATA8(TRACER_EMB_USART_INSTANCE);
@@ -384,7 +439,7 @@ void HW_TRACER_EMB_IRQHandlerUSART(void)
       }
       return;
     }
-    else if (0UL != _errorflags)
+    else if (_errorflags != 0UL)
     {
       /* Error has been detected */
 
@@ -403,8 +458,8 @@ void HW_TRACER_EMB_IRQHandlerUSART(void)
 
       /* Parity error    */
       _temp2 = TRACER_EMB_ISENABLEDIT_PE(TRACER_EMB_USART_INSTANCE);
-      if (  (1U == _temp2)
-          &&(USART_ISR_PE == ((_errorflags) & (USART_ISR_PE))) )
+      if ((_temp2 == 1U)
+          && (TRACER_EMB_FLAG_PE == ((_errorflags) & (TRACER_EMB_FLAG_PE))))
       {
         /* Flags clearing */
         TRACER_EMB_CLEARFLAG_PE(TRACER_EMB_USART_INSTANCE);
@@ -413,10 +468,10 @@ void HW_TRACER_EMB_IRQHandlerUSART(void)
 
       /* Generic Errors*/
       _temp2 = TRACER_EMB_ISENABLEDIT_ERROR(TRACER_EMB_USART_INSTANCE);
-      if (1U == _temp2)
+      if (_temp2 == 1U)
       {
         /* Framing error   */
-        if (USART_ISR_FE == ((_errorflags) & (USART_ISR_FE)))
+        if (TRACER_EMB_FLAG_FE == ((_errorflags) & (TRACER_EMB_FLAG_FE)))
         {
           /* Flags clearing */
           TRACER_EMB_CLEARFLAG_FE(TRACER_EMB_USART_INSTANCE);
@@ -424,7 +479,7 @@ void HW_TRACER_EMB_IRQHandlerUSART(void)
         }
 
         /* Overrun error   */
-        if (USART_ISR_ORE == ((_errorflags) & (USART_ISR_ORE)))
+        if (TRACER_EMB_FLAG_ORE == ((_errorflags) & (TRACER_EMB_FLAG_ORE)))
         {
           /* Flags clearing */
           TRACER_EMB_CLEARFLAG_ORE(TRACER_EMB_USART_INSTANCE);
@@ -432,7 +487,7 @@ void HW_TRACER_EMB_IRQHandlerUSART(void)
         }
 
         /* Noise detection */
-        if (USART_ISR_NE == ((_errorflags) & (USART_ISR_NE)))
+        if (TRACER_EMB_FLAG_NE == ((_errorflags) & (TRACER_EMB_FLAG_NE)))
         {
           /* Flags clearing */
           TRACER_EMB_CLEARFLAG_NE(TRACER_EMB_USART_INSTANCE);
@@ -440,7 +495,7 @@ void HW_TRACER_EMB_IRQHandlerUSART(void)
         }
       }
 
-      if ((1U == _error) && (fptr_rx != NULL))
+      if ((_error == 1U) && (fptr_rx != NULL))
       {
         fptr_rx(1U, 1U);  /* 1 indicate a reception error */
       }
@@ -454,7 +509,7 @@ void HW_TRACER_EMB_IRQHandlerUSART(void)
 #if TRACER_EMB_IT_MODE == 1UL
   /* Ready to handle TXE interrupt */
   _temp2 = TRACER_EMB_ISENABLEDIT_TXE(TRACER_EMB_USART_INSTANCE);
-  if (((USART_ISR_TXE) == ((_isrflags) & (USART_ISR_TXE))) && (1UL == _temp2))
+  if (((TRACER_EMB_FLAG_TXE) == ((_isrflags) & (TRACER_EMB_FLAG_TXE))) && (_temp2 == 1UL))
   {
     /* Write data inside the data register */
     TRACER_EMB_TRANSMIT_DATA8(TRACER_EMB_USART_INSTANCE, *txData);
@@ -464,7 +519,7 @@ void HW_TRACER_EMB_IRQHandlerUSART(void)
     {
       TRACER_EMB_DISABLEIT_TXE(TRACER_EMB_USART_INSTANCE);
 
-      if(NULL == fptr_rx)
+      if (NULL == fptr_rx)
       {
         TRACER_EMB_DISABLE_CLK_USART();
       }
@@ -472,24 +527,28 @@ void HW_TRACER_EMB_IRQHandlerUSART(void)
       TRACER_EMB_CALLBACK_TX();
     }
   }
-#endif
+#endif /* TRACER_EMB_IT_MODE == 1 */
 
 #if  (TRACER_EMB_DMA_MODE == 1UL)
   /* Ready to handle TC interrupt */
   _temp2 = TRACER_EMB_ISENABLEDIT_TC(TRACER_EMB_USART_INSTANCE);
-  if (((USART_ISR_TC) == ((_isrflags) & (USART_ISR_TC))) && (1UL == _temp2))
+  if (((TRACER_EMB_FLAG_TC) == ((_isrflags) & (TRACER_EMB_FLAG_TC))) && (_temp2 == 1UL))
   {
     TRACER_EMB_DISABLEIT_TC(TRACER_EMB_USART_INSTANCE);
     TRACER_EMB_CLEARFLAG_TC(TRACER_EMB_USART_INSTANCE);
+#if defined(DMA_SxCR_CHSEL)
+    TRACER_EMB_DISABLESTREAM(TRACER_EMB_DMA_INSTANCE, TRACER_EMB_TX_DMA_STREAM);
+#else
     TRACER_EMB_DISABLECHANNEL(TRACER_EMB_DMA_INSTANCE, TRACER_EMB_TX_DMA_CHANNEL);
-    if(NULL == fptr_rx)
+#endif /* DMA_SxCR_CHSEL */
+    if (fptr_rx == NULL)
     {
       TRACER_EMB_DISABLE_CLK_USART();
     }
     /* call the callback */
     TRACER_EMB_CALLBACK_TX();
   }
-#endif
+#endif /* TRACER_EMB_DMA_MODE == 1 */
 
 }
 
@@ -499,40 +558,59 @@ void HW_TRACER_EMB_IRQHandlerUSART(void)
   * @param data size
   * @retval none
   */
-void HW_TRACER_EMB_SendData(uint8_t *pData, uint32_t Size)
+void HW_TRACER_EMB_SendData(const uint8_t *pData, uint32_t Size)
 {
   /* enable the USART */
   TRACER_EMB_ENABLE_CLK_USART();
 
 #if TRACER_EMB_DMA_MODE == 1UL
+#if defined(GPDMA1)
   LL_DMA_ConfigAddresses(TRACER_EMB_DMA_INSTANCE, TRACER_EMB_TX_DMA_CHANNEL,
                          (uint32_t)pData,
-                         TRACER_EMB_DMA_GETREGADDR(TRACER_EMB_USART_INSTANCE, LL_USART_DMA_REG_DATA_TRANSMIT)
-#if !defined(GPDMA)
-                         ,LL_DMA_GetDataTransferDirection(TRACER_EMB_DMA_INSTANCE, TRACER_EMB_TX_DMA_CHANNEL)
-#endif
-                         );
-#if defined(GPDMA)
-  LL_DMA_SetBlockDataLength(TRACER_EMB_DMA_INSTANCE, TRACER_EMB_TX_DMA_CHANNEL, Size);
-#else
-  LL_DMA_SetDataLength(TRACER_EMB_DMA_INSTANCE, TRACER_EMB_TX_DMA_CHANNEL, Size);
-#endif /* GPDMA */
+                         TRACER_EMB_DMA_GETREGADDR(TRACER_EMB_USART_INSTANCE, LL_USART_DMA_REG_DATA_TRANSMIT));
+  LL_DMA_SetBlkDataLength(TRACER_EMB_DMA_INSTANCE, TRACER_EMB_TX_DMA_CHANNEL, Size);
 
   /* Enable DMA TX Interrupt */
   TRACER_EMB_ENABLEDMAREQ_TX(TRACER_EMB_USART_INSTANCE);
 
-  /* Enable DMA Channel Rx */
+  /* Enable DMA Channel Tx */
+  LL_DMA_EnableChannel(TRACER_EMB_DMA_INSTANCE, TRACER_EMB_TX_DMA_CHANNEL);
   TRACER_EMB_ENABLECHANNEL(TRACER_EMB_DMA_INSTANCE, TRACER_EMB_TX_DMA_CHANNEL);
-#endif
+#elif defined(DMA_SxCR_CHSEL)
+  LL_DMA_ConfigAddresses(TRACER_EMB_DMA_INSTANCE, TRACER_EMB_TX_DMA_STREAM,
+                         (uint32_t)pData,
+                         TRACER_EMB_DMA_GETREGADDR(TRACER_EMB_USART_INSTANCE),
+                         LL_DMA_GetDataTransferDirection(TRACER_EMB_DMA_INSTANCE, TRACER_EMB_TX_DMA_STREAM));
+  LL_DMA_SetDataLength(TRACER_EMB_DMA_INSTANCE, TRACER_EMB_TX_DMA_STREAM, Size);
+
+  /* Enable DMA TX Interrupt */
+  TRACER_EMB_ENABLEDMAREQ_TX(TRACER_EMB_USART_INSTANCE);
+
+  /* Enable DMA Channel Tx */
+  TRACER_EMB_ENABLESTREAM(TRACER_EMB_DMA_INSTANCE, TRACER_EMB_TX_DMA_STREAM);
+#else
+  LL_DMA_ConfigAddresses(TRACER_EMB_DMA_INSTANCE, TRACER_EMB_TX_DMA_CHANNEL,
+                         (uint32_t)pData,
+                         TRACER_EMB_DMA_GETREGADDR(TRACER_EMB_USART_INSTANCE, LL_USART_DMA_REG_DATA_TRANSMIT),
+                         LL_DMA_GetDataTransferDirection(TRACER_EMB_DMA_INSTANCE, TRACER_EMB_TX_DMA_CHANNEL));
+  LL_DMA_SetDataLength(TRACER_EMB_DMA_INSTANCE, TRACER_EMB_TX_DMA_CHANNEL, Size);
+
+  /* Enable DMA TX Interrupt */
+  TRACER_EMB_ENABLEDMAREQ_TX(TRACER_EMB_USART_INSTANCE);
+
+  /* Enable DMA Channel Tx */
+  TRACER_EMB_ENABLECHANNEL(TRACER_EMB_DMA_INSTANCE, TRACER_EMB_TX_DMA_CHANNEL);
+#endif /* GPDMA1 */
+#endif /* TRACER_EMB_DMA_MODE == 1 */
 
 #if TRACER_EMB_IT_MODE == 1UL
-  /* keep information about the data to transfert */
-  txData = pData;
+  /* keep information about the data to transfer */
+  txData = (uint8_t *)pData;
   txSize = Size;
 
   /* Enable the TXEIE */
   TRACER_EMB_ENABLE_IT_TXE(TRACER_EMB_USART_INSTANCE);
-#endif
+#endif /* TRACER_EMB_IT_MODE == 1 */
 }
 
 /**

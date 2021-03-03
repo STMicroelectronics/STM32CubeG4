@@ -36,9 +36,10 @@ FDCAN_FilterTypeDef sFilterConfig;
 FDCAN_TxHeaderTypeDef TxHeader;
 FDCAN_RxHeaderTypeDef RxHeader;
 
-extern uint8_t RxData[1156];
-
 /* Exported variables --------------------------------------------------------*/
+uint8_t TxData[FDCAN_RAM_BUFFER_SIZE];
+uint8_t RxData[FDCAN_RAM_BUFFER_SIZE];
+
 /* Private function prototypes -----------------------------------------------*/
 static void OPENBL_FDCAN_Init(void);
 

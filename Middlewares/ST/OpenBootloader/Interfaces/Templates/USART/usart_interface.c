@@ -6,23 +6,21 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
-  * This software component is licensed by ST under Image license SLA0044,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                       www.st.com/SLA0044
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
   *
   ******************************************************************************
   */
 
 /* Includes ------------------------------------------------------------------*/
 #include "platform.h"
-
 #include "openbl_core.h"
 #include "openbl_usart_cmd.h"
-
 #include "usart_interface.h"
 #include "iwdg_interface.h"
 #include "interfaces_conf.h"
@@ -57,8 +55,7 @@ void OPENBL_USART_Configuration(void)
  */
 uint8_t OPENBL_USART_ProtocolDetection(void)
 {
-  uint8_t detected = 0;
-
+  uint8_t detected;
   return detected;
 }
 
@@ -69,7 +66,6 @@ uint8_t OPENBL_USART_ProtocolDetection(void)
 uint8_t OPENBL_USART_GetCommandOpcode(void)
 {
   uint8_t command_opc = 0x0;
-
   return command_opc;
 }
 
@@ -79,7 +75,7 @@ uint8_t OPENBL_USART_GetCommandOpcode(void)
   */
 uint8_t OPENBL_USART_ReadByte(void)
 {
-  return 0;
+  return LL_USART_ReceiveData8(USARTx);
 }
 
 /**

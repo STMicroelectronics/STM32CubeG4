@@ -41,7 +41,7 @@
 /* USER CODE END 1 */
 
 /* USBPD init function */
-void MX_USBPD_Init(void);
+void            MX_USBPD_Init(void);
 
 /* USER CODE BEGIN 2 */
 /* USER CODE END 2 */

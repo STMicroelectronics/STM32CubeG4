@@ -181,9 +181,9 @@ HAL_StatusTypeDef MX_I2C3_Init(I2C_HandleTypeDef *phi2c, uint32_t timing);
 
 int32_t BSP_SPI2_Init(void);
 int32_t BSP_SPI2_DeInit(void);
-int32_t BSP_SPI2_Send(uint8_t *pData, uint16_t Length);
-int32_t BSP_SPI2_Recv(uint8_t *pData, uint16_t Length);
-int32_t BSP_SPI2_SendRecv(uint8_t *pTxData, uint8_t *pRxData, uint16_t Length);
+int32_t BSP_SPI2_Send(uint8_t *pData, uint32_t Length);
+int32_t BSP_SPI2_Recv(uint8_t *pData, uint32_t Length);
+int32_t BSP_SPI2_SendRecv(uint8_t *pTxData, uint8_t *pRxData, uint32_t Length);
 
 #if (USE_HAL_SPI_REGISTER_CALLBACKS == 1)
 int32_t BSP_SPI2_RegisterDefaultMspCallbacks (void);
