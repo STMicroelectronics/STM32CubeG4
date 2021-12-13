@@ -3123,4 +3123,4 @@ void DPM_USB_Stop(uint32_t PortNum)
   * @}
   */
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+

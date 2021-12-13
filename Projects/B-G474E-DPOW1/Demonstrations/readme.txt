@@ -1,5 +1,5 @@
 /**
-  @page Demo   Demo B-G474E-DPOW1
+  @page Demonstrations  Demo B-G474E-DPOW1
 
   @verbatim
   ******************************************************************************
@@ -7,14 +7,14 @@
   * @author  MCD Application Team
   * @brief   Description of B-G474E-DPOW1 Demo
   ******************************************************************************
+  * @attention
   *
   * Copyright (c) 2019 STMicroelectronics.
   * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   @endverbatim
@@ -48,6 +48,10 @@ Document is available here : http://www.st.com/st-web-ui/static/active/en/resour
 @note The application needs to ensure that the SysTick time base is always set to
       1 millisecond to have correct HAL operation.
 
+@par Keywords
+
+Demonstrations, Configuration, Initialization, Reset, STM32 Cortex-M device
+
 @par Hardware and Software environment
 
   - This demonstration runs on B-G474E-DPOW1 board (MB11428 revB)
@@ -59,5 +63,4 @@ In order to make the program work, you must do the following :
  - Rebuild all files and load your image into target memory
  - Run the example
 
- * <h3><center>&copy; COPYRIGHT STMicroelectronics</center></h3>
  */

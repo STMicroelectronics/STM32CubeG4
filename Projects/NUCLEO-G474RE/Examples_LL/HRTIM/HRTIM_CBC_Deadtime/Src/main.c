@@ -6,13 +6,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2019 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -270,6 +269,7 @@ static void MX_HRTIM1_Init(void)
   LL_HRTIM_TIM_DisableDeadTime(HRTIM1, LL_HRTIM_TIMER_D);
   LL_HRTIM_TIM_SetBurstModeOption(HRTIM1, LL_HRTIM_TIMER_D, LL_HRTIM_BURSTMODE_MAINTAINCLOCK);
   LL_HRTIM_ForceUpdate(HRTIM1, LL_HRTIM_TIMER_D);
+  LL_HRTIM_TIM_EnableResyncUpdate(HRTIM1, LL_HRTIM_TIMER_D);
   LL_HRTIM_TIM_SetCompare1(HRTIM1, LL_HRTIM_TIMER_D, DEADTIME);
   LL_HRTIM_TIM_SetCompareMode(HRTIM1, LL_HRTIM_TIMER_D, LL_HRTIM_COMPAREUNIT_2, LL_HRTIM_COMPAREMODE_DELAY_CMP3);
   LL_HRTIM_TIM_SetCompare2(HRTIM1, LL_HRTIM_TIMER_D, DEADTIME);
@@ -389,4 +389,3 @@ void assert_failed(uint8_t *file, uint32_t line)
 }
 #endif /* USE_FULL_ASSERT */
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

@@ -7,13 +7,14 @@
   * @author  MCD Application Team
   * @brief   Description of the OPAMP_PGA example.
   ******************************************************************************
+  * @attention
   *
-  * Copyright (c) 2020 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2020 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                       opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   @endverbatim
@@ -48,7 +49,7 @@ This example shows how to use the built-in PGA mode (OPAMP programmable gain).
       - Connect an oscilloscope to (OPAMP3_OUT, PB1: pin 24 on connector CN10) pin to display waveform  
         (OPAMP output)
       - Press User push-button button to switch between steps.
-      - Connect a wire between DAC output (PA4 - pin 32 on connector CN7) to OPAMP non inverting input (PB0 - pin 34 on connector CN7)
+      - Connect a wire between DAC output (PA4 - pin 32 on connector CN7) to OPAMP non inverting input (PA1 - pin 30 on connector CN7)
 
 @par Keywords
 
@@ -81,6 +82,5 @@ In order to make the program work, you must do the following :
  - Rebuild all files and load your image into target memory
  - Run the example
   
- * <h3><center>&copy; COPYRIGHT STMicroelectronics</center></h3>
  */
 

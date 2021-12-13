@@ -1,5 +1,5 @@
 /**
-  @page Demo Demo NUCLEO-G431KB Rev A
+  @page Led_Jumper Demo NUCLEO-G431KB Rev A
 
   @verbatim
   ********************* COPYRIGHT(c) 2019 STMicroelectronics *******************
@@ -7,13 +7,14 @@
   * @author  MCD Application Team
   * @brief   Description of the NUCLEO-G431KB Rev A Demo.
   ******************************************************************************
+  * @attention
   *
-  * Copyright (c) 2019 STMicroelectronics. All rights reserved.
+  * Copyright (c) 2019 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under Ultimate Liberty license
-  * SLA0044, the "License"; You may not use this file except in compliance with
-  * the License. You may obtain a copy of the License at:
-  *                               www.st.com/SLA0044
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   @endverbatim
@@ -45,6 +46,10 @@ This is done in an infinite loop.
 @note The application need to ensure that the SysTick time base is always set to
       1 millisecond to have correct HAL operation.
 
+@par Keywords
+
+Demonstrations, Configuration, Initialization, Reset, STM32 Cortex-M device, Jumper, LED
+
 @par Directory contents
 
   - Led_Jumper/Src/main.c                     Main program
@@ -69,5 +74,4 @@ In order to make the program work, you must do the following :
  - Rebuild all files and load your image into target memory
  - Run the example
 
- * <h3><center>&copy; COPYRIGHT STMicroelectronics</center></h3>
  */
