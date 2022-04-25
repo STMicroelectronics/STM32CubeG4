@@ -1,21 +1,27 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * File Name          : stm32g4xx_hal_msp.c
-  * Description        : This file provides code for the MSP Initialization 
-  *                      and de-Initialization codes.
+  * @file         stm32g4xx_hal_msp.c
+  * @author       STMicroelectronics
+  * @brief        Hardware abstraction layer of MSP
+  * @details      This file provides code for the MSP Initialization 
+  *               and de-Initialization codes.
   ******************************************************************************
-  * @attention
   *
-  * Copyright (c) 2019 STMicroelectronics.
+  * Copyright (c) 2022 STMicroelectronics.
   * All rights reserved.
   *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
+  * This software is licensed under terms that can be found in the LICENSE file in
+  * the root directory of this software component.
   * If no LICENSE file comes with this software, it is provided AS-IS.
-  *
   ******************************************************************************
-  */
+  *
+ * @history Date       Version Person  Change
+ * @history ---------- ------- ------- ----------------------------------------
+  * @history 2020-02-14 1.0     PBo     Created with the support of Biricha Digital Power LTd
+  * @history 2022-01-04 1.0     RGo     Header modifications
+ */
+
 /* USER CODE END Header */
 
 /* Includes ------------------------------------------------------------------*/
@@ -98,6 +104,7 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* hadc)
   /* USER CODE BEGIN ADC1_MspInit 0 */
 
   /* USER CODE END ADC1_MspInit 0 */
+
   /** Initializes the peripherals clocks
   */
     PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_ADC12;
@@ -324,6 +331,7 @@ void HAL_RTC_MspInit(RTC_HandleTypeDef* hrtc)
   /* USER CODE BEGIN RTC_MspInit 0 */
 
   /* USER CODE END RTC_MspInit 0 */
+
   /** Initializes the peripherals clocks
   */
     PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_RTC;
@@ -369,4 +377,3 @@ void HAL_RTC_MspDeInit(RTC_HandleTypeDef* hrtc)
 /* USER CODE BEGIN 1 */
 
 /* USER CODE END 1 */
-

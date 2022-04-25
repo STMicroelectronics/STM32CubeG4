@@ -1,21 +1,26 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file           : main.h
-  * @brief          : Header for main.c file.
-  *                   This file contains the common defines of the application.
+  * @file         main.h
+  * @author       STMicroelectronics
+  * @brief        Header for main.c file.
+  * @details      This file contains the common defines of the application.
   ******************************************************************************
-  * @attention
   *
-  * Copyright (c) 2019 STMicroelectronics.
+  * Copyright (c) 2022 STMicroelectronics.
   * All rights reserved.
   *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
+  * This software is licensed under terms that can be found in the LICENSE file in
+  * the root directory of this software component.
   * If no LICENSE file comes with this software, it is provided AS-IS.
-  *
   ******************************************************************************
-  */
+  *
+ * @history Date       Version Person  Change
+ * @history ---------- ------- ------- ----------------------------------------
+  * @history 2020-02-14 1.0     PBo     Created with the support of Biricha Digital Power LTd
+  * @history 2022-01-04 1.0     RGo     Header modifications
+ */
+
 /* USER CODE END Header */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
@@ -32,7 +37,6 @@ extern "C" {
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "app_dpow.h"
-#include "HW_3p3z_controller.h"
 
 /* USER CODE END Includes */
 

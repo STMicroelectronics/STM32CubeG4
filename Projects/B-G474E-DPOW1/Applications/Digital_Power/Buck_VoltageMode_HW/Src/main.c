@@ -1,27 +1,35 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file           : main.c
-  * @brief          : Main program body
+  * @file         main.c
+  * @author       STMicroelectronics
+  * @brief        Main program body
+  * @details      This file provides main function and peripheral init 
+  *               functions
   ******************************************************************************
-  * @attention
   *
-  * Copyright (c) 2019 STMicroelectronics.
+  * Copyright (c) 2022 STMicroelectronics.
   * All rights reserved.
   *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
+  * This software is licensed under terms that can be found in the LICENSE file in
+  * the root directory of this software component.
   * If no LICENSE file comes with this software, it is provided AS-IS.
-  *
   ******************************************************************************
-  */
+  *
+ * @history Date       Version Person  Change
+ * @history ---------- ------- ------- ----------------------------------------
+  * @history 2020-02-14 1.0     PBo     Created with the support of Biricha Digital Power LTd
+  * @history 2022-01-04 1.0     RGo     Header modifications
+  * @history 2022-01-10 2.0     NSa     Moved Systick_Handler to ISR file and Load_Handler to 
+  *                                     app code file
+ */
+
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-//#include "../Src/app_dpow.c" //include functions for board
 #include "stm32g4xx_it.h"
 /* USER CODE END Includes */
 
@@ -32,7 +40,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-//#define RUN_OPEN_LOOP
+// #define RUN_OPEN_LOOP
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -69,7 +77,6 @@ uint16_t ExpectedCalculatedOutputSize = (uint16_t) 1;
 uint32_t *Fmac_Wdata;
 int16_t Fmac_output;
 int16_t bTransient = 0;
-extern G4_Demo_t Demo;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -86,73 +93,7 @@ static void MX_FMAC_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-/**
-  * @brief This function handles the loads.
-  */
-void LoadHandler(void)
-{
-  switch (Demo.NbrActiveLoad)
-  {
-  case 2:
-    /* Enable Load_1 */
-    HAL_GPIO_WritePin(GPIOC, BUCKBOOST_LOAD_1_Pin, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(GPIOB, LED_RIGHT_GREEN_Pin, GPIO_PIN_SET);    
-    /* Enable Load_2 */
-    HAL_GPIO_WritePin(GPIOC, BUCKBOOST_LOAD_2_Pin, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(GPIOB, LED_LEFT_ORANGE_Pin, GPIO_PIN_SET);
-    break;
-  case 1:
-    /* Enable Load_1 */
-    HAL_GPIO_WritePin(GPIOC, BUCKBOOST_LOAD_1_Pin, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(GPIOB, LED_RIGHT_GREEN_Pin, GPIO_PIN_SET);
-    /* Disable Load_2 */
-    HAL_GPIO_WritePin(GPIOC, BUCKBOOST_LOAD_2_Pin, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(GPIOB, LED_LEFT_ORANGE_Pin, GPIO_PIN_RESET);
-    break;
-  case 0:
-  default:
-    /* Disable Load_1 */
-    HAL_GPIO_WritePin(GPIOC, BUCKBOOST_LOAD_1_Pin, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(GPIOB, LED_RIGHT_GREEN_Pin, GPIO_PIN_RESET);
-    /* Disable Load_2 */    
-    HAL_GPIO_WritePin(GPIOC, BUCKBOOST_LOAD_2_Pin, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(GPIOB, LED_LEFT_ORANGE_Pin, GPIO_PIN_RESET);
-    break;
-  }
-}
 
-/**
-  * @brief This function handles System tick timer.
-  */
-void SysTick_Handler(void)
-{
-  /* USER CODE BEGIN SysTick_IRQn 0 */
-  
-  // If ~512 ms has elapsed, check if we are doing transient load mode
-  // and run the load handler
-  if (0 == HAL_GetTick() % 512)
-  {
-    if (Demo.bTransient == 1)
-    {
-      if (Demo.NbrActiveLoad == 1)
-      {
-        Demo.NbrActiveLoad = 2;
-      }
-      else 
-      {
-        Demo.NbrActiveLoad = 1;
-      }     
-      
-      LoadHandler();
-    }
-  }
-
-  /* USER CODE END SysTick_IRQn 0 */
-  HAL_IncTick();
-  /* USER CODE BEGIN SysTick_IRQn 1 */
-
-  /* USER CODE END SysTick_IRQn 1 */
-}
 /* USER CODE END 0 */
 
 /**
@@ -294,6 +235,7 @@ void SystemClock_Config(void)
   /** Configure the main internal regulator output voltage
   */
   HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1_BOOST);
+
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
@@ -312,6 +254,7 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+
   /** Initializes the CPU, AHB and APB buses clocks
   */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
@@ -345,6 +288,7 @@ static void MX_ADC1_Init(void)
   /* USER CODE BEGIN ADC1_Init 1 */
 
   /* USER CODE END ADC1_Init 1 */
+
   /** Common config
   */
   hadc1.Instance = ADC1;
@@ -367,6 +311,7 @@ static void MX_ADC1_Init(void)
   {
     Error_Handler();
   }
+
   /** Configure the ADC multi-mode
   */
   multimode.Mode = ADC_MODE_INDEPENDENT;
@@ -374,6 +319,7 @@ static void MX_ADC1_Init(void)
   {
     Error_Handler();
   }
+
   /** Configure Regular Channel
   */
   sConfig.Channel = ADC_CHANNEL_4;
@@ -584,6 +530,7 @@ static void MX_RTC_Init(void)
   /* USER CODE BEGIN RTC_Init 1 */
 
   /* USER CODE END RTC_Init 1 */
+
   /** Initialize RTC Only
   */
   hrtc.Instance = RTC;
@@ -745,4 +692,3 @@ void assert_failed(uint8_t *file, uint32_t line)
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
-

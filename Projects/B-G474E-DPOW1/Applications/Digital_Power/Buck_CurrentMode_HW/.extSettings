@@ -1,0 +1,9 @@
+[ProjectFiles]
+HeaderPath=..\..\..\..\..\..\Drivers\STM32G4xx_HAL_Driver\Inc;..\..\..\..\..\..\Drivers\STM32G4xx_HAL_Driver\Inc\Legacy;..\..\..\..\..\..\Drivers\CMSIS\Include;..\..\..\..\..\..\Drivers\CMSIS\Device\ST\STM32G4xx\Include;
+..\..\..\..\..\..\Drivers\BSP\B-G474E-DPOW1; ..\..\..\..\..\..\Drivers\STM32G4xx_HAL_Driver\Src
+[Others]
+
+[Groups]
+Application/User=../Src/main.c;../Src/stm32g4xx_it.c;../Src/stm32g4xx_hal_msp.c;../Src/app_dpow.c
+Doc=../readme.txt;
+

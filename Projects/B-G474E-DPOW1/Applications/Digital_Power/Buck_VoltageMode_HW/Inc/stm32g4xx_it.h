@@ -1,20 +1,29 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file    stm32g4xx_it.h
-  * @brief   This file contains the headers of the interrupt handlers.
+  * @file         stm32g4xx_it.c
+  * @author       STMicroelectronics
+  * @brief        Interrupt Service Routines
+  * @details      This file provides code for all interrupt service 
+                  routines
   ******************************************************************************
-  * @attention
   *
-  * Copyright (c) 2019 STMicroelectronics.
+  * Copyright (c) 2022 STMicroelectronics.
   * All rights reserved.
   *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
+  * This software is licensed under terms that can be found in the LICENSE file in
+  * the root directory of this software component.
   * If no LICENSE file comes with this software, it is provided AS-IS.
-  *
   ******************************************************************************
-  */
+  *
+ * @history Date       Version Person  Change
+ * @history ---------- ------- ------- ----------------------------------------
+  * @history 2020-02-14 1.0     PBo     Created with the support of Biricha Digital Power LTd
+  * @history 2022-01-04 1.0     RGo     Header modifications
+  * @history 2022-01-10 2.0     NSa     Moved Systick_Handler to ISR file and Load_Handler to 
+  *                                     app code file
+ */
+
 /* USER CODE END Header */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
@@ -54,6 +63,7 @@ void UsageFault_Handler(void);
 void SVC_Handler(void);
 void DebugMon_Handler(void);
 void PendSV_Handler(void);
+void SysTick_Handler(void);
 void EXTI2_IRQHandler(void);
 void EXTI4_IRQHandler(void);
 void EXTI9_5_IRQHandler(void);

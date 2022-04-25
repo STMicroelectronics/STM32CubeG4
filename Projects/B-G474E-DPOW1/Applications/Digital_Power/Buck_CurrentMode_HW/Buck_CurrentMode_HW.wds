@@ -1,0 +1,2366 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<WDSArchive version="1.0">
+    <Settings>
+        <DisplayComp>0</DisplayComp>
+        <DisplayOpen>1</DisplayOpen>
+        <DisplayBode>1</DisplayBode>
+        <DisplaySpice>0</DisplaySpice>
+        <erroramptype_prev>0</erroramptype_prev>
+        <isotype_prev>0</isotype_prev>
+        <isolated_prev>1</isolated_prev>
+    </Settings>
+    <Symbols>
+        <Symbol>
+            <Name>Cc</Name>
+            <UserValue>9.9999999999999995e-008</UserValue>
+            <CalcValue>9.9999999999999995e-008</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vcc_per</Name>
+            <UserValue>0.025000000000000001</UserValue>
+            <CalcValue>0.025000000000000001</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ICcRms</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Rcc</Name>
+            <UserValue>0.01</UserValue>
+            <CalcValue>0.01</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Np</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>NpCalc</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Lm</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Lc</Name>
+            <UserValue>0.00043999999999999996</UserValue>
+            <CalcValue>0.00043999999999999996</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Llkg</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vclamp</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Rclamp</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Psnb</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Im</Name>
+            <UserValue>0.25</UserValue>
+            <CalcValue>0.25</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Im_sat</Name>
+            <UserValue>0.25</UserValue>
+            <CalcValue>0.25</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Im_per</Name>
+            <UserValue>0.10000000000000001</UserValue>
+            <CalcValue>0.10000000000000001</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Rxts</Name>
+            <UserValue>0.001</UserValue>
+            <CalcValue>0.001</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Rxtp</Name>
+            <UserValue>0.001</UserValue>
+            <CalcValue>0.001</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vs</Name>
+            <UserValue>5</UserValue>
+            <CalcValue>100</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vs_max</Name>
+            <UserValue>5</UserValue>
+            <CalcValue>9</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vs_min</Name>
+            <UserValue>5</UserValue>
+            <CalcValue>6</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vin</Name>
+            <UserValue>5</UserValue>
+            <CalcValue>5</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vin_max</Name>
+            <UserValue>5</UserValue>
+            <CalcValue>5</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vin_min</Name>
+            <UserValue>5</UserValue>
+            <CalcValue>5</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vout</Name>
+            <UserValue>3.2999999999999998</UserValue>
+            <CalcValue>3</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vr_per</Name>
+            <UserValue>0.5</UserValue>
+            <CalcValue>0.5</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vr</Name>
+            <UserValue>0.016500000000000001</UserValue>
+            <CalcValue>0.016500000000000001</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vr_actual</Name>
+            <UserValue>0.01707018339743158</UserValue>
+            <CalcValue>0.01707018339743158</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vramp</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vtrip</Name>
+            <UserValue>2.5</UserValue>
+            <CalcValue>2.5</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vsense</Name>
+            <UserValue>0.71515422392780403</UserValue>
+            <CalcValue>0.71515422392780403</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vswitch</Name>
+            <UserValue>0.011200000000000002</UserValue>
+            <CalcValue>0.011200000000000002</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>D</Name>
+            <UserValue>0.69373968686813903</UserValue>
+            <CalcValue>0.69373968686813903</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Dmax</Name>
+            <UserValue>0.69373968686813903</UserValue>
+            <CalcValue>0.69373968686813903</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Dmin</Name>
+            <UserValue>0.69373968686813903</UserValue>
+            <CalcValue>0.69373968686813903</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Dlim</Name>
+            <UserValue>0.90000000000000002</UserValue>
+            <CalcValue>0.90000000000000002</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Dswitch</Name>
+            <UserValue>0.69373968686813903</UserValue>
+            <CalcValue>0.69373968686813903</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Dswitch_max</Name>
+            <UserValue>0.69373968686813903</UserValue>
+            <CalcValue>0.69373968686813903</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Dswitch_min</Name>
+            <UserValue>0.69373968686813903</UserValue>
+            <CalcValue>0.69373968686813903</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Dswitch_lim</Name>
+            <UserValue>0.90000000000000002</UserValue>
+            <CalcValue>0.90000000000000002</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Dswitch_min_lim</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vref</Name>
+            <UserValue>0.65339999999999998</UserValue>
+            <CalcValue>0.65339999999999998</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vpullup</Name>
+            <UserValue>5.0999999999999996</UserValue>
+            <CalcValue>5.0999999999999996</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vbias</Name>
+            <UserValue>14</UserValue>
+            <CalcValue>14</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>IL0_ripple</Name>
+            <UserValue>0.25</UserValue>
+            <CalcValue>0.25</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>IL0_ripple_actual</Name>
+            <UserValue>0.50668224039078469</UserValue>
+            <CalcValue>0.50668224039078469</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>L0</Name>
+            <UserValue>5.4999999999999995e-005</UserValue>
+            <CalcValue>0.00011147009288597262</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Rdcr</Name>
+            <UserValue>0.41000000000000003</UserValue>
+            <CalcValue>0.073333333333333348</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>C0</Name>
+            <UserValue>0.0001</UserValue>
+            <CalcValue>0.00084007501912901285</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Resr</Name>
+            <UserValue>0.17000000000000001</UserValue>
+            <CalcValue>0.016022378589420842</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Fesr</Name>
+            <UserValue>9362.0554759938423</UserValue>
+            <CalcValue>9362.0554759938423</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vdiode</Name>
+            <UserValue>0.20000000000000001</UserValue>
+            <CalcValue>0.59999999999999998</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Rdiode</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Rswitch</Name>
+            <UserValue>0.056000000000000001</UserValue>
+            <CalcValue>0.02</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Io</Name>
+            <UserValue>0.20000000000000001</UserValue>
+            <CalcValue>0.5</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Io_step_per</Name>
+            <UserValue>0.5</UserValue>
+            <CalcValue>0.5</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Io_max</Name>
+            <UserValue>0.20000000000000001</UserValue>
+            <CalcValue>0.20000000000000001</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Io_min</Name>
+            <UserValue>0.20000000000000001</UserValue>
+            <CalcValue>0.20000000000000001</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Pout_dcm</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vovershoot</Name>
+            <UserValue>0.0050000000000000001</UserValue>
+            <CalcValue>0.66000000000000003</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vos_actual</Name>
+            <UserValue>0.043268273531671314</UserValue>
+            <CalcValue>0.043268273531671314</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>RI</Name>
+            <UserValue>0.71399999999999997</UserValue>
+            <CalcValue>3.3185497684655534</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>RImax</Name>
+            <UserValue>3.3185497684655534</UserValue>
+            <CalcValue>3.3185497684655534</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Ncs</Name>
+            <UserValue>10</UserValue>
+            <CalcValue>10</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Rsense</Name>
+            <UserValue>7.1399999999999997</UserValue>
+            <CalcValue>7.1399999999999997</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Fs</Name>
+            <UserValue>200000</UserValue>
+            <CalcValue>200000</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Fx</Name>
+            <UserValue>4000</UserValue>
+            <CalcValue>10000</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Fx_calc</Name>
+            <UserValue>3999.9999999999995</UserValue>
+            <CalcValue>3999.9999999999995</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Wx</Name>
+            <UserValue>25132.741228718343</UserValue>
+            <CalcValue>25132.741228718343</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Omd</Name>
+            <UserValue>50</UserValue>
+            <CalcValue>60</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Omd_calc</Name>
+            <UserValue>50</UserValue>
+            <CalcValue>50</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Gm_calc</Name>
+            <UserValue>13.804464711894109</UserValue>
+            <CalcValue>13.804464711894109</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Qc_user</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Se_opt</Name>
+            <UserValue>32557.276469131135</UserValue>
+            <CalcValue>32557.276469131135</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Se_mag</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Ve_opt</Name>
+            <UserValue>0.16278638234565568</UserValue>
+            <CalcValue>0.16278638234565568</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Ve_mag</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Ve_ext</Name>
+            <UserValue>0.5</UserValue>
+            <CalcValue>0.16278638234565568</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Ve_ext_slope</Name>
+            <UserValue>100</UserValue>
+            <CalcValue>100</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Fcp0</Name>
+            <UserValue>2664.1951686425414</UserValue>
+            <CalcValue>2664.1951686425414</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Fcp1</Name>
+            <UserValue>9362.0554759938423</UserValue>
+            <CalcValue>9362.0554759938423</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Fcp2</Name>
+            <UserValue>55000</UserValue>
+            <CalcValue>55000</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Fcz1</Name>
+            <UserValue>1569.6084309276696</UserValue>
+            <CalcValue>1569.6084309276696</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Fcz2</Name>
+            <UserValue>50000</UserValue>
+            <CalcValue>50000</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Fcp0actual</Name>
+            <UserValue>11139.799999999999</UserValue>
+            <CalcValue>11139.799999999999</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Fcp1actual</Name>
+            <UserValue>11824.299999999999</UserValue>
+            <CalcValue>11824.299999999999</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Fcp2actual</Name>
+            <UserValue>100000</UserValue>
+            <CalcValue>100000</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Fcz1actual</Name>
+            <UserValue>5707.7700000000004</UserValue>
+            <CalcValue>5707.7700000000004</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Fcz2actual</Name>
+            <UserValue>1495.3099999999999</UserValue>
+            <CalcValue>1495.3099999999999</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Fcz1_sub</Name>
+            <UserValue>5707.7700000000004</UserValue>
+            <CalcValue>5707.7700000000004</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Fcz2_sub</Name>
+            <UserValue>1495.3099999999999</UserValue>
+            <CalcValue>1495.3099999999999</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Ipd</Name>
+            <UserValue>0.001</UserValue>
+            <CalcValue>0.001</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Ipd_actual</Name>
+            <UserValue>0.001</UserValue>
+            <CalcValue>0.001</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>R1</Name>
+            <UserValue>800</UserValue>
+            <CalcValue>800</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>R1pd</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Rb</Name>
+            <UserValue>2500</UserValue>
+            <CalcValue>2500</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Rbpd</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>R2</Name>
+            <UserValue>3018.3600000000001</UserValue>
+            <CalcValue>3018.3600000000001</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>R3</Name>
+            <UserValue>12.1441</UserValue>
+            <CalcValue>12.1441</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>C1</Name>
+            <UserValue>9.2380900000000003e-009</UserValue>
+            <CalcValue>9.2380900000000003e-009</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>C2</Name>
+            <UserValue>1.31055e-007</UserValue>
+            <CalcValue>1.31055e-007</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>C3</Name>
+            <UserValue>8.6207499999999996e-009</UserValue>
+            <CalcValue>8.6207499999999996e-009</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Rled</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Fclk</Name>
+            <UserValue>5440000000</UserValue>
+            <CalcValue>60000000</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Fsamp</Name>
+            <UserValue>200000</UserValue>
+            <CalcValue>200000</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Td</Name>
+            <UserValue>1.3</UserValue>
+            <CalcValue>0.5</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Kpd</Name>
+            <UserValue>0.19800000000000001</UserValue>
+            <CalcValue>0.88609016591158418</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>K</Name>
+            <UserValue>5.0505050505050502</UserValue>
+            <CalcValue>5.0505050505050502</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Kmicrochip</Name>
+            <UserValue>0.63131313131313127</UserValue>
+            <CalcValue>0.63131313131313127</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Kifx</Name>
+            <UserValue>5.0505050505050502</UserValue>
+            <CalcValue>5.0505050505050502</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Kti</Name>
+            <UserValue>80.808080808080803</UserValue>
+            <CalcValue>80.808080808080803</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Kuser</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ifx_Kuser</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Guser</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>GuserUnity</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>GuserScaled</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ifx_Guser</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ifx_GuserUnity</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ifx_GuserScaled</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>A1</Name>
+            <UserValue>1.7435897435897436</UserValue>
+            <CalcValue>1.7435897435897436</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>A2</Name>
+            <UserValue>-0.74358974358974361</UserValue>
+            <CalcValue>-0.74358974358974361</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>A3</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>B0</Name>
+            <UserValue>0.22297589897371833</UserValue>
+            <CalcValue>0.22297589897371833</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>B1</Name>
+            <UserValue>0.010730533294277986</UserValue>
+            <CalcValue>0.010730533294277986</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>B2</Name>
+            <UserValue>-0.21224536567944033</UserValue>
+            <CalcValue>-0.21224536567944033</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>B3</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Kmicrochip</Name>
+            <UserValue>0.63131313131313127</UserValue>
+            <CalcValue>0.63131313131313127</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>A1scaled</Name>
+            <UserValue>1.7435897435897436</UserValue>
+            <CalcValue>1.7435897435897436</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>A2scaled</Name>
+            <UserValue>-0.74358974358974361</UserValue>
+            <CalcValue>-0.74358974358974361</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>A3scaled</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>B0scaled</Name>
+            <UserValue>0.14076761298845852</UserValue>
+            <CalcValue>0.14076761298845852</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>B1scaled</Name>
+            <UserValue>0.0067743265746704456</UserValue>
+            <CalcValue>0.0067743265746704456</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>B2scaled</Name>
+            <UserValue>-0.13399328641378808</UserValue>
+            <CalcValue>-0.13399328641378808</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>B3scaled</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ifx_K</Name>
+            <UserValue>5.0505050505050502</UserValue>
+            <CalcValue>5.0505050505050502</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ifx_A1</Name>
+            <UserValue>1.7435897435897436</UserValue>
+            <CalcValue>1.7435897435897436</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ifx_A2</Name>
+            <UserValue>-0.74358974358974361</UserValue>
+            <CalcValue>-0.74358974358974361</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ifx_A3</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ifx_B0</Name>
+            <UserValue>0.22297589897371833</UserValue>
+            <CalcValue>0.22297589897371833</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ifx_B1</Name>
+            <UserValue>0.010730533294277986</UserValue>
+            <CalcValue>0.010730533294277986</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ifx_B2</Name>
+            <UserValue>-0.21224536567944033</UserValue>
+            <CalcValue>-0.21224536567944033</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ifx_B3</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>A1unity</Name>
+            <UserValue>0.87179487179487181</UserValue>
+            <CalcValue>0.87179487179487181</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>A2unity</Name>
+            <UserValue>-0.37179487179487181</UserValue>
+            <CalcValue>-0.37179487179487181</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>A3unity</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>B0unity</Name>
+            <UserValue>0.070383806494229262</UserValue>
+            <CalcValue>0.070383806494229262</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>B1unity</Name>
+            <UserValue>0.0033871632873352228</UserValue>
+            <CalcValue>0.0033871632873352228</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>B2unity</Name>
+            <UserValue>-0.066996643206894038</UserValue>
+            <CalcValue>-0.066996643206894038</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>B3unity</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Kunity</Name>
+            <UserValue>0.5</UserValue>
+            <CalcValue>0.5</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ifx_Kunity</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Kunity_bs</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ifx_Kunity_bs</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Error_bs</Name>
+            <UserValue>3</UserValue>
+            <CalcValue>3</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ifx_Error_bs</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>REF</Name>
+            <UserValue>811</UserValue>
+            <CalcValue>811</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>MIN</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>MAX</Name>
+            <UserValue>3685.5</UserValue>
+            <CalcValue>3685.5</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Step</Name>
+            <UserValue>1.838235294117647e-010</UserValue>
+            <CalcValue>1.838235294117647e-010</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Steps</Name>
+            <UserValue>27200</UserValue>
+            <CalcValue>27200</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Ramp</Name>
+            <UserValue>9927.2727272727279</UserValue>
+            <CalcValue>9927.2727272727279</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>RampDelta</Name>
+            <UserValue>0.36497326203208558</UserValue>
+            <CalcValue>0.36497326203208558</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ifx_RampDelta</Name>
+            <UserValue>100</UserValue>
+            <CalcValue>100</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Ic</Name>
+            <UserValue>0.0050000000000000001</UserValue>
+            <CalcValue>0.0050000000000000001</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Ic_actual</Name>
+            <UserValue>0.0050000000000000001</UserValue>
+            <CalcValue>0.0050000000000000001</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>If_max</Name>
+            <UserValue>0.001</UserValue>
+            <CalcValue>0.001</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Ibias</Name>
+            <UserValue>0.001</UserValue>
+            <CalcValue>0.001</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Ibias_actual</Name>
+            <UserValue>0.001</UserValue>
+            <CalcValue>0.001</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vka</Name>
+            <UserValue>30</UserValue>
+            <CalcValue>30</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Ika</Name>
+            <UserValue>0.029999999999999999</UserValue>
+            <CalcValue>0.029999999999999999</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Iz</Name>
+            <UserValue>0.01</UserValue>
+            <CalcValue>0.01</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Iz_actual</Name>
+            <UserValue>0.0050000000000000001</UserValue>
+            <CalcValue>0.0050000000000000001</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>CTRmin</Name>
+            <UserValue>0.80000000000000004</UserValue>
+            <CalcValue>0.80000000000000004</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>CTRmax</Name>
+            <UserValue>0.80000000000000004</UserValue>
+            <CalcValue>0.80000000000000004</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>CTR</Name>
+            <UserValue>0.80000000000000004</UserValue>
+            <CalcValue>0.80000000000000004</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Copto</Name>
+            <UserValue>8.0000000000000005e-009</UserValue>
+            <CalcValue>8.0000000000000005e-009</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vce_sat</Name>
+            <UserValue>0.69999999999999996</UserValue>
+            <CalcValue>0.69999999999999996</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vf</Name>
+            <UserValue>1.2</UserValue>
+            <CalcValue>1.2</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Rbias</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Rpullup</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Wesr</Name>
+            <UserValue>58823.529411764692</UserValue>
+            <CalcValue>58823.529411764692</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Frhpz</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>FrhpzMin</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>FrhpzMax</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Wp3</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Wp4</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>M</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>tau_l</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Wlc</Name>
+            <UserValue>9976.75</UserValue>
+            <CalcValue>9976.75</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Q</Name>
+            <UserValue>1.65262</UserValue>
+            <CalcValue>1.65262</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>m_c_user</Name>
+            <UserValue>2.6719423023363325</UserValue>
+            <CalcValue>2.6719423023363325</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Sn</Name>
+            <UserValue>19472.727272727276</UserValue>
+            <CalcValue>19472.727272727276</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Sf</Name>
+            <UserValue>-65127.272727272728</UserValue>
+            <CalcValue>-65127.272727272728</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>gm</Name>
+            <UserValue>9.9999999999999991e-005</UserValue>
+            <CalcValue>9.9999999999999991e-005</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Se_total</Name>
+            <UserValue>100000</UserValue>
+            <CalcValue>100000</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>m_c</Name>
+            <UserValue>6.1353874883286643</UserValue>
+            <CalcValue>6.1353874883286643</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Qc</Name>
+            <UserValue>0.23082230281586283</UserValue>
+            <CalcValue>0.23082230281586283</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Wn</Name>
+            <UserValue>628318.53071795858</UserValue>
+            <CalcValue>628318.53071795858</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Wop</Name>
+            <UserValue>1859.7203272977322</UserValue>
+            <CalcValue>1859.7203272977322</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Rled_max</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Vz</Name>
+            <UserValue>3.2999999999999998</UserValue>
+            <CalcValue>3.2999999999999998</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Rz</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>TestComp</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>nADC</Name>
+            <UserValue>12</UserValue>
+            <CalcValue>12</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>nDAC</Name>
+            <UserValue>12</UserValue>
+            <CalcValue>10</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>nRamp</Name>
+            <UserValue>16</UserValue>
+            <CalcValue>16</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>vADC</Name>
+            <UserValue>3.2999999999999998</UserValue>
+            <CalcValue>3.2999999999999998</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>vDAC</Name>
+            <UserValue>3.2999999999999998</UserValue>
+            <CalcValue>3.2999999999999998</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>PWMticks</Name>
+            <UserValue>27200</UserValue>
+            <CalcValue>27200</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>SwitchVpk</Name>
+            <UserValue>5.2000000000000002</UserValue>
+            <CalcValue>5.2000000000000002</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>SwitchIavg</Name>
+            <UserValue>0.13874793737362781</UserValue>
+            <CalcValue>0.13874793737362781</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>SwitchIrms</Name>
+            <UserValue>0.16835456509590133</UserValue>
+            <CalcValue>0.16835456509590133</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>SwitchIpk</Name>
+            <UserValue>0.25066822403907846</UserValue>
+            <CalcValue>0.25066822403907846</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>SwitchLoss</Name>
+            <UserValue>0.0015872225369632845</UserValue>
+            <CalcValue>0.0015872225369632845</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>DiodeVpk</Name>
+            <UserValue>4.9886506682240395</UserValue>
+            <CalcValue>4.9886506682240395</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>DiodeIavg</Name>
+            <UserValue>0.0612520626263722</UserValue>
+            <CalcValue>0.0612520626263722</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>DiodeIrms</Name>
+            <UserValue>0.11185927194676953</UserValue>
+            <CalcValue>0.11185927194676953</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>DiodeIpk</Name>
+            <UserValue>0.25066822403907846</UserValue>
+            <CalcValue>0.25066822403907846</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>DiodeLoss</Name>
+            <UserValue>0.012250412525274441</UserValue>
+            <CalcValue>0.012250412525274441</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>L0Irms</Name>
+            <UserValue>0.20212806907772959</UserValue>
+            <CalcValue>0.20212806907772959</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>L0Idcm</Name>
+            <UserValue>0.049864747347196647</UserValue>
+            <CalcValue>0.049864747347196647</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>L0Iavg</Name>
+            <UserValue>0.20000000000000001</UserValue>
+            <CalcValue>0.20000000000000001</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>L0Vpk</Name>
+            <UserValue>1.6068000000000007</UserValue>
+            <CalcValue>1.6068000000000007</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>L0Iac</Name>
+            <UserValue>0.10133644807815693</UserValue>
+            <CalcValue>0.10133644807815693</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>L0Iac_spec</Name>
+            <UserValue>0.050000000000000003</UserValue>
+            <CalcValue>0.050000000000000003</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>L0Ipk</Name>
+            <UserValue>0.25066822403907846</UserValue>
+            <CalcValue>0.25066822403907846</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>L0Ivl</Name>
+            <UserValue>0.14933177596092154</UserValue>
+            <CalcValue>0.14933177596092154</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>L0pd</Name>
+            <UserValue>0.016400000000000005</UserValue>
+            <CalcValue>0.016400000000000005</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>LMIpk</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>LMIavg</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>LMIrms</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>LMIac</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>VCcPk</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Ipri_pkpk</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Ipri_mid</Name>
+            <UserValue>1.#INF</UserValue>
+            <CalcValue>1.#INF</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>C0Irms</Name>
+            <UserValue>0.02895498536355387</UserValue>
+            <CalcValue>0.02895498536355387</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>C0Iac</Name>
+            <UserValue>0.10030301156417699</UserValue>
+            <CalcValue>0.10030301156417699</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>C0Ipk</Name>
+            <UserValue>0.10133644807815695</UserValue>
+            <CalcValue>0.10133644807815695</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>C0Vpk</Name>
+            <UserValue>3.3172271961732864</UserValue>
+            <CalcValue>3.3172271961732864</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>C0pd</Name>
+            <UserValue>0.00014252650015861523</UserValue>
+            <CalcValue>0.00014252650015861523</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>IpriRms</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>IpriAvg</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>IpriPk</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>IsecPk</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>IsecRms</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>IsecAvg</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>nEff</Name>
+            <UserValue>0.90000000000000002</UserValue>
+            <CalcValue>0.84999999999999998</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>PLB_percent</Name>
+            <UserValue>0.47700642931473003</UserValue>
+            <CalcValue>0.47700642931473003</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>PLB_power</Name>
+            <UserValue>0.073333333333333361</UserValue>
+            <CalcValue>0.073333333333333361</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>PLB_remaining</Name>
+            <UserValue>0.044682920808058912</UserValue>
+            <CalcValue>0.044682920808058912</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>TotalLosses</Name>
+            <UserValue>0.034980471483080214</UserValue>
+            <CalcValue>0.034980471483080214</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>XfrmrVs</Name>
+            <UserValue>9.9999999999999995e-007</UserValue>
+            <CalcValue>9.9999999999999995e-007</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>XfrmrLoss</Name>
+            <UserValue>0.038352861850253148</UserValue>
+            <CalcValue>0.038352861850253148</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>XfrmrLoss_Cu</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>SwitchTr</Name>
+            <UserValue>1.5000000000000002e-008</UserValue>
+            <CalcValue>2.2281903190635848e-008</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>SwitchTf</Name>
+            <UserValue>2e-008</UserValue>
+            <CalcValue>2.2281903190635848e-008</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>SwitchCoss</Name>
+            <UserValue>7.8999999999999999e-011</UserValue>
+            <CalcValue>2.0655936024435515e-009</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>SwitchSwLoss</Name>
+            <UserValue>0.0046003099206838732</UserValue>
+            <CalcValue>0.0046003099206838732</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>IqI</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>IqQ</Name>
+            <UserValue>15</UserValue>
+            <CalcValue>15</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>IqS</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>IqLen</Name>
+            <UserValue>32</UserValue>
+            <CalcValue>32</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>IqErr</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ifx_IqI</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ifx_IqQ</Name>
+            <UserValue>15</UserValue>
+            <CalcValue>15</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ifx_IqS</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ifx_IqLen</Name>
+            <UserValue>32</UserValue>
+            <CalcValue>32</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ifx_IqErr</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>numDiodes</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>numSwitches</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>numDiodesOn</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>numSwitchesOn</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Slope</Name>
+            <UserValue>-23.091958738963243</UserValue>
+            <CalcValue>-23.091958738963243</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>KADC_norm</Name>
+            <UserValue>133.36589336589336</UserValue>
+            <CalcValue>133.36589336589336</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>REF_norm</Name>
+            <UserValue>811</UserValue>
+            <CalcValue>811</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>KERR_norm</Name>
+            <UserValue>9.9777710109622415</UserValue>
+            <CalcValue>9.9777710109622415</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>KDAC_norm</Name>
+            <UserValue>2.5</UserValue>
+            <CalcValue>2.5</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>KPWM_pre_norm</Name>
+            <UserValue>1.1111111111111112</UserValue>
+            <CalcValue>1.1111111111111112</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>KPWM_norm</Name>
+            <UserValue>360</UserValue>
+            <CalcValue>360</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>KBcoeffs_norm</Name>
+            <UserValue>14.851445858929676</UserValue>
+            <CalcValue>14.851445858929676</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>KCshift_norm</Name>
+            <UserValue>-1</UserValue>
+            <CalcValue>-1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>IntBits_norm</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>QuotientBits_norm</Name>
+            <UserValue>15</UserValue>
+            <CalcValue>15</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>SignBits_norm</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>TotalBits_norm</Name>
+            <UserValue>16</UserValue>
+            <CalcValue>16</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>A1_norm</Name>
+            <UserValue>0.87179487179487181</UserValue>
+            <CalcValue>0.87179487179487181</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>A2_norm</Name>
+            <UserValue>-0.37179487179487181</UserValue>
+            <CalcValue>-0.37179487179487181</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>A3_norm</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>B0_norm</Name>
+            <UserValue>0.66230289829087019</UserValue>
+            <CalcValue>0.66230289829087019</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>B1_norm</Name>
+            <UserValue>0.031872786851482364</UserValue>
+            <CalcValue>0.031872786851482364</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>B2_norm</Name>
+            <UserValue>-0.63043011143938776</UserValue>
+            <CalcValue>-0.63043011143938776</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>B3_norm</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Kuser_TI</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Guser_TI</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>Kfloat</Name>
+            <UserValue>80.808080808080803</UserValue>
+            <CalcValue>80.808080808080803</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>A1</Name>
+            <UserValue>1.7435897435897436</UserValue>
+            <CalcValue>1.7435897435897436</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>A2</Name>
+            <UserValue>-0.74358974358974361</UserValue>
+            <CalcValue>-0.74358974358974361</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>A3</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>B0float</Name>
+            <UserValue>18.018254462522691</UserValue>
+            <CalcValue>18.018254462522691</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>B1float</Name>
+            <UserValue>0.86711380155781703</UserValue>
+            <CalcValue>0.86711380155781703</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>B2float</Name>
+            <UserValue>-17.151140660964874</UserValue>
+            <CalcValue>-17.151140660964874</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>B3float</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>top</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ctrl</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>type</Name>
+            <UserValue>2</UserValue>
+            <CalcValue>2</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>measurement_disp</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>true</Active>
+        </Symbol>
+        <Symbol>
+            <Name>plant_measurement_disp</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ad</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ur</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>mt</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>rt</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>isolated</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>isotype</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>erroramptype</Name>
+            <UserValue>2</UserValue>
+            <CalcValue>2</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>calc</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>coeff</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ifx_coeff</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>coeffSigned</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>simRange</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>am</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ti_slope_comp</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>ot</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>m180</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>plant180</Name>
+            <UserValue>1</UserValue>
+            <CalcValue>1</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+        <Symbol>
+            <Name>error_shift</Name>
+            <UserValue>0</UserValue>
+            <CalcValue>0</CalcValue>
+            <Active>false</Active>
+        </Symbol>
+    </Symbols>
+    <OmicronBode>
+        <OmicronBodeGainData>
+            <Memory id="1" name="0">
+                <DataPoint x="100.0000" y="42.0452"/>
+                <DataPoint x="103.8736" y="42.1527"/>
+                <DataPoint x="107.8972" y="41.9468"/>
+                <DataPoint x="112.0767" y="43.1135"/>
+                <DataPoint x="116.4181" y="40.4400"/>
+                <DataPoint x="120.9277" y="39.5021"/>
+                <DataPoint x="125.6119" y="42.8139"/>
+                <DataPoint x="130.4776" y="40.6041"/>
+                <DataPoint x="135.5318" y="40.1149"/>
+                <DataPoint x="140.7817" y="42.1945"/>
+                <DataPoint x="146.2351" y="41.7991"/>
+                <DataPoint x="151.8996" y="39.0995"/>
+                <DataPoint x="157.7836" y="40.2902"/>
+                <DataPoint x="163.8955" y="39.6304"/>
+                <DataPoint x="170.2441" y="37.2213"/>
+                <DataPoint x="176.8387" y="38.5567"/>
+                <DataPoint x="183.6887" y="36.6269"/>
+                <DataPoint x="190.8040" y="35.6439"/>
+                <DataPoint x="198.1950" y="37.8226"/>
+                <DataPoint x="205.8723" y="36.8321"/>
+                <DataPoint x="213.8469" y="36.8894"/>
+                <DataPoint x="222.1305" y="33.8762"/>
+                <DataPoint x="230.7349" y="36.2799"/>
+                <DataPoint x="239.6726" y="34.3515"/>
+                <DataPoint x="248.9566" y="33.9851"/>
+                <DataPoint x="258.6001" y="33.7396"/>
+                <DataPoint x="268.6173" y="34.4959"/>
+                <DataPoint x="279.0224" y="31.9848"/>
+                <DataPoint x="289.8306" y="31.8914"/>
+                <DataPoint x="301.0574" y="31.2076"/>
+                <DataPoint x="312.7192" y="31.1048"/>
+                <DataPoint x="324.8326" y="30.3777"/>
+                <DataPoint x="337.4153" y="29.9166"/>
+                <DataPoint x="350.4854" y="30.0331"/>
+                <DataPoint x="364.0618" y="28.4304"/>
+                <DataPoint x="378.1641" y="28.3753"/>
+                <DataPoint x="392.8126" y="27.4831"/>
+                <DataPoint x="408.0285" y="27.4740"/>
+                <DataPoint x="423.8339" y="26.6909"/>
+                <DataPoint x="440.2515" y="25.9947"/>
+                <DataPoint x="457.3051" y="25.9260"/>
+                <DataPoint x="475.0192" y="25.7005"/>
+                <DataPoint x="493.4195" y="26.0107"/>
+                <DataPoint x="512.5325" y="24.7218"/>
+                <DataPoint x="532.3860" y="23.6293"/>
+                <DataPoint x="553.0084" y="23.2412"/>
+                <DataPoint x="574.4297" y="23.0736"/>
+                <DataPoint x="596.6808" y="21.9318"/>
+                <DataPoint x="619.7938" y="21.5905"/>
+                <DataPoint x="643.8020" y="20.9681"/>
+                <DataPoint x="668.7403" y="20.5767"/>
+                <DataPoint x="694.6446" y="20.4975"/>
+                <DataPoint x="721.5523" y="19.9335"/>
+                <DataPoint x="749.5023" y="19.0875"/>
+                <DataPoint x="778.5349" y="18.5681"/>
+                <DataPoint x="808.6922" y="18.5365"/>
+                <DataPoint x="840.0176" y="17.8746"/>
+                <DataPoint x="872.5565" y="17.2092"/>
+                <DataPoint x="906.3558" y="16.7461"/>
+                <DataPoint x="941.4643" y="16.2926"/>
+                <DataPoint x="977.9328" y="16.1119"/>
+                <DataPoint x="1015.8139" y="15.4031"/>
+                <DataPoint x="1055.1624" y="14.8075"/>
+                <DataPoint x="1096.0351" y="14.2043"/>
+                <DataPoint x="1138.4910" y="13.8670"/>
+                <DataPoint x="1182.5915" y="13.2449"/>
+                <DataPoint x="1228.4003" y="12.8534"/>
+                <DataPoint x="1275.9835" y="12.3651"/>
+                <DataPoint x="1325.4099" y="11.8653"/>
+                <DataPoint x="1376.7508" y="11.5351"/>
+                <DataPoint x="1430.0805" y="10.9222"/>
+                <DataPoint x="1485.4760" y="10.6036"/>
+                <DataPoint x="1543.0173" y="10.2183"/>
+                <DataPoint x="1602.7875" y="9.6011"/>
+                <DataPoint x="1664.8730" y="9.0348"/>
+                <DataPoint x="1729.3633" y="8.4768"/>
+                <DataPoint x="1796.3518" y="8.0122"/>
+                <DataPoint x="1865.9352" y="7.6475"/>
+                <DataPoint x="1938.2139" y="7.1758"/>
+                <DataPoint x="2013.2924" y="6.7825"/>
+                <DataPoint x="2091.2791" y="6.3168"/>
+                <DataPoint x="2172.2867" y="5.8457"/>
+                <DataPoint x="2256.4322" y="5.4829"/>
+                <DataPoint x="2343.8372" y="5.0637"/>
+                <DataPoint x="2434.6279" y="4.6616"/>
+                <DataPoint x="2528.9355" y="4.2451"/>
+                <DataPoint x="2626.8961" y="3.7920"/>
+                <DataPoint x="2728.6514" y="3.2268"/>
+                <DataPoint x="2834.3482" y="2.7530"/>
+                <DataPoint x="2944.1393" y="2.3284"/>
+                <DataPoint x="3058.1832" y="1.8475"/>
+                <DataPoint x="3176.6447" y="1.2868"/>
+                <DataPoint x="3299.6950" y="0.8584"/>
+                <DataPoint x="3427.5117" y="0.4148"/>
+                <DataPoint x="3560.2795" y="0.0069"/>
+                <DataPoint x="3698.1902" y="-0.4024"/>
+                <DataPoint x="3841.4430" y="-0.8471"/>
+                <DataPoint x="3990.2449" y="-1.2446"/>
+                <DataPoint x="4144.8107" y="-1.6306"/>
+                <DataPoint x="4305.3637" y="-2.0158"/>
+                <DataPoint x="4472.1360" y="-2.4076"/>
+                <DataPoint x="4645.3683" y="-2.8014"/>
+                <DataPoint x="4825.3109" y="-3.1771"/>
+                <DataPoint x="5012.2237" y="-3.5542"/>
+                <DataPoint x="5206.3768" y="-3.8996"/>
+                <DataPoint x="5408.0506" y="-4.2660"/>
+                <DataPoint x="5617.5364" y="-4.6288"/>
+                <DataPoint x="5835.1369" y="-5.0103"/>
+                <DataPoint x="6061.1663" y="-5.3781"/>
+                <DataPoint x="6295.9511" y="-5.7321"/>
+                <DataPoint x="6539.8306" y="-6.0597"/>
+                <DataPoint x="6793.1569" y="-6.3928"/>
+                <DataPoint x="7056.2961" y="-6.7353"/>
+                <DataPoint x="7329.6282" y="-7.0738"/>
+                <DataPoint x="7613.5481" y="-7.3965"/>
+                <DataPoint x="7908.4659" y="-7.7109"/>
+                <DataPoint x="8214.8076" y="-8.0401"/>
+                <DataPoint x="8533.0158" y="-8.3406"/>
+                <DataPoint x="8863.5500" y="-8.6794"/>
+                <DataPoint x="9206.8877" y="-9.0295"/>
+                <DataPoint x="9563.5250" y="-9.3753"/>
+                <DataPoint x="9933.9769" y="-9.7502"/>
+                <DataPoint x="10318.7787" y="-10.1042"/>
+                <DataPoint x="10718.4861" y="-10.4840"/>
+                <DataPoint x="11133.6765" y="-10.8798"/>
+                <DataPoint x="11564.9497" y="-11.2806"/>
+                <DataPoint x="12012.9286" y="-11.6832"/>
+                <DataPoint x="12478.2605" y="-12.0980"/>
+                <DataPoint x="12961.6174" y="-12.5359"/>
+                <DataPoint x="13463.6976" y="-12.9374"/>
+                <DataPoint x="13985.2263" y="-13.4124"/>
+                <DataPoint x="14526.9569" y="-13.7799"/>
+                <DataPoint x="15089.6719" y="-14.1977"/>
+                <DataPoint x="15674.1842" y="-14.6022"/>
+                <DataPoint x="16281.3382" y="-15.0568"/>
+                <DataPoint x="16912.0108" y="-15.5236"/>
+                <DataPoint x="17567.1131" y="-15.9931"/>
+                <DataPoint x="18247.5914" y="-16.5804"/>
+                <DataPoint x="18954.4286" y="-17.1363"/>
+                <DataPoint x="19688.6458" y="-17.5671"/>
+                <DataPoint x="20451.3037" y="-18.0094"/>
+                <DataPoint x="21243.5037" y="-18.5901"/>
+                <DataPoint x="22066.3904" y="-19.2227"/>
+                <DataPoint x="22921.1523" y="-19.7210"/>
+                <DataPoint x="23809.0242" y="-20.2913"/>
+                <DataPoint x="24731.2887" y="-20.9016"/>
+                <DataPoint x="25689.2779" y="-21.5316"/>
+                <DataPoint x="26684.3757" y="-22.1421"/>
+                <DataPoint x="27718.0196" y="-22.7302"/>
+                <DataPoint x="28791.7025" y="-23.3972"/>
+                <DataPoint x="29906.9756" y="-24.0784"/>
+                <DataPoint x="31065.4498" y="-24.7078"/>
+                <DataPoint x="32268.7986" y="-25.4303"/>
+                <DataPoint x="33518.7602" y="-26.0432"/>
+                <DataPoint x="34817.1402" y="-26.7644"/>
+                <DataPoint x="36165.8142" y="-27.4093"/>
+                <DataPoint x="37566.7303" y="-28.1204"/>
+                <DataPoint x="39021.9121" y="-28.7847"/>
+                <DataPoint x="40533.4618" y="-29.7710"/>
+                <DataPoint x="42103.5627" y="-30.6528"/>
+                <DataPoint x="43734.4830" y="-27.5486"/>
+                <DataPoint x="45428.5784" y="-31.4462"/>
+                <DataPoint x="47188.2962" y="-32.4104"/>
+                <DataPoint x="49016.1782" y="-33.3260"/>
+                <DataPoint x="50914.8650" y="-34.1656"/>
+                <DataPoint x="52887.0991" y="-35.0710"/>
+                <DataPoint x="54935.7296" y="-35.9956"/>
+                <DataPoint x="57063.7156" y="-36.6465"/>
+                <DataPoint x="59274.1311" y="-37.4887"/>
+                <DataPoint x="61570.1691" y="-38.8136"/>
+                <DataPoint x="63955.1462" y="-39.6505"/>
+                <DataPoint x="66432.5077" y="-40.6556"/>
+                <DataPoint x="69005.8320" y="-40.9491"/>
+                <DataPoint x="71678.8363" y="-42.9758"/>
+                <DataPoint x="74455.3820" y="-44.3691"/>
+                <DataPoint x="77339.4797" y="-45.5169"/>
+                <DataPoint x="80335.2956" y="-46.9330"/>
+                <DataPoint x="83447.1572" y="-48.6051"/>
+                <DataPoint x="86679.5596" y="-49.9962"/>
+                <DataPoint x="90037.1721" y="-54.2433"/>
+                <DataPoint x="93524.8448" y="-58.1336"/>
+                <DataPoint x="97147.6157" y="-63.3437"/>
+                <DataPoint x="104819.5874" y="-63.2655"/>
+                <DataPoint x="108879.8706" y="-59.6320"/>
+                <DataPoint x="113097.4325" y="17.6468"/>
+                <DataPoint x="117478.3656" y="-52.8962"/>
+                <DataPoint x="122028.9982" y="-50.7638"/>
+                <DataPoint x="126755.9037" y="-49.1621"/>
+                <DataPoint x="131665.9102" y="-47.3105"/>
+                <DataPoint x="136766.1104" y="-46.1101"/>
+                <DataPoint x="147566.8463" y="-44.7669"/>
+                <DataPoint x="153282.9838" y="-43.7854"/>
+                <DataPoint x="159220.5412" y="-43.2408"/>
+                <DataPoint x="165388.0953" y="-41.8249"/>
+                <DataPoint x="171794.5554" y="-40.9085"/>
+                <DataPoint x="178449.1755" y="-39.2116"/>
+                <DataPoint x="185361.5685" y="-37.9715"/>
+                <DataPoint x="192541.7194" y="-38.2693"/>
+                <DataPoint x="200000.0000" y="-51.2215"/>
+            </Memory>
+        </OmicronBodeGainData>
+        <OmicronBodePhaseData>
+            <Memory id="1" name="0">
+                <DataPoint x="100.0000" y="1.1196"/>
+                <DataPoint x="103.8736" y="1.4847"/>
+                <DataPoint x="107.8972" y="1.1874"/>
+                <DataPoint x="112.0767" y="1.1810"/>
+                <DataPoint x="116.4181" y="1.1269"/>
+                <DataPoint x="120.9277" y="0.9401"/>
+                <DataPoint x="125.6119" y="1.3145"/>
+                <DataPoint x="130.4776" y="1.1601"/>
+                <DataPoint x="135.5318" y="1.1052"/>
+                <DataPoint x="140.7817" y="1.1965"/>
+                <DataPoint x="146.2351" y="1.1531"/>
+                <DataPoint x="151.8996" y="1.0970"/>
+                <DataPoint x="157.7836" y="1.1865"/>
+                <DataPoint x="163.8955" y="1.2461"/>
+                <DataPoint x="170.2441" y="1.2420"/>
+                <DataPoint x="176.8387" y="1.1406"/>
+                <DataPoint x="183.6887" y="1.1728"/>
+                <DataPoint x="190.8040" y="1.2326"/>
+                <DataPoint x="198.1950" y="1.0180"/>
+                <DataPoint x="205.8723" y="1.2819"/>
+                <DataPoint x="213.8469" y="1.1855"/>
+                <DataPoint x="222.1305" y="1.0278"/>
+                <DataPoint x="230.7349" y="1.0431"/>
+                <DataPoint x="239.6726" y="1.1873"/>
+                <DataPoint x="248.9566" y="1.0638"/>
+                <DataPoint x="258.6001" y="1.0948"/>
+                <DataPoint x="268.6173" y="1.0493"/>
+                <DataPoint x="279.0224" y="1.0257"/>
+                <DataPoint x="289.8306" y="0.8954"/>
+                <DataPoint x="301.0574" y="0.8973"/>
+                <DataPoint x="312.7192" y="0.9903"/>
+                <DataPoint x="324.8326" y="0.9635"/>
+                <DataPoint x="337.4153" y="0.9210"/>
+                <DataPoint x="350.4854" y="0.9709"/>
+                <DataPoint x="364.0618" y="0.8171"/>
+                <DataPoint x="378.1641" y="0.8357"/>
+                <DataPoint x="392.8126" y="0.8577"/>
+                <DataPoint x="408.0285" y="0.8820"/>
+                <DataPoint x="423.8339" y="0.8269"/>
+                <DataPoint x="440.2515" y="0.8891"/>
+                <DataPoint x="457.3051" y="0.8310"/>
+                <DataPoint x="475.0192" y="0.8344"/>
+                <DataPoint x="493.4195" y="0.8088"/>
+                <DataPoint x="512.5325" y="0.8505"/>
+                <DataPoint x="532.3860" y="0.8341"/>
+                <DataPoint x="553.0084" y="0.8017"/>
+                <DataPoint x="574.4297" y="0.8556"/>
+                <DataPoint x="596.6808" y="0.8019"/>
+                <DataPoint x="619.7938" y="0.6993"/>
+                <DataPoint x="643.8020" y="0.8084"/>
+                <DataPoint x="668.7403" y="0.7677"/>
+                <DataPoint x="694.6446" y="0.7246"/>
+                <DataPoint x="721.5523" y="0.7827"/>
+                <DataPoint x="749.5023" y="0.7808"/>
+                <DataPoint x="778.5349" y="0.7929"/>
+                <DataPoint x="808.6922" y="0.7629"/>
+                <DataPoint x="840.0176" y="0.7708"/>
+                <DataPoint x="872.5565" y="0.7677"/>
+                <DataPoint x="906.3558" y="0.7331"/>
+                <DataPoint x="941.4643" y="0.7626"/>
+                <DataPoint x="977.9328" y="0.7295"/>
+                <DataPoint x="1015.8139" y="0.7246"/>
+                <DataPoint x="1055.1624" y="0.7098"/>
+                <DataPoint x="1096.0351" y="0.7406"/>
+                <DataPoint x="1138.4910" y="0.7237"/>
+                <DataPoint x="1182.5915" y="0.7563"/>
+                <DataPoint x="1228.4003" y="0.7633"/>
+                <DataPoint x="1275.9835" y="0.7634"/>
+                <DataPoint x="1325.4099" y="0.7787"/>
+                <DataPoint x="1376.7508" y="0.7810"/>
+                <DataPoint x="1430.0805" y="0.8014"/>
+                <DataPoint x="1485.4760" y="0.7844"/>
+                <DataPoint x="1543.0173" y="0.7948"/>
+                <DataPoint x="1602.7875" y="0.7924"/>
+                <DataPoint x="1664.8730" y="0.8008"/>
+                <DataPoint x="1729.3633" y="0.7908"/>
+                <DataPoint x="1796.3518" y="0.7838"/>
+                <DataPoint x="1865.9352" y="0.7855"/>
+                <DataPoint x="1938.2139" y="0.7911"/>
+                <DataPoint x="2013.2924" y="0.7990"/>
+                <DataPoint x="2091.2791" y="0.8118"/>
+                <DataPoint x="2172.2867" y="0.8241"/>
+                <DataPoint x="2256.4322" y="0.8286"/>
+                <DataPoint x="2343.8372" y="0.8379"/>
+                <DataPoint x="2434.6279" y="0.8464"/>
+                <DataPoint x="2528.9355" y="0.8493"/>
+                <DataPoint x="2626.8961" y="0.8524"/>
+                <DataPoint x="2728.6514" y="0.8502"/>
+                <DataPoint x="2834.3482" y="0.8521"/>
+                <DataPoint x="2944.1393" y="0.8549"/>
+                <DataPoint x="3058.1832" y="0.8593"/>
+                <DataPoint x="3176.6447" y="0.8576"/>
+                <DataPoint x="3299.6950" y="0.8563"/>
+                <DataPoint x="3427.5117" y="0.8560"/>
+                <DataPoint x="3560.2795" y="0.8504"/>
+                <DataPoint x="3698.1902" y="0.8494"/>
+                <DataPoint x="3841.4430" y="0.8457"/>
+                <DataPoint x="3990.2449" y="0.8455"/>
+                <DataPoint x="4144.8107" y="0.8437"/>
+                <DataPoint x="4305.3637" y="0.8366"/>
+                <DataPoint x="4472.1360" y="0.8305"/>
+                <DataPoint x="4645.3683" y="0.8195"/>
+                <DataPoint x="4825.3109" y="0.8087"/>
+                <DataPoint x="5012.2237" y="0.7981"/>
+                <DataPoint x="5206.3768" y="0.7864"/>
+                <DataPoint x="5408.0506" y="0.7745"/>
+                <DataPoint x="5617.5364" y="0.7623"/>
+                <DataPoint x="5835.1369" y="0.7469"/>
+                <DataPoint x="6061.1663" y="0.7293"/>
+                <DataPoint x="6295.9511" y="0.7117"/>
+                <DataPoint x="6539.8306" y="0.6935"/>
+                <DataPoint x="6793.1569" y="0.6696"/>
+                <DataPoint x="7056.2961" y="0.6519"/>
+                <DataPoint x="7329.6282" y="0.6327"/>
+                <DataPoint x="7613.5481" y="0.6127"/>
+                <DataPoint x="7908.4659" y="0.5931"/>
+                <DataPoint x="8214.8076" y="0.5681"/>
+                <DataPoint x="8533.0158" y="0.5440"/>
+                <DataPoint x="8863.5500" y="0.5187"/>
+                <DataPoint x="9206.8877" y="0.4891"/>
+                <DataPoint x="9563.5250" y="0.4626"/>
+                <DataPoint x="9933.9769" y="0.4330"/>
+                <DataPoint x="10318.7787" y="0.4010"/>
+                <DataPoint x="10718.4861" y="0.3697"/>
+                <DataPoint x="11133.6765" y="0.3396"/>
+                <DataPoint x="11564.9497" y="0.3069"/>
+                <DataPoint x="12012.9286" y="0.2727"/>
+                <DataPoint x="12478.2605" y="0.2371"/>
+                <DataPoint x="12961.6174" y="0.1995"/>
+                <DataPoint x="13463.6976" y="0.1590"/>
+                <DataPoint x="13985.2263" y="0.1121"/>
+                <DataPoint x="14526.9569" y="0.0636"/>
+                <DataPoint x="15089.6719" y="0.0148"/>
+                <DataPoint x="15674.1842" y="-0.0212"/>
+                <DataPoint x="16281.3382" y="-0.0736"/>
+                <DataPoint x="16912.0108" y="-0.1129"/>
+                <DataPoint x="17567.1131" y="-0.1625"/>
+                <DataPoint x="18247.5914" y="-0.2191"/>
+                <DataPoint x="18954.4286" y="-0.2720"/>
+                <DataPoint x="19688.6458" y="-0.3271"/>
+                <DataPoint x="20451.3037" y="-0.3875"/>
+                <DataPoint x="21243.5037" y="-0.4578"/>
+                <DataPoint x="22066.3904" y="-0.5274"/>
+                <DataPoint x="22921.1523" y="-0.5907"/>
+                <DataPoint x="23809.0242" y="-0.6564"/>
+                <DataPoint x="24731.2887" y="-0.7269"/>
+                <DataPoint x="25689.2779" y="-0.7883"/>
+                <DataPoint x="26684.3757" y="-0.8656"/>
+                <DataPoint x="27718.0196" y="-0.9317"/>
+                <DataPoint x="28791.7025" y="-1.0002"/>
+                <DataPoint x="29906.9756" y="-1.0696"/>
+                <DataPoint x="31065.4498" y="-1.1416"/>
+                <DataPoint x="32268.7986" y="-1.2098"/>
+                <DataPoint x="33518.7602" y="-1.2821"/>
+                <DataPoint x="34817.1402" y="-1.3598"/>
+                <DataPoint x="36165.8142" y="-1.4340"/>
+                <DataPoint x="37566.7303" y="-1.5176"/>
+                <DataPoint x="39021.9121" y="-1.6060"/>
+                <DataPoint x="40533.4618" y="-1.6978"/>
+                <DataPoint x="42103.5627" y="-1.7618"/>
+                <DataPoint x="43734.4830" y="-1.8593"/>
+                <DataPoint x="45428.5784" y="-1.9843"/>
+                <DataPoint x="47188.2962" y="-2.0942"/>
+                <DataPoint x="49016.1782" y="-2.2037"/>
+                <DataPoint x="50914.8650" y="-2.3214"/>
+                <DataPoint x="52887.0991" y="-2.4244"/>
+                <DataPoint x="54935.7296" y="-2.5505"/>
+                <DataPoint x="57063.7156" y="-2.7055"/>
+                <DataPoint x="59274.1311" y="-2.8300"/>
+                <DataPoint x="61570.1691" y="-2.9786"/>
+                <DataPoint x="63955.1462" y="-3.1250"/>
+                <DataPoint x="66432.5077" y="-3.3240"/>
+                <DataPoint x="69005.8320" y="-3.4502"/>
+                <DataPoint x="71678.8363" y="-3.5989"/>
+                <DataPoint x="74455.3820" y="-3.7497"/>
+                <DataPoint x="77339.4797" y="-3.9621"/>
+                <DataPoint x="80335.2956" y="-4.1962"/>
+                <DataPoint x="83447.1572" y="-4.3489"/>
+                <DataPoint x="86679.5596" y="-4.6467"/>
+                <DataPoint x="90037.1721" y="-4.8137"/>
+                <DataPoint x="93524.8448" y="-5.1716"/>
+                <DataPoint x="97147.6157" y="-5.1704"/>
+                <DataPoint x="104819.5874" y="-2.0920"/>
+                <DataPoint x="108879.8706" y="-2.5105"/>
+                <DataPoint x="113097.4325" y="-4.7122"/>
+                <DataPoint x="117478.3656" y="-3.2332"/>
+                <DataPoint x="122028.9982" y="-3.5011"/>
+                <DataPoint x="126755.9037" y="-3.8115"/>
+                <DataPoint x="131665.9102" y="-4.0738"/>
+                <DataPoint x="136766.1104" y="-4.4352"/>
+                <DataPoint x="147566.8463" y="-5.0125"/>
+                <DataPoint x="153282.9838" y="-5.4558"/>
+                <DataPoint x="159220.5412" y="-5.7256"/>
+                <DataPoint x="165388.0953" y="-6.1482"/>
+                <DataPoint x="171794.5554" y="-6.4247"/>
+                <DataPoint x="178449.1755" y="-6.9702"/>
+                <DataPoint x="185361.5685" y="-7.6067"/>
+                <DataPoint x="192541.7194" y="-8.6095"/>
+                <DataPoint x="200000.0000" y="-9.1297"/>
+            </Memory>
+        </OmicronBodePhaseData>
+    </OmicronBode>
+</WDSArchive>

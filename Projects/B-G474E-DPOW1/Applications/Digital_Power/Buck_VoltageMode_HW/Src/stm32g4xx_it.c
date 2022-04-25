@@ -1,20 +1,29 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file    stm32g4xx_it.c
-  * @brief   Interrupt Service Routines.
+  * @file         stm32g4xx_it.c
+  * @author       STMicroelectronics
+  * @brief        Interrupt Service Routines
+  * @details      This file provides code for all interrupt service 
+                  routines
   ******************************************************************************
-  * @attention
   *
-  * Copyright (c) 2019 STMicroelectronics.
+  * Copyright (c) 2022 STMicroelectronics.
   * All rights reserved.
   *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
+  * This software is licensed under terms that can be found in the LICENSE file in
+  * the root directory of this software component.
   * If no LICENSE file comes with this software, it is provided AS-IS.
-  *
   ******************************************************************************
-  */
+  *
+ * @history Date       Version Person  Change
+ * @history ---------- ------- ------- ----------------------------------------
+  * @history 2020-02-14 1.0     PBo     Created with the support of Biricha Digital Power LTd
+  * @history 2022-01-04 1.0     RGo     Header modifications
+  * @history 2022-01-10 2.0     NSa     Moved Systick_Handler to ISR file and Load_Handler to 
+  *                                     app code file
+ */
+
 /* USER CODE END Header */
 
 /* Includes ------------------------------------------------------------------*/
@@ -59,6 +68,7 @@ extern DMA_HandleTypeDef hdma_adc1;
 extern FMAC_HandleTypeDef hfmac;
 /* USER CODE BEGIN EV */
 extern HRTIM_HandleTypeDef hhrtim1;
+extern G4_Demo_t Demo;
 
 /* USER CODE END EV */
 
@@ -177,6 +187,38 @@ void PendSV_Handler(void)
   /* USER CODE END PendSV_IRQn 1 */
 }
 
+/**
+  * @brief This function handles System tick timer.
+  */
+void SysTick_Handler(void)
+{
+  /* USER CODE BEGIN SysTick_IRQn 0 */
+  
+  // If ~512 ms has elapsed, check if we are doing transient load mode
+  // and run the load handler
+  if (0 == HAL_GetTick() % 512)
+  {
+    if (Demo.bTransient == 1)
+    {
+      if (Demo.NbrActiveLoad == 1)
+      {
+        Demo.NbrActiveLoad = 2;
+      }
+      else 
+      {
+        Demo.NbrActiveLoad = 1;
+      }     
+      
+      LoadHandler();
+    }
+  }
+
+  /* USER CODE END SysTick_IRQn 0 */
+  /* USER CODE BEGIN SysTick_IRQn 1 */
+  HAL_IncTick();
+  /* USER CODE END SysTick_IRQn 1 */
+}
+
 /******************************************************************************/
 /* STM32G4xx Peripheral Interrupt Handlers                                    */
 /* Add here the Interrupt Handlers for the used peripherals.                  */
@@ -192,7 +234,7 @@ void EXTI2_IRQHandler(void)
   /* USER CODE BEGIN EXTI2_IRQn 0 */
 
   /* USER CODE END EXTI2_IRQn 0 */
-  HAL_GPIO_EXTI_IRQHandler(BUCKBOOST_I_IN_AVG_Pin);
+  HAL_GPIO_EXTI_IRQHandler(JOYSTICK_RIGHT_Pin);
   /* USER CODE BEGIN EXTI2_IRQn 1 */
 
   /* USER CODE END EXTI2_IRQn 1 */
@@ -273,4 +315,3 @@ void FMAC_IRQHandler(void)
 /* USER CODE BEGIN 1 */
 
 /* USER CODE END 1 */
-
