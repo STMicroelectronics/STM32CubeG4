@@ -632,7 +632,7 @@ HAL_StatusTypeDef HAL_RCC_OscConfig(RCC_OscInitTypeDef  *RCC_OscInitStruct)
         /* Get Start Tick*/
         tickstart = HAL_GetTick();
 
-        /* Wait till PLL is ready */
+        /* Wait till PLL is disabled */
         while (READ_BIT(RCC->CR, RCC_CR_PLLRDY) != 0U)
         {
           if ((HAL_GetTick() - tickstart) > PLL_TIMEOUT_VALUE)
