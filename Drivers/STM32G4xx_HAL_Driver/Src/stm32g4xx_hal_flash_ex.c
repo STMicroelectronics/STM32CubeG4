@@ -790,6 +790,18 @@ static HAL_StatusTypeDef FLASH_OB_UserConfig(uint32_t UserType, uint32_t UserCon
 
   if (status == HAL_OK)
   {
+#if defined(FLASH_OPTR_PB4_PUPEN)
+    if ((UserType & OB_USER_PB4_PUPEN) != 0U)
+    {
+      /* PB4_PUPEN option byte should be modified */
+      assert_param(IS_OB_USER_PB4_PUPEN(UserConfig & FLASH_OPTR_PB4_PUPEN));
+
+      /* Set value and mask for PB4_PUPEN option byte */
+      optr_reg_val |= (UserConfig & FLASH_OPTR_PB4_PUPEN);
+      optr_reg_mask |= FLASH_OPTR_PB4_PUPEN;
+    }
+#endif /* FLASH_OPTR_PB4_PUPEN */
+
     if ((UserType & OB_USER_BOR_LEV) != 0U)
     {
       /* BOR level option byte should be modified */

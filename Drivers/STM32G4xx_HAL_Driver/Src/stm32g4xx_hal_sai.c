@@ -366,7 +366,6 @@ HAL_StatusTypeDef HAL_SAI_InitProtocol(SAI_HandleTypeDef *hsai, uint32_t protoco
   */
 HAL_StatusTypeDef HAL_SAI_Init(SAI_HandleTypeDef *hsai)
 {
-  uint32_t tmpregisterGCR;
   uint32_t ckstr_bits;
   uint32_t syncen_bits;
 
@@ -460,22 +459,6 @@ HAL_StatusTypeDef HAL_SAI_Init(SAI_HandleTypeDef *hsai)
 
   /* SAI Block Synchro Configuration -----------------------------------------*/
   /* This setting must be done with both audio block (A & B) disabled         */
-  switch (hsai->Init.SynchroExt)
-  {
-    case SAI_SYNCEXT_DISABLE :
-      tmpregisterGCR = 0;
-      break;
-    case SAI_SYNCEXT_OUTBLOCKA_ENABLE :
-      tmpregisterGCR = SAI_GCR_SYNCOUT_0;
-      break;
-    case SAI_SYNCEXT_OUTBLOCKB_ENABLE :
-      tmpregisterGCR = SAI_GCR_SYNCOUT_1;
-      break;
-    default :
-      tmpregisterGCR = 0;
-      break;
-  }
-
   switch (hsai->Init.Synchro)
   {
     case SAI_ASYNCHRONOUS :
@@ -484,21 +467,9 @@ HAL_StatusTypeDef HAL_SAI_Init(SAI_HandleTypeDef *hsai)
     case SAI_SYNCHRONOUS :
       syncen_bits = SAI_xCR1_SYNCEN_0;
       break;
-    case SAI_SYNCHRONOUS_EXT_SAI1 :
-      syncen_bits = SAI_xCR1_SYNCEN_1;
-      break;
-    case SAI_SYNCHRONOUS_EXT_SAI2 :
-      syncen_bits = SAI_xCR1_SYNCEN_1;
-      tmpregisterGCR |= SAI_GCR_SYNCIN_0;
-      break;
     default :
       syncen_bits = 0;
       break;
-  }
-
-  if ((hsai->Instance == SAI1_Block_A) || (hsai->Instance == SAI1_Block_B))
-  {
-    SAI1->GCR = tmpregisterGCR;
   }
 
   if (hsai->Init.AudioFrequency != SAI_AUDIO_FREQUENCY_MCKDIV)
@@ -561,7 +532,7 @@ HAL_StatusTypeDef HAL_SAI_Init(SAI_HandleTypeDef *hsai)
     if (hsai->Init.Protocol == SAI_SPDIF_PROTOCOL)
     {
       hsai->Init.Mckdiv = hsai->Init.Mckdiv >> 1;
-    } 
+    }
   }
   /* Check the SAI Block master clock divider parameter */
   assert_param(IS_SAI_BLOCK_MASTER_DIVIDER(hsai->Init.Mckdiv));
@@ -2078,7 +2049,7 @@ __weak void HAL_SAI_ErrorCallback(SAI_HandleTypeDef *hsai)
   *              the configuration information for SAI module.
   * @retval HAL state
   */
-HAL_SAI_StateTypeDef HAL_SAI_GetState(SAI_HandleTypeDef *hsai)
+HAL_SAI_StateTypeDef HAL_SAI_GetState(const SAI_HandleTypeDef *hsai)
 {
   return hsai->State;
 }
@@ -2089,7 +2060,7 @@ HAL_SAI_StateTypeDef HAL_SAI_GetState(SAI_HandleTypeDef *hsai)
   *              the configuration information for the specified SAI Block.
   * @retval SAI Error Code
   */
-uint32_t HAL_SAI_GetError(SAI_HandleTypeDef *hsai)
+uint32_t HAL_SAI_GetError(const SAI_HandleTypeDef *hsai)
 {
   return hsai->ErrorCode;
 }

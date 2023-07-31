@@ -217,6 +217,10 @@ typedef struct __I2C_HandleTypeDef
 
   __IO uint32_t              AddrEventCount; /*!< I2C Address Event counter                 */
 
+  __IO uint32_t              Devaddress;     /*!< I2C Target device address                 */
+
+  __IO uint32_t              Memaddress;     /*!< I2C Target memory address                 */
+
 #if (USE_HAL_I2C_REGISTER_CALLBACKS == 1)
   void (* MasterTxCpltCallback)(struct __I2C_HandleTypeDef *hi2c);
   /*!< I2C Master Tx Transfer completed callback */
@@ -705,9 +709,9 @@ void HAL_I2C_AbortCpltCallback(I2C_HandleTypeDef *hi2c);
   * @{
   */
 /* Peripheral State, Mode and Error functions  *********************************/
-HAL_I2C_StateTypeDef HAL_I2C_GetState(I2C_HandleTypeDef *hi2c);
-HAL_I2C_ModeTypeDef  HAL_I2C_GetMode(I2C_HandleTypeDef *hi2c);
-uint32_t             HAL_I2C_GetError(I2C_HandleTypeDef *hi2c);
+HAL_I2C_StateTypeDef HAL_I2C_GetState(const I2C_HandleTypeDef *hi2c);
+HAL_I2C_ModeTypeDef  HAL_I2C_GetMode(const I2C_HandleTypeDef *hi2c);
+uint32_t             HAL_I2C_GetError(const I2C_HandleTypeDef *hi2c);
 
 /**
   * @}

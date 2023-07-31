@@ -250,8 +250,8 @@ static const uint8_t DLCtoBytes[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 12, 16, 20, 24, 
 
 /* Private function prototypes -----------------------------------------------*/
 static void FDCAN_CalcultateRamBlockAddresses(FDCAN_HandleTypeDef *hfdcan);
-static void FDCAN_CopyMessageToRAM(FDCAN_HandleTypeDef *hfdcan, FDCAN_TxHeaderTypeDef *pTxHeader, uint8_t *pTxData,
-                                   uint32_t BufferIndex);
+static void FDCAN_CopyMessageToRAM(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+                                   const uint8_t *pTxData, uint32_t BufferIndex);
 
 /* Exported functions --------------------------------------------------------*/
 /** @defgroup FDCAN_Exported_Functions FDCAN Exported Functions
@@ -1292,7 +1292,7 @@ HAL_StatusTypeDef HAL_FDCAN_UnRegisterErrorStatusCallback(FDCAN_HandleTypeDef *h
   *         contains the filter configuration information
   * @retval HAL status
   */
-HAL_StatusTypeDef HAL_FDCAN_ConfigFilter(FDCAN_HandleTypeDef *hfdcan, FDCAN_FilterTypeDef *sFilterConfig)
+HAL_StatusTypeDef HAL_FDCAN_ConfigFilter(FDCAN_HandleTypeDef *hfdcan, const FDCAN_FilterTypeDef *sFilterConfig)
 {
   uint32_t FilterElementW1;
   uint32_t FilterElementW2;
@@ -1607,7 +1607,7 @@ HAL_StatusTypeDef HAL_FDCAN_DisableTimestampCounter(FDCAN_HandleTypeDef *hfdcan)
   *         the configuration information for the specified FDCAN.
   * @retval Timestamp counter value
   */
-uint16_t HAL_FDCAN_GetTimestampCounter(FDCAN_HandleTypeDef *hfdcan)
+uint16_t HAL_FDCAN_GetTimestampCounter(const FDCAN_HandleTypeDef *hfdcan)
 {
   return (uint16_t)(hfdcan->Instance->TSCV);
 }
@@ -1730,7 +1730,7 @@ HAL_StatusTypeDef HAL_FDCAN_DisableTimeoutCounter(FDCAN_HandleTypeDef *hfdcan)
   *         the configuration information for the specified FDCAN.
   * @retval Timeout counter value
   */
-uint16_t HAL_FDCAN_GetTimeoutCounter(FDCAN_HandleTypeDef *hfdcan)
+uint16_t HAL_FDCAN_GetTimeoutCounter(const FDCAN_HandleTypeDef *hfdcan)
 {
   return (uint16_t)(hfdcan->Instance->TOCV);
 }
@@ -2103,8 +2103,8 @@ HAL_StatusTypeDef HAL_FDCAN_Stop(FDCAN_HandleTypeDef *hfdcan)
   * @param  pTxData pointer to a buffer containing the payload of the Tx frame.
   * @retval HAL status
   */
-HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, FDCAN_TxHeaderTypeDef *pTxHeader,
-                                                uint8_t *pTxData)
+HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+                                                const uint8_t *pTxData)
 {
   uint32_t PutIndex;
 
@@ -2171,7 +2171,7 @@ HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, FDC
   *          - Any value of @arg FDCAN_Tx_location if Tx request has been submitted.
   *          - 0 if no Tx FIFO/Queue request have been submitted.
   */
-uint32_t HAL_FDCAN_GetLatestTxFifoQRequestBuffer(FDCAN_HandleTypeDef *hfdcan)
+uint32_t HAL_FDCAN_GetLatestTxFifoQRequestBuffer(const FDCAN_HandleTypeDef *hfdcan)
 {
   /* Return Last Tx FIFO/Queue Request Buffer */
   return hfdcan->LatestTxFifoQRequest;
@@ -2429,7 +2429,7 @@ HAL_StatusTypeDef HAL_FDCAN_GetTxEvent(FDCAN_HandleTypeDef *hfdcan, FDCAN_TxEven
   * @param  HpMsgStatus pointer to an FDCAN_HpMsgStatusTypeDef structure.
   * @retval HAL status
   */
-HAL_StatusTypeDef HAL_FDCAN_GetHighPriorityMessageStatus(FDCAN_HandleTypeDef *hfdcan,
+HAL_StatusTypeDef HAL_FDCAN_GetHighPriorityMessageStatus(const FDCAN_HandleTypeDef *hfdcan,
                                                          FDCAN_HpMsgStatusTypeDef *HpMsgStatus)
 {
   HpMsgStatus->FilterList = ((hfdcan->Instance->HPMS & FDCAN_HPMS_FLST) >> FDCAN_HPMS_FLST_Pos);
@@ -2448,7 +2448,8 @@ HAL_StatusTypeDef HAL_FDCAN_GetHighPriorityMessageStatus(FDCAN_HandleTypeDef *hf
   * @param  ProtocolStatus pointer to an FDCAN_ProtocolStatusTypeDef structure.
   * @retval HAL status
   */
-HAL_StatusTypeDef HAL_FDCAN_GetProtocolStatus(FDCAN_HandleTypeDef *hfdcan, FDCAN_ProtocolStatusTypeDef *ProtocolStatus)
+HAL_StatusTypeDef HAL_FDCAN_GetProtocolStatus(const FDCAN_HandleTypeDef *hfdcan,
+                                              FDCAN_ProtocolStatusTypeDef *ProtocolStatus)
 {
   uint32_t StatusReg;
 
@@ -2479,7 +2480,8 @@ HAL_StatusTypeDef HAL_FDCAN_GetProtocolStatus(FDCAN_HandleTypeDef *hfdcan, FDCAN
   * @param  ErrorCounters pointer to an FDCAN_ErrorCountersTypeDef structure.
   * @retval HAL status
   */
-HAL_StatusTypeDef HAL_FDCAN_GetErrorCounters(FDCAN_HandleTypeDef *hfdcan, FDCAN_ErrorCountersTypeDef *ErrorCounters)
+HAL_StatusTypeDef HAL_FDCAN_GetErrorCounters(const FDCAN_HandleTypeDef *hfdcan,
+                                             FDCAN_ErrorCountersTypeDef *ErrorCounters)
 {
   uint32_t CountersReg;
 
@@ -2506,7 +2508,7 @@ HAL_StatusTypeDef HAL_FDCAN_GetErrorCounters(FDCAN_HandleTypeDef *hfdcan, FDCAN_
   *          - 0 : No pending transmission request on TxBufferIndex list
   *          - 1 : Pending transmission request on TxBufferIndex.
   */
-uint32_t HAL_FDCAN_IsTxBufferMessagePending(FDCAN_HandleTypeDef *hfdcan, uint32_t TxBufferIndex)
+uint32_t HAL_FDCAN_IsTxBufferMessagePending(const FDCAN_HandleTypeDef *hfdcan, uint32_t TxBufferIndex)
 {
   /* Check function parameters */
   assert_param(IS_FDCAN_TX_LOCATION_LIST(TxBufferIndex));
@@ -2529,7 +2531,7 @@ uint32_t HAL_FDCAN_IsTxBufferMessagePending(FDCAN_HandleTypeDef *hfdcan, uint32_
   *           @arg FDCAN_RX_FIFO1: Rx FIFO 1
   * @retval Rx FIFO fill level.
   */
-uint32_t HAL_FDCAN_GetRxFifoFillLevel(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo)
+uint32_t HAL_FDCAN_GetRxFifoFillLevel(const FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo)
 {
   uint32_t FillLevel;
 
@@ -2556,7 +2558,7 @@ uint32_t HAL_FDCAN_GetRxFifoFillLevel(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFi
   *         the configuration information for the specified FDCAN.
   * @retval Tx FIFO free level.
   */
-uint32_t HAL_FDCAN_GetTxFifoFreeLevel(FDCAN_HandleTypeDef *hfdcan)
+uint32_t HAL_FDCAN_GetTxFifoFreeLevel(const FDCAN_HandleTypeDef *hfdcan)
 {
   uint32_t FreeLevel;
 
@@ -2574,7 +2576,7 @@ uint32_t HAL_FDCAN_GetTxFifoFreeLevel(FDCAN_HandleTypeDef *hfdcan)
   *          - 0 : Normal FDCAN operation.
   *          - 1 : Restricted Operation Mode active.
   */
-uint32_t HAL_FDCAN_IsRestrictedOperationMode(FDCAN_HandleTypeDef *hfdcan)
+uint32_t HAL_FDCAN_IsRestrictedOperationMode(const FDCAN_HandleTypeDef *hfdcan)
 {
   uint32_t OperationMode;
 
@@ -3356,7 +3358,7 @@ __weak void HAL_FDCAN_ErrorStatusCallback(FDCAN_HandleTypeDef *hfdcan, uint32_t 
   *         the configuration information for the specified FDCAN.
   * @retval HAL state
   */
-HAL_FDCAN_StateTypeDef HAL_FDCAN_GetState(FDCAN_HandleTypeDef *hfdcan)
+HAL_FDCAN_StateTypeDef HAL_FDCAN_GetState(const FDCAN_HandleTypeDef *hfdcan)
 {
   /* Return FDCAN state */
   return hfdcan->State;
@@ -3368,7 +3370,7 @@ HAL_FDCAN_StateTypeDef HAL_FDCAN_GetState(FDCAN_HandleTypeDef *hfdcan)
   *         the configuration information for the specified FDCAN.
   * @retval FDCAN Error Code
   */
-uint32_t HAL_FDCAN_GetError(FDCAN_HandleTypeDef *hfdcan)
+uint32_t HAL_FDCAN_GetError(const FDCAN_HandleTypeDef *hfdcan)
 {
   /* Return FDCAN error code */
   return hfdcan->ErrorCode;
@@ -3450,8 +3452,8 @@ static void FDCAN_CalcultateRamBlockAddresses(FDCAN_HandleTypeDef *hfdcan)
   * @param  BufferIndex index of the buffer to be configured.
   * @retval none
  */
-static void FDCAN_CopyMessageToRAM(FDCAN_HandleTypeDef *hfdcan, FDCAN_TxHeaderTypeDef *pTxHeader, uint8_t *pTxData,
-                                   uint32_t BufferIndex)
+static void FDCAN_CopyMessageToRAM(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+                                   const uint8_t *pTxData, uint32_t BufferIndex)
 {
   uint32_t TxElementW1;
   uint32_t TxElementW2;
