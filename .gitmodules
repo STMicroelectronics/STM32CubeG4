@@ -1,0 +1,8 @@
+[submodule "Drivers/STM32G4xx_HAL_Driver"]
+	path = Drivers/STM32G4xx_HAL_Driver
+	url = https://github.com/STMicroelectronics/stm32g4xx_hal_driver.git
+	branch = master
+[submodule "Drivers/CMSIS/Device/ST/STM32G4xx"]
+	path = Drivers/CMSIS/Device/ST/STM32G4xx
+	url = https://github.com/STMicroelectronics/cmsis_device_g4.git
+	branch = master
