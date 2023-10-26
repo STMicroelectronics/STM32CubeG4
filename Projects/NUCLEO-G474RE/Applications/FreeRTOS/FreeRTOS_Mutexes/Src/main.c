@@ -228,8 +228,8 @@ void MutexHighPriorityThreadr(void const * argument)
   {
     /* The first time through the mutex will be immediately available, on
     subsequent times through the mutex will be held by the low priority thread
-    at this point and this Take will cause the low priority thread to inherit
-    the priority of this tadhr.  In this case the block time must be
+    at this point and this 'osMutexWait' will cause the low priority thread to inherit
+    the priority of this thread.  In this case the block time must be
     long enough to ensure the low priority thread will execute again before the
     block time expires.  If the block time does expire then the error
     flag will be set here */
@@ -350,7 +350,7 @@ void MutexLowPriorityThread(void const * argument)
     happen when the high-priority thread is also suspended */
     if (osMutexWait(osMutexHandle, mutexNO_DELAY) == osOK)
     {
-      /* Is the haigh and medium-priority threads suspended? */
+      /* Is the high and medium-priority threads suspended? */
       if ((osThreadGetState(MutHighHandle) != osThreadSuspended) || (osThreadGetState(MutMediumHandle) != osThreadSuspended))
       {
         /* Toggle LED2 to indicate error */
