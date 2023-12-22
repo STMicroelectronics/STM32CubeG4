@@ -20,6 +20,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+
 /* USER CODE BEGIN Includes */
 
 /* USER CODE END Includes */
@@ -150,4 +151,3 @@ void HAL_FMAC_MspDeInit(FMAC_HandleTypeDef* hfmac)
 /* USER CODE BEGIN 1 */
 
 /* USER CODE END 1 */
-

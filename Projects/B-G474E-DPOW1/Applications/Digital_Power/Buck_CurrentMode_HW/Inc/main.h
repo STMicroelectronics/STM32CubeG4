@@ -119,6 +119,7 @@ void Error_Handler(void);
 #define LED_RIGHT_GREEN_GPIO_Port GPIOB
 #define GPO1_Pin GPIO_PIN_9
 #define GPO1_GPIO_Port GPIOB
+
 /* USER CODE BEGIN Private defines */
 /* Filter parameter P: number of feed-forward taps or coefficients in the range [2:64] */
 #define COEFF_VECTOR_B_SIZE     3

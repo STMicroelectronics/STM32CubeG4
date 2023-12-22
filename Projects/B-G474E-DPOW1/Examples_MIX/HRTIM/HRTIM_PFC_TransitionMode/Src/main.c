@@ -47,7 +47,7 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
- ADC_HandleTypeDef hadc1;
+ADC_HandleTypeDef hadc1;
 
 COMP_HandleTypeDef hcomp2;
 COMP_HandleTypeDef hcomp3;
@@ -188,7 +188,7 @@ int main(void)
   /* Configure Debug engine to freeze HRTIM1 when breakpoint */
   SET_BIT(DBGMCU->APB2FZ, DBGMCU_APB2FZ_DBG_HRTIM1_STOP);
 
-  /*Enable the HRTIM CHF IT to edit the ZCD/OC occurence according user config*/
+  /*Enable the HRTIM CHF IT to edit the ZCD/OC occurrence according user config*/
   __HAL_HRTIM_TIMER_ENABLE_IT(&hhrtim1, HRTIM_TIMERINDEX_TIMER_F, HRTIM_TIM_IT_RST);
 
   /* USER CODE END 2 */
@@ -995,6 +995,8 @@ static void MX_USB_PCD_Init(void)
 static void MX_GPIO_Init(void)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
+/* USER CODE BEGIN MX_GPIO_Init_1 */
+/* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOC_CLK_ENABLE();
@@ -1069,6 +1071,8 @@ static void MX_GPIO_Init(void)
   HAL_NVIC_SetPriority(EXTI15_10_IRQn, 1, 0);
   HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
 
+/* USER CODE BEGIN MX_GPIO_Init_2 */
+/* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */

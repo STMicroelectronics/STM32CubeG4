@@ -50,6 +50,8 @@ Demonstrations, Configuration, Initialization, Reset, STM32 Cortex-M device
 
   - A microSD card must contain all the resources files
     available under the FW package Binary/SD_card folder.
+	
+ -  You need to plug an external 5V power supply on PSU connector for USBPD demo part.
 
 
 @par How to use it ?

@@ -6,13 +6,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2021 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under Ultimate Liberty license
-  * SLA0044, the "License"; You may not use this file except in compliance with
-  * the License. You may obtain a copy of the License at:
-  *                             www.st.com/SLA0044
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -188,7 +187,8 @@ USBPD_StatusTypeDef  USBPD_TCPM_set_polarity(uint32_t PortNum, uint32_t Polarity
   * @retval USBPD status
   */
 USBPD_StatusTypeDef  USBPD_TCPM_set_msg_header(uint32_t PortNum, USBPD_PortPowerRole_TypeDef PowerRole,
-                                               USBPD_PortDataRole_TypeDef DataRole, USBPD_SpecRev_TypeDef Specification);
+                                               USBPD_PortDataRole_TypeDef DataRole,
+                                               USBPD_SpecRev_TypeDef Specification);
 
 /**
   * @brief  Enable or disable PD reception
@@ -315,6 +315,4 @@ void                  USBPD_PHY_DisableRX(uint8_t PortNum);
 
 
 #endif /* __USBPD_TCPM_H */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
 

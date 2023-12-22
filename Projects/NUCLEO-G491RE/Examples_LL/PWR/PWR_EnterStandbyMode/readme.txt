@@ -54,7 +54,7 @@ LED2 is used to monitor the system state as follows:
 @note To measure the current consumption in Standby mode, remove JP6 jumper 
       and connect an ampere meter to JP6 to measure IDD current.
 
-  #error "Define whether multicore is available on the selected STM32 serie"
+  #error "Define whether multicore is available on the selected STM32 series"
 @note This example can not be used in DEBUG mode due to the fact 
       that the Cortex-M4 core is no longer clocked during low power mode 
       so debugging features are disabled.

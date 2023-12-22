@@ -20,6 +20,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+
 /* USER CODE BEGIN Includes */
 
 /* USER CODE END Includes */
@@ -96,6 +97,8 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* hadc)
   /* USER CODE BEGIN ADC1_MspInit 0 */
 
   /* USER CODE END ADC1_MspInit 0 */
+    LL_RCC_SetADCClockSource(LL_RCC_ADC12_CLKSOURCE_PLL);
+
     /* Peripheral clock enable */
     __HAL_RCC_ADC12_CLK_ENABLE();
 
@@ -146,4 +149,3 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* hadc)
 /* USER CODE BEGIN 1 */
 
 /* USER CODE END 1 */
-

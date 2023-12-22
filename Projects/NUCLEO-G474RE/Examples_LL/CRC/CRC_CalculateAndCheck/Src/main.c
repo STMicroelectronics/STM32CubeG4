@@ -59,7 +59,7 @@ static const uint8_t aDataBuffer[BUFFER_SIZE] =
 };
 
 /* Expected CRC Value */
-uint32_t uwExpectedCRCValue = 0xA9866043;
+uint32_t uwExpectedCRCValue = 0xB553F395;
 
 /* USER CODE END PV */
 
@@ -91,13 +91,11 @@ int main(void)
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-
   LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_SYSCFG);
   LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_PWR);
 
-  NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
-
   /* System interrupt init*/
+  NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
 
   /** Disable the internal Pull-Up in Dead Battery pins of UCPD peripheral
   */
@@ -171,11 +169,9 @@ void SystemClock_Config(void)
   {
   }
 
-  /* Insure 1µs transition state at intermediate medium speed clock based on DWT */
-  CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
-  DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
-  DWT->CYCCNT = 0;
-  while(DWT->CYCCNT < 100);
+  /* Insure 1us transition state at intermediate medium speed clock*/
+  for (__IO uint32_t i = (170 >> 1); i !=0; i--);
+
   /* Set AHB prescaler*/
   LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
   LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
@@ -223,6 +219,8 @@ static void MX_CRC_Init(void)
 static void MX_GPIO_Init(void)
 {
   LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
+/* USER CODE BEGIN MX_GPIO_Init_1 */
+/* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
   LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOA);
@@ -238,6 +236,8 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
   LL_GPIO_Init(LED2_GPIO_Port, &GPIO_InitStruct);
 
+/* USER CODE BEGIN MX_GPIO_Init_2 */
+/* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */
@@ -255,7 +255,7 @@ uint32_t Calculate_CRC(uint32_t BufferSize)
   /* Compute the CRC of Data Buffer array*/
   for (index = 0; index < (BufferSize / 4); index++)
   {
-    data = (uint32_t)((aDataBuffer[4 * index + 3] << 24) | (aDataBuffer[4 * index + 2] << 16) | (aDataBuffer[4 * index + 1] << 8) | aDataBuffer[4 * index]);
+    data = (uint32_t)((aDataBuffer[4 * index] << 24) | (aDataBuffer[4 * index + 1] << 16) | (aDataBuffer[4 * index + 2] << 8) | aDataBuffer[4 * index + 3]);
     LL_CRC_FeedData32(CRC, data);
   }
 
@@ -268,11 +268,11 @@ uint32_t Calculate_CRC(uint32_t BufferSize)
     }
     if (BUFFER_SIZE % 4 == 2)
     {
-      LL_CRC_FeedData16(CRC, (uint16_t)((aDataBuffer[4 * index + 1] << 8) | aDataBuffer[4 * index]));
+      LL_CRC_FeedData16(CRC, (uint16_t)((aDataBuffer[4 * index] << 8) | aDataBuffer[4 * index + 1]));
     }
     if (BUFFER_SIZE % 4 == 3)
     {
-      LL_CRC_FeedData16(CRC, (uint16_t)((aDataBuffer[4 * index + 1] << 8) | aDataBuffer[4 * index]));
+      LL_CRC_FeedData16(CRC, (uint16_t)((aDataBuffer[4 * index] << 8) | aDataBuffer[4 * index + 1]));
       LL_CRC_FeedData8(CRC, aDataBuffer[4 * index + 2]);
     }
   }
@@ -367,4 +367,3 @@ void assert_failed(uint8_t *file, uint32_t line)
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
-

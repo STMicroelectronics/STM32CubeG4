@@ -114,13 +114,11 @@ int main(void)
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-
   LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_SYSCFG);
   LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_PWR);
 
-  NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
-
   /* System interrupt init*/
+  NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
 
   /** Disable the internal Pull-Up in Dead Battery pins of UCPD peripheral
   */
@@ -158,8 +156,6 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
     Process();
-    LL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
-    LL_mDelay(1000);	
   }
   /* USER CODE END 3 */
 }
@@ -204,11 +200,9 @@ void SystemClock_Config(void)
   {
   }
 
-  /* Insure 1µs transition state at intermediate medium speed clock based on DWT */
-  CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
-  DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
-  DWT->CYCCNT = 0;
-  while(DWT->CYCCNT < 100);
+  /* Insure 1us transition state at intermediate medium speed clock*/
+  for (__IO uint32_t i = (170 >> 1); i !=0; i--);
+
   /* Set AHB prescaler*/
   LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
   LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
@@ -228,7 +222,8 @@ static void MX_RTC_Init(void)
 {
 
   /* USER CODE BEGIN RTC_Init 0 */
-
+  if(LL_RTC_BKP_GetRegister(RTC,LL_RTC_BKP_DR0) != 0x32F2)
+  {
   /* USER CODE END RTC_Init 0 */
 
   LL_RTC_InitTypeDef RTC_InitStruct = {0};
@@ -252,11 +247,16 @@ static void MX_RTC_Init(void)
 
   /* USER CODE BEGIN RTC_Init 1 */
 
+  /* Configure exti for RTC IT */
+  LL_EXTI_EnableIT_0_31(LL_EXTI_LINE_20);
+  LL_EXTI_EnableRisingTrig_0_31(LL_EXTI_LINE_20);
+
   /* USER CODE END RTC_Init 1 */
   RTC_InitStruct.HourFormat = LL_RTC_HOURFORMAT_24HOUR;
   RTC_InitStruct.AsynchPrescaler = RTC_ASYNCH_PREDIV;
   RTC_InitStruct.SynchPrescaler = RTC_SYNCH_PREDIV;
   LL_RTC_Init(RTC, &RTC_InitStruct);
+
   /** Initialize RTC and set the Time and Date
   */
   if(LL_RTC_BKP_GetRegister(RTC,LL_RTC_BKP_DR0) != 0x32F2){
@@ -274,12 +274,42 @@ static void MX_RTC_Init(void)
   LL_RTC_DATE_Init(RTC, LL_RTC_FORMAT_BCD, &RTC_DateStruct);
     LL_RTC_BKP_SetRegister(RTC,LL_RTC_BKP_DR0,0x32F2);
   }
+
   /** Enable the WakeUp
   */
   LL_RTC_EnableIT_WUT(RTC);
   LL_RTC_WAKEUP_SetClock(RTC, LL_RTC_WAKEUPCLOCK_CKSPRE);
   LL_RTC_WAKEUP_SetAutoReload(RTC, 0);
   /* USER CODE BEGIN RTC_Init 2 */
+  /* Disable RTC registers write protection */
+  LL_RTC_DisableWriteProtection(RTC);
+
+  /** Enable the WakeUp
+  */
+  LL_RTC_WAKEUP_Enable(RTC);
+  LL_RTC_EnableIT_WUT(RTC);
+  LL_RTC_WAKEUP_SetClock(RTC, LL_RTC_WAKEUPCLOCK_CKSPRE);
+  LL_RTC_WAKEUP_SetAutoReload(RTC, 0);
+
+  /* Enable the write protection for RTC registers */
+  LL_RTC_EnableWriteProtection(RTC);
+
+  }
+  else
+  {
+    /* Reset Wake up flag */
+    LL_RTC_ClearFlag_WUT(RTC);
+    /* clear exti line 20 flag */
+    LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_20);
+
+    /* RTC interrupt Init */
+    NVIC_SetPriority(RTC_WKUP_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
+    NVIC_EnableIRQ(RTC_WKUP_IRQn);
+    /* Configure exti and nvic for RTC IT */
+    LL_EXTI_EnableIT_0_31(LL_EXTI_LINE_20);
+    LL_EXTI_EnableRisingTrig_0_31(LL_EXTI_LINE_20);
+  }
+
   LL_USART_ClearFlag_TC(USART1);
 
   
@@ -377,6 +407,8 @@ static void MX_GPIO_Init(void)
 {
   LL_EXTI_InitTypeDef EXTI_InitStruct = {0};
   LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
+/* USER CODE BEGIN MX_GPIO_Init_1 */
+/* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
   LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOC);
@@ -413,6 +445,8 @@ static void MX_GPIO_Init(void)
   NVIC_SetPriority(EXTI15_10_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
   NVIC_EnableIRQ(EXTI15_10_IRQn);
 
+/* USER CODE BEGIN MX_GPIO_Init_2 */
+/* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */
@@ -427,6 +461,8 @@ void Process(void)
   static uint32_t new_hour = 0, new_minute = 0, new_second = 0;
   __IO uint32_t temp_read = 0;
 
+  LL_mDelay(1000);
+
   switch (RTC_InitializationMode)
   {
     case 0:
@@ -438,8 +474,8 @@ void Process(void)
         /* get time */
         time = LL_RTC_TIME_Get(RTC);
         /* need to read date also to unlock TR register */
-        temp_read = RTC->DR;
-        ((void)(temp_read));
+        temp_read = READ_REG(RTC->DR);
+        ((void)(temp_read));  /* To avoid warning */
 
         aStringToSend[1] = (uint8_t)((__LL_RTC_GET_HOUR(time) >> 4) + ASCII_CONVERT);/* hour tens */
         aStringToSend[2] = (uint8_t)((__LL_RTC_GET_HOUR(time) & 0x0F) + ASCII_CONVERT);/* hour units */
@@ -858,4 +894,3 @@ void assert_failed(uint8_t *file, uint32_t line)
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
-

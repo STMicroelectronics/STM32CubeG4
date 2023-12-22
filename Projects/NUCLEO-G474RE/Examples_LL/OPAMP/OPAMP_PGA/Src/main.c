@@ -224,7 +224,7 @@ void Configure_OPAMP(void)
   LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_SYSCFG);
   
   /* Note: There is no conofiguration common to several OPAMP peripherals     */
-  /*       on this STM32 serie.                                               */
+  /*       on this STM32 series.                                               */
   
   /*## Configuration of OPAMP instance parameters ############################*/
   

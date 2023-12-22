@@ -72,6 +72,7 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define VSENSE_Pin LL_GPIO_PIN_2
 #define VSENSE_GPIO_Port GPIOC
+
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */

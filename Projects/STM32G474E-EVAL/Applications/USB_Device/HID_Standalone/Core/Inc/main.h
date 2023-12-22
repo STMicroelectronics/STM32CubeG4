@@ -57,6 +57,7 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+
 /* USER CODE BEGIN Private defines */
 #define BUTTON_KEY1                      BUTTON_USER
 #define BUTTON_KEY1_PIN                  USER_BUTTON_PIN

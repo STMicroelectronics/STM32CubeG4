@@ -87,39 +87,53 @@ extern uint32_t PORT0_PDO_ListSNK[USBPD_MAX_NB_PDO];
 /* Definition of Source PDO for Port 0 */
 uint32_t PORT0_PDO_ListSRC[USBPD_MAX_NB_PDO] =
 {
-  /* PDO 1 */
-        (0x00000000U),
-  /* PDO 2 */
-        (0x00000000U),
-  /* PDO 3 */
-        (0x00000000U),
-  /* PDO 4 */
-        (0x00000000U),
-  /* PDO 5 */
-        (0x00000000U),
-  /* PDO 6 */
-        (0x00000000U),
-  /* PDO 7 */
-        (0x00000000U)
+  /* PDO 1 */ (0x00000000U),
+
+  /* PDO 2 */ (0x00000000U),
+
+  /* PDO 3 */ (0x00000000U),
+
+  /* PDO 4 */ (0x00000000U),
+
+  /* PDO 5 */ (0x00000000U),
+
+  /* PDO 6 */ (0x00000000U),
+
+  /* PDO 7 */ (0x00000000U),
+
 };
 
 /* Definition of Sink PDO for Port 0 */
 uint32_t PORT0_PDO_ListSNK[USBPD_MAX_NB_PDO] =
 {
+
   /* PDO 1 */
-        (0x2201912CU),
-  /* PDO 2 */
-        (0x00000000U),
-  /* PDO 3 */
-        (0x00000000U),
-  /* PDO 4 */
-        (0x00000000U),
-  /* PDO 5 */
-        (0x00000000U),
-  /* PDO 6 */
-        (0x00000000U),
-  /* PDO 7 */
-        (0x00000000U)
+  (
+    USBPD_PDO_TYPE_FIXED                 | /* Fixed supply PDO            */
+
+    USBPD_PDO_SNK_FIXED_SET_VOLTAGE(5000U)         | /* Voltage in mV               */
+    USBPD_PDO_SNK_FIXED_SET_OP_CURRENT(0U)     | /* Operating current in  mA            */
+
+    /* Common definitions applicable to all PDOs, defined only in PDO 1 */
+    USBPD_PDO_SNK_FIXED_FRS_NOT_SUPPORTED          | /* Fast Role Swap				 */
+    USBPD_PDO_SNK_FIXED_DRD_SUPPORTED          | /* Dual-Role Data              */
+    USBPD_PDO_SNK_FIXED_USBCOMM_NOT_SUPPORTED      | /* USB Communications          */
+    USBPD_PDO_SNK_FIXED_EXT_POWER_NOT_AVAILABLE    | /* External Power              */
+    USBPD_PDO_SNK_FIXED_HIGHERCAPAB_NOT_SUPPORTED   | /* Higher Capability           */
+    USBPD_PDO_SNK_FIXED_DRP_NOT_SUPPORTED            /* Dual-Role Power             */
+  ),
+
+  /* PDO 2 */ (0x00000000U),
+
+  /* PDO 3 */ (0x00000000U),
+
+  /* PDO 4 */ (0x00000000U),
+
+  /* PDO 5 */ (0x00000000U),
+
+  /* PDO 6 */ (0x00000000U),
+
+  /* PDO 7 */ (0x00000000U),
 };
 
 #endif

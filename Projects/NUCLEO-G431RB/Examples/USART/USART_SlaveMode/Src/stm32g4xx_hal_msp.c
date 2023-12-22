@@ -20,6 +20,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+
 /* USER CODE BEGIN Includes */
 
 /* USER CODE END Includes */
@@ -162,6 +163,7 @@ void HAL_USART_MspInit(USART_HandleTypeDef* husart)
   /* USER CODE BEGIN USART1_MspInit 0 */
 
   /* USER CODE END USART1_MspInit 0 */
+
   /** Initializes the peripherals clocks
   */
     PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USART1;
@@ -227,4 +229,3 @@ void HAL_USART_MspDeInit(USART_HandleTypeDef* husart)
 /* USER CODE BEGIN 1 */
 
 /* USER CODE END 1 */
-

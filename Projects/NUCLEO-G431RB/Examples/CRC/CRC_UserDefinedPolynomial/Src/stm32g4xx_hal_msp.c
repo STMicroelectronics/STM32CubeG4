@@ -20,6 +20,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+
 /* USER CODE BEGIN Includes */
 
 /* USER CODE END Includes */
@@ -127,4 +128,3 @@ void HAL_CRC_MspDeInit(CRC_HandleTypeDef* hcrc)
 /* USER CODE BEGIN 1 */
 
 /* USER CODE END 1 */
-

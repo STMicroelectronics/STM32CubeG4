@@ -59,6 +59,7 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+
 /* USER CODE BEGIN Private defines */
 #define EMU_PERIOD        (((SystemCoreClock/4)/10000) - 1)
 #define PULSE1_VALUE      ((EMU_PERIOD * 1 )/4)

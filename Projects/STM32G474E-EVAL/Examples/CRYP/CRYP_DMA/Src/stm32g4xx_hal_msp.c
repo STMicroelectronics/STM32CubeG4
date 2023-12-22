@@ -20,6 +20,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+
 /* USER CODE BEGIN Includes */
 
 /* USER CODE END Includes */
@@ -170,4 +171,3 @@ void HAL_CRYP_MspDeInit(CRYP_HandleTypeDef* hcryp)
 /* USER CODE BEGIN 1 */
 
 /* USER CODE END 1 */
-

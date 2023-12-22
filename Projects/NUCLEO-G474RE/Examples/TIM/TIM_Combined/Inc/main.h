@@ -59,6 +59,7 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+
 /* USER CODE BEGIN Private defines */
 /* Generate 3 combined PWM signals:
 	TIM1 input clock (TIM1CLK) is set to APB2 clock (PCLK2)    

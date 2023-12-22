@@ -20,6 +20,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+
 /* USER CODE BEGIN Includes */
 
 /* USER CODE END Includes */
@@ -145,4 +146,3 @@ void HAL_COMP_MspDeInit(COMP_HandleTypeDef* hcomp)
 /* USER CODE BEGIN 1 */
 
 /* USER CODE END 1 */
-

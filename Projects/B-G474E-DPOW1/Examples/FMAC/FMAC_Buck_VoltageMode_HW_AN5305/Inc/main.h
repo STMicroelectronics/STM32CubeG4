@@ -87,6 +87,7 @@ extern void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin);
 #define BUCKBOOST_P2_DRIVE_GPIO_Port GPIOB
 #define GPO1_Pin GPIO_PIN_9
 #define GPO1_GPIO_Port GPIOB
+
 /* USER CODE BEGIN Private defines */
 
 /* Filter parameter P: number of feed-forward taps or coefficients in the range [2:64] */

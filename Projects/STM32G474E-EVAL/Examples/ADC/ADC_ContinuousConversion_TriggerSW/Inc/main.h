@@ -57,6 +57,7 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+
 /* USER CODE BEGIN Private defines */
 /* Definitions of environment analog values */
   /* Value of analog reference voltage (Vref+), connected to analog voltage   */

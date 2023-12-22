@@ -162,6 +162,99 @@ __weak int32_t BSP_USBPD_PWR_Deinit(uint32_t Instance)
 }
 
 /**
+  * @brief  Assign Power role for current Port (Source or Sink)
+  * @param  Instance Type-C port identifier
+  *         This parameter can be take one of the following values:
+  *         @arg @ref USBPD_PWR_TYPE_C_PORT_1
+  * @param  Role Type-C port role
+  *         This parameter can be take one of the following values:
+  *         @arg @ref POWER_ROLE_SOURCE
+  *         @arg @ref POWER_ROLE_SINK
+  * @retval BSP status
+  */
+__weak int32_t BSP_USBPD_PWR_SetRole(uint32_t Instance, USBPD_PWR_PowerRoleTypeDef Role)
+{
+  /* USER CODE BEGIN BSP_USBPD_PWR_SetRole */
+  /* Check if instance is valid       */
+  int32_t ret = BSP_ERROR_NONE;
+
+  if (Instance >= USBPD_PWR_INSTANCES_NBR)
+  {
+    ret = BSP_ERROR_WRONG_PARAM;
+  }
+  else
+  {
+    PWR_DEBUG_TRACE(Instance, "ADVICE: Update BSP_USBPD_PWR_SetRole");
+  }
+
+  return ret;
+  /* USER CODE END BSP_USBPD_PWR_SetRole */
+}
+
+/**
+  * @brief  Set operating mode of Port regarding power saving constraints
+  * @param  Instance Type-C port identifier
+  *         This parameter can be take one of the following values:
+  *         @arg @ref USBPD_PWR_TYPE_C_PORT_1
+  * @param  PwrMode Type-C port power saving mode
+  *         This parameter can be take one of the following values:
+  *         @arg @ref USBPD_PWR_MODE_OFF
+  *         @arg @ref USBPD_PWR_MODE_HIBERNATE
+  *         @arg @ref USBPD_PWR_MODE_LOWPOWER
+  *         @arg @ref USBPD_PWR_MODE_NORMAL
+  * @retval BSP status
+  */
+__weak int32_t BSP_USBPD_PWR_SetPowerMode(uint32_t Instance, USBPD_PWR_PowerModeTypeDef PwrMode)
+{
+  /* USER CODE BEGIN BSP_USBPD_PWR_SetPowerMode */
+  /* Check if instance is valid       */
+  int32_t ret = BSP_ERROR_NONE;
+
+  if (Instance >= USBPD_PWR_INSTANCES_NBR)
+  {
+    ret = BSP_ERROR_WRONG_PARAM;
+  }
+  else
+  {
+    PWR_DEBUG_TRACE(Instance, "ADVICE: Update BSP_USBPD_PWR_SetPowerMode");
+  }
+
+  return ret;
+  /* USER CODE END BSP_USBPD_PWR_SetPowerMode */
+}
+
+/**
+  * @brief  Get operating mode of Port regarding power saving constraints
+  * @param  Instance Type-C port identifier
+  *         This parameter can be take one of the following values:
+  *         @arg @ref USBPD_PWR_TYPE_C_PORT_1
+  * @param  PwrMode Pointer on current Type-C port power saving mode value
+  *         Following values are available :
+  *         @arg @ref USBPD_PWR_MODE_OFF
+  *         @arg @ref USBPD_PWR_MODE_HIBERNATE
+  *         @arg @ref USBPD_PWR_MODE_LOWPOWER
+  *         @arg @ref USBPD_PWR_MODE_NORMAL
+  * @retval BSP status
+  */
+__weak int32_t BSP_USBPD_PWR_GetPowerMode(uint32_t Instance, USBPD_PWR_PowerModeTypeDef *PwrMode)
+{
+  /* USER CODE BEGIN BSP_USBPD_PWR_GetPowerMode */
+  /* Check if instance is valid       */
+  int32_t ret = BSP_ERROR_NONE;
+
+  if (Instance >= USBPD_PWR_INSTANCES_NBR)
+  {
+    ret = BSP_ERROR_WRONG_PARAM;
+  }
+  else
+  {
+    PWR_DEBUG_TRACE(Instance, "ADVICE: Update BSP_USBPD_PWR_GetPowerMode");
+  }
+  return ret;
+  /* USER CODE END BSP_USBPD_PWR_GetPowerMode */
+}
+
+/**
   * @brief  Initialize the hardware resources used by the Type-C power delivery (PD)
   *         controller.
   * @param  Instance Type-C port identifier
@@ -406,7 +499,7 @@ __weak int32_t BSP_USBPD_PWR_VBUSGetVoltage(uint32_t Instance, uint32_t *pVoltag
 
     /* STM32G474E_EVAL board is used */
     /* Value is multiplied by 7.030 according to board measurements.
-       Theorically, it should have been 7.613 (Divider R323/R244 (49.9K/330K) for VSENSE */
+       Theoretically, it should have been 7.613 (Divider R323/R244 (49.9K/330K) for VSENSE */
     voltage *= 7030U;
     voltage /= 1000U;
 
@@ -684,6 +777,22 @@ __weak int32_t BSP_USBPD_PWR_VCCSetState(uint32_t Instance, uint32_t State)
 }
 
 /**
+  * @brief  USBPD PWR callback used to notify a asynchronous PWR event.
+  *         (This callback caould be called fromp an IT routine, associated to
+  *         any PWR related event detection mechanism)
+  * @param  Instance Type-C port identifier
+  *         This parameter can be take one of the following values:
+  *         @arg @ref USBPD_PWR_TYPE_C_PORT_1
+  * @retval None
+  */
+__weak void BSP_USBPD_PWR_EventCallback(uint32_t Instance)
+{
+  /* USER CODE BEGIN BSP_USBPD_PWR_EventCallback */
+  PWR_DEBUG_TRACE(Instance, "ADVICE: Update BSP_USBPD_PWR_EventCallback");
+  /* USER CODE END BSP_USBPD_PWR_EventCallback */
+}
+
+/**
   * @}
   */
 
@@ -710,6 +819,4 @@ __weak int32_t BSP_USBPD_PWR_VCCSetState(uint32_t Instance, uint32_t State)
 /**
   * @}
   */
-
-
 

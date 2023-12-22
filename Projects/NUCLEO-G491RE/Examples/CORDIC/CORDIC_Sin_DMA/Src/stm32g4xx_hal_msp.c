@@ -20,6 +20,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+
 /* USER CODE BEGIN Includes */
 
 /* USER CODE END Includes */
@@ -173,4 +174,3 @@ void HAL_CORDIC_MspDeInit(CORDIC_HandleTypeDef* hcordic)
 /* USER CODE BEGIN 1 */
 
 /* USER CODE END 1 */
-

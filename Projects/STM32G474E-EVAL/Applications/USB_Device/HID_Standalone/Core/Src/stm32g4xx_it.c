@@ -240,4 +240,3 @@ void EXTI15_10_IRQHandler(void)
   HAL_GPIO_EXTI_IRQHandler(BUTTON_KEY1_PIN);
 }
 /* USER CODE END 1 */
-

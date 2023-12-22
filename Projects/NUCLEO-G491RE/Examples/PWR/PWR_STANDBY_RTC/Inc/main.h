@@ -57,6 +57,7 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+
 /* USER CODE BEGIN Private defines */
 #define RTC_ASYNCH_PREDIV    0x7F
 #define RTC_SYNCH_PREDIV     0x00F9  /* 32 kHz RC/128 - 1 */

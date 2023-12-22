@@ -363,4 +363,3 @@ void I2C1_ER_IRQHandler(void)
 #endif /* SLAVE_BOARD */
 
 /* USER CODE END 1 */
-

@@ -57,6 +57,7 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+
 /* USER CODE BEGIN Private defines */
 /* Set the Maximum value of the counter (Auto-Reload) that defines the Period */
 #define PERIOD               (uint32_t) 65535

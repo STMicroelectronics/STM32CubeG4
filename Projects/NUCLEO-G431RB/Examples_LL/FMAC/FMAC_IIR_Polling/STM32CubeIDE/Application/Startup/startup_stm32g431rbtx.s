@@ -93,7 +93,7 @@ LoopFillZerobss:
   cmp r2, r4
   bcc FillZerobss
 
-/* Call the clock system intitialization function.*/
+/* Call the clock system initialization function.*/
     bl  SystemInit
 /* Call static constructors */
     bl __libc_init_array
@@ -127,7 +127,6 @@ Infinite_Loop:
 ******************************************************************************/
  	.section	.isr_vector,"a",%progbits
 	.type	g_pfnVectors, %object
-	.size	g_pfnVectors, .-g_pfnVectors
 
 
 g_pfnVectors:
@@ -249,6 +248,8 @@ g_pfnVectors:
 	.word	0
 	.word	CORDIC_IRQHandler
 	.word	FMAC_IRQHandler
+
+	.size	g_pfnVectors, .-g_pfnVectors
 
 /*******************************************************************************
 *

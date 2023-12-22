@@ -59,4 +59,3 @@ const uint8_t*  BSP_GetBoardID(void);
 /**
   * @}
   */
-

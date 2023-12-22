@@ -217,4 +217,3 @@ void USB_LP_IRQHandler(void)
 /* USER CODE BEGIN 1 */
 
 /* USER CODE END 1 */
-

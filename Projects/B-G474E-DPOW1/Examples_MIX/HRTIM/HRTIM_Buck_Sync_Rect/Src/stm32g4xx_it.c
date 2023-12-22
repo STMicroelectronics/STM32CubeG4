@@ -230,4 +230,3 @@ void HRTIM1_TIMC_IRQHandler(void)
   BSP_LED_Off(LED3);
 }
 /* USER CODE END 1 */
-

@@ -58,6 +58,7 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+
 /* USER CODE BEGIN Private defines */
   /* Full-scale digital value with a resolution of 12 bits (voltage range     */
   /* determined by analog voltage references Vref+ and Vref-,                 */

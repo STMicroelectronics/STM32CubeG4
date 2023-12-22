@@ -20,6 +20,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+
 /* USER CODE BEGIN Includes */
 
 /* USER CODE END Includes */
@@ -113,6 +114,7 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* hadc)
   HAL_NVIC_SetPriority(ADCx_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(ADCx_IRQn);
   /* USER CODE END ADC1_MspInit 0 */
+
   /** Initializes the peripherals clocks
   */
     PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_ADC12;
@@ -193,4 +195,3 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* hadc)
 
 
 /* USER CODE END 1 */
-

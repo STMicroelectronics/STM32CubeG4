@@ -113,6 +113,7 @@ void UserButton_Callback(void);
 #define NVIC_PRIORITYGROUP_4         ((uint32_t)0x00000003) /*!< 4 bits for pre-emption priority,
                                                                  0 bit  for subpriority */
 #endif
+
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */

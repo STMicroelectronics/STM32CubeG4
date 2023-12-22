@@ -124,7 +124,7 @@ void WaveFormTrigger(void)
 
 /* @brief Display captured point using 'Set Data Breakpoint' 
 * @details
-* This re-plays the data recored on the IAR using the 'Set Data Breakpoint' feature.
+* This re-plays the data recorded on the IAR using the 'Set Data Breakpoint' feature.
 * When *pChA/B is written to the IAR detects the change and displays the value on the
 * ST-LINK TimeLine view. 
 */

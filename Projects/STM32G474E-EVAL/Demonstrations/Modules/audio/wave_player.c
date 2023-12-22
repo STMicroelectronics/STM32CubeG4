@@ -474,7 +474,7 @@ static void WavePlayer_PlaybackResume(void)
 static void WavePlayer_PlaybackPlay(void)
 {
   uint32_t   bytes_read;
-  uint8_t   *pBuffer;
+  uint8_t   *pBuffer = NULL;
 
   if (DMA_AudioOutComplete == COMPLETE)
   {

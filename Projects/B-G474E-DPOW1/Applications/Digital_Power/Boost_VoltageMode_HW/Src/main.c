@@ -24,7 +24,7 @@
   * @history 2022-01-04 1.0     RGo     Header modifications
   * @history 2022-01-10 2.0     NSa     Moved Systick_Handler to ISR file and Load_Handler to 
   *                                     app code file
-  * @history 2022-01-26 2.0     NSa     Supressed the use of Compare 3 in Timer C from .ioc
+  * @history 2022-01-26 2.0     NSa     Suppressed the use of Compare 3 in Timer C from .ioc
   * @history 2022-01-27 2.0     NSa     Configured longer ADC sampling time
  */
 
@@ -600,6 +600,8 @@ static void MX_DMA_Init(void)
 static void MX_GPIO_Init(void)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
+/* USER CODE BEGIN MX_GPIO_Init_1 */
+/* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOC_CLK_ENABLE();
@@ -679,6 +681,8 @@ static void MX_GPIO_Init(void)
   HAL_NVIC_SetPriority(EXTI15_10_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
 
+/* USER CODE BEGIN MX_GPIO_Init_2 */
+/* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */

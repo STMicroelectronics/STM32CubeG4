@@ -40,7 +40,7 @@ DMA transfers conversion data to the array, DMA transfer complete interruption o
 Results array is updated indefinitely (DMA in circular mode).
 During this regular channel conversions, the injected channel conversion is launched by
 software.
-LED1 is turned on or off depending on wether injected channel conversion data is greater
+LED1 is turned on or off depending on whether injected channel conversion data is greater
 or not than regular channel conversions average.
 
 For debug: variables to monitor with debugger watch window:

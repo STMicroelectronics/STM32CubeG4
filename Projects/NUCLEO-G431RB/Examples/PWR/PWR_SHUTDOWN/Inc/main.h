@@ -62,6 +62,7 @@ void Error_Handler(void);
 #define BUTTON_USER_EXTI_IRQn EXTI15_10_IRQn
 #define LED2_Pin GPIO_PIN_5
 #define LED2_GPIO_Port GPIOA
+
 /* USER CODE BEGIN Private defines */
 #define RTC_ASYNCH_PREDIV    0x7F
 #define RTC_SYNCH_PREDIV     0xF9  /* 32Khz/128 - 1 */

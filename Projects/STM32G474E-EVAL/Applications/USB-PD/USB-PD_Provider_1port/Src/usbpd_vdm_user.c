@@ -401,10 +401,13 @@ static void USBPD_VDM_InformSpecific(uint8_t PortNum, USBPD_SOPType_TypeDef SOPT
 
 /**
   * @brief  VDM Send Unstructured message callback
-  * @param  PortNum    current port number
+  * @note   Aim of this function is to fill the UVDM message which contains 1 VDM Header + 6 VDO
+  *         This callback will be called when user requests to send a UVDM message thanks
+  *         to USBPD_DPM_RequestUVDMMessage function
+  * @param  PortNum       current port number
   * @param  pUVDM_Header  Pointer on UVDM header based on @ref USBPD_UVDMHeader_TypeDef
-  * @param  pNbData       Pointer of number of VDO to send
-  * @param  pVDO          Pointer of VDO to send
+  * @param  pNbData       Pointer of number of VDO to send (max size must be equal to 6)
+  * @param  pVDO          Pointer of VDO to send (up to 6 x uint32_t)
   * @retval None
   */
 static void USBPD_VDM_SendUVDM(uint8_t PortNum, USBPD_UVDMHeader_TypeDef *pUVDM_Header, uint8_t *pNbData, uint32_t *pVDO)

@@ -6,13 +6,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2019 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under Ultimate Liberty license
-  * SLA0044, the "License"; You may not use this file except in compliance with
-  * the License. You may obtain a copy of the License at:
-  *                             www.st.com/SLA0044
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -55,13 +54,13 @@ void USBPD_TIM_Init(void)
     /***************************/
     /* Counter mode: select up-counting mode */
     LL_TIM_SetCounterMode(TIMX, LL_TIM_COUNTERMODE_UP);
-    
+
     /* Set the pre-scaler value to have TIMx counter clock equal to 1 MHz */
     LL_TIM_SetPrescaler(TIMX, __LL_TIM_CALC_PSC(SystemCoreClock, 1000000u));
-    
+
     /* Set the auto-reload value to have a counter frequency of 100Hz */
     LL_TIM_SetAutoReload(TIMX, __LL_TIM_CALC_ARR(SystemCoreClock, LL_TIM_GetPrescaler(TIMX), 100u));
-    
+
     /*********************************/
     /* Output waveform configuration */
     /*********************************/
@@ -70,13 +69,13 @@ void USBPD_TIM_Init(void)
     LL_TIM_OC_SetMode(TIMX, TIMX_CHANNEL_CH2, LL_TIM_OCMODE_TOGGLE);
     LL_TIM_OC_SetMode(TIMX, TIMX_CHANNEL_CH3, LL_TIM_OCMODE_TOGGLE);
     LL_TIM_OC_SetMode(TIMX, TIMX_CHANNEL_CH4, LL_TIM_OCMODE_TOGGLE);
-    
+
     /* Set output channel polarity: OC is active high */
     LL_TIM_OC_SetPolarity(TIMX, TIMX_CHANNEL_CH1, LL_TIM_OCPOLARITY_HIGH);
     LL_TIM_OC_SetPolarity(TIMX, TIMX_CHANNEL_CH2, LL_TIM_OCPOLARITY_HIGH);
     LL_TIM_OC_SetPolarity(TIMX, TIMX_CHANNEL_CH3, LL_TIM_OCPOLARITY_HIGH);
     LL_TIM_OC_SetPolarity(TIMX, TIMX_CHANNEL_CH4, LL_TIM_OCPOLARITY_HIGH);
-    
+
     /* Enable counter */
     LL_TIM_EnableCounter(TIMX);
   }
@@ -92,7 +91,7 @@ void USBPD_TIM_Init(void)
 void USBPD_TIM_DeInit(void)
 {
   timer_initcounter--;
-  if(0 == timer_initcounter)
+  if (0 == timer_initcounter)
   {
     TIMX_CLK_DISABLE;
   }
@@ -165,6 +164,4 @@ uint32_t USBPD_TIM_IsExpired(TIM_identifier Id)
 /**
   * @}
   */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
 

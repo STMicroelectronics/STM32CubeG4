@@ -121,7 +121,7 @@ USBPD_SettingsTypeDef DPM_Settings[USBPD_PORT_COUNT] =
 #else
       .PE_UnchunkSupport                = USBPD_FALSE,       /*!< Unchunked mode Support                */
 #endif /* _UNCHUNKED_SUPPORT */
-      .PE_FastRoleSwapSupport           = USBPD_FALSE,    /*!< Support fast role swap only spec revsion 3.0                   */
+      .PE_FastRoleSwapSupport           = USBPD_FALSE,    /*!< Support fast role swap only spec revision 3.0                   */
       .Is_GetPPSStatus_Supported        = _PPS,           /*!< PPS message supported or not by DPM                          */
       .Is_SrcCapaExt_Supported          = _SRC_CAPA_EXT,  /*!< Source_Capabilities_Extended message supported or not by DPM */
       .Is_Alert_Supported               = _ALERT,         /*!< Alert message supported or not by DPM                        */
@@ -257,7 +257,7 @@ USBPD_USER_SettingsTypeDef DPM_USER_Settings[USBPD_PORT_COUNT] =
     .PWR_AccessoryDetection     = USBPD_FALSE,  /*!< It enables or disables powered accessory detection */
     .PWR_AccessoryTransition    = USBPD_FALSE,  /*!< It enables or disables transition from Powered.accessory to Try.SNK */
     .PWR_UnconstrainedPower     = USBPD_CORE_PDO_NOT_EXT_POWERED, /*!< UUT has an external power source available that is sufficient to adequately power the system while charging external devices or the UUT’s primary function is to charge external devices. */
-    .PWR_RpResistorValue        = vRd_3_0A,     /*!< RP resitor value based on @ref CAD_SNK_Source_Current_Adv_Typedef */
+    .PWR_RpResistorValue        = vRd_3_0A,     /*!< RP resistor value based on @ref CAD_SNK_Source_Current_Adv_Typedef */
     .USB_Support                = USBPD_CORE_PDO_USBCOMM_NOT_CAPABLE, /*!< USB_Comms_Capable, is the UUT capable of enumerating as a USB host or device? */
     .USB_Device                 = USBPD_FALSE,  /*!< Type_C_Can_Act_As_Device, Indicates whether the UUT can communicate with USB 2.0 or USB 3.1 as a device or as the Upstream Facing Port of a hub. */
     .USB_Host                   = USBPD_FALSE,  /*!<  Type_C_Can_Act_As_Host, Indicates whether the UUT can communicate with USB 2.0 or USB 3.1 as a host or as the Downstream Facing Port of a hub */

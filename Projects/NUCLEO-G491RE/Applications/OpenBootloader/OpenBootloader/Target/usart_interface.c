@@ -115,10 +115,10 @@ uint8_t OPENBL_USART_ProtocolDetection(void)
   /* Check if the USART1 is addressed */
   if (((USART1->ISR & LL_USART_ISR_ABRF) != 0) && ((USART1->ISR & LL_USART_ISR_ABRE) == 0))
   {
-    /* Read byte in order to flush the 0x7F syncronization byte */
+    /* Read byte in order to flush the 0x7F synchronization byte */
     OPENBL_USART_ReadByte();
 
-    /* Aknowledge the host */
+    /* Acknowledge the host */
     OPENBL_USART_SendByte(ACK_BYTE);
 
     detected = 1U;

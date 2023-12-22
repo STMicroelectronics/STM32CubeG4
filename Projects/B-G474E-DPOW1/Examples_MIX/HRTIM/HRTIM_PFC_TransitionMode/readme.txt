@@ -90,7 +90,7 @@ Note: all measures must be taken with DC coupling
 
 In order to run the program, please do the following:
 1. Open the "HRTIM_PFC_TransitionMode.ioc"
-2. Select your prefered toolchain
+2. Select your preferred toolchain
 3. Generate code.
 4. Rebuild all files and flash target.
 5. Press joystick to either:

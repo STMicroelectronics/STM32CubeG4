@@ -60,7 +60,7 @@ typedef enum {
 /* DAC sawtooth range in mV . It correspond to slope rate 100 mA / 4us  */
 #define DAC_SAWTOOTH_RANGE   (100 * SENSE_RESISTOR)
 
-/* Current should hit sawtooth slope in the middle of the slope. Thus sawtooth peak is current limit + hald slope range */
+/* Current should hit sawtooth slope in the middle of the slope. Thus sawtooth peak is current limit + held slope range */
 #define MAX_DAC_SAW_PEAK     (MAX_SENSE_VOLTAGE + (DAC_SAWTOOTH_RANGE / 2))
 
 /* Fast DAC supports up to 15 Msamples per seconds -> 15MHz/250kHz = 60steps */
@@ -311,7 +311,7 @@ void Demo_LedColor(void)
         {
         case JOY_DOWN :
           {
-            /* Decrease global brigthness */
+            /* Decrease global brightness */
             GlobalBrigthness_1000 = GlobalBrigthness_1000 - GLOBAL_BRIGHTNESS_STEP;
             BSP_LED_On(LED_BLUE);
 
@@ -328,7 +328,7 @@ void Demo_LedColor(void)
           }
         case JOY_UP :
           {
-            /* Decrease global brigthness */
+            /* Decrease global brightness */
             GlobalBrigthness_1000 = GlobalBrigthness_1000 + GLOBAL_BRIGHTNESS_STEP;
             BSP_LED_On(LED_RED);
 
@@ -417,7 +417,7 @@ void Demo_LedColor(void)
       /* After per mille computation update for all 3 colors, update OFF color to rising phase if any  */
       if (RisingColor >= 0)
       {
-        /* Change previoulsy OFF color phase to Rising phase  */
+        /* Change previously OFF color phase to Rising phase  */
         PhaseRGB[RisingColor] = PHASE_RISING;
 
         /* Restart output waveform */
@@ -527,7 +527,7 @@ void Demo_LedWhite(void)
         case JOY_DOWN :
           {
             Phase = PHASE_FALLING;
-            /* Decrease global brigthness */
+            /* Decrease global brightness */
             GlobalBrigthness_1000 = GlobalBrigthness_1000 - GLOBAL_BRIGHTNESS_STEP;
             BSP_LED_On(LED_BLUE);
             BSP_LED_Off(LED_RED);
@@ -546,7 +546,7 @@ void Demo_LedWhite(void)
         case JOY_UP :
           {
             Phase = PHASE_RISING;
-            /* Increase global brigthness */
+            /* Increase global brightness */
             GlobalBrigthness_1000 = GlobalBrigthness_1000 + GLOBAL_BRIGHTNESS_STEP;
             BSP_LED_On(LED_RED);
             BSP_LED_Off(LED_BLUE);
@@ -745,7 +745,7 @@ static void DAC_Red_Config(void)
   }
 
   /* Fill DAC ConfigStructure */
-  /* Sawtooth waveform generation will be triggerred by HRTIM F */
+  /* Sawtooth waveform generation will be triggered by HRTIM F */
   DAC_ConfigStructure.DAC_OutputBuffer = DAC_OUTPUTBUFFER_DISABLE;
   DAC_ConfigStructure.DAC_Trigger      = DAC_TRIGGER_HRTIM_RST_TRG6;  // TRG6 correspond to HRTIM F
   DAC_ConfigStructure.DAC_Trigger2     = DAC_TRIGGER_HRTIM_STEP_TRG6;
@@ -785,7 +785,7 @@ static void DAC_Green_Config(void)
   }
 
   /* Fill DAC ConfigStructure */
-  /* Sawtooth waveform generation will be triggerred by HRTIM E */
+  /* Sawtooth waveform generation will be triggered by HRTIM E */
   DAC_ConfigStructure.DAC_OutputBuffer = DAC_OUTPUTBUFFER_DISABLE;
   DAC_ConfigStructure.DAC_Trigger      = DAC_TRIGGER_HRTIM_RST_TRG5;  // TRG5 correspond to HRTIM E
   DAC_ConfigStructure.DAC_Trigger2     = DAC_TRIGGER_HRTIM_STEP_TRG5;
@@ -825,7 +825,7 @@ static void DAC_Blue_Config(void)
   }
 
   /* Fill DAC ConfigStructure */
-  /* Sawtooth waveform generation will be triggerred by HRTIM A */
+  /* Sawtooth waveform generation will be triggered by HRTIM A */
   DAC_ConfigStructure.DAC_Trigger      = DAC_TRIGGER_HRTIM_RST_TRG1;  // TRG1 correspond to HRTIM A
   DAC_ConfigStructure.DAC_Trigger2     = DAC_TRIGGER_HRTIM_STEP_TRG1;
 #ifdef DEBUG_SLOW_DAC
@@ -1547,7 +1547,7 @@ static void HRTIM_Config(void)
     Error_Handler();
   }
 
-  /* Start all slaves in one shot so that theyre are all synchronised */
+  /* Start all slaves in one shot so that they are all synchronised */
   if(HAL_HRTIM_WaveformCountStart(&HrtimHandle, HRTIM_TIMERID_TIMER_A | HRTIM_TIMERID_TIMER_E | HRTIM_TIMERID_TIMER_F) != HAL_OK)
   {
     Error_Handler();

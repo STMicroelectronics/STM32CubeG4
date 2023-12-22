@@ -169,7 +169,7 @@ int main(void)
     /* Re-enable wakeup source */
     /* ## Setting the Wake up time ############################################*/
     /* RTC Wakeup Interrupt Generation: 
-      the wake-up counter is set to its maximum value to yield the longuest
+      the wake-up counter is set to its maximum value to yield the longest
       stop time to let the current reach its lowest operating point.
       The maximum value is 0xFFFF, corresponding to about 33 sec. when 
       RTC_WAKEUPCLOCK_RTCCLK_DIV = RTCCLK_Div16 = 16
@@ -215,6 +215,7 @@ void SystemClock_Config(void)
   /** Configure the main internal regulator output voltage
   */
   HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1);
+
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
@@ -233,6 +234,7 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+
   /** Initializes the CPU, AHB and APB buses clocks
   */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
@@ -263,6 +265,7 @@ static void MX_RTC_Init(void)
   /* USER CODE BEGIN RTC_Init 1 */
 
   /* USER CODE END RTC_Init 1 */
+
   /** Initialize RTC Only
   */
   hrtc.Instance = RTC;
@@ -440,4 +443,3 @@ void assert_failed(uint8_t *file, uint32_t line)
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
-

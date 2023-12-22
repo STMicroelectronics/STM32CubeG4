@@ -153,7 +153,7 @@ int main(void)
     aInputValues[0][Index] = TwoToneNoise[Index];
     aInputValues[1][Index] = 0;
   }
-  /* generate filter coefficents (in this example they are simply read from flash */
+  /* generate filter coefficients (in this example they are simply read from flash */
   for (Index=0; Index<COEFF_VECTOR_B_SIZE; Index++)
   {
     aFilterCoeffB[Index] = TwoToneFilter[Index];
@@ -299,6 +299,7 @@ void SystemClock_Config(void)
   /** Configure the main internal regulator output voltage
   */
   HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1_BOOST);
+
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
@@ -316,6 +317,7 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+
   /** Initializes the CPU, AHB and APB buses clocks
   */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
@@ -465,4 +467,3 @@ void assert_failed(uint8_t *file, uint32_t line)
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
-

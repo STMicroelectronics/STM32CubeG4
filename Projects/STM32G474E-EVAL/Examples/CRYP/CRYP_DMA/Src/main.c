@@ -70,7 +70,7 @@ uint32_t aPlaintext[AES_TEXT_SIZE] =
                           0xF69F2445 ,0xDF4F9B17 ,0xAD2B417B ,0xE66C3710};
 
 
-/* Cyphertext */
+/* Ciphertext */
 uint32_t aEncryptedtextExpected[AES_TEXT_SIZE] =
                           {0x3AD77BB4 ,0x0D7A3660 ,0xA89ECAF3 ,0x2466EF97 ,
                            0xF5D3D585 ,0x03B9699D ,0xE785895A ,0x96FDBAAF ,
@@ -288,6 +288,7 @@ void SystemClock_Config(void)
   /** Configure the main internal regulator output voltage
   */
   HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1_BOOST);
+
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
@@ -305,6 +306,7 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+
   /** Initializes the CPU, AHB and APB buses clocks
   */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
@@ -450,6 +452,29 @@ static void Display_EncryptedData(uint8_t mode, uint16_t keysize, uint32_t datal
   }
 }
 
+#if (USE_VCP_CONNECTION == 1)
+/**
+  * @brief  Retargets the C library printf function to the USARTx.
+  * @param  ch: character to send
+  * @param  f: pointer to file (not used)
+  * @retval The character transmitted
+  */
+#if defined(__GNUC__) && !defined(__ARMCC_VERSION)
+/* With GCC, small printf (option LD Linker->Libraries->Small printf
+   set to 'Yes') calls __io_putchar() */
+int __io_putchar(int ch)
+#else
+int fputc(int ch, FILE *f)
+#endif /* __GNUC__ */
+{
+  /* Place your implementation of fputc here */
+  /* e.g. write a character to the EVAL_COM1 and Loop until the end of transmission */
+  HAL_UART_Transmit(&UartHandle, (uint8_t *)&ch, 1, UART_TIMEOUT_VALUE);
+
+  return ch;
+}
+#endif
+
 /**
   * @brief  Display Decrypted Data
   * @param  mode: chaining mode
@@ -529,4 +554,3 @@ void assert_failed(uint8_t *file, uint32_t line)
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
-

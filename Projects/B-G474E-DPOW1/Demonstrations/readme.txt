@@ -29,7 +29,7 @@ all the peripherals, initialize the Flash interface and the systick.
 Then the SystemClock_Config() function is used to configure the system clock
 (SYSCLK) to run at 170 MHz.
 
-This demonstration cover followings use cases :
+This demonstration cover following use cases :
 - 4 LEDs demo
 - RGB LED Color demo
 - RGB LED White demo

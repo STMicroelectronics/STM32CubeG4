@@ -77,7 +77,7 @@ int main(void)
     {
     case STATE_4LED:
       /* In parallel of 4 Led demo, there is a triangle generation on TP4 */
-      /* showing advantage of HRTIM (*32 clock multiplier) compare to general purpose timer capabilies  */
+      /* showing advantage of HRTIM (*32 clock multiplier) compare to general purpose timer capabilities  */
       TriangleGenerationInit();
       Demo_4Led();
       TriangleGenerationDeInit();
@@ -266,7 +266,7 @@ static void TriangleGenerationInit(void)
     Error_Handler();
   }
 
-  /* Initialiaze compare value */
+  /* Initialize compare value */
   /* Start from 400mV. (400mV * Period=0xAA0) / 3300mV = 330 */
   TriangCmp = 330;
   HRTIM_CompareStructure.AutoDelayedMode    = HRTIM_AUTODELAYEDMODE_REGULAR;

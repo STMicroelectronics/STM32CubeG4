@@ -234,4 +234,3 @@ void RTC_TAMP_LSECSS_IRQHandler(void)
 }
 
 /* USER CODE END 1 */
-

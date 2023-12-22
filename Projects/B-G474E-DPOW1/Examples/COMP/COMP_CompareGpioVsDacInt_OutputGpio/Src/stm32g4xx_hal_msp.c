@@ -20,6 +20,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+
 /* USER CODE BEGIN Includes */
 
 /* USER CODE END Includes */
@@ -210,4 +211,3 @@ void HAL_DAC_MspDeInit(DAC_HandleTypeDef* hdac)
 /* USER CODE BEGIN 1 */
 
 /* USER CODE END 1 */
-

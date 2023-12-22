@@ -225,7 +225,7 @@ void LowPowerStandbyWakeupPin(void)
   /* Standby mode */
   HAL_PWR_EnterSTANDBYMode();
 
-  /* Following code should never be reach as MCU reset when exitting from standby */
+  /* Following code should never be reach as MCU reset when exiting from standby */
   while(1);
 }
 
@@ -257,7 +257,7 @@ void LowPowerStandbyRTCAlarm(void)
   /* Enter StandBy mode */
   HAL_PWR_EnterSTANDBYMode();
 
-  /* Following code should never be reach as MCU reset when exitting from standby */
+  /* Following code should never be reach as MCU reset when exiting from standby */
   while(1);
 }
 
@@ -297,7 +297,7 @@ void LowPowerSleepEXTI(void)
 
   /*************************************************************/
   /*  Disable all peripheral clock during SLEEP mode           */
-  /*  and put GPIO in analog mode to optimize power consumtion */
+  /*  and put GPIO in analog mode to optimize power consumption */
   /*************************************************************/
   SystemPeripheralClockDisable(WAKEUP_GPIO);
 
@@ -355,7 +355,7 @@ void LowPowerSleepRTCAlarm(void)
 
   /*************************************************************/
   /*  Disable all peripheral clock during SLEEP mode           */
-  /*  and put GPIO in analog mode to optimize power consumtion */
+  /*  and put GPIO in analog mode to optimize power consumption */
   /*************************************************************/
   SystemPeripheralClockDisable(WAKEUP_RTC);
 
@@ -430,7 +430,7 @@ void LowPowerStopEXTI(void)
 
   /*************************************************************/
   /*  Disable all peripheral clock during STOP mode            */
-  /*  and put GPIO in analog mode to optimize power consumtion */
+  /*  and put GPIO in analog mode to optimize power consumption */
   /*************************************************************/
   SystemPeripheralClockDisable(WAKEUP_GPIO);
 
@@ -480,7 +480,7 @@ void LowPowerStopRTCAlarm(void)
 
   /*************************************************************/
   /*  Disable all peripheral clock during STOP mode            */
-  /*  and put GPIO in analog mode to optimize power consumtion */
+  /*  and put GPIO in analog mode to optimize power consumption */
   /*************************************************************/
   SystemPeripheralClockDisable(WAKEUP_RTC);
 
@@ -649,7 +649,7 @@ static void LowPowerHandleAlarm(void)
 }
 
 /**
-  * @brief  Display message when exitting from Stop/Standby mode
+  * @brief  Display message when exiting from Stop/Standby mode
   * @param  Mode   Mode which MCU exit from. Could be STANDBY or STOP
   * @retval None
   */

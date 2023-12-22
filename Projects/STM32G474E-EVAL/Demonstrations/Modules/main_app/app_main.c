@@ -129,7 +129,7 @@ static KMODULE_RETURN AppMainExec(void)
     MainMenuItems[index].x = (inter_x + (indexcol * (inter_x + ICON_WIDTH)));
     MainMenuItems[index].y = (inter_y + (UTIL_LCD_GetFont()->Height) + (indexlin * (inter_y + ICON_HEIGHT)));
 
-    /* increment colomn index */
+    /* increment column index */
     indexcol++;
     if(indexcol >= column_nb)
     {

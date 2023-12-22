@@ -19,8 +19,8 @@
 /* USER CODE END Header */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __USBPD_PWR_USER_H_
-#define __USBPD_PWR_USER_H_
+#ifndef USBPD_PWR_USER_H_
+#define USBPD_PWR_USER_H_
 
 #ifdef __cplusplus
 extern "C" {
@@ -49,8 +49,7 @@ typedef enum
   POWER_ROLE_SOURCE = 0,
   POWER_ROLE_SINK,
   POWER_ROLE_DUAL
-}
-USBPD_PWR_PowerRoleTypeDef;
+} USBPD_PWR_PowerRoleTypeDef;
 
 /**
   * @brief  Voltage control mode
@@ -61,6 +60,17 @@ typedef enum
   DCDC_CTRL_MODE_GPIO,
   DCDC_CTRL_MODE_PWM,
 } USBPD_PWR_DCDCCtrlModeTypeDef;
+
+/**
+  * @brief  Low Power Mode of TypeC ports
+  */
+typedef enum
+{
+  USBPD_PWR_MODE_OFF = 0,
+  USBPD_PWR_MODE_HIBERNATE,
+  USBPD_PWR_MODE_LOWPOWER,
+  USBPD_PWR_MODE_NORMAL
+} USBPD_PWR_PowerModeTypeDef;
 
 /**
   * @brief  VBUS connection status
@@ -101,24 +111,24 @@ typedef void USBPD_PWR_VBUSDetectCallbackFunc(uint32_t Instance,
 /**
   * @brief  Number of TypeC ports
   */
-#define USBPD_PWR_INSTANCES_NBR               1U
+#define USBPD_PWR_INSTANCES_NBR           (1U)
 
 /**
   * @brief  Type-C port identifier
   */
-#define USBPD_PWR_TYPE_C_PORT_1           0U
+#define USBPD_PWR_TYPE_C_PORT_1           (0U)
 
 /**
   * @brief  CC pin identifier
   */
-#define USBPD_PWR_TYPE_C_CC1              1U
-#define USBPD_PWR_TYPE_C_CC2              2U
+#define USBPD_PWR_TYPE_C_CC1              (1U)
+#define USBPD_PWR_TYPE_C_CC2              (2U)
 
 /**
   * @brief  VBUS disconnection threshold values (in mV)
   */
 #define USBPD_PWR_HIGH_VBUS_THRESHOLD     (2800U)
-#define USBPD_PWR_LOW_VBUS_THRESHOLD       (750U)
+#define USBPD_PWR_LOW_VBUS_THRESHOLD      (750U)
 #define USBPD_PWR_VBUS_THRESHOLD_5V       (2150U)
 #define USBPD_PWR_VBUS_THRESHOLD_9V       (7000U)
 #define USBPD_PWR_VBUS_THRESHOLD_15V      (12500U)
@@ -129,7 +139,7 @@ typedef void USBPD_PWR_VBUSDetectCallbackFunc(uint32_t Instance,
   * @brief  VBUS discharge parameters
   */
 #define USBPD_PWR_DISCHARGE_MARGIN        (500U)
-#define USBPD_PWR_DISCHARGE_TIME            (6U)
+#define USBPD_PWR_DISCHARGE_TIME          (6U)
 
 /**
   * @brief  Calibration settings
@@ -167,6 +177,12 @@ typedef void USBPD_PWR_VBUSDetectCallbackFunc(uint32_t Instance,
 int32_t BSP_USBPD_PWR_Init(uint32_t Instance);
 
 int32_t BSP_USBPD_PWR_Deinit(uint32_t Instance);
+
+int32_t BSP_USBPD_PWR_SetRole(uint32_t Instance, USBPD_PWR_PowerRoleTypeDef Role);
+
+int32_t BSP_USBPD_PWR_SetPowerMode(uint32_t Instance, USBPD_PWR_PowerModeTypeDef PwrMode);
+
+int32_t BSP_USBPD_PWR_GetPowerMode(uint32_t Instance, USBPD_PWR_PowerModeTypeDef *PwrMode);
 
 int32_t BSP_USBPD_PWR_VBUSInit(uint32_t Instance);
 
@@ -226,6 +242,9 @@ int32_t BSP_USBPD_PWR_VCONNIsOn(uint32_t Instance,
                                 uint32_t CCPinId, uint8_t *pState);
 
 int32_t BSP_USBPD_PWR_VCCSetState(uint32_t Instance, uint32_t State);
+
+void    BSP_USBPD_PWR_EventCallback(uint32_t Instance);
+
 /**
   * @}
   */
@@ -246,6 +265,5 @@ int32_t BSP_USBPD_PWR_VCCSetState(uint32_t Instance, uint32_t State);
 }
 #endif
 
-#endif /* __STM32G081B_EVAL_POWER */
-
+#endif /* USBPD_PWR_USER_H_ */
 

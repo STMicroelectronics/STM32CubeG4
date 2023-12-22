@@ -59,9 +59,9 @@
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
-extern RTC_HandleTypeDef hrtc;
-/* USER CODE BEGIN EV */
 
+/* USER CODE BEGIN EV */
+extern RTC_HandleTypeDef hrtc;
 /* USER CODE END EV */
 
 /******************************************************************************/
@@ -200,21 +200,15 @@ void SysTick_Handler(void)
 /* please refer to the startup file (startup_stm32g4xx.s).                    */
 /******************************************************************************/
 
+/* USER CODE BEGIN 1 */
 /**
-  * @brief This function handles RTC wake-up interrupt through EXTI line 20.
+  * @brief This function handles RTC Auto wake-up interrupt request.
+  * @param  None
+  * @retval None
   */
 void RTC_WKUP_IRQHandler(void)
 {
-  /* USER CODE BEGIN RTC_WKUP_IRQn 0 */
-
-  /* USER CODE END RTC_WKUP_IRQn 0 */
   HAL_RTCEx_WakeUpTimerIRQHandler(&hrtc);
-  /* USER CODE BEGIN RTC_WKUP_IRQn 1 */
-
-  /* USER CODE END RTC_WKUP_IRQn 1 */
 }
 
-/* USER CODE BEGIN 1 */
-
 /* USER CODE END 1 */
-

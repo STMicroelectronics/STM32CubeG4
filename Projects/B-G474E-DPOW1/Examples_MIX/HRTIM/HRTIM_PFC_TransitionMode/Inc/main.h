@@ -162,6 +162,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin);
 #define LD4_GPIO_Port GPIOB
 #define OC_in_Pin GPIO_PIN_9
 #define OC_in_GPIO_Port GPIOB
+
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */

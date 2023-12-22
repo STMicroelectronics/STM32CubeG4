@@ -175,6 +175,7 @@ void SystemClock_Config(void)
   /** Configure the main internal regulator output voltage
   */
   HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1_BOOST);
+
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
@@ -192,6 +193,7 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+
   /** Initializes the CPU, AHB and APB buses clocks
   */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
@@ -228,7 +230,7 @@ void MutexHighPriorityThreadr(void const * argument)
   {
     /* The first time through the mutex will be immediately available, on
     subsequent times through the mutex will be held by the low priority thread
-    at this point and this 'osMutexWait' will cause the low priority thread to inherit
+    at this point and this Take will cause the low priority thread to inherit
     the priority of this thread.  In this case the block time must be
     long enough to ensure the low priority thread will execute again before the
     block time expires.  If the block time does expire then the error
@@ -453,4 +455,3 @@ void assert_failed(uint8_t *file, uint32_t line)
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
-

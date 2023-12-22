@@ -315,7 +315,7 @@ static uint8_t CopyToSD(void)
 {
   uint8_t    ret = 0;
   uint32_t   bytes_written;
-  uint8_t   *pBuffer;
+  uint8_t   *pBuffer = NULL;
 
   /* Select the valid half buffer */
   if (DMA_AudioInComplete == HALF_COMPLETE)

@@ -407,7 +407,7 @@ void OPENBL_Enable_BusyState_Sending(Send_BusyByte_Func *pCallback)
 }
 
 /**
- * @brief  This function is used to disable the send of busy state in I2C non strech mode.
+ * @brief  This function is used to disable the send of busy state in I2C non stretch mode.
  * @retval None.
 */
 void OPENBL_Disable_BusyState_Sending(void)

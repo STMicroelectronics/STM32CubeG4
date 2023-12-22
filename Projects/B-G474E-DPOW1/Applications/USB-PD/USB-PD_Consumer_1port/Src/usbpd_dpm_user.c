@@ -214,6 +214,19 @@ void USBPD_DPM_UserTimerCounter(uint8_t PortNum)
   */
 
 /**
+  * @brief  Callback function called by PE to inform DPM about PE event.
+  * @param  PortNum The current port number
+  * @param  EventVal @ref USBPD_NotifyEventValue_TypeDef
+  * @retval None
+  */
+void USBPD_DPM_Notification(uint8_t PortNum, USBPD_NotifyEventValue_TypeDef EventVal)
+{
+/* USER CODE BEGIN USBPD_DPM_Notification */
+
+/* USER CODE END USBPD_DPM_Notification */
+}
+
+/**
   * @brief  Callback function called by PE layer when HardReset message received from PRL
   * @param  PortNum The current port number
   * @param  CurrentRole the current role
@@ -225,19 +238,6 @@ void USBPD_DPM_HardReset(uint8_t PortNum, USBPD_PortPowerRole_TypeDef CurrentRol
 /* USER CODE BEGIN USBPD_DPM_HardReset */
   DPM_USER_DEBUG_TRACE(PortNum, "HELP: update USBPD_DPM_HardReset");
 /* USER CODE END USBPD_DPM_HardReset */
-}
-
-/**
-  * @brief  Callback function called by PE to inform DPM about PE event.
-  * @param  PortNum The current port number
-  * @param  EventVal @ref USBPD_NotifyEventValue_TypeDef
-  * @retval None
-  */
-void USBPD_DPM_Notification(uint8_t PortNum, USBPD_NotifyEventValue_TypeDef EventVal)
-{
-/* USER CODE BEGIN USBPD_DPM_Notification */
-
-/* USER CODE END USBPD_DPM_Notification */
 }
 
 /**
@@ -965,5 +965,3 @@ USBPD_StatusTypeDef USBPD_DPM_RequestSecurityRequest(uint8_t PortNum)
 /**
   * @}
   */
-
-

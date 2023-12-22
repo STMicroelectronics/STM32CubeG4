@@ -67,6 +67,8 @@ static const uint8_t CRC7_DATA8_TEST17[17] = {0x12, 0x34, 0xBA, 0x71, 0xAD,
 static const uint8_t CRC7_DATA8_TEST1[1]   = {0x19};
 static const uint8_t CRC7_DATA8_TEST2[2]   = {0xAB, 0xCD};
 
+uint32_t * CRC7_DATA8_PTR_TEST1 = (uint32_t *)CRC7_DATA8_TEST1;
+uint32_t * CRC7_DATA8_PTR_TEST2 = (uint32_t *)CRC7_DATA8_TEST2;
 
 
 /* Expected CRC Values */
@@ -184,7 +186,7 @@ int main(void)
     is not re-initialized, instead the previously computed CRC is used
     as initial value. */
 
-  uwCRCValue = HAL_CRC_Accumulate(&hcrc, (uint32_t *)&CRC7_DATA8_TEST1, BUFFER_SIZE_1);
+  uwCRCValue = HAL_CRC_Accumulate(&hcrc, (uint32_t *)CRC7_DATA8_PTR_TEST1, BUFFER_SIZE_1);
 
   /* Compare the CRC value to the expected one */
   if (uwCRCValue != uwExpectedCRCValue_3)
@@ -205,7 +207,7 @@ int main(void)
     This is done with a call to HAL_CRC_Calculate() instead of
     HAL_CRC_Accumulate(). */
 
-  uwCRCValue = HAL_CRC_Calculate(&hcrc, (uint32_t *)&CRC7_DATA8_TEST2, BUFFER_SIZE_2);
+  uwCRCValue = HAL_CRC_Calculate(&hcrc, (uint32_t *)CRC7_DATA8_PTR_TEST2, BUFFER_SIZE_2);
 
   /* Compare the CRC value to the expected one */
   if (uwCRCValue != uwExpectedCRCValue_4)
@@ -244,6 +246,7 @@ void SystemClock_Config(void)
   /** Configure the main internal regulator output voltage
   */
   HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1_BOOST);
+
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
@@ -261,6 +264,7 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+
   /** Initializes the CPU, AHB and APB buses clocks
   */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
@@ -343,4 +347,3 @@ void assert_failed(uint8_t *file, uint32_t line)
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
-

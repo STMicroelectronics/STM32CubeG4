@@ -66,6 +66,7 @@ void UART_Error_Callback(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+
 /* USER CODE BEGIN Private defines */
 /* Size of Transmission buffer */
 #define TXSTARTMESSAGESIZE                   (COUNTOF(aTxStartMessage) - 1)

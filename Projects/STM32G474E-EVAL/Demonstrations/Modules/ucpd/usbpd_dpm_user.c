@@ -74,7 +74,7 @@
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN Private_Typedef */
 #if defined(_SNK) || defined(_DRP)
-/** @brief  Sink Request characteritics Structure definition
+/** @brief  Sink Request characteristics Structure definition
   *
   */
 typedef struct
@@ -2023,7 +2023,7 @@ USBPD_StatusTypeDef USBPD_DPM_RequestGetSinkCapabilityExt(uint8_t PortNum)
 }
 
 /**
-  * @brief  Request the PE to get a manufacturer infor
+  * @brief  Request the PE to get a manufacturer info
   * @param  PortNum The current port number
   * @param  SOPType SOP Type
   * @param  pManuInfoData Pointer on manufacturer info based on @ref USBPD_GMIDB_TypeDef

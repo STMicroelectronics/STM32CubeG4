@@ -20,6 +20,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+
 /* USER CODE BEGIN Includes */
 
 /* USER CODE END Includes */
@@ -163,4 +164,3 @@ void HAL_I2C_MspDeInit(I2C_HandleTypeDef* hi2c)
 /* USER CODE BEGIN 1 */
 
 /* USER CODE END 1 */
-

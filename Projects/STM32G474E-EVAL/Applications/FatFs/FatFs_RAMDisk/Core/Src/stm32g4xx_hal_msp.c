@@ -21,6 +21,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+
 /* USER CODE BEGIN Includes */
 
 /* USER CODE END Includes */
@@ -266,4 +267,3 @@ void HAL_SRAM_MspDeInit(SRAM_HandleTypeDef* hsram){
 /* USER CODE BEGIN 1 */
 
 /* USER CODE END 1 */
-

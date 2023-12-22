@@ -56,9 +56,8 @@ void SVC_Handler(void);
 void DebugMon_Handler(void);
 void PendSV_Handler(void);
 void SysTick_Handler(void);
-void RTC_WKUP_IRQHandler(void);
 /* USER CODE BEGIN EFP */
-
+void RTC_WKUP_IRQHandler(void);
 /* USER CODE END EFP */
 
 #ifdef __cplusplus

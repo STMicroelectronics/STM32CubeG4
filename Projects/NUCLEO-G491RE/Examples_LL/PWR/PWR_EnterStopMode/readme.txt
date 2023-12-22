@@ -41,7 +41,7 @@ press on Reset button.
       that the Cortex-M4 core is no longer clocked during low power mode 
       so debugging features are disabled.
 
-  #error "Define whether multicore is available on the selected STM32 serie"
+  #error "Define whether multicore is available on the selected STM32 series"
 @par Keywords
 
 Power, PWR, Stop mode, Interrupt, Low Power

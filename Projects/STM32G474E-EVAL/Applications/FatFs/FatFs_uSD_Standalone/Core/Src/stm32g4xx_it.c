@@ -205,4 +205,3 @@ void IOEXPANDER_IRQOUT_EXTI_IRQnHandler(void)
 }
 
 /* USER CODE END 1 */
-

@@ -5,33 +5,27 @@
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>Release Notes for STM32CubeG4 Firmware Package</title>
-  <style>
-    code{white-space: pre-wrap;}
-    span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
-    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
-    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
   </style>
-  <link rel="stylesheet" href="_htmresc/mini-st.css" />
+  <link rel="stylesheet" href="_htmresc/mini-st_2020.css" />
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
+  <link rel="icon" type="image/x-icon" href="_htmresc/favicon.png" />
 </head>
 <body>
 <div class="row">
 <div class="col-sm-12 col-lg-4">
-<div class="card fluid">
-<div class="sectione dark">
 <center>
-<h1 id="release-notes-for-stm32cubeg4-firmware-package"><small>Release Notes for</small> STM32CubeG4 Firmware Package</h1>
+<h1 id="release-notes-for-stm32cubeg4-firmware-package">Release Notes for <mark> STM32CubeG4 Firmware Package </mark></h1>
 <p>Copyright © 2019 STMicroelectronics<br />
 </p>
 <a href="https://www.st.com" class="logo"><img src="_htmresc/st_logo_2020.png" alt="ST logo" /></a>
 </center>
-</div>
-</div>
 <h1 id="purpose">Purpose</h1>
 <p>STM32G4 series will serve all applications where <strong>advanced and/or rich analog</strong> peripheral set is required :</p>
 <ul>
@@ -56,7 +50,7 @@
 </ul>
 <p>The STM32Cube firmware solution offers a straightforward API with a modular architecture, making it simple to fine tune custom applications and scalable to fit most requirements.</p>
 <figure>
-<img src="_htmresc/STM32Cube.bmp" alt="STM32Cube" /><figcaption aria-hidden="true">STM32Cube</figcaption>
+<img src="_htmresc/STM32Cube.bmp" alt="STM32Cube" /><figcaption>STM32Cube</figcaption>
 </figure>
 <p>The HAL (Hardware Abstraction Layer) and LL (Low Layers) drivers provided within this package support the <strong>STM32G431xx/41xx</strong>, <strong>STM32G471xx</strong>, <strong>STM32G473xx/83xx</strong> and <strong>STM32G474xx/84xx</strong> lines.</p>
 <p>The HAL and LL drivers provided within this package are compliant with MISRA-C®:2012 guidelines, and have been reviewed with a static analysis tool to eliminate possible run-time errors. Reports are available on demand.</p>
@@ -72,13 +66,562 @@
 <li><a href="https://www.st.com/resource/en/user_manual/DM00298101.pdf">UM2552</a> : STM32Cube USBPD stack User Manual</li>
 </ul>
 </div>
-<section id="update-history" class="col-sm-12 col-lg-8">
-<h1>Update History</h1>
+<div class="col-sm-12 col-lg-8">
+<h1 id="update-history">Update History</h1>
 <div class="collapse">
-<input type="checkbox" id="collapse-section8" checked aria-hidden="true"> <label for="collapse-section8" aria-hidden="true">v1.5.1 / 17-June-2022 </label>
+<input type="checkbox" id="collapse-section9" checked aria-hidden="true"> <label for="collapse-section9" aria-hidden="true">V1.5.2 / 15-November-2023 </label>
 <div>
 <h2 id="main-changes">Main Changes</h2>
-<h3 id="patch-release">Patch release</h3>
+<ul>
+<li>General updates to fix known defects and enhancements implementation.</li>
+<li>Update sysmem.c and syscall.c files in all STM32CubeIDE projects to support GCC11.</li>
+<li>Upgrade USBPD Core library to use V4.3.1.</li>
+<li>Upgrade USBPD devices library to use V5.3.0.</li>
+</ul>
+<h2 id="patch-release">Patch release</h2>
+<ul>
+<li><strong>CMSIS</strong> updates
+<ul>
+<li>Fix misalignment between reference manual and CMSIS driver: remove GCR register.</li>
+<li>Add missing __IRQn and __IRQHandler aliases, TIM7_DAC and COMP4_5_6 for STM32G491xx and STM32G4A1xx devices.</li>
+<li>Update to call SystemInit first in startup/Reset_Handler, so GCC code is similar to IAR/Keil.</li>
+<li>Change the value of RAM end region in stm32g491xx IAR linker files.</li>
+<li>Fix the location of .size directive in STM32CubeIDE’s startup code to allow proper size information of vector table.</li>
+</ul></li>
+<li><strong>HAL/LL Drivers</strong> updates
+<ul>
+<li>HAL code quality enhancement for MISRA-C Rule-8.13 by adding const qualifiers.</li>
+<li><strong>HAL Generic</strong> update
+<ul>
+<li>Add implementation of utility APIs HAL_GetUIDw0, HAL_GetUIDw1 and HAL_GetUIDw2.</li>
+<li>Allow redefinition of macro UNUSED(x).</li>
+<li>Update of HAL_GetTickFreq() brief.</li>
+</ul></li>
+<li><strong>HAL/LL ADC</strong> update
+<ul>
+<li>Add “ADC_CHANNEL_0” in IS_ADC_CHANNEL() macro.</li>
+<li>Add helper macro to convert data from differential mode.</li>
+<li>Remove useless action of conversion trigger change in function LL_ADC_DeInit(); Moreover; this action was not compliant with ADC enable state (cf reference manual).</li>
+</ul></li>
+<li><strong>HAL/LL TIM</strong> update
+<ul>
+<li>Manage configuration of the Capture/compare DMA request source:
+<ul>
+<li>Add related new exported constants (TIM_CCDMAREQUEST_CC, TIM_CCDMAREQUEST_UPDATE).</li>
+<li>Create a new macro __HAL_TIM_SELECT_CCDMAREQUEST() allowing to program the TIMx_CR2.CCDS bitfield.</li>
+</ul></li>
+<li>Remove useless definition of macro IS_TIM_INTERNAL_TRIGGEREVENT_SELECTION.</li>
+<li>Improve driver robustness against wrong period values.</li>
+<li>Improve driver robustness against wrong DMA related parameters.</li>
+<li>Improve period configuration parameter check.</li>
+<li>Minor typo correction in hal_tim header file.</li>
+<li>Update __LL_TIM_CALC_PSC() macro to round up the evaluated value when the fractional part of the division is greater than 0.5.</li>
+<li>Remove useless check on IS_TIM_ADVANCED_INSTANCE() within LL_TIM_BDTR_Init() to fix Break Filter configuration problem with specific TIM instances.</li>
+<li>Update LL_TIM_DisableBreakInputSource() and LL_TIM_SetBreakInputSourcePolarity() APIs description.</li>
+<li>Remove lock management from callback management functions.</li>
+<li>Remove multiple volatile reads or writes in interrupt handler for better performance.</li>
+<li>Improve HAL TIM driver’s operational behavior.</li>
+<li>Assert check for the right channels.</li>
+<li>Fix typo in PWM symmetric mode related constants names.</li>
+<li>Remove unnecessary change of MOE bitfield in LL_TIM_BDTR_Init().</li>
+</ul></li>
+<li><strong>HAL/LL LPTIM</strong> update
+<ul>
+<li>Improve LPTIM FSM management consistency.</li>
+<li>Apply same naming rules to clear FLAG related functions.</li>
+<li>Remove Lock management from callback management functions.</li>
+<li>Remove redundant IS_LPTIM_AUTORELOAD macro.</li>
+</ul></li>
+<li><strong>HAL/LL RCC</strong> update
+<ul>
+<li>Add uint32_t cast to shift left operands constants defined with ‘U’ suffix in case MISRAC2012-Rule-12.2 violated.</li>
+<li>Wait PLL1RDY to be off before clearing PLL1 source.</li>
+<li>Set RCC_CRS_HSI48CALIBRATION_DEFAULT to 0x40 to be consistent with REFMAN and LL CRS driver.</li>
+<li>Fix wrong RCC_APB1ENR1_WWDG2EN bit referenced in __HAL_RCC_WWDG_CLK_DISABLE() macro.</li>
+<li>Modify the comment in PLL configuration.</li>
+</ul></li>
+<li><strong>HAL CORTEX</strong> update
+<ul>
+<li>Updated HAL_MPU_ConfigRegion() to allow the configuration of the MPU registers independently of the value of Enable/Disable field.</li>
+<li>Add new APIs HAL_MPU_EnableRegion() / HAL_MPU_DisableRegion().</li>
+</ul></li>
+<li><strong>HAL DAC</strong> update
+<ul>
+<li>Fix incorrect word ‘surcharged’ in functions headers.</li>
+<li>Updated DAC buffer calibration according to RM.</li>
+<li>Fix HAL_GetTick() timeout vulnerability.</li>
+</ul></li>
+<li><strong>HAL EXTI</strong> update
+<ul>
+<li>Fix computation of pExtiConfig-&gt;GPIOSel in HAL_EXTI_GetConfigLine().</li>
+<li>Fix the wrong references in the “How to use this driver” section.</li>
+</ul></li>
+<li><strong>HAL CORDIC</strong> update
+<ul>
+<li>Fix incorrect word ‘surcharged’ in functions headers.</li>
+</ul></li>
+<li><strong>HAL FMAC</strong> update
+<ul>
+<li>Avoid usage of magic numbers.</li>
+<li>Fix incorrect word ‘surcharged’ in functions headers.</li>
+</ul></li>
+<li><strong>HAL/LL HRTIM</strong> update
+<ul>
+<li>Rework HAL_HRTIM_Get…() getter functions not to change the handle state in case input parameter is out-of-range.</li>
+<li>Add a right shift of the read bit field in LL_HRTIM_FLT_GetResetMode() before returning the result.</li>
+<li>Fix erroneous fault counter threshold configuration function.</li>
+<li>Fix typo in LL_HRTIM_FLT_ResetCounter() API header.</li>
+</ul></li>
+<li><strong>HAL RTC</strong> update
+<ul>
+<li>Check if the RTC calendar has been previously initialized before entering Initialization mode.</li>
+<li>Optimize the way RSF flag is cleared in HAL_RTC_WaitForSynchro().</li>
+<li>Correct misleading note about shadow registers.</li>
+</ul></li>
+<li><strong>HAL FMC</strong> update
+<ul>
+<li>Fix Hardfault issues when executing NOR read operations caused by FMC_WRITE_OPERATION_DISABLE.</li>
+</ul></li>
+<li><strong>HAL CRYP</strong> update
+<ul>
+<li>Mask arrays are declared as static const.</li>
+<li>Update Crypt/Decrypt IT processes to avoid Computation Completed IRQ fires before the DINR pointer increment.</li>
+<li>Update AES GCM in interrupt mode to avoid Computation Completed IRQ fires before the DINR pointer increment.</li>
+</ul></li>
+<li><strong>HAL FLASH</strong> update
+<ul>
+<li>Update the hal_flash_ex.c file to correctly support the PB4_PUPEN Option.</li>
+<li>Fix FLASH_PAGE_NB value for STM32G4 category 3 devices.</li>
+</ul></li>
+<li><strong>HAL CRC</strong> update
+<ul>
+<li>Add filter in HAL_CRCEx_Polynomial_Set() to exclude even polynomials.</li>
+</ul></li>
+<li><strong>HAL QSPI</strong> update
+<ul>
+<li>Update HAL_QSPI_Abort() and HAL_QSPI_Abort_IT() APIs to check on QSPI BUSY flag status before executing the abort procedure.</li>
+<li>Fix incorrect word ‘surcharged’ in functions headers.</li>
+</ul></li>
+<li><strong>HAL SMBUS</strong> update
+<ul>
+<li>Remove Lock management from callback management functions.</li>
+<li>Update HAL SMBUS driver to prefetch data before starting the transmission: implementation of errata sheet workaround I2C2-190208 : Transmission stalled after first byte.</li>
+<li>Update SMBUS_ITErrorHandler to flash TXDR just in case of error.</li>
+</ul></li>
+<li><strong>HAL UART</strong> update
+<ul>
+<li>Add a new API HAL_UARTEx_GetRxEventType that could be used to retrieve the type of event that has led the RxEventCallback execution.</li>
+<li>Remove of HAL_LOCK/HAL_UNLOCK calls in HAL UART Tx and Rx APIs.</li>
+<li>Remove __HAL_LOCK() from HAL_xxx_RegisterCallback()/HAL_xxx_UnRegisterCallback().</li>
+<li>Disable the Receiver Timeout Interrupt when data reception is completed.</li>
+<li>Rework of UART_WaitOnFlagUntilTimeout() API to avoid being stuck forever when UART overrun error occurs and to enhance behavior.</li>
+<li>Update initialisation sequence for TXINV, RXINV and TXRXSWAP settings.</li>
+<li>Fix incorrect gState check in HAL_UART_RegisterRxEventCallback/HAL_UART_UnRegisterRxEventCallback to allow user Rx Event Callback registration when a transmit is ongoing.</li>
+<li>Avoid RTOF flag to be cleared by a transmit process in polling mode.</li>
+</ul></li>
+<li><strong>HAL SMARTCARD</strong> update
+<ul>
+<li>Remove __HAL_LOCK() from HAL_xxx_RegisterCallback()/HAL_xxx_UnRegisterCallback().</li>
+</ul></li>
+<li><strong>HAL SPI</strong> update
+<ul>
+<li>Fix driver to don’t update state in case of error (HAL_SPI_STATE_READY will be set only in case of HAL_TIMEOUT).</li>
+<li>Update HAL_SPI_TransmitReceive API to set the bit CRCNEXT in case of one byte transaction.</li>
+<li>Update IT API to enable interrupts after process unlock.</li>
+</ul></li>
+<li><strong>HAL IRDA</strong> update
+<ul>
+<li>Remove __HAL_LOCK() from HAL_xxx_RegisterCallback()/HAL_xxx_UnRegisterCallback().</li>
+</ul></li>
+<li><strong>HAL FDCAN</strong> update
+<ul>
+<li>Refine description of IsFilterMatchingFrame and FilterIndex, members of structure FDCAN_RxHeaderTypeDef.</li>
+<li>Fix GetIndex issue in HAL_FDCAN_GetRxMessage.</li>
+<li>Modify misleading DataLength values.</li>
+</ul></li>
+<li><strong>HAL SAI</strong> update
+<ul>
+<li>Avoid using magic numbers.</li>
+<li>Fix misalignment between reference manual and HAL SAI driver: remove GCR register.</li>
+<li>Improve audio quality (avoid potential glitch).</li>
+<li>Fix incorrect word ‘surcharged’.</li>
+</ul></li>
+<li><strong>HAL USART</strong> update
+<ul>
+<li>Remove __HAL_LOCK() from HAL_xxx_RegisterCallback()/HAL_xxx_UnRegisterCallback().</li>
+</ul></li>
+<li><strong>HAL/LL I2C</strong> update
+<ul>
+<li>Move polling code of HAL memory interface through interrupt management to prevent timeout issue using HAL MEM interface through FreeRTOS.</li>
+<li>Update I2C_IsErrorOccurred to return error if timeout is detected.</li>
+<li>Clear the ADDRF flag only when direction is confirmed as changed, to prevent that the ADDRF flag is cleared too early when the restart is received.</li>
+<li>Remove Lock management from callback management functions.</li>
+<li>Duplicate the test condition after timeout detection to avoid false timeout detection.</li>
+<li>Update HAL_I2C_IsDeviceReady() API to support 10_bit addressing mode: Update done on the macro I2C_GENERATE_START.</li>
+<li>Update HAL I2C driver to prefetch data before starting the transmission: implementation of errata sheet workaround I2C2-190208 : Transmission stalled after first byte.</li>
+<li>Update HAL I2C driver to disable all interrupts after end of transaction.</li>
+<li>Update HAL_I2C_Init API to clear ADD10 bit in 7 bit addressing mode.</li>
+<li>Solve Slave No stretch not functional by using HAL Slave interface.</li>
+<li>Update HAL_I2C_Mem_Write_IT API to initialize XferSize at 0.</li>
+<li>Update I2C_Slave_ISR_IT, I2C_Slave_ISR_DMA and I2C_ITSlaveCplt to prevent the call of HAL_I2C_ListenCpltCallback twice.</li>
+<li>Update I2C_WaitOnRXNEFlagUntilTimeout to check I2C_FLAG_AF independently from I2C_FLAG_RXNE.</li>
+<li>Remove the unusable code in function HAL_I2C_IsDeviceReady.</li>
+<li>Update I2C_WaitOnFlagUntilTimeout to handle error case.</li>
+<li>Update HAL_I2C_Slave_Transmit to check if the received NACK is the good one.</li>
+<li>Update LL_I2C_HandleTranfer function to prevent undefined behavior of volatile usage before updating the CR2 register.</li>
+</ul></li>
+<li><strong>LL UCPD</strong> update
+<ul>
+<li>Correct register accessed by LL_UCPD_ReadRxPaySize() function.</li>
+</ul></li>
+<li><strong>HAL USB</strong> update
+<ul>
+<li>Add new function HAL_PCD_EP_Abort() to abort current USB endpoint transfer.</li>
+<li>PCD: add supporting multi packets transfer on Interrupt endpoint.</li>
+<li>PCD: software correction added to avoid unexpected STALL condition during EP0 multi packet OUT transfer.</li>
+<li>Set DCD timeout to a minimum of 300ms before starting BCD primary detection process.</li>
+<li>hal_pcd.h: add a mask for USB RX bytes count.</li>
+</ul></li>
+<li><strong>LL UTILS</strong> update
+<ul>
+<li>Align UTILS_PLLVCO_INPUT_MAX value with documentation.</li>
+<li>Update the number of LATENCY to be coherent with the reference manual.</li>
+<li>Update package type definitions to be aligned with RM0440.</li>
+<li>Fix a condition in LL_SetFlashLatency() API to avoid generation of Rule-10.1_R2 warning.</li>
+<li>Add else statement in the end of LL_SetFlashLatency API to avoid Misra-C 2012 Rule-15.7 warnings.</li>
+<li>Fix a note about Ticks parameter.</li>
+</ul></li>
+</ul></li>
+<li><strong>Middlewares</strong>
+<ul>
+<li>Upgrade <strong>USB Power Delivery Core</strong> Library to use <strong>V4.3.1</strong>.</li>
+<li>Upgrade <strong>USB Power Delivery Device </strong> Library to use <strong>V5.3.0</strong>.</li>
+</ul></li>
+<li><strong>Projects</strong> updates
+<ul>
+<li>Fix PWR_STANDBY_RTC examples in order to execute correctly entering/exiting Standby mode.</li>
+<li>Update STM32CubeIDE projects to fix the location of .size directive in startup code to allow proper size information of vector table.</li>
+<li>Update sysmem.c and syscall.c files in all STM32CubeIDE projects to support GCC11.</li>
+<li>Update to fix STM32CubeIDE warning: Accessing 4 bytes in a region of size x [-Wstringop-overflow=] in CRC_Bytes_Stream_7bit_CRC examples.</li>
+<li>Change the initialization of the Counter Mode from “LL_TIM_COUNTERMODE_CENTER_DOWN” to “LL_TIM_COUNTERMODE_CENTER_UP” While configuring the Timer 1 in PWM mode in TIM_BreakAndDeadtime_Init examples.</li>
+<li><strong>NUCLEO-G474RE</strong>
+<ul>
+<li>Remove from ADC_GroupsRegularInjected_Init LL Example a useless double call to LL_TIM_SetTriggerOutput().</li>
+</ul></li>
+<li><strong>NUCLEO-G431RB and NUCLEO-G474RE</strong>
+<ul>
+<li>Update CRC LL examples to fix incorrect bytes stream handling.</li>
+</ul></li>
+<li><strong>NUCLEO-G491RE</strong>
+<ul>
+<li>Fix RAM size in .ld linker script files.</li>
+</ul></li>
+<li><strong>STM32G474E-EVAL</strong>
+<ul>
+<li>Correct USART3 baudrate value in STM32G474E-EVAL_T0_MFX example.</li>
+<li>Update USBPD application readme : external PSU info missing.</li>
+</ul></li>
+</ul></li>
+<li>For the complete list of changes, please refer to the release notes of each firmware component</li>
+</ul>
+<h2 id="contents">Contents</h2>
+<h3 id="projects">Projects</h3>
+<p>The STM32CubeG4 Firmware package comes with a rich set of examples running on STMicroelectronics boards, organized by board and provided with preconfigured projects for the main supported toolchains.</p>
+<p>The exhaustive list of projects is provided in this table (<a href="Projects/STM32CubeProjectsList.html">STM32CubeProjectsList.html</a>).</p>
+<table>
+<caption>Projects :</caption>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th style="text-align: left;">Version</th>
+<th style="text-align: left;">Release notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Projects</td>
+<td style="text-align: left;">See Projects Release note for details</td>
+<td style="text-align: left;"><a href="Projects/Release_Notes.html">release notes</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="components">Components</h3>
+<table>
+<caption>Released Drivers components :</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Version</th>
+<th style="text-align: left;">Release note</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">CMSIS</td>
+<td style="text-align: left;">V5.6.0_cm4</td>
+<td style="text-align: left;"><a href="Drivers/CMSIS/README.md">release note</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32G4xx CMSIS Device</td>
+<td style="text-align: left;"><strong>V1.2.3</strong></td>
+<td style="text-align: left;"><a href="Drivers/CMSIS/Device/ST/STM32G4xx/Release_Notes.html">release note</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STM32G4xx HAL Drivers</td>
+<td style="text-align: left;"><strong>V1.2.3</strong></td>
+<td style="text-align: left;"><a href="Drivers/STM32G4xx_HAL_Driver/Release_Notes.html">release note</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BSP STM32G4xx_Nucleo</td>
+<td style="text-align: left;">V1.0.4</td>
+<td style="text-align: left;"><a href="Drivers/BSP/STM32G4xx_Nucleo/Release_Notes.html">release note</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BSP STM32G474E-EVAL</td>
+<td style="text-align: left;">V1.1.5</td>
+<td style="text-align: left;"><a href="Drivers/BSP/STM32G474E-EVAL/Release_Notes.html">release note</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BSP B-G474E-DPOW1</td>
+<td style="text-align: left;">V1.1.4</td>
+<td style="text-align: left;"><a href="Drivers/BSP/B-G474E-DPOW1/Release_Notes.html">release note</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BSP Adafruit Shield (reference ID 802)</td>
+<td style="text-align: left;">V5.0.1</td>
+<td style="text-align: left;"><a href="Drivers/BSP/Adafruit_Shield/Release_Notes.html">release note</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BSP Common</td>
+<td style="text-align: left;">V7.0.0</td>
+<td style="text-align: left;"><a href="Drivers/BSP/Components/Common/Release_Notes.html">release note</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BSP hx8347d</td>
+<td style="text-align: left;">V2.0.0</td>
+<td style="text-align: left;"><a href="Drivers/BSP/Components/hx8347d/Release_Notes.html">release note</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BSP mfxstm32l152</td>
+<td style="text-align: left;">V3.0.0</td>
+<td style="text-align: left;"><a href="Drivers/BSP/Components/mfxstm32l152/Release_Notes.html">release note</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BSP mt25ql512abb</td>
+<td style="text-align: left;">V1.0.1</td>
+<td style="text-align: left;"><a href="Drivers/BSP/Components/mt25ql512abb/Release_Notes.html">release note</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BSP st7735</td>
+<td style="text-align: left;">V2.0.0</td>
+<td style="text-align: left;"><a href="Drivers/BSP/Components/st7735/Release_Notes.html">release note</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BSP stts751</td>
+<td style="text-align: left;">V1.0.2</td>
+<td style="text-align: left;"><a href="Drivers/BSP/Components/stts751/Release_Notes.html">release note</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BSP wm8994</td>
+<td style="text-align: left;">V3.0.0</td>
+<td style="text-align: left;"><a href="Drivers/BSP/Components/wm8994/Release_Notes.html">release note</a></td>
+</tr>
+</tbody>
+</table>
+<table>
+<caption>Released Middlewares components :</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Version</th>
+<th style="text-align: left;">Release note</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">STM32 USB Device Library</td>
+<td style="text-align: left;">V2.7.1</td>
+<td style="text-align: left;"><a href="Middlewares/ST/STM32_USB_Device_Library/Release_Notes.html">release note</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32 USB Power Delivery Core Library</td>
+<td style="text-align: left;"><strong>v4.3.1</strong></td>
+<td style="text-align: left;"><a href="Middlewares/ST/STM32_USBPD_Library/Core/Release_Notes.html">release note</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STM32 USB Power Delivery Device Library</td>
+<td style="text-align: left;"><strong>g4_v5.3.0</strong></td>
+<td style="text-align: left;"><a href="Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX/Release_Notes.html">release note</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">FatFS</td>
+<td style="text-align: left;">R0.12c</td>
+<td style="text-align: left;"><a href="Middlewares/Third_Party/FatFs/doc/updates.txt">release note</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">ST modified 20191011</td>
+<td style="text-align: left;"><a href="Middlewares/Third_Party/FatFs/src/st_readme.txt">release note ST</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">FreeRTOS</td>
+<td style="text-align: left;">V10.3.1</td>
+<td style="text-align: left;"><a href="Middlewares/Third_Party/FreeRTOS/Source/readme.txt">release note</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">ST modified 20200831</td>
+<td style="text-align: left;"><a href="Middlewares/Third_Party/FreeRTOS/Source/st_readme.txt">release note ST</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32 OpenBootLoader</td>
+<td style="text-align: left;">V3.0.1</td>
+<td style="text-align: left;"><a href="Middlewares/ST/OpenBootloader/Release_Notes.html">release note</a></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Version</th>
+<th style="text-align: left;">Release note</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Basic GUI</td>
+<td style="text-align: left;">V2.0.0</td>
+<td style="text-align: left;"><a href="Utilities/Basic_GUI/Release_Notes.html">release note</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Fonts</td>
+<td style="text-align: left;">V2.0.2</td>
+<td style="text-align: left;"><a href="Utilities/Fonts/Release_Notes.html">release note</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">GUI Interface</td>
+<td style="text-align: left;">GUI_V1.13.0</td>
+<td style="text-align: left;"><a href="Utilities/GUI_INTERFACE/Release_Notes.html">release note</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Tracer Emb</td>
+<td style="text-align: left;">V1.6.0</td>
+<td style="text-align: left;"><a href="Utilities/TRACER_EMB/Release_Notes.html">release note</a></td>
+</tr>
+</tbody>
+</table>
+<p>Note: in the tables above, version <strong>highlighted</strong> have changed since previous release.</p>
+<h2 id="known-limitations">Known Limitations</h2>
+<ul>
+<li>The following STM32CubeIDE project include only Debug configuration :
+<ul>
+<li>STM32G474E-EVAL/Demonstrations/Demo</li>
+</ul></li>
+</ul>
+<h2 id="development-toolchains-and-compilers">Development Toolchains and Compilers</h2>
+<table style="width:99%;">
+<caption>Development Toolchains :</caption>
+<colgroup>
+<col style="width: 91%" />
+<col style="width: 7%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: center;">Version</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">IAR Embedded Workbench for ARM (EWARM) toolchain + ST-LINKV2</td>
+<td style="text-align: center;"><strong>V8.50.9</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">RealView Microcontroller Development Kit (MDK-ARM) toolchain + ST-LINKV2 - Only template projects are migrated to Arm Compiler 6 with MDK-ARM 5.31 (“AC-like Warnings” mode).</td>
+<td style="text-align: center;"><strong>V5.38</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STM32CubeIDE toolchain</td>
+<td style="text-align: center;"><strong>V1.14.0</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="supported-devices-and-boards">Supported Devices and boards</h2>
+<table>
+<caption>Supported Devices :</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">STM32G431xx, STM32G441xx</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32G471xx</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STM32G473xx, STM32G483xx</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32G474xx, STM32G484xx</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STM32G491xx, STM32G4A1xx</td>
+</tr>
+</tbody>
+</table>
+<table>
+<caption>Supported Boards :</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">NUCLEO-G431KB Nucleo32 kit</td>
+<td style="text-align: left;">MB1430 A-01</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NUCLEO-G431RB Nucleo kit</td>
+<td style="text-align: left;">MB1367 C-01</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NUCLEO-G474RE Nucleo kit</td>
+<td style="text-align: left;">MB1367 C-01</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32G474E-EVAL Evaluation Board</td>
+<td style="text-align: left;">MB1397 B-01</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">B-G474E-DPOW1 Discovery Kit</td>
+<td style="text-align: left;">MB1428 B-01</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NUCLEO-G491RE Nucleo kit</td>
+<td style="text-align: left;">MB1367-G491RE C-04</td>
+</tr>
+</tbody>
+</table>
+<h2 id="backward-compatibility">Backward Compatibility</h2>
+<p>None</p>
+<h2 id="dependencies">Dependencies</h2>
+<p>This software release is compatible with:</p>
+<ul>
+<li>STM32CubeMX V6.4.0</li>
+</ul>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section8"  aria-hidden="true"> <label for="collapse-section8" aria-hidden="true">v1.5.1 / 17-June-2022 </label>
+<div>
+<h2 id="main-changes-1">Main Changes</h2>
+<h3 id="patch-release-1">Patch release</h3>
 <ul>
 <li><p>Add and upgrade the Digital Power applications provided for the B-G474E-DPOW1 discovery kit, showcasing the control of Buck and Boost DC-DC converters</p>
 <ul>
@@ -102,8 +645,8 @@
 </ul></li>
 </ul></li>
 </ul>
-<h2 id="contents">Contents</h2>
-<h3 id="projects">Projects</h3>
+<h2 id="contents-1">Contents</h2>
+<h3 id="projects-1">Projects</h3>
 <p>The STM32CubeG4 Firmware package comes with a rich set of examples running on STMicroelectronics boards, organized by board and provided with preconfigured projects for the main supported toolchains.</p>
 <p>The exhaustive list of projects is provided in this table (<a href="Projects/STM32CubeProjectsList.html">STM32CubeProjectsList.html</a>).</p>
 <table>
@@ -128,12 +671,12 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section7" aria-hidden="true"> <label for="collapse-section7" aria-hidden="true">V1.5.0 / 10-November-2021 </label>
 <div>
-<h2 id="main-changes-1">Main Changes</h2>
+<h2 id="main-changes-2">Main Changes</h2>
 <h3 id="maintenance-release">Maintenance release</h3>
 <ul>
-<li><p>General updates to fix known defects and enhancements implementation.</p></li>
+<li>General updates to fix known defects and enhancements implementation.</li>
 <li><p>All source files: update disclaimer to add reference to the new license agreement.</p></li>
-<li><p><strong>CMSIS</strong></p>
+<li><strong>CMSIS</strong>
 <ul>
 <li>Added new atomic register access macros in stm32g4xx.h file.</li>
 <li>Add LSI maximum startup time datasheet value: LSI_STARTUP_TIME.</li>
@@ -141,7 +684,7 @@
 <li>Fix Doxygen grouping issues.</li>
 <li>Remove extra TIM5 references in the stm32g471xx.h CMSIS file and add support to the TIM20.</li>
 </ul></li>
-<li><p><strong>HAL</strong></p>
+<li><strong>HAL</strong>
 <ul>
 <li>General updates to fix known defects and enhancements implementation.</li>
 <li><strong>HAL/LL ADC</strong> update
@@ -280,11 +823,11 @@
 <li>Update implementation of “HAL_NAND_Write_Page_16b” and “HAL_NAND_Read_Page_16b” APIs implementation to fix an issue with the page calculation of 8 bits memories.</li>
 </ul></li>
 </ul></li>
-<li><p><strong>BSP</strong></p>
+<li><strong>BSP</strong>
 <ul>
 <li>Add License.md file required for GitHub publication</li>
 </ul></li>
-<li><p><strong>Projects</strong></p>
+<li><strong>Projects</strong>
 <ul>
 <li>General updates to fix known defects and enhancements implementation.</li>
 <li>STM32G474E-EVAL Demo
@@ -309,8 +852,8 @@
 </ul></li>
 <li><p>For the complete list of changes, please refer to the release notes of each firmware component</p></li>
 </ul>
-<h2 id="contents-1">Contents</h2>
-<h3 id="projects-1">Projects</h3>
+<h2 id="contents-2">Contents</h2>
+<h3 id="projects-2">Projects</h3>
 <p>The STM32CubeG4 Firmware package comes with a rich set of examples running on STMicroelectronics boards, organized by board and provided with preconfigured projects for the main supported toolchains.</p>
 <p>The exhaustive list of projects is provided in this table (<a href="Projects/STM32CubeProjectsList.html">STM32CubeProjectsList.html</a>).</p>
 <table>
@@ -330,7 +873,7 @@
 </tr>
 </tbody>
 </table>
-<h3 id="components">Components</h3>
+<h3 id="components-1">Components</h3>
 <table>
 <caption>Released Drivers components :</caption>
 <thead>
@@ -342,7 +885,7 @@
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">CMSIS Core</td>
+<td style="text-align: left;">CMSIS</td>
 <td style="text-align: left;">V5.6.0_cm4</td>
 <td style="text-align: left;"><a href="Drivers/CMSIS/README.md">release note</a></td>
 </tr>
@@ -497,8 +1040,8 @@
 </tbody>
 </table>
 <p>Note: in the tables above, version <strong>highlighted</strong> have changed since previous release.</p>
-<h2 id="known-limitations">Known Limitations</h2>
-<h2 id="development-toolchains-and-compilers">Development Toolchains and Compilers</h2>
+<h2 id="known-limitations-1">Known Limitations</h2>
+<h2 id="development-toolchains-and-compilers-1">Development Toolchains and Compilers</h2>
 <table style="width:99%;">
 <caption>Development Toolchains :</caption>
 <colgroup>
@@ -526,7 +1069,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="supported-devices-and-boards">Supported Devices and boards</h2>
+<h2 id="supported-devices-and-boards-1">Supported Devices and boards</h2>
 <table>
 <caption>Supported Devices :</caption>
 <thead>
@@ -587,9 +1130,9 @@
 </tr>
 </tbody>
 </table>
-<h2 id="backward-compatibility">Backward Compatibility</h2>
+<h2 id="backward-compatibility-1">Backward Compatibility</h2>
 <p>None</p>
-<h2 id="dependencies">Dependencies</h2>
+<h2 id="dependencies-1">Dependencies</h2>
 <p>This software release is compatible with:</p>
 <ul>
 <li>STM32CubeMX V6.4.0</li>
@@ -599,26 +1142,26 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section6" aria-hidden="true"> <label for="collapse-section6" aria-hidden="true">V1.4.0 / 27-January-2021 </label>
 <div>
-<h2 id="main-changes-2">Main Changes</h2>
+<h2 id="main-changes-3">Main Changes</h2>
 <h3 id="maintenance-release-1">Maintenance release</h3>
 <ul>
-<li><p>General updates to fix known defects and enhancements implementation.</p></li>
-<li><p>Added new <strong>HAL SMBUS extended driver</strong> to support SMBUS fast Mode Plus.</p></li>
-<li><p>Added support of QUADSPI to STM32G471xx devices.</p></li>
-<li><p>Upgraded FreeRTOS to use <strong>V10.3.1</strong> ST modified <strong>20200831</strong>.</p></li>
-<li><p>Upgraded USB Device Lib to use <strong>V2.7.1</strong>.</p></li>
-<li><p>Upgraded STM32 USB Power Delivery Core Library to use <strong>v3.3.0</strong>.</p></li>
-<li><p>Upgraded STM32 USB Power Delivery Device Library to use <strong>g4_v5.0.0</strong>.</p></li>
-<li><p>Upgraded STM32 OpenBootLoader to use <strong>v3.0.1</strong>.</p></li>
-<li><p>Upgraded STM32 GUI Interface to use <strong>GUI_V1.13.0</strong>.</p></li>
+<li>General updates to fix known defects and enhancements implementation.</li>
+<li>Added new <strong>HAL SMBUS extended driver</strong> to support SMBUS fast Mode Plus.</li>
+<li>Added support of QUADSPI to STM32G471xx devices.</li>
+<li>Upgraded FreeRTOS to use <strong>V10.3.1</strong> ST modified <strong>20200831</strong>.</li>
+<li>Upgraded USB Device Lib to use <strong>V2.7.1</strong>.</li>
+<li>Upgraded STM32 USB Power Delivery Core Library to use <strong>v3.3.0</strong>.</li>
+<li>Upgraded STM32 USB Power Delivery Device Library to use <strong>g4_v5.0.0</strong>.</li>
+<li>Upgraded STM32 OpenBootLoader to use <strong>v3.0.1</strong>.</li>
+<li>Upgraded STM32 GUI Interface to use <strong>GUI_V1.13.0</strong>.</li>
 <li><p>Upgraded STM32 Tracer Emb to use <strong>V1.6.0</strong>.</p></li>
-<li><p><strong>CMSIS</strong></p>
+<li><strong>CMSIS</strong>
 <ul>
 <li>General updates to fix known defects and enhancements implementation.</li>
 <li>Protect Vector table modification following SRAM or FLASH preprocessor directive by a generic preprocessor directive: USER_VECT_TAB_ADDRESS.</li>
 <li>Added support of QUADSPI to STM32G471xx devices.</li>
 </ul></li>
-<li><p><strong>HAL</strong></p>
+<li><strong>HAL</strong>
 <ul>
 <li>General updates to fix known defects and enhancements implementation.</li>
 <li>Added new defines for ARM compiler V6:
@@ -719,7 +1262,7 @@
 <li>NOR_CMD_READ_STATUS_REG</li>
 <li>NOR_CMD_CLEAR_STATUS_REG</li>
 </ul></li>
-<li>Updated muliple APIs to treat separately the different memory types.</li>
+<li>Updated multiple APIs to treat separately the different memory types.</li>
 </ul></li>
 <li><strong>LL FMC </strong> Update
 <ul>
@@ -791,7 +1334,7 @@
 </ul></li>
 </ul></li>
 </ul></li>
-<li><p><strong>Middlewares</strong></p>
+<li><strong>Middlewares</strong>
 <ul>
 <li>Upgraded FreeRTOS to use <strong>V10.3.1</strong> ST modified <strong>20200831</strong>.</li>
 <li>Upgraded USB Device Lib to use <strong>V2.7.1</strong>.</li>
@@ -801,7 +1344,7 @@
 <li>Upgraded STM32 GUI Interface to use <strong>GUI_V1.13.0</strong>.</li>
 <li>Upgraded STM32 Tracer Emb to use <strong>V1.6.0</strong>.</li>
 </ul></li>
-<li><p><strong>BSP</strong></p>
+<li><strong>BSP</strong>
 <ul>
 <li>Add License.md file required for GitHub publication</li>
 <li>General updates to fix MISRA-C®:2012 warnings.</li>
@@ -821,7 +1364,7 @@
 </ul></li>
 </ul></li>
 </ul></li>
-<li><p><strong>Projects</strong></p>
+<li><strong>Projects</strong>
 <ul>
 <li>General updates to fix known defects and enhancements implementation.</li>
 <li>General updates to be compliant with CubeMx <strong>6.2.0</strong> version.</li>
@@ -846,8 +1389,8 @@
 </ul></li>
 <li><p>For the complete list of changes, please refer to the release notes of each firmware component</p></li>
 </ul>
-<h2 id="contents-2">Contents</h2>
-<h3 id="projects-2">Projects</h3>
+<h2 id="contents-3">Contents</h2>
+<h3 id="projects-3">Projects</h3>
 <p>The STM32CubeG4 Firmware package comes with a rich set of examples running on STMicroelectronics boards, organized by board and provided with preconfigured projects for the main supported toolchains.</p>
 <p>The exhaustive list of projects is provided in this table (<a href="Projects/STM32CubeProjectsList.html">STM32CubeProjectsList.html</a>).</p>
 <table>
@@ -867,7 +1410,7 @@
 </tr>
 </tbody>
 </table>
-<h3 id="components-1">Components</h3>
+<h3 id="components-2">Components</h3>
 <table>
 <caption>Released Drivers components :</caption>
 <thead>
@@ -879,7 +1422,7 @@
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">CMSIS Core</td>
+<td style="text-align: left;">CMSIS</td>
 <td style="text-align: left;">V5.6.0_cm4</td>
 <td style="text-align: left;"><a href="Drivers/CMSIS/README.md">release note</a></td>
 </tr>
@@ -1034,14 +1577,14 @@
 </tbody>
 </table>
 <p>Note: in the tables above, version <strong>highlighted</strong> have changed since previous release.</p>
-<h2 id="known-limitations-1">Known Limitations</h2>
+<h2 id="known-limitations-2">Known Limitations</h2>
 <ul>
 <li>Demo for STM32G474E-EVAL
 <ul>
 <li>Some warnings may appear while compiling the project if gcc 9 is used.</li>
 </ul></li>
 </ul>
-<h2 id="development-toolchains-and-compilers-1">Development Toolchains and Compilers</h2>
+<h2 id="development-toolchains-and-compilers-2">Development Toolchains and Compilers</h2>
 <table style="width:99%;">
 <caption>Development Toolchains :</caption>
 <colgroup>
@@ -1069,7 +1612,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="supported-devices-and-boards-1">Supported Devices and boards</h2>
+<h2 id="supported-devices-and-boards-2">Supported Devices and boards</h2>
 <table>
 <caption>Supported Devices :</caption>
 <thead>
@@ -1130,9 +1673,9 @@
 </tr>
 </tbody>
 </table>
-<h2 id="backward-compatibility-1">Backward Compatibility</h2>
+<h2 id="backward-compatibility-2">Backward Compatibility</h2>
 <p>None</p>
-<h2 id="dependencies-1">Dependencies</h2>
+<h2 id="dependencies-2">Dependencies</h2>
 <p>This software release is compatible with:</p>
 <ul>
 <li>STM32CubeMX V6.2.0</li>
@@ -1142,7 +1685,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section5" aria-hidden="true"> <label for="collapse-section5" aria-hidden="true">V1.3.0 / 26-June-2020 </label>
 <div>
-<h2 id="main-changes-3">Main Changes</h2>
+<h2 id="main-changes-4">Main Changes</h2>
 <h3 id="maintenance-release-2">Maintenance release</h3>
 <p>Release to support STM32G491xx/4A1xx devices (for more details please refer to HAL release notes).</p>
 <ul>
@@ -1158,14 +1701,14 @@
 </ul></li>
 <li><strong>HAL</strong>
 <ul>
-<li><p>Add support for STM32G491xx and STM32G4A1 part numbers</p></li>
+<li>Add support for STM32G491xx and STM32G4A1 part numbers</li>
 <li><p>General updates to fix known defects and enhancements implementation</p></li>
-<li><p><strong>HAL/LL GPIO</strong> update</p>
+<li><strong>HAL/LL GPIO</strong> update
 <ul>
 <li>Enhancement GPIO_TogglePin API to allow the toggling of many pins</li>
 <li>Update GPIO initialization sequence to avoid unwanted pulse on GPIO Pin’s</li>
 </ul></li>
-<li><p><strong>HAL/LL HRTIM</strong> update</p>
+<li><strong>HAL/LL HRTIM</strong> update
 <ul>
 <li>Constants renaming:
 <ul>
@@ -1179,7 +1722,7 @@
 <li>Remove unused LL constant LL_HRTIM_RESETTRIG_OTHER5_CMP4 as the definition it corresponds to (HRTIM_RSTR_TIMFCMP4) exists neither in the CMSIS nor in the reference manual.</li>
 </ul></li>
 </ul></li>
-<li><p><strong>HAL/LL I2S</strong> update</p>
+<li><strong>HAL/LL I2S</strong> update
 <ul>
 <li>Update HAL_I2S_DMAStop() API to be more safe
 <ul>
@@ -1191,7 +1734,7 @@
 <li>Add new ErrorCode define: HAL_I2S_ERROR_BUSY_LINE_RX</li>
 </ul></li>
 </ul></li>
-<li><p><strong>HAL/LL SPI</strong> update</p>
+<li><strong>HAL/LL SPI</strong> update
 <ul>
 <li>Update HAL_SPI_Init() API
 <ul>
@@ -1211,11 +1754,11 @@
 <li>Calculate Timeout based on a software loop to avoid blocking issue if Systick is disabled</li>
 </ul></li>
 </ul></li>
-<li><p><strong>HAL SAI</strong> update</p>
+<li><strong>HAL SAI</strong> update
 <ul>
 <li>Update HAL_SAI_Init() API to correct the formula in case of SPDIF is wrong</li>
 </ul></li>
-<li><p><strong>HAL/LL ADC</strong> update</p>
+<li><strong>HAL/LL ADC</strong> update
 <ul>
 <li>Update Channel &amp; external trigger to support <strong>STM32G491/STM32G4A1</strong> embedded with 3 ADC:
 <ul>
@@ -1224,32 +1767,32 @@
 </ul></li>
 <li>Update note in ll_adc.h &amp; hal_adc.h to highlight that the ADC with transfers DMA and ADC mode auto delay can work simultaneously.</li>
 </ul></li>
-<li><p><strong>HAL COMP</strong> update</p>
+<li><strong>HAL COMP</strong> update
 <ul>
 <li>Update Blanking sources to support <strong>STM32G491/STM32G4A1</strong> embedded with 4 COMP:
 <ul>
 <li>IS_COMP_BLANKINGSRC_INSTANCE</li>
 </ul></li>
 </ul></li>
-<li><p><strong>HAL OPAMP</strong> update</p>
+<li><strong>HAL OPAMP</strong> update
 <ul>
 <li>Update hal_opamp_ex.c to support <strong>STM32G491/STM32G4A1</strong> embedded with 4 OPAMP (OPAMP1/OPAMP2/OPAMP3/OPAMP6):</li>
 </ul></li>
-<li><p><strong>HAL FLASH</strong> update</p>
+<li><strong>HAL FLASH</strong> update
 <ul>
 <li>Update FLASH Latency comment param to list all supported flash latency values.</li>
 <li>Update FLASH_PAGE_NB to return the right page number(256 pages for devices embedded with 512KB flash size and 64 for devices embedded with 128KB flash size)</li>
 </ul></li>
-<li><p><strong>HAL/LL RCC</strong> update</p>
+<li><strong>HAL/LL RCC</strong> update
 <ul>
-<li>Update Table 1. HCLK clock frequency for STM32G4xx devices to be aligned with referance manual RM0440</li>
+<li>Update Table 1. HCLK clock frequency for STM32G4xx devices to be aligned with reference manual RM0440</li>
 <li>Update peripheral clock to support <strong>STM32G491/STM32G4A1</strong> devices:
 <ul>
 <li>HAL_RCCEx_GetPeriphCLKConfig</li>
 <li>IS_RCC_PERIPHCLOCK</li>
 </ul></li>
 </ul></li>
-<li><p><strong>HAL/LL TIM</strong> driver</p>
+<li><strong>HAL/LL TIM</strong> driver
 <ul>
 <li>Align HAL/LL TIM driver with latest updates and enhancements</li>
 <li>Add new macros to enable and disable the fast mode when using the one pulse mode to output a waveform with a minimum delay
@@ -1265,7 +1808,7 @@
 <li>Add new API HAL_TIM_DMABurst_MultiWriteStart() allowing to configure the DMA Burst to transfer multiple Data from the memory to the TIM peripheral</li>
 <li>Add new API HAL_TIM_DMABurst_MultiReadStart() allowing to configure the DMA Burst to transfer Data from the TIM peripheral to the memory</li>
 </ul></li>
-<li><p><strong>HAL/LL UART</strong> driver</p>
+<li><strong>HAL/LL UART</strong> driver
 <ul>
 <li>Update UART polling processes to handle efficiently the Lock mechanism
 <ul>
@@ -1274,11 +1817,11 @@
 <li>Update UART BRR calculation for ROM size gain</li>
 <li>Remove ‘register’ storage class specifier from LL UART driver.</li>
 </ul></li>
-<li><p><strong>HAL/LL USART</strong> driver</p>
+<li><strong>HAL/LL USART</strong> driver
 <ul>
 <li>Remove ‘register’ storage class specifier from LL USART driver.</li>
 </ul></li>
-<li><p><strong>HAL/LL USB</strong> driver</p>
+<li><strong>HAL/LL USB</strong> driver
 <ul>
 <li>Fix USB Bulk transfer double buffer mode</li>
 <li>Remove register keyword from USB defined macros as no more supported by c++ compiler</li>
@@ -1322,8 +1865,8 @@
 </ul></li>
 <li>For the complete list of changes, please refer to the release notes of each firmware component</li>
 </ul>
-<h2 id="contents-3">Contents</h2>
-<h3 id="projects-3">Projects</h3>
+<h2 id="contents-4">Contents</h2>
+<h3 id="projects-4">Projects</h3>
 <p>The STM32CubeG4 Firmware package comes with a rich set of examples running on STMicroelectronics boards, organized by board and provided with preconfigured projects for the main supported toolchains.</p>
 <p>The exhaustive list of projects is provided in this table (<a href="Projects/STM32CubeProjectsList.html">STM32CubeProjectsList.html</a>).</p>
 <table>
@@ -1343,7 +1886,7 @@
 </tr>
 </tbody>
 </table>
-<h3 id="components-2">Components</h3>
+<h3 id="components-3">Components</h3>
 <table>
 <caption>Released Drivers components :</caption>
 <thead>
@@ -1355,7 +1898,7 @@
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">CMSIS Core</td>
+<td style="text-align: left;">CMSIS</td>
 <td style="text-align: left;"><strong>V5.6.0_cm4</strong></td>
 <td style="text-align: left;"><a href="Drivers/CMSIS/README.md">release note</a></td>
 </tr>
@@ -1510,14 +2053,14 @@
 </tbody>
 </table>
 <p>Note: in the tables above, version <strong>highlighted</strong> have changed since previous release.</p>
-<h2 id="known-limitations-2">Known Limitations</h2>
+<h2 id="known-limitations-3">Known Limitations</h2>
 <ul>
 <li>OpenBootloader application for NUCLEO-G491RE
 <ul>
 <li>MDK-ARM and CubeIDE projects are not provided.</li>
 </ul></li>
 </ul>
-<h2 id="development-toolchains-and-compilers-2">Development Toolchains and Compilers</h2>
+<h2 id="development-toolchains-and-compilers-3">Development Toolchains and Compilers</h2>
 <table style="width:99%;">
 <caption>Development Toolchains :</caption>
 <colgroup>
@@ -1545,7 +2088,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="supported-devices-and-boards-2">Supported Devices and boards</h2>
+<h2 id="supported-devices-and-boards-3">Supported Devices and boards</h2>
 <table>
 <caption>Supported Devices :</caption>
 <thead>
@@ -1606,9 +2149,9 @@
 </tr>
 </tbody>
 </table>
-<h2 id="backward-compatibility-2">Backward Compatibility</h2>
+<h2 id="backward-compatibility-3">Backward Compatibility</h2>
 <p>None</p>
-<h2 id="dependencies-2">Dependencies</h2>
+<h2 id="dependencies-3">Dependencies</h2>
 <p>This software release is compatible with:</p>
 <ul>
 <li>STM32CubeMX V5.6.0</li>
@@ -1618,7 +2161,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section4" aria-hidden="true"> <label for="collapse-section4" aria-hidden="true">V1.2.0 / 14-February-2020 </label>
 <div>
-<h2 id="main-changes-4">Main Changes</h2>
+<h2 id="main-changes-5">Main Changes</h2>
 <h3 id="maintenance-release-3">Maintenance release</h3>
 <ul>
 <li>Add support for CubeIDE Toolchain to replace System Workbench for STM32 (SW4STM32)toolchain</li>
@@ -1805,8 +2348,8 @@
 </ul></li>
 <li>For the complete list of changes, please refer to the release notes of each firmware component</li>
 </ul>
-<h2 id="contents-4">Contents</h2>
-<h3 id="projects-4">Projects</h3>
+<h2 id="contents-5">Contents</h2>
+<h3 id="projects-5">Projects</h3>
 <p>The STM32CubeG4 Firmware package comes with a rich set of examples running on STMicroelectronics boards, organized by board and provided with preconfigured projects for the main supported toolchains.</p>
 <p>The exhaustive list of projects is provided in this table (<a href="Projects/STM32CubeProjectsList.html">STM32CubeProjectsList.html</a>).</p>
 <table>
@@ -1826,7 +2369,7 @@
 </tr>
 </tbody>
 </table>
-<h3 id="components-3">Components</h3>
+<h3 id="components-4">Components</h3>
 <table>
 <caption>Released Drivers components :</caption>
 <thead>
@@ -1838,7 +2381,7 @@
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">CMSIS Core</td>
+<td style="text-align: left;">CMSIS</td>
 <td style="text-align: left;">V5.4.0_cm4</td>
 <td style="text-align: left;"><a href="Drivers/CMSIS/README.md">release note</a></td>
 </tr>
@@ -1988,8 +2531,8 @@
 </tbody>
 </table>
 <p>Note: in the tables above, version <strong>highlighted</strong> have changed since previous release.</p>
-<h2 id="known-limitations-3">Known Limitations</h2>
-<h2 id="development-toolchains-and-compilers-3">Development Toolchains and Compilers</h2>
+<h2 id="known-limitations-4">Known Limitations</h2>
+<h2 id="development-toolchains-and-compilers-4">Development Toolchains and Compilers</h2>
 <table>
 <caption>Development Toolchains :</caption>
 <thead>
@@ -2013,7 +2556,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="supported-devices-and-boards-3">Supported Devices and boards</h2>
+<h2 id="supported-devices-and-boards-4">Supported Devices and boards</h2>
 <table>
 <caption>Supported Devices :</caption>
 <thead>
@@ -2067,9 +2610,9 @@
 </tr>
 </tbody>
 </table>
-<h2 id="backward-compatibility-3">Backward Compatibility</h2>
+<h2 id="backward-compatibility-4">Backward Compatibility</h2>
 <p>None</p>
-<h2 id="dependencies-3">Dependencies</h2>
+<h2 id="dependencies-4">Dependencies</h2>
 <p>This software release is compatible with:</p>
 <ul>
 <li>STM32CubeMX V5.6.0</li>
@@ -2079,14 +2622,14 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section3" aria-hidden="true"> <label for="collapse-section3" aria-hidden="true">v1.1.0 / 28-June-2019 </label>
 <div>
-<h2 id="main-changes-5">Main Changes</h2>
+<h2 id="main-changes-6">Main Changes</h2>
 <h3 id="maintenance-release-4">Maintenance release</h3>
 <p>Maintenance release of STM32CubeG4 (STM32Cube for STM32G4 Series) Firmware package supporting STM32G431xx/41xx/71xx devices, STM32G473xx/<strong>83xx</strong> devices and STM32G474xx/84xx devices.</p>
 <p>A Discovery kit, B-G474E-DPOW, is introduced in this release to enable demonstration of Buck and Boost in voltage mode, High brightness RGB LED control and USB audio streaming.</p>
 <p>In the STM32CubeG4 MCU Package, examples and applications projects are generated with the STM32CubeMX tool to initialize the system, peripherals and middleware stacks. User can open the provided ioc file in STM32CubeMX to modify the settings, add additional peripherals and/or middleware, to build his final application.</p>
 <p>Demonstrations binaries are no more delivered within the STM32CubeG4 MCU package. They are available for download, in addition to their required media files if any, in a standalone package accessible through each hardware board official webpage. Please refer to the corresponding demonstration binary readme.txt to get webpage for each board.</p>
-<h2 id="contents-5">Contents</h2>
-<h3 id="projects-5">Projects</h3>
+<h2 id="contents-6">Contents</h2>
+<h3 id="projects-6">Projects</h3>
 <p>The STM32CubeG4 Firmware package comes with a rich set of examples running on STMicroelectronics boards, organized by board and provided with preconfigured projects for the main supported toolchains.</p>
 <p>The exhaustive list of projects is provided in this table (<a href="Projects/STM32CubeProjectsList.html">STM32CubeProjectsList.html</a>).</p>
 <table>
@@ -2106,7 +2649,7 @@
 </tr>
 </tbody>
 </table>
-<h3 id="components-4">Components</h3>
+<h3 id="components-5">Components</h3>
 <table>
 <caption>Released Drivers components :</caption>
 <thead>
@@ -2118,7 +2661,7 @@
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">CMSIS Core</td>
+<td style="text-align: left;">CMSIS</td>
 <td style="text-align: left;">V5.4.0</td>
 <td style="text-align: left;"><a href="Drivers/CMSIS/README.md">release note</a></td>
 </tr>
@@ -2270,8 +2813,8 @@
 </table>
 <p><strong>CPU and Log Utilities</strong> are not more part of STM32CubeG4 Firmware Package (obsolete components)</p>
 <p>Note: in the tables above, version <strong>highlighted</strong> have changed since previous release.</p>
-<h2 id="known-limitations-4">Known Limitations</h2>
-<h2 id="development-toolchains-and-compilers-4">Development Toolchains and Compilers</h2>
+<h2 id="known-limitations-5">Known Limitations</h2>
+<h2 id="development-toolchains-and-compilers-5">Development Toolchains and Compilers</h2>
 <table>
 <caption>Development Toolchains :</caption>
 <thead>
@@ -2295,7 +2838,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="supported-devices-and-boards-4">Supported Devices and boards</h2>
+<h2 id="supported-devices-and-boards-5">Supported Devices and boards</h2>
 <table>
 <caption>Supported Devices :</caption>
 <thead>
@@ -2349,9 +2892,9 @@
 </tr>
 </tbody>
 </table>
-<h2 id="backward-compatibility-4">Backward Compatibility</h2>
+<h2 id="backward-compatibility-5">Backward Compatibility</h2>
 <p>None</p>
-<h2 id="dependencies-4">Dependencies</h2>
+<h2 id="dependencies-5">Dependencies</h2>
 <p>This software release is compatible with:</p>
 <ul>
 <li>STM32CubeMX V5.3.0</li>
@@ -2361,8 +2904,8 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section2" aria-hidden="true"> <label for="collapse-section2" aria-hidden="true">v1.0.1 / 29-May-2019 </label>
 <div>
-<h2 id="main-changes-6">Main Changes</h2>
-<h3 id="patch-release-1">Patch release</h3>
+<h2 id="main-changes-7">Main Changes</h2>
+<h3 id="patch-release-2">Patch release</h3>
 <p>Update of <strong>HRTIM examples</strong> and new release of <strong>STM32G4 patches for Keil IDE</strong>:</p>
 <ul>
 <li><p>FW Projects :</p>
@@ -2380,7 +2923,7 @@
 <li>New Keil.STM32G4xx_DFP.1.1.1.pack : Fix issue when flashing STM32G4xx devices with Keil v5.25</li>
 </ul></li>
 </ul>
-<h2 id="contents-6">Contents</h2>
+<h2 id="contents-7">Contents</h2>
 <table>
 <caption>Projects :</caption>
 <thead>
@@ -2404,11 +2947,11 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section1" aria-hidden="true"> <label for="collapse-section1" aria-hidden="true">v1.0.0 / 12-April-2019 </label>
 <div>
-<h2 id="main-changes-7">Main Changes</h2>
+<h2 id="main-changes-8">Main Changes</h2>
 <h3 id="first-release">First release</h3>
 <p>First release of STM32CubeG4 (STM32Cube for STM32G4 Series) supporting <strong>STM32G431xx/41xx</strong>, <strong>STM32G471xx</strong>, <strong>STM32G473xx/83xx</strong> and <strong>STM32G474xx/84xx</strong> devices.</p>
 <p>In the STM32CubeG4 MCU Package, most of the examples and applications projects are generated with the STM32CubeMX tool to initialize the system, peripherals and middleware stacks. User can open the provided ioc file in STM32CubeMX to modify the settings, add additional peripherals and/or middleware, to build his final application.</p>
-<h2 id="contents-7">Contents</h2>
+<h2 id="contents-8">Contents</h2>
 <table>
 <caption>Released Drivers components :</caption>
 <thead>
@@ -2420,7 +2963,7 @@
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">CMSIS Core</td>
+<td style="text-align: left;">CMSIS</td>
 <td style="text-align: left;">V5.4.0</td>
 <td style="text-align: left;"><a href="Drivers/CMSIS/README.md">release note</a></td>
 </tr>
@@ -2593,7 +3136,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="known-limitations-5">Known Limitations</h2>
+<h2 id="known-limitations-6">Known Limitations</h2>
 <table>
 <caption>Requirements not met or planned in a forthcoming release :</caption>
 <thead>
@@ -2613,7 +3156,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="development-toolchains-and-compilers-5">Development Toolchains and Compilers</h2>
+<h2 id="development-toolchains-and-compilers-6">Development Toolchains and Compilers</h2>
 <table>
 <caption>Development Toolchains :</caption>
 <thead>
@@ -2637,7 +3180,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="supported-devices-and-boards-5">Supported Devices and boards</h2>
+<h2 id="supported-devices-and-boards-6">Supported Devices and boards</h2>
 <table>
 <thead>
 <tr class="header">
@@ -2672,16 +3215,16 @@
 </tr>
 </tbody>
 </table>
-<h2 id="backward-compatibility-5">Backward Compatibility</h2>
+<h2 id="backward-compatibility-6">Backward Compatibility</h2>
 <p>None</p>
-<h2 id="dependencies-5">Dependencies</h2>
+<h2 id="dependencies-6">Dependencies</h2>
 <p>This software release is compatible with:</p>
 <ul>
 <li>STM32CubeMX V5.2.0</li>
 </ul>
 </div>
 </div>
-</section>
+</div>
 </div>
 <footer class="sticky">
 <p>For complete documentation on STM32G4xx, visit: [<a href="http://www.st.com/stm32g4">www.st.com/stm32g4</a>]</p>

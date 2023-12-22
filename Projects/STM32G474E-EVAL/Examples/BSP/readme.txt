@@ -39,7 +39,7 @@ Once the message "Press User button to start :
 Once the message "Press User button to start :
                        BUTTON example" is displayed on the screen, press user button.
 
-2_ Button_demo: Press user button twice following the messeges displayed in the Terminal I/O.
+2_ Button_demo: Press user button twice following the messages displayed in the Terminal I/O.
 Once the message "Press User button to start :
                        IO example" is displayed on the screen, press user button.
 

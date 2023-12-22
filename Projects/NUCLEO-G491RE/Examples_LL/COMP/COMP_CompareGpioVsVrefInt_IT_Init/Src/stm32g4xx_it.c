@@ -225,4 +225,3 @@ void COMP1_2_3_IRQHandler(void)
 /* USER CODE BEGIN 1 */
 
 /* USER CODE END 1 */
-

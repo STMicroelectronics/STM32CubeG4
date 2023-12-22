@@ -21,6 +21,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+
 /* USER CODE BEGIN Includes */
 
 /* USER CODE END Includes */
@@ -172,4 +173,3 @@ void HAL_TIM_OC_MspDeInit(TIM_HandleTypeDef* htim_oc)
 /* USER CODE BEGIN 1 */
 
 /* USER CODE END 1 */
-

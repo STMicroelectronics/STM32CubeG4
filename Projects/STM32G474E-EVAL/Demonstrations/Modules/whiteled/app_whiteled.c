@@ -553,7 +553,7 @@ static void DAC_Config(void)
   }
 
   /* Fill DAC ConfigStructure */
-  /* Sawtooth waveform generation will be triggerred by HRTIM */
+  /* Sawtooth waveform generation will be triggered by HRTIM */
   DAC_ConfigStructure.DAC_OutputBuffer = DAC_OUTPUTBUFFER_DISABLE;
   DAC_ConfigStructure.DAC_Trigger      = DAC_TRIGGER_HRTIM_RST_TRG5;  // TRG5 correspond to HRTIM E
   DAC_ConfigStructure.DAC_Trigger2     = DAC_TRIGGER_HRTIM_STEP_TRG5;

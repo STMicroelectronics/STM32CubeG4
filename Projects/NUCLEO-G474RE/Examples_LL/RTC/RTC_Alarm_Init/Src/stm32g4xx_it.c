@@ -225,4 +225,3 @@ void RTC_Alarm_IRQHandler(void)
   LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_17);
 }
 /* USER CODE END 1 */
-

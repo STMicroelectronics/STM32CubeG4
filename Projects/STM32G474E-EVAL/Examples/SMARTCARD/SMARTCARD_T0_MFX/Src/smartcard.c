@@ -97,7 +97,7 @@ void SC_Handler(SC_State *SCState, SC_ADPU_Commands *SC_ADPU, SC_ADPU_Response *
   case SC_POWER_ON:
     if (SC_ADPU->Header.INS == SC_GET_A2R)
     {
-      /* Smartcard intialization ---------------------------------------------*/
+      /* Smartcard initialization ---------------------------------------------*/
       SC_Init();
 
       /* Reset Data from SC buffer -------------------------------------------*/

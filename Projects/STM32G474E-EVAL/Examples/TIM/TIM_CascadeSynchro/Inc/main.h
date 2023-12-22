@@ -65,6 +65,7 @@ void Error_Handler(void);
 #define PULSE3_VALUE 1
 #define PERIOD_VALUE_TIM4 3
 #define PULSE4_VALUE 1
+
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */

@@ -81,6 +81,7 @@ void Error_Handler(void);
 #define USART1_RX_GPIO_Port GPIOA
 #define SOURCE_EN_Pin LL_GPIO_PIN_11
 #define SOURCE_EN_GPIO_Port GPIOC
+
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */

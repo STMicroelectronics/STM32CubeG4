@@ -192,7 +192,6 @@ void DMA1_Channel6_IRQHandler(void)
   /* USER CODE BEGIN DMA1_Channel6_IRQn 0 */
 
   /* USER CODE END DMA1_Channel6_IRQn 0 */
-
   TRACER_EMB_IRQHandlerDMA();
   /* USER CODE BEGIN DMA1_Channel6_IRQn 1 */
 
@@ -231,4 +230,3 @@ void UCPD1_IRQHandler(void)
 /* USER CODE BEGIN 1 */
 
 /* USER CODE END 1 */
-

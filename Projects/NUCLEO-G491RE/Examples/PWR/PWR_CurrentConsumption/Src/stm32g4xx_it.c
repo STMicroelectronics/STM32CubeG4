@@ -222,4 +222,3 @@ void EXTI15_10_IRQHandler(void)
   HAL_GPIO_EXTI_IRQHandler(USER_BUTTON_PIN);
 }
 /* USER CODE END 1 */
-

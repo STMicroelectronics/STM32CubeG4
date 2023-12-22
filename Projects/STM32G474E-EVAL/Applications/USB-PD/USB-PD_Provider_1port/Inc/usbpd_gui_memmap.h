@@ -44,7 +44,7 @@
 
 /* Following definitions should be adapted to used Flash configuration :
    INDEX_PAGE : represents the number of the page used for storing USBPD settings (usually the last page)
-   ADDR_FLASH_LAST_PAGE : Flash address value of begining of USBPD settings page
+   ADDR_FLASH_LAST_PAGE : Flash address value of beginning of USBPD settings page
    ADDR_FLASH_PAGE_END : Flash address value of end of USBPD settings page
 */
 

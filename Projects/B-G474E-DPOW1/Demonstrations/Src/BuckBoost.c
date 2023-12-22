@@ -176,10 +176,10 @@ void Demo_BuckBoost(void)
   Fmac_Wdata = (uint32_t *) FMAC_WDATA;
   HAL_ADC_Start_DMA(&hadc1,Fmac_Wdata,1);
 
-  /* Set PWM period and Fixe its duty cycle - Buck part */
+  /* Set PWM period and fix its duty cycle - Buck part */
   Demo.periodBuck = HAL_HRTIM_FreqToTicks(&hhrtim1, HRTIM_TIMERINDEX_TIMER_C, SwitchFreqBuck);
   __HAL_HRTIM_SETPERIOD(&hhrtim1, HRTIM_TIMERINDEX_TIMER_C, Demo.periodBuck);
-  __HAL_HRTIM_SETCOMPARE(&hhrtim1, HRTIM_TIMERINDEX_TIMER_C, HRTIM_COMPAREUNIT_1, Demo.periodBuck * 50 / 100); // Fixe value for PWM
+  __HAL_HRTIM_SETCOMPARE(&hhrtim1, HRTIM_TIMERINDEX_TIMER_C, HRTIM_COMPAREUNIT_1, Demo.periodBuck * 50 / 100); // Fix value for PWM
   __HAL_HRTIM_SETCOMPARE(&hhrtim1, HRTIM_TIMERINDEX_TIMER_C, HRTIM_COMPAREUNIT_3, HRTIM_MAX_DUTY); // Max allowed PWM
 
   /* Set PWM period and initialize its duty cycle - Boost part */

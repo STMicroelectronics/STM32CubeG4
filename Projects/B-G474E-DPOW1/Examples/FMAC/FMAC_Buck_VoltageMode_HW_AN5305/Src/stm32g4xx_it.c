@@ -254,4 +254,3 @@ void EXTI9_5_IRQHandler(void)
 }
 
 /* USER CODE END 1 */
-

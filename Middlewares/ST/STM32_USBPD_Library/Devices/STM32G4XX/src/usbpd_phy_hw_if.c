@@ -6,13 +6,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2019 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under Ultimate Liberty license
-  * SLA0044, the "License"; You may not use this file except in compliance with
-  * the License. You may obtain a copy of the License at:
-  *                             www.st.com/SLA0044
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -29,9 +28,14 @@
 #endif /* !USBPDCORE_LIB_NO_PD */
 #if defined(_LOW_POWER)
 #include "usbpd_lowpower.h"
-#endif
+#include "usbpd_cad_hw_if.h"
+#endif /* _LOW_POWER */
 
 /* Private typedef -----------------------------------------------------------*/
+#define PHY_ENTER_CRITICAL_SECTION()  uint32_t primask = __get_PRIMASK(); \
+  __disable_irq();
+
+#define PHY_LEAVE_CRITICAL_SECTION()  __set_PRIMASK(primask);
 
 /* Private function prototypes -----------------------------------------------*/
 USBPD_PORT_HandleTypeDef Ports[USBPD_PORT_COUNT];
@@ -68,52 +72,68 @@ USBPD_StatusTypeDef USBPD_HW_IF_SendBuffer(uint8_t PortNum, USBPD_SOPType_TypeDe
   }
   else
   {
-    switch (Type)
+    PHY_ENTER_CRITICAL_SECTION()
+
+    /* If RX is ongoing or if a DMA transfer is active then discard the buffer sending */
+    if ((Ports[PortNum].RXStatus == USBPD_TRUE) || ((Ports[PortNum].hdmatx->CCR &  DMA_CCR_EN) == DMA_CCR_EN))
     {
-      case USBPD_SOPTYPE_SOP :
-      {
-        LL_UCPD_WriteTxOrderSet(Ports[PortNum].husbpd, LL_UCPD_ORDERED_SET_SOP);
-        LL_UCPD_SetTxMode(Ports[PortNum].husbpd, LL_UCPD_TXMODE_NORMAL);
-        break;
-      }
-      case USBPD_SOPTYPE_SOP1 :
-      {
-        LL_UCPD_WriteTxOrderSet(Ports[PortNum].husbpd, LL_UCPD_ORDERED_SET_SOP1);
-        LL_UCPD_SetTxMode(Ports[PortNum].husbpd, LL_UCPD_TXMODE_NORMAL);
-        break;
-      }
-      case USBPD_SOPTYPE_SOP2 :
-      {
-        LL_UCPD_WriteTxOrderSet(Ports[PortNum].husbpd, LL_UCPD_ORDERED_SET_SOP2);
-        LL_UCPD_SetTxMode(Ports[PortNum].husbpd, LL_UCPD_TXMODE_NORMAL);
-        break;
-      }
-      case USBPD_SOPTYPE_CABLE_RESET :
-      {
-        LL_UCPD_SetTxMode(Ports[PortNum].husbpd, LL_UCPD_TXMODE_CABLE_RESET);
-        break;
-      }
-      case USBPD_SOPTYPE_BIST_MODE_2 :
-      {
-        LL_UCPD_SetTxMode(Ports[PortNum].husbpd, LL_UCPD_TXMODE_BIST_CARRIER2);
-        break;
-      }
-      default :
-        _status = USBPD_ERROR;
-        break;
+      PHY_LEAVE_CRITICAL_SECTION()
+      _status = USBPD_ERROR;
     }
-
-    if (USBPD_OK == _status)
+    else
     {
-#if defined(_LOW_POWER)
-      UTIL_LPM_SetOffMode(0 == PortNum?LPM_PE_0:LPM_PE_1, UTIL_LPM_DISABLE);
-#endif
-      WRITE_REG(Ports[PortNum].hdmatx->CMAR, (uint32_t)pBuffer);
-      WRITE_REG(Ports[PortNum].hdmatx->CNDTR, Size);
-      Ports[PortNum].hdmatx->CCR |= DMA_CCR_EN;
+      PHY_LEAVE_CRITICAL_SECTION()
 
-      LL_UCPD_WriteTxPaySize(Ports[PortNum].husbpd, Size);
-      LL_UCPD_SendMessage(Ports[PortNum].husbpd);
+      switch (Type)
+      {
+        case USBPD_SOPTYPE_SOP :
+        {
+          LL_UCPD_WriteTxOrderSet(Ports[PortNum].husbpd, LL_UCPD_ORDERED_SET_SOP);
+          LL_UCPD_SetTxMode(Ports[PortNum].husbpd, LL_UCPD_TXMODE_NORMAL);
+          break;
+        }
+        case USBPD_SOPTYPE_SOP1 :
+        {
+          LL_UCPD_WriteTxOrderSet(Ports[PortNum].husbpd, LL_UCPD_ORDERED_SET_SOP1);
+          LL_UCPD_SetTxMode(Ports[PortNum].husbpd, LL_UCPD_TXMODE_NORMAL);
+          break;
+        }
+        case USBPD_SOPTYPE_SOP2 :
+        {
+          LL_UCPD_WriteTxOrderSet(Ports[PortNum].husbpd, LL_UCPD_ORDERED_SET_SOP2);
+          LL_UCPD_SetTxMode(Ports[PortNum].husbpd, LL_UCPD_TXMODE_NORMAL);
+          break;
+        }
+        case USBPD_SOPTYPE_CABLE_RESET :
+        {
+          LL_UCPD_SetTxMode(Ports[PortNum].husbpd, LL_UCPD_TXMODE_CABLE_RESET);
+          break;
+        }
+        case USBPD_SOPTYPE_BIST_MODE_2 :
+        {
+          LL_UCPD_SetTxMode(Ports[PortNum].husbpd, LL_UCPD_TXMODE_BIST_CARRIER2);
+          break;
+        }
+        default :
+          _status = USBPD_ERROR;
+          break;
+      }
+
+      if (USBPD_OK == _status)
+      {
+#if defined(_LOW_POWER)
+        UTIL_LPM_SetStopMode(0 == PortNum ? LPM_PE_0 : LPM_PE_1, UTIL_LPM_DISABLE);
+#endif /* _LOW_POWER */
+        CLEAR_BIT(Ports[PortNum].hdmatx->CCR, DMA_CCR_EN);
+        while ((Ports[PortNum].hdmatx->CCR &  DMA_CCR_EN) == DMA_CCR_EN);
+
+        WRITE_REG(Ports[PortNum].hdmatx->CMAR, (uint32_t)pBuffer);
+        WRITE_REG(Ports[PortNum].hdmatx->CNDTR, Size);
+        SET_BIT(Ports[PortNum].hdmatx->CCR, DMA_CCR_EN);
+
+        LL_UCPD_WriteTxPaySize(Ports[PortNum].husbpd, Size);
+        LL_UCPD_SendMessage(Ports[PortNum].husbpd);
+      }
     }
   }
   return _status;
@@ -150,8 +170,13 @@ void USBPDM1_AssertRp(uint8_t PortNum)
   }
   else
   {
-    LL_UCPD_SetccEnable(Ports[PortNum].husbpd, (Ports[PortNum].CCx == CC1) ? LL_UCPD_CCENABLE_CC1 : LL_UCPD_CCENABLE_CC2);
+    LL_UCPD_SetccEnable(Ports[PortNum].husbpd,
+                        (Ports[PortNum].CCx == CC1) ? LL_UCPD_CCENABLE_CC1 : LL_UCPD_CCENABLE_CC2);
   }
+
+#if defined(TCPP0203_SUPPORT)
+  BSP_USBPD_PWR_SetRole(PortNum, POWER_ROLE_SOURCE);
+#endif /* TCPP0203_SUPPORT */
 }
 
 void USBPDM1_DeAssertRp(uint8_t PortNum)
@@ -173,7 +198,8 @@ void USBPDM1_AssertRd(uint8_t PortNum)
   }
   else
   {
-    LL_UCPD_SetccEnable(Ports[PortNum].husbpd, (Ports[PortNum].CCx == CC1) ? LL_UCPD_CCENABLE_CC1 : LL_UCPD_CCENABLE_CC2);
+    LL_UCPD_SetccEnable(Ports[PortNum].husbpd,
+                        (Ports[PortNum].CCx == CC1) ? LL_UCPD_CCENABLE_CC1 : LL_UCPD_CCENABLE_CC2);
   }
 
   HAL_Delay(1);
@@ -181,7 +207,11 @@ void USBPDM1_AssertRd(uint8_t PortNum)
 #ifndef _LOW_POWER
   LL_UCPD_TypeCDetectionCC2Enable(Ports[PortNum].husbpd);
   LL_UCPD_TypeCDetectionCC1Enable(Ports[PortNum].husbpd);
-#endif
+#endif /* _LOW_POWER */
+
+#if defined(TCPP0203_SUPPORT)
+  BSP_USBPD_PWR_SetRole(PortNum, POWER_ROLE_SINK);
+#endif /* TCPP0203_SUPPORT */
 }
 
 void USBPDM1_DeAssertRd(uint8_t PortNum)
@@ -195,19 +225,28 @@ void USBPDM1_EnterErrorRecovery(uint8_t PortNum)
   LL_UCPD_SetSRCRole(Ports[PortNum].husbpd);
   LL_UCPD_SetRpResistor(Ports[PortNum].husbpd, LL_UCPD_RESISTOR_NONE);
   LL_UCPD_RxDisable(Ports[PortNum].husbpd);
+
+#if defined(USBPD_REV30_SUPPORT)
+  if (Ports[PortNum].settings->PE_PD3_Support.d.PE_FastRoleSwapSupport == USBPD_TRUE)
+  {
+    /* Set GPIO to disallow the FRSTX handling */
+    LL_UCPD_FRSDetectionDisable(Ports[PortNum].husbpd);
+  }
+#endif /* USBPD_REV30_SUPPORT */
 }
 
 void USBPDM1_Set_CC(uint8_t PortNum, CCxPin_TypeDef cc)
 {
   /* Set the correct pin on the comparator*/
   Ports[PortNum].CCx = cc;
-  LL_UCPD_SetCCPin(Ports[PortNum].husbpd , (cc == CC1) ? LL_UCPD_CCPIN_CC1 : LL_UCPD_CCPIN_CC2);
+  LL_UCPD_SetCCPin(Ports[PortNum].husbpd, (cc == CC1) ? LL_UCPD_CCPIN_CC1 : LL_UCPD_CCPIN_CC2);
 }
 
 void USBPDM1_RX_EnableInterrupt(uint8_t PortNum)
 {
   /* Enable the RX interrupt process */
-  MODIFY_REG(Ports[PortNum].husbpd->IMR, UCPD_IMR_RXORDDETIE | UCPD_IMR_RXHRSTDETIE | UCPD_IMR_RXOVRIE | UCPD_IMR_RXMSGENDIE,
+  MODIFY_REG(Ports[PortNum].husbpd->IMR,
+             UCPD_IMR_RXORDDETIE | UCPD_IMR_RXHRSTDETIE | UCPD_IMR_RXOVRIE | UCPD_IMR_RXMSGENDIE,
              UCPD_IMR_RXORDDETIE | UCPD_IMR_RXHRSTDETIE | UCPD_IMR_RXOVRIE | UCPD_IMR_RXMSGENDIE);
   LL_UCPD_RxDMAEnable(Ports[PortNum].husbpd);
 }
@@ -249,8 +288,9 @@ void HW_SignalAttachement(uint8_t PortNum, CCxPin_TypeDef cc)
   Ports[PortNum].hdmatx->CPAR = _temp;
 
   /* disabled non Rd line set CC line enable */
-#define INTERRUPT_MASK  UCPD_IMR_TXMSGDISCIE | UCPD_IMR_TXMSGSENTIE | UCPD_IMR_HRSTDISCIE  | UCPD_IMR_HRSTSENTIE | UCPD_IMR_TXMSGABTIE |\
-                        UCPD_IMR_TXUNDIE     | UCPD_IMR_RXORDDETIE  | UCPD_IMR_RXHRSTDETIE | UCPD_IMR_RXOVRIE    | UCPD_IMR_RXMSGENDIE
+#define INTERRUPT_MASK  UCPD_IMR_TXMSGDISCIE | UCPD_IMR_TXMSGSENTIE | UCPD_IMR_HRSTDISCIE  | UCPD_IMR_HRSTSENTIE |  \
+  UCPD_IMR_TXMSGABTIE  | UCPD_IMR_TXUNDIE     | UCPD_IMR_RXORDDETIE  | UCPD_IMR_RXHRSTDETIE | \
+  UCPD_IMR_RXOVRIE     | UCPD_IMR_RXMSGENDIE
 
   MODIFY_REG(Ports[PortNum].husbpd->IMR, INTERRUPT_MASK, INTERRUPT_MASK);
 #endif /* !USBPDCORE_LIB_NO_PD */
@@ -279,7 +319,14 @@ void HW_SignalAttachement(uint8_t PortNum, CCxPin_TypeDef cc)
 #endif /* USBPD_REV30_SUPPORT */
 
   /* Disable the Resistor on Vconn PIN */
-  (Ports[PortNum].CCx == CC1) ? LL_UCPD_SetccEnable(Ports[PortNum].husbpd, LL_UCPD_CCENABLE_CC1) : LL_UCPD_SetccEnable(Ports[PortNum].husbpd, LL_UCPD_CCENABLE_CC2);
+  if (Ports[PortNum].CCx == CC1)
+  {
+    LL_UCPD_SetccEnable(Ports[PortNum].husbpd, LL_UCPD_CCENABLE_CC1);
+  }
+  else
+  {
+    LL_UCPD_SetccEnable(Ports[PortNum].husbpd, LL_UCPD_CCENABLE_CC2);
+  }
 
   /* Prepare the rx processing */
   LL_UCPD_SetRxMode(Ports[PortNum].husbpd, LL_UCPD_RXMODE_NORMAL);
@@ -300,6 +347,12 @@ void HW_SignalDetachment(uint8_t PortNum)
 #if !defined(_LOW_POWER) && !defined(USBPDM1_VCC_FEATURE_ENABLED)
   /* Enable only detection interrupt */
   WRITE_REG(Ports[PortNum].husbpd->IMR, UCPD_IMR_TYPECEVT1IE | UCPD_IMR_TYPECEVT2IE);
+#elif defined(_LOW_POWER)
+  if (USBPD_PORTPOWERROLE_SRC == Ports[PortNum].params->PE_PowerRole)
+  {
+    /* Enable detection interrupt */
+    WRITE_REG(Ports[PortNum].husbpd->IMR, UCPD_IMR_TYPECEVT1IE | UCPD_IMR_TYPECEVT2IE);
+  }
 #endif /* !_LOW_POWER && !USBPDM1_VCC_FEATURE_ENABLED */
 
   USBPD_HW_DeInit_DMATxInstance(PortNum);
@@ -312,10 +365,19 @@ void HW_SignalDetachment(uint8_t PortNum)
 #if defined(_VCONN_SUPPORT)
     /* DeInitialize Vconn management */
     (void)BSP_USBPD_PWR_VCONNDeInit(PortNum, (Ports[PortNum].CCx == CC1) ? 1u : 2u);
-#endif
+#endif /* _VCONN_SUPPORT */
     /* DeInitialise VBUS power */
     (void)BSP_USBPD_PWR_VBUSDeInit(PortNum);
   }
+
+#if defined(USBPD_REV30_SUPPORT)
+  if (Ports[PortNum].settings->PE_PD3_Support.d.PE_FastRoleSwapSupport == USBPD_TRUE)
+  {
+    /* Set GPIO to disallow the FRSTX handling */
+    LL_UCPD_FRSDetectionDisable(Ports[PortNum].husbpd);
+  }
+#endif /* USBPD_REV30_SUPPORT */
+
 #endif /* !USBPDCORE_LIB_NO_PD */
   Ports[PortNum].CCx = CCNONE;
 #if !defined(USBPDCORE_LIB_NO_PD)
@@ -338,16 +400,33 @@ void USBPD_HW_IF_SetResistor_SinkTxOK(uint8_t PortNum)
 
 uint8_t USBPD_HW_IF_IsResistor_SinkTxOk(uint8_t PortNum)
 {
+#if defined(_LOW_POWER)
+  /* When in low power mode, the type C state machine is turned off.
+     To retrieve any potential updates of the SR register, the state machine needs to be re-enabled briefly. */
+
+  /* Enable type C state machine */
+  CLEAR_BIT(Ports[PortNum].husbpd->CR, (UCPD_CR_CC1TCDIS | UCPD_CR_CC2TCDIS));
+
+  /* Let time for internal state machine to refresh his state */
+  for (uint32_t index = 0; index < CAD_DELAY_READ_CC_STATUS; index++)
+  {
+    __DSB();
+  }
+
+  /* Disable type C state machine */
+  SET_BIT(Ports[PortNum].husbpd->CR, (UCPD_CR_CC1TCDIS | UCPD_CR_CC2TCDIS));
+#endif /* _LOW_POWER */
+
   switch (Ports[PortNum].CCx)
   {
     case CC1 :
-      if((Ports[PortNum].husbpd->SR & UCPD_SR_TYPEC_VSTATE_CC1) == LL_UCPD_SNK_CC1_VRP30A)
+      if ((Ports[PortNum].husbpd->SR & UCPD_SR_TYPEC_VSTATE_CC1) == LL_UCPD_SNK_CC1_VRP30A)
       {
         return USBPD_TRUE;
       }
       break;
     case CC2 :
-      if((Ports[PortNum].husbpd->SR & UCPD_SR_TYPEC_VSTATE_CC2) == LL_UCPD_SNK_CC2_VRP30A)
+      if ((Ports[PortNum].husbpd->SR & UCPD_SR_TYPEC_VSTATE_CC2) == LL_UCPD_SNK_CC2_VRP30A)
       {
         return USBPD_TRUE;
       }
@@ -363,6 +442,3 @@ void USBPD_HW_IF_FastRoleSwapSignalling(uint8_t PortNum)
 {
   LL_UCPD_SignalFRSTX(Ports[PortNum].husbpd);
 }
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
-

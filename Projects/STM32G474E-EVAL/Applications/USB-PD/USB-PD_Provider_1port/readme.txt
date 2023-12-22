@@ -25,6 +25,8 @@ How to create a simple type C provider.
 
 This application initializes the type C port 1 in source mode with only one PDO at 5V.
 
+You need to plug an external 5V power supply on PSU connector.
+
 Connect UCPD cube Monitor on the VCP associated to our board (only available if USB cable is connected)
 The UCPD Cube Monitor will be used to trace all the messages exchange between the ports partner.
 GUI interface has been enabled in this project. It allows to interact with the device (send and receive
@@ -93,6 +95,7 @@ USB_PD_Lib, UCPD, Type C, USBPD, FreeRTOS
 In order to make the program work, you must do the following:
  - Open your preferred toolchain
  - Rebuild all files and load your image into target memory
+ - Check that you have plugged an external 5V power supply on PSU connector.
  - Run the example
  - Run CubeMx Monitor and open trace tools
  - Connect a type C sink device on the Type-C connector 1

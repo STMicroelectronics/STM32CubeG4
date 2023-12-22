@@ -58,6 +58,7 @@ void Error_Handler(void);
 
 /* Private defines -----------------------------------------------------------*/
 #define I2C_ADDRESS 0x30F
+
 /* USER CODE BEGIN Private defines */
 
 /* Size of Transmission buffer */

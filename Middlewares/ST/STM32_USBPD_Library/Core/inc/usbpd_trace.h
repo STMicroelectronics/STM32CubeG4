@@ -2,23 +2,21 @@
   ******************************************************************************
   * @file    usbpd_trace.h
   * @author  MCD Application Team
-  * @brief   This file contains the headers of usbpd_cad.h for Cable Attach-Detach
-  *          controls.
+  * @brief   Header file for usbpd_trace.c
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2021 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under Ultimate Liberty license
-  * SLA0044, the "License"; You may not use this file except in compliance with
-  * the License. You may obtain a copy of the License at:
-  *                             www.st.com/SLA0044
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
-#ifndef __USBPD_TRACE_H_
-#define __USBPD_TRACE_H_
+#ifndef USBPD_TRACE_H_
+#define USBPD_TRACE_H_
 
 #ifdef __cplusplus
 extern "C" {
@@ -26,6 +24,10 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "usbpd_core.h"
+#ifndef _STDIO
+#include "stdio.h"
+#endif /* _STDIO */
+
 /** @addtogroup STM32_USBPD_LIBRARY
   * @{
   */
@@ -40,6 +42,9 @@ extern "C" {
 
 /* Exported types ------------------------------------------------------------*/
 /* Exported define -----------------------------------------------------------*/
+/** @defgroup USBPD_CORE_TRACE_Exported_Defines USBPD CORE TRACE Exported Defines
+  * @{
+  */
 typedef enum
 {
   TCPM_TRACE_CORE_ALERT,    /*!< ALERT_TASK */
@@ -79,10 +84,22 @@ typedef enum
   TCPM_TRACE_SET_PIN_ROLE,  /* tcpc_tcpc_set_cc */
 } USBPD_TCPM_TRACE;
 
+/**
+  * @}
+  */
+
 /* Exported constants --------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/
 /* Exported variables --------------------------------------------------------*/
+/** @defgroup USBPD_CORE_TRACE_Exported_Variables USBPD CORE TRACE Exported Variables
+  * @{
+  */
 extern TRACE_ENTRY_POINT USBPD_Trace;
+
+/**
+  * @}
+  */
+
 /* Exported functions --------------------------------------------------------*/
 
 /** @defgroup USBPD_CORE_TRACE_Exported_Functions USBPD CORE TRACE Exported Functions
@@ -131,6 +148,5 @@ void            USBPD_TRACE_Add(TRACE_EVENT Type, uint8_t PortNum, uint8_t Sop, 
 }
 #endif
 
-#endif /* __USBPD_CAD_H_ */
+#endif /* USBPD_CAD_H_ */
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

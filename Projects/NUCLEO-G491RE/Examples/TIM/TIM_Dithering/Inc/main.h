@@ -60,6 +60,7 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+
 /* USER CODE BEGIN Private defines */
 /* Compute the prescaler value to have TIM2 counter clock equal to 1500000 Hz */
 #define PRESCALER_VALUE     (uint32_t)((SystemCoreClock / 1500000) - 1)

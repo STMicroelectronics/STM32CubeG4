@@ -62,7 +62,7 @@ PSU, BOOST converter, Voltage mode, CCM, STM32 Digital Power, HRTIMER usage, FMA
   - Remove the jumper from JP1 (if any) and connect a 5Vdc between Vin and GND (JP1) input connector.
   - Limit the current output of your power supply to 400mA. 
   
-  Note: if power is supplied via USBPD make sure there is a current limitter on your power source. 
+  Note: if power is supplied via USBPD make sure there is a current limiter on your power source. 
   
   - This application runs on STM32G474RET6 devices.
   - This application has been tested with B-G474E-DPOW1 board.

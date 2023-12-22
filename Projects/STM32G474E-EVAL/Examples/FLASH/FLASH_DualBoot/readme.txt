@@ -66,6 +66,9 @@ Below are the steps to run this example:
 @note The application needs to ensure that the SysTick time base is always set to 1 millisecond
       to have correct HAL operation.
 
+@note If Bootloader version is lower than V13.4 (0xD4) then the example might not work as expected due to known limitation on Bootloader.
+      The Bootloader version can be found in the address 0x1FFF6FFE and should be 0xD4 or higher for the example to work correctly.
+
 @par Keywords
 
 Memory, Flash, Dual boot, Dual Bank, Execute, Binary, Option bytes
