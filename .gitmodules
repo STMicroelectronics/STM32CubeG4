@@ -6,3 +6,15 @@
 	path = Drivers/CMSIS/Device/ST/STM32G4xx
 	url = https://github.com/STMicroelectronics/cmsis_device_g4.git
 	branch = master
+[submodule "Drivers/BSP/B-G474E-DPOW1"]
+	path = Drivers/BSP/B-G474E-DPOW1
+	url = https://github.com/STMicroelectronics/b-g474e-dpow1-bsp.git
+	branch = main
+[submodule "Drivers/BSP/STM32G4xx_Nucleo"]
+	path = Drivers/BSP/STM32G4xx_Nucleo
+	url = https://github.com/STMicroelectronics/stm32g4xx-nucleo-bsp.git
+	branch = main
+[submodule "Drivers/BSP/STM32G474E-EVAL"]
+	path = Drivers/BSP/STM32G474E-EVAL
+	url = https://github.com/STMicroelectronics/stm32g474e-eval-bsp.git
+	branch = main
