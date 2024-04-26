@@ -18,3 +18,31 @@
 	path = Drivers/BSP/STM32G474E-EVAL
 	url = https://github.com/STMicroelectronics/stm32g474e-eval-bsp.git
 	branch = main
+[submodule "Drivers/BSP/Components/Common"]
+	path = Drivers/BSP/Components/Common
+	url = https://github.com/STMicroelectronics/stm32-bsp-common.git
+	branch = main
+[submodule "Drivers/BSP/Components/hx8347d"]
+	path = Drivers/BSP/Components/hx8347d
+	url = https://github.com/STMicroelectronics/stm32-hx8347d.git
+	branch = main
+[submodule "Drivers/BSP/Components/mfxstm32l152"]
+	path = Drivers/BSP/Components/mfxstm32l152
+	url = https://github.com/STMicroelectronics/stm32-mfxstm32l152.git
+	branch = main
+[submodule "Drivers/BSP/Components/mt25ql512abb"]
+	path = Drivers/BSP/Components/mt25ql512abb
+	url = https://github.com/STMicroelectronics/stm32-mt25ql512abb.git
+	branch = main
+[submodule "Drivers/BSP/Components/stts751"]
+	path = Drivers/BSP/Components/stts751
+	url = https://github.com/STMicroelectronics/stm32-stts751.git
+	branch = main
+[submodule "Drivers/BSP/Components/st7735"]
+	path = Drivers/BSP/Components/st7735
+	url = https://github.com/STMicroelectronics/stm32-st7735.git
+	branch = main
+[submodule "Drivers/BSP/Components/wm8994"]
+	path = Drivers/BSP/Components/wm8994
+	url = https://github.com/STMicroelectronics/stm32-wm8994.git
+	branch = main
