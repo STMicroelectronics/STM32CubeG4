@@ -21,9 +21,8 @@
 
 @par Example Description
 
-This example describes how to configure the EXTI 
-and use GPIOs to toggle the user LEDs available on the board when 
-a user button is pressed. This example is based on the
+How to configure the EXTI and use GPIOs to toggle the user LEDs 
+available on the board when a user button is pressed. It is based on the
 STM32G4xx LL API. The peripheral initialization uses LL unitary service
 functions for optimization purposes (performance and size).
 

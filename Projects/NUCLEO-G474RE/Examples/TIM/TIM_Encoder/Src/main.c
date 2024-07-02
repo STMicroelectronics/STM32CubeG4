@@ -316,6 +316,10 @@ static void MX_GPIO_Init(void)
   */
 static void Emulate_Forward_Direction(TIM_HandleTypeDef* htim)
 {
+  /*## -1- Make sure channels are not started ############################## */
+  HAL_TIM_OC_Stop(htim, TIM_CHANNEL_1);
+  HAL_TIM_OC_Stop(htim, TIM_CHANNEL_2);
+
   /*## -1- Re-Configure the Pulse  ########################################## */
   sEmulConfigOC.Pulse = PULSE1_VALUE;
   if(HAL_TIM_OC_ConfigChannel(htim, &sEmulConfigOC, TIM_CHANNEL_1) != HAL_OK)
@@ -351,6 +355,10 @@ static void Emulate_Forward_Direction(TIM_HandleTypeDef* htim)
   */
 static void Emulate_Backward_Direction(TIM_HandleTypeDef* htim)
 {
+  /*## -1- Make sure channels are not started ############################## */
+  HAL_TIM_OC_Stop(htim, TIM_CHANNEL_1);
+  HAL_TIM_OC_Stop(htim, TIM_CHANNEL_2);
+
   /*## -1- Re-Configure the Pulse  ########################################## */
   sEmulConfigOC.Pulse = PULSE2_VALUE;
   if(HAL_TIM_OC_ConfigChannel(htim, &sEmulConfigOC, TIM_CHANNEL_1) != HAL_OK)

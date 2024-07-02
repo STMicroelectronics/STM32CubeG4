@@ -55,11 +55,19 @@ void USBPD_TIM_Init(void)
     /* Counter mode: select up-counting mode */
     LL_TIM_SetCounterMode(TIMX, LL_TIM_COUNTERMODE_UP);
 
+#if defined(TIMX_CLK_FREQ)
+    /* Set the pre-scaler value to have TIMx counter clock equal to 1 MHz */
+    LL_TIM_SetPrescaler(TIMX, __LL_TIM_CALC_PSC(TIMX_CLK_FREQ, 1000000u));
+
+    /* Set the auto-reload value to have a counter frequency of 100Hz */
+    LL_TIM_SetAutoReload(TIMX, __LL_TIM_CALC_ARR(TIMX_CLK_FREQ, LL_TIM_GetPrescaler(TIMX), 100u));
+#else
     /* Set the pre-scaler value to have TIMx counter clock equal to 1 MHz */
     LL_TIM_SetPrescaler(TIMX, __LL_TIM_CALC_PSC(SystemCoreClock, 1000000u));
 
     /* Set the auto-reload value to have a counter frequency of 100Hz */
     LL_TIM_SetAutoReload(TIMX, __LL_TIM_CALC_ARR(SystemCoreClock, LL_TIM_GetPrescaler(TIMX), 100u));
+#endif /* TIMX_CLK_FREQ */
 
     /*********************************/
     /* Output waveform configuration */

@@ -1,0 +1,11 @@
+[ProjectFiles]
+HeaderPath=..\..\..\..\..\..\Drivers\STM32G4xx_HAL_Driver\Inc;..\..\..\..\..\..\Drivers\STM32G4xx_HAL_Driver\Inc\Legacy;..\..\..\..\..\..\Drivers\CMSIS\Include;..\..\..\..\..\..\Drivers\CMSIS\Device\ST\STM32G4xx\Include;..\..\..\..\..\..\Drivers\BSP\STM32G474E-EVAL;..\..\..\..\..\..\Drivers\BSP\Components\mfxstm32l152;..\..\..\..\..\..\Drivers\BSP\Components\Common;..\..\..\..\..\..\Utilities\LCD
+[Others]
+Define=
+HALModule=I2C;EXTI;SPI
+[Groups]
+Doc=../readme.txt;
+Drivers/BSP/Components=../../../../../../Drivers/BSP/Components/hx8347d/hx8347d_reg.c;../../../../../../Drivers/BSP/Components/hx8347d/hx8347d.c;../../../../../../Drivers/BSP/Components/mfxstm32l152/mfxstm32l152_reg.c;../../../../../../Drivers/BSP/Components/mfxstm32l152/mfxstm32l152.c;
+Drivers/BSP/STM32G474E-EVAL=../../../../../../Drivers/BSP/STM32G474E-EVAL/stm32g474e_eval_lcd.c;../../../../../../Drivers/BSP/STM32G474E-EVAL/stm32g474e_eval_bus.c;../../../../../../Drivers/BSP/STM32G474E-EVAL/stm32g474e_eval_io.c;../../../../../../Drivers/BSP/STM32G474E-EVAL/stm32g474e_eval.c;
+Drivers/STM32G4xx_HAL_Driver=../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_spi_ex.c;../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_spi.c;../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_exti.c;../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_i2c_ex.c;../../../../../../Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_i2c.c;
+Drivers/Utilities/LCD=../../../../../../Utilities/LCD/stm32_lcd.c;

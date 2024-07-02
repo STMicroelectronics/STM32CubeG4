@@ -16,8 +16,13 @@
   ******************************************************************************
   */
 
-#ifndef USBPD_HW_H
-#define USBPD_HW_H
+#ifndef __USBPD_HW_H_
+#define __USBPD_HW_H_
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* Includes ------------------------------------------------------------------*/
 /* Private typedef -----------------------------------------------------------*/
 /* Variable containing ADC conversions results */
@@ -30,5 +35,9 @@ DMA_Channel_TypeDef *USBPD_HW_Init_DMATxInstance(uint8_t PortNum);
 void USBPD_HW_DeInit_DMATxInstance(uint8_t PortNum);
 uint32_t USBPD_HW_GetRpResistorValue(uint8_t Portnum);
 void USBPD_HW_SetFRSSignalling(uint8_t Portnum, uint8_t cc);
-#endif /* USBPD_BSP_HW_H */
 
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* __USBPD_HW_H_ */

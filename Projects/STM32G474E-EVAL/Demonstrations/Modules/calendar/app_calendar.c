@@ -435,7 +435,7 @@ static void Calendar_DateDisplay(uint8_t Year, uint8_t Month, uint8_t Day)
 {
   uint32_t mline = 0, mcolumn = 319, month = 0;
   uint32_t monthlength = 0;
-  char linedisplay[25];
+  char linedisplay[26];
   uint32_t pXSize;
 
   if (Month == 2)

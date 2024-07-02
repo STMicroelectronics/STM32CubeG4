@@ -360,7 +360,7 @@ static void Display_power(void)
 {
   uint32_t vsense = 0;
   int32_t isense = 0;
-  char  pstr[26]={0};
+  char  pstr[27]={0};
   static uint8_t counter = 0;
 
   counter++;

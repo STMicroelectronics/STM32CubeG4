@@ -117,7 +117,7 @@ USBPD_StatusTypeDef USBPD_PHY_Init(uint8_t PortNum, const USBPD_PHY_Callbacks *p
 {
   (void)PowerRole;
 
-  /* set all callbacks */
+  /* Set all callbacks */
   Ports[PortNum].cbs.USBPD_HW_IF_TxCompleted            = pCallbacks->USBPD_PHY_TxCompleted;
   Ports[PortNum].cbs.USBPD_HW_IF_BistCompleted          = pCallbacks->USBPD_PHY_BistCompleted;
   Ports[PortNum].cbs.USBPD_HW_IF_RX_ResetIndication     = pCallbacks->USBPD_PHY_ResetIndication;
@@ -165,8 +165,8 @@ uint16_t USBPD_PHY_GetMinGOODCRCTimerValue(uint8_t PortNum)
 void USBPD_PHY_Reset(uint8_t PortNum)
 {
   (void)PortNum;
-  /* reset PHY layer   */
-  /* reset HW_IF layer */
+  /* Reset PHY layer   */
+  /* Reset HW_IF layer */
 }
 
 /**
@@ -322,13 +322,13 @@ void PHY_Rx_Completed(uint8_t PortNum, uint32_t MsgType)
 
   _msgtype = tab_sop_value[MsgType];
 
-  /* check if the message must be forwarded to usbpd stack */
+  /* Check if the message must be forwarded to usbpd stack */
   switch (_msgtype)
   {
     case USBPD_SOPTYPE_CABLE_RESET :
       if (0x1Eu == (PHY_Ports[PortNum].SupportedSOP & 0x1Eu))
       {
-        /* nothing to do the message will be discarded and the port partner retry the send */
+        /* Nothing to do the message will be discarded and the port partner retry the send */
         Ports[PortNum].cbs.USBPD_HW_IF_RX_ResetIndication(PortNum, USBPD_SOPTYPE_CABLE_RESET);
       }
       break;
