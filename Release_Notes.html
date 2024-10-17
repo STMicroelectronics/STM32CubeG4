@@ -72,13 +72,220 @@
 <section id="update-history" class="col-sm-12 col-lg-8">
 <h1>Update History</h1>
 <div class="collapse">
-<input type="checkbox" id="collapse-section10" checked aria-hidden="true"> <label for="collapse-section10" aria-hidden="true">V1.6.0 / 05-June-2024 </label>
+<input type="checkbox" id="collapse-section11" checked aria-hidden="true"> <label for="collapse-section11" aria-hidden="true">V1.6.1 / 25-September-2024 </label>
 <div>
 <h2 id="main-changes">Main Changes</h2>
 <h3 id="maintenance-release">Maintenance release</h3>
 <ul>
+<li><p>General updates to fix known defects and enhancements implementation.</p></li>
+<li><p><strong>CMSIS</strong> updates</p>
+<ul>
+<li>Align TAMP_CR2_TAMPxMSK CMSIS bit defintion with the reference manual.</li>
+</ul></li>
+<li><p><strong>HAL/LL Drivers</strong> updates</p>
+<ul>
+<li><p>General updates to fix known defects and enhancements implementation.</p></li>
+<li><p><strong>HAL DAC</strong> update</p>
+<ul>
+<li>Improve management of connection selection vs buffer mode (add assert parameter check and comments).</li>
+</ul></li>
+<li><p><strong>HAL FMAC</strong> update</p>
+<ul>
+<li>Abort DMAIn/DMAOut in HAL_FMAC_FilterStop() API.</li>
+</ul></li>
+<li><p><strong>HAL I2S</strong> update</p>
+<ul>
+<li>Update HAL I2S driver to remove ‘go to’ instruction.</li>
+</ul></li>
+<li><p><strong>HAL SPI</strong> update</p>
+<ul>
+<li>Check data size before changing state in reception API.</li>
+</ul></li>
+<li><p><strong>HAL UART</strong> update</p>
+<ul>
+<li>Correct DMA Rx abort procedure impact on ongoing Tx transfer in polling mode.</li>
+</ul></li>
+<li><p><strong>HAL USART</strong> update</p>
+<ul>
+<li>Improve the visibility of the SPI mode support in HAL USART description.</li>
+</ul></li>
+<li><p><strong>HAL USB</strong> update</p>
+<ul>
+<li>Fix added to support bulk transfer in double buffer mode.</li>
+</ul></li>
+<li><p><strong>LL UCPD</strong> update</p>
+<ul>
+<li>Add LL UCPD API LL_UCPD_IsActiveFlag_RxErr().</li>
+<li>Correct wording in some LL API LL_UCPD_IsActiveFlag_xxx() function descriptions.</li>
+</ul></li>
+</ul></li>
+<li><p><strong>Projects</strong> updates</p>
+<ul>
+<li>Add restriction on how to use the FMAC_IIR_ITToPolling example in debug mode.</li>
+<li>Update HAL I2C examples to use HAL_I2CEx_EnableFastModePlus() API to enable the fast mode plus.</li>
+</ul></li>
+<li><p>For the complete list of changes, please refer to the release notes of each firmware component</p></li>
+</ul>
+<h2 id="contents">Contents</h2>
+<h3 id="projects">Projects</h3>
+<p>The STM32CubeG4 Firmware package comes with a rich set of examples running on STMicroelectronics boards, organized by board and provided with preconfigured projects for the main supported toolchains.</p>
+<p>The exhaustive list of projects is provided in this table (<a href="Projects/STM32CubeProjectsList.html">STM32CubeProjectsList.html</a>).</p>
+<table>
+<caption>Projects :</caption>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th style="text-align: left;">Version</th>
+<th style="text-align: left;">Release notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Projects</td>
+<td style="text-align: left;">See Projects Release note for details</td>
+<td style="text-align: left;"><a href="Projects/Release_Notes.html">release notes</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="components">Components</h3>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Version</th>
+<th style="text-align: left;">Release note</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>STM32G4xx CMSIS Device</strong></td>
+<td style="text-align: left;"><strong>V1.2.5</strong></td>
+<td style="text-align: left;"><a href="Drivers/CMSIS/Device/ST/STM32G4xx/Release_Notes.html">release note</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>STM32G4xx HAL Drivers</strong></td>
+<td style="text-align: left;"><strong>V1.2.5</strong></td>
+<td style="text-align: left;"><a href="Drivers/STM32G4xx_HAL_Driver/Release_Notes.html">release note</a></td>
+</tr>
+</tbody>
+</table>
+<p>Note: in the tables above, version <strong>highlighted</strong> have changed since previous release.</p>
+<h2 id="known-limitations">Known Limitations</h2>
+<ul>
+<li>The following STM32CubeIDE project include only Debug configuration :
+<ul>
+<li>STM32G474E-EVAL/Demonstrations/Demo</li>
+</ul></li>
+</ul>
+<h2 id="development-toolchains-and-compilers">Development Toolchains and Compilers</h2>
+<table style="width:99%;">
+<caption>Development Toolchains :</caption>
+<colgroup>
+<col style="width: 91%" />
+<col style="width: 7%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: center;">Version</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">IAR Embedded Workbench for ARM (EWARM) toolchain + ST-LINKV2</td>
+<td style="text-align: center;"><strong>V8.50.9</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">RealView Microcontroller Development Kit (MDK-ARM) toolchain + ST-LINKV2 - Only template projects are migrated to Arm Compiler 6 with MDK-ARM 5.31 (“AC-like Warnings” mode).</td>
+<td style="text-align: center;"><strong>V5.38</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STM32CubeIDE toolchain</td>
+<td style="text-align: center;"><strong>V1.14.0</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="supported-devices-and-boards">Supported Devices and boards</h2>
+<table>
+<caption>Supported Devices :</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">STM32G431xx, STM32G441xx</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32G471xx</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STM32G473xx, STM32G483xx</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32G474xx, STM32G484xx</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STM32G491xx, STM32G4A1xx</td>
+</tr>
+</tbody>
+</table>
+<table>
+<caption>Supported Boards :</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">NUCLEO-G431KB Nucleo32 kit</td>
+<td style="text-align: left;">MB1430 A-01</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NUCLEO-G431RB Nucleo kit</td>
+<td style="text-align: left;">MB1367 C-01</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NUCLEO-G474RE Nucleo kit</td>
+<td style="text-align: left;">MB1367 C-01</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">STM32G474E-EVAL Evaluation Board</td>
+<td style="text-align: left;">MB1397 B-01</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">STM32G474E-EVAL1 Evaluation Board</td>
+<td style="text-align: left;">MB1397 B-05</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">B-G474E-DPOW1 Discovery Kit</td>
+<td style="text-align: left;">MB1428 B-01</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NUCLEO-G491RE Nucleo kit</td>
+<td style="text-align: left;">MB1367-G491RE C-04</td>
+</tr>
+</tbody>
+</table>
+<h2 id="backward-compatibility">Backward Compatibility</h2>
+<p>None</p>
+<h2 id="dependencies">Dependencies</h2>
+<p>This software release is compatible with:</p>
+<ul>
+<li>STM32CubeMX V6.10.0</li>
+</ul>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section10" aria-hidden="true"> <label for="collapse-section10" aria-hidden="true">V1.6.0 / 05-June-2024 </label>
+<div>
+<h2 id="main-changes-1">Main Changes</h2>
+<h3 id="maintenance-release-1">Maintenance release</h3>
+<ul>
 <li>General updates to fix known defects and enhancements implementation.</li>
-<li>Maintenance release of STM32CubeG4 Firmware package supporting new <strong>STM32G414xx</strong> devices.</li>
 <li>General fixes to support GCC11 and GCC12 in all STM32CubeIDE projects.</li>
 <li>Fix printf() API implementation to be compliant with IAR 9.x.</li>
 <li>Upgrade USBPD devices library to use <strong>g4_v5.3.1</strong>.</li>
@@ -87,23 +294,12 @@
 <li>Add 64 projects running on STM32G474E-EVAL1 board.</li>
 <li>Same BSP drivers available for STM32G474E-EVAL board.</li>
 </ul></li>
-<li><strong>CMSIS</strong>
+<li><strong>CMSIS</strong> updates
 <ul>
-<li>Add support of <strong>STM32G414xx</strong> devices:
-<ul>
-<li>Add new cmsis device stm32g414xx.h file</li>
-<li>Add startup files “startup_stm32g414xx.s” for EWARM , MDK-ARM and GCC toolchains</li>
-<li>Add part numbers list to stm32g4xx.h header file:
-<ul>
-<li>STM32G414xx: STM32G414CB, STM32G414MB, STM32G414RB, STM32G414VB, STM32G414CC, STM32G414MC, STM32G414RC, STM32G414VC Devices</li>
-</ul></li>
-<li>Add EWARM STM32g414xx devices linker files (<strong>Subset flash</strong>) for EWARM toolchain</li>
-</ul></li>
 <li>Update STM32G483xx MDKARM startup file to add missing FDCAN1 IRQ handler in vector table.</li>
 </ul></li>
 <li><strong>HAL/LL Drivers</strong> updates
 <ul>
-<li><p>Add support of <strong>STM32G414xx</strong> devices.</p></li>
 <li><p>General updates to fix known defects and enhancements implementation.</p></li>
 <li><p><strong>HAL DAC</strong> update</p>
 <ul>
@@ -192,8 +388,8 @@
 </ul></li>
 <li>For the complete list of changes, please refer to the release notes of each firmware component</li>
 </ul>
-<h2 id="contents">Contents</h2>
-<h3 id="projects">Projects</h3>
+<h2 id="contents-1">Contents</h2>
+<h3 id="projects-1">Projects</h3>
 <p>The STM32CubeG4 Firmware package comes with a rich set of examples running on STMicroelectronics boards, organized by board and provided with preconfigured projects for the main supported toolchains.</p>
 <p>The exhaustive list of projects is provided in this table (<a href="Projects/STM32CubeProjectsList.html">STM32CubeProjectsList.html</a>).</p>
 <table>
@@ -213,7 +409,7 @@
 </tr>
 </tbody>
 </table>
-<h3 id="components">Components</h3>
+<h3 id="components-1">Components</h3>
 <table>
 <caption>Released Drivers components :</caption>
 <thead>
@@ -380,14 +576,14 @@
 </tbody>
 </table>
 <p>Note: in the tables above, version <strong>highlighted</strong> have changed since previous release.</p>
-<h2 id="known-limitations">Known Limitations</h2>
+<h2 id="known-limitations-1">Known Limitations</h2>
 <ul>
 <li>The following STM32CubeIDE project include only Debug configuration :
 <ul>
 <li>STM32G474E-EVAL/Demonstrations/Demo</li>
 </ul></li>
 </ul>
-<h2 id="development-toolchains-and-compilers">Development Toolchains and Compilers</h2>
+<h2 id="development-toolchains-and-compilers-1">Development Toolchains and Compilers</h2>
 <table style="width:99%;">
 <caption>Development Toolchains :</caption>
 <colgroup>
@@ -415,7 +611,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="supported-devices-and-boards">Supported Devices and boards</h2>
+<h2 id="supported-devices-and-boards-1">Supported Devices and boards</h2>
 <table>
 <caption>Supported Devices :</caption>
 <thead>
@@ -434,7 +630,7 @@
 <td style="text-align: left;">STM32G473xx, STM32G483xx</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">STM32G414xx, STM32G474xx, STM32G484xx</td>
+<td style="text-align: left;">STM32G474xx, STM32G484xx</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">STM32G491xx, STM32G4A1xx</td>
@@ -480,9 +676,9 @@
 </tr>
 </tbody>
 </table>
-<h2 id="backward-compatibility">Backward Compatibility</h2>
+<h2 id="backward-compatibility-1">Backward Compatibility</h2>
 <p>None</p>
-<h2 id="dependencies">Dependencies</h2>
+<h2 id="dependencies-1">Dependencies</h2>
 <p>This software release is compatible with:</p>
 <ul>
 <li>STM32CubeMX V6.10.0</li>
@@ -492,7 +688,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section9" aria-hidden="true"> <label for="collapse-section9" aria-hidden="true">V1.5.2 / 15-November-2023 </label>
 <div>
-<h2 id="main-changes-1">Main Changes</h2>
+<h2 id="main-changes-2">Main Changes</h2>
 <ul>
 <li>General updates to fix known defects and enhancements implementation.</li>
 <li>Update sysmem.c and syscall.c files in all STM32CubeIDE projects to support GCC11.</li>
@@ -745,8 +941,8 @@
 </ul></li>
 <li>For the complete list of changes, please refer to the release notes of each firmware component</li>
 </ul>
-<h2 id="contents-1">Contents</h2>
-<h3 id="projects-1">Projects</h3>
+<h2 id="contents-2">Contents</h2>
+<h3 id="projects-2">Projects</h3>
 <p>The STM32CubeG4 Firmware package comes with a rich set of examples running on STMicroelectronics boards, organized by board and provided with preconfigured projects for the main supported toolchains.</p>
 <p>The exhaustive list of projects is provided in this table (<a href="Projects/STM32CubeProjectsList.html">STM32CubeProjectsList.html</a>).</p>
 <table>
@@ -766,7 +962,7 @@
 </tr>
 </tbody>
 </table>
-<h3 id="components-1">Components</h3>
+<h3 id="components-2">Components</h3>
 <table>
 <caption>Released Drivers components :</caption>
 <thead>
@@ -933,14 +1129,14 @@
 </tbody>
 </table>
 <p>Note: in the tables above, version <strong>highlighted</strong> have changed since previous release.</p>
-<h2 id="known-limitations-1">Known Limitations</h2>
+<h2 id="known-limitations-2">Known Limitations</h2>
 <ul>
 <li>The following STM32CubeIDE project include only Debug configuration :
 <ul>
 <li>STM32G474E-EVAL/Demonstrations/Demo</li>
 </ul></li>
 </ul>
-<h2 id="development-toolchains-and-compilers-1">Development Toolchains and Compilers</h2>
+<h2 id="development-toolchains-and-compilers-2">Development Toolchains and Compilers</h2>
 <table style="width:99%;">
 <caption>Development Toolchains :</caption>
 <colgroup>
@@ -968,7 +1164,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="supported-devices-and-boards-1">Supported Devices and boards</h2>
+<h2 id="supported-devices-and-boards-2">Supported Devices and boards</h2>
 <table>
 <caption>Supported Devices :</caption>
 <thead>
@@ -1029,9 +1225,9 @@
 </tr>
 </tbody>
 </table>
-<h2 id="backward-compatibility-1">Backward Compatibility</h2>
+<h2 id="backward-compatibility-2">Backward Compatibility</h2>
 <p>None</p>
-<h2 id="dependencies-1">Dependencies</h2>
+<h2 id="dependencies-2">Dependencies</h2>
 <p>This software release is compatible with:</p>
 <ul>
 <li>STM32CubeMX V6.10.0</li>
@@ -1041,7 +1237,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section8"  aria-hidden="true"> <label for="collapse-section8" aria-hidden="true">v1.5.1 / 17-June-2022 </label>
 <div>
-<h2 id="main-changes-2">Main Changes</h2>
+<h2 id="main-changes-3">Main Changes</h2>
 <h3 id="patch-release-1">Patch release</h3>
 <ul>
 <li><p>Add and upgrade the Digital Power applications provided for the B-G474E-DPOW1 discovery kit, showcasing the control of Buck and Boost DC-DC converters</p>
@@ -1066,8 +1262,8 @@
 </ul></li>
 </ul></li>
 </ul>
-<h2 id="contents-2">Contents</h2>
-<h3 id="projects-2">Projects</h3>
+<h2 id="contents-3">Contents</h2>
+<h3 id="projects-3">Projects</h3>
 <p>The STM32CubeG4 Firmware package comes with a rich set of examples running on STMicroelectronics boards, organized by board and provided with preconfigured projects for the main supported toolchains.</p>
 <p>The exhaustive list of projects is provided in this table (<a href="Projects/STM32CubeProjectsList.html">STM32CubeProjectsList.html</a>).</p>
 <table>
@@ -1092,8 +1288,8 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section7" aria-hidden="true"> <label for="collapse-section7" aria-hidden="true">V1.5.0 / 10-November-2021 </label>
 <div>
-<h2 id="main-changes-3">Main Changes</h2>
-<h3 id="maintenance-release-1">Maintenance release</h3>
+<h2 id="main-changes-4">Main Changes</h2>
+<h3 id="maintenance-release-2">Maintenance release</h3>
 <ul>
 <li><p>General updates to fix known defects and enhancements implementation.</p></li>
 <li><p>All source files: update disclaimer to add reference to the new license agreement.</p></li>
@@ -1273,8 +1469,8 @@
 </ul></li>
 <li><p>For the complete list of changes, please refer to the release notes of each firmware component</p></li>
 </ul>
-<h2 id="contents-3">Contents</h2>
-<h3 id="projects-3">Projects</h3>
+<h2 id="contents-4">Contents</h2>
+<h3 id="projects-4">Projects</h3>
 <p>The STM32CubeG4 Firmware package comes with a rich set of examples running on STMicroelectronics boards, organized by board and provided with preconfigured projects for the main supported toolchains.</p>
 <p>The exhaustive list of projects is provided in this table (<a href="Projects/STM32CubeProjectsList.html">STM32CubeProjectsList.html</a>).</p>
 <table>
@@ -1294,7 +1490,7 @@
 </tr>
 </tbody>
 </table>
-<h3 id="components-2">Components</h3>
+<h3 id="components-3">Components</h3>
 <table>
 <caption>Released Drivers components :</caption>
 <thead>
@@ -1461,8 +1657,8 @@
 </tbody>
 </table>
 <p>Note: in the tables above, version <strong>highlighted</strong> have changed since previous release.</p>
-<h2 id="known-limitations-2">Known Limitations</h2>
-<h2 id="development-toolchains-and-compilers-2">Development Toolchains and Compilers</h2>
+<h2 id="known-limitations-3">Known Limitations</h2>
+<h2 id="development-toolchains-and-compilers-3">Development Toolchains and Compilers</h2>
 <table style="width:99%;">
 <caption>Development Toolchains :</caption>
 <colgroup>
@@ -1490,7 +1686,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="supported-devices-and-boards-2">Supported Devices and boards</h2>
+<h2 id="supported-devices-and-boards-3">Supported Devices and boards</h2>
 <table>
 <caption>Supported Devices :</caption>
 <thead>
@@ -1551,9 +1747,9 @@
 </tr>
 </tbody>
 </table>
-<h2 id="backward-compatibility-2">Backward Compatibility</h2>
+<h2 id="backward-compatibility-3">Backward Compatibility</h2>
 <p>None</p>
-<h2 id="dependencies-2">Dependencies</h2>
+<h2 id="dependencies-3">Dependencies</h2>
 <p>This software release is compatible with:</p>
 <ul>
 <li>STM32CubeMX V6.4.0</li>
@@ -1563,8 +1759,8 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section6" aria-hidden="true"> <label for="collapse-section6" aria-hidden="true">V1.4.0 / 27-January-2021 </label>
 <div>
-<h2 id="main-changes-4">Main Changes</h2>
-<h3 id="maintenance-release-2">Maintenance release</h3>
+<h2 id="main-changes-5">Main Changes</h2>
+<h3 id="maintenance-release-3">Maintenance release</h3>
 <ul>
 <li><p>General updates to fix known defects and enhancements implementation.</p></li>
 <li><p>Added new <strong>HAL SMBUS extended driver</strong> to support SMBUS fast Mode Plus.</p></li>
@@ -1810,8 +2006,8 @@
 </ul></li>
 <li><p>For the complete list of changes, please refer to the release notes of each firmware component</p></li>
 </ul>
-<h2 id="contents-4">Contents</h2>
-<h3 id="projects-4">Projects</h3>
+<h2 id="contents-5">Contents</h2>
+<h3 id="projects-5">Projects</h3>
 <p>The STM32CubeG4 Firmware package comes with a rich set of examples running on STMicroelectronics boards, organized by board and provided with preconfigured projects for the main supported toolchains.</p>
 <p>The exhaustive list of projects is provided in this table (<a href="Projects/STM32CubeProjectsList.html">STM32CubeProjectsList.html</a>).</p>
 <table>
@@ -1831,7 +2027,7 @@
 </tr>
 </tbody>
 </table>
-<h3 id="components-3">Components</h3>
+<h3 id="components-4">Components</h3>
 <table>
 <caption>Released Drivers components :</caption>
 <thead>
@@ -1998,14 +2194,14 @@
 </tbody>
 </table>
 <p>Note: in the tables above, version <strong>highlighted</strong> have changed since previous release.</p>
-<h2 id="known-limitations-3">Known Limitations</h2>
+<h2 id="known-limitations-4">Known Limitations</h2>
 <ul>
 <li>Demo for STM32G474E-EVAL
 <ul>
 <li>Some warnings may appear while compiling the project if gcc 9 is used.</li>
 </ul></li>
 </ul>
-<h2 id="development-toolchains-and-compilers-3">Development Toolchains and Compilers</h2>
+<h2 id="development-toolchains-and-compilers-4">Development Toolchains and Compilers</h2>
 <table style="width:99%;">
 <caption>Development Toolchains :</caption>
 <colgroup>
@@ -2033,7 +2229,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="supported-devices-and-boards-3">Supported Devices and boards</h2>
+<h2 id="supported-devices-and-boards-4">Supported Devices and boards</h2>
 <table>
 <caption>Supported Devices :</caption>
 <thead>
@@ -2094,9 +2290,9 @@
 </tr>
 </tbody>
 </table>
-<h2 id="backward-compatibility-3">Backward Compatibility</h2>
+<h2 id="backward-compatibility-4">Backward Compatibility</h2>
 <p>None</p>
-<h2 id="dependencies-3">Dependencies</h2>
+<h2 id="dependencies-4">Dependencies</h2>
 <p>This software release is compatible with:</p>
 <ul>
 <li>STM32CubeMX V6.2.0</li>
@@ -2106,8 +2302,8 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section5" aria-hidden="true"> <label for="collapse-section5" aria-hidden="true">V1.3.0 / 26-June-2020 </label>
 <div>
-<h2 id="main-changes-5">Main Changes</h2>
-<h3 id="maintenance-release-3">Maintenance release</h3>
+<h2 id="main-changes-6">Main Changes</h2>
+<h3 id="maintenance-release-4">Maintenance release</h3>
 <p>Release to support STM32G491xx/4A1xx devices (for more details please refer to HAL release notes).</p>
 <ul>
 <li><strong>CMSIS</strong>
@@ -2286,8 +2482,8 @@
 </ul></li>
 <li>For the complete list of changes, please refer to the release notes of each firmware component</li>
 </ul>
-<h2 id="contents-5">Contents</h2>
-<h3 id="projects-5">Projects</h3>
+<h2 id="contents-6">Contents</h2>
+<h3 id="projects-6">Projects</h3>
 <p>The STM32CubeG4 Firmware package comes with a rich set of examples running on STMicroelectronics boards, organized by board and provided with preconfigured projects for the main supported toolchains.</p>
 <p>The exhaustive list of projects is provided in this table (<a href="Projects/STM32CubeProjectsList.html">STM32CubeProjectsList.html</a>).</p>
 <table>
@@ -2307,7 +2503,7 @@
 </tr>
 </tbody>
 </table>
-<h3 id="components-4">Components</h3>
+<h3 id="components-5">Components</h3>
 <table>
 <caption>Released Drivers components :</caption>
 <thead>
@@ -2474,14 +2670,14 @@
 </tbody>
 </table>
 <p>Note: in the tables above, version <strong>highlighted</strong> have changed since previous release.</p>
-<h2 id="known-limitations-4">Known Limitations</h2>
+<h2 id="known-limitations-5">Known Limitations</h2>
 <ul>
 <li>OpenBootloader application for NUCLEO-G491RE
 <ul>
 <li>MDK-ARM and CubeIDE projects are not provided.</li>
 </ul></li>
 </ul>
-<h2 id="development-toolchains-and-compilers-4">Development Toolchains and Compilers</h2>
+<h2 id="development-toolchains-and-compilers-5">Development Toolchains and Compilers</h2>
 <table style="width:99%;">
 <caption>Development Toolchains :</caption>
 <colgroup>
@@ -2509,7 +2705,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="supported-devices-and-boards-4">Supported Devices and boards</h2>
+<h2 id="supported-devices-and-boards-5">Supported Devices and boards</h2>
 <table>
 <caption>Supported Devices :</caption>
 <thead>
@@ -2570,9 +2766,9 @@
 </tr>
 </tbody>
 </table>
-<h2 id="backward-compatibility-4">Backward Compatibility</h2>
+<h2 id="backward-compatibility-5">Backward Compatibility</h2>
 <p>None</p>
-<h2 id="dependencies-4">Dependencies</h2>
+<h2 id="dependencies-5">Dependencies</h2>
 <p>This software release is compatible with:</p>
 <ul>
 <li>STM32CubeMX V5.6.0</li>
@@ -2582,8 +2778,8 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section4" aria-hidden="true"> <label for="collapse-section4" aria-hidden="true">V1.2.0 / 14-February-2020 </label>
 <div>
-<h2 id="main-changes-6">Main Changes</h2>
-<h3 id="maintenance-release-4">Maintenance release</h3>
+<h2 id="main-changes-7">Main Changes</h2>
+<h3 id="maintenance-release-5">Maintenance release</h3>
 <ul>
 <li>Add support for CubeIDE Toolchain to replace System Workbench for STM32 (SW4STM32)toolchain</li>
 <li>Add new Digital_Power application running on B-G474E-DPOW1 board</li>
@@ -2769,8 +2965,8 @@
 </ul></li>
 <li>For the complete list of changes, please refer to the release notes of each firmware component</li>
 </ul>
-<h2 id="contents-6">Contents</h2>
-<h3 id="projects-6">Projects</h3>
+<h2 id="contents-7">Contents</h2>
+<h3 id="projects-7">Projects</h3>
 <p>The STM32CubeG4 Firmware package comes with a rich set of examples running on STMicroelectronics boards, organized by board and provided with preconfigured projects for the main supported toolchains.</p>
 <p>The exhaustive list of projects is provided in this table (<a href="Projects/STM32CubeProjectsList.html">STM32CubeProjectsList.html</a>).</p>
 <table>
@@ -2790,7 +2986,7 @@
 </tr>
 </tbody>
 </table>
-<h3 id="components-5">Components</h3>
+<h3 id="components-6">Components</h3>
 <table>
 <caption>Released Drivers components :</caption>
 <thead>
@@ -2952,8 +3148,8 @@
 </tbody>
 </table>
 <p>Note: in the tables above, version <strong>highlighted</strong> have changed since previous release.</p>
-<h2 id="known-limitations-5">Known Limitations</h2>
-<h2 id="development-toolchains-and-compilers-5">Development Toolchains and Compilers</h2>
+<h2 id="known-limitations-6">Known Limitations</h2>
+<h2 id="development-toolchains-and-compilers-6">Development Toolchains and Compilers</h2>
 <table>
 <caption>Development Toolchains :</caption>
 <thead>
@@ -2977,7 +3173,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="supported-devices-and-boards-5">Supported Devices and boards</h2>
+<h2 id="supported-devices-and-boards-6">Supported Devices and boards</h2>
 <table>
 <caption>Supported Devices :</caption>
 <thead>
@@ -3031,9 +3227,9 @@
 </tr>
 </tbody>
 </table>
-<h2 id="backward-compatibility-5">Backward Compatibility</h2>
+<h2 id="backward-compatibility-6">Backward Compatibility</h2>
 <p>None</p>
-<h2 id="dependencies-5">Dependencies</h2>
+<h2 id="dependencies-6">Dependencies</h2>
 <p>This software release is compatible with:</p>
 <ul>
 <li>STM32CubeMX V5.6.0</li>
@@ -3043,14 +3239,14 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section3" aria-hidden="true"> <label for="collapse-section3" aria-hidden="true">v1.1.0 / 28-June-2019 </label>
 <div>
-<h2 id="main-changes-7">Main Changes</h2>
-<h3 id="maintenance-release-5">Maintenance release</h3>
+<h2 id="main-changes-8">Main Changes</h2>
+<h3 id="maintenance-release-6">Maintenance release</h3>
 <p>Maintenance release of STM32CubeG4 (STM32Cube for STM32G4 Series) Firmware package supporting STM32G431xx/41xx/71xx devices, STM32G473xx/<strong>83xx</strong> devices and STM32G474xx/84xx devices.</p>
 <p>A Discovery kit, B-G474E-DPOW, is introduced in this release to enable demonstration of Buck and Boost in voltage mode, High brightness RGB LED control and USB audio streaming.</p>
 <p>In the STM32CubeG4 MCU Package, examples and applications projects are generated with the STM32CubeMX tool to initialize the system, peripherals and middleware stacks. User can open the provided ioc file in STM32CubeMX to modify the settings, add additional peripherals and/or middleware, to build his final application.</p>
 <p>Demonstrations binaries are no more delivered within the STM32CubeG4 MCU package. They are available for download, in addition to their required media files if any, in a standalone package accessible through each hardware board official webpage. Please refer to the corresponding demonstration binary readme.txt to get webpage for each board.</p>
-<h2 id="contents-7">Contents</h2>
-<h3 id="projects-7">Projects</h3>
+<h2 id="contents-8">Contents</h2>
+<h3 id="projects-8">Projects</h3>
 <p>The STM32CubeG4 Firmware package comes with a rich set of examples running on STMicroelectronics boards, organized by board and provided with preconfigured projects for the main supported toolchains.</p>
 <p>The exhaustive list of projects is provided in this table (<a href="Projects/STM32CubeProjectsList.html">STM32CubeProjectsList.html</a>).</p>
 <table>
@@ -3070,7 +3266,7 @@
 </tr>
 </tbody>
 </table>
-<h3 id="components-6">Components</h3>
+<h3 id="components-7">Components</h3>
 <table>
 <caption>Released Drivers components :</caption>
 <thead>
@@ -3234,8 +3430,8 @@
 </table>
 <p><strong>CPU and Log Utilities</strong> are not more part of STM32CubeG4 Firmware Package (obsolete components)</p>
 <p>Note: in the tables above, version <strong>highlighted</strong> have changed since previous release.</p>
-<h2 id="known-limitations-6">Known Limitations</h2>
-<h2 id="development-toolchains-and-compilers-6">Development Toolchains and Compilers</h2>
+<h2 id="known-limitations-7">Known Limitations</h2>
+<h2 id="development-toolchains-and-compilers-7">Development Toolchains and Compilers</h2>
 <table>
 <caption>Development Toolchains :</caption>
 <thead>
@@ -3259,7 +3455,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="supported-devices-and-boards-6">Supported Devices and boards</h2>
+<h2 id="supported-devices-and-boards-7">Supported Devices and boards</h2>
 <table>
 <caption>Supported Devices :</caption>
 <thead>
@@ -3313,9 +3509,9 @@
 </tr>
 </tbody>
 </table>
-<h2 id="backward-compatibility-6">Backward Compatibility</h2>
+<h2 id="backward-compatibility-7">Backward Compatibility</h2>
 <p>None</p>
-<h2 id="dependencies-6">Dependencies</h2>
+<h2 id="dependencies-7">Dependencies</h2>
 <p>This software release is compatible with:</p>
 <ul>
 <li>STM32CubeMX V5.3.0</li>
@@ -3325,7 +3521,7 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section2" aria-hidden="true"> <label for="collapse-section2" aria-hidden="true">v1.0.1 / 29-May-2019 </label>
 <div>
-<h2 id="main-changes-8">Main Changes</h2>
+<h2 id="main-changes-9">Main Changes</h2>
 <h3 id="patch-release-2">Patch release</h3>
 <p>Update of <strong>HRTIM examples</strong> and new release of <strong>STM32G4 patches for Keil IDE</strong>:</p>
 <ul>
@@ -3344,7 +3540,7 @@
 <li>New Keil.STM32G4xx_DFP.1.1.1.pack : Fix issue when flashing STM32G4xx devices with Keil v5.25</li>
 </ul></li>
 </ul>
-<h2 id="contents-8">Contents</h2>
+<h2 id="contents-9">Contents</h2>
 <table>
 <caption>Projects :</caption>
 <thead>
@@ -3368,11 +3564,11 @@
 <div class="collapse">
 <input type="checkbox" id="collapse-section1" aria-hidden="true"> <label for="collapse-section1" aria-hidden="true">v1.0.0 / 12-April-2019 </label>
 <div>
-<h2 id="main-changes-9">Main Changes</h2>
+<h2 id="main-changes-10">Main Changes</h2>
 <h3 id="first-release">First release</h3>
 <p>First release of STM32CubeG4 (STM32Cube for STM32G4 Series) supporting <strong>STM32G431xx/41xx</strong>, <strong>STM32G471xx</strong>, <strong>STM32G473xx/83xx</strong> and <strong>STM32G474xx/84xx</strong> devices.</p>
 <p>In the STM32CubeG4 MCU Package, most of the examples and applications projects are generated with the STM32CubeMX tool to initialize the system, peripherals and middleware stacks. User can open the provided ioc file in STM32CubeMX to modify the settings, add additional peripherals and/or middleware, to build his final application.</p>
-<h2 id="contents-9">Contents</h2>
+<h2 id="contents-10">Contents</h2>
 <table>
 <caption>Released Drivers components :</caption>
 <thead>
@@ -3557,7 +3753,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="known-limitations-7">Known Limitations</h2>
+<h2 id="known-limitations-8">Known Limitations</h2>
 <table>
 <caption>Requirements not met or planned in a forthcoming release :</caption>
 <thead>
@@ -3577,7 +3773,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="development-toolchains-and-compilers-7">Development Toolchains and Compilers</h2>
+<h2 id="development-toolchains-and-compilers-8">Development Toolchains and Compilers</h2>
 <table>
 <caption>Development Toolchains :</caption>
 <thead>
@@ -3601,7 +3797,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="supported-devices-and-boards-7">Supported Devices and boards</h2>
+<h2 id="supported-devices-and-boards-8">Supported Devices and boards</h2>
 <table>
 <thead>
 <tr class="header">
@@ -3636,9 +3832,9 @@
 </tr>
 </tbody>
 </table>
-<h2 id="backward-compatibility-7">Backward Compatibility</h2>
+<h2 id="backward-compatibility-8">Backward Compatibility</h2>
 <p>None</p>
-<h2 id="dependencies-7">Dependencies</h2>
+<h2 id="dependencies-8">Dependencies</h2>
 <p>This software release is compatible with:</p>
 <ul>
 <li>STM32CubeMX V5.2.0</li>

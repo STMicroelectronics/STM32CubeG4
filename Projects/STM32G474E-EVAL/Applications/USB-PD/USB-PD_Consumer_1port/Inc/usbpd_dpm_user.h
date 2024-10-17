@@ -48,6 +48,8 @@ typedef struct
   uint32_t Reserved1                                      :28U;  /*!< Reserved bits */
   USBPD_SNKPowerRequest_TypeDef DPM_SNKRequestedPower;          /*!< Requested Power by the sink board                     */
   USBPD_MIDB_TypeDef  DPM_ManuInfoPort;                         /*!< Manufacturer information used for the port            */
+USBPD_SKEDB_TypeDef DPM_SNKExtendedCapa;                        /*!< SNK Extended Capability           */
+uint8_t             ReservedSnkCapa[3];                       /*!< Reserved bits to match with SnkCapaExt information     */
   uint16_t            ReservedManu;                             /*!< Reserved bits to match with Manufacturer information            */
 } USBPD_USER_SettingsTypeDef;
 

@@ -110,6 +110,36 @@ USBPD_USER_SettingsTypeDef       DPM_USER_Settings[USBPD_PORT_COUNT] =
     .PE_VconnSwap = USBPD_FALSE,                 /* support VCONN swap                                  */
     .PE_DR_Swap_To_DFP = USBPD_TRUE,                  /*  Support of DR Swap to DFP                                  */
     .PE_DR_Swap_To_UFP = USBPD_TRUE,                  /*  Support of DR Swap to UFP                                  */
+     .DPM_SNKExtendedCapa =                        /*!< SNK Extended Capability        */
+	 {
+	   .VID                    = USBPD_VID,  /*!< Vendor ID (assigned by the USB-IF)                      */
+	   .PID                    = USBPD_PID,  /*!< Product ID (assigned by the manufacturer)               */
+	   .XID                    = USBPD_XID,  /*!< Value provided by the USB-IF assigned to the product    */
+	   .FW_revision            = 1,          /*!< Firmware version number                                 */
+	   .HW_revision            = 2,          /*!< Hardware version number                                 */
+       .SKEDB_Version          = USBPD_SKEDB_VERSION_1P0,  /*!<SKEDV Version (not the specification Version)
+                                                               based on @ref USBPD_SKEDB_VERSION          */
+       .LoadStep               = USBPD_SKEDB_LOADSTEP_150MA,/*!< Load Step based on @ref USBPD_SKEDB_LOADSTEP */
+       .SinkLoadCharac.b       =             /*!< Sink Load Characteristics                               */
+        {
+           .PercentOverload    = 0,          /*!< Percent overload in 10% increments Values higher than 25
+                                                  (11001b) are clipped to 250%. 00000b is the default.    */
+           .OverloadPeriod     = 0,          /*!< Overload period in 20ms when bits 0-4 non-zero          */
+           .DutyCycle          = 0,          /*!< Duty Cycle in 5% increments when bits 0-4 are non-zero  */
+           .VBusVoltageDrop    = 0,          /*!< Can tolerate VBUS Voltage drop                          */
+        },
+       .Compliance             = 0,          /*!< Compliance based on combination of @ref USBPD_SKEDB_COMPLIANCE */
+       .Touchtemp              = USBPD_SKEDB_TOUCHTEMP_NA,  /*< Touch Temp based on @ref USBPD_SKEDB_TOUCHTEMP   */
+       .BatteryInfo            = 0,          /*!< Battery info                                                   */
+       .SinkModes              = 0,          /*!< Sink Modes based on combination of @ref USBPD_SKEDB_SINKMODES  */
+       .SinkMinimumPDP        = 0,          /*!< The Minimum PDP required by the Sink to operate without
+                                                  consuming any power from its Battery(s) should it have one     */
+       .SinkOperationalPDP     = 0,          /*!< The PDP the Sink requires to operate normally. For Sinks with
+                                                  a Battery, it is the PDP rating of the charger supplied with
+                                                  it or recommended for it.                                      */
+       .SinkMaximumPDP         = 0,          /*!< The Maximum PDP the Sink can consume to operate and
+                                                  charge its Battery(s) should it have one                       */
+      },
 #if defined(USBPD_REV30_SUPPORT)
 #if _MANU_INFO
     .DPM_ManuInfoPort =                      /*!< Manufacturer information used for the port            */

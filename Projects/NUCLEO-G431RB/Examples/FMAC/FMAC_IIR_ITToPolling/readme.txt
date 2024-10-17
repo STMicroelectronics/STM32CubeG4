@@ -77,6 +77,10 @@ STM32 board LED is used to monitor the example status:
   - LED2 is blinking (1 second period) if an error is detected
     in the IIR filter results or if there is an initialization or configuration error.
 
+@note This example must be tested in release mode (not in debug). When using in debug mode,
+be aware that the IDE may perform read operations to update the Registers Debugging Window.
+Then any read on FMAC RDATA register can interfere on the expected behavior of the example.
+
 @note Care must be taken when using HAL_Delay(), this function provides accurate
       delay (in milliseconds) based on variable incremented in SysTick ISR. This
       implies that if HAL_Delay() is called from a peripheral ISR process, then

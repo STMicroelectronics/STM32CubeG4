@@ -75,6 +75,125 @@ typedef enum{
 #define PWR_DECODE_50MA(_Value_)           ((uint16_t)(((_Value_) * 50)))     /* From 50mA multiples to mA        */
 #define PWR_DECODE_MW(_Value_)             ((uint16_t)(((_Value_) * 250)))    /* From 250mW multiples to mW       */
 
+/* Macros used to describe the parameters in a PDO list */
+/* ---------------------------- FIXED --------------------------- */
+
+/* Set voltage in mV in SRC Fixed PDO */
+#define USBPD_PDO_SRC_FIXED_SET_VOLTAGE(_MV_)        (((PWR_V_50MV((_MV_)  / 1000.0))             \
+                                                       << USBPD_PDO_SRC_FIXED_VOLTAGE_Pos)        \
+                                                      & (USBPD_PDO_SRC_FIXED_VOLTAGE_Msk))
+
+/* Set max current in mA in SRC Fixed PDO */
+#define USBPD_PDO_SRC_FIXED_SET_MAX_CURRENT(_MA_)    (((PWR_A_10MA((_MA_)  / 1000.0))             \
+                                                       << USBPD_PDO_SRC_FIXED_MAX_CURRENT_Pos)    \
+                                                      & (USBPD_PDO_SRC_FIXED_MAX_CURRENT_Msk))
+
+/* Set voltage in mV in SNK Fixed PDO */
+#define USBPD_PDO_SNK_FIXED_SET_VOLTAGE(_MV_)        (((PWR_V_50MV((_MV_)  / 1000.0))             \
+                                                       << USBPD_PDO_SNK_FIXED_VOLTAGE_Pos)        \
+                                                      & (USBPD_PDO_SNK_FIXED_VOLTAGE_Msk))
+
+/* Set operating current in mA in SNK Fixed PDO */
+#define USBPD_PDO_SNK_FIXED_SET_OP_CURRENT(_MA_)     (((PWR_A_10MA((_MA_)  / 1000.0))             \
+                                                       << USBPD_PDO_SNK_FIXED_OP_CURRENT_Pos)     \
+                                                      & (USBPD_PDO_SNK_FIXED_OP_CURRENT_Msk))
+
+/* ---------------------------- VARIABLE ------------------------ */
+
+/* Set max voltage in mV in SRC VARIABLE PDO */
+#define USBPD_PDO_SRC_VARIABLE_SET_MAX_VOLTAGE(_MV_) (((PWR_V_50MV((_MV_)  / 1000.0))             \
+                                                       << USBPD_PDO_SRC_VARIABLE_MAX_VOLTAGE_Pos) \
+                                                      & (USBPD_PDO_SRC_VARIABLE_MAX_VOLTAGE_Msk))
+
+/* Set min voltage in mV in SRC VARIABLE PDO */
+#define USBPD_PDO_SRC_VARIABLE_SET_MIN_VOLTAGE(_MV_) (((PWR_V_50MV((_MV_)  / 1000.0))             \
+                                                       << USBPD_PDO_SRC_VARIABLE_MIN_VOLTAGE_Pos) \
+                                                      & (USBPD_PDO_SRC_VARIABLE_MIN_VOLTAGE_Msk))
+
+/* Set max current in mA in SRC VARIABLE PDO */
+#define USBPD_PDO_SRC_VARIABLE_SET_MAX_CURRENT(_MA_) (((PWR_A_10MA((_MA_)  / 1000.0))             \
+                                                       << USBPD_PDO_SRC_VARIABLE_MAX_CURRENT_Pos) \
+                                                      & (USBPD_PDO_SRC_VARIABLE_MAX_CURRENT_Msk))
+
+/* Set max voltage in mV in SNK VARIABLE PDO */
+#define USBPD_PDO_SNK_VARIABLE_SET_MAX_VOLTAGE(_MV_) (((PWR_V_50MV((_MV_)  / 1000.0))             \
+                                                       << USBPD_PDO_SNK_VARIABLE_MAX_VOLTAGE_Pos) \
+                                                      & (USBPD_PDO_SNK_VARIABLE_MAX_VOLTAGE_Msk))
+
+/* Set min voltage in mV in SNK VARIABLE PDO */
+#define USBPD_PDO_SNK_VARIABLE_SET_MIN_VOLTAGE(_MV_) (((PWR_V_50MV((_MV_)  / 1000.0))             \
+                                                       << USBPD_PDO_SNK_VARIABLE_MIN_VOLTAGE_Pos) \
+                                                      & (USBPD_PDO_SNK_VARIABLE_MIN_VOLTAGE_Msk))
+
+/* Set operating current in mA in SNK VARIABLE */
+#define USBPD_PDO_SNK_VARIABLE_SET_OP_CURRENT(_MA_)  (((PWR_A_10MA((_MA_)  / 1000.0))             \
+                                                       << USBPD_PDO_SNK_VARIABLE_OP_CURRENT_Pos)  \
+                                                      & (USBPD_PDO_SNK_VARIABLE_OP_CURRENT_Msk))
+
+/* ---------------------------- BATTERY ------------------------ */
+
+/* Set max voltage in mV in SRC BATTERY PDO */
+#define USBPD_PDO_SRC_BATTERY_SET_MAX_VOLTAGE(_MV_)  (((PWR_V_50MV((_MV_)  / 1000.0))             \
+                                                       << USBPD_PDO_SRC_BATTERY_MAX_VOLTAGE_Pos)  \
+                                                      & (USBPD_PDO_SRC_BATTERY_MAX_VOLTAGE_Msk))
+
+/* Set min voltage in mV in SRC BATTERY PDO */
+#define USBPD_PDO_SRC_BATTERY_SET_MIN_VOLTAGE(_MV_)  (((PWR_V_50MV((_MV_)  / 1000.0))             \
+                                                       << USBPD_PDO_SRC_BATTERY_MIN_VOLTAGE_Pos)  \
+                                                      & (USBPD_PDO_SRC_BATTERY_MIN_VOLTAGE_Msk))
+
+/* Set max power in mW in SRC BATTERY PDO */
+#define USBPD_PDO_SRC_BATTERY_SET_MAX_POWER(_MA_)    (((PWR_W((_MA_)       / 1000.0))             \
+                                                       << USBPD_PDO_SRC_BATTERY_MAX_POWER_Pos)    \
+                                                      & (USBPD_PDO_SRC_BATTERY_MAX_POWER_Msk))
+
+/* Set max voltage in mV in SNK BATTERY PDO */
+#define USBPD_PDO_SNK_BATTERY_SET_MAX_VOLTAGE(_MV_)  (((PWR_V_50MV((_MV_)  / 1000.0))             \
+                                                       << USBPD_PDO_SNK_BATTERY_MAX_VOLTAGE_Pos)  \
+                                                      & (USBPD_PDO_SNK_BATTERY_MAX_VOLTAGE_Msk))
+
+/* Set min voltage in mV in SNK BATTERY PDO */
+#define USBPD_PDO_SNK_BATTERY_SET_MIN_VOLTAGE(_MV_)  (((PWR_V_50MV((_MV_)  / 1000.0))             \
+                                                       << USBPD_PDO_SNK_BATTERY_MIN_VOLTAGE_Pos)  \
+                                                      & (USBPD_PDO_SNK_BATTERY_MIN_VOLTAGE_Msk))
+
+/* Set operating power in mW in SNK BATTERY PDO */
+#define USBPD_PDO_SNK_BATTERY_SET_OP_POWER(_MA_)     (((PWR_W((_MA_)       / 1000.0))             \
+                                                       << USBPD_PDO_SNK_BATTERY_OP_POWER_Pos)     \
+                                                      & (USBPD_PDO_SNK_BATTERY_OP_POWER_Msk))
+
+/* ---------------------------- APDO ---------------------------- */
+
+/* Set min voltage in mV in SRC APDO */
+#define USBPD_PDO_SRC_APDO_SET_MIN_VOLTAGE(_MV_)     (((PWR_V_100MV((_MV_) / 1000.0))             \
+                                                       << USBPD_PDO_SRC_APDO_MIN_VOLTAGE_Pos)     \
+                                                      & (USBPD_PDO_SRC_APDO_MIN_VOLTAGE_Msk))
+
+/* Set max voltage in mV in SRC APDO */
+#define USBPD_PDO_SRC_APDO_SET_MAX_VOLTAGE(_MV_)     (((PWR_V_100MV((_MV_) / 1000.0))             \
+                                                       << USBPD_PDO_SRC_APDO_MAX_VOLTAGE_Pos)     \
+                                                      & (USBPD_PDO_SRC_APDO_MAX_VOLTAGE_Msk))
+
+/* Set max current in mA in SRC APDO */
+#define USBPD_PDO_SRC_APDO_SET_MAX_CURRENT(_MA_)     (((PWR_A_50MA((_MA_)  / 1000.0))             \
+                                                       << USBPD_PDO_SRC_APDO_MAX_CURRENT_Pos)     \
+                                                      & (USBPD_PDO_SRC_APDO_MAX_CURRENT_Msk))
+
+/* Set min voltage in mV in SNK APDO */
+#define USBPD_PDO_SNK_APDO_SET_MIN_VOLTAGE(_MV_)     (((PWR_V_100MV((_MV_) / 1000.0))             \
+                                                       << USBPD_PDO_SNK_APDO_MIN_VOLTAGE_Pos)     \
+                                                      & (USBPD_PDO_SNK_APDO_MIN_VOLTAGE_Msk))
+
+/* Set max voltage in mV in SNK APDO */
+#define USBPD_PDO_SNK_APDO_SET_MAX_VOLTAGE(_MV_)     (((PWR_V_100MV((_MV_) / 1000.0))             \
+                                                       << USBPD_PDO_SNK_APDO_MAX_VOLTAGE_Pos)     \
+                                                      & (USBPD_PDO_SNK_APDO_MAX_VOLTAGE_Msk))
+
+/* Set max current in mA in SNK APDO */
+#define USBPD_PDO_SNK_APDO_SET_MAX_CURRENT(_MA_)     (((PWR_A_50MA((_MA_)  / 1000.0))             \
+                                                       << USBPD_PDO_SNK_APDO_MAX_CURRENT_Pos)     \
+                                                      & (USBPD_PDO_SNK_APDO_MAX_CURRENT_Msk))
+
 #define USBPD_PORT_IsValid(__Port__) ((__Port__) < (USBPD_PORT_COUNT))
 
 /**
