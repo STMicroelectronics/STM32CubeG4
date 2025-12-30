@@ -46,3 +46,27 @@
 	path = Drivers/BSP/Components/wm8994
 	url = https://github.com/STMicroelectronics/stm32-wm8994.git
 	branch = main
+[submodule "Middlewares/Third_Party/FatFs"]
+	path = Middlewares/Third_Party/FatFs
+	url = https://github.com/STMicroelectronics/stm32-mw-fatfs
+	branch = master
+[submodule "Middlewares/Third_Party/FreeRTOS"]
+	path = Middlewares/Third_Party/FreeRTOS
+	url = https://github.com/STMicroelectronics/stm32-mw-freertos
+	branch = master
+[submodule "Middlewares/ST/OpenBootloader"]
+	path = Middlewares/ST/OpenBootloader
+	url = https://github.com/STMicroelectronics/stm32-mw-openbl
+	branch = main
+[submodule "Middlewares/ST/STM32_USB_Device_Library"]
+	path = Middlewares/ST/STM32_USB_Device_Library
+	url = https://github.com/STMicroelectronics/stm32-mw-usb-device
+	branch = master
+[submodule "Middlewares/ST/STM32_USBPD_Library/Core"]
+	path = Middlewares/ST/STM32_USBPD_Library/Core
+	url = https://github.com/STMicroelectronics/stm32-mw-usbpd-core
+	branch = main
+[submodule "Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX"]
+	path = Middlewares/ST/STM32_USBPD_Library/Devices/STM32G4XX
+	url = https://github.com/STMicroelectronics/stm32-mw-usbpd-device-g4
+	branch = main
