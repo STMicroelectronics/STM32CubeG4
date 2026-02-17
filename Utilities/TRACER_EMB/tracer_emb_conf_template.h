@@ -1,18 +1,20 @@
 /**
   ******************************************************************************
-  * @file    tracer_emb_conf.h
+  * @file    tracer_emb_conf_template.h
   * @author  MCD Application Team
   * @brief   This file contains the Trace HW related defines.
+  *          This file should be copied to the application folder and renamed
+  *          to tracer_emb_conf.h. Definitions should be updated according to
+  *          application trace configuration (USART, GPIO, DMA, ...).
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2018 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -25,13 +27,14 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32g0xx_ll_bus.h"
-#include "stm32g0xx_ll_dma.h"
-#include "stm32g0xx_ll_gpio.h"
-#include "stm32g0xx_ll_rcc.h"
-#include "stm32g0xx_ll_usart.h"
+/* #include "stm32xxxx_ll_bus.h" */ /* Uncomment and rename the stm32xxxx_ll_XXX.h header
+                                      files according your device family */
+/* #include "stm32xxxx_ll_dma.h"    */
+/* #include "stm32xxxx_ll_gpio.h"   */
+/* #include "stm32xxxx_ll_rcc.h"    */
+/* #include "stm32xxxx_ll_usart.h"  */
 #if defined(LPUART1)
-#include "stm32g0xx_ll_lpuart.h"
+/* #include "stm32xxxx_ll_lpuart.h" */
 #endif /* LPUART1 */
 /* Private typedef -----------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
@@ -51,6 +54,8 @@ extern "C" {
 /* -----------------------------------------------------------------------------
       Definitions for TRACE Hw information
 -------------------------------------------------------------------------------*/
+/* All below definitions should be adapted to values corresponding to
+   your device */
 
 /* USART instance is used.*/
 #define TRACER_EMB_IS_INSTANCE_LPUART_TYPE           0UL /* set to 1UL if LPUART is used instead of USART */
@@ -60,18 +65,17 @@ extern "C" {
 #define TRACER_EMB_TX_PIN                            LL_GPIO_PIN_10
 #define TRACER_EMB_TX_AF                             LL_GPIO_AF_0
 #define TRACER_EMB_TX_GPIO_ENABLE_CLOCK()            LL_IOP_GRP1_EnableClock(LL_IOP_GRP1_PERIPH_GPIOC)
-#define TRACER_EMB_TX_GPIO_DISABLE_CLOCK()           LL_IOP_GRP1_DisableClock(LL_IOP_GRP1_PERIPH_GPIOC)
 #define TRACER_EMB_RX_GPIO                           GPIOC
 #define TRACER_EMB_RX_PIN                            LL_GPIO_PIN_11
 #define TRACER_EMB_RX_AF                             LL_GPIO_AF_0
 #define TRACER_EMB_RX_GPIO_ENABLE_CLOCK()            LL_IOP_GRP1_EnableClock(LL_IOP_GRP1_PERIPH_GPIOC)
-#define TRACER_EMB_RX_GPIO_DISABLE_CLOCK()           LL_IOP_GRP1_DisableClock(LL_IOP_GRP1_PERIPH_GPIOC)
 
 #define TRACER_EMB_ENABLE_CLK_USART()                LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_USART3)
 #define TRACER_EMB_DISABLE_CLK_USART()               LL_APB1_GRP1_DisableClock(LL_APB1_GRP1_PERIPH_USART3)
 #define TRACER_EMB_SET_CLK_SOURCE_USART()            /* No need for clock source selection in case of USART3 */
 #define TRACER_EMB_USART_IRQ                         USART3_4_LPUART1_IRQn
 #define TRACER_EMB_USART_IRQHANDLER                  USART3_4_LPUART1_IRQHandler
+
 #define TRACER_EMB_TX_AF_FUNCTION                    LL_GPIO_SetAFPin_8_15
 #define TRACER_EMB_RX_AF_FUNCTION                    LL_GPIO_SetAFPin_8_15
 #define TRACER_EMB_TX_IRQ_PRIORITY                   3
@@ -99,8 +103,11 @@ extern "C" {
 #define TRACER_EMB_TX_DMA_IRQ                        DMA1_Ch4_7_DMAMUX1_OVR_IRQn
 #define TRACER_EMB_TX_DMA_IRQHANDLER                 DMA1_Ch4_7_DMAMUX1_OVR_IRQHandler
 #define TRACER_EMB_TX_DMA_ACTIVE_FLAG                LL_DMA_IsActiveFlag_TC7
-#define TRACER_EMB_TX_DMA_CLEAR_FLAG                 LL_DMA_ClearFlag_GI7
+#define TRACER_EMB_TX_DMA_CLEAR_FLAG                 LL_DMA_ClearFlag_TC7
 #define TRACER_EMB_TX_DMA_PRIORITY                   0
+
+/*Uncomment this define only if a particular location of TRACER_ContextTypedef_t structrure is needed */
+/* #define TRACER_EMB_STRUCTURE_MEMORY_LOCATION         "memory_zone" */
 #endif  /* TRACER_EMB_DMA_MODE == 1UL */
 
 #ifdef __cplusplus
@@ -108,4 +115,3 @@ extern "C" {
 #endif
 
 #endif /* TRACER_EMB_CONF_H */
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

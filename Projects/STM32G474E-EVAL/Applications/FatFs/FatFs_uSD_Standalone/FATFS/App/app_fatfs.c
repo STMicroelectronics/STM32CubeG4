@@ -192,7 +192,7 @@ static int32_t FS_FileOperations(void)
             f_close(&SDFile);
 
             /* Compare read data with the expected data */
-            if((bytesread == byteswritten))
+            if(bytesread == byteswritten)
             {
               /* Success of the demo: no error occurrence */
               return 0;

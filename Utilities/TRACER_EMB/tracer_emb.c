@@ -6,13 +6,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2018 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -95,10 +94,15 @@ typedef struct
   TracerContext.PtrDataTx[(_POSITION_) % ((int32_t)TRACER_EMB_BUFFER_SIZE)] = (_DATA_);\
   (_POSITION_) = ((_POSITION_) + 1) % ((int32_t)TRACER_EMB_BUFFER_SIZE);
 
-#define TRACER_ENTER_CRITICAL_SECTION()  uint32_t primask= __get_PRIMASK();\
-  __disable_irq();
+
+#define TRACER_DEF_CRITICAL_SECTION()  uint32_t primask;
+
+#define TRACER_ENTER_CRITICAL_SECTION()  \
+  primask = __get_PRIMASK();             \
+  __disable_irq()
 
 #define TRACER_LEAVE_CRITICAL_SECTION() __set_PRIMASK(primask)
+
 
 
 /**
@@ -122,7 +126,11 @@ uint8_t TRACER_EMB_ReadData(void);
 /** @defgroup TRACER_EMB_Private_Variables TRACE Private Variables
   * @{
   */
+#if defined(TRACER_EMB_STRUCTURE_MEMORY_LOCATION)
+static TRACER_ContextTypedef_t TracerContext __attribute__((section(TRACER_EMB_STRUCTURE_MEMORY_LOCATION)));
+#else
 static TRACER_ContextTypedef_t TracerContext;
+#endif /* TRACER_EMB_STRUCTURE_MEMORY_LOCATION */
 /**
   * @}
   */
@@ -131,6 +139,12 @@ static TRACER_ContextTypedef_t TracerContext;
 
 /** @addtogroup TRACER_EMB_Exported_Functions
   * @{
+  */
+
+/**
+  * @brief  Tracer Init
+  * @param  None.
+  * @retval None.
   */
 void TRACER_EMB_Init(void)
 {
@@ -142,6 +156,15 @@ void TRACER_EMB_Init(void)
 
   /* Initialize the lowpower aspect */
   TRACER_EMB_LowPowerInit();
+}
+/**
+  * @brief  Tracer DeInit
+  * @param  None.
+  * @retval None.
+  */
+void TRACER_EMB_DeInit(void)
+{
+  HW_TRACER_EMB_DeInit();
 }
 
 void TRACER_EMB_Add(uint8_t *Ptr, uint32_t Size)
@@ -181,6 +204,10 @@ void TRACER_EMB_IRQHandlerUSART(void)
   HW_TRACER_EMB_IRQHandlerUSART();
 }
 
+/**
+  * @brief  Tracer read data
+  * @retval None.
+  */
 void TRACER_EMB_WriteData(uint16_t pos, uint8_t data)
 {
   TracerContext.PtrDataTx[pos % TRACER_EMB_BUFFER_SIZE] = data;
@@ -203,6 +230,11 @@ int32_t TRACER_EMB_EnableOverFlow(const uint8_t *Data, uint8_t Size)
   return -1;
 }
 
+/**
+  * @brief  Tracer read data
+  * @param  None.
+  * @retval return a data
+  */
 uint8_t TRACER_EMB_ReadData()
 {
   return HW_TRACER_EMB_ReadData();
@@ -224,6 +256,7 @@ uint8_t TRACER_EMB_ReadData()
   */
 void TRACER_EMB_CALLBACK_TX(void)
 {
+  TRACER_DEF_CRITICAL_SECTION();
   TRACER_ENTER_CRITICAL_SECTION();
   TracerContext.PtrTx_Read = (TracerContext.PtrTx_Read + TracerContext.SizeSent) % TRACER_EMB_BUFFER_SIZE;
 
@@ -231,8 +264,8 @@ void TRACER_EMB_CALLBACK_TX(void)
       && (TracerContext.discontinue == 0U))
   {
     TracerContext.OverFlow_Status = TRACER_OVERFLOW_SENT;
-    HW_TRACER_EMB_SendData(TracerContext.OverFlow_Data, TracerContext.OverFlow_Size);
     TRACER_LEAVE_CRITICAL_SECTION();
+    HW_TRACER_EMB_SendData(TracerContext.OverFlow_Data, TracerContext.OverFlow_Size);
   }
   else
   {
@@ -250,6 +283,7 @@ void TRACER_EMB_CALLBACK_TX(void)
   */
 void TRACER_EMB_Lock(void)
 {
+  TRACER_DEF_CRITICAL_SECTION();
   TRACER_ENTER_CRITICAL_SECTION();
   TracerContext.Counter++;
   TRACER_LEAVE_CRITICAL_SECTION();
@@ -262,6 +296,7 @@ void TRACER_EMB_Lock(void)
   */
 void TRACER_EMB_UnLock(void)
 {
+  TRACER_DEF_CRITICAL_SECTION();
   TRACER_ENTER_CRITICAL_SECTION();
   TracerContext.Counter--;
   TRACER_LEAVE_CRITICAL_SECTION();
@@ -278,13 +313,13 @@ void TRACER_EMB_SendData(void)
   uint32_t _begin;
   uint32_t _end;
 
+  TRACER_DEF_CRITICAL_SECTION();
   TRACER_ENTER_CRITICAL_SECTION();
 
   if (0u == TracerContext.Counter)
   {
     _begin = TracerContext.PtrTx_Read;
     _end = TracerContext.PtrTx_Write;
-
     if (_begin != _end)
     {
       TRACER_EMB_Lock();
@@ -300,8 +335,12 @@ void TRACER_EMB_SendData(void)
         TracerContext.discontinue = 1;
       }
       TRACER_EMB_LowPowerSendData();
+
       TracerContext.LowPower_Counter++;
+
+      TRACER_LEAVE_CRITICAL_SECTION();
       HW_TRACER_EMB_SendData((const uint8_t *)(&(TracerContext.PtrDataTx[_begin])), TracerContext.SizeSent);
+      TRACER_ENTER_CRITICAL_SECTION();
     }
   }
 
@@ -331,6 +370,7 @@ int32_t TRACER_EMB_AllocateBufer(uint32_t Size)
   uint32_t _freesize;
   int32_t _pos = -1;
 
+  TRACER_DEF_CRITICAL_SECTION();
   TRACER_ENTER_CRITICAL_SECTION();
 
   if (TracerContext.PtrTx_Write == TracerContext.PtrTx_Read)
@@ -398,6 +438,4 @@ __weak void TRACER_EMB_LowPowerSendDataComplete(void)
 /**
   * @}
   */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
 

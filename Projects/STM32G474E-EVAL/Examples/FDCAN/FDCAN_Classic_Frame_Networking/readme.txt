@@ -50,6 +50,11 @@ This program behaves as follows:
 @note Any unit in the CAN bus may play the role of sender (by pressing
       User push-button) or receiver.
 
+@note This example configures the FDCAN peripheral to operate in CAN-FD mode with Bit Rate Switching (BRS) enabled.
+      The transmitted CAN frame is a classical frame, as indicated in its header. With this configuration,
+      the peripheral supports both CAN-FD and classical CAN frames. Alternatively, you may configure the peripheral
+      to operate exclusively in classical CAN mode, in which case only classical frames will be supported.
+
 @note Care must be taken when using HAL_Delay(), this function provides accurate delay (in milliseconds)
       based on variable incremented in SysTick ISR. This implies that if HAL_Delay() is called from
       a peripheral ISR process, then the SysTick interrupt must have higher priority (numerically lower)

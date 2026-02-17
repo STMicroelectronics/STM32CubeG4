@@ -161,7 +161,7 @@ int main(void)
       }
 
       /*  Before starting a new communication transfer, you need to check the current
-          state of the peripheral; if it’s busy you need to wait for the end of current
+          state of the peripheral; if it's busy you need to wait for the end of current
           transfer before starting a new one.
           For simplicity reasons, this example is just waiting till the end of the
           transfer, but application may perform other tasks while transfer operation
@@ -185,7 +185,7 @@ int main(void)
       }
 
       /*  Before starting a new communication transfer, you need to check the current
-          state of the peripheral; if it’s busy you need to wait for the end of current
+          state of the peripheral; if it's busy you need to wait for the end of current
           transfer before starting a new one.
           For simplicity reasons, this example is just waiting till the end of the
           transfer, but application may perform other tasks while transfer operation
@@ -209,7 +209,7 @@ int main(void)
       }
 
       /*  Before starting a new communication transfer, you need to check the current
-          state of the peripheral; if it’s busy you need to wait for the end of current
+          state of the peripheral; if it's busy you need to wait for the end of current
           transfer before starting a new one.
           For simplicity reasons, this example is just waiting till the end of the
           transfer, but application may perform other tasks while transfer operation
@@ -236,7 +236,7 @@ int main(void)
       }
 
       /*  Before starting a new communication transfer, you need to check the current
-          state of the peripheral; if it’s busy you need to wait for the end of current
+          state of the peripheral; if it's busy you need to wait for the end of current
           transfer before starting a new one.
           For simplicity reasons, this example is just waiting till the end of the
           transfer, but application may perform other tasks while transfer operation
@@ -260,7 +260,7 @@ int main(void)
       }
 
       /*  Before starting a new communication transfer, you need to check the current
-          state of the peripheral; if it’s busy you need to wait for the end of current
+          state of the peripheral; if it's busy you need to wait for the end of current
           transfer before starting a new one.
           For simplicity reasons, this example is just waiting till the end of the
           transfer, but application may perform other tasks while transfer operation
@@ -284,7 +284,7 @@ int main(void)
       }
 
       /*  Before starting a new communication transfer, you need to check the current
-          state of the peripheral; if it’s busy you need to wait for the end of current
+          state of the peripheral; if it's busy you need to wait for the end of current
           transfer before starting a new one.
           For simplicity reasons, this example is just waiting till the end of the
           transfer, but application may perform other tasks while transfer operation
@@ -327,7 +327,7 @@ int main(void)
     }
 
     /*  Before starting a new communication transfer, you need to check the current
-    state of the peripheral; if it’s busy you need to wait for the end of current
+    state of the peripheral; if it's busy you need to wait for the end of current
     transfer before starting a new one.
     For simplicity reasons, this example is just waiting till the end of the
     transfer, but application may perform other tasks while transfer operation
@@ -343,7 +343,7 @@ int main(void)
       while (HAL_I2C_Slave_Receive_IT(&hi2c1, (uint8_t *)&hRxNumData, 2) != HAL_OK);
 
       /*  Before starting a new communication transfer, you need to check the current
-      state of the peripheral; if it’s busy you need to wait for the end of current
+      state of the peripheral; if it's busy you need to wait for the end of current
       transfer before starting a new one.
       For simplicity reasons, this example is just waiting till the end of the
       transfer, but application may perform other tasks while transfer operation
@@ -356,7 +356,7 @@ int main(void)
       while (HAL_I2C_Slave_Receive_IT(&hi2c1, (uint8_t *)aRxBuffer, hRxNumData) != HAL_OK);
 
       /*  Before starting a new communication transfer, you need to check the current
-      state of the peripheral; if it’s busy you need to wait for the end of current
+      state of the peripheral; if it's busy you need to wait for the end of current
       transfer before starting a new one.
       For simplicity reasons, this example is just waiting till the end of the
       transfer, but application may perform other tasks while transfer operation
@@ -385,7 +385,7 @@ int main(void)
       while (HAL_I2C_Slave_Receive_IT(&hi2c1, (uint8_t *)&hTxNumData, 2) != HAL_OK);
 
       /*  Before starting a new communication transfer, you need to check the current
-      state of the peripheral; if it’s busy you need to wait for the end of current
+      state of the peripheral; if it's busy you need to wait for the end of current
       transfer before starting a new one.
       For simplicity reasons, this example is just waiting till the end of the
       transfer, but application may perform other tasks while transfer operation
@@ -398,7 +398,7 @@ int main(void)
       while (HAL_I2C_Slave_Transmit_IT(&hi2c1, (uint8_t *)aTxBuffer, RXBUFFERSIZE) != HAL_OK);
 
       /*  Before starting a new communication transfer, you need to check the current
-      state of the peripheral; if it’s busy you need to wait for the end of current
+      state of the peripheral; if it's busy you need to wait for the end of current
       transfer before starting a new one.
       For simplicity reasons, this example is just waiting till the end of the
       transfer, but application may perform other tasks while transfer operation

@@ -64,6 +64,7 @@ void SystemClock_Config(void);
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
  /* This sample code shows how to configure The HAL time base source base with a 
     dedicated  Tick interrupt priority.
@@ -213,7 +214,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   /* USER CODE BEGIN Callback 0 */
 
   /* USER CODE END Callback 0 */
-  if (htim->Instance == TIM7) {
+  if (htim->Instance == TIM7)
+  {
     HAL_IncTick();
   }
   /* USER CODE BEGIN Callback 1 */

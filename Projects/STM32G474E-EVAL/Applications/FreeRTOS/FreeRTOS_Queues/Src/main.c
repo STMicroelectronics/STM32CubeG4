@@ -70,6 +70,7 @@ void MessageQueueConsumer(void const * argument);
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
   /* STM32G4xx HAL library initialization:
        - Configure the Flash prefetch
@@ -145,6 +146,7 @@ int main(void)
   osKernelStart();
 
   /* We should never get here as control is now taken by the scheduler */
+
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
@@ -293,7 +295,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   /* USER CODE BEGIN Callback 0 */
 
   /* USER CODE END Callback 0 */
-  if (htim->Instance == TIM6) {
+  if (htim->Instance == TIM6)
+  {
     HAL_IncTick();
   }
   /* USER CODE BEGIN Callback 1 */

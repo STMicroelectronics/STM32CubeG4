@@ -118,7 +118,7 @@ Each time board 1 is awoken, the system clock (SYSCLK) at 170 MHz is restored.
 
 
 The LPUART is configured as follows:
-    - BaudRate = 9600 baud
+    - BaudRate = 115200 baud
     - Word Length = 8 bits (8 data bits, no parity bit)
     - One Stop Bit
     - Parity none

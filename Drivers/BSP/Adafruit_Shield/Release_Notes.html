@@ -11,40 +11,39 @@
       span.underline{text-decoration: underline;}
       div.column{display: inline-block; vertical-align: top; width: 50%;}
   </style>
-  <link rel="stylesheet" href="_htmresc/mini-st.css" />
+  <link rel="stylesheet" href="_htmresc/mini-st_2020.css" />
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
+  <link rel="icon" type="image/x-icon" href="_htmresc/favicon.png" />
 </head>
 <body>
 <div class="row">
 <div class="col-sm-12 col-lg-4">
-<div class="card fluid">
-<div class="sectione dark">
 <center>
-<h1 id="release-notes-for-adafruit_shield-driver"><strong>Release Notes for Adafruit_Shield Driver</strong></h1>
+<h1 id="release-notes-for-bsp-adafruit_shield-drivers"><small>Release Notes for</small> <mark>BSP Adafruit_Shield Drivers</mark></h1>
 <p>Copyright © 2014 STMicroelectronics<br />
 </p>
-<a href="https://www.st.com" class="logo"><img src="_htmresc/st_logo.png" alt="ST logo" /></a>
-</center>
-</div>
-</div>
-<h1 id="license">License</h1>
-This software component is licensed by ST under BSD 3-Clause license, the “License”; You may not use this component except in compliance with the License. You may obtain a copy of the License at:
-<center>
-<a href="https://opensource.org/licenses/BSD-3-Clause">https://opensource.org/licenses/BSD-3-Clause</a>
+<a href="https://www.st.com" class="logo"><img src="_htmresc/st_logo_2020.png" alt="ST logo" /></a>
 </center>
 <h1 id="purpose">Purpose</h1>
-<p>The BSP (Board Specific Package) drivers are parts of the STM32Cube package based on the HAL drivers and provide a set of high level APIs relative to the hardware components and features in the evaluation boards, discovery kits and nucleo boards coming with the STM32Cube package for a given STM32 serie.</p>
-<p>The BSP drivers allow a quick access to the board’s services using high level APIs and without any specific configuration as the link with the HAL and the external components is done in intrinsic within the drivers.</p>
-<p>From project settings points of view, user has only to add the necessary driver’s files in the workspace and call the needed functions from examples. However some low level configuration functions are weak and can be overridden by the applications if user wants to change some BSP drivers default behavior.</p>
+<p>This directory contains the BSP Adafruit_Shield drivers.</p>
 </div>
 <div class="col-sm-12 col-lg-8">
 <h1 id="update-history">Update History</h1>
 <div class="collapse">
-<input type="checkbox" id="collapse-section18" checked aria-hidden="true"> <label for="collapse-section18" aria-hidden="true"><strong>V5.0.1 / 13-March-2020</strong></label>
+<input type="checkbox" id="collapse-section19" checked aria-hidden="true"> <label for="collapse-section19" aria-hidden="true"><strong>V5.0.2 / 23-January-2026</strong></label>
 <div>
 <h2 id="main-changes">Main Changes</h2>
+<ul>
+<li>Update licensing</li>
+</ul>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section18" aria-hidden="true"> <label for="collapse-section18" aria-hidden="true"><strong>V5.0.1 / 13-March-2020</strong></label>
+<div>
+<h2 id="main-changes-1">Main Changes</h2>
 <ul>
 <li>Minor changes to fix typos</li>
 </ul>
@@ -53,7 +52,7 @@ This software component is licensed by ST under BSD 3-Clause license, the “Lic
 <div class="collapse">
 <input type="checkbox" id="collapse-section17" aria-hidden="true"> <label for="collapse-section17" aria-hidden="true"><strong>V5.0.0 / 25-February-2020</strong></label>
 <div>
-<h2 id="main-changes-1">Main Changes</h2>
+<h2 id="main-changes-2">Main Changes</h2>
 <ul>
 <li>Rename GUI_Drv_t into UTILS_LCD_Drv_t</li>
 </ul>
@@ -70,7 +69,7 @@ This software component is licensed by ST under BSD 3-Clause license, the “Lic
 <div class="collapse">
 <input type="checkbox" id="collapse-section16" aria-hidden="true"> <label for="collapse-section16" aria-hidden="true"><strong>V4.0.4 / 15-October-2019</strong></label>
 <div>
-<h2 id="main-changes-2">Main Changes</h2>
+<h2 id="main-changes-3">Main Changes</h2>
 <ul>
 <li>adafruit_802.c
 <ul>
@@ -87,7 +86,7 @@ This software component is licensed by ST under BSD 3-Clause license, the “Lic
 <div class="collapse">
 <input type="checkbox" id="collapse-section15" aria-hidden="true"> <label for="collapse-section15" aria-hidden="true"><strong>V4.0.3 / 25-June-2019</strong></label>
 <div>
-<h2 id="main-changes-3">Main Changes</h2>
+<h2 id="main-changes-4">Main Changes</h2>
 <ul>
 <li>adafruit_802_sd.c
 <ul>
@@ -103,7 +102,7 @@ This software component is licensed by ST under BSD 3-Clause license, the “Lic
 <div class="collapse">
 <input type="checkbox" id="collapse-section14" aria-hidden="true"> <label for="collapse-section14" aria-hidden="true"><strong>V4.0.2 / 30-May-2019</strong></label>
 <div>
-<h2 id="main-changes-4">Main Changes</h2>
+<h2 id="main-changes-5">Main Changes</h2>
 <ul>
 <li>stm32_adafruit_sd.h
 <ul>
@@ -119,7 +118,7 @@ This software component is licensed by ST under BSD 3-Clause license, the “Lic
 <div class="collapse">
 <input type="checkbox" id="collapse-section13" aria-hidden="true"> <label for="collapse-section13" aria-hidden="true"><strong>V4.0.1 / 25-April-2019</strong></label>
 <div>
-<h2 id="main-changes-5">Main Changes</h2>
+<h2 id="main-changes-6">Main Changes</h2>
 <ul>
 <li>Add adafruit_802_conf_STM32H7xx_Nucleo.h file under Adafruit_Config folder</li>
 <li>adafruit_802_lcd.c/.h:
@@ -133,7 +132,7 @@ This software component is licensed by ST under BSD 3-Clause license, the “Lic
 <div class="collapse">
 <input type="checkbox" id="collapse-section12" aria-hidden="true"> <label for="collapse-section12" aria-hidden="true"><strong>V4.0.0 / 12-April-2019</strong></label>
 <div>
-<h2 id="main-changes-6">Main Changes</h2>
+<h2 id="main-changes-7">Main Changes</h2>
 <ul>
 <li>Official release of component drivers for Adafruit_Shield in line with STM32Cube BSP drivers development guidelines (UM2298)</li>
 </ul>
@@ -148,7 +147,7 @@ This software component is licensed by ST under BSD 3-Clause license, the “Lic
 <div class="collapse">
 <input type="checkbox" id="collapse-section9" aria-hidden="true"> <label for="collapse-section9" aria-hidden="true"><strong>V3.0.3 / 30-April-2018</strong></label>
 <div>
-<h2 id="main-changes-7">Main Changes</h2>
+<h2 id="main-changes-8">Main Changes</h2>
 <ul>
 <li>stm32_adafruit_sd.c:
 <ul>
@@ -160,7 +159,7 @@ This software component is licensed by ST under BSD 3-Clause license, the “Lic
 <div class="collapse">
 <input type="checkbox" id="collapse-section8" aria-hidden="true"> <label for="collapse-section8" aria-hidden="true"><strong>V3.0.2 / 24-August-2017</strong></label>
 <div>
-<h2 id="main-changes-8">Main Changes</h2>
+<h2 id="main-changes-9">Main Changes</h2>
 <ul>
 <li>stm32_adafruit_lcd.c:
 <ul>
@@ -172,7 +171,7 @@ This software component is licensed by ST under BSD 3-Clause license, the “Lic
 <div class="collapse">
 <input type="checkbox" id="collapse-section7" aria-hidden="true"> <label for="collapse-section7" aria-hidden="true"><strong>V3.0.1 / 02-June-2017</strong></label>
 <div>
-<h2 id="main-changes-9">Main Changes</h2>
+<h2 id="main-changes-10">Main Changes</h2>
 <ul>
 <li>Add general description of BSP drivers</li>
 <li>Add Dependencies section</li>
@@ -183,7 +182,7 @@ This software component is licensed by ST under BSD 3-Clause license, the “Lic
 <div class="collapse">
 <input type="checkbox" id="collapse-section6" aria-hidden="true"> <label for="collapse-section6" aria-hidden="true"><strong>V3.0.0 / 23-December-2016</strong></label>
 <div>
-<h2 id="main-changes-10">Main Changes</h2>
+<h2 id="main-changes-11">Main Changes</h2>
 <ul>
 <li>Update BSP_SD_ReadBlocks and BSP_SD_WriteBlocks following new HAL SD drivers implementation</li>
 <li>Update BSP_SD_Erase implementation to manage SDHC and SDSC cards</li>
@@ -198,7 +197,7 @@ This software component is licensed by ST under BSD 3-Clause license, the “Lic
 <div class="collapse">
 <input type="checkbox" id="collapse-section5" aria-hidden="true"> <label for="collapse-section5" aria-hidden="true"><strong>V2.0.1 / 04-November-2015</strong></label>
 <div>
-<h2 id="main-changes-11">Main Changes</h2>
+<h2 id="main-changes-12">Main Changes</h2>
 <ul>
 <li>Fix GNU GCC warning on missing break instruction in SD_GetDataResponse()</li>
 </ul>
@@ -207,7 +206,7 @@ This software component is licensed by ST under BSD 3-Clause license, the “Lic
 <div class="collapse">
 <input type="checkbox" id="collapse-section4" aria-hidden="true"> <label for="collapse-section4" aria-hidden="true"><strong>V2.0.0 / 10-September-2015</strong></label>
 <div>
-<h2 id="main-changes-12">Main Changes</h2>
+<h2 id="main-changes-13">Main Changes</h2>
 <ul>
 <li>Improve SD over SPI protocol implementation</li>
 <li><strong>Note</strong>
@@ -224,7 +223,7 @@ This software component is licensed by ST under BSD 3-Clause license, the “Lic
 <div class="collapse">
 <input type="checkbox" id="collapse-section3" aria-hidden="true"> <label for="collapse-section3" aria-hidden="true"><strong>V1.1.1 / 21-November-2014</strong></label>
 <div>
-<h2 id="main-changes-13">Main Changes</h2>
+<h2 id="main-changes-14">Main Changes</h2>
 <ul>
 <li>stm32_adafruit_sd.c
 <ul>
@@ -245,7 +244,7 @@ This software component is licensed by ST under BSD 3-Clause license, the “Lic
 <div class="collapse">
 <input type="checkbox" id="collapse-section2" aria-hidden="true"> <label for="collapse-section2" aria-hidden="true"><strong>V1.1.0 / 22-July-2014</strong></label>
 <div>
-<h2 id="main-changes-14">Main Changes</h2>
+<h2 id="main-changes-15">Main Changes</h2>
 <ul>
 <li>Add new user API BSP_LCD_DrawBitmap() to draw a bitmap picture loaded in the STM32 MCU internal memory</li>
 <li>Add new static API SetDisplayWindow(), needed by BSP_LCD_DrawBitmap()</li>
@@ -258,7 +257,7 @@ This software component is licensed by ST under BSD 3-Clause license, the “Lic
 <div class="collapse">
 <input type="checkbox" id="collapse-section1" aria-hidden="true"> <label for="collapse-section1" aria-hidden="true"><strong>V1.0.0 / 22-April-2014</strong></label>
 <div>
-<h2 id="main-changes-15">Main Changes</h2>
+<h2 id="main-changes-16">Main Changes</h2>
 <ul>
 <li>First official release of <strong>Adafruit Shield</strong> driver</li>
 </ul>

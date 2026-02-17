@@ -6,13 +6,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2019-2024 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -107,9 +106,23 @@
                                      (((((Color & 0xFF00U) >> 8) >>2) & 0x3FU) << 5) |\
                                      (((((Color & 0xFF0000U) >> 16) >>3) & 0x1FU) << 11))
 
+#define CONVERTARGB88882ARGB4444(Color)((((Color & 0xFFU) >> 4) & 0xFU) |\
+                                       (((((Color & 0xFF00U) >> 8) >> 4) & 0xFU) << 4) |\
+                                       (((((Color & 0xFF0000U) >> 16) >> 4) & 0xFU) << 8) | \
+                                       (((((Color & 0xFF000000U) >> 24) >> 4) & 0xFU) << 12))
+
 #define CONVERTRGB5652ARGB8888(Color)(((((((Color >> 11) & 0x1FU) * 527) + 23) >> 6) << 16) |\
                                      ((((((Color >> 5) & 0x3FU) * 259) + 33) >> 6) << 8) |\
                                      ((((Color & 0x1FU) * 527) + 23) >> 6) | 0xFF000000)
+
+#define CONVERTARGB44442ARGB8888(Color)(((((Color >> 12U) & 0xFU) * 17U) << 24U) |\
+                                        ((((Color >>  8U) & 0xFU) * 17U) << 16U) |\
+                                        ((((Color >>  4U) & 0xFU) * 17U) << 8U) |\
+                                        ((((Color >>  0U) & 0xFU) * 17U) << 0U))
+
+#define CONVERTRGB8882ARGB8888(Color)(Color | 0xFF000000U)
+
+#define CONVERTARGB88882RGB888(Color)(Color & 0x00FFFFFFU)
 
 /**
   * @}
@@ -179,9 +192,9 @@ void UTIL_LCD_SetFuncDriver(const LCD_UTILS_Drv_t *pDrv)
 
   DrawProp->LcdLayer = 0;
   DrawProp->LcdDevice = 0;
-  FuncDriver.GetXSize(0, &DrawProp->LcdXsize);
-  FuncDriver.GetYSize(0, &DrawProp->LcdYsize);
-  FuncDriver.GetFormat(0, &DrawProp->LcdPixelFormat);
+  FuncDriver.GetXSize(0, &DrawProp[DrawProp->LcdLayer].LcdXsize);
+  FuncDriver.GetYSize(0, &DrawProp[DrawProp->LcdLayer].LcdYsize);
+  FuncDriver.GetFormat(0, &DrawProp[DrawProp->LcdLayer].LcdPixelFormat);
 }
 
 /**
@@ -195,6 +208,9 @@ void UTIL_LCD_SetLayer(uint32_t Layer)
     if(FuncDriver.SetLayer(DrawProp->LcdDevice, Layer) == 0)
     {
       DrawProp->LcdLayer = Layer;
+      FuncDriver.GetXSize(DrawProp->LcdDevice, &DrawProp[DrawProp->LcdLayer].LcdXsize);
+      FuncDriver.GetYSize(DrawProp->LcdDevice, &DrawProp[DrawProp->LcdLayer].LcdYsize);
+      FuncDriver.GetFormat(DrawProp->LcdDevice, &DrawProp[DrawProp->LcdLayer].LcdPixelFormat);
     }
   }
 }
@@ -287,11 +303,19 @@ void UTIL_LCD_FillRGBRect(uint32_t Xpos, uint32_t Ypos, uint8_t *pData, uint32_t
 void UTIL_LCD_DrawHLine(uint32_t Xpos, uint32_t Ypos, uint32_t Length, uint32_t Color)
 {
   /* Write line */
-  if(DrawProp->LcdPixelFormat == LCD_PIXEL_FORMAT_RGB565)
+  if(DrawProp[DrawProp->LcdLayer].LcdPixelFormat == LCD_PIXEL_FORMAT_RGB565)
   {
     FuncDriver.DrawHLine(DrawProp->LcdDevice, Xpos, Ypos, Length, CONVERTARGB88882RGB565(Color));
   }
-  else
+  else if(DrawProp[DrawProp->LcdLayer].LcdPixelFormat == LCD_PIXEL_FORMAT_RGB888)
+  {
+    FuncDriver.DrawHLine(DrawProp->LcdDevice, Xpos, Ypos, Length, CONVERTARGB88882RGB888(Color));
+  }
+  else if(DrawProp[DrawProp->LcdLayer].LcdPixelFormat == LCD_PIXEL_FORMAT_ARGB4444)
+  {
+    FuncDriver.DrawHLine(DrawProp->LcdDevice, Xpos, Ypos, Length, CONVERTARGB88882ARGB4444(Color));
+  }
+  else /*LCD_PIXEL_FORMAT_ARGB8888*/
   {
     FuncDriver.DrawHLine(DrawProp->LcdDevice, Xpos, Ypos, Length, Color);
   }
@@ -307,11 +331,19 @@ void UTIL_LCD_DrawHLine(uint32_t Xpos, uint32_t Ypos, uint32_t Length, uint32_t 
 void UTIL_LCD_DrawVLine(uint32_t Xpos, uint32_t Ypos, uint32_t Length, uint32_t Color)
 {
   /* Write line */
-  if(DrawProp->LcdPixelFormat == LCD_PIXEL_FORMAT_RGB565)
+  if(DrawProp[DrawProp->LcdLayer].LcdPixelFormat == LCD_PIXEL_FORMAT_RGB565)
   {
     FuncDriver.DrawVLine(DrawProp->LcdDevice, Xpos, Ypos, Length, CONVERTARGB88882RGB565(Color));
   }
-  else
+  else if(DrawProp[DrawProp->LcdLayer].LcdPixelFormat == LCD_PIXEL_FORMAT_RGB888)
+  {
+    FuncDriver.DrawVLine(DrawProp->LcdDevice, Xpos, Ypos, Length, CONVERTARGB88882RGB888(Color));
+  }
+  else if(DrawProp[DrawProp->LcdLayer].LcdPixelFormat == LCD_PIXEL_FORMAT_ARGB4444)
+  {
+    FuncDriver.DrawVLine(DrawProp->LcdDevice, Xpos, Ypos, Length, CONVERTARGB88882ARGB4444(Color));
+  }
+  else /*LCD_PIXEL_FORMAT_ARGB888*/
   {
     FuncDriver.DrawVLine(DrawProp->LcdDevice, Xpos, Ypos, Length, Color);
   }
@@ -327,9 +359,17 @@ void UTIL_LCD_GetPixel(uint16_t Xpos, uint16_t Ypos, uint32_t *Color)
 {
   /* Get Pixel */
   FuncDriver.GetPixel(DrawProp->LcdDevice, Xpos, Ypos, Color);
-  if(DrawProp->LcdPixelFormat == LCD_PIXEL_FORMAT_RGB565)
+  if(DrawProp[DrawProp->LcdLayer].LcdPixelFormat == LCD_PIXEL_FORMAT_RGB565)
   {
     *Color = CONVERTRGB5652ARGB8888(*Color);
+  }
+  else if(DrawProp[DrawProp->LcdLayer].LcdPixelFormat == LCD_PIXEL_FORMAT_RGB888)
+  {
+    *Color = CONVERTRGB8882ARGB8888(*Color);
+  }
+  else if(DrawProp[DrawProp->LcdLayer].LcdPixelFormat == LCD_PIXEL_FORMAT_ARGB4444)
+  {
+    *Color = CONVERTARGB44442ARGB8888(*Color);
   }
 }
 
@@ -342,11 +382,19 @@ void UTIL_LCD_GetPixel(uint16_t Xpos, uint16_t Ypos, uint32_t *Color)
 void UTIL_LCD_SetPixel(uint16_t Xpos, uint16_t Ypos, uint32_t Color)
 {
   /* Set Pixel */
-  if(DrawProp->LcdPixelFormat == LCD_PIXEL_FORMAT_RGB565)
+  if(DrawProp[DrawProp->LcdLayer].LcdPixelFormat == LCD_PIXEL_FORMAT_RGB565)
   {
     FuncDriver.SetPixel(DrawProp->LcdDevice, Xpos, Ypos, CONVERTARGB88882RGB565(Color));
   }
-  else
+  else if(DrawProp[DrawProp->LcdLayer].LcdPixelFormat == LCD_PIXEL_FORMAT_RGB888)
+  {
+    FuncDriver.SetPixel(DrawProp->LcdDevice, Xpos, Ypos, CONVERTARGB88882RGB888(Color));
+  }
+  else if(DrawProp[DrawProp->LcdLayer].LcdPixelFormat == LCD_PIXEL_FORMAT_ARGB4444)
+  {
+    FuncDriver.SetPixel(DrawProp->LcdDevice, Xpos, Ypos, CONVERTARGB88882ARGB4444(Color));
+  }
+  else /*LCD_PIXEL_FORMAT_ARGB888*/
   {
     FuncDriver.SetPixel(DrawProp->LcdDevice, Xpos, Ypos, Color);
   }
@@ -359,7 +407,7 @@ void UTIL_LCD_SetPixel(uint16_t Xpos, uint16_t Ypos, uint32_t Color)
 void UTIL_LCD_Clear(uint32_t Color)
 {
   /* Clear the LCD */
-  UTIL_LCD_FillRect(0, 0, DrawProp->LcdXsize, DrawProp->LcdYsize, Color);
+  UTIL_LCD_FillRect(0, 0, DrawProp[DrawProp->LcdLayer].LcdXsize, DrawProp[DrawProp->LcdLayer].LcdYsize, Color);
 }
 
 /**
@@ -369,7 +417,7 @@ void UTIL_LCD_Clear(uint32_t Color)
 void UTIL_LCD_ClearStringLine(uint32_t Line)
 {
   /* Draw rectangle with background color */
-  UTIL_LCD_FillRect(0, (Line * DrawProp[DrawProp->LcdLayer].pFont->Height), DrawProp->LcdXsize, DrawProp[DrawProp->LcdLayer].pFont->Height, DrawProp[DrawProp->LcdLayer].BackColor);
+  UTIL_LCD_FillRect(0, (Line * DrawProp[DrawProp->LcdLayer].pFont->Height), DrawProp[DrawProp->LcdLayer].LcdXsize, DrawProp[DrawProp->LcdLayer].pFont->Height, DrawProp[DrawProp->LcdLayer].BackColor);
 }
 
 /**
@@ -406,7 +454,7 @@ void UTIL_LCD_DisplayStringAt(uint32_t Xpos, uint32_t Ypos, uint8_t *Text, Text_
   while (*ptr++) size ++ ;
 
   /* Characters number per line */
-  xsize = (DrawProp->LcdXsize/DrawProp[DrawProp->LcdLayer].pFont->Width);
+  xsize = (DrawProp[DrawProp->LcdLayer].LcdXsize/DrawProp[DrawProp->LcdLayer].pFont->Width);
 
   switch (Mode)
   {
@@ -439,7 +487,7 @@ void UTIL_LCD_DisplayStringAt(uint32_t Xpos, uint32_t Ypos, uint8_t *Text, Text_
   }
 
   /* Send the string character by character on LCD */
-  while ((*Text != 0) & (((DrawProp->LcdXsize - (i*DrawProp[DrawProp->LcdLayer].pFont->Width)) & 0xFFFF) >= DrawProp[DrawProp->LcdLayer].pFont->Width))
+  while ((*Text != 0) & (((DrawProp[DrawProp->LcdLayer].LcdXsize - (i*DrawProp[DrawProp->LcdLayer].pFont->Width)) & 0xFFFF) >= DrawProp[DrawProp->LcdLayer].pFont->Width))
   {
     /* Display one character on LCD */
     UTIL_LCD_DisplayChar(refcolumn, Ypos, *Text);
@@ -579,49 +627,49 @@ void UTIL_LCD_DrawCircle(uint32_t Xpos, uint32_t Ypos, uint32_t Radius, uint32_t
 
   while (current_x <= current_y)
   {
-    if((Ypos - current_y) < DrawProp->LcdYsize)
+    if((Ypos - current_y) < DrawProp[DrawProp->LcdLayer].LcdYsize)
     {
-      if((Xpos + current_x) < DrawProp->LcdXsize)
+      if((Xpos + current_x) < DrawProp[DrawProp->LcdLayer].LcdXsize)
       {
         UTIL_LCD_SetPixel((Xpos + current_x), (Ypos - current_y), Color);
       }
-      if((Xpos - current_x) < DrawProp->LcdXsize)
+      if((Xpos - current_x) < DrawProp[DrawProp->LcdLayer].LcdXsize)
       {
         UTIL_LCD_SetPixel((Xpos - current_x), (Ypos - current_y), Color);
       }
     }
 
-    if((Ypos - current_x) < DrawProp->LcdYsize)
+    if((Ypos - current_x) < DrawProp[DrawProp->LcdLayer].LcdYsize)
     {
-      if((Xpos + current_y) < DrawProp->LcdXsize)
+      if((Xpos + current_y) < DrawProp[DrawProp->LcdLayer].LcdXsize)
       {
         UTIL_LCD_SetPixel((Xpos + current_y), (Ypos - current_x), Color);
       }
-      if((Xpos - current_y) < DrawProp->LcdXsize)
+      if((Xpos - current_y) < DrawProp[DrawProp->LcdLayer].LcdXsize)
       {
         UTIL_LCD_SetPixel((Xpos - current_y), (Ypos - current_x), Color);
       }
     }
 
-    if((Ypos + current_y) < DrawProp->LcdYsize)
+    if((Ypos + current_y) < DrawProp[DrawProp->LcdLayer].LcdYsize)
     {
-      if((Xpos + current_x) < DrawProp->LcdXsize)
+      if((Xpos + current_x) < DrawProp[DrawProp->LcdLayer].LcdXsize)
       {
         UTIL_LCD_SetPixel((Xpos + current_x), (Ypos + current_y), Color);
       }
-      if((Xpos - current_x) < DrawProp->LcdXsize)
+      if((Xpos - current_x) < DrawProp[DrawProp->LcdLayer].LcdXsize)
       {
         UTIL_LCD_SetPixel((Xpos - current_x), (Ypos + current_y), Color);
       }
     }
 
-    if((Ypos + current_x) < DrawProp->LcdYsize)
+    if((Ypos + current_x) < DrawProp[DrawProp->LcdLayer].LcdYsize)
     {
-      if((Xpos + current_y) < DrawProp->LcdXsize)
+      if((Xpos + current_y) < DrawProp[DrawProp->LcdLayer].LcdXsize)
       {
         UTIL_LCD_SetPixel((Xpos + current_y), (Ypos + current_x), Color);
       }
-      if((Xpos - current_y) < DrawProp->LcdXsize)
+      if((Xpos - current_y) < DrawProp[DrawProp->LcdLayer].LcdXsize)
       {
         UTIL_LCD_SetPixel((Xpos - current_y), (Ypos + current_x), Color);
       }
@@ -726,11 +774,19 @@ void UTIL_LCD_DrawBitmap(uint32_t Xpos, uint32_t Ypos, uint8_t *pData)
 void UTIL_LCD_FillRect(uint32_t Xpos, uint32_t Ypos, uint32_t Width, uint32_t Height, uint32_t Color)
 {
   /* Fill the rectangle */
-  if(DrawProp->LcdPixelFormat == LCD_PIXEL_FORMAT_RGB565)
+  if(DrawProp[DrawProp->LcdLayer].LcdPixelFormat == LCD_PIXEL_FORMAT_RGB565)
   {
     FuncDriver.FillRect(DrawProp->LcdDevice, Xpos, Ypos, Width, Height, CONVERTARGB88882RGB565(Color));
   }
-  else
+  else if(DrawProp[DrawProp->LcdLayer].LcdPixelFormat == LCD_PIXEL_FORMAT_RGB888)
+  {
+    FuncDriver.FillRect(DrawProp->LcdDevice, Xpos, Ypos, Width, Height, CONVERTARGB88882RGB888(Color));
+  }
+  else if(DrawProp[DrawProp->LcdLayer].LcdPixelFormat == LCD_PIXEL_FORMAT_ARGB4444)
+  {
+    FuncDriver.FillRect(DrawProp->LcdDevice, Xpos, Ypos, Width, Height, CONVERTARGB88882ARGB4444(Color));
+  }
+  else /*LCD_PIXEL_FORMAT_ARGB8888*/
   {
     FuncDriver.FillRect(DrawProp->LcdDevice, Xpos, Ypos, Width, Height, Color);
   }
@@ -949,8 +1005,11 @@ static void DrawChar(uint32_t Xpos, uint32_t Ypos, const uint8_t *pData)
 
   height = DrawProp[DrawProp->LcdLayer].pFont->Height;
   width  = DrawProp[DrawProp->LcdLayer].pFont->Width;
-  uint16_t rgb565[24];
-  uint32_t argb8888[24];
+
+  uint8_t rgb8[24*4];
+  uint16_t* rgb16 = (uint16_t*)rgb8;
+  uint32_t* argb32 = (uint32_t*)rgb8;
+  uint16_t* argb4444 = (uint16_t*)rgb8;
 
   offset =  8 *((width + 7)/8) -  width ;
 
@@ -981,29 +1040,64 @@ static void DrawChar(uint32_t Xpos, uint32_t Ypos, const uint8_t *pData)
       {
         if(line & (1 << (width- j + offset- 1)))
         {
-          rgb565[j] = CONVERTARGB88882RGB565(DrawProp[DrawProp->LcdLayer].TextColor);
+          rgb16[j] = CONVERTARGB88882RGB565(DrawProp[DrawProp->LcdLayer].TextColor);
         }
         else
         {
-          rgb565[j] = CONVERTARGB88882RGB565(DrawProp[DrawProp->LcdLayer].BackColor);
+          rgb16[j] = CONVERTARGB88882RGB565(DrawProp[DrawProp->LcdLayer].BackColor);
         }
       }
-      UTIL_LCD_FillRGBRect(Xpos,  Ypos++, (uint8_t*)&rgb565[0], width, 1);
+      UTIL_LCD_FillRGBRect(Xpos,  Ypos++, &rgb8[0], width, 1);
     }
-    else
+    else if(DrawProp[DrawProp->LcdLayer].LcdPixelFormat == LCD_PIXEL_FORMAT_RGB888)
+    {
+      for (j = 0; j < width*3; j = j+ 3)
+      {
+        if(line & (1 << (width- j/3 + offset- 1)))
+        {
+          rgb8[j] = CONVERTARGB88882RGB888((DrawProp[DrawProp->LcdLayer].TextColor)) & 0xFFU;
+          rgb8[j + 1U] = (CONVERTARGB88882RGB888((DrawProp[DrawProp->LcdLayer].TextColor)) >> 8) & 0xFFU;
+          rgb8[j + 2U] = (CONVERTARGB88882RGB888((DrawProp[DrawProp->LcdLayer].TextColor)) >> 16) & 0xFFU;
+        }
+        else
+        {
+          rgb8[j] = CONVERTARGB88882RGB888((DrawProp[DrawProp->LcdLayer].BackColor)) & 0xFFU;
+          rgb8[j + 1U] = (CONVERTARGB88882RGB888((DrawProp[DrawProp->LcdLayer].BackColor)) >> 8) & 0xFFU;
+          rgb8[j + 2U] = (CONVERTARGB88882RGB888((DrawProp[DrawProp->LcdLayer].BackColor)) >> 16) & 0xFFU;
+        }
+      }
+
+      UTIL_LCD_FillRGBRect(Xpos,  Ypos++, &rgb8[0], width, 1);
+    }
+    else if(DrawProp[DrawProp->LcdLayer].LcdPixelFormat == LCD_PIXEL_FORMAT_ARGB4444)
     {
       for (j = 0; j < width; j++)
       {
         if(line & (1 << (width- j + offset- 1)))
         {
-          argb8888[j] = DrawProp[DrawProp->LcdLayer].TextColor;
+          argb4444[j] = CONVERTARGB88882ARGB4444(DrawProp[DrawProp->LcdLayer].TextColor);
         }
         else
         {
-          argb8888[j] = DrawProp[DrawProp->LcdLayer].BackColor;
+          argb4444[j] = CONVERTARGB88882ARGB4444(DrawProp[DrawProp->LcdLayer].BackColor);
         }
       }
-      UTIL_LCD_FillRGBRect(Xpos,  Ypos++, (uint8_t*)&argb8888[0], width, 1);
+      UTIL_LCD_FillRGBRect(Xpos,  Ypos++, (uint8_t*)&argb4444[0], width, 1);
+    }
+    else /*LCD_PIXEL_FORMAT_ARGB888*/
+    {
+      for (j = 0; j < width; j++)
+      {
+        if(line & (1 << (width- j + offset- 1)))
+        {
+          argb32[j] = DrawProp[DrawProp->LcdLayer].TextColor;
+        }
+        else
+        {
+          argb32[j] = DrawProp[DrawProp->LcdLayer].BackColor;
+        }
+      }
+      UTIL_LCD_FillRGBRect(Xpos,  Ypos++, &rgb8[0], width, 1);
     }
   }
 }
@@ -1100,5 +1194,3 @@ static void FillTriangle(Triangle_Positions_t *Positions, uint32_t Color)
 /**
   * @}
   */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
