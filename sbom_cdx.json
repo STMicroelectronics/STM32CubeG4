@@ -4,7 +4,7 @@
 	"serialNumber": "urn:uuid:e74ce1de-72fb-4721-8ca5-f0548c42d1cf",
 	"version": 1,
 	"metadata": {
-		"timestamp": "2026-02-04T09:04:51Z",
+		"timestamp": "2026-05-07T09:04:51Z",
 		"tools": [
 			{
 				"vendor": "Black Duck",
@@ -29,7 +29,7 @@
 				"name": "ST Microelectronics"
 			},
 			"name": "STM32CubeG4",
-			"version": "1.6.2",
+			"version": "1.6.3",
 			"licenses": [
 				{
 					"license": {
@@ -1461,7 +1461,7 @@
 			},
 			"author": "STMicroelectronics",
 			"name": "STM32G4xx HAL Driver",
-			"version": "1.2.6",
+			"version": "1.2.7",
 			"licenses": [
 				{
 					"license": {
